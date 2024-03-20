@@ -1,0 +1,14 @@
+{
+  "name": "best-shot",
+  "version": "0.0.1",
+  "private": true,
+  "engines": {
+    "node": "18.15.0"
+  },
+  "scripts": {
+  },
+  "dependencies": {
+  },
+  "devDependencies": {
+  }
+}

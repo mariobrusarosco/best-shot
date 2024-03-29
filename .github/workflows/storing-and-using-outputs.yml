@@ -1,0 +1,26 @@
+name: Storing and Using Outputs
+on: workflow_dispatch
+jobs:
+  fake-build:
+    runs-on: ubuntu-latest
+    outputs:
+      firstname: ${{ steps.firstname.outputs.value }}
+      lastname: ${{ steps.lastname.outputs.value }}
+    steps:
+      - name: Create a folder
+        run: mkdir dist
+
+      - name: Create an output value for firstname
+        id: firstname
+        run: echo "firstname" >> "$GITHUB_OUTPUT"
+
+      - name: Create an output value for lastname
+        id: lastname
+        run: echo "lastname" >> "$GITHUB_OUTPUT"
+
+  fake-publish:
+    runs-on: ubuntu-latest
+    needs: fake-build
+    steps:
+      - name: List the files in the artifact
+        run: echo ${{ github.outputs }}

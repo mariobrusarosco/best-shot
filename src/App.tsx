@@ -2,12 +2,15 @@ import { useState } from "react";
 import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
 import "./App.css";
+import Button from "@mui/material/Button";
+import CssBaseline from "@mui/material/CssBaseline";
 
 function App() {
   const [count, setCount] = useState(0);
 
   return (
     <>
+      <CssBaseline />
       <div>
         <a href="https://vitejs.dev" target="_blank">
           <img src={viteLogo} className="logo" alt="Vite logo" />
@@ -17,6 +20,18 @@ function App() {
         </a>
       </div>
       <h1>Best Shot</h1>
+
+      <div
+        style={{
+          border: "1px solid tan",
+        }}
+      >
+        <h2>Material UI Component</h2>
+        <h3>Button</h3>
+
+        <Button variant="contained">Hello</Button>
+      </div>
+
       <div className="card">
         <button onClick={() => setCount((count) => count + 1)}>
           count is {count}

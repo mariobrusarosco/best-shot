@@ -15,7 +15,7 @@ jobs:
         run: ls
 
       - name: Print the content of the file
-        run: cat dist/hello.txt
+        run: cat dist/index.html
 
   fake-build:
     runs-on: ubuntu-latest

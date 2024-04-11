@@ -12,7 +12,7 @@ jobs:
           path: dist
 
       - name: List the files in the artifact
-        run: ls
+        run: ls dist
 
       - name: Print the content of the file
         run: cat dist/index.html

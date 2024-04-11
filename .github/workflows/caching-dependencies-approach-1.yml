@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - chore/**
+      - main
 jobs:
   fake-test:
     runs-on: ubuntu-latest

@@ -1,5 +1,8 @@
 name: Caching dependencies - Approach #1
-on: workflow_dispatch
+on:
+  push:
+    branches:
+      - chore/**
 jobs:
   fake-test:
     runs-on: ubuntu-latest

@@ -29,6 +29,9 @@ jobs:
       - name: Create a file in the folder
         run: echo "Hello, !!!!!" > dist/hello.txt
 
+      - name: Install dependencies
+        run: yarn
+
       - name: Build the Application
         run: yarn build
 

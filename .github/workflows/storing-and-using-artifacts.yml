@@ -20,6 +20,9 @@ jobs:
   fake-build:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout code from repository
+        uses: actions/checkout@v4
+
       - name: Create a folder
         run: mkdir dist
 

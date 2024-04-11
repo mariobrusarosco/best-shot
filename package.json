@@ -7,7 +7,7 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "test": "echo testing...2"
+    "test": "echo testing...3"
   },
   "dependencies": {
     "formik": "^2.4.5",

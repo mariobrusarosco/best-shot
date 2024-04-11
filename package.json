@@ -7,7 +7,7 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "test": "echo testing...!de"
+    "test": "echo testing...!sdas"
   },
   "dependencies": {
     "formik": "^2.4.5",

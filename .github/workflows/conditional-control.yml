@@ -1,0 +1,25 @@
+name: Condional Control
+on:
+  push:
+    branches:
+      - chore/**
+      - main
+
+jobs:
+  fake-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create a folder. Just simulation an error
+        id: some-id
+        run: exit 1
+      - name: Create a backup folder
+        if: failure() && steps.some-id.outcome == 'failure'
+        run: mkdir backup-dist
+
+  report:
+    runs-on: ubuntu-latest
+    needs: [fake-test]
+    if: failure()
+    steps:
+      - name: Reporting failure
+        run: echo "${{ toJson(github)}}""

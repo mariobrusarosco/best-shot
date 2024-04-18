@@ -1,4 +1,4 @@
-name: Reusable Flow Main
+name: Reusable Flow Root
 on:
   push:
     branches:

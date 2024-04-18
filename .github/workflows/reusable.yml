@@ -2,7 +2,7 @@ name: Reusable Flow Main
 on:
   push:
     branches:
-      - poc/gh-actions-intermid/**
+      - poc/gh-actions-intermid
 jobs:
   build:
     runs-on: ubuntu-latest

@@ -1,0 +1,30 @@
+name: Reusable Deploy
+on:
+  workflow_call:
+    secrets:
+      EARTH_FORMAT:
+        description: "A fake secret"
+        required: false
+    inputs:
+      artifact_name:
+        description: "The name of the artifact to download"
+        default: "build-output-folder"
+        type: string
+        required: true
+    outputs:
+      deploy-result:
+        description: "The job id of the deploy job"
+        value: ${{ jobs.deploy.outputs.deploy-result }}
+jobs:
+  deploy:
+    outputs:
+      deploy-result: ${{ steps.deploy-result.outputs.deploy-result }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy the Application
+        run: echo "Fake deploy the application with artifact ${{ inputs.artifact_name }} and secret ${{ secrets.EARTH_FORMAT }}"
+
+      - name: Outputting a fake deploy result
+        id: deploy-result
+        run: |
+          echo "deploy-result=${{ github.sha }}" >> $GITHUB_OUTPUT

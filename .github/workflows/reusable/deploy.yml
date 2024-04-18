@@ -1,8 +1,0 @@
-name: Reusable Deploy
-on: workflow_call
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Build the Application
-        run: echo "Fake build"

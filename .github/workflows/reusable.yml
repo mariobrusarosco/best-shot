@@ -1,0 +1,11 @@
+name: Reusable Flow Main
+on:
+  push:
+    branches:
+      - poc/gh-actions-intermid/**
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Build the Application by using the reusable deploy.yml
+        uses: ./.github/workflows/reusable/deploy.yml

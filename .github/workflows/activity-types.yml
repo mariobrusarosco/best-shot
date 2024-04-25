@@ -5,6 +5,8 @@ on:
     types:
       - opened
   push:
+    branches:
+      - main
 jobs:
   prepare-a-drink:
     runs-on: ubuntu-latest

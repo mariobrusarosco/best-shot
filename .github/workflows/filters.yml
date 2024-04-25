@@ -8,21 +8,21 @@ on:
     # Targeting specific branches
     branches:
       - main
-      - dev-*
-      - feat/**
-    # Ignoring specific branches
-    branches-ignore:
-      - main
-      - dev-*
-      - feat/**
-    # Targeting specific paths
-    paths:
-      - "src/**"
-      - "docs/**"
-    # Ignoring specific paths
-    paths-ignore:
-      - "src/**"
-      - "docs/**"
+    #   - dev-*
+    #   - feat/**
+    # # Ignoring specific branches
+    # branches-ignore:
+    #   - main
+    #   - dev-*
+    #   - feat/**
+    # # Targeting specific paths
+    # paths:
+    #   - "src/**"
+    #   - "docs/**"
+    # # Ignoring specific paths
+    # paths-ignore:
+    #   - "src/**"
+    #   - "docs/**"
 jobs:
   prepare-a-drink:
     runs-on: ubuntu-latest

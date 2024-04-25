@@ -1,5 +1,8 @@
 name: Storing and Using Outputs
-on: push
+on:
+  push:
+    branches:
+      - main
 jobs:
   fake_build:
     runs-on: ubuntu-latest

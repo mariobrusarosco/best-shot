@@ -3,7 +3,7 @@ on:
   push:
     branches:
       - chore/**
-      - main/**
+      - main
 jobs:
   build:
     continue-on-error: true

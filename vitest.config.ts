@@ -7,12 +7,12 @@ export default defineConfig({
 		root: __dirname,
 		setupFiles: ["./vitest.setup.ts"],
 		css: false,
-		// isolate: false,
-		// // you can also disable isolation only for specific pools
-		// poolOptions: {
-		// 	forks: {
-		// 		isolate: false,
-		// 	},
-		// },
+		isolate: false,
+		// you can also disable isolation only for specific pools
+		poolOptions: {
+			forks: {
+				isolate: false,
+			},
+		},
 	},
 });

@@ -5,5 +5,3 @@
  * (https://github.com/chaance/vitest-dom)
  */
 import "@testing-library/jest-dom";
-
-console.warn("------- PERFORMING THINGS BEFORE RUNINNG TESTS");

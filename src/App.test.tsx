@@ -5,6 +5,6 @@ describe("Boilerplate", () => {
   it("renders properly", async () => {
     render(<App />);
 
-    expect(screen.getByText(/bqest shot/i)).toBeInTheDocument();
+    expect(screen.getByText(/best shot/i)).toBeInTheDocument();
   });
 });

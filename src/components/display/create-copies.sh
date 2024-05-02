@@ -7,7 +7,7 @@ srcTest="Display.test.tsx"
 echo "Creating 50 copies of $srcComponent and $srcTest"
 
 
-for i in $(seq 16 50)
+for i in $(seq 51 100)
 do
     # Create copies of the component and test files
     cp "$srcComponent" "DisplayCopy$i.tsx"

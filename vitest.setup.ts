@@ -4,4 +4,9 @@
  * toBeInTheDocument() available in our tests.
  * (https://github.com/chaance/vitest-dom)
  */
-import "@testing-library/jest-dom";
+// import "@testing-library/jest-dom";
+import "@testing-library/jest-dom/vitest";
+
+import { cleanup } from "@testing-library/react";
+
+cleanup();

@@ -6,7 +6,10 @@ describe("Boilerplate", () => {
 		render(<App />);
 
 		screen.debug();
+		screen.getByText("Best Shot");
 
-		expect(screen.getByText(/best shot/i)).toBeInTheDocument();
+		expect(
+			screen.getByRole("heading", { name: /Best Shot/i })
+		).toBeInTheDocument();
 	});
 });

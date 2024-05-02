@@ -1,7 +1,7 @@
 export const Display = () => {
 	return (
 		<div>
-			<h1>Display</h1>
+			<h1>Display One</h1>
 			<div className="card">
 				<p>
 					Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quasi ipsam,

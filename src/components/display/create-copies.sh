@@ -4,10 +4,10 @@
 srcComponent="Display.tsx"
 srcTest="Display.test.tsx"
 
-echo "Creating 500 copies of $srcComponent and $srcTest"
+echo "Creating 50 copies of $srcComponent and $srcTest"
 
 
-for i in $(seq 1 50)
+for i in $(seq 1 15)
 do
     # Create copies of the component and test files
     cp "$srcComponent" "DisplayCopy$i.tsx"

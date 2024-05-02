@@ -4,6 +4,5 @@
  * toBeInTheDocument() available in our tests.
  * (https://github.com/chaance/vitest-dom)
  */
-import "@testing-library/jest-dom";
-
-console.warn("------- PERFORMING THINGS BEFORE RUNINNG TESTS");
+// import "@testing-library/jest-dom";
+import "@testing-library/jest-dom/vitest";

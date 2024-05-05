@@ -6,7 +6,7 @@ import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 
 function App() {
-  const [count, setCount] = useState(0);
+	const [count, setCount] = useState(0);
 
   return (
     <>

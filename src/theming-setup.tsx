@@ -2,9 +2,6 @@ import { useMediaQuery } from "@mui/system";
 import Button from "@mui/material/Button";
 
 export const ThemingSetup = () => {
-	const isSmallScreen = useMediaQuery("(max-width:600px)");
-	const isLargeScreen = useMediaQuery("(min-width:601px)");
-
 	return (
 		<div>
 			<h1>Theming Setup</h1>
@@ -24,13 +21,6 @@ export const ThemingSetup = () => {
 					.ts file we can import a CSS file like this:
 				</p>
 				<pre>import "./App.css"; .... ...</pre>
-			</section>
-
-			<section>
-				<h2>Breakpoints / Media Queries</h2>
-
-				{isSmallScreen && <p>Small Screen</p>}
-				{isLargeScreen && <p>Large Screen</p>}
 			</section>
 
 			<section className="">

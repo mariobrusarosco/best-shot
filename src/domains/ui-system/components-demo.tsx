@@ -1,4 +1,4 @@
-import { Box, Container, Paper } from "@mui/material";
+import { Box, Container, Paper, Typography } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import { useMediaQuery, useTheme } from "@mui/system";
 import { styled } from "@mui/material/styles";
@@ -12,7 +12,7 @@ const Item = styled(Paper)(({ theme }) => ({
 	[theme.breakpoints.down("mobile")]: {
 		backgroundColor: "red",
 	},
-	[theme.breakpoints.up("mobile")]: {
+	[theme.breakpoints.up("tablet")]: {
 		backgroundColor: "blue",
 	},
 	[theme.breakpoints.up("desktop")]: {
@@ -22,16 +22,28 @@ const Item = styled(Paper)(({ theme }) => ({
 
 export const ComponentsDemo = () => {
 	const theme = useTheme();
-	console.log(theme.breakpoints);
 	const isSmallScreen = useMediaQuery("(max-width:600px)");
 	const isLargeScreen = useMediaQuery("(min-width:601px)");
+	console.log(theme);
 
 	return (
 		<div>
+			<h1>MUI Capabilities</h1>
+			<section>
+				<h2>Fonts</h2>
+
+				<h3>Using Fonts from a Design System</h3>
+				<Typography variant="h4">Lorem Ipsum</Typography>
+				<Typography variant="h5">Lorem Ipsum</Typography>
+
+				<h3>Using Fonts from Custom UIs</h3>
+				<PrimaryFont>Primary font</PrimaryFont>
+				<SecondaryFont>Secondary font</SecondaryFont>
+			</section>
 			<section>
 				<h2>Container</h2>
 
-				<Container maxWidth="mobile">
+				<Container maxWidth="laptop">
 					<Box sx={{ bgcolor: "#cfe8fc", height: "100vh" }} />
 				</Container>
 			</section>
@@ -45,7 +57,7 @@ export const ComponentsDemo = () => {
 						<Item>hello</Item>
 					</Grid>
 					<Grid item mobile={4} tablet={6} desktop={12}>
-						<Item>hello</Item>
+						<Item>hello!</Item>
 					</Grid>
 					<Grid item mobile={4} tablet={6} desktop={12}>
 						<Item>hello</Item>
@@ -62,7 +74,7 @@ export const ComponentsDemo = () => {
 					columns={{ mobile: 1, tablet: 8, desktop: 12 }}
 				>
 					{Array.from(Array(6)).map((_, index) => (
-						<Grid item mobile={4} tablet={6} desktop={12} key={index}>
+						<Grid item mobile={4} tablet={6} desktop={6} key={index}>
 							<Item>hello!</Item>
 						</Grid>
 					))}
@@ -78,3 +90,16 @@ export const ComponentsDemo = () => {
 		</div>
 	);
 };
+
+const PrimaryFont = styled("div")(({ theme }) => ({
+	...theme.typography.button,
+	backgroundColor: theme.palette.background.paper,
+	padding: theme.spacing(1),
+}));
+
+const SecondaryFont = styled("div")(({ theme }) => ({
+	...theme.typography,
+	fontFamily: "Montserrat Variable",
+	backgroundColor: theme.palette.background.paper,
+	padding: theme.spacing(1),
+}));

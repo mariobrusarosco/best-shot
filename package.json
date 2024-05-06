@@ -14,7 +14,8 @@
 	"dependencies": {
 		"@emotion/react": "^11.11.4",
 		"@emotion/styled": "^11.11.5",
-		"@fontsource/roboto": "^5.0.13",
+		"@fontsource-variable/montserrat": "^5.0.19",
+		"@fontsource/libre-baskerville": "^5.0.13",
 		"@mui/icons-material": "^5.15.16",
 		"@mui/material": "^5.15.15",
 		"@mui/system": "^5.15.15",

@@ -507,10 +507,15 @@
   resolved "https://registry.yarnpkg.com/@floating-ui/utils/-/utils-0.2.2.tgz#d8bae93ac8b815b2bd7a98078cf91e2724ef11e5"
   integrity sha512-J4yDIIthosAsRZ5CPYP/jQvUAQtlZTTD/4suA08/FEnlxqW3sKS9iAhgsa9VYLZ6vDHn/ixJgIqRQPotoBjxIw==
 
-"@fontsource/roboto@^5.0.13":
+"@fontsource-variable/montserrat@^5.0.19":
+  version "5.0.19"
+  resolved "https://registry.yarnpkg.com/@fontsource-variable/montserrat/-/montserrat-5.0.19.tgz#207bc43a00a1173b45edba291d7772c01c3c7592"
+  integrity sha512-vOlVjdGock2yBOeBbg5qexPa1TJM/PS8Nx9YlF6DFEtFf/Y5ayDbZRvV/WPj8W2vk7/aDxUEtTAp/Qp8wK9hNQ==
+
+"@fontsource/libre-baskerville@^5.0.13":
   version "5.0.13"
-  resolved "https://registry.yarnpkg.com/@fontsource/roboto/-/roboto-5.0.13.tgz#2d6ec431a2f9dfe38ca76525c2d6bf12241f575b"
-  integrity sha512-j61DHjsdUCKMXSdNLTOxcG701FWnF0jcqNNQi2iPCDxU8seN/sMxeh62dC++UiagCWq9ghTypX+Pcy7kX+QOeQ==
+  resolved "https://registry.yarnpkg.com/@fontsource/libre-baskerville/-/libre-baskerville-5.0.13.tgz#4fa5746c9c95bc446bec27af192cf2860e28f41a"
+  integrity sha512-4RmjVL+W0Y0HbPz2jVXykFXpeu+NnE2xplGNcLEGSMkjSWM5fHH6tu3Vmzskfjp9j47/EQVfuQ0uIDEFmUd6iA==
 
 "@humanwhocodes/config-array@^0.11.14":
   version "0.11.14"

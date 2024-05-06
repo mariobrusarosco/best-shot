@@ -25,12 +25,12 @@ We'll use Material-UI's utilities library.
 
 ---
 
-## Reset / Normalization
+### Reset / Normalization
 
 This project uses MUI normalization, through `CssBaseline` component.
 More details: (here)[https://mui.com/material-ui/react-css-baseline/]
 
-## Targeting Screens by theirs sizes / Using Breakpoints
+### Targeting Screens by theirs sizes / Using Breakpoints
 
 We can use breakpoints in three ways:
 
@@ -106,7 +106,7 @@ const StatRoot = styled("div", {
 	</Container>
 ```
 
-### Recommended way
+#### Recommended way
 
 ```jsx
 import { useMediaQuery } from "@mui/material";
@@ -122,4 +122,29 @@ const App = () => {
 		</div>
 	);
 };
+```
+
+### Texts, Fonts and, Typography
+
+#### Accessing typography aspects when creating `Custom UI`s
+
+```tsx
+import { styled } from "@mui/material/styles";
+
+// theme
+{
+	...,
+	typography: {
+		fontFamily: "Libre Baskerville,Montserrat Variable, sans-serif",
+		fontSize: 14,
+		fontWeightBold: 700,
+		....
+	}
+	...
+}
+const Div = styled("div")(({ theme }) => ({
+	...theme.typography.button,
+	backgroundColor: theme.palette.background.paper,
+	padding: theme.spacing(1),
+}));
 ```

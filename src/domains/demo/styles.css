@@ -1,0 +1,36 @@
+.round {
+  display: flex;
+  flex-direction: column;
+}
+
+.round-games {
+  display: flex;
+  flex-direction: column;
+  gap: 24px
+}
+
+.game {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 8px;
+}
+
+.local-and-date {
+  display: flex;
+gap: 8px  ;
+  align-items: center;
+  justify-content:center;
+}
+
+.teams {
+  display: flex;
+  justify-content: center;
+  gap: 4px;
+}
+
+.home, .away {
+  display: flex;
+  gap: 4px;
+}
+

@@ -1,41 +1,44 @@
-import { useQuery } from "@tanstack/react-query";
-import { useState } from "react";
-import { getTournament, getTournaments } from "./fetchers";
-import { globoEsporteRound, responseTournament } from "./typing";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { getMemberGuesses, getMembers } from "./fetchers";
+import { getUserToken } from "./utils";
+import { createGuess } from "./mutations";
 
-export const useTournaments = () => {
-	const [activeTournament, setActiveTournament] = useState<string | null>(null);
-	const handleSelectTournament = (id: string) => {
-		setActiveTournament(id);
-	};
-
-	const tournaments = useQuery<responseTournament[]>({
-		queryKey: ["tournament"],
-		queryFn: getTournaments,
+export const useGuessMutation = () => {
+	const mutate = useMutation({
+		mutationFn: createGuess,
+		onSuccess: (data) => {
+			alert("Guess created successfully", data);
+		},
 	});
 
-	return {
-		activeTournament,
-		handleSelectTournament,
-		...tournaments,
-	};
+	return mutate;
 };
 
-export const useTournament = (id: string | null) => {
-	const [activeRound, setActiveRound] = useState(1);
+export const useGuess = (
+	selectedTournament: Awaited<ReturnType<typeof useTournament>>
+) => {
+	const fakeAuth = getUserToken();
 
-	const handleNextRound = () => {
-		setActiveRound((prev) => prev + 1);
-	};
-	const handlePreviousRound = () => {
-		setActiveRound((prev) => prev - 1);
-	};
-
-	const tournament = useQuery({
-		queryKey: ["tournament", { id, activeRound }],
-		queryFn: getTournament,
-		enabled: !!id,
+	const guesses = useQuery({
+		queryKey: [
+			"guess",
+			{ tournamentId: selectedTournament?.query.data?.id, memberId: fakeAuth },
+		],
+		queryFn: getMemberGuesses,
+		enabled: !!selectedTournament?.query.data?.id && !!fakeAuth,
 	});
 
-	return { ...tournament, handleNextRound, handlePreviousRound, activeRound };
+	return guesses;
+};
+
+export const useMembers = () => {
+	const fakeAuth = getUserToken();
+
+	const members = useQuery({
+		queryKey: ["members", { memberId: fakeAuth }],
+		queryFn: getMembers,
+		enabled: !!fakeAuth,
+	});
+
+	return members;
 };

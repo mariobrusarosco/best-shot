@@ -3,3 +3,8 @@ export const TOURNAMENT_IDS = [
 	"c33769be-62ec-43c6-a633-8c826e14a696",
 	"43fe4870-6c4b-40c2-b284-7cdfa01c24ec",
 ] as const;
+
+export const SCORE_TABLE = {
+	EXACT_SCORE: 3,
+	MATCH_RESULT: 1,
+} as const;

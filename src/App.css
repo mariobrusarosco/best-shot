@@ -4,3 +4,66 @@
 	padding: 2rem;
 	text-align: center;
 }
+
+.app-container {
+	display: flex;
+}
+
+header {
+	flex-shrink: 0;
+}
+.page {
+	flex: 1;
+}
+
+.round-actions {
+	display: flex;
+	gap: 24px;
+	justify-content: center;
+}
+.round {
+	display: flex;
+	flex-direction: column;
+}
+
+.round-games {
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+}
+
+.game {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	gap: 8px;
+}
+
+.local-and-date {
+	display: flex;
+	gap: 8px;
+	align-items: center;
+	justify-content: center;
+}
+
+.teams {
+	display: flex;
+	justify-content: center;
+	gap: 4px;
+}
+
+.home,
+.away {
+	display: flex;
+	gap: 4px;
+}
+
+.demo-section {
+	display: flex;
+	justify-content: space-between;
+}
+
+.section-wrapper {
+	min-width: 500px;
+	border: 1px solid tomato;
+}

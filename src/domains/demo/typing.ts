@@ -36,17 +36,12 @@ export type globoEsporteGame = {
 	homeTeam: string;
 	awayTeam: string;
 	stadium: string;
+	gameStarted: boolean;
 };
 
-export type globoEsporteRound = {
+export type IRound = {
 	id: number;
-	games: globoEsporteGame[];
+	games: IGame[];
 };
 
-export type responseTournament = {
-	id: string;
-	label: string;
-	description: string;
-	createdAt: string;
-	updatedAt: string;
-};
+export type IGame = globoEsporteGame;

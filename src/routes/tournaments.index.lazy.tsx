@@ -34,6 +34,6 @@ const TournamentsPage = () => {
 	);
 };
 
-export const Route = createLazyFileRoute("/tournaments")({
+export const Route = createLazyFileRoute("/tournaments/")({
 	component: TournamentsPage,
 });

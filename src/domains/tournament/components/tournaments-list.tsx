@@ -13,7 +13,9 @@ const TournamentsList = ({ tournaments }: Props) => {
 				{tournaments?.map((tournament) => {
 					return (
 						<li key={tournament.id}>
-							<Link to={`${tournament.id}`}>{tournament.label}</Link>
+							<Link to="/tournaments/$id" params={{ id: tournament.id }}>
+								{tournament.label}
+							</Link>
 						</li>
 					);
 				})}

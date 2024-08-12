@@ -3,12 +3,7 @@ import { useLeagues } from "./hooks/use-leagues";
 import { useLeageScore } from "./hooks/use-leagues-score";
 
 const LeaguesPage = () => {
-	const [selectedLeague, setSelectedLegaue] = useState<string>("");
 	const { inputs, handleNewLeague, handleLeagueInvite, leagues } = useLeagues();
-
-	const handleSelectLeague = (id: string) => {
-		setSelectedLegaue(id);
-	};
 
 	// const guesses = useGuess(tournament);
 	const leagueScore = useLeageScore(selectedLeague);

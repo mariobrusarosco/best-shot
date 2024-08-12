@@ -1,33 +1,14 @@
-import { Link, Outlet } from "react-router-dom";
+import { Outlet } from "@tanstack/react-router";
+import { Header } from "./header";
+import { TanStackRouterDevtools } from "@tanstack/router-devtools";
 
 const AppContainer = () => {
 	return (
 		<div className="app-container">
 			<Header />
 			<Outlet />
+			<TanStackRouterDevtools />
 		</div>
-	);
-};
-const Header = () => {
-	return (
-		<header>
-			<nav>
-				<ul>
-					<li>
-						<Link to="/">Home</Link>
-					</li>
-					<li>
-						<Link to="/dashboard">Dashboard</Link>
-					</li>
-					<li>
-						<Link to="/leagues">Leagues</Link>
-					</li>
-					<li>
-						<Link to="/tournaments">Tournaments</Link>
-					</li>
-				</ul>
-			</nav>
-		</header>
 	);
 };
 

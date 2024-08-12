@@ -2,7 +2,6 @@ import "./styles.css";
 import { useMembers } from "./hooks";
 
 import { Guess } from "../guess/components/guess";
-import { Outlet } from "react-router-dom";
 import { useTournament } from "../tournament/hooks/use-tournament";
 import { useTournaments } from "../tournament/hooks/use-tournaments";
 import { useGuess } from "../guess/hooks/use-guess";
@@ -98,8 +97,6 @@ const Demo = () => {
 					)}
 				</div>
 			</section>
-
-			<Outlet />
 		</>
 	);
 };

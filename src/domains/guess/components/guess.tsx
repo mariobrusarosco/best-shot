@@ -45,7 +45,7 @@ const Guess = ({ match, tournamentId, guesses }: Props) => {
 						queryKey: ["guess", { tournamentId, memberId }],
 					});
 				},
-			}
+			},
 		);
 	};
 
@@ -55,10 +55,10 @@ const Guess = ({ match, tournamentId, guesses }: Props) => {
 	const forbidNewGuesses = gameDate < now;
 	// const forbidNewGuesses = false;
 
-	console.log({ gameGuess, forbidNewGuesses });
 	// console.log(match.id, { now, gameDate, forbidNewGuesses });
 	// const score = analyzeScore(gameGuess, game);
 	const noPreviousGuess = !gameGuess;
+	console.log({ gameGuess, forbidNewGuesses });
 
 	return (
 		<div className="your-shot">

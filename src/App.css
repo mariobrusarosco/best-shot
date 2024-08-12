@@ -11,6 +11,11 @@
 
 header {
 	flex-shrink: 0;
+
+	ul {
+		display: flex;
+		flex-direction: column;
+	}
 }
 .page {
 	flex: 1;

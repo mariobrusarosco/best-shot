@@ -1,15 +1,26 @@
 import { useParams } from "react-router-dom";
 import { useTournament } from "../hooks/use-tournament";
+import { Guess } from "../../guess/components/guess";
+import { Match } from "../../match/components/match";
+import { useGuess } from "../../guess/hooks/use-guess";
 
 const TournamentPage = () => {
-	const tournamentId = useParams<{ tournamentId: string }>()?.tournamentId;
-	const { uiState, serverState } = useTournament(tournamentId);
+	const tournamentId = useParams<{ tournamentId: string }>()
+		.tournamentId as string;
+	const tournament = useTournament(tournamentId);
+	const guesses = useGuess(tournament.serverState.data);
 
 	// Derivative State
-	const tournamentLabel = serverState.data?.label;
-	const matchesForSelectedRound = serverState.data?.matches;
+	const tournamentLabel = tournament.serverState.data?.label;
+	const matchesForSelectedRound = tournament.serverState.data?.matches;
 
-	console.log(matchesForSelectedRound);
+	const activeGames = tournament.serverState?.data?.matches;
+	const shouldRender = tournament.serverState.isSuccess && guesses.isSuccess;
+
+	// console.log("shouldRender", shouldRender);
+	// console.log("activeGames", activeGames);
+	console.log("guesses", guesses.data);
+	console.log("activeGames", activeGames);
 
 	return (
 		<div data-ui="tournament-page" className="page">
@@ -20,15 +31,15 @@ const TournamentPage = () => {
 
 			<div className="round-actions">
 				<button
-					onClick={uiState.handlePreviousRound}
-					disabled={uiState.activeRound === 1}
+					onClick={tournament.uiState.handlePreviousRound}
+					disabled={tournament.uiState.activeRound === 1}
 				>
 					Prev
 				</button>
-				<p>Round {uiState.activeRound}</p>
+				<p>Round {tournament.uiState.activeRound}</p>
 				<button
-					disabled={uiState.activeRound === 38}
-					onClick={uiState.handleNextRound}
+					disabled={tournament.uiState.activeRound === 38}
+					onClick={tournament.uiState.handleNextRound}
 				>
 					Next
 				</button>
@@ -36,33 +47,16 @@ const TournamentPage = () => {
 
 			<ul className="round-games">
 				{matchesForSelectedRound?.map((match) => {
+					debugger;
 					return (
-						<li key={match.id} className="game">
-							<div className="information">
-								<div className="local-and-date">
-									<strong className="stadium">{match.stadium}</strong>
-									<p className="date">
-										<span>{new Date(match.date).toLocaleString()}</span>
-									</p>
-								</div>
-								<div className="teams">
-									<div className="home">
-										<span>{match.homeTeam}</span>
-										<span>{match.homeScore}</span>
-									</div>
-									<span>x</span>
-									<div className="away">
-										<span>{match.awayScore}</span>
-										<span>{match.awayTeam}</span>
-									</div>
-								</div>
-							</div>
+						<li key={match.id} className="round-item">
+							<Match match={match} />
 
-							{/* <Guess
-								tournamentId={tournament?.query?.data?.id}
-								game={game}
+							<Guess
+								tournamentId={tournamentId}
+								match={match}
 								guesses={guesses.data}
-							/> */}
+							/>
 						</li>
 					);
 				})}

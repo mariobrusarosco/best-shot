@@ -1,4 +1,4 @@
-import { IGuess } from "./components/guess";
+import { IGuess } from "../guess/components/guess";
 import { SCORE_TABLE } from "./constants";
 import { IGame } from "./typing";
 

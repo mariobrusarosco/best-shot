@@ -4,13 +4,13 @@ import { ITournament } from "../tournament/typing";
 export const getTournament = async ({ queryKey }) => {
 	const [_key, { id, activeRound }] = queryKey;
 
-	const response = await api.get(`tournament/${id}?round=${activeRound}`);
+	const response = await api.get(`tournaments/${id}?round=${activeRound}`);
 
 	return response.data as ITournament;
 };
 
 export const getTournaments = async () => {
-	const response = await api.get("tournament");
+	const response = await api.get("tournaments");
 
 	return response.data;
 };

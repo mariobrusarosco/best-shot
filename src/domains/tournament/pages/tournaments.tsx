@@ -13,16 +13,10 @@ const TournamentsPage = () => {
 	}
 
 	return (
-		<div className="page">
-			<div>
-				<h2>Tournaments</h2>
+		<div className="tournaments-screen">
+			<div className="heading">
+				<h3>Leagues</h3>
 			</div>
-
-			{isPending ? (
-				<div>
-					<p>... LOADING TOURNAMENTS ...</p>
-				</div>
-			) : null}
 
 			{data ? (
 				<div>
@@ -31,8 +25,6 @@ const TournamentsPage = () => {
 			) : null}
 		</div>
 	);
-
-	return null;
 };
 
 export { TournamentsPage };

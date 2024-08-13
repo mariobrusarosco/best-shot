@@ -17,6 +17,49 @@ header {
 		flex-direction: column;
 	}
 }
+
+.leagues-screen,
+.tournaments-screen {
+	width: 100%;
+	.heading {
+		flex: 1;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		padding: 56px 40px;
+		color: #fff;
+		background-color: #574f7d;
+	}
+
+	h3 {
+		margin: 0;
+		font-size: 36px;
+	}
+
+	.list {
+		background-color: #3c2a4d;
+		padding: 58px 32px;
+
+		ul {
+			display: flex;
+			flex-wrap: wrap;
+			gap: 32px;
+		}
+
+		a {
+			color: #fff;
+			text-decoration: none;
+		}
+
+		.list-item {
+			width: 180px;
+			padding: 24px;
+			border-radius: 16px;
+			background-color: #574f7d;
+			font-size: 16px;
+		}
+	}
+}
 .page {
 	flex: 1;
 }

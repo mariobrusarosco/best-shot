@@ -47,7 +47,6 @@ const TournamentPage = () => {
 
 			<ul className="round-games">
 				{matchesForSelectedRound?.map((match) => {
-					debugger;
 					return (
 						<li key={match.id} className="round-item">
 							<Match match={match} />

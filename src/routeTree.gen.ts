@@ -17,17 +17,12 @@ import { Route as DashboardImport } from './routes/dashboard'
 
 // Create Virtual Routes
 
-const LeaguesLazyImport = createFileRoute('/leagues')()
 const IndexLazyImport = createFileRoute('/')()
 const TournamentsIndexLazyImport = createFileRoute('/tournaments/')()
+const LeaguesIndexLazyImport = createFileRoute('/leagues/')()
 const TournamentsIdLazyImport = createFileRoute('/tournaments/$id')()
 
 // Create/Update Routes
-
-const LeaguesLazyRoute = LeaguesLazyImport.update({
-  path: '/leagues',
-  getParentRoute: () => rootRoute,
-} as any).lazy(() => import('./routes/leagues.lazy').then((d) => d.Route))
 
 const DashboardRoute = DashboardImport.update({
   path: '/dashboard',
@@ -45,6 +40,11 @@ const TournamentsIndexLazyRoute = TournamentsIndexLazyImport.update({
 } as any).lazy(() =>
   import('./routes/tournaments.index.lazy').then((d) => d.Route),
 )
+
+const LeaguesIndexLazyRoute = LeaguesIndexLazyImport.update({
+  path: '/leagues/',
+  getParentRoute: () => rootRoute,
+} as any).lazy(() => import('./routes/leagues.index.lazy').then((d) => d.Route))
 
 const TournamentsIdLazyRoute = TournamentsIdLazyImport.update({
   path: '/tournaments/$id',
@@ -71,18 +71,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardImport
       parentRoute: typeof rootRoute
     }
-    '/leagues': {
-      id: '/leagues'
-      path: '/leagues'
-      fullPath: '/leagues'
-      preLoaderRoute: typeof LeaguesLazyImport
-      parentRoute: typeof rootRoute
-    }
     '/tournaments/$id': {
       id: '/tournaments/$id'
       path: '/tournaments/$id'
       fullPath: '/tournaments/$id'
       preLoaderRoute: typeof TournamentsIdLazyImport
+      parentRoute: typeof rootRoute
+    }
+    '/leagues/': {
+      id: '/leagues/'
+      path: '/leagues'
+      fullPath: '/leagues'
+      preLoaderRoute: typeof LeaguesIndexLazyImport
       parentRoute: typeof rootRoute
     }
     '/tournaments/': {
@@ -100,8 +100,8 @@ declare module '@tanstack/react-router' {
 export const routeTree = rootRoute.addChildren({
   IndexLazyRoute,
   DashboardRoute,
-  LeaguesLazyRoute,
   TournamentsIdLazyRoute,
+  LeaguesIndexLazyRoute,
   TournamentsIndexLazyRoute,
 })
 
@@ -115,8 +115,8 @@ export const routeTree = rootRoute.addChildren({
       "children": [
         "/",
         "/dashboard",
-        "/leagues",
         "/tournaments/$id",
+        "/leagues/",
         "/tournaments/"
       ]
     },
@@ -126,11 +126,11 @@ export const routeTree = rootRoute.addChildren({
     "/dashboard": {
       "filePath": "dashboard.tsx"
     },
-    "/leagues": {
-      "filePath": "leagues.lazy.tsx"
-    },
     "/tournaments/$id": {
       "filePath": "tournaments.$id.lazy.tsx"
+    },
+    "/leagues/": {
+      "filePath": "leagues.index.lazy.tsx"
     },
     "/tournaments/": {
       "filePath": "tournaments.index.lazy.tsx"

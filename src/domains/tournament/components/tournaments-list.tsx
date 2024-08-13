@@ -8,11 +8,11 @@ const TournamentsList = ({ tournaments }: Props) => {
 	if (tournaments === undefined) return null;
 
 	return (
-		<div className="tournaments">
-			<ul className="tournaments-list">
+		<div className="tournaments list">
+			<ul className="">
 				{tournaments?.map((tournament) => {
 					return (
-						<li key={tournament.id}>
+						<li key={tournament.id} className="list-item">
 							<Link to="/tournaments/$id" params={{ id: tournament.id }}>
 								{tournament.label}
 							</Link>

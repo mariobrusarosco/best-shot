@@ -3,7 +3,7 @@ import { getLeagueScore } from "../../demo/fetchers";
 
 export const useLeageScore = (leagueId: string) => {
 	const query = useQuery({
-		queryKey: ["score", { leagueId }],
+		queryKey: ["scores", { leagueId }],
 		queryFn: getLeagueScore,
 		enabled: !!leagueId,
 	});

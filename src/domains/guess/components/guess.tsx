@@ -52,8 +52,8 @@ const Guess = ({ match, tournamentId, guesses }: Props) => {
 	const now = Date.now();
 	const gameDate = new Date(match.date).getTime();
 
-	const forbidNewGuesses = gameDate < now;
-	// const forbidNewGuesses = false;
+	// const forbidNewGuesses = gameDate < now;
+	const forbidNewGuesses = false;
 
 	// console.log(match.id, { now, gameDate, forbidNewGuesses });
 	// const score = analyzeScore(gameGuess, game);

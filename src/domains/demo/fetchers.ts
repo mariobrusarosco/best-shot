@@ -50,7 +50,7 @@ export const getMemberGuesses = async ({ queryKey }) => {
 export const getLeagueScore = async ({ queryKey }) => {
 	const [_, { leagueId }] = queryKey;
 
-	const response = await api.get(`score/league/${leagueId}`);
+	const response = await api.get(`scores/league/${leagueId}`);
 
 	return response.data;
 };

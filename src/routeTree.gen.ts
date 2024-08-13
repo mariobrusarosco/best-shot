@@ -21,6 +21,7 @@ const IndexLazyImport = createFileRoute('/')()
 const TournamentsIndexLazyImport = createFileRoute('/tournaments/')()
 const LeaguesIndexLazyImport = createFileRoute('/leagues/')()
 const TournamentsIdLazyImport = createFileRoute('/tournaments/$id')()
+const LeaguesIdLazyImport = createFileRoute('/leagues/$id')()
 
 // Create/Update Routes
 
@@ -53,6 +54,11 @@ const TournamentsIdLazyRoute = TournamentsIdLazyImport.update({
   import('./routes/tournaments.$id.lazy').then((d) => d.Route),
 )
 
+const LeaguesIdLazyRoute = LeaguesIdLazyImport.update({
+  path: '/leagues/$id',
+  getParentRoute: () => rootRoute,
+} as any).lazy(() => import('./routes/leagues.$id.lazy').then((d) => d.Route))
+
 // Populate the FileRoutesByPath interface
 
 declare module '@tanstack/react-router' {
@@ -69,6 +75,13 @@ declare module '@tanstack/react-router' {
       path: '/dashboard'
       fullPath: '/dashboard'
       preLoaderRoute: typeof DashboardImport
+      parentRoute: typeof rootRoute
+    }
+    '/leagues/$id': {
+      id: '/leagues/$id'
+      path: '/leagues/$id'
+      fullPath: '/leagues/$id'
+      preLoaderRoute: typeof LeaguesIdLazyImport
       parentRoute: typeof rootRoute
     }
     '/tournaments/$id': {
@@ -100,6 +113,7 @@ declare module '@tanstack/react-router' {
 export const routeTree = rootRoute.addChildren({
   IndexLazyRoute,
   DashboardRoute,
+  LeaguesIdLazyRoute,
   TournamentsIdLazyRoute,
   LeaguesIndexLazyRoute,
   TournamentsIndexLazyRoute,
@@ -115,6 +129,7 @@ export const routeTree = rootRoute.addChildren({
       "children": [
         "/",
         "/dashboard",
+        "/leagues/$id",
         "/tournaments/$id",
         "/leagues/",
         "/tournaments/"
@@ -125,6 +140,9 @@ export const routeTree = rootRoute.addChildren({
     },
     "/dashboard": {
       "filePath": "dashboard.tsx"
+    },
+    "/leagues/$id": {
+      "filePath": "leagues.$id.lazy.tsx"
     },
     "/tournaments/$id": {
       "filePath": "tournaments.$id.lazy.tsx"

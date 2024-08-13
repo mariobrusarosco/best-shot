@@ -9,7 +9,7 @@ const LeaguesPage = () => {
 	const [inInviteMode, setInInviteMode] = useState(false);
 
 	return (
-		<div className="leagues-screen">
+		<div className="leagues-screen screen">
 			<div className="heading">
 				<h3>Leagues</h3>
 

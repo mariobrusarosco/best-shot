@@ -14,7 +14,7 @@ const TournamentsPage = () => {
 	}
 
 	return (
-		<div className="tournaments-screen">
+		<div className="tournaments-screen screen">
 			<div className="heading">
 				<h3>Tournaments</h3>
 			</div>

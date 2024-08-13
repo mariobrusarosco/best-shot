@@ -7,7 +7,6 @@ import { Guess } from "../domains/guess/components/guess";
 const route = getRouteApi("/tournaments/$id");
 
 const TournamentPage = () => {
-	console.log({ route });
 	const tournamentId = route.useParams().id;
 	const tournament = useTournament(tournamentId);
 	const guesses = useGuess(tournament.serverState.data);
@@ -25,7 +24,7 @@ const TournamentPage = () => {
 	console.log("activeGames", activeGames);
 
 	return (
-		<div data-ui="tournament-page" className="page">
+		<div data-ui="tournament-page" className="screen">
 			<div className="heading">
 				<h2>Tournament</h2>
 				<h3>{tournamentLabel}</h3>

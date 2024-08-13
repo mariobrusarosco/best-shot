@@ -18,8 +18,7 @@ header {
 	}
 }
 
-.leagues-screen,
-.tournaments-screen {
+.screen {
 	width: 100%;
 	.heading {
 		flex: 1;
@@ -39,6 +38,7 @@ header {
 	.list {
 		background-color: #3c2a4d;
 		padding: 58px 32px;
+		color: #fff;
 
 		ul {
 			display: flex;
@@ -57,6 +57,10 @@ header {
 			border-radius: 16px;
 			background-color: #574f7d;
 			font-size: 16px;
+		}
+
+		.list-item-two {
+			
 		}
 	}
 }

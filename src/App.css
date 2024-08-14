@@ -9,6 +9,10 @@
 	display: flex;
 }
 
+p {
+	margin: 0;
+}
+
 header {
 	flex-shrink: 0;
 
@@ -60,7 +64,6 @@ header {
 		}
 
 		.list-item-two {
-			
 		}
 	}
 }
@@ -76,19 +79,30 @@ header {
 .round {
 	display: flex;
 	flex-direction: column;
+	background-color: #3c2a4d;
 }
 
 .round-games {
 	display: flex;
-	flex-direction: column;
+	flex-wrap: wrap;
 	gap: 12px;
+	padding: 8px;
+	justify-content: center;
 }
 
-.game {
+.match-card {
+	width: 200px;
+	border-radius: 8px;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
-	gap: 8px;
+	gap: 32px;
+	padding: 16px;
+	background-color: #fff;
+
+	input {
+		width: 30px;
+	}
 }
 
 .local-and-date {
@@ -101,13 +115,19 @@ header {
 .teams {
 	display: flex;
 	justify-content: center;
-	gap: 4px;
+	gap: 8px;
 }
 
 .home,
 .away {
 	display: flex;
-	gap: 4px;
+	gap: 8px;
+}
+
+.guess {
+	display: flex;
+	justify-content: center;
+	gap: 8px;
 }
 
 .demo-section {

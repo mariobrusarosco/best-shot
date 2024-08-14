@@ -1,12 +1,12 @@
 import { createLazyFileRoute, getRouteApi } from "@tanstack/react-router";
-import { useLeagues } from "../domains/league/hooks/use-leagues";
-import { useLeageScore } from "../domains/league/hooks/use-leagues-score";
-import { ILeague } from "../domains/league/typing";
+import { useLeagues } from "../../domains/league/hooks/use-leagues";
+import { useLeageScore } from "../../domains/league/hooks/use-leagues-score";
+import { ILeague } from "../../domains/league/typing";
 
-const route = getRouteApi("/leagues/$id");
+const route = getRouteApi("/_auth/leagues/$leagueId");
 
 const LeaguePage = () => {
-	const leagueId = route.useParams().id;
+	const leagueId = route.useParams().leagueId;
 	const { leagues } = useLeagues();
 	const leagueName = leagues.data?.find(
 		(league: ILeague) => league.id === leagueId,
@@ -25,7 +25,7 @@ const LeaguePage = () => {
 				<div className="list">
 					<p>Ranking</p>
 					<ul>
-						{scoreboard?.map(([member, score]) => {
+						{scoreboard?.map(([member, score]: [string, number]) => {
 							return (
 								<li>
 									{member} : {score}
@@ -39,6 +39,6 @@ const LeaguePage = () => {
 	);
 };
 
-export const Route = createLazyFileRoute("/leagues/$id")({
+export const Route = createLazyFileRoute("/_auth/leagues/$leagueId")({
 	component: LeaguePage,
 });

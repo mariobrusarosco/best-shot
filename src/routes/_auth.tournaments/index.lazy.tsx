@@ -1,6 +1,6 @@
 import { createLazyFileRoute } from "@tanstack/react-router";
-import { useTournaments } from "../domains/tournament/hooks/use-tournaments";
-import { TournamentsList } from "../domains/tournament/components/tournaments-list";
+import { useTournaments } from "../../domains/tournament/hooks/use-tournaments";
+import { TournamentsList } from "../../domains/tournament/components/tournaments-list";
 
 const TournamentsPage = () => {
 	const { data, isPending, error } = useTournaments();
@@ -34,6 +34,6 @@ const TournamentsPage = () => {
 	);
 };
 
-export const Route = createLazyFileRoute("/tournaments/")({
+export const Route = createLazyFileRoute("/_auth/tournaments/")({
 	component: TournamentsPage,
 });

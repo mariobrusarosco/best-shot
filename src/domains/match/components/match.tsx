@@ -1,13 +1,32 @@
+import { format } from "date-fns";
 import { IMatch } from "../typing";
+import { getRouteApi } from "@tanstack/react-router";
+
+const route = getRouteApi("/tournaments/$tournamentId/matches/");
+const { useParams, useNavigate } = route;
 
 export const Match = ({ match }: { match: IMatch }) => {
+	const navigate = useNavigate();
+	const { tournamentId } = useParams();
+
+	const handleMoreDetails = () => {
+		navigate({
+			to: "/tournaments/$tournamentId/matches/$matchId",
+			params: {
+				matchId: match.id,
+				tournamentId,
+			},
+		});
+	};
+
 	return (
 		<div className="information">
 			<div className="local-and-date">
-				{/* <strong className="stadium">{match.stadium}</strong> */}
 				<p className="date">
-					<span>{new Date(match.date).toLocaleString()}</span>
+					<span>{format(match.date, "dd/MM/yy - k:mm")}</span>
 				</p>
+
+				<p onClick={handleMoreDetails}>more</p>
 			</div>
 			<div className="teams">
 				<div className="home">

@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { useLeagues } from "../domains/league/hooks/use-leagues";
-import { useLeageScore } from "../domains/league/hooks/use-leagues-score";
+import { useLeagues } from "../../domains/league/hooks/use-leagues";
 import { createLazyFileRoute, Link } from "@tanstack/react-router";
+import { ILeague } from "../../domains/league/typing";
 
 const LeaguesPage = () => {
 	const { inputs, handleNewLeague, handleLeagueInvite, leagues } = useLeagues();
@@ -78,10 +78,10 @@ const LeaguesPage = () => {
 
 			<div className="list">
 				<ul>
-					{leagues?.data?.map((league) => {
+					{leagues?.data?.map((league: ILeague) => {
 						return (
 							<li key={league.label} className="list-item">
-								<Link to="/leagues/$id" params={{ id: league.id }}>
+								<Link to="/leagues/$leagueId" params={{ leagueId: league.id }}>
 									{league.label}
 								</Link>
 							</li>
@@ -93,7 +93,7 @@ const LeaguesPage = () => {
 	);
 };
 
-export const Route = createLazyFileRoute("/leagues/")({
+export const Route = createLazyFileRoute("/_auth/leagues/")({
 	component: LeaguesPage,
 });
 

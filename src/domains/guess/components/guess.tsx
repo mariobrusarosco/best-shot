@@ -70,7 +70,7 @@ const Guess = ({ match, tournamentId, guesses }: Props) => {
 				<>
 					<p>Your shot</p>
 
-					<div className="teams">
+					<div className="guess">
 						<div className="home">
 							{forbidNewGuesses ? (
 								<span>{gameGuess?.homeScore}</span>

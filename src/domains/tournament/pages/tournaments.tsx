@@ -2,7 +2,7 @@ import { TournamentsList } from "../components/tournaments-list";
 import { useTournaments } from "../hooks/use-tournaments";
 
 const TournamentsPage = () => {
-	const { data, isPending, error } = useTournaments();
+	const { data, error } = useTournaments();
 
 	if (error) {
 		return (

@@ -1,13 +1,11 @@
 import { createLazyFileRoute, getRouteApi } from "@tanstack/react-router";
 import { useTournament } from "../../../domains/tournament/hooks/use-tournament";
-import { useGuess } from "../../../domains/guess/hooks/use-guess";
 
 const route = getRouteApi("/_auth/tournaments/$tournamentId/ranking");
 
 const TournamentRanking = () => {
 	const tournamentId = route.useParams().tournamentId;
 	const tournament = useTournament(tournamentId);
-	const guesses = useGuess(tournament.serverState.data);
 
 	// Derivative State
 	const tournamentLabel = tournament.serverState.data?.label;

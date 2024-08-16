@@ -1,12 +1,13 @@
-import { useParams } from "react-router-dom";
 import { useTournament } from "../hooks/use-tournament";
 import { Guess } from "../../guess/components/guess";
 import { Match } from "../../match/components/match";
 import { useGuess } from "../../guess/hooks/use-guess";
+import { getRouteApi } from "@tanstack/react-router";
+
+const route = getRouteApi("/_auth/tournaments/$tournamentId/matches/");
 
 const TournamentPage = () => {
-	const tournamentId = useParams<{ tournamentId: string }>()
-		.tournamentId as string;
+	const { tournamentId } = route.useParams();
 	const tournament = useTournament(tournamentId);
 	const guesses = useGuess(tournament.serverState.data);
 
@@ -15,7 +16,7 @@ const TournamentPage = () => {
 	const matchesForSelectedRound = tournament.serverState.data?.matches;
 
 	const activeGames = tournament.serverState?.data?.matches;
-	const shouldRender = tournament.serverState.isSuccess && guesses.isSuccess;
+	// const shouldRender = tournament.serverState.isSuccess && guesses.isSuccess;
 
 	// console.log("shouldRender", shouldRender);
 	// console.log("activeGames", activeGames);
@@ -25,7 +26,6 @@ const TournamentPage = () => {
 	return (
 		<div data-ui="tournament-page" className="page">
 			<div className="heading">
-				<h2>Tournament</h2>
 				<h3>{tournamentLabel}</h3>
 			</div>
 

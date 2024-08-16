@@ -4,6 +4,7 @@ import { ITournament } from "../typing";
 interface Props {
 	tournaments: ITournament[];
 }
+
 const TournamentsList = ({ tournaments }: Props) => {
 	if (tournaments === undefined) return null;
 
@@ -14,8 +15,8 @@ const TournamentsList = ({ tournaments }: Props) => {
 					return (
 						<li key={tournament.id} className="list-item">
 							<Link
-								to="/tournaments/$id/matches"
-								params={{ id: tournament.id }}
+								to="/tournaments/$tournamentId/matches"
+								params={{ tournamentId: tournament.id }}
 							>
 								{tournament.label}
 							</Link>

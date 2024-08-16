@@ -1,7 +1,4 @@
-import {
-	createRootRoute,
-	createRootRouteWithContext,
-} from "@tanstack/react-router";
+import { createRootRouteWithContext } from "@tanstack/react-router";
 import { AppContainer } from "../domains/global/components/app-container";
 import { useAuth0 } from "@auth0/auth0-react";
 

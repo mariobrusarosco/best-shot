@@ -13,7 +13,7 @@ const LeaguePage = () => {
 	).label;
 
 	const { data } = useLeageScore(leagueId);
-	const scoreboard = data && Object.entries(data);
+	const scoreboard = data && (Object.entries(data) as [string, number][]);
 
 	return (
 		<div className="leagues-screen screen">
@@ -25,13 +25,15 @@ const LeaguePage = () => {
 				<div className="list">
 					<p>Ranking</p>
 					<ul>
-						{scoreboard?.map(([member, score]: [string, number]) => {
-							return (
-								<li>
-									{member} : {score}
-								</li>
-							);
-						})}
+						{(scoreboard as [string, number][])?.map(
+							([member, score]: [string, number]) => {
+								return (
+									<li>
+										{member} : {score}
+									</li>
+								);
+							},
+						)}
 					</ul>
 				</div>
 			</div>

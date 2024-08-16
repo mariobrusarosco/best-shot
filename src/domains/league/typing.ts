@@ -3,3 +3,16 @@ export type ILeague = {
 	label: string;
 	description: string;
 };
+
+export type CreateLeagueInput = {
+	label: string;
+	description?: string;
+};
+
+export type CreateGuessInput = {
+	matchId: string;
+	memberId: string;
+	tournamentId: string;
+	homeScore: number;
+	awayScore: number;
+};

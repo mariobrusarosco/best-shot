@@ -1,8 +1,8 @@
 import { useQueryClient, useQuery, useMutation } from "@tanstack/react-query";
 import { useState } from "react";
-import { getLeagues } from "../../demo/fetchers";
-import { createLeague, inviteToLeague } from "../../demo/mutations";
 import { getUserToken } from "../../demo/utils";
+import { getLeagues } from "../server-side/fetchers";
+import { createLeague, inviteToLeague } from "../server-side/mutations";
 
 export const useLeagues = () => {
 	const memberId = getUserToken();

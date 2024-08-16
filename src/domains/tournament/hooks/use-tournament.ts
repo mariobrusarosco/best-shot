@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
-import { getTournament } from "../../demo/fetchers";
 import { useState } from "react";
 import { ITournament } from "../typing";
+import { getTournament } from "../server-state/fetchers";
 
 export const useTournament = (id: string | undefined) => {
 	const [activeRound, setActiveRound] = useState(1);

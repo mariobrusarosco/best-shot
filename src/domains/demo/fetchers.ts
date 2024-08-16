@@ -1,40 +1,13 @@
 import { api } from "../../api";
-import { ITournament } from "../tournament/typing";
 
-export const getTournament = async ({ queryKey }) => {
-	const [_key, { id, activeRound }] = queryKey;
-
-	const response = await api.get(`tournaments/${id}?round=${activeRound}`);
-
-	return response.data as ITournament;
-};
-
-export const getTournaments = async () => {
-	const response = await api.get("tournaments");
-
-	return response.data;
-};
-
-export const getMembers = async ({ queryKey }) => {
+export const getMembers = async ({ queryKey }: { queryKey: any }) => {
 	const [_key, { memberId }] = queryKey;
 	const response = await api.post("whoami", { memberId });
 
 	return response.data;
 };
 
-export const getLeagues = async ({ queryKey }) => {
-	const [_key, { memberId }] = queryKey;
-
-	const response = await api.get("league", {
-		params: {
-			memberId,
-		},
-	});
-
-	return response.data;
-};
-
-export const getMemberGuesses = async ({ queryKey }) => {
+export const getMemberGuesses = async ({ queryKey }: { queryKey: any }) => {
 	const [_key, { memberId, tournamentId }] = queryKey;
 
 	const response = await api.get("guess", {
@@ -43,14 +16,6 @@ export const getMemberGuesses = async ({ queryKey }) => {
 			tournamentId,
 		},
 	});
-
-	return response.data;
-};
-
-export const getLeagueScore = async ({ queryKey }) => {
-	const [_, { leagueId }] = queryKey;
-
-	const response = await api.get(`scores/league/${leagueId}`);
 
 	return response.data;
 };

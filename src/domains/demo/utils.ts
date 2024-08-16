@@ -1,4 +1,4 @@
-import { IGuess } from "../guess/components/guess";
+import { IGuess } from "../guess/typing";
 import { SCORE_TABLE } from "./constants";
 import { IGame } from "./typing";
 
@@ -19,9 +19,17 @@ const hasGuessedMatchResult = (guess: IGuess, game: IGame) => {
 		guessResult = "DRAW";
 	}
 
-	if (game?.homeScore > game?.awayScore) {
+	if (
+		game?.homeScore != null &&
+		game?.awayScore != null &&
+		game?.homeScore > game?.awayScore
+	) {
 		matchResult = "HOME_WIN";
-	} else if (game?.homeScore < game?.awayScore) {
+	} else if (
+		game?.homeScore != null &&
+		game?.awayScore != null &&
+		game?.homeScore < game?.awayScore
+	) {
 		matchResult = "AWAY_WIN";
 	} else {
 		matchResult = "DRAW";

@@ -1,8 +1,3 @@
-type GenericErrorType = {
-	statusText: string;
-	message: string;
-};
-
 const ErrorPage = () => {
 	// console.error("[BEST SHOT] - App General Error", error);
 

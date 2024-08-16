@@ -1,10 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
-import { getTournaments } from "../../demo/fetchers";
 import { ITournament } from "../typing";
+import { getTournaments } from "../server-state/fetchers";
 
 export const useTournaments = () => {
 	const tournaments = useQuery<ITournament[]>({
-		queryKey: ["tournament"],
+		queryKey: ["tournaments"],
 		queryFn: getTournaments,
 	});
 

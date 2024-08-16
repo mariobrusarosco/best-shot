@@ -6,7 +6,7 @@ export const Route = createFileRoute("/")({
 });
 
 const LoginButton = () => {
-	const { loginWithRedirect, user } = useAuth0();
+	const { loginWithRedirect } = useAuth0();
 
 	return <button onClick={() => loginWithRedirect()}>Log In</button>;
 };

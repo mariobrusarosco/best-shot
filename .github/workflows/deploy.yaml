@@ -1,29 +1,48 @@
 name: Deploy
 on:
   workflow_call:
+    secrets:
+      ENV:
+        description: "A fake secret"
+        required: true
     inputs:
-      env_name:
+      ENV_NAME:
         description: "environment name"
-        default: "production"
+        type: string
+        required: true
+      AWS_BUCKET_ID:
+        description: "Bucket ID"
         type: string
         required: true
 env:
-  AWS_BUCKET_ID: ${{secrets.AWS_BUCKET_ID}}
-  ENVIRONMENT: ${{ inputs.env_name }}
+  AWS_BUCKET_ID: "one"
+  ENV_NAME: "two"
 
 jobs:
   deploy:
-    environment: ${{ inputs.env_name }}
     runs-on: ubuntu-latest
+    environment: ${{ inputs.ENV_NAME }}
     steps:
-      - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-east-1
+      - name: Environment
+        run: echo "Environment ${{ inputs.environment }}"
+      # - uses: actions/download-artifact@v4
+      #   with:
+      #     path: build-output-folder
+      - name: Logging ENv
+        run: echo "${{ toJson(env) }}"
 
-      - name: Deploy static site
-        run: aws s3 sync ./dist s3://${AWS_BUCKET_ID}
-      - name: Build the Application
-        run: echo "env => $ENVIRONMENT"
+      - name: Logging Inputs
+        run: echo "${{ toJson(inputs) }}"
+
+      - name: Logging secrets
+        run: echo "${{ toJson(secrets) }}"
+
+      # - name: Configure AWS Credentials
+      #   uses: aws-actions/configure-aws-credentials@v1
+      #   with:
+      #     aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      #     aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      #     aws-region: us-east-1
+
+      # - name: Deploy static site
+      #   run: aws s3 sync ./build-output-folder s3://${AWS_BUCKET_ID}

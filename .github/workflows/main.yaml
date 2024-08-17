@@ -1,22 +1,17 @@
 name: Best Shot
 on:
-  pull_request:
+  push:
+    branches:
+      - main
+      - feat/deploy-setup
+
+env:
+  AWS_BUCKET_ID: ${{secrets.AWS_BUCKET_ID}}
+
 jobs:
-  test:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: Install dependencies
-        run: yarn
-      - name: Run tests
-        run: yarn test
-      - name: Upload coverage
-        uses: actions/upload-artifact@v2
-        with:
-          name: coverage
-          path: coverage
   build:
     runs-on: ubuntu-latest
+    environment: "production"
     steps:
       - uses: actions/checkout@v2
       - name: Install dependencies
@@ -25,3 +20,13 @@ jobs:
       - name: Build
         run: yarn build
         # TODO: Upload the build artifact
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+
+      - name: Deploy static site
+        run: aws s3 sync ./dist s3://${AWS_BUCKET_ID}

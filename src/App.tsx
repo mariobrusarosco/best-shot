@@ -22,6 +22,8 @@ const queryClient = new QueryClient({
 });
 
 function App() {
+	console.log("env: ", import.meta.env);
+
 	return (
 		<>
 			<QueryClientProvider client={queryClient}>

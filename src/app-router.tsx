@@ -1,7 +1,7 @@
-import { useAuth0 } from "@auth0/auth0-react";
+// import { useAuth0 } from "@auth0/auth0-react";
 import { routeTree } from "./routeTree.gen";
 import { createRouter, RouterProvider } from "@tanstack/react-router";
-import { AuthLoader } from "./domains/authentication/components/auth-loader";
+// import { AuthLoader } from "./domains/authentication/components/auth-loader";
 
 declare module "@tanstack/react-router" {
 	interface Register {
@@ -15,11 +15,11 @@ const router = createRouter({
 });
 
 const AppRouter = () => {
-	const auth = useAuth0();
+	// const auth = useAuth0();
 
-	if (auth.isLoading) return <AuthLoader />;
+	// if (auth.isLoading) return <AuthLoader />;
 
-	return <RouterProvider router={router} context={{ auth }} />;
+	return <RouterProvider router={router} context={{ auth: undefined }} />;
 };
 
 export { AppRouter };

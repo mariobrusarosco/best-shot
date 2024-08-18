@@ -22,7 +22,7 @@ jobs:
         run: echo "${{ toJson(secrets) }}"
 
       - name: Build
-        run: yarn build
+        run: yarn build --mode staging
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1

@@ -1,4 +1,10 @@
 import "./App.css";
+import "./theming/load-configuration";
+
+import { ThemeProvider } from "@mui/material/styles";
+import CssBaseline from "@mui/material/CssBaseline";
+import { ComponentsDemo } from "./domains/ui-system/components-demo";
+import { theme } from "./theming/theme";
 import {
 	QueryCache,
 	QueryClient,
@@ -28,7 +34,11 @@ function App() {
 		<>
 			<QueryClientProvider client={queryClient}>
 				<ReactQueryDevtools initialIsOpen={false} />
-				<AppRouter />
+				<ThemeProvider theme={theme}>
+					<CssBaseline />
+					<ComponentsDemo />
+					<AppRouter />
+				</ThemeProvider>
 			</QueryClientProvider>
 		</>
 	);

@@ -1,27 +1,61 @@
 name: Best Shot
 on:
-  pull_request:
+  push:
+    branches:
+      - main
+      - feat/deploy-setup
+
+env:
+  AWS_BUCKET_ID: ${{secrets.AWS_BUCKET_ID}}
+
 jobs:
-  test:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: Install dependencies
-        run: yarn
-      - name: Run tests
-        run: yarn test
-      - name: Upload coverage
-        uses: actions/upload-artifact@v2
-        with:
-          name: coverage
-          path: coverage
-  build:
+  build-and-deploy-staging:
+    environment: staging
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - name: Install dependencies
         # TODO: Cache the dependencies
         run: yarn
+
+      - name: "Loggin secrets"
+        run: echo "${{ toJson(secrets) }}"
+
+      - name: Build
+        run: yarn build --mode staging
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+
+      - name: Deploy static site
+        run: aws s3 sync ./dist s3://${AWS_BUCKET_ID}
+
+  deploy-production:
+    environment: production
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install dependencies
+        # TODO: Cache the dependencies
+        run: yarn
+
+      - name: "Logging secrets"
+        run: echo "${{ toJson(secrets) }}"
+
       - name: Build
         run: yarn build
-        # TODO: Upload the build artifact
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+
+      - name: Deploy static site
+        run: aws s3 sync ./dist s3://${AWS_BUCKET_ID}

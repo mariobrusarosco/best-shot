@@ -28,7 +28,7 @@ export const ComponentsDemo = () => {
 
 	return (
 		<div>
-			<h1>MUI Capabilities</h1>
+			<h1>MUI Capabilities !!!!</h1>
 			<section>
 				<h2>Fonts</h2>
 

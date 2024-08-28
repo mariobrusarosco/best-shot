@@ -7,6 +7,7 @@ on:
 
 env:
   AWS_BUCKET_ID: ${{secrets.AWS_BUCKET_ID}}
+  AWS_CLOUDFRONT_ID: ${{secrets.AWS_CLOUDFRONT_ID}}
 
 jobs:
   build-and-deploy-staging:
@@ -34,6 +35,8 @@ jobs:
       - name: Deploy static site
         run: aws s3 sync ./dist s3://${AWS_BUCKET_ID}
 
+      - name: Invalidate Cloudfront
+        run: aws cloudfront create-invalidation --distribution-id ${AWS_CLOUDFRONT_ID}  --paths "/*"
   deploy-production:
     environment: production
     runs-on: ubuntu-latest
@@ -44,11 +47,8 @@ jobs:
         # TODO: Cache the dependencies
         run: yarn
 
-      - name: "Logging secrets"
-        run: echo "${{ toJson(secrets) }}"
-
       - name: Build
-        run: yarn build
+        run: yarn build --mode production
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -59,3 +59,6 @@ jobs:
 
       - name: Deploy static site
         run: aws s3 sync ./dist s3://${AWS_BUCKET_ID}
+
+      - name: Invalidate Cloudfront
+        run: aws cloudfront create-invalidation --distribution-id ${AWS_CLOUDFRONT_ID} --paths "/*"

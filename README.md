@@ -1,4 +1,4 @@
-# One Word
+# Best Shot
 
 A side project _Football App_ where I intend to:
 

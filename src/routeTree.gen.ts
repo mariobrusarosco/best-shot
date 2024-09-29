@@ -19,6 +19,7 @@ import { Route as AuthDashboardImport } from './routes/_auth.dashboard'
 
 // Create Virtual Routes
 
+const UiSystemLazyImport = createFileRoute('/ui-system')()
 const AuthTournamentsIndexLazyImport = createFileRoute('/_auth/tournaments/')()
 const AuthLeaguesIndexLazyImport = createFileRoute('/_auth/leagues/')()
 const AuthLeaguesLeagueIdLazyImport = createFileRoute(
@@ -38,6 +39,11 @@ const AuthTournamentsTournamentIdMatchesMatchIdLazyImport = createFileRoute(
 )()
 
 // Create/Update Routes
+
+const UiSystemLazyRoute = UiSystemLazyImport.update({
+  path: '/ui-system',
+  getParentRoute: () => rootRoute,
+} as any).lazy(() => import('./routes/ui-system.lazy').then((d) => d.Route))
 
 const AuthRoute = AuthImport.update({
   id: '/_auth',
@@ -133,6 +139,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthImport
       parentRoute: typeof rootRoute
     }
+    '/ui-system': {
+      id: '/ui-system'
+      path: '/ui-system'
+      fullPath: '/ui-system'
+      preLoaderRoute: typeof UiSystemLazyImport
+      parentRoute: typeof rootRoute
+    }
     '/_auth/dashboard': {
       id: '/_auth/dashboard'
       path: '/dashboard'
@@ -206,6 +219,7 @@ export const routeTree = rootRoute.addChildren({
     AuthTournamentsTournamentIdMatchesMatchIdLazyRoute,
     AuthTournamentsTournamentIdMatchesIndexLazyRoute,
   }),
+  UiSystemLazyRoute,
 })
 
 /* prettier-ignore-end */
@@ -217,7 +231,8 @@ export const routeTree = rootRoute.addChildren({
       "filePath": "__root.tsx",
       "children": [
         "/",
-        "/_auth"
+        "/_auth",
+        "/ui-system"
       ]
     },
     "/": {
@@ -235,6 +250,9 @@ export const routeTree = rootRoute.addChildren({
         "/_auth/tournaments/$tournamentId/matches/$matchId",
         "/_auth/tournaments/$tournamentId/matches/"
       ]
+    },
+    "/ui-system": {
+      "filePath": "ui-system.lazy.tsx"
     },
     "/_auth/dashboard": {
       "filePath": "_auth.dashboard.tsx",

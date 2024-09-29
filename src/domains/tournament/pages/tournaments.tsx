@@ -1,8 +1,8 @@
-import { TournamentsList } from "../components/tournaments-list";
-import { useTournaments } from "../hooks/use-tournaments";
+import { useTournaments } from "../../domains/tournament/hooks/use-tournaments";
+import { TournamentsList } from "../../domains/tournament/components/tournaments-list";
 
-const TournamentsPage = () => {
-	const { data, error } = useTournaments();
+export const TournamentsPage = () => {
+	const { data, isPending, error } = useTournaments();
 
 	if (error) {
 		return (
@@ -15,8 +15,14 @@ const TournamentsPage = () => {
 	return (
 		<div className="tournaments-screen screen">
 			<div className="heading">
-				<h3>Leagues</h3>
+				<h3>Tournaments</h3>
 			</div>
+
+			{isPending ? (
+				<div>
+					<p>... LOADING TOURNAMENTS ...</p>
+				</div>
+			) : null}
 
 			{data ? (
 				<div>
@@ -26,5 +32,3 @@ const TournamentsPage = () => {
 		</div>
 	);
 };
-
-export { TournamentsPage };

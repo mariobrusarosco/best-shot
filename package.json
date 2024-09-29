@@ -12,14 +12,14 @@
 		"test:production": "echo testing in production"
 	},
 	"dependencies": {
-		"@emotion/react": "^11.11.4",
-		"@emotion/styled": "^11.11.5",
+		"@auth0/auth0-react": "^2.2.4",
+		"@emotion/react": "^11.13.3",
+		"@emotion/styled": "^11.13.0",
 		"@fontsource-variable/montserrat": "^5.0.19",
 		"@fontsource/libre-baskerville": "^5.0.13",
-		"@mui/icons-material": "^5.15.16",
-		"@mui/material": "^5.15.15",
+		"@mui/icons-material": "^6.1.1",
+		"@mui/material": "^6.1.1",
 		"@mui/system": "^5.15.15",
-		"@auth0/auth0-react": "^2.2.4",
 		"@tanstack/react-query": "^5.51.9",
 		"@tanstack/react-query-devtools": "^5.51.9",
 		"@tanstack/react-router": "^1.47.1",
@@ -47,6 +47,7 @@
 		"vitest": "^1.5.3"
 	},
 	"peerDependencies": {
-		"react": "^17.0.0 || ^18.0.0"
+		"react": "^17.0.0 || ^18.0.0",
+		"react-dom": "^17.0.0 || ^18.0.0"
 	}
 }

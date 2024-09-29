@@ -1,5 +1,5 @@
 import { Box, Container, Paper, Typography } from "@mui/material";
-import Grid from "@mui/material/Grid";
+import Grid from "@mui/material/Grid2";
 import { useMediaQuery, useTheme } from "@mui/system";
 import { styled } from "@mui/material/styles";
 
@@ -53,16 +53,16 @@ export const ComponentsDemo = () => {
 
 				<p>Basic Example</p>
 				<Grid container spacing={2}>
-					<Grid item mobile={4} tablet={6} desktop={12}>
+					<Grid size={{ mobile: 4, tablet: 6, desktop: 12 }}>
 						<Item>hello</Item>
 					</Grid>
-					<Grid item mobile={4} tablet={6} desktop={12}>
-						<Item>hello!</Item>
-					</Grid>
-					<Grid item mobile={4} tablet={6} desktop={12}>
+					<Grid size={{ mobile: 4, tablet: 6, desktop: 12 }}>
 						<Item>hello</Item>
 					</Grid>
-					<Grid item mobile={4} tablet={6} desktop={12}>
+					<Grid size={{ mobile: 4, tablet: 6, desktop: 12 }}>
+						<Item>hello</Item>
+					</Grid>
+					<Grid size={{ mobile: 4, tablet: 6, desktop: 12 }}>
 						<Item>hello</Item>
 					</Grid>
 				</Grid>
@@ -74,8 +74,8 @@ export const ComponentsDemo = () => {
 					columns={{ mobile: 1, tablet: 8, desktop: 12 }}
 				>
 					{Array.from(Array(6)).map((_, index) => (
-						<Grid item mobile={4} tablet={6} desktop={6} key={index}>
-							<Item>hello!</Item>
+						<Grid size={{ mobile: 4, tablet: 6, desktop: 12 }} key={index}>
+							<Item>hello</Item>
 						</Grid>
 					))}
 				</Grid>

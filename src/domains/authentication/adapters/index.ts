@@ -10,7 +10,7 @@ type IAuthAdapter = Record<
 	APP_MODES,
 	{
 		Provider: ({ children }: { children: React.ReactNode }) => JSX.Element;
-		hook: () => {};
+		hook: () => any;
 	}
 >;
 

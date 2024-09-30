@@ -10,15 +10,7 @@ import CssBaseline from "@mui/material/CssBaseline";
 import { theme } from "./theming/theme";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { AppRouter } from "./app-router";
-import { AuthenticationAdapter } from "./domains/authentication/utils";
-
-const mode = import.meta.env.MODE as
-	| "demo"
-	| "localhost"
-	| "staging"
-	| "production";
-
-const AuthProvider = AuthenticationAdapter[mode].Provider;
+import { AuthProvider } from "@/domains/authentication/context";
 
 const queryClient = new QueryClient({
 	defaultOptions: {

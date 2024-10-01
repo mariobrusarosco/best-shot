@@ -15,6 +15,7 @@ const router = createRouter({
 
 const AppRouter = () => {
 	const { auth } = useAppAuth();
+	console.log({ auth });
 
 	return <RouterProvider router={router} context={{ auth }} />;
 };

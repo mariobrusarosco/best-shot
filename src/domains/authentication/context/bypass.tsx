@@ -7,7 +7,9 @@ export const ByPassAuthProvider = ({
 }: {
 	children: React.ReactNode;
 }) => {
-	const value = {};
+	const value = {
+		isAuthenticated: true,
+	};
 
 	return (
 		<ByPassAuthContext.Provider value={value}>

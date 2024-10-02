@@ -15,6 +15,7 @@ import { createFileRoute } from '@tanstack/react-router'
 import { Route as rootRoute } from './routes/__root'
 import { Route as AuthImport } from './routes/_auth'
 import { Route as IndexRouteImport } from './routes/index.route'
+import { Route as AuthMyAccountImport } from './routes/_auth.my-account'
 import { Route as AuthDashboardImport } from './routes/_auth.dashboard'
 
 // Create Virtual Routes
@@ -47,6 +48,11 @@ const AuthRoute = AuthImport.update({
 const IndexRouteRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRoute,
+} as any)
+
+const AuthMyAccountRoute = AuthMyAccountImport.update({
+  path: '/my-account',
+  getParentRoute: () => AuthRoute,
 } as any)
 
 const AuthDashboardRoute = AuthDashboardImport.update({
@@ -140,6 +146,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthDashboardImport
       parentRoute: typeof AuthImport
     }
+    '/_auth/my-account': {
+      id: '/_auth/my-account'
+      path: '/my-account'
+      fullPath: '/my-account'
+      preLoaderRoute: typeof AuthMyAccountImport
+      parentRoute: typeof AuthImport
+    }
     '/_auth/leagues/$leagueId': {
       id: '/_auth/leagues/$leagueId'
       path: '/leagues/$leagueId'
@@ -198,6 +211,7 @@ export const routeTree = rootRoute.addChildren({
   IndexRouteRoute,
   AuthRoute: AuthRoute.addChildren({
     AuthDashboardRoute,
+    AuthMyAccountRoute,
     AuthLeaguesLeagueIdLazyRoute,
     AuthLeaguesIndexLazyRoute,
     AuthTournamentsIndexLazyRoute,
@@ -227,6 +241,7 @@ export const routeTree = rootRoute.addChildren({
       "filePath": "_auth.tsx",
       "children": [
         "/_auth/dashboard",
+        "/_auth/my-account",
         "/_auth/leagues/$leagueId",
         "/_auth/leagues/",
         "/_auth/tournaments/",
@@ -238,6 +253,10 @@ export const routeTree = rootRoute.addChildren({
     },
     "/_auth/dashboard": {
       "filePath": "_auth.dashboard.tsx",
+      "parent": "/_auth"
+    },
+    "/_auth/my-account": {
+      "filePath": "_auth.my-account.tsx",
       "parent": "/_auth"
     },
     "/_auth/leagues/$leagueId": {

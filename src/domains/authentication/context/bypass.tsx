@@ -9,14 +9,12 @@ export const ByPassAuthProvider = ({
 }: {
 	children: React.ReactNode;
 }) => {
-	const [isAuthenticated, setIsAuthenticated] = useState(false);
 	const value = {
-		isAuthenticated,
+		isAuthenticated: true,
 	};
 
 	const { mutate } = useMutation({
 		mutationFn: authenticatedLocalMember,
-		onSuccess: () => setIsAuthenticated(true),
 	});
 
 	useEffect(() => {

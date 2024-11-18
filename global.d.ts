@@ -1,13 +1,5 @@
 import { GridProps as MuiGridProps } from "@mui/material/Grid";
 
-// declare module "@mui/material/Grid" {
-// interface ComponentOverrides {
-// 	MuiGrid: {
-// 		defaultProps: MuiGridProps;
-// 	};
-// }
-// }
-
 declare module "@mui/material/styles" {
 	interface BreakpointOverrides {
 		xs: false;
@@ -20,4 +12,22 @@ declare module "@mui/material/styles" {
 		laptop: true;
 		desktop: true;
 	}
+
+	interface Palette extends CustomPalette {}
+	interface PaletteOptions extends CustomPalette 
 }
+
+interface CustomPalette {
+	teal: {
+		500: string;
+	};
+	black: {
+		700: string;
+		800: string;
+	};
+	neutral: {
+		0: string;
+		100: string;
+	};
+}
+

@@ -15,7 +15,7 @@ const TournamentsList = ({ tournaments }: Props) => {
 					return (
 						<li key={tournament.id} className="list-item">
 							<Link
-								to="/tournaments/$tournamentId/matches"
+								to="/tournaments/$tournamentId"
 								params={{ tournamentId: tournament.id }}
 							>
 								{tournament.label}

@@ -1,6 +1,6 @@
 import { api } from "@/api";
 import { useMutation } from "@tanstack/react-query";
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect } from "react";
 
 const ByPassAuthContext = createContext({});
 

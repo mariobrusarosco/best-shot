@@ -13,4 +13,5 @@ export type ITournament = {
 	description: ApiTournament["description"];
 	label: ApiTournament["label"];
 	matches: IMatch[];
+	logo: string;
 };

@@ -7,11 +7,32 @@ This project will use Material-UI as the main styling library.
 [Rationale]
 // TODO
 
-## Feature
+## Creating a Component
+
+1. Creating a `themed` Component
+
+```tsx
+const StatRoot = styled("div" | Box)(({ theme }) => ({
+	flexDirection: "column",
+	fontWeight: 600,
+	gap: theme.spacing(0.5),
+	padding: theme.spacing(3, 4),
+	backgroundColor: theme.palette.background.paper,
+	boxShadow: theme.shadows[2],
+
+	// Responsiveness
+	[theme.breakpoints.up("mobile")]: {
+		position: "absolute",
+		bottom: 0,
+	},
+}));
+```
+
+## Creating a Screen
 
 ### Icons
 
-We'll use Material-UI's icons library.
+We'll use `@tabler/icons-react`
 
 ### Utilities
 
@@ -21,16 +42,7 @@ We'll use Material-UI's utilities library.
 
 ### How to work with Media Queries in this Project?
 
-### How to set styles that are applied to all components/pages?
-
----
-
-### Reset / Normalization
-
-This project uses MUI normalization, through `CssBaseline` component.
-More details: (here)[https://mui.com/material-ui/react-css-baseline/]
-
-### Targeting Screens by theirs sizes / Using Breakpoints
+#### Targeting Screens by theirs sizes / Using Breakpoints
 
 We can use breakpoints in three ways:
 
@@ -74,6 +86,10 @@ const StatRoot = styled("div", {
 	boxShadow: theme.shadows[2],
 	letterSpacing: "-0.025em",
 	fontWeight: 600,
+	[theme.breakpoints.up("mobile")]: {
+		position: "absolute",
+		bottom: 0,
+	},
 }));
 ```
 
@@ -106,7 +122,7 @@ const StatRoot = styled("div", {
 	</Container>
 ```
 
-#### Recommended way
+##### Recommended way
 
 ```jsx
 import { useMediaQuery } from "@mui/material";
@@ -124,6 +140,15 @@ const App = () => {
 };
 ```
 
+### How to set styles that are applied to all components/pages?
+
+---
+
+### Reset / Normalization
+
+This project uses MUI normalization, through `CssBaseline` component.
+More details: (here)[https://mui.com/material-ui/react-css-baseline/]
+
 ### Texts, Fonts and, Typography
 
 #### Accessing typography aspects when creating `Custom UI`s
@@ -131,7 +156,7 @@ const App = () => {
 ```tsx
 import { styled } from "@mui/material/styles";
 
-// theme
+// How to set Typography properties on App's theme
 {
 	...,
 	typography: {
@@ -142,6 +167,8 @@ import { styled } from "@mui/material/styles";
 	}
 	...
 }
+
+// How to access Typography properties
 const Div = styled("div")(({ theme }) => ({
 	...theme.typography.button,
 	backgroundColor: theme.palette.background.paper,

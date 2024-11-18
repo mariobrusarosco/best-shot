@@ -1,4 +1,3 @@
-import "./App.css";
 import "./theming/load-configuration";
 import {
 	QueryCache,

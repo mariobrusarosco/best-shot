@@ -1,7 +1,6 @@
 import { createTheme } from "@mui/material/styles";
 
 // TOKENS
-
 const BREAKPOINTS = {
 	values: {
 		mobile: 0,
@@ -16,6 +15,7 @@ export const COLORS = {
 		500: "#6A9B96",
 	},
 	black: {
+		400: "#A3ABA8",
 		700: "#131514",
 		800: "#242424",
 	},
@@ -43,12 +43,16 @@ export const PADDING = {
 
 const theme = createTheme({
 	typography: {
-		fontFamily: ["Libre Baskerville", "Montserrat Variable", "sans-serif"].join(
-			",",
-		),
+		fontFamily: ["Poppins", "Montserrat", "sans-serif"].join(","),
+		...TYPOGRAPHY.variants,
 	},
 	palette: COLORS,
 	components: {
+		MuiTypography: {
+			defaultProps: {
+				// variantMapping: TYPOGRAPHY.variantMapping,
+			},
+		},
 		MuiUseMediaQuery: {
 			defaultProps: {
 				noSsr: true,

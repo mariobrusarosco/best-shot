@@ -67,4 +67,13 @@ theme.typography.h4 = {
 	fontFamily: "Montserrat Variable",
 };
 
+export const UIHelper = (() => {
+	return {
+		media: {
+			mobile: theme.breakpoints.up("mobile"),
+			desktop: theme.breakpoints.up("desktop"),
+		},
+	};
+})();
+
 export { theme };

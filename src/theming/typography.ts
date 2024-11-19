@@ -1,4 +1,4 @@
-const TYPOGRAPHY = {
+export const TYPOGRAPHY = {
 	variantMapping: {
 		topic: "p",
 	},

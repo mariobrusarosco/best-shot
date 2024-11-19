@@ -14,8 +14,10 @@ const AppContainer = () => {
 			}}
 		>
 			<Menu />
-			<Outlet />
-			<TanStackRouterDevtools />
+			<Box data-ui="main-area" component="main" sx={{ flex: 1 }}>
+				<Outlet />
+			</Box>
+			<TanStackRouterDevtools position="top-left" initialIsOpen={false} />
 		</Box>
 	);
 };

@@ -1,4 +1,5 @@
 import { createTheme } from "@mui/material/styles";
+import { TYPOGRAPHY } from "./typography";
 
 // TOKENS
 const BREAKPOINTS = {

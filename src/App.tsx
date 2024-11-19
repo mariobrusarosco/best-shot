@@ -10,6 +10,7 @@ import { theme } from "./theming/theme";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { AppRouter } from "./app-router";
 import { AuthProvider } from "@/domains/authentication/context";
+import { GlobalCSS } from "./theming/global-styles";
 
 const queryClient = new QueryClient({
 	defaultOptions: {
@@ -29,9 +30,10 @@ function App() {
 	return (
 		<QueryClientProvider client={queryClient}>
 			<AuthProvider>
-				<ReactQueryDevtools initialIsOpen={false} />
+				<ReactQueryDevtools initialIsOpen={false} buttonPosition="top-right" />
 				<ThemeProvider theme={theme}>
 					<CssBaseline />
+					<GlobalCSS />
 					<AppRouter />
 				</ThemeProvider>
 			</AuthProvider>

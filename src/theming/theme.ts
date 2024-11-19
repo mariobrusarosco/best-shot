@@ -50,7 +50,7 @@ const theme = createTheme({
 	components: {
 		MuiTypography: {
 			defaultProps: {
-				// variantMapping: TYPOGRAPHY.variantMapping,
+				variantMapping: TYPOGRAPHY.variantMapping,
 			},
 		},
 		MuiUseMediaQuery: {

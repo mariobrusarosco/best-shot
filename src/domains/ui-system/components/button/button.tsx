@@ -9,9 +9,6 @@ const resetButton = () => css`
 	margin: 0;
 `;
 
-export const Button = styled(ButtonBase, {
-	name: "Button",
-	slot: "Root",
-})`
+export const Button = styled(ButtonBase)`
 	${resetButton};
 `;

@@ -28,21 +28,103 @@ const StatRoot = styled("div" | Box)(({ theme }) => ({
 }));
 ```
 
+2. Using the `sx` prop
+
+A) using `theme` from `useTheme()`
+
+```tsx
+import { useTheme } from "@mui/material";
+
+const HeaderButton = ({ iconName }: { iconName: keyof typeof ICONS }) => {
+	const theme = useTheme();
+
+	console.log({ theme });
+
+	return (
+		<Button
+			sx={{
+				backgroundColor: theme.palette.teal[500],
+				color: theme.palette.neutral[100],
+				padding: theme.spacing(1),
+			}}
+		>
+			<AppIcon name={iconName} size="small" stroke={2} width={20} height={20} />
+		</Button>
+	);
+};
+```
+
+B) Via `styled` function
+
+```tsx
+const Button = styled(BaseButton)(
+  ({ theme }) => `
+  font-family: 'IBM Plex Sans', sans-serif;
+	color: ${theme.palette.mode === 'dark' ? 'red' : 'blue'};
+	....
+`
+// Usage
+<Button ... />
+
+```
+
+C) using special strings.
+
+<Callout>
+This only works with `MUI props`. A MUI Component or a Custom Component that EXPOSES `MUI props`. If that's the case we can "create" our Component by proving specific `props`. These `props` have inner access the App's Theme.  
+</Callout>
+
+```tsx
+// Given this Theme Config...
+...
+palette: {
+	black: {
+		400: "#A3ABA8",
+		700: "#131514",
+		800: "#242424",
+	}
+}
+...
+
+// Usage
+	<Typography color="black.400" variant="body1">
+		Dashboard
+	</Typography>
+```
+
 ## Creating a Screen
 
-### Icons
+# Icons
 
-We'll use `@tabler/icons-react`
+We have an `Icon Component` (it uses `@tabler/icons-react`)
 
-### Utilities
+```tsx
+<AppIcon name={iconName} size="small" stroke={2} width={20} height={20} />
+```
+
+- Available values for `size` and `name` props will be prompted by 'autocomplete'
+- It's up to us to add more customization to an `Icon`. It accepts the same SVG properties a `<svg>` does. (including a 'style' prop)
+
+```tsx
+<AppIcon
+	color="red"
+	name={iconName}
+	size="small"
+	stroke={2}
+	width={20}
+	height={20}
+/>
+```
+
+# Utilities
 
 We'll use Material-UI's utilities library.
 
-## Guides
+# Guides
 
-### How to work with Media Queries in this Project?
+## How to work with Media Queries in this Project?
 
-#### Targeting Screens by theirs sizes / Using Breakpoints
+### Targeting Screens by theirs sizes / Using Breakpoints
 
 We can use breakpoints in three ways:
 
@@ -144,14 +226,14 @@ const App = () => {
 
 ---
 
-### Reset / Normalization
+# Reset / Normalization
 
 This project uses MUI normalization, through `CssBaseline` component.
 More details: (here)[https://mui.com/material-ui/react-css-baseline/]
 
-### Texts, Fonts and, Typography
+# Texts, Fonts and, Typography
 
-#### Accessing typography aspects when creating `Custom UI`s
+## Accessing typography aspects when creating `Custom UI`s
 
 ```tsx
 import { styled } from "@mui/material/styles";

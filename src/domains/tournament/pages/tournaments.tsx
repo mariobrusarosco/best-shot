@@ -1,3 +1,4 @@
+import { ScreenLayout } from "@/domains/ui-system/layout/screen-layout";
 import { TournamentsList } from "../components/tournaments-list";
 import { useTournaments } from "../hooks/use-tournaments";
 
@@ -13,7 +14,7 @@ const TournamentsPage = () => {
 	}
 
 	return (
-		<div className="tournaments-screen screen">
+		<ScreenLayout data-ui="tournaments-screen screen">
 			<div className="heading">
 				<h3>Leagues</h3>
 			</div>
@@ -23,7 +24,7 @@ const TournamentsPage = () => {
 					<TournamentsList tournaments={data} />
 				</div>
 			) : null}
-		</div>
+		</ScreenLayout>
 	);
 };
 

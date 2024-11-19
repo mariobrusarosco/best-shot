@@ -1,13 +1,12 @@
-import { createLazyFileRoute, getRouteApi } from "@tanstack/react-router";
-import { useGuess } from "../../../../domains/guess/hooks/use-guess";
-import { useTournament } from "../../../../domains/tournament/hooks/use-tournament";
-import { Match } from "../../../../domains/match/components/match";
-import { Guess } from "../../../../domains/guess/components/guess";
+import { useGuess } from "../../guess/hooks/use-guess";
+import { useTournament } from "../hooks/use-tournament";
+import { Match } from "../../match/components/match";
+import { Guess } from "../../guess/components/guess";
 
-const route = getRouteApi("/_auth/tournaments/$tournamentId/matches/");
+// const route = getRouteApi("/_auth/tournaments/$tournamentId/matches/");
 
-const TournamentMatches = () => {
-	const tournamentId = route.useParams().tournamentId;
+export const TournamentMatches = () => {
+	const tournamentId = "asdsa";
 	const tournament = useTournament(tournamentId);
 	const guesses = useGuess(tournament.serverState.data);
 
@@ -66,9 +65,3 @@ const TournamentMatches = () => {
 		</div>
 	);
 };
-
-export const Route = createLazyFileRoute(
-	"/_auth/tournaments/$tournamentId/matches/",
-)({
-	component: TournamentMatches,
-});

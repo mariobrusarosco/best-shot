@@ -1,14 +1,24 @@
 import { Outlet } from "@tanstack/react-router";
-import { Header } from "./header";
+import { Menu } from "./menu";
 import { TanStackRouterDevtools } from "@tanstack/router-devtools";
+import { Box } from "@mui/system";
 
 const AppContainer = () => {
 	return (
-		<div className="app-container">
-			<Header />
-			<Outlet />
-			<TanStackRouterDevtools />
-		</div>
+		<Box
+			data-ui="app-container"
+			sx={{
+				display: "flex",
+				bgcolor: "black.700",
+				minHeight: "100dvh",
+			}}
+		>
+			<Menu />
+			<Box data-ui="main-area" component="main" sx={{ flex: 1 }}>
+				<Outlet />
+			</Box>
+			<TanStackRouterDevtools position="top-left" initialIsOpen={false} />
+		</Box>
 	);
 };
 

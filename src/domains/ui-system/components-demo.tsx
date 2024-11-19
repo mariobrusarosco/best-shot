@@ -33,8 +33,8 @@ export const ComponentsDemo = () => {
 				<h2>Fonts</h2>
 
 				<h3>Using Fonts from a Design System</h3>
-				<Typography variant="h4">Lorem Ipsum</Typography>
-				<Typography variant="h5">Lorem Ipsum</Typography>
+				<Typography variant="topic">Lorem Ipsum</Typography>
+				<Typography variant="topic">Lorem Ipsum</Typography>
 
 				<h3>Using Fonts from Custom UIs</h3>
 				<PrimaryFont>Primary font</PrimaryFont>

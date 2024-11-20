@@ -11,12 +11,7 @@ const LeaguesPage = () => {
 
 	return (
 		<div className="leagues-screen screen">
-			<ScreenHeading
-				title="leagues"
-				sx={{
-					backgroundColor: "teal.500",
-				}}
-			/>
+			<ScreenHeading title="leagues" />
 
 			<div className="league-creation">
 				<button onClick={() => setInCreationMode(!inCreationMode)}>

@@ -12,7 +12,11 @@ export const TYPOGRAPHY = {
 			fontWeight: 500,
 			fontFamily: "Poppins",
 		},
-		h2: undefined,
+		h2: {
+			fontSize: 48,
+			fontWeight: 500,
+			fontFamily: "Poppins",
+		},
 		h3: {
 			fontSize: 36,
 			fontFamily: "Montserrat",
@@ -21,6 +25,14 @@ export const TYPOGRAPHY = {
 		h5: undefined,
 		h6: {
 			fontSize: 24,
+			fontFamily: "Montserrat",
+		},
+		label: {
+			fontSize: 12,
+			fontFamily: "Poppins",
+		},
+		tag: {
+			fontSize: 10,
 			fontFamily: "Montserrat",
 		},
 		subtitle1: undefined,

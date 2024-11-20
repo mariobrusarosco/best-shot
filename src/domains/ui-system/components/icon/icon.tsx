@@ -1,8 +1,8 @@
+import { IconProps } from "@tabler/icons-react";
 import { forwardRef } from "react";
 import { ICONS } from "./mapper";
-import { IconProps } from "@tabler/icons-react";
 
-type sizes = "small" | "medium" | "large";
+type sizes = "tiny" | "extra-small" | "small" | "medium" | "large";
 
 interface Props extends IconProps {
 	name: keyof typeof ICONS;
@@ -10,9 +10,11 @@ interface Props extends IconProps {
 }
 
 const sizeMapping = {
-	small: 16,
-	medium: 24,
-	large: 32,
+	tiny: 14,
+	["extra-small"]: 16,
+	small: 24,
+	medium: 32,
+	large: 48,
 };
 
 const AppIcon = forwardRef<SVGSVGElement, Props>((props) => {

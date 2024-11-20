@@ -1,5 +1,3 @@
-import { GridProps as MuiGridProps } from "@mui/material/Grid";
-
 // TODO Move Breakpoint-related code to a .d.ts
 declare module "@mui/material/styles" {
 	interface BreakpointOverrides {
@@ -34,9 +32,8 @@ declare module "@mui/material/styles" {
 declare module "@mui/material/Typography" {
 	interface TypographyPropsVariantOverrides {
 		topic: true;
-		h1: true;
-		h3: true;
-		h2: false;
+		tag: true;
+		label: true;
 		h4: false;
 		h5: false;
 		subtitle1: false;
@@ -71,5 +68,5 @@ export type CustomTypographyVariant =
 	| "h5"
 	| "h6"
 	| "caption"
-	| "button"
-	| "overline";
+	| "label"
+	| "tag";

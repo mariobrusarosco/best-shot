@@ -4,6 +4,7 @@ import { TYPOGRAPHY } from "./typography";
 // TOKENS
 const BREAKPOINTS = {
 	values: {
+		all: 0,
 		mobile: 768,
 		tablet: 769,
 		laptop: 1024,
@@ -62,11 +63,6 @@ const theme = createTheme({
 	},
 	breakpoints: BREAKPOINTS,
 });
-
-theme.typography.h4 = {
-	...theme.typography.h4,
-	fontFamily: "Montserrat Variable",
-};
 
 export const UIHelper = (() => {
 	return {

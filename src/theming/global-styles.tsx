@@ -7,8 +7,15 @@ export const GlobalCSS = () => (
 				width: "100%",
 				height: "100vh",
 			},
+			menu: {
+				margin: 0,
+			},
 			li: {
 				listStyleType: "none",
+			},
+			ul: {
+				padding: 0,
+				margin: 0,
 			},
 		}}
 	/>

@@ -1,9 +1,9 @@
+import {
+	Surface,
+	SurfaceProps,
+} from "@/domains/ui-system/components/surface/surface";
 import { UIHelper } from "@/theming/theme";
 import { Box, Typography, useMediaQuery } from "@mui/material";
-import { styled } from "@mui/material/styles";
-import { ComponentProps, forwardRef } from "react";
-
-type SurfaceProps = ComponentProps<typeof Surface>;
 
 interface Props extends SurfaceProps {
 	children?: React.ReactNode;
@@ -12,45 +12,35 @@ interface Props extends SurfaceProps {
 	tagText?: string;
 }
 
-const { startsOn, whileIs } = UIHelper.media;
+const { startsOn } = UIHelper.media;
 
-export const ScreenHeading = forwardRef<HTMLDivElement, Props>((props) => {
-	const { children, title, subtitle, ...rest } = props;
+export const ScreenHeading = (props: Props) => {
+	const { children, title, subtitle } = props;
 	const isDesktopScreen = useMediaQuery(startsOn("desktop"));
 
-	const titleVariant = isDesktopScreen ? "h1" : "h3";
+	const titleVariant = isDesktopScreen ? "h1" : "h2";
 
 	return (
-		<Surface {...rest}>
+		<Surface
+			sx={{
+				pt: 10,
+				pb: 6,
+				px: [3, 6],
+				bgcolor: "black.800",
+				borderBottomLeftRadius: "24px",
+				borderBottomRightRadius: "24px",
+			}}
+		>
 			<Box>
 				<Typography variant={titleVariant}>{title}</Typography>
-				{subtitle ? <Typography variant="h6">{title}</Typography> : null}
+				{subtitle ? (
+					<Typography variant="label" color="teal.500">
+						{subtitle}
+					</Typography>
+				) : null}
 			</Box>
 
 			{children ? <Box>{children}</Box> : null}
 		</Surface>
 	);
-});
-
-ScreenHeading.displayName = "ScreenHeading";
-
-const Surface = styled("div")(({ theme }) => {
-	return {
-		display: "flex",
-		borderRadius: 24,
-		borderTopLeftRadius: 0,
-		borderTopRightRadius: 0,
-		color: theme.palette.neutral[100],
-
-		[whileIs("mobile")]: {
-			flexDirection: "column",
-			padding: theme.spacing(11, 2, 6, 2),
-		},
-
-		[startsOn("tablet")]: {
-			position: "relative",
-			gap: theme.spacing(6),
-			padding: theme.spacing(10, 5),
-		},
-	};
-});
+};

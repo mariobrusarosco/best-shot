@@ -8,7 +8,6 @@ import {
 import Typography from "@mui/material/Typography";
 import Box from "@mui/system/Box";
 import { Link } from "@tanstack/react-router";
-import { forwardRef } from "react";
 import { ITournament } from "../typing";
 import { TournamentLogo } from "./tournament-logo";
 
@@ -18,13 +17,12 @@ interface Props extends SurfaceProps {
 	logo?: ITournament["logo"];
 }
 
-export const TournamentCard = forwardRef<HTMLDivElement, Props>((props) => {
-	const { id, label, logo, ...rest } = props;
+export const TournamentCard = (props: Props) => {
+	const { id, label } = props;
 
 	return (
 		<Link to="/tournaments/$tournamentId" params={{ tournamentId: id }} as="li">
 			<Surface
-				{...rest}
 				sx={{
 					display: "flex",
 					backgroundColor: "black.800",
@@ -40,7 +38,7 @@ export const TournamentCard = forwardRef<HTMLDivElement, Props>((props) => {
 					}}
 				>
 					<TournamentLogo src={fakeLogo} />
-					{logo}
+
 					<Typography
 						variant="label"
 						color="neutral.100"
@@ -66,6 +64,4 @@ export const TournamentCard = forwardRef<HTMLDivElement, Props>((props) => {
 			</Surface>
 		</Link>
 	);
-});
-
-TournamentCard.displayName = "TournamentCard";
+};

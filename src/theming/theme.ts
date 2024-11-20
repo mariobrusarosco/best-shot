@@ -4,8 +4,8 @@ import { TYPOGRAPHY } from "./typography";
 // TOKENS
 const BREAKPOINTS = {
 	values: {
-		mobile: 0,
-		tablet: 768,
+		mobile: 768,
+		tablet: 769,
 		laptop: 1024,
 		desktop: 1440,
 	},
@@ -18,7 +18,7 @@ export const COLORS = {
 	black: {
 		400: "#A3ABA8",
 		700: "#131514",
-		800: "#242424",
+		800: "#232424",
 	},
 	neutral: {
 		0: "#FFFFFF",
@@ -71,8 +71,9 @@ theme.typography.h4 = {
 export const UIHelper = (() => {
 	return {
 		media: {
-			mobile: theme.breakpoints.up("mobile"),
-			desktop: theme.breakpoints.up("desktop"),
+			whileIs: theme.breakpoints.down,
+			startsOn: theme.breakpoints.up,
+			between: theme.breakpoints.between,
 		},
 	};
 })();

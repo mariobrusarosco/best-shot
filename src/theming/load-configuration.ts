@@ -1,3 +1,4 @@
+// TODO Refactor all imports to use only the ones we need
 // Fonts
 import "@fontsource/poppins/100.css";
 import "@fontsource/poppins/200.css";

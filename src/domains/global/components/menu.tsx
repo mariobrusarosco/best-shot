@@ -1,42 +1,41 @@
 import { Button } from "@/domains/ui-system/components/button/button";
+import { AppIcon } from "@/domains/ui-system/components/icon/icon";
+import { ICONS } from "@/domains/ui-system/components/icon/mapper";
 import { UIHelper } from "@/theming/theme";
 import { Box, Typography, useTheme } from "@mui/material";
-import { Link } from "@tanstack/react-router";
-import { useState } from "react";
 import { styled } from "@mui/material/styles";
-import { ICONS } from "@/domains/ui-system/components/icon/mapper";
-import { AppIcon } from "@/domains/ui-system/components/icon/icon";
+import { Link } from "@tanstack/react-router";
 
-const { media } = UIHelper;
+const { startsOn, whileIs } = UIHelper.media;
 
 const Wrapper = styled(Box)(({ theme }) => ({
 	display: "flex",
 	justifyContent: "center",
 	borderTopRightRadius: "16px",
 	borderTopLeftRadius: "16px",
-	padding: theme.spacing(3, 2),
 	gap: theme.spacing(4),
-	backgroundColor: `${theme.palette.neutral[100]}0d`, // TODO Create a converter function
 
-	[media.mobile]: {
+	[whileIs("mobile")]: {
+		padding: theme.spacing(3, 2),
+		backgroundColor: `${theme.palette.neutral[100]}0d`, // TODO Create a converter function
 		width: "100vw",
 		position: "absolute",
 		bottom: 0,
+		zIndex: theme.zIndex.appBar,
 	},
-	[media.desktop]: {
+	[startsOn("tablet")]: {
 		width: "auto",
 		flexDirection: "column",
-		position: "relative",
 		gap: theme.spacing(6),
 		padding: theme.spacing(4),
 	},
 }));
 
 export const Menu = () => {
-	const [isOpen, setisOpen] = useState(true);
+	const isOpen = false;
 
 	return (
-		<Wrapper component="header">
+		<Wrapper component="menu">
 			<Box
 				sx={{
 					display: {
@@ -44,17 +43,7 @@ export const Menu = () => {
 						tablet: "block",
 					},
 				}}
-			>
-				<AppIcon
-					name={"LayoutDashboard"}
-					size="small"
-					color="#fff"
-					stroke={2}
-					width={20}
-					height={20}
-					onClick={() => setisOpen(!isOpen)}
-				/>
-			</Box>
+			></Box>
 			<HeaderLink to="/dashboard">
 				<HeaderButton iconName="LayoutDashboard" />
 				{isOpen ? (

@@ -147,6 +147,8 @@ const isLargeScreen = useMediaQuery("(min-width:601px)");
    We can access the breakpoints object from the theme object (ThemeProvider must be set up!)
 
 ```tsx
+import { useMediaQuery } from "@mui/material";
+
 const theme = useTheme();
 const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
 const isLargeScreen = useMediaQuery(theme.breakpoints.up("md"));

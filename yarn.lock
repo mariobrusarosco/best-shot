@@ -1812,6 +1812,11 @@ eslint-plugin-react-refresh@^0.4.6:
   resolved "https://registry.yarnpkg.com/eslint-plugin-react-refresh/-/eslint-plugin-react-refresh-0.4.6.tgz#e8e8accab681861baed00c5c12da70267db0936f"
   integrity sha512-NjGXdm7zgcKRkKMua34qVO9doI7VOxZ6ancSvBELJSSoX97jyndXcSoa8XBh69JoB31dNz3EEzlMcizZl7LaMA==
 
+eslint-plugin-unused-imports@^4.1.4:
+  version "4.1.4"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-unused-imports/-/eslint-plugin-unused-imports-4.1.4.tgz#62ddc7446ccbf9aa7b6f1f0b00a980423cda2738"
+  integrity sha512-YptD6IzQjDardkl0POxnnRBhU1OEePMV0nd6siHaRBbd+lyh6NAhFEobiznKU7kTsSsDeSD62Pe7kAM1b7dAZQ==
+
 eslint-scope@^7.2.2:
   version "7.2.2"
   resolved "https://registry.yarnpkg.com/eslint-scope/-/eslint-scope-7.2.2.tgz#deb4f92563390f32006894af62a22dba1c46423f"

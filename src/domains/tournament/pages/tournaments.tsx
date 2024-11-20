@@ -18,15 +18,13 @@ const TournamentsPage = () => {
 		<Box data-ui="tournaments-screen">
 			<ScreenHeading
 				title="tournaments"
-				sx={{
-					backgroundColor: "teal.500",
-				}}
+				subtitle="all current available tournaments"
 			/>
 
 			{data ? (
-				<div>
+				<Box py={[6, 10]} px={[2, 6]}>
 					<TournamentsList tournaments={data} />
-				</div>
+				</Box>
 			) : null}
 		</Box>
 	);

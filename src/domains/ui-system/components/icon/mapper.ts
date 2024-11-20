@@ -1,4 +1,5 @@
 import {
+	IconChevronRight,
 	IconLayoutDashboard,
 	IconTrophy,
 	IconUser,
@@ -11,4 +12,5 @@ export const ICONS = {
 	User: IconUser,
 	Users: IconUsers,
 	LayoutDashboard: IconLayoutDashboard,
+	ChevronRight: IconChevronRight,
 };

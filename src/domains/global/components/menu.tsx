@@ -14,19 +14,18 @@ const Wrapper = styled(Box)(({ theme }) => ({
 	borderTopRightRadius: "16px",
 	borderTopLeftRadius: "16px",
 	gap: theme.spacing(4),
+	backgroundColor: theme.palette.black[800],
 
 	[whileIs("mobile")]: {
 		padding: theme.spacing(3, 2),
-		backgroundColor: `${theme.palette.neutral[100]}0d`, // TODO Create a converter function
 		width: "100vw",
-		position: "absolute",
+		position: "fixed",
 		bottom: 0,
 		zIndex: theme.zIndex.appBar,
 	},
 	[startsOn("tablet")]: {
 		width: "auto",
 		flexDirection: "column",
-		gap: theme.spacing(6),
 		padding: theme.spacing(4),
 	},
 }));

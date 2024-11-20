@@ -1,8 +1,9 @@
+import { Box } from "@mui/system";
 import { Link } from "@tanstack/react-router";
 
 export const TournamentTabs = ({ tournamentId }: { tournamentId: string }) => {
 	return (
-		<div data-ui="tournament-tabs">
+		<Box color="neutral.100" data-ui="tournament-tabs">
 			<ul>
 				<Link to="/tournaments/$tournamentId/matches" params={{ tournamentId }}>
 					Matches
@@ -17,6 +18,6 @@ export const TournamentTabs = ({ tournamentId }: { tournamentId: string }) => {
 					Simulator
 				</Link>
 			</ul>
-		</div>
+		</Box>
 	);
 };

@@ -1,7 +1,9 @@
-import { useTournament } from "../hooks/use-tournament";
-import { getRouteApi } from "@tanstack/react-router";
+import { ScreenHeading } from "@/domains/global/components/screen-heading";
+import { Box } from "@mui/system";
+import { getRouteApi, Outlet } from "@tanstack/react-router";
 import { TournamentHeading } from "../components/tournament-heading";
 import { TournamentTabs } from "../components/tournament-tabs";
+import { useTournament } from "../hooks/use-tournament";
 
 const route = getRouteApi("/_auth/tournaments/$tournamentId/");
 
@@ -11,7 +13,7 @@ const TournamentPage = () => {
 	// const guesses = useGuess(tournament.serverState.data);
 
 	// Derivative State
-	const tournamentLabel = tournament.serverState.data?.label;
+	// const tournamentLabel = tournament.serverState.data?.label;
 	// const matchesForSelectedRound = tournament.serverState.data?.matches;
 
 	// const activeGames = tournament.serverState?.data?.matches;
@@ -32,14 +34,14 @@ const TournamentPage = () => {
 
 	return (
 		<div data-ui="tournament-page" className="page">
-			<div className="heading">
-				<h3>{tournamentLabel}</h3>
-			</div>
+			<ScreenHeading title="tournament" />
 
-			<>
+			<Box sx={{ display: "flex" }}>
 				<TournamentHeading tournament={tournament.serverState.data} />
 				<TournamentTabs tournamentId={tournament.serverState.data.id} />
-			</>
+			</Box>
+
+			<Outlet />
 		</div>
 	);
 };

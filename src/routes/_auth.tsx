@@ -1,10 +1,22 @@
+import { Menu } from "@/domains/global/components/menu";
+import { Box } from "@mui/material";
 import { createFileRoute, Outlet, redirect } from "@tanstack/react-router";
 
 const AuthLayout = () => {
 	return (
-		<div data-ui="authenticated-layout">
-			<Outlet />
-		</div>
+		<Box
+			data-ui="authenticated-layout"
+			sx={{
+				display: "flex",
+				height: "100%",
+				width: "100%",
+			}}
+		>
+			<Menu />
+			<Box data-ui="main-area" sx={{ flex: 1 }}>
+				<Outlet />
+			</Box>
+		</Box>
 	);
 };
 

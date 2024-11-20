@@ -7,7 +7,11 @@ export const TYPOGRAPHY = {
 			fontSize: 16,
 			fontFamily: "Montserrat",
 		},
-		h1: undefined,
+		h1: {
+			fontSize: 60,
+			fontWeight: 500,
+			fontFamily: "Poppins",
+		},
 		h2: undefined,
 		h3: {
 			fontSize: 36,

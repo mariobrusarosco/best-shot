@@ -1,4 +1,5 @@
-import { ScreenLayout } from "@/domains/ui-system/layout/screen-layout";
+import { ScreenHeading } from "@/domains/global/components/screen-heading";
+import { Box } from "@mui/system";
 import { TournamentsList } from "../components/tournaments-list";
 import { useTournaments } from "../hooks/use-tournaments";
 
@@ -14,17 +15,20 @@ const TournamentsPage = () => {
 	}
 
 	return (
-		<ScreenLayout data-ui="tournaments-screen screen">
-			<div className="heading">
-				<h3>Leagues</h3>
-			</div>
+		<Box data-ui="tournaments-screen">
+			<ScreenHeading
+				title="tournaments"
+				sx={{
+					backgroundColor: "teal.500",
+				}}
+			/>
 
 			{data ? (
 				<div>
 					<TournamentsList tournaments={data} />
 				</div>
 			) : null}
-		</ScreenLayout>
+		</Box>
 	);
 };
 

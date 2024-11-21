@@ -1,13 +1,15 @@
+import { createFileRoute, getRouteApi } from "@tanstack/react-router";
+
 import { ScreenHeading } from "@/domains/global/components/screen-heading";
+import { TournamentHeading } from "@/domains/tournament/components/tournament-heading";
+import { TournamentTabs } from "@/domains/tournament/components/tournament-tabs";
+import { useTournament } from "@/domains/tournament/hooks/use-tournament";
 import { Box } from "@mui/system";
-import { getRouteApi, Outlet } from "@tanstack/react-router";
-import { TournamentHeading } from "../components/tournament-heading";
-import { TournamentTabs } from "../components/tournament-tabs";
-import { useTournament } from "../hooks/use-tournament";
+import { Outlet } from "@tanstack/react-router";
 
-const route = getRouteApi("/_auth/tournaments/$tournamentId/");
+const route = getRouteApi("/_auth/tournaments/$tournamentId");
 
-const TournamentPage = () => {
+const TournamentLayout = () => {
 	const { tournamentId } = route.useParams();
 	const tournament = useTournament(tournamentId);
 	// const guesses = useGuess(tournament.serverState.data);
@@ -36,7 +38,7 @@ const TournamentPage = () => {
 		<div data-ui="tournament-page" className="page">
 			<ScreenHeading title="tournament" />
 
-			<Box sx={{ display: "flex" }}>
+			<Box sx={{ display: "flex", flexDirection: "column", px: 3 }}>
 				<TournamentHeading tournament={tournament.serverState.data} />
 				<TournamentTabs tournamentId={tournament.serverState.data.id} />
 			</Box>
@@ -46,4 +48,8 @@ const TournamentPage = () => {
 	);
 };
 
-export { TournamentPage };
+export const Route = createFileRoute(
+	"/_auth/tournaments/$tournamentId/_layout",
+)({
+	component: TournamentLayout,
+});

@@ -1,12 +1,11 @@
-import { useGuess } from "../../guess/hooks/use-guess";
-import { useTournament } from "../hooks/use-tournament";
-import { Match } from "../../match/components/match";
-import { Guess } from "../../guess/components/guess";
+import { useGuess } from "@/domains/guess/hooks/use-guess";
+import { useTournament } from "@/domains/tournament/hooks/use-tournament";
+import { createLazyFileRoute, getRouteApi } from "@tanstack/react-router";
 
-// const route = getRouteApi("/_auth/tournaments/$tournamentId/matches/");
+const route = getRouteApi("/_auth/tournaments/$tournamentId");
 
 export const TournamentMatches = () => {
-	const tournamentId = "asdsa";
+	const tournamentId = route.useParams().tournamentId;
 	const tournament = useTournament(tournamentId);
 	const guesses = useGuess(tournament.serverState.data);
 
@@ -23,7 +22,7 @@ export const TournamentMatches = () => {
 	console.log("activeGames", activeGames);
 
 	return (
-		<div data-ui="tournament-page" className="screen">
+		<div data-ui="matches" className="screen">
 			<div className="heading">
 				<h2>Tournament</h2>
 				<h3>{tournamentLabel}</h3>
@@ -50,13 +49,13 @@ export const TournamentMatches = () => {
 					<ul className="round-games">
 						{matchesForSelectedRound?.map((match) => (
 							<li key={match.id} className="round-item match-card">
-								<Match match={match} />
+								{/* <Match match={match} /> */}
 
-								<Guess
+								{/* <Guess
 									tournamentId={tournamentId}
 									match={match}
 									guesses={guesses.data}
-								/>
+								/> */}
 							</li>
 						))}
 					</ul>
@@ -65,3 +64,9 @@ export const TournamentMatches = () => {
 		</div>
 	);
 };
+
+export const Route = createLazyFileRoute(
+	"/_auth/tournaments/$tournamentId/_layout/matches",
+)({
+	component: TournamentMatches,
+});

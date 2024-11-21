@@ -1,7 +1,7 @@
 import { createLazyFileRoute } from "@tanstack/react-router";
 
 export const Route = createLazyFileRoute(
-	"/_auth/tournaments/$tournamentId/standings",
+	"/_auth/tournaments/$tournamentId/_layout/standings",
 )({
 	component: () => (
 		<div>

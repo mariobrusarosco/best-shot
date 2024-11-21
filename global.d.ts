@@ -44,19 +44,19 @@ declare module "@mui/material/Typography" {
 }
 
 // TODO Move Palette-related code to a .d.ts
-
 interface CustomPalette {
 	teal: {
 		500: string;
 	};
 	black: {
-		400: string;
+		500: string;
 		700: string;
 		800: string;
 	};
 	neutral: {
 		0: string;
 		100: string;
+		500: string;
 	};
 }
 

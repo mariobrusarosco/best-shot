@@ -21,7 +21,11 @@ export const TournamentCard = (props: Props) => {
 	const { id, label } = props;
 
 	return (
-		<Link to="/tournaments/$tournamentId" params={{ tournamentId: id }} as="li">
+		<Link
+			to="/tournaments/$tournamentId/matches"
+			params={{ tournamentId: id }}
+			as="li"
+		>
 			<Surface
 				sx={{
 					display: "flex",

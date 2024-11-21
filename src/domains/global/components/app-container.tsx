@@ -9,7 +9,7 @@ const AppContainer = () => {
 			component="main"
 			sx={{
 				bgcolor: "black.700",
-				height: "100%",
+				flexGrow: 1,
 			}}
 		>
 			<Outlet />

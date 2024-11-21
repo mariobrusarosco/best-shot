@@ -23,7 +23,7 @@ export const TournamentRanking = () => {
 	return (
 		<div data-ui="rakning" className="screen">
 			<Typography variant="h3" color="neutral.100">
-				RAKNING
+				RAKNING of {tournamentLabel}
 			</Typography>
 		</div>
 	);

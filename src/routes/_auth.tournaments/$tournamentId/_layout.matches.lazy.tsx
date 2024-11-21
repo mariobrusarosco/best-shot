@@ -1,6 +1,8 @@
 import { useGuess } from "@/domains/guess/hooks/use-guess";
+import { MatchCard } from "@/domains/match/components/match-card/match-card";
 import { TournamentRoundsBar } from "@/domains/tournament/components/tournament-rounds-bar";
 import { useTournament } from "@/domains/tournament/hooks/use-tournament";
+import fakeLogo from "@/domains/ui-system/components/icon/system-icons/copa-do-brasil.svg";
 import { Box } from "@mui/system";
 import { createLazyFileRoute, getRouteApi } from "@tanstack/react-router";
 
@@ -16,9 +18,9 @@ export const TournamentMatches = () => {
 	const matchesForSelectedRound = tournament.serverState.data?.matches;
 
 	const activeGames = tournament.serverState?.data?.matches;
-	const shouldRender = tournament.serverState.isSuccess && guesses.isSuccess;
+	const shouldRender = tournament.serverState.isSuccess;
 
-	// console.log("shouldRender", shouldRender);
+	console.log("shouldRender", shouldRender);
 	// console.log("activeGames", activeGames);
 	console.log("guesses", guesses.data);
 	console.log("activeGames", activeGames);
@@ -35,25 +37,10 @@ export const TournamentMatches = () => {
 
 			{shouldRender ? (
 				<div className="round">
-					<div className="round-actions">
-						<button
-							onClick={tournament.uiState.handlePreviousRound}
-							disabled={tournament.uiState.activeRound === 1}
-						>
-							Prev
-						</button>
-						<p>Round {tournament.uiState.activeRound}</p>
-						<button
-							disabled={tournament.uiState.activeRound === 38}
-							onClick={tournament.uiState.handleNextRound}
-						>
-							Next
-						</button>
-					</div>
-
-					<ul className="round-games">
+					<Box mt={5} display="grid" gap={2} className="round-games">
 						{matchesForSelectedRound?.map((match) => (
 							<li key={match.id} className="round-item match-card">
+								<MatchCard logoUrl={fakeLogo} key={match.id} />
 								{/* <Match match={match} /> */}
 
 								{/* <Guess
@@ -63,7 +50,7 @@ export const TournamentMatches = () => {
 								/> */}
 							</li>
 						))}
-					</ul>
+					</Box>
 				</div>
 			) : null}
 		</Box>

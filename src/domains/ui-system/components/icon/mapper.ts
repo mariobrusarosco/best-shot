@@ -4,6 +4,7 @@ import {
 	IconTrophy,
 	IconUser,
 	IconUsers,
+	IconX,
 } from "@tabler/icons-react";
 
 // TODO Dinamically import Icons without the need of mapping them!
@@ -13,4 +14,5 @@ export const ICONS = {
 	Users: IconUsers,
 	LayoutDashboard: IconLayoutDashboard,
 	ChevronRight: IconChevronRight,
+	X: IconX,
 };

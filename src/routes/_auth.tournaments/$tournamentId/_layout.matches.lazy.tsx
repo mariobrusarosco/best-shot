@@ -1,5 +1,7 @@
 import { useGuess } from "@/domains/guess/hooks/use-guess";
+import { TournamentRoundsBar } from "@/domains/tournament/components/tournament-rounds-bar";
 import { useTournament } from "@/domains/tournament/hooks/use-tournament";
+import { Box } from "@mui/system";
 import { createLazyFileRoute, getRouteApi } from "@tanstack/react-router";
 
 const route = getRouteApi("/_auth/tournaments/$tournamentId");
@@ -10,7 +12,7 @@ export const TournamentMatches = () => {
 	const guesses = useGuess(tournament.serverState.data);
 
 	// Derivative State
-	const tournamentLabel = tournament.serverState.data?.label;
+	// const tournamentLabel = tournament.serverState.data?.label;
 	const matchesForSelectedRound = tournament.serverState.data?.matches;
 
 	const activeGames = tournament.serverState?.data?.matches;
@@ -22,11 +24,14 @@ export const TournamentMatches = () => {
 	console.log("activeGames", activeGames);
 
 	return (
-		<div data-ui="matches" className="screen">
-			<div className="heading">
-				<h2>Tournament</h2>
-				<h3>{tournamentLabel}</h3>
-			</div>
+		<Box
+			data-ui="matches"
+			className="screen"
+			py={[6, 10]}
+			px={[2, 6]}
+			maxWidth="100vw"
+		>
+			<TournamentRoundsBar />
 
 			{shouldRender ? (
 				<div className="round">
@@ -61,7 +66,7 @@ export const TournamentMatches = () => {
 					</ul>
 				</div>
 			) : null}
-		</div>
+		</Box>
 	);
 };
 

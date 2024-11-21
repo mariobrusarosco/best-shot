@@ -1,10 +1,10 @@
-import { useAuth0 } from "@auth0/auth0-react";
+import OktaAuth0Provider from "@/domains/authentication/context/auth-0";
 import {
 	ByPassAuthProvider,
 	useReactContextAdapter,
 } from "@/domains/authentication/context/bypass";
-import OktaAuth0Provider from "@/domains/authentication/context/auth-0";
 import { APP_MODES } from "@/domains/global/typing";
+import { useAuth0 } from "@auth0/auth0-react";
 
 type IAuthAdapter = Record<
 	APP_MODES,
@@ -23,6 +23,6 @@ export const AuthenticationAdapter: IAuthAdapter = {
 		Provider: ByPassAuthProvider,
 		hook: useReactContextAdapter,
 	},
-	staging: { Provider: OktaAuth0Provider, hook: useAuth0 },
+	staging: { Provider: ByPassAuthProvider, hook: useReactContextAdapter },
 	production: { Provider: OktaAuth0Provider, hook: useAuth0 },
 };

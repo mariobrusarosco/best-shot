@@ -1,4 +1,5 @@
-import { Auth0Provider } from "@auth0/auth0-react";
+import { Auth0Provider, useAuth0 as useAuthBase } from "@auth0/auth0-react";
+import { IAuthHook } from "..";
 
 export default function OktaAuth0Provider({
 	children,
@@ -17,3 +18,13 @@ export default function OktaAuth0Provider({
 		</Auth0Provider>
 	);
 }
+
+export const useAuth0 = () => {
+	const { isAuthenticated, isLoading, user } = useAuthBase();
+
+	return {
+		isAuthenticated,
+		isLoadingAuth: isLoading,
+		authId: user?.sub,
+	} satisfies IAuthHook;
+};

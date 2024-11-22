@@ -1,3 +1,4 @@
+import { useMember } from "@/domains/member/hooks/use-member";
 import {
 	Surface,
 	SurfaceProps,
@@ -15,6 +16,8 @@ interface Props extends SurfaceProps {
 const { startsOn } = UIHelper.media;
 
 export const ScreenHeading = (props: Props) => {
+	const member = useMember();
+	console.log("---ScreenHeading------", member);
 	const { children, title, subtitle } = props;
 	const isDesktopScreen = useMediaQuery(startsOn("desktop"));
 

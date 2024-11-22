@@ -1,10 +1,17 @@
-import { APP_MODE } from "@/domains/global/utils";
 import { AuthenticationAdapter } from "@/domains/authentication/adapters";
+import { APP_MODE } from "@/domains/global/utils";
+import { useMember } from "@/domains/member/hooks/use-member";
 
-const useAUth = AuthenticationAdapter[APP_MODE].hook;
+export const useAuth = AuthenticationAdapter[APP_MODE].hook;
 
 export const useAppAuth = () => {
-	const auth = useAUth();
+	const auth = useAuth();
+	console.log("[AUTH]", { auth });
+	const member = useMember(auth.authId);
 
-	return { auth };
+	const memberIsReady = member.isSuccess && member?.data;
+	const loadingMemberData = member.isFetching;
+	const authError = member.isError || !auth?.isAuthenticated;
+
+	return { memberIsReady, loadingMemberData, authError, member };
 };

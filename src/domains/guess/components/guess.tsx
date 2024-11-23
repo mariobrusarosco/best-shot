@@ -1,9 +1,9 @@
-import { useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
+import { useState } from "react";
 import { getUserToken } from "../../demo/utils";
-import { IGuess } from "../typing";
 import { IMatch } from "../../match/typing";
 import { useGuessMutation } from "../hooks/use-guess-mutation";
+import { IGuess } from "../typing";
 
 interface Props {
 	match: IMatch;
@@ -14,17 +14,17 @@ interface Props {
 const Guess = ({ match, tournamentId, guesses }: Props) => {
 	const queryClient = useQueryClient();
 	const gameGuess = guesses?.find((guess) => guess.matchId === match.id);
-	const [homeScore, setHomeScore] = useState(gameGuess?.homeScore);
-	const [awayScore, setAwayScore] = useState(gameGuess?.awayScore);
+	const [homeScore, setHomeScore] = useState(gameGuess?.homeScore || "");
+	const [awayScore, setAwayScore] = useState(gameGuess?.awayScore || "");
 	const { mutate } = useGuessMutation();
 
 	const handleHomeScore = (e: React.ChangeEvent<HTMLInputElement>) => {
-		const score = Number(e.target.value) || 0;
+		const score = e.target.value;
 
 		setHomeScore(score);
 	};
 	const handleAwayScore = (e: React.ChangeEvent<HTMLInputElement>) => {
-		const score = Number(e.target.value) || 0;
+		const score = e.target.value;
 		setAwayScore(score);
 	};
 
@@ -36,8 +36,8 @@ const Guess = ({ match, tournamentId, guesses }: Props) => {
 				matchId: match.id,
 				tournamentId,
 				memberId,
-				homeScore: Number(homeScore),
-				awayScore: Number(awayScore),
+				homeScore: homeScore,
+				awayScore: awayScore,
 			},
 			{
 				onSettled: () => {

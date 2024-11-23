@@ -3,8 +3,8 @@ export type IGuess = {
 	memberId: string;
 	matchId: string;
 	tournamentId: string;
-	homeScore: number;
-	awayScore: number;
+	homeScore: string;
+	awayScore: string;
 	createdAt: Date;
 	updatedAt: Date;
 };

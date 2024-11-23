@@ -13,6 +13,6 @@ export type CreateGuessInput = {
 	matchId: string;
 	memberId: string;
 	tournamentId: string;
-	homeScore: number;
-	awayScore: number;
+	homeScore: string;
+	awayScore: string;
 };

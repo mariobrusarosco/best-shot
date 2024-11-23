@@ -16,6 +16,12 @@ export const COLORS = {
 	teal: {
 		500: "#6A9B96",
 	},
+	green: {
+		200: "#8AC79F",
+	},
+	red: {
+		400: "#FF6D6D",
+	},
 	black: {
 		500: "#373737",
 		700: "#131514",

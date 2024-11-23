@@ -10,7 +10,7 @@ interface Props extends IconProps {
 }
 
 const sizeMapping = {
-	tiny: 14,
+	tiny: 12,
 	["extra-small"]: 16,
 	small: 24,
 	medium: 32,

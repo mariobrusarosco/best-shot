@@ -1,5 +1,5 @@
-import { APP_MODE } from "@/domains/global/utils";
 import { AuthenticationAdapter } from "@/domains/authentication/adapters";
+import { APP_MODE } from "@/domains/global/utils";
 
 const useAUth = AuthenticationAdapter[APP_MODE].hook;
 

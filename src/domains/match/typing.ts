@@ -2,7 +2,7 @@ export type IMatch = {
 	id: string;
 	date: string;
 	homeTeam: string;
-	homeScore: number;
+	homeScore: string;
 	awayTeam: string;
-	awayScore: number;
+	awayScore: string;
 };

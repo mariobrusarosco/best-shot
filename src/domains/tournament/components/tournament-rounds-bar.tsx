@@ -30,7 +30,7 @@ export const TournamentRoundsBar = () => {
 				<Typography
 					variant="topic"
 					color="neutral.100"
-					textTransform="uppercase"
+					textTransform="lowercase"
 				>
 					rounds
 				</Typography>
@@ -47,7 +47,7 @@ export const TournamentRoundsBar = () => {
 					<Typography
 						variant="tag"
 						color="neutral.100"
-						textTransform="uppercase"
+						textTransform="lowercase"
 					>
 						standings
 					</Typography>

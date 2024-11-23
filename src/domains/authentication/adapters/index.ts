@@ -6,7 +6,6 @@ import {
 	useByPassAuth,
 } from "@/domains/authentication/adapters/bypass";
 import { APP_MODES } from "@/domains/global/typing";
-import { useAuth0 } from "@auth0/auth0-react";
 
 export type IAuthProvider = ({
 	children,

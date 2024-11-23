@@ -1,9 +1,9 @@
-import { useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
+import { useState } from "react";
 import { getUserToken } from "../../demo/utils";
-import { IGuess } from "../typing";
 import { IMatch } from "../../match/typing";
 import { useGuessMutation } from "../hooks/use-guess-mutation";
+import { IGuess } from "../typing";
 
 interface Props {
 	match: IMatch;

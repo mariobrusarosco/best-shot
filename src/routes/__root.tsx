@@ -1,10 +1,9 @@
-import { useAuth0 } from "@auth0/auth0-react";
+import { useAppAuth } from "@/domains/authentication/hooks/use-app-auth";
 import { createRootRouteWithContext } from "@tanstack/react-router";
 import { AppContainer } from "../domains/global/components/app-container";
 
-export interface RouterContext {
-	auth: ReturnType<typeof useAuth0> | undefined | { isAuthenticated: boolean };
-}
+export interface RouterContext extends ReturnType<typeof useAppAuth> {}
+// export const Route = createRootRouteWithContext<RouterContext>()({
 
 export const Route = createRootRouteWithContext<RouterContext>()({
 	component: AppContainer,

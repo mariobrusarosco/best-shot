@@ -6,23 +6,6 @@ import { createFileRoute, Outlet } from "@tanstack/react-router";
 const AuthLayout = () => {
 	const { memberIsReady, loadingMemberData, authError, member } = useAppAuth();
 
-	console.log({ memberIsReady, loadingMemberData, authError, member });
-
-	// if (loadingMemberData) {
-	// 	return (
-	// 		<Typography variant="h1" color="neutral.100">
-	// 			loading
-	// 		</Typography>
-	// 	);
-	// }
-
-	// if (authError) {
-	// 	console.error("[AUTH] - ERROR", authError);
-
-	// 	return <Navigate to="/login" />;
-	// }
-
-	// if (memberIsReady) console.log("[MEMBER]", member.data.nickName);
 	return (
 		<Box
 			data-ui="authenticated-layout"
@@ -41,17 +24,15 @@ const AuthLayout = () => {
 };
 
 export const Route = createFileRoute("/_auth")({
-	// beforeLoad: async ({ context, location }) => {
-	// 	const isAuthenticated = context.member.query.is;
-
-	// if (!isAuthenticated || !hasValidMemberId) {
-	// 	throw redirect({
-	// 		to: "/",
-	// 		search: {
-	// 			redirect: location.href,
-	// 		},
-	// 	});
-	// }
-	// },
+	beforeLoad: async ({ context, location }) => {
+		if (!context.auth?.isAuthenticated) {
+			throw redirect({
+				to: "/ui-system",
+				search: {
+					redirect: location.href,
+				},
+			});
+		}
+	},
 	component: AuthLayout,
 });

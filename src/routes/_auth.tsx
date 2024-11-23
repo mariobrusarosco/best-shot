@@ -4,8 +4,11 @@ import { Box } from "@mui/material";
 import { createFileRoute, Outlet } from "@tanstack/react-router";
 
 const AuthLayout = () => {
-	const { memberIsReady, loadingMemberData, authError, member } = useAppAuth();
+	const { auth } = useAppAuth();
 
+	if (auth.isLoadingAuth) {
+		return <div style={{ color: "white", fontSize: 40 }}>LOADING</div>;
+	}
 	return (
 		<Box
 			data-ui="authenticated-layout"
@@ -24,15 +27,5 @@ const AuthLayout = () => {
 };
 
 export const Route = createFileRoute("/_auth")({
-	beforeLoad: async ({ context, location }) => {
-		if (!context.auth?.isAuthenticated) {
-			throw redirect({
-				to: "/ui-system",
-				search: {
-					redirect: location.href,
-				},
-			});
-		}
-	},
 	component: AuthLayout,
 });

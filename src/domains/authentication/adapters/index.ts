@@ -3,8 +3,8 @@ import OktaAuth0Provider, {
 } from "@/domains/authentication/adapters/auth-0";
 import {
 	ByPassAuthProvider,
-	useByPassAuth,
-} from "@/domains/authentication/adapters/bypass";
+	useAuthByPass,
+} from "@/domains/authentication/context/bypass";
 import { APP_MODES } from "@/domains/global/typing";
 
 export type IAuthProvider = ({
@@ -30,12 +30,12 @@ export type IAuthAdapter = Record<
 export const AuthenticationAdapter: IAuthAdapter = {
 	"local-dev": {
 		Provider: ByPassAuthProvider,
-		hook: useByPassAuth,
+		hook: useAuthByPass,
 	},
 	demo: {
 		Provider: ByPassAuthProvider,
-		hook: useByPassAuth,
+		hook: useAuthByPass,
 	},
-	staging: { Provider: ByPassAuthProvider, hook: useByPassAuth },
+	staging: { Provider: ByPassAuthProvider, hook: useAuthByPass },
 	production: { Provider: OktaAuth0Provider, hook: useAuth0 },
 };

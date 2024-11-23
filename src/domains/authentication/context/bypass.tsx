@@ -1,7 +1,7 @@
 import { api } from "@/api";
 import { useMutation } from "@tanstack/react-query";
 import { createContext, useContext, useEffect, useState } from "react";
-import { IAuthHook } from "..";
+import { IAuthHook } from "../adapters";
 
 const ByPassAuthContext = createContext<IAuthHook | undefined>(undefined);
 
@@ -13,7 +13,7 @@ export const ByPassAuthProvider = ({
 	const [state, setState] = useState<IAuthHook>({
 		isAuthenticated: false,
 		authId: undefined,
-		isLoadingAuth: false,
+		isLoadingAuth: true,
 	});
 
 	const { mutate } = useMutation({
@@ -42,18 +42,11 @@ export const authenticatedLocalMember = async (memberId: any) => {
 	return response.data;
 };
 
-export const authenticatedLocalMember2 = async ({ queryKey }: any) => {
-	const [, { authId }] = queryKey;
-	const response = await api.get("whoami/" + authId);
-
-	return response.data;
-};
-
-export const useByPassAuth = () => {
+export const useAuthByPass = () => {
 	const context = useContext(ByPassAuthContext);
 
 	if (context === undefined)
-		throw new Error("useByPassAuth must be used within a ByPassAuthProvider");
+		throw new Error("useAuthByPass must be used within a ByPassAuthProvider");
 
 	return context;
 };

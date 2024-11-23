@@ -19,11 +19,11 @@ export const TournamentMatches = () => {
 	const matchesForSelectedRound = tournament.serverState.data?.matches;
 
 	// const activeGames = tournament.serverState?.data?.matches;
-	const shouldRender = tournament.serverState.isSuccess;
+	const shouldRender = tournament.serverState.isSuccess && guesses.isSuccess;
 
 	// console.log("shouldRender", shouldRender);
 	// console.log("activeGames", activeGames);
-	// console.log("[Match], GUESSES.DATA", guesses.data);
+	// console.log("guesses", guesses.data);
 	// console.log("activeGames", activeGames);
 
 	return (

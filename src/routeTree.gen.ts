@@ -14,6 +14,7 @@ import { createFileRoute } from '@tanstack/react-router'
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as UiSystemImport } from './routes/ui-system'
+import { Route as LoginImport } from './routes/login'
 import { Route as AuthImport } from './routes/_auth'
 import { Route as IndexRouteImport } from './routes/index.route'
 import { Route as AuthMyAccountImport } from './routes/_auth.my-account'
@@ -47,6 +48,11 @@ const AuthTournamentsTournamentIdLayoutMatchesLazyImport = createFileRoute(
 
 const UiSystemRoute = UiSystemImport.update({
   path: '/ui-system',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const LoginRoute = LoginImport.update({
+  path: '/login',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -161,6 +167,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthImport
       parentRoute: typeof rootRoute
     }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginImport
+      parentRoute: typeof rootRoute
+    }
     '/ui-system': {
       id: '/ui-system'
       path: '/ui-system'
@@ -269,6 +282,7 @@ export const routeTree = rootRoute.addChildren({
           }),
       }),
   }),
+  LoginRoute,
   UiSystemRoute,
 })
 
@@ -282,6 +296,7 @@ export const routeTree = rootRoute.addChildren({
       "children": [
         "/",
         "/_auth",
+        "/login",
         "/ui-system"
       ]
     },
@@ -298,6 +313,9 @@ export const routeTree = rootRoute.addChildren({
         "/_auth/tournaments/",
         "/_auth/tournaments/$tournamentId"
       ]
+    },
+    "/login": {
+      "filePath": "login.tsx"
     },
     "/ui-system": {
       "filePath": "ui-system.tsx"

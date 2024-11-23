@@ -15,13 +15,13 @@ export const TournamentMatches = () => {
 	// const tournamentLabel = tournament.serverState.data?.label;
 	const matchesForSelectedRound = tournament.serverState.data?.matches;
 
-	const activeGames = tournament.serverState?.data?.matches;
+	// const activeGames = tournament.serverState?.data?.matches;
 	const shouldRender = tournament.serverState.isSuccess && guesses.isSuccess;
 
 	// console.log("shouldRender", shouldRender);
 	// console.log("activeGames", activeGames);
-	console.log("guesses", guesses.data);
-	console.log("activeGames", activeGames);
+	// console.log("guesses", guesses.data);
+	// console.log("activeGames", activeGames);
 
 	return (
 		<Box

@@ -18,7 +18,7 @@ export const TournamentMatches = () => {
 	// const tournamentLabel = tournament.serverState.data?.label;
 	const matchesForSelectedRound = tournament.serverState.data?.matches;
 
-	const activeGames = tournament.serverState?.data?.matches;
+	// const activeGames = tournament.serverState?.data?.matches;
 	const shouldRender = tournament.serverState.isSuccess;
 
 	// console.log("shouldRender", shouldRender);

@@ -3,8 +3,8 @@ export type IGuess = {
 	memberId: string;
 	matchId: string;
 	tournamentId: string;
-	homeScore: number;
-	awayScore: number;
+	homeScore: string;
+	awayScore: string;
 	createdAt: Date;
 	updatedAt: Date;
 };
@@ -14,3 +14,9 @@ export const GUESS_STATUS = {
 	INCORRECT_GUESS: "incorret_guess",
 	CORRECT_GUESS: "correct_guess",
 };
+
+export const GUESS_POINTS = {
+	AWAY: 1,
+	HOME: 1,
+	MATCH: 3,
+} as const;

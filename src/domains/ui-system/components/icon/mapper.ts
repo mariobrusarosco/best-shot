@@ -1,6 +1,8 @@
 import {
 	IconChevronRight,
 	IconLayoutDashboard,
+	IconMinus,
+	IconPlus,
 	IconTrophy,
 	IconUser,
 	IconUsers,
@@ -15,4 +17,6 @@ export const ICONS = {
 	LayoutDashboard: IconLayoutDashboard,
 	ChevronRight: IconChevronRight,
 	X: IconX,
+	Plus: IconPlus,
+	Minus: IconMinus,
 };

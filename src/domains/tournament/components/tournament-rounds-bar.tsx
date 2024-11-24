@@ -1,10 +1,16 @@
+import { useTournament } from "@/domains/tournament/hooks/use-tournament";
 import { Button } from "@/domains/ui-system/components/button/button";
 import { AppIcon } from "@/domains/ui-system/components/icon/icon";
+import { Pill } from "@/domains/ui-system/components/pill/pill";
 import { Surface } from "@/domains/ui-system/components/surface/surface";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/system/Box";
 
-export const TournamentRoundsBar = () => {
+export const TournamentRoundsBar = ({
+	tournamentState,
+}: {
+	tournamentState?: ReturnType<typeof useTournament>["uiState"];
+}) => {
 	return (
 		<Surface
 			sx={{
@@ -34,6 +40,16 @@ export const TournamentRoundsBar = () => {
 				>
 					rounds
 				</Typography>
+
+				<Pill bgcolor="teal.500" onClick={tournamentState?.handleNextRound}>
+					<Typography
+						variant="topic"
+						color="neutral.100"
+						textTransform="lowercase"
+					>
+						round {tournamentState?.activeRound}
+					</Typography>
+				</Pill>
 
 				<Button
 					sx={{
@@ -77,6 +93,7 @@ export const TournamentRoundsBar = () => {
 							borderWidth: "1px",
 							borderStyle: "solid",
 						}}
+						onClick={() => tournamentState?.goToRound(i)}
 					>
 						<Typography variant="label" color="neutral.100">
 							{i}

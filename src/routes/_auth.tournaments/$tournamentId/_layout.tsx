@@ -2,7 +2,6 @@ import { createFileRoute, getRouteApi } from "@tanstack/react-router";
 
 import { ScreenHeading } from "@/domains/global/components/screen-heading";
 import { TournamentHeading } from "@/domains/tournament/components/tournament-heading";
-import { TournamentTabs } from "@/domains/tournament/components/tournament-tabs";
 import { useTournament } from "@/domains/tournament/hooks/use-tournament";
 import { Box } from "@mui/system";
 import { Outlet } from "@tanstack/react-router";
@@ -40,9 +39,9 @@ const TournamentLayout = () => {
 
 			<Box sx={{ display: "flex", flexDirection: "column", px: 3 }}>
 				<TournamentHeading tournament={tournament.serverState.data} />
-				<TournamentTabs tournamentId={tournament.serverState.data.id} />
+				{/* <TournamentTabs tournamentId={tournament.serverState.data.id} /> */}
 			</Box>
-
+			{/* <ScrollRestoration getKey={(location) => location.pathname} /> */}
 			<Outlet />
 		</div>
 	);

@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
-import { ITournament } from "../typing";
 import { getTournament } from "../server-state/fetchers";
+import { ITournament } from "../typing";
 
 export const useTournament = (id: string | undefined) => {
 	const [activeRound, setActiveRound] = useState(1);
@@ -11,6 +11,9 @@ export const useTournament = (id: string | undefined) => {
 	};
 	const handlePreviousRound = () => {
 		setActiveRound((prev) => prev - 1);
+	};
+	const goToRound = (round: number) => {
+		setActiveRound(round);
 	};
 
 	const query = useQuery<ITournament>({
@@ -24,6 +27,7 @@ export const useTournament = (id: string | undefined) => {
 		uiState: {
 			handleNextRound,
 			handlePreviousRound,
+			goToRound,
 			activeRound,
 		},
 	};

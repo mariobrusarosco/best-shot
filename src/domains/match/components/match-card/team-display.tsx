@@ -14,42 +14,28 @@ export const TeamDisplay = ({
 	expanded: boolean;
 }) => {
 	return (
-		<Box
-			sx={{
-				display: "flex",
-				gap: 1,
-				alignItems: "center",
-			}}
-		>
-			<Box
+		<Display>
+			{expanded ? (
+				<Box>
+					<span>pos</span>
+					{standing}
+				</Box>
+			) : null}
+
+			<Surface
 				sx={{
-					gap: 0.5,
-					display: "flex",
-					alignItems: "center",
+					p: 1,
+					borderRadius: 1,
+					bgcolor: "black.500",
+					display: "grid",
+					placeItems: "center",
 				}}
 			>
-				{expanded ? (
-					<Box>
-						<span>pos</span>
-						{standing}
-					</Box>
-				) : null}
+				<TeamLogo src={logoUrl} />
+			</Surface>
 
-				<Surface
-					sx={{
-						p: 1,
-						borderRadius: 1,
-						bgcolor: "black.500",
-						display: "grid",
-						placeItems: "center",
-					}}
-				>
-					<TeamLogo src={logoUrl} />
-				</Surface>
-
-				<Typography variant="tag">{label}</Typography>
-			</Box>
-		</Box>
+			<Typography variant="caption">{label}</Typography>
+		</Display>
 	);
 };
 
@@ -58,3 +44,15 @@ export const TeamLogo = styled("img")(() => ({
 	width: 14,
 	height: 14,
 }));
+
+export const Display = styled(Box)(
+	({ theme }) => `
+		display: flex;	
+		align-items: center;
+		gap: ${theme.spacing(0.5)};
+
+		[data-venue="away"] &{
+			flex-direction: row-reverse;
+		}
+	`,
+);

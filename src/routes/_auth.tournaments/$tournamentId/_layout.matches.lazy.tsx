@@ -4,27 +4,26 @@ import { MatchCard } from "@/domains/match/components/match-card/match-card";
 import { TournamentRoundsBar } from "@/domains/tournament/components/tournament-rounds-bar";
 import { useTournament } from "@/domains/tournament/hooks/use-tournament";
 import fakeLogo from "@/domains/ui-system/components/icon/system-icons/copa-do-brasil.svg";
+import { Pill } from "@/domains/ui-system/components/pill/pill";
+import { Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import { createLazyFileRoute, getRouteApi } from "@tanstack/react-router";
-
-const route = getRouteApi("/_auth/tournaments/$tournamentId");
+import { createLazyFileRoute } from "@tanstack/react-router";
 
 export const TournamentMatches = () => {
-	const tournamentId = route.useParams().tournamentId;
-	const tournament = useTournament(tournamentId);
+	const tournament = useTournament();
 	const guesses = useGuess(tournament.serverState.data);
 
 	// Derivative State
-	// const tournamentLabel = tournament.serverState.data?.label;
 	const matchesForSelectedRound = tournament.serverState.data?.matches;
-
-	// const activeGames = tournament.serverState?.data?.matches;
 	const shouldRender = tournament.serverState.isSuccess && guesses.isSuccess;
 
-	// console.log("shouldRender", shouldRender);
-	// console.log("activeGames", activeGames);
-	// console.log("guesses", guesses.data);
-	// console.log("activeGames", activeGames);
+	if (tournament.serverState.isLoading || guesses.isLoading) {
+		return (
+			<Typography variant="h3" color="neutral.100">
+				Loading...
+			</Typography>
+		);
+	}
 
 	return (
 		<Box
@@ -34,18 +33,31 @@ export const TournamentMatches = () => {
 			px={[2, 6]}
 			maxWidth="100vw"
 		>
-			<TournamentRoundsBar />
-
+			<TournamentRoundsBar tournamentState={tournament.uiState} />
 			{shouldRender ? (
 				<div className="round">
-					<Box mt={5} display="grid" gap={2} className="round-games">
+					<Pill
+						bgcolor="teal.500"
+						onClick={tournament.uiState?.handleNextRound}
+						my={4}
+						mx="auto"
+						maxWidth={90}
+					>
+						<Typography
+							variant="label"
+							color="neutral.100"
+							textTransform="lowercase"
+						>
+							round {tournament.uiState?.activeRound}
+						</Typography>
+					</Pill>
+
+					<Box display="grid" gap={2} pb={7} className="round-games">
 						{matchesForSelectedRound?.map((match) => {
-							console.log("[Match --- match], match", match);
+							// console.log("[Match --- match], match", match);
 							const guess = guesses.data?.find((guess: IGuess) => {
 								return guess.matchId === match.id;
 							});
-
-							// console.log("[Match]", match);
 
 							return (
 								<li key={match.id} className="round-item match-card">
@@ -55,13 +67,6 @@ export const TournamentMatches = () => {
 										match={match}
 										guess={guess}
 									/>
-									{/* <Match match={match} /> */}
-
-									{/* <Guess
-									tournamentId={tournamentId}
-									match={match}
-									guesses={guesses.data}
-								/> */}
 								</li>
 							);
 						})}

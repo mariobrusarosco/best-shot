@@ -1,6 +1,5 @@
 import { Button } from "@/domains/ui-system/components/button/button";
 import { AppIcon } from "@/domains/ui-system/components/icon/icon";
-import fakeLogo from "@/domains/ui-system/components/icon/system-icons/copa-do-brasil.svg";
 import {
 	Surface,
 	SurfaceProps,
@@ -41,7 +40,9 @@ export const TournamentCard = (props: Props) => {
 						flex: 1,
 					}}
 				>
-					<TournamentLogo src={fakeLogo} />
+					<TournamentLogo
+						src={`https://api.sofascore.app/api/v1/unique-tournament/17/image/dark`}
+					/>
 
 					<Typography
 						variant="label"

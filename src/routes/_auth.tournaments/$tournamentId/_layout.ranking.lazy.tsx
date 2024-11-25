@@ -1,24 +1,12 @@
 import { useTournament } from "@/domains/tournament/hooks/use-tournament";
 import { Typography } from "@mui/material";
-import { createLazyFileRoute, getRouteApi } from "@tanstack/react-router";
-
-const route = getRouteApi("/_auth/tournaments/$tournamentId");
+import { createLazyFileRoute } from "@tanstack/react-router";
 
 export const TournamentRanking = () => {
-	const tournamentId = route.useParams().tournamentId;
-	const tournament = useTournament(tournamentId);
+	const tournament = useTournament();
 
 	// Derivative State
 	const tournamentLabel = tournament.serverState.data?.label;
-	// const matchesForSelectedRound = tournament.serverState.data?.matches;
-
-	// const activeGames = tournament.serverState?.data?.matches;
-	// const shouldRender = tournament.serverState.isSuccess && guesses.isSuccess;
-
-	// // console.log("shouldRender", shouldRender);
-	// // console.log("activeGames", activeGames);
-	// console.log("guesses", guesses.data);
-	// console.log("activeGames", activeGames);
 
 	return (
 		<div data-ui="rakning" className="screen">

@@ -10,5 +10,8 @@ const resetButton = () => css`
 `;
 
 export const Button = styled(ButtonBase)`
+	display: flex;
+	justify-content: center;
+	align-items: center;
 	${resetButton};
 `;

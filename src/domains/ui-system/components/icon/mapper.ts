@@ -1,6 +1,11 @@
 import {
+	IconChevronDown,
 	IconChevronRight,
+	IconChevronUp,
+	IconDeviceFloppy,
 	IconLayoutDashboard,
+	IconMinus,
+	IconPlus,
 	IconTrophy,
 	IconUser,
 	IconUsers,
@@ -14,5 +19,10 @@ export const ICONS = {
 	Users: IconUsers,
 	LayoutDashboard: IconLayoutDashboard,
 	ChevronRight: IconChevronRight,
+	ChevroDown: IconChevronDown,
+	ChevronUp: IconChevronUp,
 	X: IconX,
+	Plus: IconPlus,
+	Minus: IconMinus,
+	Save: IconDeviceFloppy,
 };

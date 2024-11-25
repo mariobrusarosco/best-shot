@@ -26,13 +26,13 @@ const ScoreHelper = {
 
 const GuessHelper = {
 	getStatus: (guessValue: string, scoreValue: string) => {
-		if (!guessValue) return GUESS_STATUS.NO_GUESS;
-
-		if (guessValue === scoreValue) return GUESS_STATUS.CORRECT_GUESS;
+		if (guessValue === null || guessValue === undefined)
+			return GUESS_STATUS.NO_GUESS;
+		if (guessValue == scoreValue) return GUESS_STATUS.CORRECT_GUESS;
 		else return GUESS_STATUS.INCORRECT_GUESS;
 	},
 	getPoints: (guessValue: string, scoreValue: string) => {
-		return guessValue === scoreValue ? GUESS_POINTS.HOME : 0;
+		return guessValue == scoreValue ? GUESS_POINTS.HOME : 0;
 	},
 	analyze: (guess: IGuess, match: IMatch) => {
 		if (!guess) return;

@@ -38,13 +38,13 @@ export const MatchCard = (props: Props) => {
 					flex: 1,
 					gridArea: "teams",
 				}}
-				data-ui
 			>
 				<Box
 					data-venue="home"
 					sx={{
 						display: "flex",
-						gap: 1,
+						columnGap: 1,
+						rowGap: 2,
 						justifyContent: "space-between",
 						flexDirection: isOpen ? "column" : "row",
 					}}
@@ -76,13 +76,17 @@ export const MatchCard = (props: Props) => {
 						/>
 					) : null}
 				</Box>
-
+				<Divider
+					sx={{ bgcolor: "black.500", width: "1px", mx: 0.5 }}
+					orientation="vertical"
+				/>
 				<Box
 					data-venue="away"
 					sx={{
 						display: "flex",
 						justifyContent: "space-between",
-						gap: 1,
+						columnGap: 1,
+						rowGap: 2,
 						flexDirection: isOpen ? "column" : "row",
 					}}
 				>
@@ -134,10 +138,6 @@ export const MatchCard = (props: Props) => {
 					</Stack>
 				) : null}
 
-				<Divider
-					sx={{ bgcolor: "black.500", width: "1px" }}
-					orientation="vertical"
-				/>
 				<Box display="flex" gap={1}>
 					{isOpen ? (
 						<SaveButton

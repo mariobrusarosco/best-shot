@@ -26,12 +26,7 @@ const TournamentsList = ({ tournaments }: Props) => {
 			data-ui="tournaments-list"
 		>
 			{tournaments?.map((tournament) => (
-				<TournamentCard
-					key={tournament.id}
-					label={tournament.label}
-					id={tournament.id}
-					logo={tournament.logo}
-				/>
+				<TournamentCard tournament={tournament} key={tournament.id} />
 			))}
 		</Box>
 	);

@@ -1,5 +1,6 @@
 import {
 	IconChevronDown,
+	IconChevronLeft,
 	IconChevronRight,
 	IconChevronUp,
 	IconDeviceFloppy,
@@ -21,6 +22,7 @@ export const ICONS = {
 	ChevronRight: IconChevronRight,
 	ChevroDown: IconChevronDown,
 	ChevronUp: IconChevronUp,
+	ChevronLeft: IconChevronLeft,
 	X: IconX,
 	Plus: IconPlus,
 	Minus: IconMinus,

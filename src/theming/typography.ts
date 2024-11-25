@@ -26,6 +26,7 @@ export const TYPOGRAPHY = {
 		h6: {
 			fontSize: 24,
 			fontFamily: "Montserrat",
+			lineHeight: 1.5,
 		},
 		label: {
 			fontSize: 12,

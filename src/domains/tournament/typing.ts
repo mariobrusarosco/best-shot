@@ -3,6 +3,8 @@ import { IMatch } from "../match/typing";
 export type ApiTournament = {
 	id: string;
 	label: string;
+	seasonId: string;
+	externalId: string;
 	description: string;
 	createdAt: string;
 	updatedAt: string;
@@ -13,5 +15,6 @@ export type ITournament = {
 	description: ApiTournament["description"];
 	label: ApiTournament["label"];
 	matches: IMatch[];
-	logo: string;
+	seasonId: ApiTournament["seasonId"];
+	externalId: ApiTournament["externalId"];
 };

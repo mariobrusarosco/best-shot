@@ -11,7 +11,7 @@ const LeaguesPage = () => {
 
 	return (
 		<div className="leagues-screen screen">
-			<ScreenHeading title="leagues" />
+			<ScreenHeading title="leagues" withBackButton />
 
 			<div className="league-creation">
 				<button onClick={() => setInCreationMode(!inCreationMode)}>

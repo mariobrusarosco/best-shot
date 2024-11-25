@@ -1,5 +1,6 @@
 import {
 	IconChevronDown,
+	IconChevronLeft,
 	IconChevronRight,
 	IconChevronUp,
 	IconDeviceFloppy,
@@ -25,4 +26,5 @@ export const ICONS = {
 	Plus: IconPlus,
 	Minus: IconMinus,
 	Save: IconDeviceFloppy,
+	ChevronLeft: IconChevronLeft,
 };

@@ -7,17 +7,16 @@ import {
 import Typography from "@mui/material/Typography";
 import Box from "@mui/system/Box";
 import { Link } from "@tanstack/react-router";
+import { TOURNAMENT_LOGO_URL } from "../constants.ts";
 import { ITournament } from "../typing";
 import { TournamentLogo } from "./tournament-logo";
 
 interface Props extends SurfaceProps {
-	id: ITournament["id"];
-	label: ITournament["label"];
-	logo?: ITournament["logo"];
+	tournament: ITournament;
 }
 
-export const TournamentCard = (props: Props) => {
-	const { id, label } = props;
+export const TournamentCard = ({ tournament }: Props) => {
+	const { id, label, externalId } = tournament;
 
 	return (
 		<Link
@@ -28,44 +27,53 @@ export const TournamentCard = (props: Props) => {
 			<Surface
 				sx={{
 					display: "flex",
+					flexDirection: "column",
+					justifyContent: "space-between",
+					gap: 2,
 					backgroundColor: "black.800",
 					borderRadius: 2,
 					p: 2,
+					height: 120,
 				}}
 			>
 				<Box
 					sx={{
-						display: "grid",
-						gap: 2,
-						flex: 1,
+						display: "flex",
+						justifyContent: "space-between",
 					}}
 				>
 					<TournamentLogo
-						src={`https://api.sofascore.app/api/v1/unique-tournament/17/image/dark`}
+						src={TOURNAMENT_LOGO_URL.replace(":externalId", externalId)}
 					/>
 
-					<Typography
-						variant="label"
-						color="neutral.100"
-						textTransform="uppercase"
+					<Button
+						sx={{
+							color: "teal.500",
+							p: 1,
+							borderRadius: "50%",
+							width: 32,
+							height: 32,
+							display: "grid",
+							placeItems: "center",
+						}}
 					>
-						{label}
-					</Typography>
+						<AppIcon name="ChevronRight" size="extra-small" />
+					</Button>
 				</Box>
 
-				<Button
+				<Typography
+					variant="label"
+					color="neutral.100"
+					textTransform="uppercase"
 					sx={{
-						color: "teal.500",
-						p: 1,
-						borderRadius: "50%",
-						width: 32,
-						height: 32,
-						display: "grid",
-						placeItems: "center",
+						textOverflow: "ellipsis",
+						overflow: "hidden",
+						maxHeight: "50px",
+						wordBreak: "break-word",
 					}}
 				>
-					<AppIcon name="ChevronRight" size="extra-small" />
-				</Button>
+					{label}
+				</Typography>
 			</Surface>
 		</Link>
 	);

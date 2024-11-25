@@ -22,7 +22,7 @@ const TournamentLayout = () => {
 			<ScreenHeading title="tournament" />
 
 			<Box sx={{ display: "flex", flexDirection: "column", px: 3 }}>
-				<TournamentHeading tournament={tournament.serverState.data} />
+				<TournamentHeading />
 				{/* <TournamentTabs tournamentId={tournament.serverState.data.id} /> */}
 			</Box>
 			<Outlet />

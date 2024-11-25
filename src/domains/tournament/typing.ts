@@ -6,6 +6,8 @@ export type ApiTournament = {
 	description: string;
 	createdAt: string;
 	updatedAt: string;
+	seasonId: string;
+	externalId: string;
 };
 
 export type ITournament = {
@@ -14,4 +16,7 @@ export type ITournament = {
 	label: ApiTournament["label"];
 	matches: IMatch[];
 	logo: string;
+	seasonId: ApiTournament["seasonId"];
+	externalId: ApiTournament["externalId"];
+};
 };

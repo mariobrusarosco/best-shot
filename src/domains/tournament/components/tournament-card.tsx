@@ -7,6 +7,7 @@ import {
 import Typography from "@mui/material/Typography";
 import Box from "@mui/system/Box";
 import { Link } from "@tanstack/react-router";
+import { TOURNAMENT_LOGO_URL } from "../constants";
 import { ITournament } from "../typing";
 import { TournamentLogo } from "./tournament-logo";
 
@@ -42,7 +43,7 @@ export const TournamentCard = ({ tournament }: Props) => {
 					}}
 				>
 					<TournamentLogo
-						src={`https://api.sofascore.app/api/v1/unique-tournament/${externalId}/image/dark`}
+						src={TOURNAMENT_LOGO_URL.replace(":externalId", externalId)}
 					/>
 
 					<Button

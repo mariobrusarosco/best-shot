@@ -2,6 +2,7 @@ import { TournamentLogo } from "@/domains/tournament/components/tournament-logo"
 import { UIHelper } from "@/theming/theme";
 import Typography from "@mui/material/Typography/Typography";
 import { Box, useMediaQuery } from "@mui/system";
+import { TOURNAMENT_LOGO_URL } from "../constants";
 import { useTournament } from "../hooks/use-tournament";
 
 const { startsOn } = UIHelper.media;
@@ -37,7 +38,10 @@ export const TournamentHeading = () => {
 			</Typography>
 
 			<TournamentLogo
-				src={`https://api.sofascore.app/api/v1/unique-tournament/${tournament.serverState.data?.externalId}/image/dark`}
+				src={TOURNAMENT_LOGO_URL.replace(
+					":externalId",
+					tournament.serverState.data?.externalId || "",
+				)}
 				sx={{
 					width: 127,
 					height: 127,

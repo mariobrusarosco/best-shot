@@ -6,7 +6,7 @@ import {
 	NumberInputProps,
 } from "@mui/base/Unstable_NumberInput";
 import { css, styled } from "@mui/system";
-import { forwardRef } from "react";
+import { forwardRef, useRef } from "react";
 
 export const NumberInput = forwardRef(
 	(props: NumberInputProps, ref: React.ForwardedRef<HTMLDivElement>) => {
@@ -39,12 +39,20 @@ export const NumberInput = forwardRef(
 );
 
 export const ScoreInput = ({ value, handleInputChange }: InputProps) => {
+	const ref = useRef<HTMLInputElement>(null);
+
 	return (
 		<NumberInput
 			aria-label="score-input"
 			placeholder="-"
 			value={toNullOrNumber(value)}
-			onChange={(_, val) => handleInputChange(toNullOrString(val))}
+			ref={ref}
+			onChange={(_, val) => {
+				// Moving the focus out of the input
+				ref.current?.querySelector("input")?.blur();
+
+				handleInputChange(toNullOrString(val));
+			}}
 			onInputChange={(e) => {
 				const val = e.target.value as string | null;
 				handleInputChange(toNullOrString(val));

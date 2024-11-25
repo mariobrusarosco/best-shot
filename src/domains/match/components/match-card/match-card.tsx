@@ -26,9 +26,6 @@ export const MatchCard = (props: Props) => {
 	const analysis = MatchAnalysis(guess, match);
 	const guessInputs = useGuessInputs(guess, match);
 
-	// console.log("[ANALYSIS]", analysis.score, analysis.guess, analysis.match);
-	console.log("guessInputs", guessInputs.allowNewGuess);
-
 	return (
 		<Card data-open={isOpen} data-ui="card">
 			<Box
@@ -44,7 +41,8 @@ export const MatchCard = (props: Props) => {
 					data-venue="home"
 					sx={{
 						display: "flex",
-						gap: 1,
+						columnGap: 1,
+						rowGap: 2,
 						justifyContent: "space-between",
 						flexDirection: isOpen ? "column" : "row",
 					}}
@@ -76,6 +74,11 @@ export const MatchCard = (props: Props) => {
 						/>
 					) : null}
 				</Box>
+
+				<Divider
+					sx={{ bgcolor: "black.500", width: "1px" }}
+					orientation="vertical"
+				/>
 
 				<Box
 					data-venue="away"
@@ -134,10 +137,6 @@ export const MatchCard = (props: Props) => {
 					</Stack>
 				) : null}
 
-				<Divider
-					sx={{ bgcolor: "black.500", width: "1px" }}
-					orientation="vertical"
-				/>
 				<Box display="flex" gap={1}>
 					{isOpen ? (
 						<SaveButton

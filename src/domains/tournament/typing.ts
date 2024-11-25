@@ -19,4 +19,3 @@ export type ITournament = {
 	seasonId: ApiTournament["seasonId"];
 	externalId: ApiTournament["externalId"];
 };
-};

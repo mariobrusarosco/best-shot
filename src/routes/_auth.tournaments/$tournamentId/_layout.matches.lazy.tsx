@@ -37,17 +37,15 @@ export const TournamentMatches = () => {
 			{shouldRender ? (
 				<div className="round">
 					<Pill
-						bgcolor="teal.500"
-						onClick={tournament.uiState?.handleNextRound}
-						my={4}
-						mx="auto"
-						maxWidth={90}
+						mt={6}
+						mb={2}
+						color="teal.500"
+						bgcolor="neutral.100"
+						width={70}
+						height={20}
 					>
-						<Typography
-							variant="label"
-							color="neutral.100"
-							textTransform="lowercase"
-						>
+						<Typography variant="tag">
+							{" "}
 							round {tournament.uiState?.activeRound}
 						</Typography>
 					</Pill>

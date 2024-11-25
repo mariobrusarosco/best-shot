@@ -1,3 +1,4 @@
+import { useGuessInputs } from "@/domains/guess/hooks/use-guess-inputs";
 import { Button } from "@/domains/ui-system/components/button/button";
 import { AppIcon } from "@/domains/ui-system/components/icon/icon";
 import {
@@ -5,7 +6,7 @@ import {
 	NumberInputProps,
 } from "@mui/base/Unstable_NumberInput";
 import { css, styled } from "@mui/system";
-import { forwardRef, useState } from "react";
+import { forwardRef } from "react";
 
 export const NumberInput = forwardRef(
 	(props: NumberInputProps, ref: React.ForwardedRef<HTMLDivElement>) => {
@@ -32,32 +33,45 @@ export const NumberInput = forwardRef(
 						className: "decrement",
 					},
 				}}
-				// value={value}
-				// onChange={(e) => {
-				// 	const value = e.target.value;
-				// 	onChange(value);
-				// }}
 			/>
 		);
 	},
 );
 
-export const ScoreInput = () => {
-	const [value, setValue] = useState<null | number>(null);
-
+export const ScoreInput = ({ value, handleInputChange }: InputProps) => {
 	return (
 		<NumberInput
 			aria-label="score-input"
 			placeholder="-"
-			value={value}
-			onChange={(_, val) => {
-				setValue(val);
+			value={toNullOrNumber(value)}
+			onChange={(_, val) => handleInputChange(toNullOrString(val))}
+			onInputChange={(e) => {
+				const val = e.target.value as string | null;
+				handleInputChange(toNullOrString(val));
 			}}
 			min={0}
 			step={1}
 		/>
 	);
 };
+
+const toNullOrString = (value: string | number | null) => {
+	if (value === null || value === "") return null;
+	return String(value);
+};
+
+const toNullOrNumber = (value: string | null) => {
+	if (value === null || value === "") return null;
+	return Number(value);
+};
+
+interface InputProps {
+	value: string | null;
+	handleInputChange: ReturnType<typeof useGuessInputs>[
+		| "handleAwayGuess"
+		| "handleHomeGuess"];
+}
+
 export const InputBoxStyled = styled("div")(
 	({ theme }) => `
     display: grid;
@@ -81,7 +95,6 @@ export const InputStyled = styled("input")(
   width: 32px;
   text-align: center;
 
-  
   ${resetInput};
   `,
 );

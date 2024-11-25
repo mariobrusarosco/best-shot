@@ -1,9 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
+import { getRouteApi } from "@tanstack/react-router";
 import { useState } from "react";
 import { getTournament } from "../server-state/fetchers";
 import { ITournament } from "../typing";
 
-export const useTournament = (id: string | undefined) => {
+const route = getRouteApi("/_auth/tournaments/$tournamentId");
+
+export const useTournament = () => {
+	const id = route.useParams().tournamentId;
 	const [activeRound, setActiveRound] = useState(1);
 
 	const handleNextRound = () => {

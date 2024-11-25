@@ -1,6 +1,7 @@
 import { Box } from "@mui/system";
 import { Outlet } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/router-devtools";
+import { APP_MODE } from "../utils";
 
 const AppContainer = () => {
 	return (
@@ -13,7 +14,9 @@ const AppContainer = () => {
 			}}
 		>
 			<Outlet />
-			<TanStackRouterDevtools position="top-left" initialIsOpen={false} />
+			{APP_MODE === "local-dev" && (
+				<TanStackRouterDevtools position="top-left" initialIsOpen={false} />
+			)}
 		</Box>
 	);
 };

@@ -2,12 +2,12 @@ import { useMutation } from "@tanstack/react-query";
 import { createGuess } from "../../demo/mutations";
 
 export const useGuessMutation = () => {
-	const mutate = useMutation({
+	const mutation = useMutation({
 		mutationFn: createGuess,
 		onSuccess: () => {
-			alert("Guess created successfully");
+			console.log("Guess created successfully");
 		},
 	});
 
-	return mutate;
+	return mutation;
 };

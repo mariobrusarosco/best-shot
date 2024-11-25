@@ -1,3 +1,4 @@
+import { useGuessInputs } from "@/domains/guess/hooks/use-guess-inputs";
 import { IGuess } from "@/domains/guess/typing";
 import { Button } from "@/domains/ui-system/components/button/button";
 import { AppIcon } from "@/domains/ui-system/components/icon/icon";
@@ -19,11 +20,14 @@ interface Props {
 }
 
 export const MatchCard = (props: Props) => {
-	const [isOpen, setIsOpen] = useState(true);
+	const [isOpen, setIsOpen] = useState(false);
 	const { logoUrl, match, guess } = props;
 
 	const analysis = MatchAnalysis(guess, match);
-	console.log("[ANALYSIS]", analysis.score, analysis.guess);
+	const guessInputs = useGuessInputs(guess, match);
+
+	// console.log("[ANALYSIS]", analysis.score, analysis.guess, analysis.match);
+	console.log("guessInputs", guessInputs.allowNewGuess);
 
 	return (
 		<Card data-open={isOpen} data-ui="card">
@@ -65,7 +69,12 @@ export const MatchCard = (props: Props) => {
 						label={match.homeTeam}
 					/>
 
-					{isOpen ? <ScoreInput /> : null}
+					{isOpen ? (
+						<ScoreInput
+							value={guessInputs.homeGuess}
+							handleInputChange={guessInputs.handleHomeGuess}
+						/>
+					) : null}
 				</Box>
 
 				<Box
@@ -91,7 +100,10 @@ export const MatchCard = (props: Props) => {
 						}}
 					>
 						{isOpen ? (
-							<ScoreInput />
+							<ScoreInput
+								value={guessInputs.awayGuess}
+								handleInputChange={guessInputs.handleAwayGuess}
+							/>
 						) : (
 							<>
 								<ScoreDisplay value={analysis.score.away} />
@@ -126,18 +138,34 @@ export const MatchCard = (props: Props) => {
 					sx={{ bgcolor: "black.500", width: "1px" }}
 					orientation="vertical"
 				/>
-				<Button
-					sx={{
-						borderRadius: "50%",
-						color: "neutral.100",
-						backgroundColor: "teal.500",
-						width: 24,
-						height: 24,
-					}}
-					onClick={() => setIsOpen((prev) => !prev)}
-				>
-					<AppIcon name="ChevronRight" size="tiny" />
-				</Button>
+				<Box display="flex" gap={1}>
+					{isOpen ? (
+						<SaveButton
+							onClick={guessInputs.handleSave}
+							disabled={!guessInputs.allowNewGuess}
+						>
+							<AppIcon name="Save" size="extra-small" />
+						</SaveButton>
+					) : null}
+
+					{/* {analysis.match.PENDING_MATCH ?( */}
+					<Button
+						sx={{
+							borderRadius: "50%",
+							color: "neutral.100",
+							backgroundColor: "teal.500",
+							width: 24,
+							height: 24,
+						}}
+						onClick={() => setIsOpen((prev) => !prev)}
+					>
+						<AppIcon
+							name={isOpen ? "ChevronUp" : "ChevroDown"}
+							size="extra-small"
+						/>
+					</Button>
+					{/* ) : null} */}
+				</Box>
 			</Header>
 		</Card>
 	);
@@ -170,5 +198,20 @@ export const Header = styled(Box)(
 		align-items: center;
 		grid-area: header;		
 		gap: ${theme.spacing(1)};
+	`,
+);
+
+export const SaveButton = styled(Button)(
+	({ theme }) => `
+		border-radius: 50%;
+		color: ${theme.palette.neutral[100]};
+		background-color: ${theme.palette.teal[500]};
+		width: 24px;
+		height: 24px;
+
+		&[disabled] {
+    	filter: grayscale(1);
+			opacity: 0.5;
+  	} 
 	`,
 );

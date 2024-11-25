@@ -2,8 +2,9 @@ import { Pill } from "@/domains/ui-system/components/pill/pill";
 import { Box, Typography } from "@mui/material";
 
 export const ScoreDisplay = ({ value }: { value: number | null }) => {
-	const content = value || "-";
+	const content = value ?? "-";
 
+	// debugger;
 	return (
 		<Box
 			sx={{

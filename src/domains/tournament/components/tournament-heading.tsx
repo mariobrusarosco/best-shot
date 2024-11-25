@@ -1,20 +1,18 @@
 import { TournamentLogo } from "@/domains/tournament/components/tournament-logo";
-import fakeLogo from "@/domains/ui-system/components/icon/system-icons/copa-do-brasil.svg";
 import { UIHelper } from "@/theming/theme";
 import Typography from "@mui/material/Typography/Typography";
 import { Box, useMediaQuery } from "@mui/system";
-import { ITournament } from "../typing";
+import { TOURNAMENT_LOGO_URL } from "../constants.ts";
+import { useTournament } from "../hooks/use-tournament";
 
 const { startsOn } = UIHelper.media;
 
-export const TournamentHeading = ({
-	tournament,
-}: {
-	tournament: ITournament;
-}) => {
+export const TournamentHeading = () => {
+	const tournament = useTournament();
+	console.log(tournament.serverState.data);
 	const isDesktopScreen = useMediaQuery(startsOn("desktop"));
 
-	const titleVariant = isDesktopScreen ? "h1" : "h3";
+	const titleVariant = isDesktopScreen ? "h1" : "h6";
 
 	return (
 		<Box
@@ -26,12 +24,24 @@ export const TournamentHeading = ({
 				gap: 2,
 			}}
 		>
-			<Typography color="neutral.100" variant={titleVariant}>
-				{tournament.label}
+			<Typography
+				color="neutral.100"
+				variant={titleVariant}
+				sx={{
+					textOverflow: "ellipsis",
+					overflow: "hidden",
+					wordBreak: "break-word",
+					maxWidth: "50%",
+				}}
+			>
+				{tournament.serverState.data?.label}
 			</Typography>
 
 			<TournamentLogo
-				src={fakeLogo}
+				src={TOURNAMENT_LOGO_URL.replace(
+					":externalId",
+					tournament.serverState.data?.externalId || "",
+				)}
 				sx={{
 					width: 127,
 					height: 127,

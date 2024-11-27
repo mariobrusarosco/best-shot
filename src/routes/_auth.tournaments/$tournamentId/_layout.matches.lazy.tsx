@@ -43,10 +43,7 @@ export const TournamentMatches = () => {
 						width={70}
 						height={20}
 					>
-						<Typography variant="tag">
-							{" "}
-							round {tournament.uiState?.activeRound}
-						</Typography>
+						<Typography variant="tag"> round</Typography>
 					</Pill>
 
 					<Box display="grid" gap={2} pb={7} className="round-games">

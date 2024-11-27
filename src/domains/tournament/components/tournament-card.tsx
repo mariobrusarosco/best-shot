@@ -22,6 +22,7 @@ export const TournamentCard = ({ tournament }: Props) => {
 		<Link
 			to="/tournaments/$tournamentId/matches"
 			params={{ tournamentId: id }}
+			search={{ round: 1 }}
 			as="li"
 		>
 			<Surface

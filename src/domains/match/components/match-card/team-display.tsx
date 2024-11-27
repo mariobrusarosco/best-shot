@@ -1,16 +1,13 @@
 import { Surface } from "@/domains/ui-system/components/surface/surface";
 import Typography from "@mui/material/Typography/Typography";
 import { Box, styled } from "@mui/system";
+import { ITeam } from "../../typing";
 
 export const TeamDisplay = ({
-	logoUrl,
-	label,
-	standing,
+	team,
 	expanded,
 }: {
-	logoUrl: string;
-	label: string;
-	standing?: string;
+	team: ITeam;
 	expanded: boolean;
 }) => {
 	return (
@@ -18,7 +15,7 @@ export const TeamDisplay = ({
 			{expanded ? (
 				<Box>
 					<span>pos</span>
-					{standing}
+					{0}
 				</Box>
 			) : null}
 
@@ -31,18 +28,18 @@ export const TeamDisplay = ({
 					placeItems: "center",
 				}}
 			>
-				<TeamLogo src={logoUrl} />
+				<TeamLogo src={team.badge} />
 			</Surface>
 
-			<Typography variant="caption">{label}</Typography>
+			<Typography variant="caption">{team.shortName}</Typography>
 		</Display>
 	);
 };
 
 export const TeamLogo = styled("img")(() => ({
 	display: "inline-flex",
-	width: 14,
-	height: 14,
+	width: 16,
+	height: 16,
 }));
 
 export const Display = styled(Box)(

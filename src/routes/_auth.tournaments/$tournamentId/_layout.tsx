@@ -19,7 +19,7 @@ const TournamentLayout = () => {
 
 	return (
 		<div data-ui="tournament-page" className="page">
-			<ScreenHeading title="tournament" />
+			<ScreenHeading title="tournament" withBackButton />
 
 			<Box sx={{ display: "flex", flexDirection: "column", px: 3 }}>
 				<TournamentHeading />

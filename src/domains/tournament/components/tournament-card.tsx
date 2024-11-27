@@ -16,7 +16,7 @@ interface Props extends SurfaceProps {
 }
 
 export const TournamentCard = ({ tournament }: Props) => {
-	const { id, label, externalId } = tournament;
+	const { label, id, externalId } = tournament;
 
 	return (
 		<Link

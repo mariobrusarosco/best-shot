@@ -3,8 +3,14 @@ export type IGuess = {
 	memberId: string;
 	matchId: string;
 	tournamentId: string;
-	homeScore: string;
-	awayScore: string;
+	home: {
+		score: string;
+		status?: typeof GUESS_STATUS;
+	};
+	away: {
+		score: string;
+		status?: typeof GUESS_STATUS;
+	};
 	createdAt: Date;
 	updatedAt: Date;
 };

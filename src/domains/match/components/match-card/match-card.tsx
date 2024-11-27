@@ -14,14 +14,13 @@ import { ScoreDisplay } from "./score-display";
 import { ScoreInput } from "./score-input";
 import { TeamDisplay } from "./team-display";
 interface Props {
-	logoUrl: string;
 	match: IMatch;
 	guess: IGuess;
 }
 
 export const MatchCard = (props: Props) => {
 	const [isOpen, setIsOpen] = useState(false);
-	const { logoUrl, match, guess } = props;
+	const { match, guess } = props;
 
 	const analysis = MatchAnalysis(guess, match);
 	const guessInputs = useGuessInputs(guess, match);
@@ -61,11 +60,7 @@ export const MatchCard = (props: Props) => {
 						</Box>
 					)}
 
-					<TeamDisplay
-						expanded={isOpen}
-						logoUrl={logoUrl}
-						label={match.homeTeam}
-					/>
+					<TeamDisplay expanded={isOpen} team={match.home} />
 
 					{isOpen ? (
 						<ScoreInput
@@ -89,11 +84,7 @@ export const MatchCard = (props: Props) => {
 						flexDirection: isOpen ? "column" : "row",
 					}}
 				>
-					<TeamDisplay
-						expanded={isOpen}
-						logoUrl={logoUrl}
-						label={match.awayTeam}
-					/>
+					<TeamDisplay expanded={isOpen} team={match.away} />
 					<Box
 						sx={{
 							display: "flex",

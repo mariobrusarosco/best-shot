@@ -7,12 +7,18 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/system/Box";
 
 export const TournamentRoundsBar = ({
-	tournamentState,
+	tournament,
 }: {
-	tournamentState?: ReturnType<typeof useTournament>["uiState"];
+	tournament: ReturnType<typeof useTournament>;
 }) => {
 	return (
-		<Box>
+		<Box
+			sx={{
+				position: "sticky",
+				top: 0,
+				left: 0,
+			}}
+		>
 			<Box
 				sx={{
 					display: "flex",
@@ -66,6 +72,9 @@ export const TournamentRoundsBar = ({
 					pb: 2,
 					gap: 2,
 					overflow: "hidden",
+					position: "sticky",
+					top: 0,
+					left: 0,
 				}}
 			>
 				<Box
@@ -77,7 +86,9 @@ export const TournamentRoundsBar = ({
 						pb: 2,
 					}}
 				>
-					{Array.from({ length: 38 }).map((_, i) => (
+					{Array.from({
+						length: Number(tournament.serverState.data?.rounds),
+					}).map((_, i) => (
 						<Button
 							sx={{
 								color: "teal.500",
@@ -90,10 +101,10 @@ export const TournamentRoundsBar = ({
 								borderWidth: "1px",
 								borderStyle: "solid",
 							}}
-							onClick={() => tournamentState?.goToRound(i)}
+							onClick={() => tournament.uiState?.goToRound(i + 1)}
 						>
 							<Typography variant="label" color="teal.500">
-								{i}
+								{i + 1}
 							</Typography>
 						</Button>
 					))}

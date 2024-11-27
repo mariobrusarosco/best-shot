@@ -9,7 +9,6 @@ const { startsOn } = UIHelper.media;
 
 export const TournamentHeading = () => {
 	const tournament = useTournament();
-	console.log(tournament.serverState.data);
 	const isDesktopScreen = useMediaQuery(startsOn("desktop"));
 
 	const titleVariant = isDesktopScreen ? "h1" : "h6";

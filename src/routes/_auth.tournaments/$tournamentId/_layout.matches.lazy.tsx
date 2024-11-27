@@ -30,7 +30,8 @@ export const TournamentMatches = () => {
 		<Box
 			data-ui="matches"
 			className="screen"
-			py={[6, 10]}
+			pt={[6, 10]}
+			pb={14}
 			px={[2, 6]}
 			maxWidth="100vw"
 		>
@@ -48,7 +49,7 @@ export const TournamentMatches = () => {
 						<Typography variant="tag">round {activeRound}</Typography>
 					</Pill>
 
-					<Box display="grid" gap={2} pb={7} className="round-games">
+					<Box display="grid" gap={2} className="round-games">
 						{matchesForSelectedRound?.map((match) => {
 							// console.log("[Match --- match], match", match);
 							const guess = guesses.data?.find((guess: IGuess) => {

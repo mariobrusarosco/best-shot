@@ -15,7 +15,6 @@ export const TournamentRoundsBar = ({
 }) => {
 	const { activeRound, goToRound } = useTournamentRounds();
 
-	console.log({ activeRound });
 	return (
 		<Box
 			sx={{

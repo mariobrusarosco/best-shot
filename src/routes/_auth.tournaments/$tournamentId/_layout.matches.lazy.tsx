@@ -3,6 +3,7 @@ import { IGuess } from "@/domains/guess/typing";
 import { MatchCard } from "@/domains/match/components/match-card/match-card";
 import { TournamentRoundsBar } from "@/domains/tournament/components/tournament-rounds-bar";
 import { useTournament } from "@/domains/tournament/hooks/use-tournament";
+import { useTournamentRounds } from "@/domains/tournament/hooks/use-tournament-rounds";
 import { Pill } from "@/domains/ui-system/components/pill/pill";
 import { Typography } from "@mui/material";
 import { Box } from "@mui/system";
@@ -10,6 +11,7 @@ import { createLazyFileRoute } from "@tanstack/react-router";
 
 export const TournamentMatches = () => {
 	const tournament = useTournament();
+	const { activeRound } = useTournamentRounds();
 	const guesses = useGuess(tournament.serverState.data);
 
 	// Derivative State
@@ -43,7 +45,7 @@ export const TournamentMatches = () => {
 						width={70}
 						height={20}
 					>
-						<Typography variant="tag"> round</Typography>
+						<Typography variant="tag">round {activeRound}</Typography>
 					</Pill>
 
 					<Box display="grid" gap={2} pb={7} className="round-games">

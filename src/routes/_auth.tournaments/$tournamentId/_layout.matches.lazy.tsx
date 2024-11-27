@@ -3,7 +3,6 @@ import { IGuess } from "@/domains/guess/typing";
 import { MatchCard } from "@/domains/match/components/match-card/match-card";
 import { TournamentRoundsBar } from "@/domains/tournament/components/tournament-rounds-bar";
 import { useTournament } from "@/domains/tournament/hooks/use-tournament";
-import fakeLogo from "@/domains/ui-system/components/icon/system-icons/copa-do-brasil.svg";
 import { Pill } from "@/domains/ui-system/components/pill/pill";
 import { Typography } from "@mui/material";
 import { Box } from "@mui/system";
@@ -33,14 +32,14 @@ export const TournamentMatches = () => {
 			px={[2, 6]}
 			maxWidth="100vw"
 		>
-			<TournamentRoundsBar tournamentState={tournament.uiState} />
+			<TournamentRoundsBar tournament={tournament} />
 			{shouldRender ? (
 				<div className="round">
 					<Pill
 						mt={6}
 						mb={2}
-						color="teal.500"
-						bgcolor="neutral.100"
+						bgcolor="teal.500"
+						color="neutral.100"
 						width={70}
 						height={20}
 					>
@@ -59,12 +58,7 @@ export const TournamentMatches = () => {
 
 							return (
 								<li key={match.id} className="round-item match-card">
-									<MatchCard
-										logoUrl={fakeLogo}
-										key={match.id}
-										match={match}
-										guess={guess}
-									/>
+									<MatchCard key={match.id} match={match} guess={guess} />
 								</li>
 							);
 						})}

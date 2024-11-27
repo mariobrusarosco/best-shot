@@ -14,8 +14,8 @@ interface Props {
 const Guess = ({ match, tournamentId, guesses }: Props) => {
 	const queryClient = useQueryClient();
 	const gameGuess = guesses?.find((guess) => guess.matchId === match.id);
-	const [homeScore, setHomeScore] = useState(gameGuess?.homeScore || "");
-	const [awayScore, setAwayScore] = useState(gameGuess?.awayScore || "");
+	const [homeScore, setHomeScore] = useState(gameGuess?.home.score || "");
+	const [awayScore, setAwayScore] = useState(gameGuess?.away.score || "");
 	const { mutate } = useGuessMutation();
 
 	const handleHomeScore = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -72,7 +72,7 @@ const Guess = ({ match, tournamentId, guesses }: Props) => {
 					<div className="guess">
 						<div className="home">
 							{forbidNewGuesses ? (
-								<span>{gameGuess?.homeScore}</span>
+								<span>{gameGuess?.away.score}</span>
 							) : (
 								<input
 									type="number"
@@ -86,7 +86,7 @@ const Guess = ({ match, tournamentId, guesses }: Props) => {
 						<span>x</span>
 						<div className="away">
 							{forbidNewGuesses ? (
-								<span>{gameGuess?.awayScore}</span>
+								<span>{gameGuess?.away.score}</span>
 							) : (
 								<input
 									min={0}

@@ -26,13 +26,13 @@ export const Match = ({ match }: { match: IMatch }) => {
 			</div>
 			<div className="teams">
 				<div className="home">
-					<span>{match.homeTeam}</span>
-					<span>{match.homeScore}</span>
+					<span>{match.home.shortName}</span>
+					<span>{match.home.score}</span>
 				</div>
 				<span>x</span>
 				<div className="away">
-					<span>{match.awayScore}</span>
-					<span>{match.awayTeam}</span>
+					<span>{match.away.shortName}</span>
+					<span>{match.away.score}</span>
 				</div>
 			</div>
 		</div>

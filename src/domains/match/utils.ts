@@ -17,8 +17,8 @@ export const MatchAnalysis = (guess: IGuess, match: IMatch) => {
 const ScoreHelper = {
 	analyze: (match: IMatch) => {
 		return {
-			home: Number(match.homeScore) ?? null,
-			away: Number(match.awayScore) ?? null,
+			home: Number(match.home.score) ?? null,
+			away: Number(match.away.score) ?? null,
 			outcome: getGuessOrMatchOutcome(match),
 		};
 	},
@@ -38,8 +38,8 @@ const GuessHelper = {
 		if (!guess) return;
 
 		const points = {
-			home: GuessHelper.getPoints(guess.homeScore, match.homeScore),
-			away: GuessHelper.getPoints(guess.awayScore, match.awayScore),
+			home: GuessHelper.getPoints(guess.home.score, match.home.score),
+			away: GuessHelper.getPoints(guess.away.score, match.home.score),
 			matchOutcome:
 				getGuessOrMatchOutcome(match) === getGuessOrMatchOutcome(guess)
 					? GUESS_POINTS.MATCH
@@ -47,13 +47,13 @@ const GuessHelper = {
 		};
 
 		const home = {
-			value: Number(guess.homeScore) ?? null,
-			status: GuessHelper.getStatus(guess.homeScore, match.homeScore),
+			value: Number(guess.home.score) ?? null,
+			status: GuessHelper.getStatus(guess.home.score, match.home.score),
 		};
 
 		const away = {
-			value: Number(guess.awayScore) ?? null,
-			status: GuessHelper.getStatus(guess.awayScore, match.awayScore),
+			value: Number(guess.away.score) ?? null,
+			status: GuessHelper.getStatus(guess.away.score, match.away.score),
 		};
 
 		return { away, points, home };
@@ -63,11 +63,11 @@ const GuessHelper = {
 const getGuessOrMatchOutcome = (
 	entity: IGuess | IMatch,
 ): MATCH_OR_GUESS_OUTCOME | null => {
-	if (!entity?.awayScore || !entity?.homeScore) return null;
+	if (!entity?.away.score || !entity?.home.score) return null;
 
-	if (entity.homeScore === entity.awayScore) return "DRAW";
+	if (entity.home.score === entity.away.score) return "DRAW";
 
-	return entity.homeScore > entity.awayScore ? "HOME_WIN" : "AWAY_WIN";
+	return entity.home.score > entity.away.score ? "HOME_WIN" : "AWAY_WIN";
 };
 
 export const hideAndShow = (analysis: ReturnType<typeof MatchAnalysis>) => {

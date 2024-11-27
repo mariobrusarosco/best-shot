@@ -11,10 +11,10 @@ export const useGuessInputs = (guess: IGuess, match: IMatch) => {
 	const queryClient = useQueryClient();
 	const tournamentId = route.useParams().tournamentId;
 	const [homeGuess, setHomeGuess] = useState<null | string>(
-		guess?.homeScore ?? null,
+		guess?.home.score ?? null,
 	);
 	const [awayGuess, setAwayGuess] = useState<null | string>(
-		guess?.awayScore ?? null,
+		guess?.away.score ?? null,
 	);
 	const { mutate, isPending } = useGuessMutation();
 

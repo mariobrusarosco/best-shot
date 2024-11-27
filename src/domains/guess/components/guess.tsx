@@ -36,8 +36,8 @@ const Guess = ({ match, tournamentId, guesses }: Props) => {
 				matchId: match.id,
 				tournamentId,
 				memberId,
-				homeScore: homeScore,
-				awayScore: awayScore,
+				home: { score: homeScore },
+				away: { score: awayScore },
 			},
 			{
 				onSettled: () => {

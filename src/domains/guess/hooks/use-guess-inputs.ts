@@ -16,7 +16,7 @@ export const useGuessInputs = (guess: IGuess, match: IMatch) => {
 	const [awayGuess, setAwayGuess] = useState<null | string>(
 		guess?.away.score ?? null,
 	);
-	const { mutate, isPending } = useGuessMutation();
+	const { isPending, mutateAsync } = useGuessMutation();
 
 	const handleHomeGuess = (value: string | null) => {
 		setHomeGuess(value);
@@ -32,13 +32,17 @@ export const useGuessInputs = (guess: IGuess, match: IMatch) => {
 			throw new Error("Invalid guess");
 		}
 
-		mutate(
+		return mutateAsync(
 			{
 				matchId: match.id,
 				tournamentId,
 				memberId,
-				homeScore: homeGuess,
-				awayScore: awayGuess,
+				home: {
+					score: homeGuess,
+				},
+				away: {
+					score: awayGuess,
+				},
 			},
 			{
 				onSettled: () => {

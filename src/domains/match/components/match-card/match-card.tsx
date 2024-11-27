@@ -131,7 +131,10 @@ export const MatchCard = (props: Props) => {
 				<Box display="flex" gap={1}>
 					{isOpen ? (
 						<SaveButton
-							onClick={guessInputs.handleSave}
+							onClick={async () => {
+								await guessInputs.handleSave();
+								setIsOpen(false);
+							}}
 							disabled={!guessInputs.allowNewGuess}
 						>
 							<AppIcon name="Save" size="extra-small" />

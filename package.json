@@ -1,7 +1,7 @@
 {
 	"name": "best-shot",
 	"private": true,
-	"version": "0.13.1",
+	"version": "0.14.0",
 	"type": "module",
 	"scripts": {
 		"start": "concurrently \"vite --mode local-dev\" \"cd ../api-best-shot && yarn dev\"",
@@ -9,8 +9,7 @@
 		"build": "tsc && vite build",
 		"preview": "vite preview",
 		"test": "vitest run --coverage",
-		"test:dev": "vitest",
-		"test:production": "echo testing in production"
+		"test:dev": "vitest"
 	},
 	"dependencies": {
 		"@auth0/auth0-react": "^2.2.4",

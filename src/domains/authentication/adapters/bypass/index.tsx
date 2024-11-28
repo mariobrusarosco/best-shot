@@ -1,9 +1,15 @@
 import { api } from "@/api";
+import { APP_MODE } from "@/domains/global/utils";
 import { useMutation } from "@tanstack/react-query";
 import { createContext, useContext, useEffect, useState } from "react";
 import { IAuthHook } from "..";
 
 const ByPassAuthContext = createContext<IAuthHook | undefined>(undefined);
+
+const memberid =
+	APP_MODE === "local-dev"
+		? localStorage.getItem("local-member-id")
+		: import.meta.env.VITE_MOCKED_MEMBER_ID;
 
 export const ByPassAuthProvider = ({
 	children,
@@ -21,9 +27,9 @@ export const ByPassAuthProvider = ({
 	});
 
 	useEffect(() => {
-		mutate(import.meta.env.VITE_MOCKED_MEMBER_ID);
+		mutate(memberid);
 		setState({
-			authId: import.meta.env.VITE_MOCKED_MEMBER_ID,
+			authId: memberid as string,
 			isAuthenticated: true,
 			isLoadingAuth: false,
 		});
@@ -36,15 +42,8 @@ export const ByPassAuthProvider = ({
 	);
 };
 
-export const authenticatedLocalMember = async (memberId: any) => {
-	const response = await api.post("whoami", { memberId });
-
-	return response.data;
-};
-
-export const authenticatedLocalMember2 = async ({ queryKey }: any) => {
-	const [, { authId }] = queryKey;
-	const response = await api.get("whoami/" + authId);
+export const authenticatedLocalMember = async (publicId: any) => {
+	const response = await api.post("whoami", { publicId });
 
 	return response.data;
 };

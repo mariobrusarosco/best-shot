@@ -4,19 +4,22 @@ import { AppIcon } from "@/domains/ui-system/components/icon/icon";
 import { Pill } from "@/domains/ui-system/components/pill/pill";
 import { Surface } from "@/domains/ui-system/components/surface/surface";
 import Typography from "@mui/material/Typography";
+import { styled } from "@mui/system";
 import Box from "@mui/system/Box";
+import { useTournamentRounds } from "../hooks/use-tournament-rounds";
 
 export const TournamentRoundsBar = ({
 	tournament,
 }: {
 	tournament: ReturnType<typeof useTournament>;
 }) => {
+	const { activeRound, goToRound } = useTournamentRounds();
+
 	return (
 		<Box
 			sx={{
-				position: "sticky",
-				top: 0,
-				left: 0,
+				overflow: "hidden",
+				width: "100vw",
 			}}
 		>
 			<Box
@@ -89,27 +92,40 @@ export const TournamentRoundsBar = ({
 					{Array.from({
 						length: Number(tournament.serverState.data?.rounds),
 					}).map((_, i) => (
-						<Button
-							sx={{
-								color: "teal.500",
-								p: 1,
-								borderRadius: 2,
-								width: 32,
-								height: 32,
-								display: "grid",
-								borderColor: "teal.500",
-								borderWidth: "1px",
-								borderStyle: "solid",
-							}}
-							onClick={() => tournament.uiState?.goToRound(i + 1)}
+						<RoundButton
+							onClick={() => goToRound(i + 1)}
+							data-active={activeRound === i + 1}
 						>
-							<Typography variant="label" color="teal.500">
+							<Typography variant="label" color="currentcolor">
 								{i + 1}
 							</Typography>
-						</Button>
+						</RoundButton>
 					))}
 				</Box>
 			</Surface>
 		</Box>
 	);
 };
+
+// background changes if active
+const RoundButton = styled(Button)(
+	({ theme }) => `
+		background-color: transparent;
+		color: ${theme.palette.teal[500]};
+		padding: ${theme.spacing(1)};
+		border-radius: ${theme.shape.borderRadius}px;
+		width: 32px;
+		height: 32px;
+		display: grid;
+		place-items: center;
+		border-color: ${theme.palette.teal[500]};
+		border-width: 1px;
+		border-style: solid;
+
+
+		&[data-active="true"] {
+			background-color: ${theme.palette.teal[500]};
+			color: ${theme.palette.neutral[100]};
+		}
+	`,
+);

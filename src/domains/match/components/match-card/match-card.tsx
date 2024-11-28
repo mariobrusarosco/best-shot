@@ -1,4 +1,3 @@
-import { useGuessInputs } from "@/domains/guess/hooks/use-guess-inputs";
 import { IGuess } from "@/domains/guess/typing";
 import { Button } from "@/domains/ui-system/components/button/button";
 import { AppIcon } from "@/domains/ui-system/components/icon/icon";
@@ -8,22 +7,18 @@ import Divider from "@mui/material/Divider";
 import { Box, Stack, styled } from "@mui/system";
 import { useState } from "react";
 import { IMatch } from "../../typing";
-import { MatchAnalysis } from "../../utils";
-import { GuessDisplay } from "./guess-display";
-import { ScoreDisplay } from "./score-display";
-import { ScoreInput } from "./score-input";
 import { TeamDisplay } from "./team-display";
 interface Props {
 	match: IMatch;
-	guess: IGuess;
+	guess: IGuess | null;
 }
 
 export const MatchCard = (props: Props) => {
 	const [isOpen, setIsOpen] = useState(false);
-	const { match, guess } = props;
+	const { match } = props;
 
-	const analysis = MatchAnalysis(guess, match);
-	const guessInputs = useGuessInputs(guess, match);
+	// const analysis = MatchAnalysis(guess, match);
+	// const guessInputs = useGuessInputs(guess, match);
 
 	return (
 		<Card data-open={isOpen} data-ui="card">
@@ -55,19 +50,19 @@ export const MatchCard = (props: Props) => {
 								gap: 1,
 							}}
 						>
-							<ScoreDisplay value={analysis.score.home} />
-							<GuessDisplay data={analysis?.guess?.home} />
+							{/* <ScoreDisplay value={analysis.score.home} />
+							<GuessDisplay data={analysis?.guess?.home} /> */}
 						</Box>
 					)}
 
 					<TeamDisplay expanded={isOpen} team={match.home} />
 
-					{isOpen ? (
+					{/* {isOpen ? (
 						<ScoreInput
 							value={guessInputs.homeGuess}
 							handleInputChange={guessInputs.handleHomeGuess}
 						/>
-					) : null}
+					) : null} */}
 				</Box>
 
 				<Divider
@@ -93,17 +88,17 @@ export const MatchCard = (props: Props) => {
 							gap: 1,
 						}}
 					>
-						{isOpen ? (
+						{/* {isOpen ? (
 							<ScoreInput
 								value={guessInputs.awayGuess}
 								handleInputChange={guessInputs.handleAwayGuess}
 							/>
-						) : (
-							<>
-								<ScoreDisplay value={analysis.score.away} />
-								<GuessDisplay data={analysis?.guess?.away} />
-							</>
-						)}
+						) : ( */}
+						<>
+							{/* <ScoreDisplay value={analysis.score.away} />
+							<GuessDisplay data={analysis?.guess?.away} /> */}
+						</>
+						{/* )} */}
 					</Box>
 				</Box>
 			</Box>
@@ -129,7 +124,7 @@ export const MatchCard = (props: Props) => {
 				) : null}
 
 				<Box display="flex" gap={1}>
-					{isOpen ? (
+					{/* {isOpen ? (
 						<SaveButton
 							onClick={async () => {
 								await guessInputs.handleSave();
@@ -139,7 +134,7 @@ export const MatchCard = (props: Props) => {
 						>
 							<AppIcon name="Save" size="extra-small" />
 						</SaveButton>
-					) : null}
+					) : null} */}
 
 					{/* {analysis.match.PENDING_MATCH ?( */}
 					<Button

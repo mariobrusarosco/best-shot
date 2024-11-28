@@ -55,18 +55,6 @@ export const Menu = () => {
 					</Typography>
 				) : null}
 			</HeaderLink>
-			<HeaderLink to="/leagues">
-				<HeaderButton iconName="Users" />
-				{isOpen ? (
-					<Typography
-						color="black.400"
-						variant="topic"
-						textTransform="uppercase"
-					>
-						leagues
-					</Typography>
-				) : null}
-			</HeaderLink>
 			<HeaderLink to="/tournaments">
 				<HeaderButton iconName="Trophy" />
 				{isOpen ? (
@@ -76,6 +64,18 @@ export const Menu = () => {
 						textTransform="uppercase"
 					>
 						tournaments
+					</Typography>
+				) : null}
+			</HeaderLink>
+			<HeaderLink to="/leagues">
+				<HeaderButton iconName="Users" />
+				{isOpen ? (
+					<Typography
+						color="black.400"
+						variant="topic"
+						textTransform="uppercase"
+					>
+						leagues
 					</Typography>
 				) : null}
 			</HeaderLink>

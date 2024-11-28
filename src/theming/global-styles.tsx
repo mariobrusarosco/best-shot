@@ -21,6 +21,7 @@ export const GlobalCSS = () => (
 			},
 			a: {
 				textDecoration: "none",
+				color: "unset",
 			},
 		}}
 	/>

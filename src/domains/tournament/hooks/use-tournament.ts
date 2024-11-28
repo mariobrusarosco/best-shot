@@ -8,11 +8,8 @@ const route = getRouteApi("/_auth/tournaments/$tournamentId");
 export const useTournament = () => {
 	const id = route.useParams().tournamentId;
 
-	const search = route.useSearch<{ round: string }>();
-	const round = search.round;
-
 	const query = useQuery<ITournament>({
-		queryKey: ["tournament", { id, round }],
+		queryKey: ["tournament", { id }],
 		queryFn: getTournament,
 		enabled: !!id,
 	});

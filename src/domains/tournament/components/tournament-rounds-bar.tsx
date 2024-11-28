@@ -18,9 +18,8 @@ export const TournamentRoundsBar = ({
 	return (
 		<Box
 			sx={{
-				position: "sticky",
-				top: 0,
-				left: 0,
+				overflow: "hidden",
+				width: "100vw",
 			}}
 		>
 			<Box

@@ -76,3 +76,10 @@ export type CustomTypographyVariant =
 	| "caption"
 	| "label"
 	| "tag";
+
+declare module "@tabler/icons-react/dist/icons/*.mjs" {
+	import { ForwardRefExoticComponent, SVGProps } from "react";
+
+	const IconComponent: ForwardRefExoticComponent<SVGProps<SVGSVGElement>>;
+	export default IconComponent;
+}

@@ -1,17 +1,15 @@
-import {
-	IconChevronDown,
-	IconChevronLeft,
-	IconChevronRight,
-	IconChevronUp,
-	IconDeviceFloppy,
-	IconLayoutDashboard,
-	IconMinus,
-	IconPlus,
-	IconTrophy,
-	IconUser,
-	IconUsers,
-	IconX,
-} from "@tabler/icons-react";
+import IconChevronDown from "@tabler/icons-react/dist/esm/icons/IconChevronDown.mjs";
+import IconChevronLeft from "@tabler/icons-react/dist/esm/icons/IconChevronLeft.mjs";
+import IconChevronRight from "@tabler/icons-react/dist/esm/icons/IconChevronRight.mjs";
+import IconChevronUp from "@tabler/icons-react/dist/esm/icons/IconChevronUp.mjs";
+import IconSave from "@tabler/icons-react/dist/esm/icons/IconDeviceFloppy.mjs";
+import IconLayoutDashboard from "@tabler/icons-react/dist/esm/icons/IconLayoutDashboard.mjs";
+import IconMinus from "@tabler/icons-react/dist/esm/icons/IconMinus.mjs";
+import IconPlus from "@tabler/icons-react/dist/esm/icons/IconPlus.mjs";
+import IconTrophy from "@tabler/icons-react/dist/esm/icons/IconTrophy.mjs";
+import IconUser from "@tabler/icons-react/dist/esm/icons/IconUser.mjs";
+import IconUsers from "@tabler/icons-react/dist/esm/icons/IconUsers.mjs";
+import IconX from "@tabler/icons-react/dist/esm/icons/IconX.mjs";
 
 // TODO Dinamically import Icons without the need of mapping them!
 export const ICONS = {
@@ -20,11 +18,11 @@ export const ICONS = {
 	Users: IconUsers,
 	LayoutDashboard: IconLayoutDashboard,
 	ChevronRight: IconChevronRight,
-	ChevroDown: IconChevronDown,
+	ChevronDown: IconChevronDown,
 	ChevronUp: IconChevronUp,
 	X: IconX,
 	Plus: IconPlus,
 	Minus: IconMinus,
-	Save: IconDeviceFloppy,
+	Save: IconSave,
 	ChevronLeft: IconChevronLeft,
 };

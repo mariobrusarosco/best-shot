@@ -148,7 +148,7 @@ export const MatchCard = (props: Props) => {
 						onClick={() => setIsOpen((prev) => !prev)}
 					>
 						<AppIcon
-							name={isOpen ? "ChevronUp" : "ChevroDown"}
+							name={isOpen ? "ChevronUp" : "ChevronDown"}
 							size="extra-small"
 						/>
 					</Button>

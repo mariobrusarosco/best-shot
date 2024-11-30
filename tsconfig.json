@@ -7,12 +7,14 @@
 		"skipLibCheck": true,
 
 		/* Bundler mode */
+		"allowJs": true,
 		"moduleResolution": "bundler",
 		"allowImportingTsExtensions": true,
 		"resolveJsonModule": true,
 		"isolatedModules": true,
 		"noEmit": true,
 		"jsx": "react-jsx",
+		"esModuleInterop": true,
 
 		/* Linting */
 		"strict": true,
@@ -22,9 +24,15 @@
 		"types": ["vitest/globals", "@testing-library/jest-dom"],
 		"baseUrl": ".",
 		"paths": {
-			"@/*": ["src/*"]
+			"@/*": ["src/*"],
+			"@tabler/icons-react/*": ["node_modules/@tabler/icons-react/*"]
 		}
 	},
-	"include": ["src", "global.d.ts"],
+	"include": [
+		"src",
+		"global.d.ts",
+		"node_modules/@tabler/icons-react/**/*.mjs"
+		// "node_modules/@tabler/icons-react/dist/esm/tabler-icons-react.d.ts"
+	],
 	"references": [{ "path": "./tsconfig.node.json" }]
 }

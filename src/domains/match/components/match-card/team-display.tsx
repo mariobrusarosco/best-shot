@@ -28,10 +28,10 @@ export const TeamDisplay = ({
 					placeItems: "center",
 				}}
 			>
-				<TeamLogo src={team.badge} />
+				<TeamLogo src={team?.badge} />
 			</Surface>
 
-			<Typography variant="caption">{team.shortName}</Typography>
+			<Typography variant="caption">{team?.shortName}</Typography>
 		</Display>
 	);
 };

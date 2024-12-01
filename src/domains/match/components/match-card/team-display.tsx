@@ -14,7 +14,7 @@ export const TeamDisplay = ({
 		<Display>
 			{expanded ? (
 				<Box>
-					<span>pos</span>
+					<Typography variant="caption">pos</Typography>
 					{0}
 				</Box>
 			) : null}
@@ -31,7 +31,7 @@ export const TeamDisplay = ({
 				<TeamLogo src={team?.badge} />
 			</Surface>
 
-			<Typography variant="caption">{team?.shortName}</Typography>
+			<Typography variant="caption">{team.shortName}</Typography>
 		</Display>
 	);
 };

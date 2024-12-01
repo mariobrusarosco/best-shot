@@ -81,6 +81,6 @@ type MATCH_OR_GUESS_OUTCOME =
 	| "NOT_PROCESSED";
 
 export type AnalizedGuess = {
-	value: number;
+	value: string | null;
 	status: string;
 };

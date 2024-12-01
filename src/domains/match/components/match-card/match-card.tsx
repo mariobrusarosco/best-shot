@@ -7,6 +7,8 @@ import Divider from "@mui/material/Divider";
 import { Box, Stack, styled } from "@mui/system";
 import { useState } from "react";
 import { IMatch } from "../../typing";
+import { GuessDisplay } from "./guess-display";
+import { ScoreDisplay } from "./score-display";
 import { TeamDisplay } from "./team-display";
 interface Props {
 	match: IMatch;
@@ -50,8 +52,13 @@ export const MatchCard = (props: Props) => {
 								gap: 1,
 							}}
 						>
-							{/* <ScoreDisplay value={analysis.score.home} />
-							<GuessDisplay data={analysis?.guess?.home} /> */}
+							<ScoreDisplay value={match.home.score} />
+							<GuessDisplay
+								data={{
+									value: null,
+									status: "",
+								}}
+							/>
 						</Box>
 					)}
 
@@ -95,8 +102,13 @@ export const MatchCard = (props: Props) => {
 							/>
 						) : ( */}
 						<>
-							{/* <ScoreDisplay value={analysis.score.away} />
-							<GuessDisplay data={analysis?.guess?.away} /> */}
+							<ScoreDisplay value={match.away.score} />
+							<GuessDisplay
+								data={{
+									value: null,
+									status: "",
+								}}
+							/>
 						</>
 						{/* )} */}
 					</Box>

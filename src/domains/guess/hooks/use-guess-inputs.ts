@@ -28,8 +28,6 @@ export const useGuessInputs = (guess: IGuess | undefined, match: IMatch) => {
 	};
 
 	const handleSave = () => {
-		const memberId = import.meta.env.VITE_MOCKED_MEMBER_ID || "";
-
 		if (homeGuess === null || awayGuess === null) {
 			throw new Error("Invalid guess");
 		}
@@ -44,10 +42,7 @@ export const useGuessInputs = (guess: IGuess | undefined, match: IMatch) => {
 			{
 				onSettled: () => {
 					queryClient.invalidateQueries({
-						queryKey: [
-							"guess",
-							{ tournamentId, memberId, round: search?.round },
-						],
+						queryKey: ["guess", { tournamentId, round: search?.round }],
 					});
 				},
 			},

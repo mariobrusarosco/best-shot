@@ -11,14 +11,15 @@ const TournamentLayout = () => {
 	const tournament = useTournament();
 
 	return (
-		<div data-ui="tournament-page" className="page">
+		<Box data-ui="tournament-page" sx={{ height: "100%" }}>
 			<ScreenHeading title="tournament" withBackButton />
-			<Box sx={{ display: "flex", flexDirection: "column", px: 3 }}>
+			{/* <ScrollRestoration /> */}
+			<Box sx={{ display: "flex", flexDirection: "column", px: 1.5 }}>
 				<TournamentHeading />
 				<TournamentRoundsBar tournament={tournament} />
 			</Box>
 			<Outlet />
-		</div>
+		</Box>
 	);
 };
 

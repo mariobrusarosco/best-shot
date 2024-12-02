@@ -8,21 +8,13 @@ import { Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { createLazyFileRoute } from "@tanstack/react-router";
 
-export const TournamentMatches = () => {
+export const TournamentMatchesScreen = () => {
 	const { activeRound } = useTournamentRounds();
 	const guesses = useGuess();
 	const matches = useTournamentMatches();
 
 	console.log("matches.isFetching", matches.isFetching);
 	console.log("guess.isFetching", guesses.isFetching);
-
-	if (matches.isFetching || guesses.isFetching) {
-		return (
-			<Typography variant="h3" color="neutral.100">
-				Loading MATCHES...
-			</Typography>
-		);
-	}
 
 	if (matches.isError || guesses.isError) {
 		return (
@@ -36,14 +28,14 @@ export const TournamentMatches = () => {
 		<Box
 			data-ui="matches"
 			className="screen"
-			pt={[6, 10]}
+			pt={[2, 10]}
 			pb={14}
 			px={[1.5, 6]}
 			maxWidth="100vw"
 		>
 			<div className="round">
 				<Pill
-					mt={6}
+					mt={1}
 					mb={2}
 					bgcolor="teal.500"
 					color="neutral.100"
@@ -74,5 +66,5 @@ export const TournamentMatches = () => {
 export const Route = createLazyFileRoute(
 	"/_auth/tournaments/$tournamentId/_layout/matches",
 )({
-	component: TournamentMatches,
+	component: TournamentMatchesScreen,
 });

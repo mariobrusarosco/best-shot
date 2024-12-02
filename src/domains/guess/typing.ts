@@ -1,20 +1,3 @@
-export type IGuessResponse = {
-	id: string;
-	memberId: string;
-	matchId: string;
-	tournamentId: string;
-	home: {
-		score: string;
-		status: (typeof GUESS_STATUS)[keyof typeof GUESS_STATUS];
-	};
-	away: {
-		score: string;
-		status: (typeof GUESS_STATUS)[keyof typeof GUESS_STATUS];
-	};
-	createdAt: Date;
-	updatedAt: Date;
-};
-
 export interface IGuess {
 	id: string;
 	matchId: string;
@@ -32,23 +15,7 @@ export interface IGuess {
 	total: number | null;
 }
 
-// export type PartialGuess = Pick<IGuess, "away" | "home">;
-
-// export type IGuess = {
-// 	id: IGuessResponse["id"];
-// 	memberId: IGuessResponse["memberId"];
-// 	matchId: IGuessResponse["matchId"];
-// 	tournamentId: IGuessResponse["tournamentId"];
-// 	home: {
-// 		score: number | null;
-// 		status: IGuessResponse["home"]["status"];
-// 	};
-// 	away: {
-// 		score: number | null;
-// 		status: IGuessResponse["away"]["status"];
-// 	};
-// };
-
+// TODO Refactor as "GUESS_OUTCOME"
 export const GUESS_STATUS = {
 	NO_GUESS: "no_guess",
 	INCORRECT_GUESS: "incorret_guess",

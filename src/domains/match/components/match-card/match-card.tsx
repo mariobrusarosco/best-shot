@@ -95,10 +95,7 @@ export const MatchCard = (props: Props) => {
 							}}
 						>
 							<ScoreDisplay value={props.match.away.score} />
-							<GuessDisplay
-								data={props.guess?.away || null}
-								// matchScore={props.match.away.score}
-							/>
+							<GuessDisplay data={props.guess?.away || null} />
 						</Box>
 					)}
 				</Box>

@@ -54,11 +54,12 @@ export const TournamentMatches = () => {
 							return guess.matchId === match.id;
 						});
 
-						return (
-							<li key={match.id} className="round-item match-card">
-								<MatchCard key={match.id} match={match} guess={guess} />
-							</li>
-						);
+						if (!guess)
+							return (
+								<li key={match.id} className="round-item match-card">
+									<MatchCard key={match.id} match={match} guess={guess} />
+								</li>
+							);
 					})}
 				</Box>
 			</div>

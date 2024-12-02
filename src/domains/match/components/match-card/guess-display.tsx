@@ -1,9 +1,8 @@
 import { GUESS_STATUS } from "@/domains/guess/typing";
 import { Pill } from "@/domains/ui-system/components/pill/pill";
 import { Box, Typography } from "@mui/material";
-import { AnalizedGuess } from "../../utils";
 
-export const GuessDisplay = ({ data }: { data?: AnalizedGuess }) => {
+export const GuessDisplay = ({ data }: { data?: any }) => {
 	const content = data?.value ?? "-";
 	const { color, bgColor } = getStylesByStatus(data?.status);
 

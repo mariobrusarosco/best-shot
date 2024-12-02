@@ -2,26 +2,26 @@ import { IMatch } from "@/domains/match/typing";
 import { useQueryClient } from "@tanstack/react-query";
 import { getRouteApi } from "@tanstack/react-router";
 import { useState } from "react";
-import { IGuess } from "../typing";
+import { IGuess, PartialGuess } from "../typing";
 import { useGuessMutation } from "./use-guess-mutation";
 
 const route = getRouteApi("/_auth/tournaments/$tournamentId");
 
-export const useGuessInputs = (guess: IGuess, match: IMatch) => {
+export const useGuessInputs = (guess: IGuess | PartialGuess, match: IMatch) => {
 	const queryClient = useQueryClient();
 	const tournamentId = route.useParams().tournamentId;
-	const [homeGuess, setHomeGuess] = useState<null | string>(
+	const [homeGuess, setHomeGuess] = useState<null | number>(
 		guess?.home.score ?? null,
 	);
-	const [awayGuess, setAwayGuess] = useState<null | string>(
+	const [awayGuess, setAwayGuess] = useState<null | number>(
 		guess?.away.score ?? null,
 	);
 	const { isPending, mutateAsync } = useGuessMutation();
 
-	const handleHomeGuess = (value: string | null) => {
+	const handleHomeGuess = (value: number | null) => {
 		setHomeGuess(value);
 	};
-	const handleAwayGuess = (value: string | null) => {
+	const handleAwayGuess = (value: number | null) => {
 		setAwayGuess(value);
 	};
 

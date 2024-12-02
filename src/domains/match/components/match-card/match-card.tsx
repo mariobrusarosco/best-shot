@@ -1,5 +1,6 @@
 import { useGuessInputs } from "@/domains/guess/hooks/use-guess-inputs";
 import { IGuess } from "@/domains/guess/typing";
+import { buildGuessInputs } from "@/domains/guess/utils";
 import { Button } from "@/domains/ui-system/components/button/button";
 import { AppIcon } from "@/domains/ui-system/components/icon/icon";
 import { Surface } from "@/domains/ui-system/components/surface/surface";
@@ -10,18 +11,19 @@ import { useState } from "react";
 import { IMatch } from "../../typing";
 import { GuessDisplay } from "./guess-display";
 import { ScoreDisplay } from "./score-display";
+import { ScoreInput } from "./score-input";
 import { TeamDisplay } from "./team-display";
 interface Props {
 	match: IMatch;
-	guess: IGuess | null;
+	guess: IGuess | undefined;
 }
 
 export const MatchCard = (props: Props) => {
 	const [isOpen, setIsOpen] = useState(false);
-	const { match, guess } = props;
 
+	const guess = props.guess || buildGuessInputs();
 	// const analysis = MatchAnalysis(guess, match);
-	const guessInputs = useGuessInputs(guess, match);
+	const guessInputs = useGuessInputs(guess, props.match);
 
 	return (
 		<Card data-open={isOpen} data-ui="card">
@@ -53,24 +55,19 @@ export const MatchCard = (props: Props) => {
 								gap: 1,
 							}}
 						>
-							<ScoreDisplay value={match.home.score} />
-							<GuessDisplay
-								data={{
-									value: null,
-									status: "",
-								}}
-							/>
+							<ScoreDisplay value={props.match.home.score} />
+							<GuessDisplay data={guess} />
 						</Box>
 					)}
 
-					<TeamDisplay expanded={isOpen} team={match.home} />
+					<TeamDisplay expanded={isOpen} team={props.match.home} />
 
-					{/* {isOpen ? (
+					{isOpen ? (
 						<ScoreInput
 							value={null}
 							handleInputChange={guessInputs.handleHomeGuess}
 						/>
-					) : null} */}
+					) : null}
 				</Box>
 
 				<Divider
@@ -87,7 +84,7 @@ export const MatchCard = (props: Props) => {
 						flexDirection: isOpen ? "column" : "row",
 					}}
 				>
-					<TeamDisplay expanded={isOpen} team={match.away} />
+					<TeamDisplay expanded={isOpen} team={props.match.away} />
 					<Box
 						sx={{
 							display: "flex",
@@ -96,22 +93,17 @@ export const MatchCard = (props: Props) => {
 							gap: 1,
 						}}
 					>
-						{/* {isOpen ? (
+						{isOpen ? (
 							<ScoreInput
 								value={guessInputs.awayGuess}
 								handleInputChange={guessInputs.handleAwayGuess}
 							/>
-						) : ( */}
-						<>
-							<ScoreDisplay value={match.away.score} />
-							<GuessDisplay
-								data={{
-									value: null,
-									status: "",
-								}}
-							/>
-						</>
-						{/* )} */}
+						) : (
+							<>
+								<ScoreDisplay value={props.match.away.score} />
+								<GuessDisplay data={guess} />
+							</>
+						)}
 					</Box>
 				</Box>
 			</Box>
@@ -131,7 +123,7 @@ export const MatchCard = (props: Props) => {
 							variant="tag"
 							color="neutral.100"
 						>
-							{new Date(match.date).toLocaleDateString()}
+							{new Date(props.match.date).toLocaleDateString()}
 						</Typography>
 					</Stack>
 				) : null}
@@ -149,7 +141,7 @@ export const MatchCard = (props: Props) => {
 						</SaveButton>
 					) : null} */}
 
-					{/* {analysis.match.PENDING_MATCH ?( */}
+					{/* {analysis.props.match.PENDING_MATCH ?( */}
 					<Button
 						sx={{
 							borderRadius: "50%",

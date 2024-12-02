@@ -1,13 +1,13 @@
 import { Surface } from "@/domains/ui-system/components/surface/surface";
 import Typography from "@mui/material/Typography/Typography";
 import { Box, styled } from "@mui/system";
-import { ITeam } from "../../typing";
+import { IMatch } from "../../typing";
 
 export const TeamDisplay = ({
 	team,
 	expanded,
 }: {
-	team: ITeam;
+	team: IMatch["home"] | IMatch["away"];
 	expanded: boolean;
 }) => {
 	return (

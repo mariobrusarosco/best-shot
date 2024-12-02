@@ -14,9 +14,9 @@ export type CreateGuessInput = {
 	memberId: string;
 	tournamentId: string;
 	home: {
-		score: string;
+		score: number;
 	};
 	away: {
-		score: string;
+		score: number;
 	};
 };

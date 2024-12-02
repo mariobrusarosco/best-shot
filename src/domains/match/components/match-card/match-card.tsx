@@ -1,3 +1,4 @@
+import { useGuessInputs } from "@/domains/guess/hooks/use-guess-inputs";
 import { IGuess } from "@/domains/guess/typing";
 import { Button } from "@/domains/ui-system/components/button/button";
 import { AppIcon } from "@/domains/ui-system/components/icon/icon";
@@ -17,10 +18,10 @@ interface Props {
 
 export const MatchCard = (props: Props) => {
 	const [isOpen, setIsOpen] = useState(false);
-	const { match } = props;
+	const { match, guess } = props;
 
 	// const analysis = MatchAnalysis(guess, match);
-	// const guessInputs = useGuessInputs(guess, match);
+	const guessInputs = useGuessInputs(guess, match);
 
 	return (
 		<Card data-open={isOpen} data-ui="card">
@@ -66,7 +67,7 @@ export const MatchCard = (props: Props) => {
 
 					{/* {isOpen ? (
 						<ScoreInput
-							value={guessInputs.homeGuess}
+							value={null}
 							handleInputChange={guessInputs.handleHomeGuess}
 						/>
 					) : null} */}

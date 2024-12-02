@@ -8,14 +8,9 @@ export const getMembers = async ({ queryKey }: { queryKey: any }) => {
 };
 
 export const getMemberGuesses = async ({ queryKey }: { queryKey: any }) => {
-	const [_key, { memberId, tournamentId }] = queryKey;
+	const [_key, { tournamentId }] = queryKey;
 
-	const response = await api.get("guess", {
-		params: {
-			memberId,
-			tournamentId,
-		},
-	});
+	const response = await api.get(`/tournaments/${tournamentId}/guess`);
 
 	return response.data;
 };

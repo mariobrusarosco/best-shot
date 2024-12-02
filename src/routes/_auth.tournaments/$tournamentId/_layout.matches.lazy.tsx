@@ -1,3 +1,5 @@
+import { useGuess } from "@/domains/guess/hooks/use-guess";
+import { IGuess } from "@/domains/guess/typing";
 import { MatchCard } from "@/domains/match/components/match-card/match-card";
 import { useTournamentMatches } from "@/domains/tournament/hooks/use-tournament-matches";
 import { useTournamentRounds } from "@/domains/tournament/hooks/use-tournament-rounds";
@@ -8,10 +10,10 @@ import { createLazyFileRoute } from "@tanstack/react-router";
 
 export const TournamentMatches = () => {
 	const { activeRound } = useTournamentRounds();
-	// const guesses = useGuess();
+	const guesses = useGuess();
 	const matches = useTournamentMatches();
 
-	console.log({ matches });
+	console.log({ guesses });
 
 	// Derivative State
 	// const matchesForSelectedRound = tournament.serverState.data?.matches;
@@ -48,13 +50,13 @@ export const TournamentMatches = () => {
 
 				<Box display="grid" gap={2} className="round-games">
 					{matches?.data?.map((match) => {
-						// const guess = guesses.data?.find((guess: IGuess) => {
-						// 	return guess.matchId === match.id;
-						// });
+						const guess = guesses.data?.find((guess: IGuess) => {
+							return guess.matchId === match.id;
+						});
 
 						return (
 							<li key={match.id} className="round-item match-card">
-								<MatchCard key={match.id} match={match} guess={null} />
+								<MatchCard key={match.id} match={match} guess={guess} />
 							</li>
 						);
 					})}

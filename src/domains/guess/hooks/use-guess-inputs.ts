@@ -10,6 +10,7 @@ const route = getRouteApi("/_auth/tournaments/$tournamentId");
 export const useGuessInputs = (guess: IGuess | PartialGuess, match: IMatch) => {
 	const queryClient = useQueryClient();
 	const tournamentId = route.useParams().tournamentId;
+
 	const [homeGuess, setHomeGuess] = useState<null | number>(
 		guess?.home.score ?? null,
 	);
@@ -36,7 +37,7 @@ export const useGuessInputs = (guess: IGuess | PartialGuess, match: IMatch) => {
 			{
 				matchId: match.id,
 				tournamentId,
-				memberId,
+				// round: search.round,
 				home: {
 					score: homeGuess,
 				},

@@ -41,7 +41,6 @@ export const NumberInput = forwardRef(
 export const ScoreInput = ({ value, handleInputChange }: InputProps) => {
 	const ref = useRef<HTMLInputElement>(null);
 
-	console.log("render", value);
 	return (
 		<NumberInput
 			aria-label="score-input"

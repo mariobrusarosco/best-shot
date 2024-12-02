@@ -1,5 +1,5 @@
+import { Button } from "@/domains/ui-system/components/button/button";
 import { Surface } from "@/domains/ui-system/components/surface/surface";
-import { Button } from "@mui/material";
 import { Box, styled } from "@mui/system";
 
 export const Card = styled(Surface)(

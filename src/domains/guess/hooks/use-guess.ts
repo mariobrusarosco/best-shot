@@ -6,10 +6,13 @@ const route = getRouteApi("/_auth/tournaments/$tournamentId");
 
 export const useGuess = () => {
 	const tournamentId = route.useParams().tournamentId;
+	const search = route.useSearch<{ round: string }>();
+	const round = search.round;
+
 	const guesses = useQuery({
-		queryKey: ["guess", { tournamentId }],
+		queryKey: ["guess", { tournamentId, round }],
 		queryFn: getMemberGuesses,
-		enabled: !!tournamentId,
+		enabled: !!tournamentId && !!round,
 	});
 
 	return guesses;

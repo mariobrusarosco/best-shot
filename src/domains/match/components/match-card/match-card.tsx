@@ -8,7 +8,7 @@ import { Box, Stack } from "@mui/system";
 import { useState } from "react";
 import { IMatch } from "../../typing";
 import { GuessDisplay } from "./guess-display";
-import { Card, Header } from "./match-card.styles";
+import { Card, Header, SaveButton, ToggleButton } from "./match-card.styles";
 import { ScoreDisplay } from "./score-display";
 import { ScoreInput } from "./score-input";
 import { TeamDisplay } from "./team-display";
@@ -21,7 +21,6 @@ export const MatchCard = (props: Props) => {
 	const [isOpen, setIsOpen] = useState(false);
 
 	const guess = props.guess || buildGuessInputs();
-	// const analysis = MatchAnalysis(guess, match);
 	const guessInputs = useGuessInputs(guess, props.match);
 
 	return (
@@ -138,11 +137,9 @@ export const MatchCard = (props: Props) => {
 						</SaveButton>
 					) : null}
 
-					{/* {analysis.props.match.PENDING_MATCH ?( */}
 					<ToggleButton onClick={() => setIsOpen((prev) => !prev)}>
 						<AppIcon name={isOpen ? "Minus" : "Plus"} size="tiny" />
 					</ToggleButton>
-					{/* ) : null} */}
 				</Box>
 			</Header>
 		</Card>

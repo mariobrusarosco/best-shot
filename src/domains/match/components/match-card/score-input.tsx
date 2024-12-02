@@ -22,6 +22,7 @@ export const NumberInput = forwardRef(
 				slotProps={{
 					input: { className: "input" },
 					incrementButton: {
+						autoFocus: false,
 						children: <AppIcon name="Plus" size="extra-small" />,
 						"aria-label": "increment-button",
 						className: "increment",
@@ -47,10 +48,12 @@ export const ScoreInput = ({ value, handleInputChange }: InputProps) => {
 			placeholder="-"
 			value={value}
 			ref={ref}
+			onBeforeInputCapture={(e) => {
+				console.log(e);
+				debugger;
+			}}
 			onChange={(_, val) => {
-				// debugger;
-				// Moving the focus out of the input
-				ref.current?.querySelector("input")?.blur();
+				console.log(handleInputChange);
 
 				handleInputChange(val);
 			}}
@@ -103,6 +106,7 @@ export const InputStyled = styled("input")(
   padding: ${theme.spacing(1)};
   width: 32px;
   text-align: center;
+	caret-color: transparent;
 
   ${resetInput};
   `,

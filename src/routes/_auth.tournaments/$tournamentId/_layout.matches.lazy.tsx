@@ -33,7 +33,7 @@ export const TournamentMatches = () => {
 			className="screen"
 			pt={[6, 10]}
 			pb={14}
-			px={[2, 6]}
+			px={[1.5, 6]}
 			maxWidth="100vw"
 		>
 			<div className="round">

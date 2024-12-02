@@ -22,3 +22,9 @@ export const buildGuessInputs = (): PartialGuess => {
 		away: { score: null, status: GUESS_STATUS.NO_GUESS },
 	};
 };
+
+// {isOpen ? (
+// 	<InputsWrapper>
+// 		<ScoreInputs guess={props.guess} match={props.match} />{" "}
+// 	</InputsWrapper>
+// ) : null

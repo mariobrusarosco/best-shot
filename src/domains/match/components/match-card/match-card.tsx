@@ -1,15 +1,14 @@
 import { useGuessInputs } from "@/domains/guess/hooks/use-guess-inputs";
 import { IGuess } from "@/domains/guess/typing";
 import { buildGuessInputs } from "@/domains/guess/utils";
-import { Button } from "@/domains/ui-system/components/button/button";
 import { AppIcon } from "@/domains/ui-system/components/icon/icon";
-import { Surface } from "@/domains/ui-system/components/surface/surface";
 import { Typography } from "@mui/material";
 import Divider from "@mui/material/Divider";
-import { Box, Stack, styled } from "@mui/system";
+import { Box, Stack } from "@mui/system";
 import { useState } from "react";
 import { IMatch } from "../../typing";
 import { GuessDisplay } from "./guess-display";
+import { Card, Header } from "./match-card.styles";
 import { ScoreDisplay } from "./score-display";
 import { ScoreInput } from "./score-input";
 import { TeamDisplay } from "./team-display";
@@ -34,7 +33,6 @@ export const MatchCard = (props: Props) => {
 					flex: 1,
 					gridArea: "teams",
 				}}
-				data-ui
 			>
 				<Box
 					data-venue="home"
@@ -46,7 +44,16 @@ export const MatchCard = (props: Props) => {
 						flexDirection: isOpen ? "column" : "row",
 					}}
 				>
-					{isOpen ? null : (
+					<TeamDisplay expanded={isOpen} team={props.match.home} />
+
+					{isOpen ? (
+						<>
+							<ScoreInput
+								value={guessInputs.homeGuess}
+								handleInputChange={guessInputs.handleHomeGuess}
+							/>
+						</>
+					) : (
 						<Box
 							sx={{
 								display: "flex",
@@ -59,15 +66,6 @@ export const MatchCard = (props: Props) => {
 							<GuessDisplay data={guess} />
 						</Box>
 					)}
-
-					<TeamDisplay expanded={isOpen} team={props.match.home} />
-
-					{isOpen ? (
-						<ScoreInput
-							value={null}
-							handleInputChange={guessInputs.handleHomeGuess}
-						/>
-					) : null}
 				</Box>
 
 				<Divider
@@ -85,26 +83,25 @@ export const MatchCard = (props: Props) => {
 					}}
 				>
 					<TeamDisplay expanded={isOpen} team={props.match.away} />
-					<Box
-						sx={{
-							display: "flex",
-							flexDirection: "column",
-							justifyContent: "space-between",
-							gap: 1,
-						}}
-					>
-						{isOpen ? (
-							<ScoreInput
-								value={guessInputs.awayGuess}
-								handleInputChange={guessInputs.handleAwayGuess}
-							/>
-						) : (
-							<>
-								<ScoreDisplay value={props.match.away.score} />
-								<GuessDisplay data={guess} />
-							</>
-						)}
-					</Box>
+
+					{isOpen ? (
+						<ScoreInput
+							value={guessInputs.awayGuess}
+							handleInputChange={guessInputs.handleAwayGuess}
+						/>
+					) : (
+						<Box
+							sx={{
+								display: "flex",
+								flexDirection: "column",
+								justifyContent: "space-between",
+								gap: 1,
+							}}
+						>
+							<ScoreDisplay value={props.match.away.score} />
+							<GuessDisplay data={guess} />
+						</Box>
+					)}
 				</Box>
 			</Box>
 
@@ -129,7 +126,7 @@ export const MatchCard = (props: Props) => {
 				) : null}
 
 				<Box display="flex" gap={1}>
-					{/* {isOpen ? (
+					{isOpen ? (
 						<SaveButton
 							onClick={async () => {
 								await guessInputs.handleSave();
@@ -139,72 +136,15 @@ export const MatchCard = (props: Props) => {
 						>
 							<AppIcon name="Save" size="extra-small" />
 						</SaveButton>
-					) : null} */}
+					) : null}
 
 					{/* {analysis.props.match.PENDING_MATCH ?( */}
-					<Button
-						sx={{
-							borderRadius: "50%",
-							color: "neutral.100",
-							backgroundColor: "teal.500",
-							width: 24,
-							height: 24,
-						}}
-						onClick={() => setIsOpen((prev) => !prev)}
-					>
-						<AppIcon
-							name={isOpen ? "ChevronUp" : "ChevronDown"}
-							size="extra-small"
-						/>
-					</Button>
+					<ToggleButton onClick={() => setIsOpen((prev) => !prev)}>
+						<AppIcon name={isOpen ? "Minus" : "Plus"} size="tiny" />
+					</ToggleButton>
 					{/* ) : null} */}
 				</Box>
 			</Header>
 		</Card>
 	);
 };
-
-export const Card = styled(Surface)(
-	({ theme }) => `
-		display: grid;	
-		border-radius: ${theme.shape.borderRadius}px;
-		background-color: ${theme.palette.black[800]};
-		padding: ${theme.spacing(2)};
-		gap: ${theme.spacing(1)};	
-		
-		&[data-open=true]{
-			grid-template-areas: "header" "teams";
-			grid-template-columns: 1fr;
-		}
-			
-		&[data-open=false]{
-			grid-template-columns: 1fr auto;
-			grid-template-areas: "teams header";
-		}
-	`,
-);
-
-export const Header = styled(Box)(
-	({ theme }) => `
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		grid-area: header;		
-		gap: ${theme.spacing(1)};
-	`,
-);
-
-export const SaveButton = styled(Button)(
-	({ theme }) => `
-		border-radius: 50%;
-		color: ${theme.palette.neutral[100]};
-		background-color: ${theme.palette.teal[500]};
-		width: 24px;
-		height: 24px;
-
-		&[disabled] {
-    	filter: grayscale(1);
-			opacity: 0.5;
-  	} 
-	`,
-);

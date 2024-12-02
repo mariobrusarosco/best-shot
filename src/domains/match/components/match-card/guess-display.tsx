@@ -7,7 +7,7 @@ interface Props {
 }
 
 export const GuessDisplay = ({ data }: Props) => {
-	const content = data?.value || "-";
+	const content = data?.value ?? "-";
 	const { color, bgColor } = getStylesByOutcome(data?.guessOutcome || null);
 
 	return (

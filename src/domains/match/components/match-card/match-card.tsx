@@ -1,6 +1,5 @@
 import { useGuessInputs } from "@/domains/guess/hooks/use-guess-inputs";
 import { IGuess } from "@/domains/guess/typing";
-import { buildGuessInputs } from "@/domains/guess/utils";
 import { AppIcon } from "@/domains/ui-system/components/icon/icon";
 import { Typography } from "@mui/material";
 import Divider from "@mui/material/Divider";
@@ -19,9 +18,7 @@ interface Props {
 
 export const MatchCard = (props: Props) => {
 	const [isOpen, setIsOpen] = useState(false);
-
-	const guess = props.guess || buildGuessInputs();
-	const guessInputs = useGuessInputs(guess, props.match);
+	const guessInputs = useGuessInputs(props.guess, props.match);
 
 	return (
 		<Card data-open={isOpen} data-ui="card">
@@ -62,7 +59,7 @@ export const MatchCard = (props: Props) => {
 							}}
 						>
 							<ScoreDisplay value={props.match.home.score} />
-							<GuessDisplay data={guess} />
+							<GuessDisplay data={props.guess?.home || null} />
 						</Box>
 					)}
 				</Box>
@@ -98,7 +95,10 @@ export const MatchCard = (props: Props) => {
 							}}
 						>
 							<ScoreDisplay value={props.match.away.score} />
-							<GuessDisplay data={guess} />
+							<GuessDisplay
+								data={props.guess?.away || null}
+								// matchScore={props.match.away.score}
+							/>
 						</Box>
 					)}
 				</Box>

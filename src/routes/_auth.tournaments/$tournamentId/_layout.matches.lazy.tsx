@@ -13,16 +13,21 @@ export const TournamentMatches = () => {
 	const guesses = useGuess();
 	const matches = useTournamentMatches();
 
-	console.log({ guesses });
+	console.log("matches.isFetching", matches.isFetching);
+	console.log("guess.isFetching", guesses.isFetching);
 
-	// Derivative State
-	// const matchesForSelectedRound = tournament.serverState.data?.matches;
-	// const shouldRender = matches.isSuccess && guesses.isSuccess;
-
-	if (matches.isFetching) {
+	if (matches.isFetching || guesses.isFetching) {
 		return (
 			<Typography variant="h3" color="neutral.100">
 				Loading MATCHES...
+			</Typography>
+		);
+	}
+
+	if (matches.isError || guesses.isError) {
+		return (
+			<Typography variant="h3" color="red.100">
+				Ops! Something went wrong
 			</Typography>
 		);
 	}
@@ -54,12 +59,11 @@ export const TournamentMatches = () => {
 							return guess.matchId === match.id;
 						});
 
-						if (!guess)
-							return (
-								<li key={match.id} className="round-item match-card">
-									<MatchCard key={match.id} match={match} guess={guess} />
-								</li>
-							);
+						return (
+							<li key={match.id} className="round-item match-card">
+								<MatchCard key={match.id} match={match} guess={guess} />
+							</li>
+						);
 					})}
 				</Box>
 			</div>

@@ -1,10 +1,14 @@
-import { GUESS_STATUS } from "@/domains/guess/typing";
+import { IGuess } from "@/domains/guess/typing";
 import { Pill } from "@/domains/ui-system/components/pill/pill";
 import { Box, Typography } from "@mui/material";
 
-export const GuessDisplay = ({ data }: { data?: any }) => {
-	const content = data?.value ?? "-";
-	const { color, bgColor } = getStylesByStatus(data?.status);
+interface Props {
+	data: IGuess["away"] | IGuess["away"] | null;
+}
+
+export const GuessDisplay = ({ data }: Props) => {
+	const content = data?.value || "-";
+	const { color, bgColor } = getStylesByOutcome(data?.guessOutcome || null);
 
 	return (
 		<Box
@@ -25,14 +29,15 @@ export const GuessDisplay = ({ data }: { data?: any }) => {
 	);
 };
 
-const getStylesByStatus = (status?: string) => {
-	if (status === GUESS_STATUS.INCORRECT_GUESS)
+const getStylesByOutcome = (outcome: string | null) => {
+	if (outcome === "incorrect_guess") {
 		return {
 			color: "red.400",
 			bgColor: "red.400",
 		};
+	}
 
-	if (status === GUESS_STATUS.CORRECT_GUESS)
+	if (outcome === "correct_guess")
 		return {
 			color: "green.200",
 			bgColor: "green.200",

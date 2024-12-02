@@ -15,22 +15,39 @@ export type IGuessResponse = {
 	updatedAt: Date;
 };
 
-export type PartialGuess = Pick<IGuess, "away" | "home">;
-
-export type IGuess = {
-	id: IGuessResponse["id"];
-	memberId: IGuessResponse["memberId"];
-	matchId: IGuessResponse["matchId"];
-	tournamentId: IGuessResponse["tournamentId"];
+export interface IGuess {
+	id: string;
+	matchId: string;
 	home: {
-		score: number | null;
-		status: IGuessResponse["home"]["status"];
+		guessOutcome: string;
+		value: number | null;
+		points: number | null;
 	};
-	away: {
-		score: number | null;
-		status: IGuessResponse["away"]["status"];
+	away: { guessOutcome: string; value: number | null; points: number | null };
+	fullMatch: {
+		guessOutcome: string;
+		value: number | null;
+		points: number | null;
 	};
-};
+	total: number | null;
+}
+
+// export type PartialGuess = Pick<IGuess, "away" | "home">;
+
+// export type IGuess = {
+// 	id: IGuessResponse["id"];
+// 	memberId: IGuessResponse["memberId"];
+// 	matchId: IGuessResponse["matchId"];
+// 	tournamentId: IGuessResponse["tournamentId"];
+// 	home: {
+// 		score: number | null;
+// 		status: IGuessResponse["home"]["status"];
+// 	};
+// 	away: {
+// 		score: number | null;
+// 		status: IGuessResponse["away"]["status"];
+// 	};
+// };
 
 export const GUESS_STATUS = {
 	NO_GUESS: "no_guess",

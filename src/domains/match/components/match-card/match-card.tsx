@@ -1,6 +1,7 @@
 import { useGuessInputs } from "@/domains/guess/hooks/use-guess-inputs";
 import { IGuess } from "@/domains/guess/typing";
 import { AppIcon } from "@/domains/ui-system/components/icon/icon";
+import { Pill } from "@/domains/ui-system/components/pill/pill";
 import { Typography } from "@mui/material";
 import Divider from "@mui/material/Divider";
 import { Box, Stack } from "@mui/system";
@@ -13,15 +14,21 @@ import { ScoreInput } from "./score-input";
 import { TeamDisplay } from "./team-display";
 interface Props {
 	match: IMatch;
-	guess: IGuess | undefined;
+	guess: IGuess;
 }
 
-export const MatchCard = (props: Props) => {
+export const MatchCard = ({ guess, match }: Props) => {
 	const [isOpen, setIsOpen] = useState(false);
-	const guessInputs = useGuessInputs(props.guess, props.match);
+	const guessInputs = useGuessInputs(guess, match);
 
 	return (
-		<Card data-open={isOpen} data-ui="card">
+		<Card data-open={isOpen} data-ui="card" data-guess-status={guess.status}>
+			{guess.status === "expired" ? (
+				<Pill bgcolor="red.400" maxWidth={70} height={18}>
+					<Typography variant="tag">expired</Typography>
+				</Pill>
+			) : null}
+
 			<Box
 				sx={{
 					display: "flex",
@@ -40,7 +47,7 @@ export const MatchCard = (props: Props) => {
 						flexDirection: isOpen ? "column" : "row",
 					}}
 				>
-					<TeamDisplay expanded={isOpen} team={props.match.home} />
+					<TeamDisplay expanded={isOpen} team={match.home} />
 
 					{isOpen ? (
 						<>
@@ -58,8 +65,8 @@ export const MatchCard = (props: Props) => {
 								gap: 1,
 							}}
 						>
-							<ScoreDisplay value={props.match.home.score} />
-							<GuessDisplay data={props.guess?.home || null} />
+							<ScoreDisplay value={match.home.score} />
+							<GuessDisplay data={guess?.home || null} />
 						</Box>
 					)}
 				</Box>
@@ -78,7 +85,7 @@ export const MatchCard = (props: Props) => {
 						flexDirection: isOpen ? "column" : "row",
 					}}
 				>
-					<TeamDisplay expanded={isOpen} team={props.match.away} />
+					<TeamDisplay expanded={isOpen} team={match.away} />
 
 					{isOpen ? (
 						<ScoreInput
@@ -94,8 +101,8 @@ export const MatchCard = (props: Props) => {
 								gap: 1,
 							}}
 						>
-							<ScoreDisplay value={props.match.away.score} />
-							<GuessDisplay data={props.guess?.away || null} />
+							<ScoreDisplay value={match.away.score} />
+							<GuessDisplay data={guess?.away || null} />
 						</Box>
 					)}
 				</Box>
@@ -116,7 +123,7 @@ export const MatchCard = (props: Props) => {
 							variant="tag"
 							color="neutral.100"
 						>
-							{new Date(props.match.date).toLocaleDateString()}
+							{new Date(match.date).toLocaleDateString()}
 						</Typography>
 					</Stack>
 				) : null}

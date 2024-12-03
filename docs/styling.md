@@ -68,6 +68,18 @@ const Button = styled(BaseButton)(
 
 ```
 
+[Passing Custom CSS]
+
+```tsx
+const Wrapper = styled(Box)(({ theme, sx: customStyles }) => ({
+	display: "flex",
+	justifyContent: "space-between",
+	alignItems: "center",
+	gap: 1,
+	...customStyles, // Spread custom styles passed via `sx`
+}));
+```
+
 C) using special strings.
 
 <Callout>

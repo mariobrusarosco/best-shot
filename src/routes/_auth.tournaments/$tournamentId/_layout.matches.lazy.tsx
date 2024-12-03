@@ -24,6 +24,16 @@ export const TournamentMatchesScreen = () => {
 		);
 	}
 
+	if (matches.isLoading || guesses.isLoading) {
+		return (
+			<Box>
+				<Typography variant="h3" color="red.100">
+					...Loading....
+				</Typography>
+			</Box>
+		);
+	}
+
 	return (
 		<Box
 			data-ui="matches"
@@ -49,7 +59,7 @@ export const TournamentMatchesScreen = () => {
 					{matches?.data?.map((match) => {
 						const guess = guesses.data?.find((guess: IGuess) => {
 							return guess.matchId === match.id;
-						});
+						}) as IGuess;
 
 						return (
 							<li key={match.id} className="round-item match-card">

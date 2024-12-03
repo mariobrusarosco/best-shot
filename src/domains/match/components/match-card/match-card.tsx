@@ -29,6 +29,18 @@ export const MatchCard = ({ guess, match }: Props) => {
 				</Pill>
 			) : null}
 
+			{guess.status === "waiting_for_game" ? (
+				<Pill bgcolor="teal.500" maxWidth={110} height={18}>
+					<Typography variant="tag">waiting for game</Typography>
+				</Pill>
+			) : null}
+
+			{guess.status === "not-started" ? (
+				<Pill bgcolor="teal.500" maxWidth={110} height={18}>
+					<Typography variant="tag">not started</Typography>
+				</Pill>
+			) : null}
+
 			<Box
 				sx={{
 					display: "flex",
@@ -65,7 +77,10 @@ export const MatchCard = ({ guess, match }: Props) => {
 								gap: 1,
 							}}
 						>
-							<ScoreDisplay value={match.home.score} />
+							{guess.status === "not-started" ||
+							guess.status === "waiting_for_game" ? null : (
+								<ScoreDisplay value={match.home.score} />
+							)}
 							<GuessDisplay data={guess?.home || null} />
 						</Box>
 					)}
@@ -101,7 +116,10 @@ export const MatchCard = ({ guess, match }: Props) => {
 								gap: 1,
 							}}
 						>
-							<ScoreDisplay value={match.away.score} />
+							{guess.status === "not-started" ||
+							guess.status === "waiting_for_game" ? null : (
+								<ScoreDisplay value={match.away.score} />
+							)}
 							<GuessDisplay data={guess?.away || null} />
 						</Box>
 					)}

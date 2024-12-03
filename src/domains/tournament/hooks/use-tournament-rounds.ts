@@ -7,7 +7,11 @@ export const useTournamentRounds = () => {
 	const navigate = route.useNavigate();
 
 	const goToRound = (round: number) => {
-		navigate({ search: (prev) => ({ ...prev, round }) });
+		navigate({
+			search: (prev) => ({ ...prev, round }),
+			resetScroll: false,
+			replace: false,
+		});
 	};
 
 	return {

@@ -1,28 +1,31 @@
-export type IGuess = {
+export interface IGuess {
 	id: string;
-	memberId: string;
 	matchId: string;
-	tournamentId: string;
 	home: {
-		score: string;
-		status?: typeof GUESS_STATUS;
+		status: GUESS_STATUS;
+		value: number | null;
+		points: number | null;
 	};
 	away: {
-		score: string;
-		status?: typeof GUESS_STATUS;
+		status: GUESS_STATUS;
+		value: number | null;
+		points: number | null;
 	};
-	createdAt: Date;
-	updatedAt: Date;
-};
+	fullMatch: {
+		status: GUESS_STATUS;
+		points: number | null;
+	};
+	total: number | null;
+	status: GUESS_STATUS;
+}
 
-export const GUESS_STATUS = {
-	NO_GUESS: "no_guess",
-	INCORRECT_GUESS: "incorret_guess",
-	CORRECT_GUESS: "correct_guess",
-};
-
-export const GUESS_POINTS = {
-	AWAY: 1,
-	HOME: 1,
-	MATCH: 3,
+export const GUESS_STATUSES = {
+	EXPIRED: "expired",
+	CORRECT: "correct",
+	INCORRECT: "incorrect",
+	NOT_STARTED: "not-started",
+	WAITING_FOR_GAME: "waiting_for_game",
+	FINALIZED: "finalized",
 } as const;
+
+export type GUESS_STATUS = (typeof GUESS_STATUSES)[keyof typeof GUESS_STATUSES];

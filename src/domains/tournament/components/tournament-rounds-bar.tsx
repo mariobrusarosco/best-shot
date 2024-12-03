@@ -21,6 +21,7 @@ export const TournamentRoundsBar = ({
 				overflow: "hidden",
 				width: "100vw",
 			}}
+			data-ui="tournament-rounds-bar"
 		>
 			<Box
 				sx={{
@@ -28,7 +29,7 @@ export const TournamentRoundsBar = ({
 					justifyContent: "space-between",
 					alignItems: "center",
 					gap: 2,
-					pb: 0.5,
+					pb: 2,
 				}}
 			>
 				<Pill bgcolor="teal.500" color="neutral.100" width={70} height={20}>

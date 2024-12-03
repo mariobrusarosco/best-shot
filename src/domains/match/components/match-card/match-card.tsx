@@ -1,29 +1,46 @@
+import { useGuessInputs } from "@/domains/guess/hooks/use-guess-inputs";
 import { IGuess } from "@/domains/guess/typing";
-import { Button } from "@/domains/ui-system/components/button/button";
 import { AppIcon } from "@/domains/ui-system/components/icon/icon";
-import { Surface } from "@/domains/ui-system/components/surface/surface";
+import { Pill } from "@/domains/ui-system/components/pill/pill";
 import { Typography } from "@mui/material";
 import Divider from "@mui/material/Divider";
-import { Box, Stack, styled } from "@mui/system";
+import { Box, Stack } from "@mui/system";
 import { useState } from "react";
 import { IMatch } from "../../typing";
 import { GuessDisplay } from "./guess-display";
+import { Card, Header, SaveButton, ToggleButton } from "./match-card.styles";
 import { ScoreDisplay } from "./score-display";
+import { ScoreInput } from "./score-input";
 import { TeamDisplay } from "./team-display";
 interface Props {
 	match: IMatch;
-	guess: IGuess | null;
+	guess: IGuess;
 }
 
-export const MatchCard = (props: Props) => {
+export const MatchCard = ({ guess, match }: Props) => {
 	const [isOpen, setIsOpen] = useState(false);
-	const { match } = props;
-
-	// const analysis = MatchAnalysis(guess, match);
-	// const guessInputs = useGuessInputs(guess, match);
+	const guessInputs = useGuessInputs(guess, match);
 
 	return (
-		<Card data-open={isOpen} data-ui="card">
+		<Card data-open={isOpen} data-ui="card" data-guess-status={guess.status}>
+			{guess.status === "expired" ? (
+				<Pill bgcolor="red.400" maxWidth={70} height={18}>
+					<Typography variant="tag">expired</Typography>
+				</Pill>
+			) : null}
+
+			{guess.status === "waiting_for_game" ? (
+				<Pill bgcolor="teal.500" maxWidth={110} height={18}>
+					<Typography variant="tag">waiting for game</Typography>
+				</Pill>
+			) : null}
+
+			{guess.status === "not-started" ? (
+				<Pill bgcolor="teal.500" maxWidth={110} height={18}>
+					<Typography variant="tag">not started</Typography>
+				</Pill>
+			) : null}
+
 			<Box
 				sx={{
 					display: "flex",
@@ -31,7 +48,6 @@ export const MatchCard = (props: Props) => {
 					flex: 1,
 					gridArea: "teams",
 				}}
-				data-ui
 			>
 				<Box
 					data-venue="home"
@@ -43,7 +59,16 @@ export const MatchCard = (props: Props) => {
 						flexDirection: isOpen ? "column" : "row",
 					}}
 				>
-					{isOpen ? null : (
+					<TeamDisplay expanded={isOpen} team={match.home} />
+
+					{isOpen ? (
+						<>
+							<ScoreInput
+								value={guessInputs.homeGuess}
+								handleInputChange={guessInputs.handleHomeGuess}
+							/>
+						</>
+					) : (
 						<Box
 							sx={{
 								display: "flex",
@@ -52,24 +77,13 @@ export const MatchCard = (props: Props) => {
 								gap: 1,
 							}}
 						>
-							<ScoreDisplay value={match.home.score} />
-							<GuessDisplay
-								data={{
-									value: null,
-									status: "",
-								}}
-							/>
+							{guess.status === "not-started" ||
+							guess.status === "waiting_for_game" ? null : (
+								<ScoreDisplay value={match.home.score} />
+							)}
+							<GuessDisplay data={guess?.home || null} />
 						</Box>
 					)}
-
-					<TeamDisplay expanded={isOpen} team={match.home} />
-
-					{/* {isOpen ? (
-						<ScoreInput
-							value={guessInputs.homeGuess}
-							handleInputChange={guessInputs.handleHomeGuess}
-						/>
-					) : null} */}
 				</Box>
 
 				<Divider
@@ -87,31 +101,28 @@ export const MatchCard = (props: Props) => {
 					}}
 				>
 					<TeamDisplay expanded={isOpen} team={match.away} />
-					<Box
-						sx={{
-							display: "flex",
-							flexDirection: "column",
-							justifyContent: "space-between",
-							gap: 1,
-						}}
-					>
-						{/* {isOpen ? (
-							<ScoreInput
-								value={guessInputs.awayGuess}
-								handleInputChange={guessInputs.handleAwayGuess}
-							/>
-						) : ( */}
-						<>
-							<ScoreDisplay value={match.away.score} />
-							<GuessDisplay
-								data={{
-									value: null,
-									status: "",
-								}}
-							/>
-						</>
-						{/* )} */}
-					</Box>
+
+					{isOpen ? (
+						<ScoreInput
+							value={guessInputs.awayGuess}
+							handleInputChange={guessInputs.handleAwayGuess}
+						/>
+					) : (
+						<Box
+							sx={{
+								display: "flex",
+								flexDirection: "column",
+								justifyContent: "space-between",
+								gap: 1,
+							}}
+						>
+							{guess.status === "not-started" ||
+							guess.status === "waiting_for_game" ? null : (
+								<ScoreDisplay value={match.away.score} />
+							)}
+							<GuessDisplay data={guess?.away || null} />
+						</Box>
+					)}
 				</Box>
 			</Box>
 
@@ -136,7 +147,7 @@ export const MatchCard = (props: Props) => {
 				) : null}
 
 				<Box display="flex" gap={1}>
-					{/* {isOpen ? (
+					{isOpen ? (
 						<SaveButton
 							onClick={async () => {
 								await guessInputs.handleSave();
@@ -146,72 +157,13 @@ export const MatchCard = (props: Props) => {
 						>
 							<AppIcon name="Save" size="extra-small" />
 						</SaveButton>
-					) : null} */}
+					) : null}
 
-					{/* {analysis.match.PENDING_MATCH ?( */}
-					<Button
-						sx={{
-							borderRadius: "50%",
-							color: "neutral.100",
-							backgroundColor: "teal.500",
-							width: 24,
-							height: 24,
-						}}
-						onClick={() => setIsOpen((prev) => !prev)}
-					>
-						<AppIcon
-							name={isOpen ? "ChevronUp" : "ChevronDown"}
-							size="extra-small"
-						/>
-					</Button>
-					{/* ) : null} */}
+					<ToggleButton onClick={() => setIsOpen((prev) => !prev)}>
+						<AppIcon name={isOpen ? "Minus" : "Plus"} size="tiny" />
+					</ToggleButton>
 				</Box>
 			</Header>
 		</Card>
 	);
 };
-
-export const Card = styled(Surface)(
-	({ theme }) => `
-		display: grid;	
-		border-radius: ${theme.shape.borderRadius}px;
-		background-color: ${theme.palette.black[800]};
-		padding: ${theme.spacing(2)};
-		gap: ${theme.spacing(1)};	
-		
-		&[data-open=true]{
-			grid-template-areas: "header" "teams";
-			grid-template-columns: 1fr;
-		}
-			
-		&[data-open=false]{
-			grid-template-columns: 1fr auto;
-			grid-template-areas: "teams header";
-		}
-	`,
-);
-
-export const Header = styled(Box)(
-	({ theme }) => `
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		grid-area: header;		
-		gap: ${theme.spacing(1)};
-	`,
-);
-
-export const SaveButton = styled(Button)(
-	({ theme }) => `
-		border-radius: 50%;
-		color: ${theme.palette.neutral[100]};
-		background-color: ${theme.palette.teal[500]};
-		width: 24px;
-		height: 24px;
-
-		&[disabled] {
-    	filter: grayscale(1);
-			opacity: 0.5;
-  	} 
-	`,
-);

@@ -1,4 +1,3 @@
-import { useGuessInputs } from "@/domains/guess/hooks/use-guess-inputs";
 import { Button } from "@/domains/ui-system/components/button/button";
 import { AppIcon } from "@/domains/ui-system/components/icon/icon";
 import {
@@ -23,6 +22,7 @@ export const NumberInput = forwardRef(
 				slotProps={{
 					input: { className: "input" },
 					incrementButton: {
+						autoFocus: false,
 						children: <AppIcon name="Plus" size="extra-small" />,
 						"aria-label": "increment-button",
 						className: "increment",
@@ -45,17 +45,21 @@ export const ScoreInput = ({ value, handleInputChange }: InputProps) => {
 		<NumberInput
 			aria-label="score-input"
 			placeholder="-"
-			value={toNullOrNumber(value)}
+			value={value}
 			ref={ref}
+			onBeforeInputCapture={(e) => {
+				console.log(e);
+				debugger;
+			}}
 			onChange={(_, val) => {
-				// Moving the focus out of the input
-				ref.current?.querySelector("input")?.blur();
+				console.log(handleInputChange);
 
-				handleInputChange(toNullOrString(val));
+				handleInputChange(val);
 			}}
 			onInputChange={(e) => {
-				const val = e.target.value as string | null;
-				handleInputChange(toNullOrString(val));
+				const val = toSafeNumber(e.target.value);
+
+				handleInputChange(val);
 			}}
 			min={0}
 			step={1}
@@ -63,21 +67,20 @@ export const ScoreInput = ({ value, handleInputChange }: InputProps) => {
 	);
 };
 
-const toNullOrString = (value: string | number | null) => {
-	if (value === null || value === "") return null;
-	return String(value);
-};
+// const toNullOrString = (value: string | number | null) => {
+// 	if (value === null || value === "") return null;
+// 	return String(value);
+// };
 
-const toNullOrNumber = (value: string | null) => {
-	if (value === null || value === "") return null;
-	return Number(value);
+const toSafeNumber = (str: string) => {
+	if (str === null || str === "" || str === undefined) return null;
+
+	return Number(str);
 };
 
 interface InputProps {
-	value: string | null;
-	handleInputChange: ReturnType<typeof useGuessInputs>[
-		| "handleAwayGuess"
-		| "handleHomeGuess"];
+	value: number | null;
+	handleInputChange: (val: number | null) => void;
 }
 
 export const InputBoxStyled = styled("div")(
@@ -102,6 +105,7 @@ export const InputStyled = styled("input")(
   padding: ${theme.spacing(1)};
   width: 32px;
   text-align: center;
+	caret-color: transparent;
 
   ${resetInput};
   `,

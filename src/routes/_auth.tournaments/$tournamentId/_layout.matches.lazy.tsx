@@ -1,3 +1,5 @@
+import { useGuess } from "@/domains/guess/hooks/use-guess";
+import { IGuess } from "@/domains/guess/typing";
 import { MatchCard } from "@/domains/match/components/match-card/match-card";
 import { useTournamentMatches } from "@/domains/tournament/hooks/use-tournament-matches";
 import { useTournamentRounds } from "@/domains/tournament/hooks/use-tournament-rounds";
@@ -6,22 +8,29 @@ import { Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { createLazyFileRoute } from "@tanstack/react-router";
 
-export const TournamentMatches = () => {
+export const TournamentMatchesScreen = () => {
 	const { activeRound } = useTournamentRounds();
-	// const guesses = useGuess();
+	const guesses = useGuess();
 	const matches = useTournamentMatches();
 
-	console.log({ matches });
+	console.log("matches.isFetching", matches.isFetching);
+	console.log("guess.isFetching", guesses.isFetching);
 
-	// Derivative State
-	// const matchesForSelectedRound = tournament.serverState.data?.matches;
-	// const shouldRender = matches.isSuccess && guesses.isSuccess;
-
-	if (matches.isFetching) {
+	if (matches.isError || guesses.isError) {
 		return (
-			<Typography variant="h3" color="neutral.100">
-				Loading MATCHES...
+			<Typography variant="h3" color="red.100">
+				Ops! Something went wrong
 			</Typography>
+		);
+	}
+
+	if (matches.isLoading || guesses.isLoading) {
+		return (
+			<Box>
+				<Typography variant="h3" color="red.100">
+					...Loading....
+				</Typography>
+			</Box>
 		);
 	}
 
@@ -29,14 +38,14 @@ export const TournamentMatches = () => {
 		<Box
 			data-ui="matches"
 			className="screen"
-			pt={[6, 10]}
+			pt={[2, 10]}
 			pb={14}
-			px={[2, 6]}
+			px={[1.5, 6]}
 			maxWidth="100vw"
 		>
 			<div className="round">
 				<Pill
-					mt={6}
+					mt={1}
 					mb={2}
 					bgcolor="teal.500"
 					color="neutral.100"
@@ -48,13 +57,13 @@ export const TournamentMatches = () => {
 
 				<Box display="grid" gap={2} className="round-games">
 					{matches?.data?.map((match) => {
-						// const guess = guesses.data?.find((guess: IGuess) => {
-						// 	return guess.matchId === match.id;
-						// });
+						const guess = guesses.data?.find((guess: IGuess) => {
+							return guess.matchId === match.id;
+						}) as IGuess;
 
 						return (
 							<li key={match.id} className="round-item match-card">
-								<MatchCard key={match.id} match={match} guess={null} />
+								<MatchCard key={match.id} match={match} guess={guess} />
 							</li>
 						);
 					})}
@@ -67,5 +76,5 @@ export const TournamentMatches = () => {
 export const Route = createLazyFileRoute(
 	"/_auth/tournaments/$tournamentId/_layout/matches",
 )({
-	component: TournamentMatches,
+	component: TournamentMatchesScreen,
 });

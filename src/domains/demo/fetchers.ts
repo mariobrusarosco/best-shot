@@ -1,4 +1,5 @@
 import { api } from "../../api";
+import { IGuess } from "../guess/typing";
 
 export const getMembers = async ({ queryKey }: { queryKey: any }) => {
 	const [_key, { memberId }] = queryKey;
@@ -8,14 +9,13 @@ export const getMembers = async ({ queryKey }: { queryKey: any }) => {
 };
 
 export const getMemberGuesses = async ({ queryKey }: { queryKey: any }) => {
-	const [_key, { memberId, tournamentId }] = queryKey;
+	const [_key, { tournamentId, round }] = queryKey;
 
-	const response = await api.get("guess", {
+	const response = await api.get(`/tournaments/${tournamentId}/guess`, {
 		params: {
-			memberId,
-			tournamentId,
+			round,
 		},
 	});
 
-	return response.data;
+	return response.data as IGuess[];
 };

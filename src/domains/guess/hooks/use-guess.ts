@@ -1,18 +1,18 @@
 import { useQuery } from "@tanstack/react-query";
+import { getRouteApi } from "@tanstack/react-router";
 import { getMemberGuesses } from "../../demo/fetchers";
-import { ITournament } from "../../tournament/typing";
 
-export const useGuess = (selectedTournament?: ITournament) => {
+const route = getRouteApi("/_auth/tournaments/$tournamentId");
+
+export const useGuess = () => {
+	const tournamentId = route.useParams().tournamentId;
+	const search = route.useSearch<{ round: string }>();
+	const round = search.round;
+
 	const guesses = useQuery({
-		queryKey: [
-			"guess",
-			{
-				tournamentId: selectedTournament?.id,
-				memberId: import.meta.env.VITE_MOCKED_MEMBER_ID,
-			},
-		],
+		queryKey: ["guess", { tournamentId, round }],
 		queryFn: getMemberGuesses,
-		enabled: !!selectedTournament?.id,
+		enabled: !!tournamentId && !!round,
 	});
 
 	return guesses;

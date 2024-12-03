@@ -11,12 +11,12 @@ export type CreateLeagueInput = {
 
 export type CreateGuessInput = {
 	matchId: string;
-	memberId: string;
+	// round: string;
 	tournamentId: string;
 	home: {
-		score: string;
+		score: number;
 	};
 	away: {
-		score: string;
+		score: number;
 	};
 };

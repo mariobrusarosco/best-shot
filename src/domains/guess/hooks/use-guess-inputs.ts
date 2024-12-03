@@ -7,27 +7,27 @@ import { useGuessMutation } from "./use-guess-mutation";
 
 const route = getRouteApi("/_auth/tournaments/$tournamentId");
 
-export const useGuessInputs = (guess: IGuess, match: IMatch) => {
+export const useGuessInputs = (guess: IGuess | undefined, match: IMatch) => {
 	const queryClient = useQueryClient();
+	const search = route.useSearch<{ round: string }>();
 	const tournamentId = route.useParams().tournamentId;
-	const [homeGuess, setHomeGuess] = useState<null | string>(
-		guess?.home.score ?? null,
+
+	const [homeGuess, setHomeGuess] = useState<null | number>(
+		guess?.home?.value ?? null,
 	);
-	const [awayGuess, setAwayGuess] = useState<null | string>(
-		guess?.away.score ?? null,
+	const [awayGuess, setAwayGuess] = useState<null | number>(
+		guess?.away?.value ?? null,
 	);
 	const { isPending, mutateAsync } = useGuessMutation();
 
-	const handleHomeGuess = (value: string | null) => {
+	const handleHomeGuess = (value: number | null) => {
 		setHomeGuess(value);
 	};
-	const handleAwayGuess = (value: string | null) => {
+	const handleAwayGuess = (value: number | null) => {
 		setAwayGuess(value);
 	};
 
 	const handleSave = () => {
-		const memberId = import.meta.env.VITE_MOCKED_MEMBER_ID || "";
-
 		if (homeGuess === null || awayGuess === null) {
 			throw new Error("Invalid guess");
 		}
@@ -36,18 +36,13 @@ export const useGuessInputs = (guess: IGuess, match: IMatch) => {
 			{
 				matchId: match.id,
 				tournamentId,
-				memberId,
-				home: {
-					score: homeGuess,
-				},
-				away: {
-					score: awayGuess,
-				},
+				home: { score: homeGuess },
+				away: { score: awayGuess },
 			},
 			{
 				onSettled: () => {
 					queryClient.invalidateQueries({
-						queryKey: ["guess", { tournamentId, memberId }],
+						queryKey: ["guess", { tournamentId, round: search?.round }],
 					});
 				},
 			},

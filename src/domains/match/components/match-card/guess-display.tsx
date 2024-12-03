@@ -1,19 +1,22 @@
-import { GUESS_STATUS } from "@/domains/guess/typing";
+import { GUESS_STATUS, IGuess } from "@/domains/guess/typing";
 import { Pill } from "@/domains/ui-system/components/pill/pill";
 import { Box, Typography } from "@mui/material";
-import { AnalizedGuess } from "../../utils";
+import { styled } from "@mui/system";
 
-export const GuessDisplay = ({ data }: { data?: AnalizedGuess }) => {
+interface Props {
+	data: IGuess["away"] | IGuess["away"];
+}
+
+export const GuessDisplay = ({ data }: Props) => {
 	const content = data?.value ?? "-";
-	const { color, bgColor } = getStylesByStatus(data?.status);
+	const { color, bgColor, opacity } = getStylesByStatus(data?.status || null);
+
+	if (data.status === "expired") return null;
 
 	return (
-		<Box
+		<Wrapper
 			sx={{
-				display: "flex",
-				justifyContent: "space-between",
-				alignItems: "center",
-				gap: 1,
+				opacity,
 			}}
 		>
 			<Typography variant="tag" color={color}>
@@ -22,18 +25,34 @@ export const GuessDisplay = ({ data }: { data?: AnalizedGuess }) => {
 			<Pill bgcolor={bgColor} minWidth={30} height={20}>
 				<Typography variant="tag">{content}</Typography>
 			</Pill>
-		</Box>
+		</Wrapper>
 	);
 };
 
-const getStylesByStatus = (status?: string) => {
-	if (status === GUESS_STATUS.INCORRECT_GUESS)
+const Wrapper = styled(Box)({
+	display: "flex",
+	justifyContent: "space-between",
+	alignItems: "center",
+	gap: 1,
+});
+
+const getStylesByStatus = (status: GUESS_STATUS) => {
+	if (status === "expired") {
+		return {
+			color: "neutral.100",
+			bgColor: "black.500",
+			opacity: 0.5,
+		};
+	}
+
+	if (status === "incorrect") {
 		return {
 			color: "red.400",
 			bgColor: "red.400",
 		};
+	}
 
-	if (status === GUESS_STATUS.CORRECT_GUESS)
+	if (status === "correct")
 		return {
 			color: "green.200",
 			bgColor: "green.200",

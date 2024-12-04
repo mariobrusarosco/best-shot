@@ -15,7 +15,7 @@ const router = createRouter({
 const AppRouter = () => {
 	return (
 		<>
-			<RouterProvider router={router} />;
+			<RouterProvider router={router} />
 		</>
 	);
 };

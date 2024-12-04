@@ -7,7 +7,6 @@ import {
 import Typography from "@mui/material/Typography";
 import Box from "@mui/system/Box";
 import { Link } from "@tanstack/react-router";
-import { TOURNAMENT_LOGO_URL } from "../constants.ts";
 import { ITournament } from "../typing";
 import { TournamentLogo } from "./tournament-logo";
 
@@ -44,7 +43,7 @@ export const TournamentCard = ({ tournament }: Props) => {
 					}}
 				>
 					<TournamentLogo
-						src={TOURNAMENT_LOGO_URL.replace(":externalId", externalId)}
+						src={`${import.meta.env["VITE_DATA_PROVIDER_ASSETS_URL"]}${externalId}.png`}
 					/>
 
 					<Button

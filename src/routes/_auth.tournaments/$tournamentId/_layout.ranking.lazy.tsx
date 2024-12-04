@@ -5,8 +5,7 @@ import { createLazyFileRoute } from "@tanstack/react-router";
 export const TournamentRanking = () => {
 	const tournament = useTournament();
 
-	// Derivative State
-	const tournamentLabel = tournament.serverState.data?.label;
+	const tournamentLabel = tournament.data?.label;
 
 	return (
 		<div data-ui="rakning" className="screen">

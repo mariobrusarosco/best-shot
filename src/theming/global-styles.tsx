@@ -23,6 +23,10 @@ export const GlobalCSS = () => (
 				textDecoration: "none",
 				color: "unset",
 			},
+			img: {
+				maxWidth: "100%",
+				height: "auto",
+			},
 		}}
 	/>
 );

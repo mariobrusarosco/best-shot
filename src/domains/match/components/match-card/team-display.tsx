@@ -28,7 +28,9 @@ export const TeamDisplay = ({
 					placeItems: "center",
 				}}
 			>
-				<TeamLogo src={`https://dgrvgrmvem9d1.cloudfront.net/${team.id}.svg`} />
+				<TeamLogo
+					src={`${import.meta.env["VITE_DATA_PROVIDER_ASSETS_URL"]}${team.id}.svg`}
+				/>
 			</Surface>
 
 			<Typography variant="caption">{team.shortName}</Typography>

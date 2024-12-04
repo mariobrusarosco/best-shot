@@ -91,7 +91,7 @@ export const TournamentRoundsBar = ({
 					}}
 				>
 					{Array.from({
-						length: Number(tournament.serverState.data?.rounds),
+						length: Number(tournament.data?.rounds),
 					}).map((_, i) => (
 						<RoundButton
 							onClick={() => goToRound(i + 1)}

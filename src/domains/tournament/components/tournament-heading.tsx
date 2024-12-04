@@ -1,25 +1,38 @@
 import { UIHelper } from "@/theming/theme";
 import Typography from "@mui/material/Typography/Typography";
-import { Box, useMediaQuery } from "@mui/system";
+import { Box, styled, useMediaQuery } from "@mui/system";
+import { useTournament } from "../hooks/use-tournament";
 
 const { startsOn } = UIHelper.media;
 
-export const TournamentHeading = () => {
-	// const tournament = useTournament();
+interface Props {
+	tournament: ReturnType<typeof useTournament>;
+}
+
+export const TournamentHeading = ({ tournament }: Props) => {
 	const isDesktopScreen = useMediaQuery(startsOn("desktop"));
 
-	const titleVariant = isDesktopScreen ? "h1" : "h6";
+	const titleVariant = isDesktopScreen ? "h1" : "h2";
 
 	return (
 		<Box
 			data-ui="tournament-heading"
 			sx={{
-				display: "flex",
+				// display: "flex",
 				justifyContent: "space-between",
-				marginTop: 5,
-				gap: 2,
+				marginTop: 1,
+				gap: 1,
 			}}
 		>
+			<TournamentLogo
+				sx={{
+					// position: "absolute",
+					// right: "0",
+					width: "100%",
+					maxWidth: "140px",
+				}}
+				src={`${import.meta.env["VITE_DATA_PROVIDER_ASSETS_URL"]}${tournament.data?.externalId}.png`}
+			/>
 			<Typography
 				color="neutral.100"
 				variant={titleVariant}
@@ -27,22 +40,15 @@ export const TournamentHeading = () => {
 					textOverflow: "ellipsis",
 					overflow: "hidden",
 					wordBreak: "break-word",
-					maxWidth: "50%",
+					// maxWidth: "70%",
 				}}
 			>
-				{/* {tournament.serverState.data?.label} */}
+				{tournament.data?.label}
 			</Typography>
-
-			{/* <TournamentLogo
-				src={TOURNAMENT_LOGO_URL.replace(
-					":externalId",
-					tournament.serverState.data?.externalId || "",
-				)}
-				sx={{
-					width: 127,
-					height: 127,
-				}}
-			/> */}
 		</Box>
 	);
 };
+
+export const TournamentLogo = styled("img")(() => ({
+	display: "inline-flex",
+}));

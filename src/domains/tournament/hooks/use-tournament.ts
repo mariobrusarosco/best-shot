@@ -14,7 +14,5 @@ export const useTournament = () => {
 		enabled: !!id,
 	});
 
-	return {
-		serverState: query,
-	};
+	return query;
 };

@@ -28,7 +28,10 @@ export const TeamDisplay = ({
 					placeItems: "center",
 				}}
 			>
-				<TeamLogo src={team?.badge} />
+				<TeamLogo
+					src={`https://dgrvgrmvem9d1.cloudfront.net/${team.id}.svg`}
+					onError={(e) => (e.currentTarget.src = "sdsa")}
+				/>
 			</Surface>
 
 			<Typography variant="caption">{team.shortName}</Typography>

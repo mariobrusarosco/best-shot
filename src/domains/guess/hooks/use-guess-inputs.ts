@@ -34,6 +34,7 @@ export const useGuessInputs = (guess: IGuess | undefined, match: IMatch) => {
 
 		return mutateAsync(
 			{
+				id: guess?.id || "",
 				matchId: match.id,
 				tournamentId,
 				home: { score: homeGuess },

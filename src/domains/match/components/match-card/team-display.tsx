@@ -1,3 +1,4 @@
+import { APP_MODE } from "@/domains/global/utils";
 import { Surface } from "@/domains/ui-system/components/surface/surface";
 import Typography from "@mui/material/Typography/Typography";
 import { Box, styled } from "@mui/system";
@@ -10,6 +11,8 @@ export const TeamDisplay = ({
 	team: IMatch["home"] | IMatch["away"];
 	expanded: boolean;
 }) => {
+	const logo = APP_MODE === "local-dev" ? "" : team.badge;
+
 	return (
 		<Display>
 			{expanded ? (
@@ -28,9 +31,7 @@ export const TeamDisplay = ({
 					placeItems: "center",
 				}}
 			>
-				<TeamLogo
-					src={`${import.meta.env["VITE_DATA_PROVIDER_ASSETS_URL"]}${team.id}.svg`}
-				/>
+				<TeamLogo src={logo} />
 			</Surface>
 
 			<Typography variant="caption">{team.shortName}</Typography>

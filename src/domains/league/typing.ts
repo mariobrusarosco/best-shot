@@ -10,8 +10,8 @@ export type CreateLeagueInput = {
 };
 
 export type CreateGuessInput = {
+	id: string;
 	matchId: string;
-	// round: string;
 	tournamentId: string;
 	home: {
 		score: number;

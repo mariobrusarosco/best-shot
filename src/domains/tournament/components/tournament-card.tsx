@@ -15,7 +15,7 @@ interface Props extends SurfaceProps {
 }
 
 export const TournamentCard = ({ tournament }: Props) => {
-	const { label, id, externalId } = tournament;
+	const { label, id } = tournament;
 
 	return (
 		<Link
@@ -42,9 +42,7 @@ export const TournamentCard = ({ tournament }: Props) => {
 						justifyContent: "space-between",
 					}}
 				>
-					<TournamentLogo
-						src={`${import.meta.env["VITE_DATA_PROVIDER_ASSETS_URL"]}${externalId}.png`}
-					/>
+					<TournamentLogo src={tournament.logo} />
 
 					<Button
 						sx={{

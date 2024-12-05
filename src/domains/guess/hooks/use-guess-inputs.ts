@@ -9,7 +9,7 @@ const route = getRouteApi("/_auth/tournaments/$tournamentId");
 
 export const useGuessInputs = (guess: IGuess | undefined, match: IMatch) => {
 	const queryClient = useQueryClient();
-	const search = route.useSearch<{ round: string }>();
+	const search = route.useSearch() as { round: number };
 	const tournamentId = route.useParams().tournamentId;
 
 	const [homeGuess, setHomeGuess] = useState<null | number>(

@@ -6,7 +6,7 @@ const route = getRouteApi("/_auth/tournaments/$tournamentId");
 
 export const useTournamentMatches = () => {
 	const tournamentId = route.useParams().tournamentId;
-	const search = route.useSearch<{ round: string }>();
+	const search = route.useSearch() as { round: string };
 	const round = search.round;
 
 	const query = useQuery({

@@ -76,6 +76,11 @@ export const useLeagues = () => {
 				setLabelInput("");
 				setDescriptionInput("");
 			},
+			// TODO Type App's error object
+			onError: (error: any) => {
+				console.log(error?.response?.data);
+				alert(error?.response?.data);
+			},
 		});
 	};
 

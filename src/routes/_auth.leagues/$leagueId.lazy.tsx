@@ -1,13 +1,9 @@
 import { ScreenHeading } from "@/domains/global/components/screen-heading";
-import { useLeageScore } from "@/domains/league/hooks/use-leagues-score";
-import { GridOfCards } from "@/domains/ui-system/components/grid-of-cards/grid-of-cards";
+import { LeagueHeading } from "@/domains/league/components/league-heading/league-heading";
+import { useLeague } from "@/domains/league/hooks/use-league";
 import Typography from "@mui/material/Typography/Typography";
 import { Box } from "@mui/system";
-import { useQuery } from "@tanstack/react-query";
-import { createLazyFileRoute, getRouteApi } from "@tanstack/react-router";
-import { ILeague } from "../../domains/league/typing";
-
-const route = getRouteApi("/_auth/leagues/$leagueId");
+import { createLazyFileRoute } from "@tanstack/react-router";
 
 // const detailedRanking = (scoreboard: any) => {
 // 	Object.entries(scoreboard).forEach(([member, points]) => {
@@ -16,16 +12,8 @@ const route = getRouteApi("/_auth/leagues/$leagueId");
 // };
 
 const LeaguePage = () => {
-	const leagues = useQuery({
-		queryKey: ["leagues"],
-		enabled: false,
-	}) as { data: ILeague[] };
-	const leagueId = route.useParams().leagueId;
-	const leagueName = leagues.data?.find(
-		(league: ILeague) => league.id === leagueId,
-	)?.label;
+	const { data: league } = useLeague();
 
-	const { data } = useLeageScore(leagueId);
 	// const scoreboard = data && (Object.entries(data) as [string, number][]);
 
 	// const groupedByTournamentSlug = (data: any) => {
@@ -54,39 +42,23 @@ const LeaguePage = () => {
 	// 		return item.slug;
 	// 	});
 
-	console.log("scoreboard", data);
+	console.log("league", league);
+	// console.log("scoreboard", data);
 
 	return (
 		<Box data-ui="leagues-screen screen">
-			<ScreenHeading title="league" withBackButton tagText={leagueName} />
+			<ScreenHeading title="league" withBackButton tagText={league?.label} />
 
 			<Box pt={[6, 10]} pb={14} px={[2, 6]}>
-				<Box
-					sx={{
-						display: "grid",
-						py: 2,
-						gap: 1,
-					}}
-				>
-					<Typography
-						sx={{
-							mb: 3,
-						}}
-						textTransform="lowercase"
-						variant="h3"
-						color="neutral.100"
-					>
-						{leagueName}
-					</Typography>
-				</Box>
+				<LeagueHeading league={league} />
 
 				<div className="ranking">
 					<Typography variant="h6" color="neutral.100">
 						Ranking
 					</Typography>
 
-					<GridOfCards className="list">
-						{/* {data &&
+					{/* <ParticipantsList /> */}
+					{/* {data &&
 							Object.entries(data).map(([member, points]) => (
 								<Box key={member}>
 									<Card>
@@ -117,8 +89,8 @@ const LeaguePage = () => {
 										</Box>
 									))}
 								</Box> */}
-						{/* ))} */}
-					</GridOfCards>
+					{/* ))} */}
+					{/* </ParticipantsList> */}
 				</div>
 			</Box>
 		</Box>

@@ -1,6 +1,6 @@
 import { Box, styled } from "@mui/system";
 
-export const Pill = styled(Box)(
+export const AppPill = styled(Box)(
 	({ theme }) => `
   display: flex;
   justify-content: center;

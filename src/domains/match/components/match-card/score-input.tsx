@@ -1,4 +1,4 @@
-import { Button } from "@/domains/ui-system/components/button/button";
+import { AppButton } from "@/domains/ui-system/components/button/button";
 import { AppIcon } from "@/domains/ui-system/components/icon/icon";
 import {
 	Unstable_NumberInput as BaseNumberInput,
@@ -111,7 +111,7 @@ export const InputStyled = styled("input")(
   `,
 );
 
-const InputButtonStyled = styled(Button)(
+const InputButtonStyled = styled(AppButton)(
 	({ theme }) => `
   background-color: ${theme.palette.teal[500]};
   color: ${theme.palette.neutral[100]};

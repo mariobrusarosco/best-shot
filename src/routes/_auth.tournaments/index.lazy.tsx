@@ -1,11 +1,14 @@
 import { ScreenHeading } from "@/domains/global/components/screen-heading";
-import { TournamentsList } from "@/domains/tournament/components/tournaments-list";
+import {
+	TournamentsList,
+	TournamentsListLoading,
+} from "@/domains/tournament/components/tournaments-list";
 import { useTournaments } from "@/domains/tournament/hooks/use-tournaments";
 import { Box } from "@mui/system";
 import { createLazyFileRoute } from "@tanstack/react-router";
 
 const TournamentsPage = () => {
-	const { data, error } = useTournaments();
+	const { data, error, isLoading } = useTournaments();
 
 	if (error) {
 		return (
@@ -23,11 +26,10 @@ const TournamentsPage = () => {
 				withBackButton
 			/>
 
-			{data ? (
-				<Box py={[6, 10]} px={[2, 6]}>
-					<TournamentsList tournaments={data} />
-				</Box>
-			) : null}
+			<Box py={[6, 10]} px={[2, 6]}>
+				{isLoading ? <TournamentsListLoading /> : null}
+				{data ? <TournamentsList tournaments={data} /> : null}
+			</Box>
 		</Box>
 	);
 };

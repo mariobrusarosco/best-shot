@@ -3,7 +3,7 @@ import { IGuess } from "@/domains/guess/typing";
 import { MatchCard } from "@/domains/match/components/match-card/match-card";
 import { useTournamentMatches } from "@/domains/tournament/hooks/use-tournament-matches";
 import { useTournamentRounds } from "@/domains/tournament/hooks/use-tournament-rounds";
-import { Pill } from "@/domains/ui-system/components/pill/pill";
+import { AppPill } from "@/domains/ui-system/components/pill/pill";
 import { Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { createLazyFileRoute } from "@tanstack/react-router";
@@ -44,7 +44,7 @@ export const TournamentMatchesScreen = () => {
 			maxWidth="100vw"
 		>
 			<div className="round">
-				<Pill
+				<AppPill
 					mt={1}
 					mb={2}
 					bgcolor="teal.500"
@@ -53,7 +53,7 @@ export const TournamentMatchesScreen = () => {
 					height={20}
 				>
 					<Typography variant="tag">round {activeRound}</Typography>
-				</Pill>
+				</AppPill>
 
 				<Box display="grid" gap={2} className="round-games">
 					{matches?.data?.map((match) => {

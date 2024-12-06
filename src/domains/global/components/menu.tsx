@@ -1,4 +1,4 @@
-import { Button } from "@/domains/ui-system/components/button/button";
+import { AppButton } from "@/domains/ui-system/components/button/button";
 import { AppIcon } from "@/domains/ui-system/components/icon/icon";
 import { ICONS } from "@/domains/ui-system/components/icon/mapper";
 import { UIHelper } from "@/theming/theme";
@@ -105,7 +105,7 @@ const HeaderButton = ({ iconName }: { iconName: keyof typeof ICONS }) => {
 	const theme = useTheme();
 
 	return (
-		<Button
+		<AppButton
 			sx={{
 				backgroundColor: theme.palette.teal[500],
 				color: theme.palette.neutral[100],
@@ -122,6 +122,6 @@ const HeaderButton = ({ iconName }: { iconName: keyof typeof ICONS }) => {
 			}}
 		>
 			<AppIcon name={iconName} size="small" stroke={2} width={20} height={20} />
-		</Button>
+		</AppButton>
 	);
 };

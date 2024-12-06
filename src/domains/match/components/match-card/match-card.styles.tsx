@@ -1,4 +1,4 @@
-import { Button } from "@/domains/ui-system/components/button/button";
+import { AppButton } from "@/domains/ui-system/components/button/button";
 import { Surface } from "@/domains/ui-system/components/surface/surface";
 import { Box, styled } from "@mui/system";
 
@@ -32,7 +32,7 @@ export const Header = styled(Box)(
 	`,
 );
 
-export const ToggleButton = styled(Button)(
+export const ToggleButton = styled(AppButton)(
 	({ theme }) => `
 		border-radius: 50%;
 		color: ${theme.palette.neutral[100]};
@@ -42,7 +42,7 @@ export const ToggleButton = styled(Button)(
 	`,
 );
 
-export const SaveButton = styled(Button)(
+export const SaveButton = styled(AppButton)(
 	({ theme }) => `
 		border-radius: 50%;
 		color: ${theme.palette.neutral[100]};

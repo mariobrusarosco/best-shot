@@ -1,5 +1,5 @@
 import { GUESS_STATUS, IGuess } from "@/domains/guess/typing";
-import { Pill } from "@/domains/ui-system/components/pill/pill";
+import { AppPill } from "@/domains/ui-system/components/pill/pill";
 import { Box, Typography } from "@mui/material";
 import { styled } from "@mui/system";
 
@@ -22,9 +22,9 @@ export const GuessDisplay = ({ data }: Props) => {
 			<Typography variant="tag" color={color}>
 				guess
 			</Typography>
-			<Pill bgcolor={bgColor} minWidth={30} height={20}>
+			<AppPill bgcolor={bgColor} minWidth={30} height={20}>
 				<Typography variant="tag">{content}</Typography>
-			</Pill>
+			</AppPill>
 		</Wrapper>
 	);
 };

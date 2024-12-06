@@ -18,7 +18,6 @@ export const TournamentHeading = ({ tournament }: Props) => {
 		<Box
 			data-ui="tournament-heading"
 			sx={{
-				// display: "flex",
 				justifyContent: "space-between",
 				marginTop: 1,
 				gap: 1,

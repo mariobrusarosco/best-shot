@@ -47,6 +47,7 @@ declare module "@mui/material/Typography" {
 	interface TypographyPropsVariantOverrides {
 		topic: true;
 		tag: true;
+		paragraph: true;
 		label: true;
 		h4: false;
 		h5: false;
@@ -69,6 +70,8 @@ interface CustomPalette {
 		500: string;
 	};
 	black: {
+		300: string;
+		400: string;
 		500: string;
 		700: string;
 		800: string;
@@ -87,6 +90,7 @@ export type CustomTypographyVariant =
 	| "h4"
 	| "h5"
 	| "h6"
+	| "paragraph"
 	| "caption"
 	| "label"
 	| "tag";

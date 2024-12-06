@@ -1,13 +1,7 @@
-import { api } from "../../../api";
+import { api } from "@/api";
 
-export const getLeagues = async ({ queryKey }: { queryKey: any }) => {
-	const [_key, { memberId }] = queryKey;
-
-	const response = await api.get("leagues", {
-		params: {
-			memberId,
-		},
-	});
+export const getLeagues = async () => {
+	const response = await api.get("leagues");
 
 	return response.data;
 };
@@ -15,7 +9,15 @@ export const getLeagues = async ({ queryKey }: { queryKey: any }) => {
 export const getLeagueScore = async ({ queryKey }: { queryKey: any }) => {
 	const [_, { leagueId }] = queryKey;
 
-	const response = await api.get(`scores/league/${leagueId}`);
+	const response = await api.get(`leagues/${leagueId}/leaderboard`);
+
+	return response.data;
+};
+
+export const getLeague = async ({ queryKey }: { queryKey: any }) => {
+	const [_, { leagueId }] = queryKey;
+
+	const response = await api.get(`leagues/${leagueId}`);
 
 	return response.data;
 };

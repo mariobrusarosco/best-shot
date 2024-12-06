@@ -1,12 +1,8 @@
-import { Button } from "@/domains/ui-system/components/button/button";
-import { AppIcon } from "@/domains/ui-system/components/icon/icon";
-import {
-	Surface,
-	SurfaceProps,
-} from "@/domains/ui-system/components/surface/surface";
+import { AppCard } from "@/domains/ui-system/components/card/card";
+import { AppLinkCard } from "@/domains/ui-system/components/link-card/link-card";
+import { SurfaceProps } from "@/domains/ui-system/components/surface/surface";
 import Typography from "@mui/material/Typography";
-import Box from "@mui/system/Box";
-import { Link } from "@tanstack/react-router";
+import { Box } from "@mui/system";
 import { ITournament } from "../typing";
 import { TournamentLogo } from "./tournament-logo";
 
@@ -18,60 +14,54 @@ export const TournamentCard = ({ tournament }: Props) => {
 	const { label, id } = tournament;
 
 	return (
-		<Link
-			to="/tournaments/$tournamentId/matches"
-			params={{ tournamentId: id }}
-			search={{ round: 1 }}
+		<Box
+			component="li"
+			sx={{
+				"> *": {
+					display: "grid",
+					height: "100%",
+				},
+			}}
 		>
-			<Surface
-				sx={{
-					display: "flex",
-					flexDirection: "column",
-					justifyContent: "space-between",
-					gap: 2,
-					backgroundColor: "black.800",
-					borderRadius: 2,
-					p: 2,
-					height: 120,
-				}}
+			<AppLinkCard
+				to="/tournaments/$tournamentId/matches"
+				params={{ tournamentId: id }}
+				search={{ round: 1 }}
+				adornment={<TournamentLogo src={tournament.logo} />}
+				replace={false}
+				resetScroll={false}
 			>
-				<Box
-					sx={{
-						display: "flex",
-						justifyContent: "space-between",
-					}}
-				>
-					<TournamentLogo src={tournament.logo} />
-
-					<Button
-						sx={{
-							color: "teal.500",
-							p: 1,
-							borderRadius: "50%",
-							width: 32,
-							height: 32,
-							display: "grid",
-							placeItems: "center",
-						}}
-					>
-						<AppIcon name="ChevronRight" size="extra-small" />
-					</Button>
-				</Box>
-
 				<Typography
 					variant="label"
 					color="neutral.100"
 					textTransform="uppercase"
 					sx={{
+						display: "block",
 						textOverflow: "ellipsis",
 						overflow: "hidden",
-						maxHeight: "50px",
 						wordBreak: "break-word",
+						whiteSpace: "nowrap",
 					}}
 				>
 					{label}
 				</Typography>
-			</Surface>
-		</Link>
+			</AppLinkCard>
+		</Box>
+	);
+};
+
+export const TournamentCardSkeleton = () => {
+	return (
+		<Box
+			component="li"
+			sx={{
+				"> *": {
+					display: "grid",
+					height: "100%",
+				},
+			}}
+		>
+			<AppCard.Skeleton />
+		</Box>
 	);
 };

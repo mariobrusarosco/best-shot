@@ -9,7 +9,7 @@ const resetButton = () => css`
 	margin: 0;
 `;
 
-export const Button = styled(ButtonBase)`
+export const AppButton = styled(ButtonBase)`
 	display: flex;
 	justify-content: center;
 	align-items: center;

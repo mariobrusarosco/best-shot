@@ -1,12 +1,8 @@
 export const TYPOGRAPHY = {
-	variantMapping: {
-		topic: "p",
-	},
+	// variantMapping: {
+	// 	topic: "p",
+	// },
 	variants: {
-		topic: {
-			fontSize: 16,
-			fontFamily: "Montserrat",
-		},
 		h1: {
 			fontSize: 60,
 			fontWeight: 500,
@@ -27,6 +23,14 @@ export const TYPOGRAPHY = {
 			fontSize: 24,
 			fontFamily: "Montserrat",
 			lineHeight: 1.5,
+		},
+		paragraph: {
+			fontSize: 18,
+			fontFamily: "Montserrat",
+		},
+		topic: {
+			fontSize: 16,
+			fontFamily: "Montserrat",
 		},
 		label: {
 			fontSize: 12,

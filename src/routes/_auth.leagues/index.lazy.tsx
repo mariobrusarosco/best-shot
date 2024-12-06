@@ -1,24 +1,32 @@
 import { ScreenHeading } from "@/domains/global/components/screen-heading";
-import { Card } from "@/domains/match/components/match-card/match-card.styles";
+import { LeaguesList } from "@/domains/league/components/leagues-list";
 import { Button } from "@/domains/ui-system/components/button/button";
 import { AppInput } from "@/domains/ui-system/components/input/input";
 import { Box, styled, Typography, TypographyProps } from "@mui/material";
-import { createLazyFileRoute, Link, useSearch } from "@tanstack/react-router";
+import { createLazyFileRoute, useSearch } from "@tanstack/react-router";
 import { useLeagues } from "../../domains/league/hooks/use-leagues";
-import { ILeague } from "../../domains/league/typing";
 
 const LeaguesPage = () => {
 	const { inputs, handleNewLeague, handleLeagueInvite, leagues } = useLeagues();
 	const search = useSearch({ from: "/_auth/leagues/" }) as { founder: boolean };
 
 	const founderDemoPrivelage = search["founder"];
-	console.log({ founderDemoPrivelage });
+
+	if (leagues.isError) {
+		return <div>There was an error loading the leagues</div>;
+	}
+
+	if (leagues.isLoading) {
+		return <div>Loading...</div>;
+	}
 
 	return (
 		<Box data-ui="leagues-screen screen">
 			<ScreenHeading title="leagues" withBackButton />
 
 			<Box pt={[6, 10]} pb={14} px={[2, 6]}>
+				<LeaguesList leagues={leagues.data} />
+
 				{founderDemoPrivelage ? (
 					<>
 						<Box
@@ -105,23 +113,6 @@ const LeaguesPage = () => {
 						</Box>
 					</>
 				) : null}
-
-				<div className="list">
-					<ul>
-						{leagues?.data?.map((league: ILeague) => {
-							return (
-								<li key={league.label} className="list-item">
-									<Link
-										to="/leagues/$leagueId"
-										params={{ leagueId: league.id }}
-									>
-										<Card>{league.label}</Card>
-									</Link>
-								</li>
-							);
-						})}
-					</ul>
-				</div>
 			</Box>
 		</Box>
 	);

@@ -1,11 +1,9 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
-import { getUserToken } from "../../demo/utils";
 import { getLeagues } from "../server-side/fetchers";
 import { createLeague, inviteToLeague } from "../server-side/mutations";
 
 export const useLeagues = () => {
-	const memberId = getUserToken();
 	const queryClient = useQueryClient();
 
 	const leagues = useQuery({
@@ -46,7 +44,6 @@ export const useLeagues = () => {
 		const createLeagueInput = {
 			label: labelInput,
 			description: descriptionInput,
-			founderId: memberId,
 		};
 
 		createLeagueMutation.mutate(createLeagueInput, {
@@ -76,8 +73,8 @@ export const useLeagues = () => {
 
 		inviteToLeagueMutation.mutate(inviteInput, {
 			onSettled: () => {
-				// setLabelInput("");
-				// setDescriptionInput("");
+				setLabelInput("");
+				setDescriptionInput("");
 			},
 		});
 	};

@@ -1,13 +1,7 @@
 import { api } from "../../../api";
 
-export const getLeagues = async ({ queryKey }: { queryKey: any }) => {
-	const [_key, { memberId }] = queryKey;
-
-	const response = await api.get("leagues", {
-		params: {
-			memberId,
-		},
-	});
+export const getLeagues = async () => {
+	const response = await api.get("leagues");
 
 	return response.data;
 };

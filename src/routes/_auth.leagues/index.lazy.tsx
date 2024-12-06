@@ -1,4 +1,5 @@
 import { ScreenHeading } from "@/domains/global/components/screen-heading";
+import { Card } from "@/domains/match/components/match-card/match-card.styles";
 import { Button } from "@/domains/ui-system/components/button/button";
 import { AppInput } from "@/domains/ui-system/components/input/input";
 import { Box, styled, Typography, TypographyProps } from "@mui/material";
@@ -114,7 +115,7 @@ const LeaguesPage = () => {
 										to="/leagues/$leagueId"
 										params={{ leagueId: league.id }}
 									>
-										{league.label}
+										<Card>{league.label}</Card>
 									</Link>
 								</li>
 							);

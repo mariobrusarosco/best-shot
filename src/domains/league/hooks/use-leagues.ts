@@ -1,4 +1,4 @@
-import { useQueryClient, useQuery, useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { getUserToken } from "../../demo/utils";
 import { getLeagues } from "../server-side/fetchers";
@@ -9,7 +9,7 @@ export const useLeagues = () => {
 	const queryClient = useQueryClient();
 
 	const leagues = useQuery({
-		queryKey: ["league", { memberId }],
+		queryKey: ["leagues"],
 		queryFn: getLeagues,
 	});
 
@@ -17,7 +17,7 @@ export const useLeagues = () => {
 		mutationFn: createLeague,
 		onSuccess: () => {
 			alert("League created successfully");
-			queryClient.invalidateQueries({ queryKey: ["league", { memberId }] });
+			queryClient.invalidateQueries({ queryKey: ["leagues"] });
 		},
 	});
 
@@ -25,7 +25,7 @@ export const useLeagues = () => {
 		mutationFn: inviteToLeague,
 		onSuccess: () => {
 			alert("Invitation sent successfully");
-			queryClient.invalidateQueries({ queryKey: ["league", { memberId }] });
+			queryClient.invalidateQueries({ queryKey: ["leagues"] });
 		},
 	});
 
@@ -53,6 +53,9 @@ export const useLeagues = () => {
 			onSettled: () => {
 				setLabelInput("");
 				setDescriptionInput("");
+			},
+			onSuccess: () => {
+				alert("League created!");
 			},
 		});
 	};

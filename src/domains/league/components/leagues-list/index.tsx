@@ -1,7 +1,7 @@
 import { ILeague } from "@/domains/league/typing";
-import { LinkCard } from "@/domains/ui-system/components/card/card";
 import { GridOfCards } from "@/domains/ui-system/components/grid-of-cards/grid-of-cards";
 import { AppIcon } from "@/domains/ui-system/components/icon/icon";
+import { AppLinkCard } from "@/domains/ui-system/components/link-card/link-card";
 import Typography from "@mui/material/Typography/Typography";
 
 export const LeaguesList = ({ leagues }: { leagues: ILeague[] }) => {
@@ -9,7 +9,7 @@ export const LeaguesList = ({ leagues }: { leagues: ILeague[] }) => {
 		<GridOfCards component="ul" data-ui="leagues-list">
 			{leagues?.map((league: ILeague) => (
 				<li>
-					<LinkCard
+					<AppLinkCard
 						to="/leagues/$leagueId"
 						params={{ leagueId: league.id }}
 						key={league.label}
@@ -18,7 +18,7 @@ export const LeaguesList = ({ leagues }: { leagues: ILeague[] }) => {
 						<Typography variant="label" textTransform="uppercase">
 							{league.label}
 						</Typography>
-					</LinkCard>
+					</AppLinkCard>
 				</li>
 			))}
 		</GridOfCards>

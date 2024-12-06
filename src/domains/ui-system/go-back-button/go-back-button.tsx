@@ -1,14 +1,13 @@
+import { AppButton } from "@/domains/ui-system/components/button/button";
+import { AppIcon } from "@/domains/ui-system/components/icon/icon";
 import Typography from "@mui/material/Typography/Typography";
-
 import { useRouter } from "@tanstack/react-router";
-import { Button } from "../components/button/button";
-import { AppIcon } from "../components/icon/icon";
 
 export const GoBackButton = () => {
 	const router = useRouter();
 
 	return (
-		<Button
+		<AppButton
 			sx={{
 				position: "absolute",
 				top: 0,
@@ -24,6 +23,6 @@ export const GoBackButton = () => {
 			<Typography variant="tag" color="neutral.100" textTransform="uppercase">
 				back
 			</Typography>
-		</Button>
+		</AppButton>
 	);
 };

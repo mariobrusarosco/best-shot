@@ -10,8 +10,12 @@ export const GridOfCards = styled(Box)(({ theme }) =>
 			tablet: 3,
 		},
 		gridTemplateColumns: {
-			all: "repeat(2, minmax(100px, 177px))",
+			all: "repeat(2, minmax(100px, 1fr))",
 			tablet: "repeat(2, minmax(100px, 320px))",
+		},
+
+		gridAutoRows: {
+			all: "115px",
 		},
 	}),
 );

@@ -1,6 +1,6 @@
 import { ScreenHeading } from "@/domains/global/components/screen-heading";
 import { LeaguesList } from "@/domains/league/components/leagues-list";
-import { Button } from "@/domains/ui-system/components/button/button";
+import { AppButton } from "@/domains/ui-system/components/button/button";
 import { AppInput } from "@/domains/ui-system/components/input/input";
 import { Box, styled, Typography, TypographyProps } from "@mui/material";
 import { createLazyFileRoute, useSearch } from "@tanstack/react-router";
@@ -118,7 +118,7 @@ const LeaguesPage = () => {
 	);
 };
 
-const SubmitButton = styled(Button)(({ theme }) => ({
+const SubmitButton = styled(AppButton)(({ theme }) => ({
 	my: 2,
 	width: 150,
 	marginTop: theme.spacing(2),

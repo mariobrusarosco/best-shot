@@ -1,7 +1,7 @@
 import { useTournament } from "@/domains/tournament/hooks/use-tournament";
 import { AppButton } from "@/domains/ui-system/components/button/button";
 import { AppIcon } from "@/domains/ui-system/components/icon/icon";
-import { Pill } from "@/domains/ui-system/components/pill/pill";
+import { AppPill } from "@/domains/ui-system/components/pill/pill";
 import { Surface } from "@/domains/ui-system/components/surface/surface";
 import Typography from "@mui/material/Typography";
 import { styled } from "@mui/system";
@@ -32,9 +32,9 @@ export const TournamentRoundsBar = ({
 					pb: 2,
 				}}
 			>
-				<Pill bgcolor="teal.500" color="neutral.100" width={70} height={20}>
+				<AppPill bgcolor="teal.500" color="neutral.100" width={70} height={20}>
 					<Typography variant="tag">rounds</Typography>
-				</Pill>
+				</AppPill>
 
 				<Box
 					sx={{

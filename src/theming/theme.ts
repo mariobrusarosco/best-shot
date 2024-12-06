@@ -23,6 +23,8 @@ export const COLORS = {
 		400: "#FF6D6D",
 	},
 	black: {
+		300: "#939393",
+		400: "#484848",
 		500: "#373737",
 		700: "#131514",
 		800: "#232424",
@@ -58,9 +60,9 @@ const theme = createTheme({
 	palette: COLORS,
 	components: {
 		MuiTypography: {
-			defaultProps: {
-				variantMapping: TYPOGRAPHY.variantMapping,
-			},
+			// defaultProps: {
+			// 	variantMapping: TYPOGRAPHY.variantMapping,
+			// },
 		},
 		MuiUseMediaQuery: {
 			defaultProps: {

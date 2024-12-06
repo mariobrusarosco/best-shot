@@ -1,7 +1,16 @@
 export type ILeague = {
 	id: string;
 	label: string;
-	description: string;
+	description?: string;
+};
+
+export type ILeagueWithParticipants = ILeague & {
+	participants: IParticipant[];
+};
+
+export type IParticipant = {
+	nickName: string;
+	role: string;
 };
 
 export type CreateLeagueInput = {

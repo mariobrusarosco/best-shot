@@ -1,7 +1,7 @@
 import { useGuessInputs } from "@/domains/guess/hooks/use-guess-inputs";
 import { IGuess } from "@/domains/guess/typing";
 import { AppIcon } from "@/domains/ui-system/components/icon/icon";
-import { Pill } from "@/domains/ui-system/components/pill/pill";
+import { AppPill } from "@/domains/ui-system/components/pill/pill";
 import { Typography } from "@mui/material";
 import Divider from "@mui/material/Divider";
 import { Box, Stack } from "@mui/system";
@@ -24,21 +24,21 @@ export const MatchCard = ({ guess, match }: Props) => {
 	return (
 		<Card data-open={isOpen} data-ui="card" data-guess-status={guess.status}>
 			{guess.status === "expired" ? (
-				<Pill bgcolor="red.400" maxWidth={70} height={18}>
+				<AppPill bgcolor="red.400" maxWidth={70} height={18}>
 					<Typography variant="tag">expired</Typography>
-				</Pill>
+				</AppPill>
 			) : null}
 
 			{guess.status === "waiting_for_game" ? (
-				<Pill bgcolor="teal.500" maxWidth={110} height={18}>
+				<AppPill bgcolor="teal.500" maxWidth={110} height={18}>
 					<Typography variant="tag">waiting for game</Typography>
-				</Pill>
+				</AppPill>
 			) : null}
 
 			{guess.status === "not-started" ? (
-				<Pill bgcolor="teal.500" maxWidth={110} height={18}>
+				<AppPill bgcolor="teal.500" maxWidth={110} height={18}>
 					<Typography variant="tag">not started</Typography>
-				</Pill>
+				</AppPill>
 			) : null}
 
 			<Box

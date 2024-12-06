@@ -1,6 +1,9 @@
 import { ScreenHeading } from "@/domains/global/components/screen-heading";
 import { LeagueHeading } from "@/domains/league/components/league-heading/league-heading";
+import { ParticipantsList } from "@/domains/league/components/participants/participants-list";
+import { ParticipantsListSkeleton } from "@/domains/league/components/participants/participants-list-skeleton";
 import { useLeague } from "@/domains/league/hooks/use-league";
+import { AppPill } from "@/domains/ui-system/components/pill/pill";
 import Typography from "@mui/material/Typography/Typography";
 import { Box } from "@mui/system";
 import { createLazyFileRoute } from "@tanstack/react-router";
@@ -12,7 +15,7 @@ import { createLazyFileRoute } from "@tanstack/react-router";
 // };
 
 const LeaguePage = () => {
-	const { data: league } = useLeague();
+	const { data: league, isLoading } = useLeague();
 
 	// const scoreboard = data && (Object.entries(data) as [string, number][]);
 
@@ -52,12 +55,22 @@ const LeaguePage = () => {
 			<Box pt={[6, 10]} pb={14} px={[2, 6]}>
 				<LeagueHeading league={league} />
 
-				<div className="ranking">
-					<Typography variant="h6" color="neutral.100">
-						Ranking
-					</Typography>
+				<AppPill
+					bgcolor="teal.500"
+					color="neutral.100"
+					width={100}
+					height={25}
+					mb={2}
+				>
+					<Typography variant="tag">Participants</Typography>
+				</AppPill>
 
-					{/* <ParticipantsList /> */}
+				<div data-ui="participants">
+					{isLoading ? (
+						<ParticipantsListSkeleton />
+					) : (
+						<ParticipantsList league={league} />
+					)}
 					{/* {data &&
 							Object.entries(data).map(([member, points]) => (
 								<Box key={member}>

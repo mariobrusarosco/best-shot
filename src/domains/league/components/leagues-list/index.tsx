@@ -3,6 +3,7 @@ import { GridOfCards } from "@/domains/ui-system/components/grid-of-cards/grid-o
 import { AppIcon } from "@/domains/ui-system/components/icon/icon";
 import { AppLinkCard } from "@/domains/ui-system/components/link-card/link-card";
 import Typography from "@mui/material/Typography/Typography";
+import { Box } from "@mui/system";
 
 export const LeaguesList = ({ leagues }: { leagues: ILeague[] }) => {
 	return (
@@ -13,7 +14,13 @@ export const LeaguesList = ({ leagues }: { leagues: ILeague[] }) => {
 						to="/leagues/$leagueId"
 						params={{ leagueId: league.id }}
 						key={league.label}
-						adornment={<AppIcon name="Users" size="small" />}
+						adornment={
+							<Box color="teal.500">
+								<AppIcon name="Users" size="small" />
+							</Box>
+						}
+						replace={false}
+						resetScroll={false}
 					>
 						<Typography variant="label" textTransform="uppercase">
 							{league.label}

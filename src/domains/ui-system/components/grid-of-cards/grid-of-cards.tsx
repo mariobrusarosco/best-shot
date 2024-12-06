@@ -13,7 +13,6 @@ export const GridOfCards = styled(Box)(({ theme }) =>
 			all: "repeat(2, minmax(100px, 1fr))",
 			tablet: "repeat(2, minmax(100px, 320px))",
 		},
-
 		gridAutoRows: {
 			all: "115px",
 		},

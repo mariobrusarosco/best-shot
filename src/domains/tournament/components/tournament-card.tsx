@@ -28,6 +28,8 @@ export const TournamentCard = ({ tournament }: Props) => {
 				params={{ tournamentId: id }}
 				search={{ round: 1 }}
 				adornment={<TournamentLogo src={tournament.logo} />}
+				replace={false}
+				resetScroll={false}
 			>
 				<Typography
 					variant="label"

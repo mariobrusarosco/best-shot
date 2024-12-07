@@ -20,11 +20,11 @@ export type ITournament = {
 	externalId: ApiTournament["externalId"];
 	label: ApiTournament["label"];
 	logo: ApiTournament["logo"];
-	matches: IMatch[];
 	rounds: ApiTournament["rounds"];
 	season: ApiTournament["season"];
 	slug: ApiTournament["slug"];
 	mode: ApiTournament["mode"];
+	matches: IMatch[];
 };
 
 export type ITournamentPerformance = {

@@ -1,5 +1,5 @@
 import { useMutation } from "@tanstack/react-query";
-import { createGuess } from "../../demo/mutations";
+import { createGuess } from "../server-side/mutations";
 
 export const useGuessMutation = () => {
 	const mutation = useMutation({

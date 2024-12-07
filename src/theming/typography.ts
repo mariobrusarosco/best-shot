@@ -14,10 +14,14 @@ export const TYPOGRAPHY = {
 			fontFamily: "Poppins",
 		},
 		h3: {
+			fontSize: 42,
+			fontWeight: 600,
+			fontFamily: "Montserrat",
+		},
+		h4: {
 			fontSize: 36,
 			fontFamily: "Montserrat",
 		},
-		h4: undefined,
 		h5: undefined,
 		h6: {
 			fontSize: 24,

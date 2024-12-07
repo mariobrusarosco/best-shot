@@ -26,3 +26,9 @@ export type ITournament = {
 	slug: ApiTournament["slug"];
 	mode: ApiTournament["mode"];
 };
+
+export type ITournamentPerformance = {
+	matchId: string;
+	total: number;
+	status: string;
+};

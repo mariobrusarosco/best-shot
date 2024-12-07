@@ -18,8 +18,10 @@ export const TournamentRoundsBar = ({
 	return (
 		<Box
 			sx={{
-				overflow: "hidden",
-				width: "100vw",
+				gridColumn: {
+					all: "1fr ",
+					tablet: "1 / 1",
+				},
 			}}
 			data-ui="tournament-rounds-bar"
 		>
@@ -67,27 +69,32 @@ export const TournamentRoundsBar = ({
 
 			<Surface
 				sx={{
-					display: "flex",
-					flexDirection: "column",
 					backgroundColor: "black.800",
 					borderRadius: 2,
-					px: 2,
-					pt: 3,
-					pb: 2,
-					gap: 2,
-					overflow: "hidden",
-					position: "sticky",
-					top: 0,
-					left: 0,
+					py: {
+						all: 3,
+						tablet: 2,
+					},
+					px: {
+						all: 2,
+						tablet: 2,
+					},
+					maxWidth: "calc(100vw - 25px)",
 				}}
 			>
 				<Box
 					sx={{
-						display: "grid",
-						gridAutoFlow: "column",
-						overflow: "auto",
+						overflow: "scroll",
+						display: "flex",
+						flexDirection: {
+							tablet: "column",
+						},
 						gap: 1.5,
-						pb: 2,
+						pb: 1,
+						// pr: {
+						// 	all: 2,
+						// 	tablet: 2,
+						// },
 					}}
 				>
 					{Array.from({

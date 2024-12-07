@@ -20,32 +20,54 @@ export const ScreenHeading = (props: Props) => {
 	const { children, title, subtitle, withBackButton } = props;
 	const isDesktopScreen = useMediaQuery(startsOn("desktop"));
 
-	const titleVariant = isDesktopScreen ? "h1" : "h2";
+	const titleVariant = isDesktopScreen ? "h1" : "h3";
 
 	return (
 		<Surface
 			sx={{
 				position: "relative",
-				pt: 10,
-				pb: 6,
-				px: [3, 6],
+				px: {
+					all: 3,
+					tablet: 2,
+				},
+				py: {
+					all: 10,
+					tablet: 4,
+				},
 				bgcolor: "black.800",
 				borderBottomLeftRadius: "24px",
 				borderBottomRightRadius: "24px",
-				minHeight: 220,
+				gridColumn: "1 / 4",
+				display: {
+					tablet: "flex",
+				},
+				minHeight: {
+					all: 200,
+					tablet: 100,
+				},
 			}}
 		>
 			{withBackButton ? <GoBackButton /> : null}
-			<Box>
-				<Typography variant={titleVariant}>{title}</Typography>
-				{subtitle ? (
-					<Typography variant="label" color="teal.500">
-						{subtitle}
-					</Typography>
-				) : null}
-			</Box>
 
-			{children ? <Box>{children}</Box> : null}
+			{/* <Box data-ui="title-and-subtitle"> */}
+			{title ? (
+				<Typography
+					data-ui="title"
+					variant={titleVariant}
+					textTransform="lowercase"
+				>
+					{title}
+				</Typography>
+			) : null}
+
+			{subtitle ? (
+				<Typography data-ui="subtitle" variant="label" color="teal.500">
+					{subtitle}
+				</Typography>
+			) : null}
+			{/* </Box> */}
+
+			{children ? <Box data-ui="children">{children}</Box> : null}
 		</Surface>
 	);
 };

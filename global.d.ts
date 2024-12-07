@@ -49,7 +49,6 @@ declare module "@mui/material/Typography" {
 		tag: true;
 		paragraph: true;
 		label: true;
-		h4: false;
 		h5: false;
 		subtitle1: false;
 		subtitle2: false;
@@ -101,3 +100,11 @@ declare module "@tabler/icons-react/dist/icons/*.mjs" {
 	const IconComponent: ForwardRefExoticComponent<SVGProps<SVGSVGElement>>;
 	export default IconComponent;
 }
+
+// interface ObjectConstructor {
+// 	orderBy?: <T>(
+// 		array: T[],
+// 		iteratees: (keyof T)[],
+// 		orders?: ("asc" | "desc")[],
+// 	) => T[];
+// }

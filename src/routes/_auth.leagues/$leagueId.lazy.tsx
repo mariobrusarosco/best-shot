@@ -50,11 +50,11 @@ const LeaguePage = () => {
 
 	return (
 		<Box data-ui="leagues-screen screen">
-			<ScreenHeading title="league" withBackButton tagText={league?.label} />
+			<ScreenHeading withBackButton>
+				<LeagueHeading league={league} />
+			</ScreenHeading>
 
 			<Box pt={[6, 10]} pb={14} px={[2, 6]}>
-				<LeagueHeading league={league} />
-
 				<AppPill
 					bgcolor="teal.500"
 					color="neutral.100"

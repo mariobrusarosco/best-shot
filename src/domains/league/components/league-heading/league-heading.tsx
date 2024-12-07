@@ -1,4 +1,3 @@
-import { AppIcon } from "@/domains/ui-system/components/icon/icon";
 import { UIHelper } from "@/theming/theme";
 import Typography from "@mui/material/Typography/Typography";
 import { Box, useMediaQuery } from "@mui/system";
@@ -13,7 +12,7 @@ interface Props {
 export const LeagueHeading = ({ league }: Props) => {
 	const isDesktopScreen = useMediaQuery(startsOn("desktop"));
 
-	const titleVariant = isDesktopScreen ? "h1" : "h6";
+	const titleVariant = isDesktopScreen ? "h1" : "h3";
 
 	return (
 		<Box
@@ -27,10 +26,11 @@ export const LeagueHeading = ({ league }: Props) => {
 				mb: 6,
 			}}
 		>
-			<AppIcon name="Users" size="medium" />
+			{/* <AppIcon name="Users" size="medium" /> */}
 			<Typography
 				color="neutral.100"
 				variant={titleVariant}
+				textTransform="lowercase"
 				sx={{
 					textOverflow: "ellipsis",
 					overflow: "hidden",
@@ -42,7 +42,3 @@ export const LeagueHeading = ({ league }: Props) => {
 		</Box>
 	);
 };
-
-// export const TournamentLogo = styled("img")(() => ({
-// 	display: "inline-flex",
-// }));

@@ -1,4 +1,5 @@
 import { api } from "@/api";
+import { ILeagueWithParticipants } from "../typing";
 
 export const getLeagues = async () => {
 	const response = await api.get("leagues");
@@ -19,5 +20,5 @@ export const getLeague = async ({ queryKey }: { queryKey: any }) => {
 
 	const response = await api.get(`leagues/${leagueId}`);
 
-	return response.data;
+	return response.data as ILeagueWithParticipants;
 };

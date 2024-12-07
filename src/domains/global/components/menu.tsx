@@ -15,6 +15,7 @@ const Wrapper = styled(Box)(({ theme }) => ({
 	borderTopLeftRadius: "16px",
 	gap: theme.spacing(4),
 	backgroundColor: theme.palette.black[800],
+	maxHeight: "100vh",
 
 	[whileIs("mobile")]: {
 		padding: theme.spacing(3, 2),
@@ -26,7 +27,7 @@ const Wrapper = styled(Box)(({ theme }) => ({
 	[startsOn("tablet")]: {
 		width: "auto",
 		flexDirection: "column",
-		padding: theme.spacing(4),
+		padding: theme.spacing(2),
 	},
 }));
 

@@ -1,7 +1,14 @@
 import { Box } from "@mui/system";
 import { Link } from "@tanstack/react-router";
+import { ITournament } from "../typing";
 
-export const TournamentTabs = ({ tournamentId }: { tournamentId: string }) => {
+export const TournamentTabs = ({
+	tournament,
+}: {
+	tournament?: ITournament;
+}) => {
+	if (!tournament) return null;
+
 	return (
 		<Box
 			component="ul"
@@ -13,15 +20,19 @@ export const TournamentTabs = ({ tournamentId }: { tournamentId: string }) => {
 			}}
 			data-ui="tournament-tabs"
 		>
-			<Link to="/tournaments/$tournamentId/matches" params={{ tournamentId }}>
+			<Link
+				to="/tournaments/$tournamentId/matches"
+				params={{ tournamentId: tournament.id }}
+			>
 				Matches
 			</Link>
-			<Link to="/tournaments/$tournamentId/ranking" params={{ tournamentId }}>
-				Ranking
+			<Link
+				to="/tournaments/$tournamentId/performance"
+				params={{ tournamentId: tournament.id }}
+			>
+				performance
 			</Link>
-			<Link to="/tournaments/$tournamentId/standings" params={{ tournamentId }}>
-				Simulator
-			</Link>
+			{/* <span>Simulator (Coming soon)</span> */}
 		</Box>
 	);
 };

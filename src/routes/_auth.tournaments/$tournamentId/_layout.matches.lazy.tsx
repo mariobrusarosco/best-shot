@@ -5,9 +5,12 @@ import { TournamentRoundsBar } from "@/domains/tournament/components/tournament-
 import { useTournament } from "@/domains/tournament/hooks/use-tournament";
 import { useTournamentMatches } from "@/domains/tournament/hooks/use-tournament-matches";
 import { useTournamentRounds } from "@/domains/tournament/hooks/use-tournament-rounds";
+import { useTournamentSetup } from "@/domains/tournament/hooks/use-tournament-setup";
+import { AppButton } from "@/domains/ui-system/components/button/button";
 import { AppPill } from "@/domains/ui-system/components/pill/pill";
 import { Typography } from "@mui/material";
 import { Box, styled } from "@mui/system";
+import { useQueryClient } from "@tanstack/react-query";
 import { createLazyFileRoute } from "@tanstack/react-router";
 
 export const TournamentMatchesScreen = () => {
@@ -15,9 +18,12 @@ export const TournamentMatchesScreen = () => {
 	const tournament = useTournament();
 	const guesses = useGuess();
 	const matches = useTournamentMatches();
+	const setup = useTournamentSetup();
+	const queryClient = useQueryClient();
 
-	console.log("matches.isFetching", matches.isFetching);
-	console.log("guess.isFetching", guesses.isFetching);
+	// console.log("matches.isFetching", matches.isFetching);
+	// console.log("guess.isFetching", guesses.isFetching);
+	// console.log("guesses?.data", guesses?.data);
 
 	if (matches.isError || guesses.isError) {
 		return (
@@ -35,6 +41,35 @@ export const TournamentMatchesScreen = () => {
 				<Typography variant="h3" color="red.100">
 					...Loading....
 				</Typography>
+			</MainContainer>
+		);
+	}
+
+	if (guesses.data?.length === 0) {
+		return (
+			<MainContainer>
+				<AppButton
+					sx={{
+						width: "180px",
+						height: "50px",
+						borderRadius: 2,
+						backgroundColor: "teal.500",
+					}}
+					disabled={setup.isPending}
+					onClick={async () => {
+						await setup.mutateAsync({
+							tournamentId: tournament.data?.id || "",
+						});
+
+						queryClient.invalidateQueries({
+							queryKey: ["guess"],
+						});
+					}}
+				>
+					<Typography variant="caption" color="neutral.100">
+						click here to setup
+					</Typography>
+				</AppButton>
 			</MainContainer>
 		);
 	}

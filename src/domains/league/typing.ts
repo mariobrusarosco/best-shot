@@ -2,7 +2,14 @@ export type ILeague = {
 	id: string;
 	label: string;
 	description?: string;
+	participants: IParticipant[];
+	performance: ILeaguePerformance;
 };
+
+export type ILeaguePerformance = {
+	nick: string;
+	points: number;
+}[];
 
 export type ILeagueWithParticipants = ILeague & {
 	participants: IParticipant[];

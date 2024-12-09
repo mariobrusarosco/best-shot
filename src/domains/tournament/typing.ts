@@ -28,6 +28,12 @@ export type ITournament = {
 };
 
 export type ITournamentPerformance = {
+	guesses: IGuessPerformance[];
+	lastUpdated: string;
+	points: string;
+};
+
+export type IGuessPerformance = {
 	matchId: string;
 	total: number;
 	status: string;

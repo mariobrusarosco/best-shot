@@ -8,3 +8,9 @@ export const setupTournament = async (input: InputSetupTournament) => {
 
 	return response.data;
 };
+
+export const updateTournamentPerformance = async (tournamentId: string) => {
+	const response = await api.patch(`tournaments/${tournamentId}/performance`);
+
+	return response.data;
+};

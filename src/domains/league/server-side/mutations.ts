@@ -12,3 +12,9 @@ export const inviteToLeague = async (invitationInput: any) => {
 
 	return response.data;
 };
+
+export const updateLeaguePerformance = async (leagueId: string) => {
+	const response = await api.patch(`leagues/${leagueId}/performance`);
+
+	return response.data;
+};

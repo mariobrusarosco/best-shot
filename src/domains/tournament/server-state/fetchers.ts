@@ -39,5 +39,5 @@ export const getTournamentPerformance = async ({
 
 	const response = await api.get(`tournaments/${tournamentId}/performance`);
 
-	return response.data as ITournamentPerformance[];
+	return response.data as ITournamentPerformance;
 };

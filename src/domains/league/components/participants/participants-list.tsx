@@ -48,7 +48,7 @@ export const ListGrid = styled(GridOfCards)(({ theme }) =>
 		borderRadius: 1,
 		gridTemplateColumns: {
 			all: "1fr",
-			tablet: "repeat(auto-fit, 270px)",
+			tablet: "repeat(auto-fit, minmax(270px, auto))",
 		},
 		gridAutoRows: {
 			all: "70px",

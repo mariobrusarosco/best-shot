@@ -7,9 +7,12 @@ export type ILeague = {
 };
 
 export type ILeaguePerformance = {
-	nick: string;
-	points: number;
-}[];
+	lastUpdatedAt: string;
+	performances: {
+		name: string;
+		points: number;
+	}[];
+};
 
 export type ILeagueWithParticipants = ILeague & {
 	participants: IParticipant[];

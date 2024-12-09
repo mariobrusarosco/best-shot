@@ -1,39 +1,45 @@
+import { TournamentPerformanceStats } from "@/domains/tournament/components/tournament-performance-stats/tournament-performance-stats";
 import { useTournament } from "@/domains/tournament/hooks/use-tournament";
 import { useTournamentPerformance } from "@/domains/tournament/hooks/use-tournament-performance";
-import { ITournamentPerformance } from "@/domains/tournament/typing";
 import { Typography } from "@mui/material";
 import { Box, styled } from "@mui/system";
 import { createLazyFileRoute } from "@tanstack/react-router";
 
-const getTotalPoints = (performance?: ITournamentPerformance[]) => {
-	if (!performance) return null;
+// const getTotalPoints = (performance?: ITournamentPerformance[]) => {
+// 	if (!performance) return null;
 
-	return performance.reduce((acc, value) => acc + value.total, 0);
-};
+// 	return performance.reduce((acc, value) => acc + value.total, 0);
+// };
 export const TournamentPerformance = () => {
 	const tournament = useTournament();
 	const performance = useTournamentPerformance();
 
-	if (performance.isError || tournament.isError) {
+	if (performance.query.isError || tournament.isError) {
 		return <MainContainer>error....</MainContainer>;
 	}
 
-	if (performance.isLoading || tournament.isLoading) {
+	if (performance.query.isLoading || tournament.isLoading) {
 		return <MainContainer>loading....</MainContainer>;
 	}
 
-	const totalPoints = getTotalPoints(performance.data);
-	const guessesByStatus = Object.groupBy(
-		performance.data!,
-		({ status }) => status,
-	);
-	console.log({ guessesByStatus });
+	// const totalPoints = getTotalPoints(performance.query.data);
+	// const guessesByStatus = Object.groupBy(
+	// 	performance.query.data!,
+	// 	({ status }) => status,
+	// );
+	// console.log({ guessesByStatus, totalPoints });
+
 	return (
 		<MainContainer data-ui="screen performance-screen">
 			<Typography variant="h2" color="neutral.100">
 				Your performance
 			</Typography>
 
+			<TournamentPerformanceStats
+				mutation={performance.mutation}
+				query={performance.query}
+			/>
+			{/* 
 			<Box
 				sx={{
 					display: "flex",
@@ -67,7 +73,7 @@ export const TournamentPerformance = () => {
 								overflow: "scroll",
 							}}
 						>
-							{performance?.data?.map((performance, i) => {
+							{performance?.query.data?.map((performance, i) => {
 								return (
 									<Box
 										key={performance.matchId}
@@ -152,7 +158,7 @@ export const TournamentPerformance = () => {
 						</Box>
 					</Box>
 				</Box>
-			</Box>
+			</Box> */}
 		</MainContainer>
 	);
 };

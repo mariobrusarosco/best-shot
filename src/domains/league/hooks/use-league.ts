@@ -1,7 +1,7 @@
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { getRouteApi } from "@tanstack/react-router";
 import { getLeague } from "../server-side/fetchers";
-import { updateLeaguePerformance } from "../server-side/mutations";
+import { useLeaguePerformance } from "./use-league-performance";
 
 const route = getRouteApi("/_auth/leagues/$leagueId");
 
@@ -13,11 +13,9 @@ export const useLeague = () => {
 		enabled: !!leagueId,
 	});
 
-	const mutation = useMutation({
-		mutationFn: updateLeaguePerformance,
-	});
+	const { mutation, performance } = useLeaguePerformance();
 
-	return { league, mutation };
+	return { league, mutation, performance };
 };
 
 // export const useLeageScore = (leagueId: string | null) => {

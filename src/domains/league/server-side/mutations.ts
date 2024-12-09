@@ -14,7 +14,7 @@ export const inviteToLeague = async (invitationInput: any) => {
 };
 
 export const updateLeaguePerformance = async (leagueId: string) => {
-	const response = await api.post(`leagues/${leagueId}/performance`);
+	const response = await api.patch(`leagues/${leagueId}/performance`);
 
 	return response.data;
 };

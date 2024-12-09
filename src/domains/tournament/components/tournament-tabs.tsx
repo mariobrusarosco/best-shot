@@ -16,7 +16,7 @@ export const TournamentTabs = ({
 				display: "flex",
 				justifyContent: "center",
 				gap: 4,
-				padding: 4,
+				// padding: 4,
 			}}
 			data-ui="tournament-tabs"
 		>

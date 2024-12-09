@@ -34,7 +34,7 @@ export const TournamentRoundsBar = ({
 					pb: 2,
 				}}
 			>
-				<AppPill bgcolor="teal.500" color="neutral.100" width={70} height={20}>
+				<AppPill bgcolor="teal.500" color="neutral.100" width={120} height={20}>
 					<Typography variant="tag">rounds</Typography>
 				</AppPill>
 

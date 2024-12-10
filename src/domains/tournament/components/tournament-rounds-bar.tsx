@@ -5,6 +5,7 @@ import { AppPill } from "@/domains/ui-system/components/pill/pill";
 import Typography from "@mui/material/Typography";
 import { styled } from "@mui/system";
 import Box from "@mui/system/Box";
+import { useEffect } from "react";
 import { useTournamentRounds } from "../hooks/use-tournament-rounds";
 
 export const TournamentRoundsBar = ({
@@ -13,6 +14,16 @@ export const TournamentRoundsBar = ({
 	tournament: ReturnType<typeof useTournament>;
 }) => {
 	const { activeRound, goToRound } = useTournamentRounds();
+
+	useEffect(() => {
+		if (activeRound) {
+			const el = document.querySelector("[data-active='true']");
+
+			el?.scrollIntoView({
+				inline: "center",
+			});
+		}
+	}, []);
 
 	return (
 		<Wrapper data-ui="tournament-rounds-bar">
@@ -129,6 +140,7 @@ const AppLink = styled(Box)(({ theme }) => theme?.unstable_sx({}));
 
 const Bar = styled(Box)(({ theme }) =>
 	theme?.unstable_sx({
+		scrollSnapType: "x mandatory",
 		width: 1,
 		overflowX: "scroll",
 		display: "flex",
@@ -145,6 +157,7 @@ const Bar = styled(Box)(({ theme }) =>
 
 const RoundButton = styled(AppButton)(
 	({ theme }) => `
+	  scroll-snap-align: center; 
 		background-color: transparent;
 		color: ${theme.palette.neutral[100]};
 		padding: ${theme.spacing(1)};

@@ -40,7 +40,7 @@ const TournamentLayout = () => {
 
 const Container = styled(Box)(({ theme }) =>
 	theme?.unstable_sx({
-		height: "100%",
+		flex: 1,
 		display: "flex",
 		flexDirection: "column",
 	}),

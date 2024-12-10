@@ -27,27 +27,27 @@ export const TournamentMatchesScreen = () => {
 
 	if (matches.isError || guesses.isError) {
 		return (
-			<MainContainer>
+			<Matches>
 				<Typography variant="h3" color="red.100">
 					Ops! Something went wrong
 				</Typography>
-			</MainContainer>
+			</Matches>
 		);
 	}
 
 	if (matches.isLoading || guesses.isLoading) {
 		return (
-			<MainContainer>
+			<Matches>
 				<Typography variant="h3" color="red.100">
 					...Loading....
 				</Typography>
-			</MainContainer>
+			</Matches>
 		);
 	}
 
 	if (guesses.data?.length === 0) {
 		return (
-			<MainContainer>
+			<Matches>
 				<AppButton
 					sx={{
 						width: "180px",
@@ -70,33 +70,25 @@ export const TournamentMatchesScreen = () => {
 						click here to setup
 					</Typography>
 				</AppButton>
-			</MainContainer>
+			</Matches>
 		);
 	}
 
 	return (
-		<MainContainer data-ui="matches">
+		<Matches data-ui="matches">
 			<TournamentRoundsBar tournament={tournament} />
 
-			<Box
-				data-ui="rounds"
-				sx={{
-					gridColumn: {
-						all: "",
-						tablet: "2 / 2",
-					},
-				}}
-			>
-				<AppPill
-					mt={1}
-					mb={2}
-					bgcolor="teal.500"
-					color="neutral.100"
-					width={70}
-					height={20}
-				>
-					<Typography variant="tag">round {activeRound}</Typography>
-				</AppPill>
+			<Rounds data-ui="rounds">
+				<RoundHeading>
+					<AppPill
+						bgcolor="teal.500"
+						color="neutral.100"
+						width={70}
+						height={25}
+					>
+						<Typography variant="tag">round {activeRound}</Typography>
+					</AppPill>
+				</RoundHeading>
 
 				<Box display="grid" gap={2} className="round-games">
 					{matches?.data?.map((match) => {
@@ -111,7 +103,7 @@ export const TournamentMatchesScreen = () => {
 						);
 					})}
 				</Box>
-			</Box>
+			</Rounds>
 
 			<Box
 				data-ui="standings"
@@ -126,22 +118,56 @@ export const TournamentMatchesScreen = () => {
 					standings
 				</Typography>
 			</Box>
-		</MainContainer>
+		</Matches>
 	);
 };
 
-const MainContainer = styled(Box)(({ theme }) =>
+const Matches = styled(Box)(({ theme }) =>
 	theme?.unstable_sx({
-		pt: [2, 10],
-		pb: 14,
-		px: [1.5, 3],
-		gap: 2,
-		width: "100%",
+		overflow: "hidden",
+		height: {
+			all: "calc(100vh - var(--screeh-heading-height-mobile))",
+			tablet: "calc(100vh - var(--screeh-heading-height-tablet))",
+		},
+		py: {
+			tablet: 8,
+		},
+		px: {
+			tablet: 4,
+		},
 		display: "grid",
+		gap: {
+			tablet: 4,
+		},
 		gridTemplateColumns: {
 			all: "1fr",
-			tablet: "70px 400px 1fr",
+			tablet: "60px 400px 1fr",
 		},
+	}),
+);
+
+const Rounds = styled(Box)(({ theme }) =>
+	theme?.unstable_sx({
+		overflow: "auto",
+		height: {
+			all: "calc(100vh - var(--screeh-heading-height-mobile))",
+			tablet: "calc(100vh - var(--screeh-heading-height-tablet))",
+		},
+		px: [1.5, 3],
+		pb: {
+			all: "175px",
+			tablet: "50px",
+		},
+	}),
+);
+
+const RoundHeading = styled(Box)(({ theme }) =>
+	theme?.unstable_sx({
+		position: "sticky",
+		top: 0,
+		width: "100%",
+		py: { all: 2, tablet: "unset" },
+		backgroundColor: "black.700",
 	}),
 );
 

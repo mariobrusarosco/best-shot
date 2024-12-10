@@ -1,4 +1,5 @@
-import { Box } from "@mui/system";
+import { Surface } from "@/domains/ui-system/components/surface/surface";
+import { styled } from "@mui/system";
 import { Link } from "@tanstack/react-router";
 import { ITournament } from "../typing";
 
@@ -10,16 +11,7 @@ export const TournamentTabs = ({
 	if (!tournament) return null;
 
 	return (
-		<Box
-			component="ul"
-			sx={{
-				display: "flex",
-				justifyContent: "center",
-				gap: 4,
-				padding: 4,
-			}}
-			data-ui="tournament-tabs"
-		>
+		<Wrapper as="ul" data-ui="tournament-tabs">
 			<Link
 				to="/tournaments/$tournamentId/matches"
 				params={{ tournamentId: tournament.id }}
@@ -33,6 +25,19 @@ export const TournamentTabs = ({
 				performance
 			</Link>
 			{/* <span>Simulator (Coming soon)</span> */}
-		</Box>
+		</Wrapper>
 	);
 };
+
+const Wrapper = styled(Surface)(({ theme }) =>
+	theme?.unstable_sx({
+		backgroundColor: "black.500",
+		display: "flex",
+		justifyContent: "center",
+		gap: 4,
+		py: 3,
+		mt: 3,
+		borderRadius: 2,
+		width: 1,
+	}),
+);

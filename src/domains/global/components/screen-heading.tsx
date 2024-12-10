@@ -4,7 +4,8 @@ import {
 } from "@/domains/ui-system/components/surface/surface";
 import { GoBackButton } from "@/domains/ui-system/go-back-button/go-back-button";
 import { UIHelper } from "@/theming/theme";
-import { Box, Typography, useMediaQuery } from "@mui/material";
+import { Typography, useMediaQuery } from "@mui/material";
+import { styled } from "@mui/system";
 
 interface Props extends SurfaceProps {
 	children?: React.ReactNode;
@@ -23,33 +24,9 @@ export const ScreenHeading = (props: Props) => {
 	const titleVariant = isDesktopScreen ? "h1" : "h3";
 
 	return (
-		<Surface
-			sx={{
-				position: "relative",
-				px: {
-					all: 3,
-					tablet: 2,
-				},
-				py: {
-					all: 10,
-					tablet: 4,
-				},
-				bgcolor: "black.800",
-				borderBottomLeftRadius: "24px",
-				borderBottomRightRadius: "24px",
-				gridColumn: "1 / 4",
-				display: {
-					tablet: "flex",
-				},
-				minHeight: {
-					all: 200,
-					tablet: 100,
-				},
-			}}
-		>
+		<Wrapper data-ui="screen-heading">
 			{withBackButton ? <GoBackButton /> : null}
 
-			{/* <Box data-ui="title-and-subtitle"> */}
 			{title ? (
 				<Typography
 					data-ui="title"
@@ -65,9 +42,34 @@ export const ScreenHeading = (props: Props) => {
 					{subtitle}
 				</Typography>
 			) : null}
-			{/* </Box> */}
 
-			{children ? <Box data-ui="children">{children}</Box> : null}
-		</Surface>
+			{children ? children : null}
+		</Wrapper>
 	);
 };
+
+const Wrapper = styled(Surface)(({ theme }) =>
+	theme?.unstable_sx({
+		height: {
+			all: "var(--screeh-heading-height-mobile)",
+			tablet: "var(--screeh-heading-height-tablet)",
+		},
+		position: "relative",
+		px: {
+			all: 2,
+			tablet: 2,
+		},
+		pt: {
+			all: 10,
+			tablet: 5,
+		},
+		pb: {
+			all: 6,
+			tablet: 6,
+		},
+		bgcolor: "black.800",
+		borderBottomLeftRadius: "24px",
+		borderBottomRightRadius: "24px",
+		gridColumn: "1 / 4",
+	}),
+);

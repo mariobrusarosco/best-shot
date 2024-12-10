@@ -19,9 +19,7 @@ const AuthLayout = () => {
 			}}
 		>
 			<Menu />
-			<Box data-ui="main-area" sx={{ flex: 1 }}>
-				<Outlet />
-			</Box>
+			<Outlet />
 		</Box>
 	);
 };

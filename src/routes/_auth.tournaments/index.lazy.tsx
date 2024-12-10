@@ -4,6 +4,7 @@ import {
 	TournamentsListLoading,
 } from "@/domains/tournament/components/tournaments-list";
 import { useTournaments } from "@/domains/tournament/hooks/use-tournaments";
+import { ScreenLayout } from "@/domains/ui-system/layout/screen-layout";
 import { Box } from "@mui/system";
 import { createLazyFileRoute } from "@tanstack/react-router";
 
@@ -19,7 +20,7 @@ const TournamentsPage = () => {
 	}
 
 	return (
-		<Box data-ui="tournaments-screen">
+		<ScreenLayout data-ui="tournaments-screen">
 			<ScreenHeading
 				title="tournaments"
 				subtitle="all current available tournaments"
@@ -30,7 +31,7 @@ const TournamentsPage = () => {
 				{isLoading ? <TournamentsListLoading /> : null}
 				{data ? <TournamentsList tournaments={data} /> : null}
 			</Box>
-		</Box>
+		</ScreenLayout>
 	);
 };
 

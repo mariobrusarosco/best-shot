@@ -2,7 +2,6 @@ import { Box, styled } from "@mui/system";
 
 export const GridOfCards = styled(Box)(({ theme }) =>
 	theme.unstable_sx({
-		padding: 1,
 		borderRadius: 1,
 		display: "grid",
 		gap: {

@@ -19,6 +19,7 @@ export const TYPOGRAPHY = {
 			fontFamily: "Montserrat",
 		},
 		h4: {
+			fontWeight: 600,
 			fontSize: 36,
 			fontFamily: "Montserrat",
 		},

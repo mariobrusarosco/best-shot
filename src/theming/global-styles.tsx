@@ -6,14 +6,13 @@ export const GlobalCSS = () => (
 		styles={{
 			body: {},
 			":root": {
-				"--screeh-heading-height-mobile": "400px",
-				"--screeh-heading-height-tablet": "200px",
+				"--screeh-heading-height-mobile": "190px",
+				"--screeh-heading-height-tablet": "250px",
 			},
 			"#root": {
-				minHeight: "100vh",
-				display: "flex",
-				// overflow: "hidden",
-				// clipPath: "inset(0)",
+				height: "100vh",
+				width: "100vw",
+				// display: "flex",
 			},
 			menu: {
 				margin: 0,
@@ -30,7 +29,7 @@ export const GlobalCSS = () => (
 				color: "unset",
 			},
 			img: {
-				maxWidth: "100%",
+				width: "100%",
 				height: "auto",
 			},
 			/* width */

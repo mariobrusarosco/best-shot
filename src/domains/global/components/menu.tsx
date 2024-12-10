@@ -28,6 +28,7 @@ const Wrapper = styled(Box)(({ theme }) => ({
 		width: "auto",
 		flexDirection: "column",
 		padding: theme.spacing(2),
+		gap: "40px",
 	},
 }));
 

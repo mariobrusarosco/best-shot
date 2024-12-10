@@ -124,6 +124,7 @@ export const TournamentMatchesScreen = () => {
 
 const Matches = styled(Box)(({ theme }) =>
 	theme?.unstable_sx({
+		display: "none",
 		overflow: "hidden",
 		height: {
 			all: "calc(100vh - var(--screeh-heading-height-mobile))",
@@ -135,7 +136,7 @@ const Matches = styled(Box)(({ theme }) =>
 		px: {
 			tablet: 4,
 		},
-		display: "grid",
+		// display: "grid",
 		gap: {
 			tablet: 4,
 		},

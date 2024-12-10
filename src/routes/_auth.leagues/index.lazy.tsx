@@ -2,6 +2,7 @@ import { ScreenHeading } from "@/domains/global/components/screen-heading";
 import { LeaguesList } from "@/domains/league/components/leagues-list";
 import { AppButton } from "@/domains/ui-system/components/button/button";
 import { AppInput } from "@/domains/ui-system/components/input/input";
+import { ScreenLayout } from "@/domains/ui-system/layout/screen-layout";
 import { Box, styled, Typography, TypographyProps } from "@mui/material";
 import { createLazyFileRoute, useSearch } from "@tanstack/react-router";
 import { useLeagues } from "../../domains/league/hooks/use-leagues";
@@ -21,7 +22,7 @@ const LeaguesPage = () => {
 	}
 
 	return (
-		<Box data-ui="leagues-screen screen">
+		<ScreenLayout data-ui="leagues-screen screen">
 			<ScreenHeading title="leagues" withBackButton />
 
 			<Box pt={[6, 10]} pb={14} px={[2, 6]}>
@@ -114,7 +115,7 @@ const LeaguesPage = () => {
 					</>
 				) : null}
 			</Box>
-		</Box>
+		</ScreenLayout>
 	);
 };
 

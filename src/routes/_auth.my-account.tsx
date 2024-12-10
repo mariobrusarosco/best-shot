@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 
 import { ScreenHeading } from "@/domains/global/components/screen-heading";
 import { useMember } from "@/domains/member/hooks/use-member";
+import { ScreenLayout } from "@/domains/ui-system/layout/screen-layout";
 import { Typography } from "@mui/material";
 
 export default function MyAccountScreen() {
@@ -11,26 +12,26 @@ export default function MyAccountScreen() {
 
 	if (member.isFetching) {
 		return (
-			<div>
+			<ScreenLayout>
 				<Typography variant="h1" color="neutral.100">
 					...loading
 				</Typography>
-			</div>
+			</ScreenLayout>
 		);
 	}
 
 	if (member.isError) {
 		return (
-			<div>
+			<ScreenLayout>
 				<Typography variant="h1" color="red.400">
 					Ops, something has happend
 				</Typography>
-			</div>
+			</ScreenLayout>
 		);
 	}
 
 	return (
-		<div>
+		<ScreenLayout>
 			<ScreenHeading title="my account" />
 
 			<div>
@@ -38,7 +39,7 @@ export default function MyAccountScreen() {
 					{member.data?.nickName}
 				</Typography>
 			</div>
-		</div>
+		</ScreenLayout>
 	);
 }
 

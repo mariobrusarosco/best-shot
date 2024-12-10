@@ -1,48 +1,21 @@
 import { APP_MODE } from "@/domains/global/utils";
-import { UIHelper } from "@/theming/theme";
-import Typography from "@mui/material/Typography/Typography";
-import { Box, styled, useMediaQuery } from "@mui/system";
+import { Box, styled } from "@mui/system";
 import { useTournament } from "../hooks/use-tournament";
 import { TournamentTabs } from "./tournament-tabs";
-
-const { startsOn } = UIHelper.media;
 
 interface Props {
 	tournament: ReturnType<typeof useTournament>;
 }
 
 export const TournamentHeading = ({ tournament }: Props) => {
-	const isDesktopScreen = useMediaQuery(startsOn("desktop"));
-
-	const titleVariant = isDesktopScreen ? "h1" : "h2";
-	const logoSrc = APP_MODE === "local-dev" ? "" : tournament.data?.logo;
+	const logoSrc = APP_MODE === "production" ? "" : tournament.data?.logo;
 
 	return (
 		<Wrapper data-ui="tournament-heading">
-			<LabelAndLogo data-ui="label-and-logo">
-				<TournamentLabelBox data-ui="tournament-label-box">
-					<Typography
-						color="neutral.100"
-						variant={titleVariant}
-						textTransform="lowercase"
-						sx={{
-							width: { all: "fit-content" },
-						}}
-					>
-						{tournament.data?.label}
-					</Typography>
-					<Typography
-						display="block"
-						data-ui="season"
-						variant="label"
-						color="teal.500"
-					>
-						{tournament.data?.season}
-					</Typography>
-				</TournamentLabelBox>
-
+			<LogoBox>
 				<TournamentLogo src={logoSrc} />
-			</LabelAndLogo>
+			</LogoBox>
+
 			<TournamentTabs tournament={tournament?.data} />
 		</Wrapper>
 	);
@@ -50,35 +23,38 @@ export const TournamentHeading = ({ tournament }: Props) => {
 
 const Wrapper = styled(Box)(({ theme }) =>
 	theme?.unstable_sx({
-		gap: 2,
 		display: "flex",
-		flexDirection: {
-			all: "column",
-			tablet: "row",
-		},
+		flexDirection: "row",
 		justifyContent: "space-between",
-		alignItems: "flex-start",
+		alignItems: "center",
 		px: {
-			all: 0,
+			all: 2,
 			tablet: 2,
 		},
+		py: {
+			all: 4,
+			tablet: 2,
+		},
+		gap: 2,
 	}),
 );
 
-const TournamentLabelBox = styled(Box)(({ theme }) => theme?.unstable_sx({}));
-
-const LabelAndLogo = styled(Box)(({ theme }) =>
+const LogoBox = styled(Box)(({ theme }) =>
 	theme?.unstable_sx({
-		width: 1,
 		display: "grid",
-		gap: 3,
+		img: {
+			maxHeight: {
+				all: "140px",
+				tablet: "140px",
+			},
+			maxWidth: {
+				all: "140px",
+				tablet: "140px",
+			},
+		},
 	}),
 );
 
 export const TournamentLogo = styled("img")(({ theme }) =>
-	theme?.unstable_sx({
-		maxWidth: {
-			all: "120px",
-		},
-	}),
+	theme?.unstable_sx({}),
 );

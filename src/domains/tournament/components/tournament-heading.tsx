@@ -1,3 +1,4 @@
+import { APP_MODE } from "@/domains/global/utils";
 import { UIHelper } from "@/theming/theme";
 import Typography from "@mui/material/Typography/Typography";
 import { Box, styled, useMediaQuery } from "@mui/system";
@@ -14,6 +15,7 @@ export const TournamentHeading = ({ tournament }: Props) => {
 	const isDesktopScreen = useMediaQuery(startsOn("desktop"));
 
 	const titleVariant = isDesktopScreen ? "h1" : "h2";
+	const logoSrc = APP_MODE === "local-dev" ? "" : tournament.data?.logo;
 
 	return (
 		<Wrapper data-ui="tournament-heading">
@@ -39,7 +41,7 @@ export const TournamentHeading = ({ tournament }: Props) => {
 					</Typography>
 				</TournamentLabelBox>
 
-				<TournamentLogo src={tournament.data?.logo} />
+				<TournamentLogo src={logoSrc} />
 			</LabelAndLogo>
 			<TournamentTabs tournament={tournament?.data} />
 		</Wrapper>

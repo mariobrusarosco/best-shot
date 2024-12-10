@@ -27,7 +27,6 @@ export const ScreenHeading = (props: Props) => {
 		<Wrapper data-ui="screen-heading">
 			{withBackButton ? <GoBackButton /> : null}
 
-			{/* <Box data-ui="title-and-subtitle"> */}
 			{title ? (
 				<Typography
 					data-ui="title"
@@ -43,16 +42,18 @@ export const ScreenHeading = (props: Props) => {
 					{subtitle}
 				</Typography>
 			) : null}
-			{/* </Box> */}
 
 			{children ? children : null}
-			{/* {children ? <Box data-ui="children">{children}</Box> : null} */}
 		</Wrapper>
 	);
 };
 
 const Wrapper = styled(Surface)(({ theme }) =>
 	theme?.unstable_sx({
+		height: {
+			all: "var(--screeh-heading-height-mobile)",
+			tablet: "var(--screeh-heading-height-tablet)",
+		},
 		position: "relative",
 		px: {
 			all: 2,
@@ -70,9 +71,5 @@ const Wrapper = styled(Surface)(({ theme }) =>
 		borderBottomLeftRadius: "24px",
 		borderBottomRightRadius: "24px",
 		gridColumn: "1 / 4",
-		minHeight: {
-			all: 200,
-			tablet: 100,
-		},
 	}),
 );

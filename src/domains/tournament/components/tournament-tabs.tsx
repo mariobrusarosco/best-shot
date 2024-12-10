@@ -39,11 +39,5 @@ const Wrapper = styled(Surface)(({ theme }) =>
 		mt: 3,
 		borderRadius: 2,
 		width: 1,
-		// position: {
-		// 	all: "absolute",
-		// 	tablet: "relative",
-		// },
 	}),
 );
-
-// const Temp = styled(Box)(({ theme }) => theme?.unstable_sx({}));

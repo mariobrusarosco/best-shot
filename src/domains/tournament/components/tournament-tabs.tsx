@@ -66,16 +66,17 @@ export const TournamentTabs = ({
 const Wrapper = styled(Surface)(({ theme }) =>
 	theme?.unstable_sx({
 		display: "flex",
-		flexDirection: {
-			all: "column",
-			tablet: "row",
-		},
+		justifyContent: "space-between",
+		// flexDirection: {
+		// 	all: "column",
+		// 	tablet: "row",
+		// },
 		gap: { all: 2, tablet: 2 },
-		width: { all: "120px", tablet: "auto" },
+		// width: { all: "120px", tablet: "auto" },
 
-		"> a": {
-			display: "inline-flex",
-			width: { tablet: "200px" },
-		},
+		// "> a": {
+		// 	display: "inline-flex",
+		// 	width: { tablet: "200px" },
+		// },
 	}),
 );

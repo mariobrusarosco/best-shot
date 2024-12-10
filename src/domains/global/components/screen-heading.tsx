@@ -29,25 +29,22 @@ export const ScreenHeading = (props: Props) => {
 			{withBackButton ? <GoBackButton /> : null}
 
 			<TextBox data-ui="text-box">
-				{title ? (
-					<Typography
-						data-ui="title"
-						variant={titleVariant}
-						textTransform="lowercase"
-					>
-						{title}
-					</Typography>
-				) : null}
+				<Typography
+					data-ui="title"
+					variant={titleVariant}
+					textTransform="lowercase"
+				>
+					{title}
+				</Typography>
 
-				{subtitle ? (
-					<Typography
-						data-ui="subtitle"
-						variant={subtitleVariant}
-						color="teal.500"
-					>
-						{subtitle}
-					</Typography>
-				) : null}
+				<Typography
+					data-ui="subtitle"
+					variant={subtitleVariant}
+					color="teal.500"
+					minHeight="18px"
+				>
+					{subtitle}
+				</Typography>
 			</TextBox>
 
 			{children ? children : null}
@@ -61,15 +58,10 @@ const Wrapper = styled(Surface)(({ theme }) =>
 			all: "var(--screeh-heading-height-mobile)",
 			tablet: "var(--screeh-heading-height-tablet)",
 		},
-		display: {
-			tablet: "flex",
-		},
-		justifyContent: {
-			tablet: "space-between",
-		},
-		alignItems: {
-			tablet: "center",
-		},
+		display: "flex",
+		justifyContent: "space-between",
+		alignItems: "center",
+		gap: 2,
 		px: {
 			all: 2,
 			tablet: 6,

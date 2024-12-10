@@ -53,10 +53,9 @@ const TournamentLayout = () => {
 
 const LogoBox = styled(Box)(({ theme }) =>
 	theme?.unstable_sx({
-		display: { all: "none", tablet: "grid" },
 		img: {
-			maxHeight: "170px",
-			maxWidth: "170px",
+			maxHeight: "110px",
+			maxWidth: "110px",
 		},
 	}),
 );

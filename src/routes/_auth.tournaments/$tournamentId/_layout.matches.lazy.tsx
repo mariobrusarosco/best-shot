@@ -124,12 +124,12 @@ export const TournamentMatchesScreen = () => {
 
 const Matches = styled(Box)(({ theme }) =>
 	theme?.unstable_sx({
-		display: "none",
-		overflow: "hidden",
-		height: {
-			all: "calc(100vh - var(--screeh-heading-height-mobile))",
-			tablet: "calc(100vh - var(--screeh-heading-height-tablet))",
-		},
+		overflow: "auto",
+		flex: 1,
+		// height: {
+		// 	all: "calc(100vh - var(--screeh-heading-height-mobile))",
+		// 	tablet: "calc(100vh - var(--screeh-heading-height-tablet))",
+		// },
 		py: {
 			tablet: 8,
 		},
@@ -149,15 +149,15 @@ const Matches = styled(Box)(({ theme }) =>
 
 const Rounds = styled(Box)(({ theme }) =>
 	theme?.unstable_sx({
-		overflow: "auto",
-		height: {
-			all: "calc(100vh - var(--screeh-heading-height-mobile))",
-			tablet: "calc(100vh - var(--screeh-heading-height-tablet))",
-		},
+		// overflow: "auto",
+		// height: {
+		// 	all: "calc(100vh - var(--screeh-heading-height-mobile))",
+		// 	tablet: "calc(100vh - var(--screeh-heading-height-tablet))",
+		// },
 		px: [1.5, 3],
 		pb: {
-			all: "175px",
-			tablet: "50px",
+			all: "215px",
+			tablet: "215px",
 		},
 	}),
 );

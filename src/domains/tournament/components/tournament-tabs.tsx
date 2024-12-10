@@ -23,10 +23,10 @@ export const TournamentTabs = ({
 					borderColor="teal.500"
 					bgcolor="black.800"
 					color="neutral.100"
-					height={25}
+					height={30}
 					width={1}
 				>
-					<Typography variant="tag">Matches</Typography>
+					<Typography variant="tag">matches</Typography>
 				</AppPill>
 			</Link>
 			<Link
@@ -38,7 +38,7 @@ export const TournamentTabs = ({
 					borderColor="teal.500"
 					bgcolor="black.800"
 					color="neutral.100"
-					height={25}
+					height={30}
 					width={1}
 				>
 					<Typography variant="tag">performance</Typography>
@@ -53,10 +53,10 @@ export const TournamentTabs = ({
 					borderColor="teal.500"
 					bgcolor="black.800"
 					color="neutral.100"
-					height={25}
+					height={30}
 					width={1}
 				>
-					<Typography variant="tag">Simulator (soon)</Typography>
+					<Typography variant="tag">simulator (soon)</Typography>
 				</AppPill>
 			</Link>
 		</Wrapper>
@@ -71,10 +71,11 @@ const Wrapper = styled(Surface)(({ theme }) =>
 			tablet: "row",
 		},
 		gap: { all: 2, tablet: 2 },
-		width: { all: "120px", tablet: "120px" },
+		width: { all: "120px", tablet: "auto" },
 
 		"> a": {
 			display: "inline-flex",
+			width: { tablet: "200px" },
 		},
 	}),
 );

@@ -6,13 +6,13 @@ export const GlobalCSS = () => (
 		styles={{
 			body: {},
 			":root": {
-				"--screeh-heading-height-mobile": "200px",
-				"--screeh-heading-height-tablet": "200px",
+				"--screeh-heading-height-mobile": "190px",
+				"--screeh-heading-height-tablet": "250px",
 			},
 			"#root": {
 				height: "100vh",
 				width: "100vw",
-				display: "flex",
+				// display: "flex",
 			},
 			menu: {
 				margin: 0,

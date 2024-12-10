@@ -1,7 +1,11 @@
 import { ScreenHeading } from "@/domains/global/components/screen-heading";
-import { TournamentHeading } from "@/domains/tournament/components/tournament-heading";
+import {
+	TournamentHeading,
+	TournamentLogo,
+} from "@/domains/tournament/components/tournament-heading";
 import { useTournament } from "@/domains/tournament/hooks/use-tournament";
 import { Typography } from "@mui/material";
+import { Box, styled } from "@mui/system";
 import { Outlet } from "@tanstack/react-router";
 import { ScreenLayout } from "../ui-system/layout/screen-layout";
 
@@ -34,7 +38,11 @@ const TournamentLayout = () => {
 				title={tournament.data?.label}
 				subtitle={tournament.data?.season}
 				withBackButton
-			></ScreenHeading>
+			>
+				<LogoBox>
+					<TournamentLogo src={tournament.data?.logo} />
+				</LogoBox>
+			</ScreenHeading>
 
 			<TournamentHeading tournament={tournament} />
 
@@ -42,5 +50,15 @@ const TournamentLayout = () => {
 		</ScreenLayout>
 	);
 };
+
+const LogoBox = styled(Box)(({ theme }) =>
+	theme?.unstable_sx({
+		display: { all: "none", tablet: "grid" },
+		img: {
+			maxHeight: "170px",
+			maxWidth: "170px",
+		},
+	}),
+);
 
 export { TournamentLayout };

@@ -25,15 +25,17 @@ const Wrapper = styled(Box)(({ theme }) =>
 	theme?.unstable_sx({
 		display: "flex",
 		flexDirection: "row",
-		justifyContent: "space-between",
-		alignItems: "center",
+		justifyContent: {
+			all: "space-between",
+			tablet: "flex-end",
+		},
 		px: {
 			all: 2,
 			tablet: 2,
 		},
 		py: {
 			all: 4,
-			tablet: 2,
+			tablet: 4,
 		},
 		gap: 2,
 	}),
@@ -41,7 +43,7 @@ const Wrapper = styled(Box)(({ theme }) =>
 
 const LogoBox = styled(Box)(({ theme }) =>
 	theme?.unstable_sx({
-		display: "grid",
+		display: { all: "grid", tablet: "none" },
 		img: {
 			maxHeight: {
 				all: "140px",

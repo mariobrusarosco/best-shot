@@ -17,7 +17,7 @@ export const ScoreDisplay = ({ value }: { value: number | null }) => {
 				score
 			</Typography>
 			<AppPill bgcolor={"black.500"} minWidth={30} height={20}>
-				<Typography variant="tag">{null}</Typography>
+				<Typography variant="tag">{value}</Typography>
 			</AppPill>
 		</Box>
 	);

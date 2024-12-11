@@ -20,6 +20,7 @@ import {
 	ToggleButton,
 } from "./match-card.styles";
 import { ScoreDisplay } from "./score-display";
+import { ScoreInput } from "./score-input";
 import { TeamDisplay } from "./team-display";
 
 interface Props {
@@ -30,6 +31,11 @@ interface Props {
 export const MatchCard = ({ guess, match }: Props) => {
 	const [isOpen, setIsOpen] = useState(false);
 	const guessInputs = useGuessInputs(guess, match);
+
+	console.log({ guessInputs });
+
+	const avaialbleActions =
+		guess.status !== "paused" && guess.status !== "expired";
 
 	return (
 		<Card data-open={isOpen} data-ui="card" data-guess-status={guess.status}>
@@ -47,6 +53,7 @@ export const MatchCard = ({ guess, match }: Props) => {
 							? "-"
 							: format(new Date(match.date), "dd MMM - k:mm")}
 					</Typography>
+					{/* {isOpen ? getStatusPill(guess) : null} */}
 					{getStatusPill(guess)}
 				</Stack>
 
@@ -71,10 +78,19 @@ export const MatchCard = ({ guess, match }: Props) => {
 
 			<Teams>
 				<Team data-venue="home">
-					<ScoreAndGuess>
-						<ScoreDisplay value={match.home.score} />
-						<GuessDisplay data={guess.home} />
-					</ScoreAndGuess>
+					{avaialbleActions ? (
+						<ScoreAndGuess>
+							<ScoreDisplay value={match.home.score} />
+							{isOpen ? (
+								<ScoreInput
+									value={guessInputs.homeGuess}
+									handleInputChange={guessInputs.handleHomeGuess}
+								/>
+							) : (
+								<GuessDisplay data={guess.home} />
+							)}
+						</ScoreAndGuess>
+					) : null}
 					<TeamDisplay expanded={isOpen} team={match.home} />
 				</Team>
 
@@ -87,17 +103,22 @@ export const MatchCard = ({ guess, match }: Props) => {
 				/>
 
 				<Team data-venue="away">
-					<ScoreAndGuess>
-						<ScoreDisplay value={match.away.score} />
-						<GuessDisplay data={guess.away} />
-					</ScoreAndGuess>
+					{avaialbleActions ? (
+						<ScoreAndGuess>
+							<ScoreDisplay value={match.away.score} />
+							{isOpen ? (
+								<ScoreInput
+									value={guessInputs.awayGuess}
+									handleInputChange={guessInputs.handleAwayGuess}
+								/>
+							) : (
+								<GuessDisplay data={guess.away} />
+							)}
+						</ScoreAndGuess>
+					) : null}
 					<TeamDisplay expanded={isOpen} team={match.away} />
 				</Team>
 			</Teams>
-
-			{/* <Inputs>
-			
-			</Inputs> */}
 		</Card>
 	);
 };
@@ -105,14 +126,14 @@ export const MatchCard = ({ guess, match }: Props) => {
 const getStatusPill = (guess: IGuess) => {
 	if (guess.status === "paused")
 		return (
-			<AppPill bgcolor="pink.700" width={80} height={5}>
+			<AppPill bgcolor="pink.700" width={80} height={20}>
 				<Typography variant="tag">postponed</Typography>
 			</AppPill>
 		);
 
 	if (guess.status === "expired")
 		return (
-			<AppPill border="1px solid" borderColor="red.400" width={60} height={5}>
+			<AppPill border="1px solid" borderColor="red.400" width={60} height={20}>
 				<Typography color="red.400" variant="tag">
 					expired
 				</Typography>
@@ -121,8 +142,8 @@ const getStatusPill = (guess: IGuess) => {
 
 	if (guess.status === "waiting_for_game")
 		return (
-			<AppPill bgcolor="teal.500" width={90} height={5}>
-				<Typography variant="tag">waiting for game</Typography>
+			<AppPill bgcolor="teal.500" width={120} height={20}>
+				<Typography variant="tag">waiting for match</Typography>
 			</AppPill>
 		);
 
@@ -132,9 +153,9 @@ const getStatusPill = (guess: IGuess) => {
 				border="1px solid"
 				borderColor="neutral.100"
 				width={75}
-				height={5}
+				height={20}
 			>
-				<Typography variant="tag">not started</Typography>
+				<Typography variant="tag">give a shot!</Typography>
 			</AppPill>
 		);
 

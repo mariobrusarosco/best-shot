@@ -4,7 +4,7 @@ import {
 	Unstable_NumberInput as BaseNumberInput,
 	NumberInputProps,
 } from "@mui/base/Unstable_NumberInput";
-import { css, styled } from "@mui/system";
+import { Box, css, styled } from "@mui/system";
 import { forwardRef, useRef } from "react";
 
 export const NumberInput = forwardRef(
@@ -47,10 +47,6 @@ export const ScoreInput = ({ value, handleInputChange }: InputProps) => {
 			placeholder="-"
 			value={value}
 			ref={ref}
-			onBeforeInputCapture={(e) => {
-				console.log(e);
-				debugger;
-			}}
 			onChange={(_, val) => {
 				console.log(handleInputChange);
 
@@ -83,16 +79,30 @@ interface InputProps {
 	handleInputChange: (val: number | null) => void;
 }
 
-export const InputBoxStyled = styled("div")(
-	({ theme }) => `
-    display: grid;
-    grid-template-areas: 'decrement input increment';
-    gap: ${theme.spacing(1)};
+// export const InputBoxStyled = styled("div")(
+// 	({ theme }) => `
+//     display: grid;
+//     grid-template-areas: 'decrement input increment';
+//     gap: ${theme.spacing(1)};
 
-    & .input { grid-area: input; };
-    & .increment { grid-area: increment; };
-    & .decrement { grid-area: decrement; };
-  `,
+//     & .input { grid-area: input;flex:1 };
+//     & .increment { grid-area: increment; flex:1 };
+//     & .decrement { grid-area: decrement; flex:1};
+//   `,
+// );
+
+export const InputBoxStyled = styled(Box)(({ theme }) =>
+	theme?.unstable_sx({
+		display: "flex",
+		justifyContent: "space-between",
+		alignItems: "center",
+		gridArea: "teams",
+		gap: 1,
+
+		"& .decrement": { gridArea: "decrement", flex: 1, order: 1 },
+		"& .input": { gridArea: "input", flex: 1, order: 2 },
+		"& .increment": { gridArea: "increment", flex: 1, order: 3 },
+	}),
 );
 
 export const InputStyled = styled("input")(
@@ -117,6 +127,7 @@ const InputButtonStyled = styled(AppButton)(
   color: ${theme.palette.neutral[100]};
   border-radius: ${theme.shape.borderRadius}px;
   padding: ${theme.spacing(1)};
+	flex: 1,
 
   &[disabled] {
     filter: grayscale(1);

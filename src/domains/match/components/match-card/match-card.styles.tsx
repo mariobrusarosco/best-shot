@@ -8,17 +8,16 @@ export const Card = styled(Surface)(
 		border-radius: ${theme.shape.borderRadius}px;
 		background-color: ${theme.palette.black[800]};
 		padding: ${theme.spacing(2)};
-		gap: ${theme.spacing(1.5)};	
-		
+	
 		&[data-open=true]{
 			grid-template-areas: "header" "teams";
 			grid-template-columns: 1fr;
+			gap: ${theme.spacing(3)};	
 		}
 			
 		&[data-open=false]{
-			// grid-template-columns: 1fr auto;
+			gap: ${theme.spacing(1)};	
 			grid-template-areas: "header" "teams";
-			// grid-template-areas: "header cta" "teams cta";
 		}
 	`,
 );
@@ -39,6 +38,7 @@ export const Teams = styled(Box)(({ theme }) =>
 		justifyContent: "space-between",
 		alignItems: "center",
 		gridArea: "teams",
+		gap: 1,
 	}),
 );
 
@@ -47,12 +47,8 @@ export const Team = styled(Box)(({ theme }) =>
 		display: "flex",
 		alignItems: "center",
 		gap: 1,
-
-		// "[data-open='false'] &": {
-		// 	gridTemplateColumns: {
-		// 		all: "1fr 1px 1fr",
-		// 	},
-		// },
+		flex: 1,
+		maxWidth: "48%",
 
 		"[data-open='true'] &": {
 			gap: 2,
@@ -60,6 +56,8 @@ export const Team = styled(Box)(({ theme }) =>
 				all: "column-reverse",
 			},
 			alignItems: "stretch",
+			justifyContent: "space-between",
+			height: "100%",
 		},
 		"[data-venue='away']&": {
 			flexDirection: "row-reverse",

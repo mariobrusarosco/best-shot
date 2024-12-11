@@ -78,9 +78,9 @@ export const MatchCard = ({ guess, match }: Props) => {
 
 			<Teams>
 				<Team data-venue="home">
+					<ScoreDisplay value={match.home.score} />
 					{avaialbleActions ? (
 						<ScoreAndGuess>
-							<ScoreDisplay value={match.home.score} />
 							{isOpen ? (
 								<ScoreInput
 									value={guessInputs.homeGuess}
@@ -103,9 +103,9 @@ export const MatchCard = ({ guess, match }: Props) => {
 				/>
 
 				<Team data-venue="away">
+					<ScoreDisplay value={match.away.score} />
 					{avaialbleActions ? (
 						<ScoreAndGuess>
-							<ScoreDisplay value={match.away.score} />
 							{isOpen ? (
 								<ScoreInput
 									value={guessInputs.awayGuess}

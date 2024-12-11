@@ -10,7 +10,6 @@ import { AppButton } from "@/domains/ui-system/components/button/button";
 import { AppPill } from "@/domains/ui-system/components/pill/pill";
 import { Typography } from "@mui/material";
 import { Box, Stack, styled } from "@mui/system";
-import { useQueryClient } from "@tanstack/react-query";
 import { createLazyFileRoute } from "@tanstack/react-router";
 import { useEffect } from "react";
 
@@ -20,7 +19,6 @@ export const TournamentMatchesScreen = () => {
 	const guesses = useGuess();
 	const matches = useTournamentMatches();
 	const setup = useTournamentSetup();
-	const queryClient = useQueryClient();
 
 	// console.log("matches.isFetching", matches.isFetching);
 	// console.log("guess.isFetching", guesses.isFetching);
@@ -72,14 +70,10 @@ export const TournamentMatchesScreen = () => {
 						await setup.mutateAsync({
 							tournamentId: tournament.data?.id || "",
 						});
-
-						queryClient.invalidateQueries({
-							queryKey: ["guess"],
-						});
 					}}
 				>
 					<Typography variant="caption" color="neutral.100">
-						click here to setup
+						{setup.isPending ? "...working on it..." : "click here to setup"}
 					</Typography>
 				</AppButton>
 			</Matches>

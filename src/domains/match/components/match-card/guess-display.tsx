@@ -19,7 +19,7 @@ export const GuessDisplay = ({ data }: Props) => {
 				opacity,
 			}}
 		>
-			<Typography variant="tag" color={color}>
+			<Typography textTransform="uppercase" variant="tag" color={color}>
 				guess
 			</Typography>
 			<AppPill bgcolor={bgColor} minWidth={30} height={20}>
@@ -29,19 +29,25 @@ export const GuessDisplay = ({ data }: Props) => {
 	);
 };
 
-const Wrapper = styled(Box)({
-	display: "flex",
-	justifyContent: "space-between",
-	alignItems: "center",
-	gap: 1,
-});
+export const Wrapper = styled(Box)(({ theme }) =>
+	theme?.unstable_sx({
+		display: "flex",
+		justifyContent: "space-between",
+		alignItems: "center",
+		gap: 1,
+
+		"&[data-venue='away']": {
+			flexDirection: "row-reverse",
+		},
+	}),
+);
 
 const getStylesByStatus = (status: GUESS_STATUS) => {
 	if (status === "expired") {
 		return {
 			color: "neutral.100",
 			bgColor: "black.500",
-			opacity: 0.5,
+			opacity: 0.2,
 		};
 	}
 

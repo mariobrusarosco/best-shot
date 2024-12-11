@@ -102,7 +102,7 @@ export const TournamentMatchesScreen = () => {
 					</AppPill>
 				</RoundHeading>
 
-				<Stack gap={2} className="round-games">
+				<Stack gap={1} className="round-games">
 					{matches?.data?.map((match) => {
 						const guess = guesses.data?.find((guess: IGuess) => {
 							return guess.matchId === match.id;

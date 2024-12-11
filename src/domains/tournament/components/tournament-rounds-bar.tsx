@@ -115,7 +115,6 @@ const Wrapper = styled(Box)(({ theme }) =>
 			all: 5,
 			tablet: 4,
 		},
-		backgroundColor: "white",
 		boxShadow: "0 4px 30px rgba(0, 0, 0, 0.1)",
 		backdropFilter: {
 			all: "blur(10px)",

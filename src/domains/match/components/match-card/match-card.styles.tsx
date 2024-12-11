@@ -1,6 +1,6 @@
 import { AppButton } from "@/domains/ui-system/components/button/button";
 import { Surface } from "@/domains/ui-system/components/surface/surface";
-import { Box, styled } from "@mui/system";
+import { Stack, styled } from "@mui/system";
 
 export const Card = styled(Surface)(
 	({ theme }) => `
@@ -17,19 +17,18 @@ export const Card = styled(Surface)(
 			
 		&[data-open=false]{
 			grid-template-columns: 1fr auto;
-			grid-template-areas: "teams header";
+			grid-template-areas: "header cta" "teams cta";
 		}
 	`,
 );
 
-export const Header = styled(Box)(
-	({ theme }) => `
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		grid-area: header;		
-		gap: ${theme.spacing(1)};
-	`,
+export const Header = styled(Stack)(({ theme }) =>
+	theme?.unstable_sx({
+		flexDirection: "row",
+		alignItems: "center",
+		gridArea: "header",
+		gap: 1,
+	}),
 );
 
 export const ToggleButton = styled(AppButton)(

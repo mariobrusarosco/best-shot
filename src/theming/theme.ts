@@ -34,6 +34,9 @@ export const COLORS = {
 		100: "#FDFCFC",
 		500: "#A3ABA8",
 	},
+	pink: {
+		700: "#BB2253",
+	},
 };
 
 export const BORDER_RADIUS = {

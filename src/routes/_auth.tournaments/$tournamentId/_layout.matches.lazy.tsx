@@ -9,7 +9,7 @@ import { useTournamentSetup } from "@/domains/tournament/hooks/use-tournament-se
 import { AppButton } from "@/domains/ui-system/components/button/button";
 import { AppPill } from "@/domains/ui-system/components/pill/pill";
 import { Typography } from "@mui/material";
-import { Box, styled } from "@mui/system";
+import { Box, Stack, styled } from "@mui/system";
 import { useQueryClient } from "@tanstack/react-query";
 import { createLazyFileRoute } from "@tanstack/react-router";
 import { useEffect } from "react";
@@ -102,7 +102,7 @@ export const TournamentMatchesScreen = () => {
 					</AppPill>
 				</RoundHeading>
 
-				<Box display="grid" gap={2} className="round-games">
+				<Stack gap={2} className="round-games">
 					{matches?.data?.map((match) => {
 						const guess = guesses.data?.find((guess: IGuess) => {
 							return guess.matchId === match.id;
@@ -114,7 +114,7 @@ export const TournamentMatchesScreen = () => {
 							</li>
 						);
 					})}
-				</Box>
+				</Stack>
 			</Rounds>
 
 			<Box

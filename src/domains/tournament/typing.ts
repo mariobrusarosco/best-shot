@@ -24,7 +24,7 @@ export type ITournament = {
 	season: ApiTournament["season"];
 	slug: ApiTournament["slug"];
 	mode: ApiTournament["mode"];
-	matches: IMatch[];
+	starterRound: number;
 };
 
 export type ITournamentPerformance = {

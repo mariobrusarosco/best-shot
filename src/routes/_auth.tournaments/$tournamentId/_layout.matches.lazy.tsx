@@ -12,9 +12,10 @@ import { Typography } from "@mui/material";
 import { Box, styled } from "@mui/system";
 import { useQueryClient } from "@tanstack/react-query";
 import { createLazyFileRoute } from "@tanstack/react-router";
+import { useEffect } from "react";
 
 export const TournamentMatchesScreen = () => {
-	const { activeRound } = useTournamentRounds();
+	const { activeRound, goToRound } = useTournamentRounds();
 	const tournament = useTournament();
 	const guesses = useGuess();
 	const matches = useTournamentMatches();
@@ -24,8 +25,19 @@ export const TournamentMatchesScreen = () => {
 	// console.log("matches.isFetching", matches.isFetching);
 	// console.log("guess.isFetching", guesses.isFetching);
 	// console.log("guesses?.data", guesses?.data);
+	console.log({ activeRound });
+	const isEmptyState = guesses.data?.length === 0;
+	const isError = matches.isError || guesses.isError;
+	const isLoading = matches.isLoading || guesses.isLoading;
+	const autoSelectARound = !isLoading && !activeRound;
 
-	if (matches.isError || guesses.isError) {
+	useEffect(() => {
+		const starterRound = Number(tournament.data?.starterRound) || 1;
+
+		if (autoSelectARound) goToRound(starterRound);
+	}, [autoSelectARound]);
+
+	if (isError) {
 		return (
 			<Matches>
 				<Typography variant="h3" color="red.100">
@@ -35,7 +47,7 @@ export const TournamentMatchesScreen = () => {
 		);
 	}
 
-	if (matches.isLoading || guesses.isLoading) {
+	if (isLoading) {
 		return (
 			<Matches>
 				<Typography variant="h3" color="red.100">
@@ -45,7 +57,7 @@ export const TournamentMatchesScreen = () => {
 		);
 	}
 
-	if (guesses.data?.length === 0) {
+	if (isEmptyState) {
 		return (
 			<Matches>
 				<AppButton

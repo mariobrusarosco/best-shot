@@ -21,7 +21,7 @@ const Wrapper = styled(Box)(({ theme }) =>
 			tablet: 2,
 		},
 		py: {
-			all: 4,
+			all: 2,
 			tablet: 4,
 		},
 		gap: 2,

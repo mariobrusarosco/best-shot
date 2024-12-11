@@ -1,7 +1,7 @@
 {
 	"name": "best-shot",
 	"private": true,
-	"version": "0.27.0",
+	"version": "0.28.0",
 	"scripts": {
 		"start": "concurrently \"vite --mode local-dev\" \"cd ../api-best-shot && yarn dev\"",
 		"dev": "vite --mode local-dev",
@@ -25,7 +25,7 @@
 		"@tanstack/react-query-devtools": "^5.51.9",
 		"@tanstack/react-router": "^1.47.1",
 		"axios": "^1.7.2",
-		"date-fns": "^3.6.0",
+		"date-fns": "^4.1.0",
 		"lodash": "^4.17.21",
 		"react": "^18.2.0",
 		"react-dom": "^18.2.0"

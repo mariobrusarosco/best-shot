@@ -103,7 +103,7 @@ const Wrapper = styled(Box)(({ theme }) =>
 			tablet: "100%",
 		},
 		px: {
-			all: 2,
+			all: 0,
 			tablet: "unset",
 		},
 		pt: {
@@ -115,7 +115,6 @@ const Wrapper = styled(Box)(({ theme }) =>
 			all: 5,
 			tablet: 4,
 		},
-		backgroundColor: "white",
 		boxShadow: "0 4px 30px rgba(0, 0, 0, 0.1)",
 		backdropFilter: {
 			all: "blur(10px)",
@@ -132,8 +131,8 @@ const PillAndStandingLink = styled(Box)(({ theme }) =>
 		justifyContent: "space-between",
 		alignItems: "center",
 		gap: 2,
-
 		pb: 2,
+		px: 2,
 	}),
 );
 
@@ -141,7 +140,6 @@ const AppLink = styled(Box)(({ theme }) => theme?.unstable_sx({}));
 
 const Bar = styled(Box)(({ theme }) =>
 	theme?.unstable_sx({
-		scrollSnapType: "x mandatory",
 		width: 1,
 		overflowX: "scroll",
 		display: "flex",
@@ -153,6 +151,7 @@ const Bar = styled(Box)(({ theme }) =>
 		},
 		gap: 1.5,
 		pb: { all: 1 },
+		px: 2,
 	}),
 );
 

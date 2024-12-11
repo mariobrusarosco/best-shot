@@ -36,7 +36,7 @@ export const Menu = () => {
 	const isOpen = false;
 
 	return (
-		<Wrapper component="menu">
+		<Wrapper as="menu">
 			<Box
 				sx={{
 					display: {

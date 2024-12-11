@@ -1,7 +1,7 @@
 {
 	"name": "best-shot",
 	"private": true,
-	"version": "0.28.0",
+	"version": "0.29.0",
 	"scripts": {
 		"start": "concurrently \"vite --mode local-dev\" \"cd ../api-best-shot && yarn dev\"",
 		"dev": "vite --mode local-dev",
@@ -17,8 +17,7 @@
 		"@fontsource/montserrat": "^5.1.0",
 		"@fontsource/poppins": "^5.1.0",
 		"@mui/base": "^5.0.0-beta.64",
-		"@mui/icons-material": "^5.15.16",
-		"@mui/material": "^5.15.15",
+		"@mui/material": "^6.2.0",
 		"@mui/system": "^5.15.15",
 		"@tabler/icons-react": "^3.22.0",
 		"@tanstack/react-query": "^5.51.9",

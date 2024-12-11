@@ -80,6 +80,9 @@ interface CustomPalette {
 		100: string;
 		500: string;
 	};
+	pink: {
+		700: string;
+	};
 }
 
 export type CustomTypographyVariant =

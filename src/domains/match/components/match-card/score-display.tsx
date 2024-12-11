@@ -2,7 +2,7 @@ import { AppPill } from "@/domains/ui-system/components/pill/pill";
 import { Box, Typography } from "@mui/material";
 
 export const ScoreDisplay = ({ value }: { value: number | null }) => {
-	const content = value ?? "-";
+	if (!value) return null;
 
 	return (
 		<Box
@@ -13,9 +13,11 @@ export const ScoreDisplay = ({ value }: { value: number | null }) => {
 				gap: 1,
 			}}
 		>
-			<Typography variant="tag">score</Typography>
+			<Typography textTransform="uppercase" variant="tag">
+				score
+			</Typography>
 			<AppPill bgcolor={"black.500"} minWidth={30} height={20}>
-				<Typography variant="tag">{content}</Typography>
+				<Typography variant="tag">{value}</Typography>
 			</AppPill>
 		</Box>
 	);

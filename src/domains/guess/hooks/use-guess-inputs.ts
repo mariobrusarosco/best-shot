@@ -7,16 +7,16 @@ import { useGuessMutation } from "./use-guess-mutation";
 
 const route = getRouteApi("/_auth/tournaments/$tournamentId");
 
-export const useGuessInputs = (guess: IGuess | undefined, match: IMatch) => {
+export const useGuessInputs = (guess: IGuess, match: IMatch) => {
 	const queryClient = useQueryClient();
 	const search = route.useSearch() as { round: number };
 	const tournamentId = route.useParams().tournamentId;
 
 	const [homeGuess, setHomeGuess] = useState<null | number>(
-		guess?.home?.value ?? null,
+		guess.home.value ?? null,
 	);
 	const [awayGuess, setAwayGuess] = useState<null | number>(
-		guess?.away?.value ?? null,
+		guess.away.value ?? null,
 	);
 	const { isPending, mutateAsync } = useGuessMutation();
 

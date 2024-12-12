@@ -4,12 +4,13 @@ import { ScreenLayout } from "@/domains/ui-system/layout/screen-layout";
 
 const DashboardPage = () => {
 	const member = useMember();
+	// const performance = useMemberPerformance();
 
-	console.log("---------", member.data);
+	console.log("---------", member?.data);
 
 	return (
 		<ScreenLayout data-ui="dashboard-screen">
-			<ScreenHeading title="Hello," subtitle="Mario" />
+			<ScreenHeading title="Hello," subtitle={member?.data?.nickName} />
 		</ScreenLayout>
 	);
 };

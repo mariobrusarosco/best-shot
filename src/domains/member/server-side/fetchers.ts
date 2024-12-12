@@ -1,10 +1,16 @@
 import { api } from "@/api";
+import { IMember, IMemberPerformance } from "@/domains/member/typing";
 
 // TODO Type "queryKey" correctly
-export const getMember = async ({ queryKey }: any) => {
-	const [, authId] = queryKey;
+export const getMember = async () => {
+	const response = await api.get("member");
 
-	const response = await api.get("whoami/" + authId);
+	return response.data as IMember;
+};
 
-	return response.data;
+// TODO Type "queryKey" correctly
+export const getMemberPerformance = async () => {
+	const response = await api.get("member/performance");
+
+	return response.data as IMemberPerformance;
 };

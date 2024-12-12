@@ -1,12 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
 import { getMember } from "../server-side/fetchers";
 
-export const useMember = (authId?: string | undefined) => {
+export const useMember = () => {
 	const query = useQuery({
 		queryKey: ["member"],
 		queryFn: getMember,
-		enabled: !!authId,
+		enabled: true,
 	});
 
-	return { ...query };
+	return query;
 };

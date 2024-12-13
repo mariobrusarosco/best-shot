@@ -42,14 +42,20 @@ const TournamentLayout = () => {
 			<ScreenHeading
 				title={tournament.data?.label}
 				subtitle={tournament.data?.season}
-				withBackButton
+				backTo="/tournaments"
 			>
 				<LogoBox>
 					<TournamentLogo src={tournament.data?.logo} />
 				</LogoBox>
 			</ScreenHeading>
 
-			<ScreenMainContent>
+			<ScreenMainContent
+				data-ui="asdsa"
+				sx={{
+					px: [1.5, 3],
+					pb: "215px",
+				}}
+			>
 				<TournamentHeading tournament={tournament} />
 
 				<Outlet />

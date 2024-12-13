@@ -41,6 +41,7 @@ export const MatchCard = ({ guess, match }: Props) => {
 		match.status === "open" &&
 		(guess.status === "not-started" || guess.status === "waiting_for_game");
 
+	console.log({ guess, match });
 	return (
 		<Card data-open={isOpen} data-ui="card" data-guess-status={guess.status}>
 			<Header>

@@ -69,7 +69,7 @@ export const Menu = () => {
 					</Typography>
 				) : null}
 			</HeaderLink>
-			<HeaderLink to="/leagues?founder=true">
+			<HeaderLink to="/leagues">
 				<HeaderButton iconName="Users" />
 				{isOpen ? (
 					<Typography

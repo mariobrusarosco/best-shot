@@ -48,15 +48,9 @@ const GridOfCards = styled(Box)(({ theme }) =>
 			tablet: 3,
 		},
 		gridAutoColumns: "47%",
+		gridAutoRows: "110px",
 		gridAutoFlow: "column",
-		gridTemplateRows: "110px 110px",
-		gridTemplateColumns: "47% 47%",
-		// gridTemplateColumns: {
-		// 	all: "repeat(2, minmax(100px, 1fr))",
-		// 	tablet: "repeat(2, minmax(100px, 320px))",
-		// },
-		// gridAutoRows: {
-		// 	all: "115px",
-		// },
+		// gridTemplateRows: "auto auto",
+		// gridTemplateColumns: "47% 47%",
 	}),
 );

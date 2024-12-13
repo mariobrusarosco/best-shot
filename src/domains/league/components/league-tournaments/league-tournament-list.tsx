@@ -1,15 +1,13 @@
 import { useLeague } from "@/domains/league/hooks/use-league";
-import { ILeague } from "@/domains/league/typing";
 import { useTournaments } from "@/domains/tournament/hooks/use-tournaments";
 import { AppButton } from "@/domains/ui-system/components/button/button";
 import { AppIcon } from "@/domains/ui-system/components/icon/icon";
 import { AppPill } from "@/domains/ui-system/components/pill/pill";
-import { Surface } from "@/domains/ui-system/components/surface/surface";
 import Typography from "@mui/material/Typography/Typography";
 import { Box, styled } from "@mui/system";
 import { getRouteApi } from "@tanstack/react-router";
 import { lazy } from "react";
-import { ListGrid } from "../league-performance-stats/league-performance-stats";
+import { TournamentLeagueCard } from "../league-tournament-customization/league-tournament-customization";
 const LeagueTournamentCustomization = lazy(() =>
 	import(
 		"../league-tournament-customization/league-tournament-customization"
@@ -18,12 +16,6 @@ const LeagueTournamentCustomization = lazy(() =>
 
 const route = getRouteApi("/_auth/leagues/$leagueId/");
 
-const getTournaments = (tournaments?: ILeague["tournaments"]) => {
-	if (!tournaments) return [];
-
-	return tournaments?.map((tournament) => tournament);
-};
-
 export const LeagueTournaments = ({
 	league,
 }: {
@@ -31,7 +23,7 @@ export const LeagueTournaments = ({
 }) => {
 	const { editMode } = route.useSearch() as { editMode: boolean };
 	const navigate = route.useNavigate();
-	const { data } = useTournaments();
+	const { data: allAppAvailableTournamens } = useTournaments();
 	const toggleEditMode = () => {
 		navigate({
 			search: (prev: { editMode: boolean }) => ({
@@ -40,8 +32,6 @@ export const LeagueTournaments = ({
 			}),
 		});
 	};
-
-	console.log({ editMode, navigate });
 
 	const isEmptyState =
 		league?.isSuccess && league.data?.tournaments.length === 0;
@@ -54,6 +44,7 @@ export const LeagueTournaments = ({
 					display: "flex",
 					justifyContent: "space-between",
 					alignItems: "center",
+					mb: 2,
 				}}
 			>
 				<AppPill bgcolor="teal.500" color="neutral.100" width={100} height={25}>
@@ -76,29 +67,21 @@ export const LeagueTournaments = ({
 				</EmptyState>
 			)}
 
-			{editMode && data && league.data && (
+			{editMode && allAppAvailableTournamens && league.data && (
 				<LeagueTournamentCustomization
-					currentTournaments={getTournaments(league?.data?.tournaments)}
-					allTournaments={data}
+					currentTournaments={league?.data?.tournaments}
+					allTournaments={allAppAvailableTournamens}
 					league={league.data}
 				/>
 			)}
 
-			<ListGrid component="ul" data-ui="league-tournament-list">
-				{getTournaments(league?.data?.tournaments).map((tournament) => (
-					<Card>
-						<CardHeading>
-							<Typography variant="tag" textAlign="center" color="neutral.100">
-								{tournament.label}
-							</Typography>
-
-							<LogoBox>
-								<img src={tournament.logo} />
-							</LogoBox>
-						</CardHeading>
-					</Card>
-				))}
-			</ListGrid>
+			{!editMode && allAppAvailableTournamens && league.data && (
+				<ListGrid component="ul" data-ui="league-tournament-list">
+					{league?.data?.tournaments.map((tournament) => (
+						<TournamentLeagueCard tournament={tournament} />
+					))}
+				</ListGrid>
+			)}
 		</Box>
 	);
 };
@@ -127,38 +110,10 @@ const EmptyStartButton = styled(AppButton)(({ theme }) =>
 	}),
 );
 
-const Card = styled(Surface)(({ theme }) =>
+const ListGrid = styled(Box)(({ theme }) =>
 	theme.unstable_sx({
 		display: "flex",
-		flexDirection: "column",
-		justifyContent: "center",
-		alignItems: "center",
-		backgroundColor: "black.800",
-		height: "80px",
-		// py: 1,
-		// px: 2,
-		px: 0.5,
-		borderRadius: 3,
-	}),
-);
-
-const CardHeading = styled(Box)(({ theme }) =>
-	theme.unstable_sx({
-		display: "flex",
-		flexDirection: "column",
-		justifyContent: "space-between",
-		alignItems: "center",
-		gap: 2,
-		backgroundColor: "black.800",
-		borderRadius: 3,
-	}),
-);
-
-const LogoBox = styled(Box)(({ theme }) =>
-	theme.unstable_sx({
-		width: 20,
-		height: 20,
-		display: "grid",
-		placeContent: "center",
+		gap: 1,
+		flexWrap: "wrap",
 	}),
 );

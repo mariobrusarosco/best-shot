@@ -155,16 +155,10 @@ const Matches = styled(Box)(({ theme }) =>
 
 const Rounds = styled(Box)(({ theme }) =>
 	theme?.unstable_sx({
-		// overflow: "auto",
-		// height: {
-		// 	all: "calc(100vh - var(--screeh-heading-height-mobile))",
-		// 	tablet: "calc(100vh - var(--screeh-heading-height-tablet))",
+		// pb: {
+		// 	all: "215px",
+		// 	tablet: "215px",
 		// },
-		px: [1.5, 3],
-		pb: {
-			all: "215px",
-			tablet: "215px",
-		},
 	}),
 );
 

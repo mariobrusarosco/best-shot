@@ -74,15 +74,14 @@ export const LeagueTournamentCustomization = ({
 
 	return (
 		<Stack mt={4} gap={2}>
-			<Divider sx={{ bgcolor: "black.300" }} />
-
 			<Stack gap={1}>
 				<Box
 					color="neutral.100"
 					display="flex"
 					alignItems="center"
 					justifyContent="space-between"
-					mb={1}
+					mb={2}
+					pt={2}
 				>
 					<Typography
 						textTransform="uppercase"
@@ -92,14 +91,30 @@ export const LeagueTournamentCustomization = ({
 					>
 						tracked
 					</Typography>
-					<SaveButton
-						onClick={mutation.mutate}
-						sx={{ p: 1 }}
-						disabled={noTournamentIncluded || mutation.isPending}
-						aria-disabled={noTournamentIncluded || mutation.isPending}
+
+					<Box
+						gap={0.5}
+						display="flex"
+						alignItems="center"
+						justifyContent="space-between"
 					>
-						<AppIcon name="Save" size="extra-small" />
-					</SaveButton>
+						<Typography
+							variant="tag"
+							color="neutral.100"
+							fontWeight={700}
+							textTransform="uppercase"
+						>
+							save
+						</Typography>
+						<SaveButton
+							onClick={mutation.mutate}
+							sx={{ p: 1 }}
+							disabled={noTournamentIncluded || mutation.isPending}
+							aria-disabled={noTournamentIncluded || mutation.isPending}
+						>
+							<AppIcon name="Save" size="extra-small" />
+						</SaveButton>
+					</Box>
 				</Box>
 
 				<ListGrid>
@@ -110,42 +125,18 @@ export const LeagueTournamentCustomization = ({
 					)}
 
 					{tracked?.map((tournament) => (
-						<Card>
-							<CardHeading>
-								<Typography
-									variant="tag"
-									textAlign="center"
-									color="neutral.100"
-								>
-									{tournament.label}
-								</Typography>
-
-								{/* TODO Standard Logo usage */}
-								<LogoBox>
-									<img src={tournament.logo} />
-								</LogoBox>
-							</CardHeading>
-
-							<CTABox>
-								<AppIcon
-									name="Plus"
-									size="extra-small"
-									onClick={() => addTournament(tournament)}
-								/>
-								<AppIcon
-									name="Minus"
-									size="extra-small"
-									onClick={() => removeTournament(tournament)}
-								/>
-							</CTABox>
-						</Card>
+						<TournamentLeagueCard
+							tournament={tournament}
+							onRemove={() => removeTournament(tournament)}
+							status="tracked"
+						/>
 					))}
 				</ListGrid>
 			</Stack>
 
 			<Divider sx={{ bgcolor: "black.300" }} />
 
-			<Stack gap={1}>
+			<Stack gap={1} mt={2}>
 				<Typography
 					textTransform="uppercase"
 					variant="label"
@@ -156,39 +147,62 @@ export const LeagueTournamentCustomization = ({
 				</Typography>
 
 				<ListGrid>
-					{untracked?.map((tournament) => (
-						<Card>
-							<CardHeading>
-								<Typography
-									variant="tag"
-									textAlign="center"
-									color="neutral.100"
-								>
-									{tournament.label}
-								</Typography>
-
-								<LogoBox>
-									<img src={tournament.logo} />
-								</LogoBox>
-							</CardHeading>
-
-							<CTABox>
-								<AppIcon
-									name="Plus"
-									size="extra-small"
-									onClick={() => addTournament(tournament)}
-								/>
-								<AppIcon
-									name="Minus"
-									size="extra-small"
-									onClick={() => removeTournament(tournament)}
-								/>
-							</CTABox>
-						</Card>
-					))}
+					{untracked?.length === 0 ? (
+						<Typography variant="label" color="neutral.100">
+							This league is tracking all available tournaments
+						</Typography>
+					) : (
+						untracked?.map((tournament) => (
+							<TournamentLeagueCard
+								tournament={tournament}
+								onAdd={() => addTournament(tournament)}
+								status="untracked"
+							/>
+						))
+					)}
 				</ListGrid>
 			</Stack>
+
+			<Divider sx={{ bgcolor: "black.300" }} />
 		</Stack>
+	);
+};
+
+export const TournamentLeagueCard = ({
+	tournament,
+	onAdd,
+	onRemove,
+	status = "read-only",
+}: {
+	tournament: ITournament;
+	onAdd?: () => void;
+	onRemove?: () => void;
+	status?: "tracked" | "untracked" | "read-only";
+}) => {
+	return (
+		<Card>
+			<CardHeading>
+				<Typography variant="tag" textAlign="center" color="neutral.100">
+					{tournament.label}
+				</Typography>
+
+				<LogoBox>
+					<img src={tournament.logo} />
+				</LogoBox>
+			</CardHeading>
+
+			{status === "tracked" ? (
+				<IconBox bgcolor="red.400">
+					<AppIcon name="Minus" size="extra-small" onClick={onRemove} />
+				</IconBox>
+			) : null}
+
+			{status === "untracked" ? (
+				<IconBox bgcolor="green.200">
+					<AppIcon name="Plus" size="extra-small" onClick={onAdd} />
+				</IconBox>
+			) : null}
+		</Card>
 	);
 };
 
@@ -206,22 +220,21 @@ const Card = styled(Surface)(({ theme }) =>
 		justifyContent: "space-between",
 		alignItems: "center",
 		backgroundColor: "black.800",
-		height: "100px",
-		width: "105px",
+		minHeight: "40px",
+		width: "48%",
 		py: 1,
 		px: 1,
 		borderRadius: 2,
-		gap: 2,
+		gap: 1,
 	}),
 );
 
 const CardHeading = styled(Box)(({ theme }) =>
 	theme.unstable_sx({
 		display: "flex",
-		flexDirection: "column",
-		justifyContent: "space-between",
+		// flexDirection: "column",
 		alignItems: "center",
-		gap: 2,
+		gap: 1,
 		backgroundColor: "black.800",
 		borderRadius: 3,
 		flex: 1,
@@ -230,22 +243,19 @@ const CardHeading = styled(Box)(({ theme }) =>
 
 const LogoBox = styled(Box)(({ theme }) =>
 	theme.unstable_sx({
-		width: 20,
-		height: 20,
+		width: 14,
+		height: 14,
 		display: "grid",
 		placeContent: "center",
 	}),
 );
 
-const CTABox = styled(Box)(({ theme }) =>
+const IconBox = styled(Box)(({ theme }) =>
 	theme.unstable_sx({
-		display: "flex",
-		flexDirection: "column",
-		justifyContent: "center",
-		alignItems: "center",
-		height: "100%",
-		width: "25px",
-		gap: 3,
+		borderRadius: "8px",
+		padding: 0.5,
+		display: "grid",
+		placeContent: "center",
 	}),
 );
 
@@ -255,7 +265,6 @@ const SaveButton = styled(AppButton)(({ theme }) =>
 		color: "neutral.100",
 		p: 1,
 		borderRadius: 2,
-		maxWidth: "180px",
 
 		"[aria-disabled='true']&": {
 			opacity: 0.6,

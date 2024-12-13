@@ -41,7 +41,7 @@ const TournamentsPage = () => {
 			<ScreenHeading
 				title="tournaments"
 				subtitle="all current available tournaments"
-				withBackButton
+				backTo="/dashboard"
 			/>
 
 			<ScreenMainContent>

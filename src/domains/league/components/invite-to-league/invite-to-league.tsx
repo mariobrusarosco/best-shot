@@ -1,23 +1,26 @@
 import { AppButton } from "@/domains/ui-system/components/button/button";
 import { AppInput } from "@/domains/ui-system/components/input/input";
+import { AppPill } from "@/domains/ui-system/components/pill/pill";
 import { Surface } from "@/domains/ui-system/components/surface/surface";
 import { TypographyProps } from "@mui/material";
 import Typography from "@mui/material/Typography/Typography";
 import { Box, styled } from "@mui/system";
-import { useLeagues } from "../../hooks/use-leagues";
+import { useLeague } from "../../hooks/use-league";
 
-export const InviteToLeague = () => {
-	const { inputs, handleLeagueInvite } = useLeagues();
+export const InviteToLeague = ({
+	hasInvitePermission,
+}: {
+	hasInvitePermission: boolean | undefined;
+}) => {
+	const { inputs } = useLeague();
+
+	if (!hasInvitePermission) return null;
 
 	return (
 		<Box>
-			<Typography
-				textTransform="lowercase"
-				variant="paragraph"
-				color="neutral.100"
-			>
-				Invite to League
-			</Typography>
+			<AppPill bgcolor="teal.500" color="neutral.100" width={100} height={25}>
+				<Typography variant="tag">invitations</Typography>
+			</AppPill>
 
 			<Card
 				sx={{
@@ -36,15 +39,6 @@ export const InviteToLeague = () => {
 					}}
 					className="league-invitation"
 				>
-					<Label htmlFor="league-id">League ID</Label>
-					<AppInput
-						type="text"
-						id="league-id"
-						name="league-id"
-						value={inputs.leagueInput}
-						onChange={inputs.handleLeagueInput}
-					/>
-
 					<Label htmlFor="guest-id">Guest ID</Label>
 
 					<AppInput
@@ -54,7 +48,9 @@ export const InviteToLeague = () => {
 						value={inputs.guestIdInput}
 						onChange={inputs.handleGuestIdInput}
 					/>
-					<SubmitButton onClick={handleLeagueInvite}>Invite</SubmitButton>
+					<SubmitButton onClick={inputs.handleLeagueInvite}>
+						Invite
+					</SubmitButton>
 				</Box>
 			</Card>
 		</Box>

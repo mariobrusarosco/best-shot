@@ -1,5 +1,4 @@
 import { AppButton } from "@/domains/ui-system/components/button/button";
-import { GridOfCards } from "@/domains/ui-system/components/grid-of-cards/grid-of-cards";
 import { AppPill } from "@/domains/ui-system/components/pill/pill";
 import Typography from "@mui/material/Typography/Typography";
 import { Box, styled } from "@mui/system";
@@ -56,12 +55,20 @@ export const LeaguePerformanceStats = ({
 					my: 2,
 				}}
 			>
-				<AppPill bgcolor="teal.500" color="neutral.100" width={110} height={25}>
+				<AppPill bgcolor="teal.500" color="neutral.100" width={100} height={25}>
 					<Typography variant="tag">leaderboard</Typography>
 				</AppPill>
 			</Box>
 
-			<ListGrid>
+			<GridOfCards
+				component="ul"
+				data-ui="league-performance-stats"
+				sx={{
+					maxHeight: "260px",
+					overflow: "auto",
+					pb: 2,
+				}}
+			>
 				{performance?.data?.performances.map((leagueMember, index) => (
 					<Card>
 						<Box
@@ -131,7 +138,7 @@ export const LeaguePerformanceStats = ({
 						</Box>
 					</Card>
 				))}
-			</ListGrid>
+			</GridOfCards>
 		</Box>
 	);
 };
@@ -148,17 +155,17 @@ export const Card = styled(Box)(({ theme }) =>
 	}),
 );
 
-export const ListGrid = styled(GridOfCards)(({ theme }) =>
+const GridOfCards = styled(Box)(({ theme }) =>
 	theme.unstable_sx({
-		padding: 0,
 		borderRadius: 1,
-		gridTemplateColumns: {
-			all: "1fr 1fr",
-			tablet: "repeat(auto-fit, minmax(270px, 270px))",
+		display: "grid",
+		gap: {
+			all: 2,
+			tablet: 3,
 		},
-		gridAutoRows: {
-			all: "70px",
-			tablet: "80px",
-		},
+		gridAutoColumns: "47%",
+		gridAutoFlow: "column",
+		gridTemplateRows: "90px 90px",
+		gridTemplateColumns: "47% 47%",
 	}),
 );

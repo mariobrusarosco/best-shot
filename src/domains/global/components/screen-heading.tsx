@@ -12,13 +12,13 @@ interface Props extends SurfaceProps {
 	title?: string;
 	subtitle?: string;
 	tagText?: string;
-	withBackButton?: boolean;
+	backTo?: string;
 }
 
 const { startsOn } = UIHelper.media;
 
 export const ScreenHeading = (props: Props) => {
-	const { children, title, subtitle, withBackButton } = props;
+	const { children, title, subtitle, backTo } = props;
 	const isDesktopScreen = useMediaQuery(startsOn("desktop"));
 
 	const titleVariant = isDesktopScreen ? "h1" : "h4";
@@ -26,7 +26,7 @@ export const ScreenHeading = (props: Props) => {
 
 	return (
 		<Wrapper data-ui="screen-heading">
-			{withBackButton ? <GoBackButton /> : null}
+			{backTo ? <GoBackButton backTo={backTo} /> : null}
 
 			<TextBox data-ui="text-box">
 				<Typography

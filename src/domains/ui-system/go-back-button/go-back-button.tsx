@@ -1,11 +1,15 @@
 import { AppButton } from "@/domains/ui-system/components/button/button";
 import { AppIcon } from "@/domains/ui-system/components/icon/icon";
 import Typography from "@mui/material/Typography/Typography";
-import { useRouter } from "@tanstack/react-router";
+import { useNavigate } from "@tanstack/react-router";
 
-export const GoBackButton = () => {
-	const router = useRouter();
-
+export const GoBackButton = ({ backTo }: { backTo: string }) => {
+	const navigate = useNavigate();
+	const handleBack = () => {
+		navigate({
+			to: backTo,
+		});
+	};
 	return (
 		<AppButton
 			sx={{
@@ -17,7 +21,7 @@ export const GoBackButton = () => {
 				gap: 0.5,
 				py: 4,
 			}}
-			onClick={router.history.back}
+			onClick={handleBack}
 		>
 			<AppIcon name="ChevronLeft" size="extra-small" />
 			<Typography variant="tag" color="neutral.100" textTransform="uppercase">

@@ -11,13 +11,14 @@ import { createLazyFileRoute } from "@tanstack/react-router";
 
 const LeaguePage = () => {
 	const { league, mutation, performance } = useLeague();
+	const hasInvitePermission = league?.data?.permissions.invite;
 
 	console.log("league", league, performance);
 
 	if (league.isLoading) {
 		return (
 			<ScreenLayout data-ui="leagues-screen-loading">
-				<ScreenHeading withBackButton title="league">
+				<ScreenHeading title="league">
 					<ScreenMainContent>
 						...loading...
 						<ParticipantsListSkeleton />
@@ -30,7 +31,7 @@ const LeaguePage = () => {
 	if (league.isError) {
 		return (
 			<ScreenLayout data-ui="leagues-screen-error">
-				<ScreenHeading withBackButton title="league">
+				<ScreenHeading title="league">
 					<ScreenMainContent>...error...</ScreenMainContent>
 				</ScreenHeading>
 			</ScreenLayout>
@@ -40,7 +41,7 @@ const LeaguePage = () => {
 	return (
 		<ScreenLayout data-ui="leagues-screen screen">
 			<ScreenHeading
-				withBackButton
+				backTo="/leagues"
 				title="league"
 				subtitle={league.data?.label}
 			/>
@@ -54,7 +55,7 @@ const LeaguePage = () => {
 								mutation={mutation}
 							/>
 							<LeagueTournaments league={league} />
-							<InviteToLeague />
+							<InviteToLeague hasInvitePermission={hasInvitePermission} />
 						</>
 					) : null}
 				</Box>

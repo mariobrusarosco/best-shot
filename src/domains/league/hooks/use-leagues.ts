@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { getLeagues } from "../server-side/fetchers";
-import { createLeague, inviteToLeague } from "../server-side/mutations";
+import { createLeague } from "../server-side/mutations";
 
 export const useLeagues = () => {
 	const queryClient = useQueryClient();
@@ -19,18 +19,8 @@ export const useLeagues = () => {
 		},
 	});
 
-	const inviteToLeagueMutation = useMutation({
-		mutationFn: inviteToLeague,
-		onSuccess: () => {
-			alert("Invitation sent successfully");
-			queryClient.invalidateQueries({ queryKey: ["leagues"] });
-		},
-	});
-
 	const [labelInput, setLabelInput] = useState("");
 	const [descriptionInput, setDescriptionInput] = useState("");
-	const [guestIdInput, setGuestIdInput] = useState("");
-	const [leagueInput, setLeagueInput] = useState("");
 
 	const handleLabelChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setLabelInput(e.target.value);
@@ -57,46 +47,14 @@ export const useLeagues = () => {
 		});
 	};
 
-	const handleLeagueInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-		setLeagueInput(e.target.value);
-	};
-
-	const handleGuestIdInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-		setGuestIdInput(e.target.value);
-	};
-
-	const handleLeagueInvite = () => {
-		const inviteInput = {
-			leagueId: leagueInput,
-			guestId: guestIdInput,
-		};
-
-		inviteToLeagueMutation.mutate(inviteInput, {
-			onSettled: () => {
-				setLabelInput("");
-				setDescriptionInput("");
-			},
-			// TODO Type App's error object
-			onError: (error: any) => {
-				console.log(error?.response?.data);
-				alert(error?.response?.data);
-			},
-		});
-	};
-
 	return {
 		leagues,
 		handleNewLeague,
-		handleLeagueInvite,
 		inputs: {
 			labelInput,
 			descriptionInput,
 			handleLabelChange,
 			handleDescriptionChange,
-			guestIdInput,
-			leagueInput,
-			handleLeagueInput,
-			handleGuestIdInput,
 		},
 	};
 };

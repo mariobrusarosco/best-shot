@@ -12,7 +12,7 @@ const LeaguesPage = () => {
 	if (leagues.isLoading) {
 		return (
 			<ScreenLayout>
-				<ScreenHeading title="leagues" withBackButton />
+				<ScreenHeading title="leagues" />
 				<ScreenMainContent>Loading...</ScreenMainContent>
 			</ScreenLayout>
 		);
@@ -21,7 +21,7 @@ const LeaguesPage = () => {
 	if (leagues.isError) {
 		return (
 			<ScreenLayout>
-				<ScreenHeading title="leagues" withBackButton />
+				<ScreenHeading title="leagues" />
 				<ScreenMainContent>
 					There was an error loading the leagues
 				</ScreenMainContent>
@@ -31,7 +31,7 @@ const LeaguesPage = () => {
 
 	return (
 		<ScreenLayout data-ui="leagues-screen screen">
-			<ScreenHeading title="leagues" withBackButton />
+			<ScreenHeading title="leagues" backTo="/dashboard" />
 
 			<ScreenMainContent>
 				<LeaguesList leagues={leagues.data} />

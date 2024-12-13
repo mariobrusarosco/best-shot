@@ -2,6 +2,7 @@ import { ScreenHeading } from "@/domains/global/components/screen-heading";
 import { LeaguesList } from "@/domains/league/components/leagues-list";
 import { AppButton } from "@/domains/ui-system/components/button/button";
 import { AppInput } from "@/domains/ui-system/components/input/input";
+import { Surface } from "@/domains/ui-system/components/surface/surface";
 import { ScreenLayout } from "@/domains/ui-system/layout/screen-layout";
 import { Box, styled, Typography, TypographyProps } from "@mui/material";
 import { createLazyFileRoute, useSearch } from "@tanstack/react-router";
@@ -30,25 +31,26 @@ const LeaguesPage = () => {
 
 				{founderDemoPrivelage ? (
 					<>
-						<Box
+						<Typography
 							sx={{
-								display: "grid",
+								mb: 1,
+							}}
+							textTransform="lowercase"
+							variant="paragraph"
+							color="neutral.100"
+						>
+							create a new league
+						</Typography>
+
+						<Card
+							sx={{
+								mt: 2,
 								py: 2,
 								gap: 1,
+								backgroundColor: "black.800",
 							}}
 							className="league-creation"
 						>
-							<Typography
-								sx={{
-									mb: 3,
-								}}
-								textTransform="lowercase"
-								variant="h6"
-								color="neutral.100"
-							>
-								create a new league
-							</Typography>
-
 							<Label htmlFor="league-label">Name</Label>
 
 							<AppInput
@@ -62,56 +64,54 @@ const LeaguesPage = () => {
 							<SubmitButton type="submit" onClick={handleNewLeague}>
 								create
 							</SubmitButton>
-						</Box>
+						</Card>
 
-						<Box
+						<Typography
+							textTransform="lowercase"
+							variant="paragraph"
+							color="neutral.100"
+						>
+							Invite to League
+						</Typography>
+
+						<Card
 							sx={{
-								display: "grid",
+								mt: 2,
 								py: 2,
 								gap: 1,
+								backgroundColor: "black.800",
 							}}
 							className="league-creation"
 						>
-							<Typography
+							<Box
 								sx={{
-									mb: 3,
+									display: "grid",
+									py: 2,
+									gap: 1,
 								}}
-								textTransform="lowercase"
-								variant="h6"
-								color="neutral.100"
+								className="league-invitation"
 							>
-								Invite to League
-							</Typography>
-						</Box>
+								<Label htmlFor="league-id">League ID</Label>
+								<AppInput
+									type="text"
+									id="league-id"
+									name="league-id"
+									value={inputs.leagueInput}
+									onChange={inputs.handleLeagueInput}
+								/>
 
-						<Box
-							sx={{
-								display: "grid",
-								py: 2,
-								gap: 1,
-							}}
-							className="league-invitation"
-						>
-							<Label htmlFor="league-id">League ID</Label>
-							<AppInput
-								type="text"
-								id="league-id"
-								name="league-id"
-								value={inputs.leagueInput}
-								onChange={inputs.handleLeagueInput}
-							/>
+								<Label htmlFor="guest-id">Guest ID</Label>
 
-							<Label htmlFor="guest-id">Guest ID</Label>
-
-							<AppInput
-								type="text"
-								id="guest-id"
-								name="guest-id"
-								value={inputs.guestIdInput}
-								onChange={inputs.handleGuestIdInput}
-							/>
-							<SubmitButton onClick={handleLeagueInvite}>Invite</SubmitButton>
-						</Box>
+								<AppInput
+									type="text"
+									id="guest-id"
+									name="guest-id"
+									value={inputs.guestIdInput}
+									onChange={inputs.handleGuestIdInput}
+								/>
+								<SubmitButton onClick={handleLeagueInvite}>Invite</SubmitButton>
+							</Box>
+						</Card>
 					</>
 				) : null}
 			</Box>
@@ -147,6 +147,19 @@ const Label = styled((props: MyCustomTypographyProps) => (
 	textTransform: "uppercase",
 	color: theme.palette.neutral[100],
 }));
+
+const Card = styled(Surface)(({ theme }) =>
+	theme.unstable_sx({
+		backgroundColor: "black.800",
+		px: 2,
+		py: 2,
+		borderRadius: 2,
+		display: "flex",
+		flexDirection: "column",
+		justifyContent: "center",
+		gap: 1,
+	}),
+);
 
 export const Route = createLazyFileRoute("/_auth/leagues/")({
 	component: LeaguesPage,

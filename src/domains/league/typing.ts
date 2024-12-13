@@ -1,9 +1,17 @@
+import { ITournament } from "../tournament/typing";
+
 export type ILeague = {
 	id: string;
 	label: string;
 	description?: string;
-	participants: IParticipant[];
+	tournaments: ITournament[];
+	permissions: {
+		edit: boolean;
+		invite: boolean;
+		delete: boolean;
+	};
 	performance: ILeaguePerformance;
+	participants?: IParticipant[];
 };
 
 export type ILeaguePerformance = {
@@ -12,10 +20,6 @@ export type ILeaguePerformance = {
 		name: string;
 		points: number;
 	}[];
-};
-
-export type ILeagueWithParticipants = ILeague & {
-	participants: IParticipant[];
 };
 
 export type IParticipant = {

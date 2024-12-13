@@ -18,3 +18,14 @@ export const updateLeaguePerformance = async (leagueId: string) => {
 
 	return response.data;
 };
+
+export const updateLeagueTournaments = async (
+	leagueId: string,
+	updateInput: { tournamentId: string; leagueId: string; status: string }[],
+) => {
+	const response = await api.patch(`leagues/${leagueId}/tournaments`, {
+		updateInput,
+	});
+
+	return response.data;
+};

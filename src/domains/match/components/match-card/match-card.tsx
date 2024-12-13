@@ -36,7 +36,11 @@ export const MatchCard = ({ guess, match }: Props) => {
 
 	const avaialbleActions =
 		guess.status !== "paused" && guess.status !== "expired";
-
+	// const showInputs =
+	// 	isOpen &&
+	// 	match.status === "open" &&
+	// 	(guess.status === "not-started" || guess.status === "waiting_for_game");
+	const showInputs = true;
 	return (
 		<Card data-open={isOpen} data-ui="card" data-guess-status={guess.status}>
 			<Header>
@@ -78,19 +82,17 @@ export const MatchCard = ({ guess, match }: Props) => {
 
 			<Teams>
 				<Team data-venue="home">
-					<ScoreDisplay value={match.home.score} />
-					{avaialbleActions ? (
-						<ScoreAndGuess>
-							{isOpen ? (
-								<ScoreInput
-									value={guessInputs.homeGuess}
-									handleInputChange={guessInputs.handleHomeGuess}
-								/>
-							) : (
-								<GuessDisplay data={guess.home} />
-							)}
-						</ScoreAndGuess>
-					) : null}
+					<ScoreAndGuess>
+						<ScoreDisplay value={match.home.score} />
+						{showInputs ? (
+							<ScoreInput
+								value={guessInputs.homeGuess}
+								handleInputChange={guessInputs.handleHomeGuess}
+							/>
+						) : null}
+
+						{avaialbleActions ? <GuessDisplay data={guess.home} /> : null}
+					</ScoreAndGuess>
 					<TeamDisplay expanded={isOpen} team={match.home} />
 				</Team>
 
@@ -103,19 +105,18 @@ export const MatchCard = ({ guess, match }: Props) => {
 				/>
 
 				<Team data-venue="away">
-					<ScoreDisplay value={match.away.score} />
-					{avaialbleActions ? (
-						<ScoreAndGuess>
-							{isOpen ? (
-								<ScoreInput
-									value={guessInputs.awayGuess}
-									handleInputChange={guessInputs.handleAwayGuess}
-								/>
-							) : (
-								<GuessDisplay data={guess.away} />
-							)}
-						</ScoreAndGuess>
-					) : null}
+					<ScoreAndGuess>
+						<ScoreDisplay value={match.away.score} />
+
+						{showInputs ? (
+							<ScoreInput
+								value={guessInputs.awayGuess}
+								handleInputChange={guessInputs.handleAwayGuess}
+							/>
+						) : null}
+
+						{avaialbleActions ? <GuessDisplay data={guess.away} /> : null}
+					</ScoreAndGuess>
 					<TeamDisplay expanded={isOpen} team={match.away} />
 				</Team>
 			</Teams>

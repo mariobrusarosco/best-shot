@@ -6,6 +6,7 @@ import IconSave from "@tabler/icons-react/dist/esm/icons/IconDeviceFloppy.mjs";
 import IconLayoutDashboard from "@tabler/icons-react/dist/esm/icons/IconLayoutDashboard.mjs";
 import IconMinus from "@tabler/icons-react/dist/esm/icons/IconMinus.mjs";
 import IconPlus from "@tabler/icons-react/dist/esm/icons/IconPlus.mjs";
+import IconSettings from "@tabler/icons-react/dist/esm/icons/IconSettings.mjs";
 import IconTrophy from "@tabler/icons-react/dist/esm/icons/IconTrophy.mjs";
 import IconUser from "@tabler/icons-react/dist/esm/icons/IconUser.mjs";
 import IconUsers from "@tabler/icons-react/dist/esm/icons/IconUsers.mjs";
@@ -25,4 +26,5 @@ export const ICONS = {
 	Minus: IconMinus,
 	Save: IconSave,
 	ChevronLeft: IconChevronLeft,
+	Settings: IconSettings,
 };

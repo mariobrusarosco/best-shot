@@ -3,7 +3,7 @@ import { getRouteApi } from "@tanstack/react-router";
 import { getLeaguePerformance } from "../server-side/fetchers";
 import { updateLeaguePerformance } from "../server-side/mutations";
 
-const route = getRouteApi("/_auth/leagues/$leagueId");
+const route = getRouteApi("/_auth/leagues/$leagueId/");
 
 export const useLeaguePerformance = () => {
 	const leagueId = route.useParams().leagueId;

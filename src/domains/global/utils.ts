@@ -7,3 +7,12 @@ export const toNumberOrNull = (val: string | null | undefined) => {
 
 	return Number(val);
 };
+
+export const updateSearchParams = (
+	prev: Record<string, any>,
+	key: string,
+	value: any,
+) => ({
+	...prev,
+	[key]: value,
+});

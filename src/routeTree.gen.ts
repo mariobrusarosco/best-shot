@@ -20,6 +20,7 @@ import { Route as IndexRouteImport } from './routes/index.route'
 import { Route as AuthMyAccountImport } from './routes/_auth.my-account'
 import { Route as AuthDashboardImport } from './routes/_auth.dashboard'
 import { Route as AuthTournamentsTournamentIdLayoutImport } from './routes/_auth.tournaments/$tournamentId/_layout'
+import { Route as AuthLeaguesLeagueIdEditImport } from './routes/_auth.leagues/$leagueId/edit'
 
 // Create Virtual Routes
 
@@ -28,8 +29,8 @@ const AuthTournamentsTournamentIdImport = createFileRoute(
 )()
 const AuthTournamentsIndexLazyImport = createFileRoute('/_auth/tournaments/')()
 const AuthLeaguesIndexLazyImport = createFileRoute('/_auth/leagues/')()
-const AuthLeaguesLeagueIdLazyImport = createFileRoute(
-  '/_auth/leagues/$leagueId',
+const AuthLeaguesLeagueIdIndexLazyImport = createFileRoute(
+  '/_auth/leagues/$leagueId/',
 )()
 const AuthTournamentsTournamentIdLayoutStandingsLazyImport = createFileRoute(
   '/_auth/tournaments/$tournamentId/_layout/standings',
@@ -104,19 +105,26 @@ const AuthLeaguesIndexLazyRoute = AuthLeaguesIndexLazyImport.update({
   import('./routes/_auth.leagues/index.lazy').then((d) => d.Route),
 )
 
-const AuthLeaguesLeagueIdLazyRoute = AuthLeaguesLeagueIdLazyImport.update({
-  id: '/leagues/$leagueId',
-  path: '/leagues/$leagueId',
-  getParentRoute: () => AuthRoute,
-} as any).lazy(() =>
-  import('./routes/_auth.leagues/$leagueId.lazy').then((d) => d.Route),
-)
+const AuthLeaguesLeagueIdIndexLazyRoute =
+  AuthLeaguesLeagueIdIndexLazyImport.update({
+    id: '/leagues/$leagueId/',
+    path: '/leagues/$leagueId/',
+    getParentRoute: () => AuthRoute,
+  } as any).lazy(() =>
+    import('./routes/_auth.leagues/$leagueId/index.lazy').then((d) => d.Route),
+  )
 
 const AuthTournamentsTournamentIdLayoutRoute =
   AuthTournamentsTournamentIdLayoutImport.update({
     id: '/_layout',
     getParentRoute: () => AuthTournamentsTournamentIdRoute,
   } as any)
+
+const AuthLeaguesLeagueIdEditRoute = AuthLeaguesLeagueIdEditImport.update({
+  id: '/leagues/$leagueId/edit',
+  path: '/leagues/$leagueId/edit',
+  getParentRoute: () => AuthRoute,
+} as any)
 
 const AuthTournamentsTournamentIdLayoutStandingsLazyRoute =
   AuthTournamentsTournamentIdLayoutStandingsLazyImport.update({
@@ -208,13 +216,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthMyAccountImport
       parentRoute: typeof AuthImport
     }
-    '/_auth/leagues/$leagueId': {
-      id: '/_auth/leagues/$leagueId'
-      path: '/leagues/$leagueId'
-      fullPath: '/leagues/$leagueId'
-      preLoaderRoute: typeof AuthLeaguesLeagueIdLazyImport
-      parentRoute: typeof AuthImport
-    }
     '/_auth/leagues/': {
       id: '/_auth/leagues/'
       path: '/leagues'
@@ -227,6 +228,13 @@ declare module '@tanstack/react-router' {
       path: '/tournaments'
       fullPath: '/tournaments'
       preLoaderRoute: typeof AuthTournamentsIndexLazyImport
+      parentRoute: typeof AuthImport
+    }
+    '/_auth/leagues/$leagueId/edit': {
+      id: '/_auth/leagues/$leagueId/edit'
+      path: '/leagues/$leagueId/edit'
+      fullPath: '/leagues/$leagueId/edit'
+      preLoaderRoute: typeof AuthLeaguesLeagueIdEditImport
       parentRoute: typeof AuthImport
     }
     '/_auth/tournaments/$tournamentId': {
@@ -242,6 +250,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/tournaments/$tournamentId'
       preLoaderRoute: typeof AuthTournamentsTournamentIdLayoutImport
       parentRoute: typeof AuthTournamentsTournamentIdRoute
+    }
+    '/_auth/leagues/$leagueId/': {
+      id: '/_auth/leagues/$leagueId/'
+      path: '/leagues/$leagueId'
+      fullPath: '/leagues/$leagueId'
+      preLoaderRoute: typeof AuthLeaguesLeagueIdIndexLazyImport
+      parentRoute: typeof AuthImport
     }
     '/_auth/tournaments/$tournamentId/_layout/matches': {
       id: '/_auth/tournaments/$tournamentId/_layout/matches'
@@ -318,20 +333,22 @@ const AuthTournamentsTournamentIdRouteWithChildren =
 interface AuthRouteChildren {
   AuthDashboardRoute: typeof AuthDashboardRoute
   AuthMyAccountRoute: typeof AuthMyAccountRoute
-  AuthLeaguesLeagueIdLazyRoute: typeof AuthLeaguesLeagueIdLazyRoute
   AuthLeaguesIndexLazyRoute: typeof AuthLeaguesIndexLazyRoute
   AuthTournamentsIndexLazyRoute: typeof AuthTournamentsIndexLazyRoute
+  AuthLeaguesLeagueIdEditRoute: typeof AuthLeaguesLeagueIdEditRoute
   AuthTournamentsTournamentIdRoute: typeof AuthTournamentsTournamentIdRouteWithChildren
+  AuthLeaguesLeagueIdIndexLazyRoute: typeof AuthLeaguesLeagueIdIndexLazyRoute
 }
 
 const AuthRouteChildren: AuthRouteChildren = {
   AuthDashboardRoute: AuthDashboardRoute,
   AuthMyAccountRoute: AuthMyAccountRoute,
-  AuthLeaguesLeagueIdLazyRoute: AuthLeaguesLeagueIdLazyRoute,
   AuthLeaguesIndexLazyRoute: AuthLeaguesIndexLazyRoute,
   AuthTournamentsIndexLazyRoute: AuthTournamentsIndexLazyRoute,
+  AuthLeaguesLeagueIdEditRoute: AuthLeaguesLeagueIdEditRoute,
   AuthTournamentsTournamentIdRoute:
     AuthTournamentsTournamentIdRouteWithChildren,
+  AuthLeaguesLeagueIdIndexLazyRoute: AuthLeaguesLeagueIdIndexLazyRoute,
 }
 
 const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren)
@@ -343,10 +360,11 @@ export interface FileRoutesByFullPath {
   '/ui-system': typeof UiSystemRoute
   '/dashboard': typeof AuthDashboardRoute
   '/my-account': typeof AuthMyAccountRoute
-  '/leagues/$leagueId': typeof AuthLeaguesLeagueIdLazyRoute
   '/leagues': typeof AuthLeaguesIndexLazyRoute
   '/tournaments': typeof AuthTournamentsIndexLazyRoute
+  '/leagues/$leagueId/edit': typeof AuthLeaguesLeagueIdEditRoute
   '/tournaments/$tournamentId': typeof AuthTournamentsTournamentIdLayoutRouteWithChildren
+  '/leagues/$leagueId': typeof AuthLeaguesLeagueIdIndexLazyRoute
   '/tournaments/$tournamentId/matches': typeof AuthTournamentsTournamentIdLayoutMatchesLazyRoute
   '/tournaments/$tournamentId/performance': typeof AuthTournamentsTournamentIdLayoutPerformanceLazyRoute
   '/tournaments/$tournamentId/simulator': typeof AuthTournamentsTournamentIdLayoutSimulatorLazyRoute
@@ -360,10 +378,11 @@ export interface FileRoutesByTo {
   '/ui-system': typeof UiSystemRoute
   '/dashboard': typeof AuthDashboardRoute
   '/my-account': typeof AuthMyAccountRoute
-  '/leagues/$leagueId': typeof AuthLeaguesLeagueIdLazyRoute
   '/leagues': typeof AuthLeaguesIndexLazyRoute
   '/tournaments': typeof AuthTournamentsIndexLazyRoute
+  '/leagues/$leagueId/edit': typeof AuthLeaguesLeagueIdEditRoute
   '/tournaments/$tournamentId': typeof AuthTournamentsTournamentIdLayoutRouteWithChildren
+  '/leagues/$leagueId': typeof AuthLeaguesLeagueIdIndexLazyRoute
   '/tournaments/$tournamentId/matches': typeof AuthTournamentsTournamentIdLayoutMatchesLazyRoute
   '/tournaments/$tournamentId/performance': typeof AuthTournamentsTournamentIdLayoutPerformanceLazyRoute
   '/tournaments/$tournamentId/simulator': typeof AuthTournamentsTournamentIdLayoutSimulatorLazyRoute
@@ -378,11 +397,12 @@ export interface FileRoutesById {
   '/ui-system': typeof UiSystemRoute
   '/_auth/dashboard': typeof AuthDashboardRoute
   '/_auth/my-account': typeof AuthMyAccountRoute
-  '/_auth/leagues/$leagueId': typeof AuthLeaguesLeagueIdLazyRoute
   '/_auth/leagues/': typeof AuthLeaguesIndexLazyRoute
   '/_auth/tournaments/': typeof AuthTournamentsIndexLazyRoute
+  '/_auth/leagues/$leagueId/edit': typeof AuthLeaguesLeagueIdEditRoute
   '/_auth/tournaments/$tournamentId': typeof AuthTournamentsTournamentIdRouteWithChildren
   '/_auth/tournaments/$tournamentId/_layout': typeof AuthTournamentsTournamentIdLayoutRouteWithChildren
+  '/_auth/leagues/$leagueId/': typeof AuthLeaguesLeagueIdIndexLazyRoute
   '/_auth/tournaments/$tournamentId/_layout/matches': typeof AuthTournamentsTournamentIdLayoutMatchesLazyRoute
   '/_auth/tournaments/$tournamentId/_layout/performance': typeof AuthTournamentsTournamentIdLayoutPerformanceLazyRoute
   '/_auth/tournaments/$tournamentId/_layout/simulator': typeof AuthTournamentsTournamentIdLayoutSimulatorLazyRoute
@@ -398,10 +418,11 @@ export interface FileRouteTypes {
     | '/ui-system'
     | '/dashboard'
     | '/my-account'
-    | '/leagues/$leagueId'
     | '/leagues'
     | '/tournaments'
+    | '/leagues/$leagueId/edit'
     | '/tournaments/$tournamentId'
+    | '/leagues/$leagueId'
     | '/tournaments/$tournamentId/matches'
     | '/tournaments/$tournamentId/performance'
     | '/tournaments/$tournamentId/simulator'
@@ -414,10 +435,11 @@ export interface FileRouteTypes {
     | '/ui-system'
     | '/dashboard'
     | '/my-account'
-    | '/leagues/$leagueId'
     | '/leagues'
     | '/tournaments'
+    | '/leagues/$leagueId/edit'
     | '/tournaments/$tournamentId'
+    | '/leagues/$leagueId'
     | '/tournaments/$tournamentId/matches'
     | '/tournaments/$tournamentId/performance'
     | '/tournaments/$tournamentId/simulator'
@@ -430,11 +452,12 @@ export interface FileRouteTypes {
     | '/ui-system'
     | '/_auth/dashboard'
     | '/_auth/my-account'
-    | '/_auth/leagues/$leagueId'
     | '/_auth/leagues/'
     | '/_auth/tournaments/'
+    | '/_auth/leagues/$leagueId/edit'
     | '/_auth/tournaments/$tournamentId'
     | '/_auth/tournaments/$tournamentId/_layout'
+    | '/_auth/leagues/$leagueId/'
     | '/_auth/tournaments/$tournamentId/_layout/matches'
     | '/_auth/tournaments/$tournamentId/_layout/performance'
     | '/_auth/tournaments/$tournamentId/_layout/simulator'
@@ -480,10 +503,11 @@ export const routeTree = rootRoute
       "children": [
         "/_auth/dashboard",
         "/_auth/my-account",
-        "/_auth/leagues/$leagueId",
         "/_auth/leagues/",
         "/_auth/tournaments/",
-        "/_auth/tournaments/$tournamentId"
+        "/_auth/leagues/$leagueId/edit",
+        "/_auth/tournaments/$tournamentId",
+        "/_auth/leagues/$leagueId/"
       ]
     },
     "/login": {
@@ -500,16 +524,16 @@ export const routeTree = rootRoute
       "filePath": "_auth.my-account.tsx",
       "parent": "/_auth"
     },
-    "/_auth/leagues/$leagueId": {
-      "filePath": "_auth.leagues/$leagueId.lazy.tsx",
-      "parent": "/_auth"
-    },
     "/_auth/leagues/": {
       "filePath": "_auth.leagues/index.lazy.tsx",
       "parent": "/_auth"
     },
     "/_auth/tournaments/": {
       "filePath": "_auth.tournaments/index.lazy.tsx",
+      "parent": "/_auth"
+    },
+    "/_auth/leagues/$leagueId/edit": {
+      "filePath": "_auth.leagues/$leagueId/edit.tsx",
       "parent": "/_auth"
     },
     "/_auth/tournaments/$tournamentId": {
@@ -528,6 +552,10 @@ export const routeTree = rootRoute
         "/_auth/tournaments/$tournamentId/_layout/simulator",
         "/_auth/tournaments/$tournamentId/_layout/standings"
       ]
+    },
+    "/_auth/leagues/$leagueId/": {
+      "filePath": "_auth.leagues/$leagueId/index.lazy.tsx",
+      "parent": "/_auth"
     },
     "/_auth/tournaments/$tournamentId/_layout/matches": {
       "filePath": "_auth.tournaments/$tournamentId/_layout.matches.lazy.tsx",

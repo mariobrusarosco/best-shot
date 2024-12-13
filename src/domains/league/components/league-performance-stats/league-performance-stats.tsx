@@ -15,57 +15,50 @@ export const LeaguePerformanceStats = ({
 	console.log({ performance, mutation });
 
 	return (
-		<Box
-			sx={{
-				mt: 5,
-			}}
-		>
+		<Box data-ui="league-performance-stats">
+			<Box
+				sx={{
+					display: "flex",
+					alignItems: "center",
+					gap: 1,
+					mb: 6,
+				}}
+			>
+				<Typography textTransform="uppercase" variant="tag" color="teal.500">
+					last updated at:
+				</Typography>
+				<Typography textTransform="uppercase" variant="tag" color="neutral.100">
+					{performance?.data?.lastUpdatedAt &&
+						new Date(performance.data.lastUpdatedAt).toUTCString()}
+				</Typography>
+				<AppButton
+					sx={{
+						width: "70px",
+						height: "30px",
+						borderRadius: 2,
+						backgroundColor: "teal.500",
+					}}
+					disabled={mutation.isPending}
+					onClick={async () => {
+						mutation.mutate();
+					}}
+				>
+					<Typography variant="caption" color="neutral.100">
+						Update
+					</Typography>
+				</AppButton>
+			</Box>
+
 			<Box
 				sx={{
 					display: "flex",
 					justifyContent: "space-between",
-					mb: 4,
+					my: 2,
 				}}
 			>
-				<AppPill bgcolor="teal.500" color="neutral.100" width={70} height={25}>
-					<Typography variant="tag">top 10</Typography>
+				<AppPill bgcolor="teal.500" color="neutral.100" width={110} height={25}>
+					<Typography variant="tag">leaderboard</Typography>
 				</AppPill>
-
-				<Box
-					sx={{
-						display: "flex",
-						alignItems: "center",
-						gap: 1,
-					}}
-				>
-					<Typography textTransform="uppercase" variant="tag" color="teal.500">
-						last updated at:
-					</Typography>
-					<Typography
-						textTransform="uppercase"
-						variant="tag"
-						color="neutral.100"
-					>
-						{performance?.data?.lastUpdatedAt &&
-							new Date(performance.data.lastUpdatedAt).toUTCString()}
-					</Typography>
-					<AppButton
-						sx={{
-							width: "70px",
-							height: "30px",
-							borderRadius: 2,
-							backgroundColor: "teal.500",
-						}}
-						disabled={mutation.isPending}
-						onClick={async () => {
-							mutation.mutate();
-						}}
-					>
-						<Typography variant="caption" color="neutral.100">
-							Update
-						</Typography>
-					</AppButton>
-				</Box>
 			</Box>
 
 			<ListGrid>
@@ -84,11 +77,30 @@ export const LeaguePerformanceStats = ({
 							<AppPill
 								bgcolor="teal.500"
 								color="neutral.100"
-								width={30}
+								width={15}
 								height={15}
 							>
 								<Typography variant="tag">{index + 1}</Typography>
 							</AppPill>
+						</Box>
+
+						<Box
+							sx={{ display: "grid", placeContent: "space-between", gap: 0.5 }}
+						>
+							<Typography
+								variant="label"
+								textTransform="lowercase"
+								color="black.300"
+							>
+								points
+							</Typography>
+							<Typography
+								color="neutral.100"
+								variant="topic"
+								textTransform="capitalize"
+							>
+								{leagueMember.points}
+							</Typography>
 						</Box>
 
 						<Box
@@ -110,27 +122,11 @@ export const LeaguePerformanceStats = ({
 								color="neutral.100"
 								variant="topic"
 								textTransform="capitalize"
+								width="100%"
+								overflow="hidden"
+								textOverflow="ellipsis"
 							>
 								{leagueMember.name}
-							</Typography>
-						</Box>
-
-						<Box
-							sx={{ display: "grid", placeContent: "space-between", gap: 0.5 }}
-						>
-							<Typography
-								variant="label"
-								textTransform="lowercase"
-								color="black.300"
-							>
-								points
-							</Typography>
-							<Typography
-								color="neutral.100"
-								variant="topic"
-								textTransform="capitalize"
-							>
-								{leagueMember.points}
 							</Typography>
 						</Box>
 					</Card>
@@ -147,6 +143,7 @@ export const Card = styled(Box)(({ theme }) =>
 		padding: 2,
 		borderRadius: 2,
 		display: "flex",
+		flexWrap: "nowrap",
 		gap: 2,
 	}),
 );
@@ -156,8 +153,8 @@ export const ListGrid = styled(GridOfCards)(({ theme }) =>
 		padding: 0,
 		borderRadius: 1,
 		gridTemplateColumns: {
-			all: "1fr",
-			tablet: "repeat(auto-fit, minmax(270px, auto))",
+			all: "1fr 1fr",
+			tablet: "repeat(auto-fit, minmax(270px, 270px))",
 		},
 		gridAutoRows: {
 			all: "70px",

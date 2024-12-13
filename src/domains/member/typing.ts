@@ -4,31 +4,56 @@ export interface IMember {
 }
 
 export interface IMemberPerformance {
-	bestRanked: {
-		tournament: {
+	tournaments: {
+		best: {
 			name: string;
 			badge: string;
-			leader: {
-				points: number;
-				name: string;
-			};
-			member: {
-				points: number;
-			};
+			points: number;
 		};
-		league: {
+		worst: {
 			name: string;
-			badge?: string;
-			leader: {
-				points: number;
-				name: string;
-			};
-			member: {
-				points: number;
-			};
+			badge: string;
+			points: number;
 		};
 	};
-	currentMonth: {
-		exactMatchOutcome: number;
+	mainLeague: {
+		leader: {
+			name: string;
+			points: number;
+		};
+		you: {
+			name: string;
+			points: number;
+		};
 	};
+	// currentMonth: {
+	// 	points: number;
+	// };
+	// currentWeek: {
+	// 	points: number;
+	// };
+	// leagues: {
+	// 	best: {
+	// 		name: string;
+	// 		badge: string;
+	// 		leader: {
+	// 			points: number;
+	// 			name: string;
+	// 		};
+	// 		member: {
+	// 			points: number;
+	// 		};
+	// 	};
+	// 	worst: {
+	// 		name: string;
+	// 		badge: string;
+	// 		leader: {
+	// 			points: number;
+	// 			name: string;
+	// 		};
+	// 		member: {
+	// 			points: number;
+	// 		};
+	// 	};
+	// };
 }

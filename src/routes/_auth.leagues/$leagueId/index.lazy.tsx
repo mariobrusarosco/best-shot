@@ -1,10 +1,12 @@
 import { ScreenHeading } from "@/domains/global/components/screen-heading";
+import { InviteToLeague } from "@/domains/league/components/invite-to-league/invite-to-league";
 import { LeaguePerformanceStats } from "@/domains/league/components/league-performance-stats/league-performance-stats";
 import { LeagueTournaments } from "@/domains/league/components/league-tournaments/league-tournament-list";
 import { ParticipantsListSkeleton } from "@/domains/league/components/participants/participants-list-skeleton";
 import { useLeague } from "@/domains/league/hooks/use-league";
 import { ScreenLayout } from "@/domains/ui-system/layout/screen-layout";
-import { Box, styled } from "@mui/system";
+import { ScreenMainContent } from "@/domains/ui-system/layout/screen-main-content";
+import { Box } from "@mui/system";
 import { createLazyFileRoute } from "@tanstack/react-router";
 
 const LeaguePage = () => {
@@ -16,10 +18,10 @@ const LeaguePage = () => {
 		return (
 			<ScreenLayout data-ui="leagues-screen-loading">
 				<ScreenHeading withBackButton title="league">
-					<MainContainer>
+					<ScreenMainContent>
 						...loading...
 						<ParticipantsListSkeleton />
-					</MainContainer>
+					</ScreenMainContent>
 				</ScreenHeading>
 			</ScreenLayout>
 		);
@@ -29,7 +31,7 @@ const LeaguePage = () => {
 		return (
 			<ScreenLayout data-ui="leagues-screen-error">
 				<ScreenHeading withBackButton title="league">
-					<MainContainer>...error...</MainContainer>
+					<ScreenMainContent>...error...</ScreenMainContent>
 				</ScreenHeading>
 			</ScreenLayout>
 		);
@@ -43,7 +45,7 @@ const LeaguePage = () => {
 				subtitle={league.data?.label}
 			/>
 
-			<MainContainer>
+			<ScreenMainContent>
 				<Box display="grid" gap={4}>
 					{league ? (
 						<>
@@ -52,20 +54,14 @@ const LeaguePage = () => {
 								mutation={mutation}
 							/>
 							<LeagueTournaments league={league} />
+							<InviteToLeague />
 						</>
 					) : null}
 				</Box>
-			</MainContainer>
+			</ScreenMainContent>
 		</ScreenLayout>
 	);
 };
-
-const MainContainer = styled(Box)(({ theme }) =>
-	theme.unstable_sx({
-		px: 2,
-		py: 8,
-	}),
-);
 
 export const Route = createLazyFileRoute("/_auth/leagues/$leagueId/")({
 	component: LeaguePage,

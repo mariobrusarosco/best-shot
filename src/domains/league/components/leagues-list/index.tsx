@@ -1,13 +1,20 @@
 import { ILeague } from "@/domains/league/typing";
-import { GridOfCards } from "@/domains/ui-system/components/grid-of-cards/grid-of-cards";
 import { AppIcon } from "@/domains/ui-system/components/icon/icon";
 import { AppLinkCard } from "@/domains/ui-system/components/link-card/link-card";
 import Typography from "@mui/material/Typography/Typography";
-import { Box } from "@mui/system";
+import { Box, styled } from "@mui/system";
 
 export const LeaguesList = ({ leagues }: { leagues: ILeague[] }) => {
 	return (
-		<GridOfCards component="ul" data-ui="leagues-list">
+		<GridOfCards
+			component="ul"
+			data-ui="leagues-list"
+			sx={{
+				maxHeight: "260px",
+				overflow: "auto",
+				pb: 2,
+			}}
+		>
 			{leagues?.map((league: ILeague) => (
 				<li>
 					<AppLinkCard
@@ -31,3 +38,25 @@ export const LeaguesList = ({ leagues }: { leagues: ILeague[] }) => {
 		</GridOfCards>
 	);
 };
+
+const GridOfCards = styled(Box)(({ theme }) =>
+	theme.unstable_sx({
+		borderRadius: 1,
+		display: "grid",
+		gap: {
+			all: 2,
+			tablet: 3,
+		},
+		gridAutoColumns: "47%",
+		gridAutoFlow: "column",
+		gridTemplateRows: "110px 110px",
+		gridTemplateColumns: "47% 47%",
+		// gridTemplateColumns: {
+		// 	all: "repeat(2, minmax(100px, 1fr))",
+		// 	tablet: "repeat(2, minmax(100px, 320px))",
+		// },
+		// gridAutoRows: {
+		// 	all: "115px",
+		// },
+	}),
+);

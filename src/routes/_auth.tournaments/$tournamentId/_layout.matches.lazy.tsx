@@ -170,8 +170,8 @@ const Rounds = styled(Box)(({ theme }) =>
 
 const RoundHeading = styled(Box)(({ theme }) =>
 	theme?.unstable_sx({
-		position: "sticky",
-		top: 0,
+		// position: "sticky",
+		// top: 0,
 		width: "100%",
 		py: { all: 2, tablet: "unset" },
 		backgroundColor: "black.700",

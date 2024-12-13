@@ -5,6 +5,7 @@ import { TournamentLogo } from "@/domains/tournament/components/tournament-headi
 import { GridOfCards } from "@/domains/ui-system/components/grid-of-cards/grid-of-cards";
 import { Surface } from "@/domains/ui-system/components/surface/surface";
 import { ScreenLayout } from "@/domains/ui-system/layout/screen-layout";
+import { ScreenMainContent } from "@/domains/ui-system/layout/screen-main-content";
 import { Typography } from "@mui/material";
 import { Box, Stack, styled } from "@mui/system";
 
@@ -12,22 +13,34 @@ const DashboardPage = () => {
 	const member = useMember();
 	const performance = useMemberPerformance();
 
-	console.log("---------", member?.data, performance?.data);
-
 	if (performance.isFetching || performance.isFetching) {
-		return <p>loading...</p>;
+		return (
+			<ScreenLayout data-ui="dashboard-screen">
+				<ScreenHeading title="" subtitle="" />
+
+				<ScreenMainContent>Loading</ScreenMainContent>
+			</ScreenLayout>
+		);
 	}
 
 	if (performance.isError || member.isError) {
-		return <p>Error</p>;
+		return (
+			<ScreenLayout data-ui="dashboard-screen">
+				<ScreenHeading title="Dashboard" subtitle="" />
+
+				<ScreenMainContent>Error</ScreenMainContent>
+			</ScreenLayout>
+		);
 	}
 
 	return (
 		<ScreenLayout data-ui="dashboard-screen">
 			<ScreenHeading title="Hello," subtitle={member?.data?.nickName} />
 
-			<BestAndWorstTournaments performance={performance} />
-			<MainLeague performance={performance} />
+			<ScreenMainContent>
+				<BestAndWorstTournaments performance={performance} />
+				<MainLeague performance={performance} />
+			</ScreenMainContent>
 		</ScreenLayout>
 	);
 };
@@ -53,7 +66,7 @@ const BestAndWorstTournaments = ({
 	const tournaments = performance?.data?.tournaments;
 
 	return (
-		<Stack color="neutral.100" py={2} px={2} gap={1}>
+		<Stack color="neutral.100">
 			<Typography variant="paragraph">tournaments</Typography>
 
 			<GridOfCards>
@@ -149,7 +162,7 @@ const MainLeague = ({
 	const mainLeague = performance?.data?.mainLeague;
 
 	return (
-		<Stack color="neutral.100" py={2} px={2} gap={1}>
+		<Stack color="neutral.100">
 			<Typography variant="paragraph">main league</Typography>
 
 			<GridOfCards>

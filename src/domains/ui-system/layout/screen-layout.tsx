@@ -8,7 +8,7 @@ export const ScreenLayout = styled(Box)(({ theme }) =>
 			all: "100vw",
 			tablet: "100%",
 		},
-		height: {
+		minHeight: {
 			all: "100vh",
 		},
 	}),

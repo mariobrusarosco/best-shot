@@ -8,6 +8,7 @@ import { Typography } from "@mui/material";
 import { Box, styled } from "@mui/system";
 import { Outlet } from "@tanstack/react-router";
 import { ScreenLayout } from "../ui-system/layout/screen-layout";
+import { ScreenMainContent } from "../ui-system/layout/screen-main-content";
 
 const TournamentLayout = () => {
 	const tournament = useTournament();
@@ -15,9 +16,11 @@ const TournamentLayout = () => {
 	if (tournament.isLoading) {
 		return (
 			<ScreenLayout>
-				<Typography variant="h3" color="neutral.10">
-					...Loading...
-				</Typography>
+				<ScreenMainContent>
+					<Typography variant="h3" color="neutral.10">
+						...Loading...
+					</Typography>
+				</ScreenMainContent>
 			</ScreenLayout>
 		);
 	}
@@ -25,9 +28,11 @@ const TournamentLayout = () => {
 	if (tournament.isError) {
 		return (
 			<ScreenLayout>
-				<Typography variant="h3" color="neutral.10">
-					Ops! Something happened
-				</Typography>
+				<ScreenMainContent>
+					<Typography variant="h3" color="neutral.10">
+						Ops! Something happened
+					</Typography>
+				</ScreenMainContent>
 			</ScreenLayout>
 		);
 	}
@@ -44,9 +49,11 @@ const TournamentLayout = () => {
 				</LogoBox>
 			</ScreenHeading>
 
-			<TournamentHeading tournament={tournament} />
+			<ScreenMainContent>
+				<TournamentHeading tournament={tournament} />
 
-			<Outlet />
+				<Outlet />
+			</ScreenMainContent>
 		</ScreenLayout>
 	);
 };

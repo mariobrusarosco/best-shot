@@ -5,17 +5,34 @@ import {
 } from "@/domains/tournament/components/tournaments-list";
 import { useTournaments } from "@/domains/tournament/hooks/use-tournaments";
 import { ScreenLayout } from "@/domains/ui-system/layout/screen-layout";
-import { Box } from "@mui/system";
+import { ScreenMainContent } from "@/domains/ui-system/layout/screen-main-content";
+import Typography from "@mui/material/Typography/Typography";
 import { createLazyFileRoute } from "@tanstack/react-router";
 
 const TournamentsPage = () => {
 	const { data, error, isLoading } = useTournaments();
 
+	if (isLoading) {
+		return (
+			<ScreenLayout>
+				<ScreenMainContent>
+					<Typography variant="h3" color="neutral.10">
+						...Loading...
+					</Typography>
+				</ScreenMainContent>
+			</ScreenLayout>
+		);
+	}
+
 	if (error) {
 		return (
-			<div className="error tournaments-page-error">
-				We could not load all available tournaments
-			</div>
+			<ScreenLayout>
+				<ScreenMainContent>
+					<Typography variant="h3" color="neutral.10">
+						Ops! Something happened
+					</Typography>
+				</ScreenMainContent>
+			</ScreenLayout>
 		);
 	}
 
@@ -27,10 +44,10 @@ const TournamentsPage = () => {
 				withBackButton
 			/>
 
-			<Box py={[6, 10]} px={[2, 6]}>
+			<ScreenMainContent>
 				{isLoading ? <TournamentsListLoading /> : null}
 				{data ? <TournamentsList tournaments={data} /> : null}
-			</Box>
+			</ScreenMainContent>
 		</ScreenLayout>
 	);
 };

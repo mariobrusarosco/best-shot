@@ -3,6 +3,7 @@ import { useMember } from "@/domains/member/hooks/use-member";
 import { useMemberPerformance } from "@/domains/member/hooks/use-member-performance";
 import { TournamentLogo } from "@/domains/tournament/components/tournament-heading";
 import { GridOfCards } from "@/domains/ui-system/components/grid-of-cards/grid-of-cards";
+import { AppPill } from "@/domains/ui-system/components/pill/pill";
 import { Surface } from "@/domains/ui-system/components/surface/surface";
 import { ScreenLayout } from "@/domains/ui-system/layout/screen-layout";
 import { ScreenMainContent } from "@/domains/ui-system/layout/screen-main-content";
@@ -13,7 +14,7 @@ const DashboardPage = () => {
 	const member = useMember();
 	const performance = useMemberPerformance();
 
-	if (performance.isFetching || performance.isFetching) {
+	if (performance.isPending || performance.isPending) {
 		return (
 			<ScreenLayout data-ui="dashboard-screen">
 				<ScreenHeading title="" subtitle="" />
@@ -38,8 +39,10 @@ const DashboardPage = () => {
 			<ScreenHeading title="Hello," subtitle={member?.data?.nickName} />
 
 			<ScreenMainContent>
-				<BestAndWorstTournaments performance={performance} />
-				<MainLeague performance={performance} />
+				<Stack mt={3} gap={4}>
+					<BestAndWorstTournaments performance={performance} />
+					<MainLeague performance={performance} />
+				</Stack>
 			</ScreenMainContent>
 		</ScreenLayout>
 	);
@@ -66,8 +69,12 @@ const BestAndWorstTournaments = ({
 	const tournaments = performance?.data?.tournaments;
 
 	return (
-		<Stack color="neutral.100">
-			<Typography variant="paragraph">tournaments</Typography>
+		<Stack color="neutral.100" gap={3}>
+			<AppPill bgcolor="teal.500" color="neutral.100" height={30} width="150px">
+				<Typography textTransform="uppercase" variant="label">
+					tournaments
+				</Typography>
+			</AppPill>
 
 			<GridOfCards>
 				<DashCard>
@@ -162,8 +169,12 @@ const MainLeague = ({
 	const mainLeague = performance?.data?.mainLeague;
 
 	return (
-		<Stack color="neutral.100">
-			<Typography variant="paragraph">main league</Typography>
+		<Stack color="neutral.100" gap={3}>
+			<AppPill bgcolor="teal.500" color="neutral.100" height={30} width="150px">
+				<Typography textTransform="uppercase" variant="label">
+					main league
+				</Typography>
+			</AppPill>
 
 			<GridOfCards>
 				<DashCard>

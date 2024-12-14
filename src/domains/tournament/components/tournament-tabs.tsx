@@ -1,8 +1,9 @@
-import { AppPill } from "@/domains/ui-system/components/pill/pill";
+import { CustomLink } from "@/domains/ui-system/components/link/link";
 import { Surface } from "@/domains/ui-system/components/surface/surface";
-import Typography from "@mui/material/Typography/Typography";
-import { styled } from "@mui/system";
-import { Link } from "@tanstack/react-router";
+import { UIHelper } from "@/theming/theme";
+import { Tab, Tabs, TabsList } from "@mui/base";
+import { styled, Typography } from "@mui/material";
+import { useLocation } from "@tanstack/react-router";
 import { ITournament } from "../typing";
 
 export const TournamentTabs = ({
@@ -10,56 +11,65 @@ export const TournamentTabs = ({
 }: {
 	tournament?: ITournament;
 }) => {
+	const location = useLocation();
+	const lastPath = location.pathname?.split("/").at(-1);
+
 	if (!tournament) return null;
 
 	return (
-		<Wrapper as="ul" data-ui="tournament-tabs">
-			<Link
-				to="/tournaments/$tournamentId/matches"
-				params={{ tournamentId: tournament.id }}
-			>
-				<AppPill
-					border="1px solid"
-					borderColor="teal.500"
-					bgcolor="black.800"
-					color="neutral.100"
-					height={30}
-					width={1}
-				>
-					<Typography variant="tag">matches</Typography>
-				</AppPill>
-			</Link>
-			<Link
-				to="/tournaments/$tournamentId/performance"
-				params={{ tournamentId: tournament.id }}
-			>
-				<AppPill
-					border="1px solid"
-					borderColor="teal.500"
-					bgcolor="black.800"
-					color="neutral.100"
-					height={30}
-					width={1}
-				>
-					<Typography variant="tag">performance</Typography>
-				</AppPill>
-			</Link>
-			<Link
-				to="/tournaments/$tournamentId/performance"
-				params={{ tournamentId: tournament.id }}
-			>
-				<AppPill
-					border="1px solid"
-					borderColor="teal.500"
-					bgcolor="black.800"
-					color="neutral.100"
-					height={30}
-					width={1}
-				>
-					<Typography variant="tag">simulator (soon)</Typography>
-				</AppPill>
-			</Link>
-		</Wrapper>
+		<Tabs defaultValue={lastPath}>
+			<TabsList slots={{ root: Wrapper }}>
+				<Tab
+					value={"matches"}
+					slots={{
+						root: (props) => (
+							<CustomTab
+								to="/tournaments/$tournamentId/matches"
+								params={{ tournamentId: tournament.id }}
+								{...props}
+							>
+								<Typography variant="tag" textTransform="uppercase">
+									matches
+								</Typography>
+							</CustomTab>
+						),
+					}}
+				/>
+				<Tab
+					value={"performance"}
+					slots={{
+						root: (props) => (
+							<CustomTab
+								to="/tournaments/$tournamentId/performance"
+								params={{ tournamentId: tournament.id }}
+								{...props}
+							>
+								<Typography variant="tag" textTransform="uppercase">
+									performance
+								</Typography>
+							</CustomTab>
+						),
+					}}
+				/>
+
+				{/* <Tab
+					value={"simulator"}
+					slots={{
+						root: (props) => (
+							<CustomTab
+								to="/tournaments/$tournamentId/simulator"
+								params={{ tournamentId: tournament.id }}
+								{...props}
+							>
+								<Typography variant="tag" textTransform="uppercase">
+									simulator
+								</Typography>
+							</CustomTab>
+						),
+					}}
+				/> */}
+			</TabsList>
+		</Tabs>
 	);
 };
 
@@ -67,16 +77,32 @@ const Wrapper = styled(Surface)(({ theme }) =>
 	theme?.unstable_sx({
 		display: "flex",
 		justifyContent: "space-between",
-		// flexDirection: {
-		// 	all: "column",
-		// 	tablet: "row",
-		// },
-		gap: { all: 2, tablet: 2 },
-		// width: { all: "120px", tablet: "auto" },
+		border: `1px solid ${theme.palette.teal[500]}`,
+		borderRadius: 2,
+		padding: 0.5,
+		gap: 0.5,
 
-		// "> a": {
-		// 	display: "inline-flex",
-		// 	width: { tablet: "200px" },
-		// },
+		[UIHelper.startsOn("tablet")]: {
+			// gap: 3,
+		},
+	}),
+);
+
+const CustomTab = styled(CustomLink)(({ theme }) =>
+	theme?.unstable_sx({
+		color: "neutral.100",
+		px: 0.5,
+		py: 0.5,
+		borderRadius: 2,
+		flex: 1,
+		textAlign: "center",
+
+		"[aria-selected='true']&": {
+			backgroundColor: "teal.500",
+		},
+
+		[UIHelper.startsOn("tablet")]: {
+			// gap: 3,
+		},
 	}),
 );

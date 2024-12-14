@@ -1,41 +1,33 @@
 import { AppButton } from "@/domains/ui-system/components/button/button";
 import { GridOfCards } from "@/domains/ui-system/components/grid-of-cards/grid-of-cards";
-import { AppPill } from "@/domains/ui-system/components/pill/pill";
+import { Surface } from "@/domains/ui-system/components/surface/surface";
 import Typography from "@mui/material/Typography/Typography";
-import { Box, styled } from "@mui/system";
+import { Box, Stack, styled } from "@mui/system";
 import { useTournamentPerformance } from "../../hooks/use-tournament-performance";
+import { ITournamentPerformance } from "../../typing";
+import { GuessSection } from "./guess-section";
 
 export const TournamentPerformanceStats = ({
-	query,
+	data,
 	mutation,
 }: {
-	query?: ReturnType<typeof useTournamentPerformance>["query"];
+	data: ITournamentPerformance;
 	mutation: ReturnType<typeof useTournamentPerformance>["mutation"];
 }) => {
-	console.log({ query, mutation });
+	if (!data) return null;
+
+	const guessesByStatus = Object.groupBy(data.details, ({ status }) => status);
+
+	console.log({ guessesByStatus });
 
 	return (
-		<Box
-			sx={{
-				mt: 5,
-			}}
-		>
+		<Stack gap={4} pt={5}>
 			<Box
 				sx={{
 					display: "flex",
 					justifyContent: "space-between",
 				}}
 			>
-				<AppPill
-					bgcolor="teal.500"
-					color="neutral.100"
-					width={130}
-					height={25}
-					mb={2}
-				>
-					<Typography variant="tag">lorem</Typography>
-				</AppPill>
-
 				<Box
 					sx={{
 						display: "flex",
@@ -55,8 +47,7 @@ export const TournamentPerformanceStats = ({
 						variant="caption"
 						color="neutral.100"
 					>
-						{query?.data?.lastUpdated &&
-							new Date(query.data.lastUpdated).toUTCString()}
+						{data?.lastUpdated && new Date(data.lastUpdated).toUTCString()}
 					</Typography>
 					<AppButton
 						sx={{
@@ -77,19 +68,129 @@ export const TournamentPerformanceStats = ({
 				</Box>
 			</Box>
 
-			{/* <GridOfCards>
-				<Card>adsda</Card>
-			</GridOfCards> */}
-		</Box>
+			<GridOfCards>
+				<PerfCard>
+					<Stack direction="row" gap={1.5} alignItems="center">
+						<Typography
+							textTransform="uppercase"
+							variant="paragraph"
+							color="teal.500"
+						>
+							points
+						</Typography>
+						<Typography
+							textTransform="uppercase"
+							variant="h1"
+							color="neutral.100"
+						>
+							{data?.points}
+						</Typography>
+					</Stack>
+				</PerfCard>
+			</GridOfCards>
+
+			<Stack>
+				<GridOfCards>
+					<PerfCard>
+						<Stack direction="row" gap={1.5} alignItems="center">
+							<Typography
+								textTransform="uppercase"
+								variant="caption"
+								color="teal.500"
+							>
+								correct guesses
+							</Typography>
+							<Typography
+								textTransform="uppercase"
+								variant="h4"
+								color="neutral.100"
+							>
+								{guessesByStatus["correct"]?.length ?? 0}
+							</Typography>
+						</Stack>
+					</PerfCard>
+					<PerfCard>
+						<Stack direction="row" gap={1.5} alignItems="center">
+							<Typography
+								textTransform="uppercase"
+								variant="caption"
+								color="teal.500"
+							>
+								incorrect guesses
+							</Typography>
+							<Typography
+								textTransform="uppercase"
+								variant="h4"
+								color="neutral.100"
+							>
+								{guessesByStatus["incorrect"]?.length ?? 0}
+							</Typography>
+						</Stack>
+					</PerfCard>
+					<PerfCard>
+						<Stack direction="row" gap={1.5} alignItems="center">
+							<Typography
+								textTransform="uppercase"
+								variant="caption"
+								color="teal.500"
+							>
+								waiting for macth outcome
+							</Typography>
+							<Typography
+								textTransform="uppercase"
+								variant="h4"
+								color="neutral.100"
+							>
+								{guessesByStatus["waiting_for_game"]?.length ?? 0}
+							</Typography>
+						</Stack>
+					</PerfCard>
+					<PerfCard>
+						<Stack direction="row" gap={1.5} alignItems="center">
+							<Typography
+								textTransform="uppercase"
+								variant="caption"
+								color="teal.500"
+							>
+								you still can guess
+							</Typography>
+							<Typography
+								textTransform="uppercase"
+								variant="h4"
+								color="neutral.100"
+							>
+								{guessesByStatus["not-started"]?.length ?? 0}
+							</Typography>
+						</Stack>
+					</PerfCard>
+				</GridOfCards>
+			</Stack>
+
+			<Stack>
+				<GuessSection groupName={"all"} groupOfGuesses={data.details} />
+
+				{/* {Object.values(GUESS_STATUSES).map((status) => {
+					return (
+						<GuessSection
+							groupName={status}
+							groupOfGuesses={guessesByStatus[status]}
+						/>
+					);
+				})} */}
+			</Stack>
+		</Stack>
 	);
 };
 
-// TODO Unify this Card, if possible
-export const Card = styled(GridOfCards)(({ theme }) =>
+const PerfCard = styled(Surface)(({ theme }) =>
 	theme.unstable_sx({
 		backgroundColor: "black.800",
-		padding: 2,
+		px: 2,
+		py: 2,
 		borderRadius: 2,
-		display: "grid",
+		display: "flex",
+		flexDirection: "column",
+		justifyContent: "center",
+		gap: 1,
 	}),
 );

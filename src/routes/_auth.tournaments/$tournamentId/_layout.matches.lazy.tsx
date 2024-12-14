@@ -79,12 +79,19 @@ export const TournamentMatchesScreen = () => {
 			<Rounds data-ui="rounds">
 				<RoundHeading>
 					<AppPill
-						bgcolor="teal.500"
-						color="neutral.100"
-						width={70}
+						border="1px solid"
+						borderColor="teal.500"
+						width={80}
 						height={25}
 					>
-						<Typography variant="tag">round {activeRound}</Typography>
+						<Typography
+							variant="tag"
+							textTransform="uppercase"
+							color="neutral.100"
+							fontWeight={500}
+						>
+							round {activeRound}
+						</Typography>
 					</AppPill>
 				</RoundHeading>
 
@@ -146,6 +153,8 @@ const Matches = styled(Box)(({ theme }) =>
 const Rounds = styled(Box)(({ theme }) =>
 	theme?.unstable_sx({
 		overflow: "auto",
+		pb: 2,
+
 		[UIHelper.startsOn("desktop")]: {
 			pr: 2,
 		},
@@ -154,18 +163,15 @@ const Rounds = styled(Box)(({ theme }) =>
 
 const RoundHeading = styled(Box)(({ theme }) =>
 	theme?.unstable_sx({
-		position: "sticky",
-		top: 0,
-		width: "100%",
+		// position: "sticky",
+		// top: 0,
+		// width: "100%",
 		backgroundColor: "black.700",
+		pb: 3,
 
-		[UIHelper.whileIs("mobile")]: {
-			py: 2,
-		},
+		[UIHelper.whileIs("mobile")]: {},
 
-		[UIHelper.startsOn("desktop")]: {
-			pb: 3,
-		},
+		[UIHelper.startsOn("desktop")]: {},
 	}),
 );
 

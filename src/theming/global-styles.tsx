@@ -33,6 +33,14 @@ export const GlobalCSS = () => (
 				width: "100%",
 				height: "auto",
 			},
+
+			button: {
+				appearance: "none",
+				backgroundColor: "unset",
+				outline: "none",
+				border: "none",
+				padding: "unset",
+			},
 			/* width */
 
 			"::-webkit-scrollbar": {

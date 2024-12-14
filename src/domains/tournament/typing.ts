@@ -1,3 +1,4 @@
+import { IGuess } from "../guess/typing";
 import { IMatch } from "../match/typing";
 
 export type ApiTournament = {
@@ -28,13 +29,7 @@ export type ITournament = {
 };
 
 export type ITournamentPerformance = {
-	guesses: IGuessPerformance[];
+	details: IGuess[];
 	lastUpdated: string;
 	points: string;
-};
-
-export type IGuessPerformance = {
-	matchId: string;
-	total: number;
-	status: string;
 };

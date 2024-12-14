@@ -24,5 +24,5 @@ export const useTournamentPerformance = () => {
 		},
 	});
 
-	return { query, mutation };
+	return { ...query, mutation };
 };

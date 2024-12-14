@@ -3,6 +3,7 @@ import { AppButton } from "@/domains/ui-system/components/button/button";
 import { AppIcon } from "@/domains/ui-system/components/icon/icon";
 import { Surface } from "@/domains/ui-system/components/surface/surface";
 import Divider from "@mui/material/Divider/Divider";
+import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography/Typography";
 import { Box, Stack, styled } from "@mui/system";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -80,17 +81,35 @@ export const LeagueTournamentCustomization = ({
 					display="flex"
 					alignItems="center"
 					justifyContent="space-between"
-					mb={2}
 					pt={2}
 				>
-					<Typography
-						textTransform="uppercase"
-						variant="label"
-						color="teal.500"
-						fontWeight={600}
-					>
-						tracked
-					</Typography>
+					<Box display="flex" gap={1}>
+						<Typography
+							textTransform="uppercase"
+							variant="label"
+							color="teal.500"
+							fontWeight={600}
+						>
+							tracked
+						</Typography>
+
+						<Tooltip
+							slotProps={{
+								tooltip: {
+									sx: {
+										bgcolor: "teal.500",
+										py: 2,
+									},
+								},
+							}}
+							title="These are the tournaments this league is taken into
+									consideration when calculating the leaderboard."
+						>
+							<Box color="neutral.100">
+								<AppIcon name="Info" size="extra-small" />
+							</Box>
+						</Tooltip>
+					</Box>
 
 					<Box
 						gap={0.5}
@@ -137,14 +156,33 @@ export const LeagueTournamentCustomization = ({
 			<Divider sx={{ bgcolor: "black.300" }} />
 
 			<Stack gap={1} mt={2}>
-				<Typography
-					textTransform="uppercase"
-					variant="label"
-					color="red.400"
-					fontWeight={600}
-				>
-					not tracked
-				</Typography>
+				<Box display="flex" gap={1}>
+					<Typography
+						textTransform="uppercase"
+						variant="label"
+						color="red.400"
+						fontWeight={600}
+					>
+						tracked
+					</Typography>
+
+					<Tooltip
+						slotProps={{
+							tooltip: {
+								sx: {
+									bgcolor: "red.400",
+									py: 2,
+								},
+							},
+						}}
+						title="These are the tournaments this league DOES NOT taken into
+									consideration when calculating the leaderboard."
+					>
+						<Box color="neutral.100">
+							<AppIcon name="Info" size="extra-small" />
+						</Box>
+					</Tooltip>
+				</Box>
 
 				<ListGrid>
 					{untracked?.length === 0 ? (

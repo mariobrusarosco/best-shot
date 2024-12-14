@@ -3,6 +3,7 @@ import IconChevronLeft from "@tabler/icons-react/dist/esm/icons/IconChevronLeft.
 import IconChevronRight from "@tabler/icons-react/dist/esm/icons/IconChevronRight.mjs";
 import IconChevronUp from "@tabler/icons-react/dist/esm/icons/IconChevronUp.mjs";
 import IconSave from "@tabler/icons-react/dist/esm/icons/IconDeviceFloppy.mjs";
+import IconInfoSquareRounded from "@tabler/icons-react/dist/esm/icons/IconInfoSquareRounded.mjs";
 import IconLayoutDashboard from "@tabler/icons-react/dist/esm/icons/IconLayoutDashboard.mjs";
 import IconMinus from "@tabler/icons-react/dist/esm/icons/IconMinus.mjs";
 import IconPlus from "@tabler/icons-react/dist/esm/icons/IconPlus.mjs";
@@ -27,4 +28,5 @@ export const ICONS = {
 	Save: IconSave,
 	ChevronLeft: IconChevronLeft,
 	Settings: IconSettings,
+	Info: IconInfoSquareRounded,
 };

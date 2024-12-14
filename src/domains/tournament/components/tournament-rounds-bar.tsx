@@ -1,4 +1,3 @@
-import { useTournament } from "@/domains/tournament/hooks/use-tournament";
 import { AppButton } from "@/domains/ui-system/components/button/button";
 import { AppIcon } from "@/domains/ui-system/components/icon/icon";
 import { AppPill } from "@/domains/ui-system/components/pill/pill";
@@ -7,11 +6,12 @@ import { styled } from "@mui/system";
 import Box from "@mui/system/Box";
 import { useEffect } from "react";
 import { useTournamentRounds } from "../hooks/use-tournament-rounds";
+import { ITournament } from "../typing";
 
 export const TournamentRoundsBar = ({
 	tournament,
 }: {
-	tournament: ReturnType<typeof useTournament>;
+	tournament: ITournament;
 }) => {
 	const { activeRound, goToRound } = useTournamentRounds();
 
@@ -65,7 +65,7 @@ export const TournamentRoundsBar = ({
 
 			<Bar>
 				{Array.from({
-					length: Number(tournament.data?.rounds),
+					length: Number(tournament.rounds),
 				}).map((_, i) => (
 					<RoundButton
 						onClick={() => goToRound(i + 1)}

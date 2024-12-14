@@ -2,11 +2,10 @@ import { useGuess } from "@/domains/guess/hooks/use-guess";
 import { IGuess } from "@/domains/guess/typing";
 import { MatchCard } from "@/domains/match/components/match-card/match-card";
 import { TournamentRoundsBar } from "@/domains/tournament/components/tournament-rounds-bar";
+import { TournamentSetup } from "@/domains/tournament/components/tournament-setup/tournament-setup";
 import { useTournament } from "@/domains/tournament/hooks/use-tournament";
 import { useTournamentMatches } from "@/domains/tournament/hooks/use-tournament-matches";
 import { useTournamentRounds } from "@/domains/tournament/hooks/use-tournament-rounds";
-import { useTournamentSetup } from "@/domains/tournament/hooks/use-tournament-setup";
-import { AppButton } from "@/domains/ui-system/components/button/button";
 import { AppPill } from "@/domains/ui-system/components/pill/pill";
 import { Typography } from "@mui/material";
 import { Box, Stack, styled } from "@mui/system";
@@ -15,27 +14,32 @@ import { useEffect } from "react";
 
 export const TournamentMatchesScreen = () => {
 	const { activeRound, goToRound } = useTournamentRounds();
-	const tournament = useTournament();
-	const guesses = useGuess();
-	const matches = useTournamentMatches();
-	const setup = useTournamentSetup();
+	const tournamentQuery = useTournament();
+	const guessesQuery = useGuess();
+	const matchesQuery = useTournamentMatches();
 
 	// console.log("matches.isFetching", matches.isFetching);
 	// console.log("guess.isFetching", guesses.isFetching);
 	// console.log("guesses?.data", guesses?.data);
 	console.log({ activeRound });
-	const isEmptyState = guesses.data?.length === 0;
-	const isError = matches.isError || guesses.isError;
-	const isLoading = matches.isLoading || guesses.isLoading;
+	const isEmptyState = guessesQuery.data?.length === 0;
+	const isLoading =
+		matchesQuery.isLoading ||
+		guessesQuery.isLoading ||
+		tournamentQuery.isLoading;
 	const autoSelectARound = !isLoading && !activeRound;
+	const isSuccess =
+		matchesQuery.isSuccess &&
+		guessesQuery.isSuccess &&
+		tournamentQuery.isSuccess;
 
 	useEffect(() => {
-		const starterRound = Number(tournament.data?.starterRound) || 1;
+		const starterRound = Number(tournamentQuery.data?.starterRound) || 1;
 
 		if (autoSelectARound) goToRound(starterRound);
 	}, [autoSelectARound]);
 
-	if (isError) {
+	if (!isSuccess) {
 		return (
 			<Matches>
 				<Typography variant="h3" color="red.100">
@@ -58,31 +62,14 @@ export const TournamentMatchesScreen = () => {
 	if (isEmptyState) {
 		return (
 			<Matches>
-				<AppButton
-					sx={{
-						width: "180px",
-						height: "50px",
-						borderRadius: 2,
-						backgroundColor: "teal.500",
-					}}
-					disabled={setup.isPending}
-					onClick={async () => {
-						await setup.mutateAsync({
-							tournamentId: tournament.data?.id || "",
-						});
-					}}
-				>
-					<Typography variant="caption" color="neutral.100">
-						{setup.isPending ? "...working on it..." : "click here to setup"}
-					</Typography>
-				</AppButton>
+				<TournamentSetup tournament={tournamentQuery.data} />
 			</Matches>
 		);
 	}
 
 	return (
 		<Matches data-ui="matches">
-			<TournamentRoundsBar tournament={tournament} />
+			<TournamentRoundsBar tournament={tournamentQuery.data} />
 
 			<Rounds data-ui="rounds">
 				<RoundHeading>
@@ -97,8 +84,8 @@ export const TournamentMatchesScreen = () => {
 				</RoundHeading>
 
 				<Stack gap={1} className="round-games">
-					{matches?.data?.map((match) => {
-						const guess = guesses.data?.find((guess: IGuess) => {
+					{matchesQuery?.data?.map((match) => {
+						const guess = guessesQuery.data?.find((guess: IGuess) => {
 							return guess.matchId === match.id;
 						}) as IGuess;
 

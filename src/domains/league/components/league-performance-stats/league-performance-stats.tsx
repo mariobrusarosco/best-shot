@@ -64,7 +64,7 @@ export const LeaguePerformanceStats = ({
 				component="ul"
 				data-ui="league-performance-stats"
 				sx={{
-					maxHeight: "260px",
+					maxHeight: "fit-content",
 					overflow: "auto",
 					pb: 2,
 				}}
@@ -163,9 +163,10 @@ const GridOfCards = styled(Box)(({ theme }) =>
 			all: 2,
 			tablet: 3,
 		},
-		gridAutoColumns: "47%",
+		gridAutoColumns: "100%",
+		gridAutoRows: "1fr",
 		gridAutoFlow: "column",
-		gridTemplateRows: "90px 90px",
-		gridTemplateColumns: "47% 47%",
+		gridTemplateColumns: "100%",
+		gridTemplateRows: "auto auto",
 	}),
 );

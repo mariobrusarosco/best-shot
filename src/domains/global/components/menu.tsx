@@ -6,7 +6,7 @@ import { Box, Typography, useTheme } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { Link } from "@tanstack/react-router";
 
-const { startsOn, whileIs } = UIHelper.media;
+const { startsOn, whileIs } = UIHelper;
 
 const Wrapper = styled(Box)(({ theme }) => ({
 	display: "flex",

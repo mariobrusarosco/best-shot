@@ -7,8 +7,10 @@ import { useTournament } from "@/domains/tournament/hooks/use-tournament";
 import { useTournamentMatches } from "@/domains/tournament/hooks/use-tournament-matches";
 import { useTournamentRounds } from "@/domains/tournament/hooks/use-tournament-rounds";
 import { AppPill } from "@/domains/ui-system/components/pill/pill";
-import { Typography } from "@mui/material";
-import { Box, Stack, styled } from "@mui/system";
+import { UIHelper } from "@/theming/theme";
+import { Stack, Typography } from "@mui/material";
+import { styled } from "@mui/material/styles";
+import { Box } from "@mui/system";
 import { createLazyFileRoute } from "@tanstack/react-router";
 import { useEffect } from "react";
 
@@ -23,15 +25,18 @@ export const TournamentMatchesScreen = () => {
 	// console.log("guesses?.data", guesses?.data);
 	console.log({ activeRound });
 	const isEmptyState = guessesQuery.data?.length === 0;
-	const isLoading =
-		matchesQuery.isLoading ||
-		guessesQuery.isLoading ||
-		tournamentQuery.isLoading;
-	const autoSelectARound = !isLoading && !activeRound;
-	const isSuccess =
-		matchesQuery.isSuccess &&
-		guessesQuery.isSuccess &&
-		tournamentQuery.isSuccess;
+	const isPending =
+		matchesQuery.isPending ||
+		guessesQuery.isPending ||
+		tournamentQuery.isPending;
+
+	console.log(
+		{ isPending },
+		matchesQuery.isPending,
+		guessesQuery.isPending,
+		tournamentQuery.isPending,
+	);
+	const autoSelectARound = !tournamentQuery.isPending && !activeRound;
 
 	useEffect(() => {
 		const starterRound = Number(tournamentQuery.data?.starterRound) || 1;
@@ -39,7 +44,7 @@ export const TournamentMatchesScreen = () => {
 		if (autoSelectARound) goToRound(starterRound);
 	}, [autoSelectARound]);
 
-	if (!isSuccess) {
+	if (tournamentQuery.isError) {
 		return (
 			<Matches>
 				<Typography variant="h3" color="red.100">
@@ -49,7 +54,7 @@ export const TournamentMatchesScreen = () => {
 		);
 	}
 
-	if (isLoading) {
+	if (isPending) {
 		return (
 			<Matches>
 				<Typography variant="h3" color="red.100">
@@ -84,7 +89,7 @@ export const TournamentMatchesScreen = () => {
 				</RoundHeading>
 
 				<Stack gap={1} className="round-games">
-					{matchesQuery?.data?.map((match) => {
+					{matchesQuery.data?.map((match) => {
 						const guess = guessesQuery.data?.find((guess: IGuess) => {
 							return guess.matchId === match.id;
 						}) as IGuess;
@@ -117,45 +122,50 @@ export const TournamentMatchesScreen = () => {
 
 const Matches = styled(Box)(({ theme }) =>
 	theme?.unstable_sx({
-		overflow: "auto",
 		flex: 1,
-		// height: {
-		// 	all: "calc(100vh - var(--screeh-heading-height-mobile))",
-		// 	tablet: "calc(100vh - var(--screeh-heading-height-tablet))",
-		// },
-		py: {
-			tablet: 8,
+		[UIHelper.whileIs("mobile")]: {
+			overflow: "auto",
+			pb: "200px",
 		},
-		px: {
-			tablet: 4,
+		[UIHelper.startsOn("tablet")]: {
+			overflow: "hidden",
+			placeContent: "start",
+			pt: 6,
+			pb: 4,
+			columnGap: 4,
+			display: "flex",
+			maxHeight:
+				"calc(100vh - var(--screeh-heading-height-tablet) - var(--tournament-heading-height-tablet))",
 		},
-		// display: "grid",
-		gap: {
-			tablet: 4,
-		},
-		gridTemplateColumns: {
-			all: "1fr",
-			tablet: "60px 400px 1fr",
+		[UIHelper.startsOn("desktop")]: {
+			px: 4,
 		},
 	}),
 );
 
 const Rounds = styled(Box)(({ theme }) =>
 	theme?.unstable_sx({
-		// pb: {
-		// 	all: "215px",
-		// 	tablet: "215px",
-		// },
+		overflow: "auto",
+		[UIHelper.startsOn("desktop")]: {
+			pr: 2,
+		},
 	}),
 );
 
 const RoundHeading = styled(Box)(({ theme }) =>
 	theme?.unstable_sx({
-		// position: "sticky",
-		// top: 0,
+		position: "sticky",
+		top: 0,
 		width: "100%",
-		py: { all: 2, tablet: "unset" },
 		backgroundColor: "black.700",
+
+		[UIHelper.whileIs("mobile")]: {
+			py: 2,
+		},
+
+		[UIHelper.startsOn("desktop")]: {
+			pb: 3,
+		},
 	}),
 );
 

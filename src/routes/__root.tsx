@@ -17,7 +17,7 @@ const AppContainer = () => {
 		>
 			<Outlet />
 			{APP_MODE === "local-dev" && (
-				<TanStackRouterDevtools position="bottom-left" initialIsOpen={false} />
+				<TanStackRouterDevtools position="bottom-right" initialIsOpen={false} />
 			)}
 		</Box>
 	);

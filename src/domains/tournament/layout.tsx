@@ -49,13 +49,7 @@ const TournamentLayout = () => {
 				</LogoBox>
 			</ScreenHeading>
 
-			<ScreenMainContent
-				data-ui="asdsa"
-				sx={{
-					px: [1.5, 3],
-					pb: "215px",
-				}}
-			>
+			<ScreenMainContent data-ui="screen-main-content">
 				<TournamentHeading tournament={tournament} />
 
 				<Outlet />

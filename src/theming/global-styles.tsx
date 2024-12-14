@@ -8,6 +8,7 @@ export const GlobalCSS = () => (
 			":root": {
 				"--screeh-heading-height-mobile": "190px",
 				"--screeh-heading-height-tablet": "250px",
+				"--tournament-heading-height-tablet": "50px",
 			},
 			"#root": {
 				height: "100vh",

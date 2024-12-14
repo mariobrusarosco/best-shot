@@ -32,8 +32,6 @@ export const MatchCard = ({ guess, match }: Props) => {
 	const [isOpen, setIsOpen] = useState(false);
 	const guessInputs = useGuessInputs(guess, match);
 
-	console.log({ guessInputs });
-
 	const avaialbleActions =
 		guess.status !== "paused" && guess.status !== "expired";
 	const showInputs =
@@ -41,7 +39,6 @@ export const MatchCard = ({ guess, match }: Props) => {
 		match.status === "open" &&
 		(guess.status === "not-started" || guess.status === "waiting_for_game");
 
-	console.log({ guess, match });
 	return (
 		<Card data-open={isOpen} data-ui="card" data-guess-status={guess.status}>
 			<Header>

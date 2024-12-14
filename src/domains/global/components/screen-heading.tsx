@@ -15,7 +15,7 @@ interface Props extends SurfaceProps {
 	backTo?: string;
 }
 
-const { startsOn } = UIHelper.media;
+const { startsOn } = UIHelper;
 
 export const ScreenHeading = (props: Props) => {
 	const { children, title, subtitle, backTo } = props;

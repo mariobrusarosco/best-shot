@@ -30,6 +30,8 @@ export const LeagueTournaments = ({
 				...prev,
 				editMode: !prev.editMode,
 			}),
+			replace: true,
+			resetScroll: false,
 		});
 	};
 

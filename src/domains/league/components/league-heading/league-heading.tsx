@@ -3,7 +3,7 @@ import Typography from "@mui/material/Typography/Typography";
 import { Box, useMediaQuery } from "@mui/system";
 import { useLeagues } from "../../hooks/use-leagues";
 
-const { startsOn } = UIHelper.media;
+const { startsOn } = UIHelper;
 
 interface Props {
 	league: ReturnType<typeof useLeagues>["leagues"]["data"][number];

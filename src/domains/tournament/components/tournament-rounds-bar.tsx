@@ -1,6 +1,7 @@
 import { AppButton } from "@/domains/ui-system/components/button/button";
 import { AppIcon } from "@/domains/ui-system/components/icon/icon";
 import { AppPill } from "@/domains/ui-system/components/pill/pill";
+import { UIHelper } from "@/theming/theme";
 import Typography from "@mui/material/Typography";
 import { styled } from "@mui/system";
 import Box from "@mui/system/Box";
@@ -21,6 +22,7 @@ export const TournamentRoundsBar = ({
 
 			el?.scrollIntoView({
 				inline: "center",
+				block: "center",
 			});
 		}
 	}, [activeRound]);
@@ -63,7 +65,7 @@ export const TournamentRoundsBar = ({
 				</AppLink>
 			</PillAndStandingLink>
 
-			<Bar>
+			<Bar data-ui="bar">
 				{Array.from({
 					length: Number(tournament.rounds),
 				}).map((_, i) => (
@@ -83,44 +85,28 @@ export const TournamentRoundsBar = ({
 
 const Wrapper = styled(Box)(({ theme }) =>
 	theme?.unstable_sx({
-		position: {
-			all: "fixed",
-			tablet: "relative",
-		},
-		bottom: {
-			all: "50px",
-			tablet: "unset",
-		},
 		display: "flex",
-		flexDirection: {
-			all: "column",
-		},
-		alignItems: {
-			tablet: "center",
-		},
-		width: {
-			all: "100vw",
-			tablet: "100%",
-		},
-		px: {
-			all: 0,
-			tablet: "unset",
-		},
-		pt: {
-			all: 2,
-			tablet: "unset",
+		flexDirection: "column",
+		boxShadow: "0 4px 30px rgba(0, 0, 0, 0.1)",
+
+		[UIHelper.whileIs("mobile")]: {
+			alignItems: "center",
+			overflow: "hidden",
+			position: "fixed",
+			bottom: "50px",
+			px: 0,
+			pt: 2,
+			pb: 4,
+			width: "100vw",
+			backdropFilter: "blur(10px)",
 		},
 
-		pb: {
-			all: 5,
-			tablet: 4,
+		[UIHelper.startsOn("tablet")]: {
+			overflowY: "auto",
+			// width: "80px",
+			// pb: 5,
+			// height: 1,
 		},
-		boxShadow: "0 4px 30px rgba(0, 0, 0, 0.1)",
-		backdropFilter: {
-			all: "blur(10px)",
-			tablet: "unset",
-		},
-		overflow: "hidden",
 	}),
 );
 
@@ -132,7 +118,7 @@ const PillAndStandingLink = styled(Box)(({ theme }) =>
 		alignItems: "center",
 		gap: 2,
 		pb: 2,
-		px: 2,
+		// px: 2,
 	}),
 );
 
@@ -143,15 +129,19 @@ const Bar = styled(Box)(({ theme }) =>
 		width: 1,
 		overflowX: "scroll",
 		display: "flex",
-		flexDirection: {
-			tablet: "column",
-		},
-		alignItems: {
-			tablet: "center",
-		},
 		gap: 1.5,
-		pb: { all: 1 },
-		px: 2,
+		pb: 1,
+
+		[UIHelper.whileIs("mobile")]: {
+			px: 2,
+		},
+
+		[UIHelper.startsOn("tablet")]: {
+			flexDirection: "column",
+			alignItems: "center",
+			px: 2,
+			mt: 2,
+		},
 	}),
 );
 

@@ -1,3 +1,4 @@
+import { UIHelper } from "@/theming/theme";
 import { Box, styled } from "@mui/system";
 import { useTournament } from "../hooks/use-tournament";
 import { TournamentTabs } from "./tournament-tabs";
@@ -16,15 +17,14 @@ export const TournamentHeading = ({ tournament }: Props) => {
 
 const Wrapper = styled(Box)(({ theme }) =>
 	theme?.unstable_sx({
-		px: {
-			all: 2,
-			tablet: 2,
-		},
-		py: {
-			all: 2,
-			tablet: 4,
-		},
+		px: 2,
+		py: 2,
 		gap: 2,
+
+		[UIHelper.startsOn("tablet")]: {
+			height: "var(--tournament-heading-height-tablet)",
+			backgroundColor: "red.400",
+		},
 	}),
 );
 

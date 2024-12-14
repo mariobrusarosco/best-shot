@@ -22,7 +22,7 @@ export const Layout = styled(Box)(({ theme }) =>
 	theme?.unstable_sx({
 		display: "grid",
 		gap: {
-			tablet: 6,
+			tablet: 2,
 		},
 		gridTemplateColumns: {
 			tablet: "75px 1fr",

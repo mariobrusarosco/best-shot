@@ -1,6 +1,6 @@
-import { APP_MODE } from "@/domains/global/utils";
+import { UIHelper } from "@/theming/theme";
 import Typography from "@mui/material/Typography/Typography";
-import { Box, styled } from "@mui/system";
+import { Box, styled, useMediaQuery } from "@mui/system";
 import { IMatch } from "../../typing";
 
 export const TeamDisplay = ({
@@ -10,7 +10,8 @@ export const TeamDisplay = ({
 	team: IMatch["home"] | IMatch["away"];
 	expanded: boolean;
 }) => {
-	const logo = APP_MODE === "staging" ? "" : team.badge;
+	const isDesktopScreen = useMediaQuery(UIHelper.startsOn("desktop"));
+	const displayFullname = expanded || isDesktopScreen;
 
 	return (
 		<Display>
@@ -27,11 +28,11 @@ export const TeamDisplay = ({
 
 			<TeamBox>
 				<TeamLogoBox>
-					<TeamLogo src={logo} />
+					<TeamLogo src={team.badge} />
 				</TeamLogoBox>
 
 				<Typography variant="caption">
-					{expanded ? team.name : team.shortName}
+					{displayFullname ? team.name : team.shortName}
 				</Typography>
 			</TeamBox>
 		</Display>

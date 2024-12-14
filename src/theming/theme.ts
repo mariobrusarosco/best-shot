@@ -78,11 +78,9 @@ const theme = createTheme({
 
 export const UIHelper = (() => {
 	return {
-		media: {
-			whileIs: theme.breakpoints.down,
-			startsOn: theme.breakpoints.up,
-			between: theme.breakpoints.between,
-		},
+		whileIs: theme.breakpoints.down,
+		startsOn: theme.breakpoints.up,
+		between: theme.breakpoints.between,
 	};
 })();
 

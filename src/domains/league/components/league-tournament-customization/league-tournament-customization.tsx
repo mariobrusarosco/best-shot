@@ -94,6 +94,8 @@ export const LeagueTournamentCustomization = ({
 						</Typography>
 
 						<Tooltip
+							enterTouchDelay={0}
+							leaveTouchDelay={1000}
 							slotProps={{
 								tooltip: {
 									sx: {
@@ -105,7 +107,7 @@ export const LeagueTournamentCustomization = ({
 							title="These are the tournaments this league is taken into
 									consideration when calculating the leaderboard."
 						>
-							<Box color="neutral.100">
+							<Box color="teal.500">
 								<AppIcon name="Info" size="extra-small" />
 							</Box>
 						</Tooltip>
@@ -163,10 +165,12 @@ export const LeagueTournamentCustomization = ({
 						color="red.400"
 						fontWeight={600}
 					>
-						tracked
+						untracked
 					</Typography>
 
 					<Tooltip
+						enterTouchDelay={0}
+						leaveTouchDelay={1000}
 						slotProps={{
 							tooltip: {
 								sx: {
@@ -178,7 +182,7 @@ export const LeagueTournamentCustomization = ({
 						title="These are the tournaments this league DOES NOT taken into
 									consideration when calculating the leaderboard."
 					>
-						<Box color="neutral.100">
+						<Box color="red.400">
 							<AppIcon name="Info" size="extra-small" />
 						</Box>
 					</Tooltip>
@@ -218,7 +222,7 @@ export const TournamentLeagueCard = ({
 	status?: "tracked" | "untracked" | "read-only";
 }) => {
 	return (
-		<Card>
+		<Card onClick={status === "tracked" ? onRemove : onAdd}>
 			<CardHeading>
 				<Typography variant="tag" textAlign="center" color="neutral.100">
 					{tournament.label}
@@ -231,13 +235,13 @@ export const TournamentLeagueCard = ({
 
 			{status === "tracked" ? (
 				<IconBox bgcolor="red.400">
-					<AppIcon name="Minus" size="extra-small" onClick={onRemove} />
+					<AppIcon name="Minus" size="tiny" />
 				</IconBox>
 			) : null}
 
 			{status === "untracked" ? (
 				<IconBox bgcolor="green.200">
-					<AppIcon name="Plus" size="extra-small" onClick={onAdd} />
+					<AppIcon name="Plus" size="tiny" />
 				</IconBox>
 			) : null}
 		</Card>

@@ -6,11 +6,13 @@ export interface IMember {
 export interface IMemberPerformance {
 	tournaments: {
 		best: {
+			tourmamentId: string;
 			name: string;
 			badge: string;
 			points: number;
 		};
 		worst: {
+			tourmamentId: string;
 			name: string;
 			badge: string;
 			points: number;
@@ -18,6 +20,7 @@ export interface IMemberPerformance {
 	};
 	mainLeague: {
 		leader: {
+			leagueId: string;
 			name: string;
 			points: number;
 		};

@@ -55,9 +55,14 @@ export const LeaguePerformanceStats = ({
 					my: 2,
 				}}
 			>
-				<AppPill bgcolor="teal.500" color="neutral.100" width={100} height={25}>
+				<AppPill.Component
+					bgcolor="teal.500"
+					color="neutral.100"
+					width={100}
+					height={25}
+				>
 					<Typography variant="tag">leaderboard</Typography>
-				</AppPill>
+				</AppPill.Component>
 			</Box>
 
 			<GridOfCards
@@ -81,14 +86,14 @@ export const LeaguePerformanceStats = ({
 							>
 								pos
 							</Typography>
-							<AppPill
+							<AppPill.Component
 								bgcolor="teal.500"
 								color="neutral.100"
 								width={15}
 								height={15}
 							>
 								<Typography variant="tag">{index + 1}</Typography>
-							</AppPill>
+							</AppPill.Component>
 						</Box>
 
 						<Box

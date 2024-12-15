@@ -22,9 +22,9 @@ export const GuessDisplay = ({ data }: Props) => {
 			<Typography textTransform="uppercase" variant="tag" color={color}>
 				guess
 			</Typography>
-			<AppPill bgcolor={bgColor} minWidth={30} height={20}>
+			<AppPill.Component bgcolor={bgColor} minWidth={30} height={20}>
 				<Typography variant="tag">{content}</Typography>
-			</AppPill>
+			</AppPill.Component>
 		</Wrapper>
 	);
 };

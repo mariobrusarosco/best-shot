@@ -14,9 +14,9 @@ export const ParticipantSkeleton = () => {
 					...
 				</Typography>
 			</Box>
-			<AppPill bgcolor="black.800" minWidth={55} height={20}>
+			<AppPill.Component bgcolor="black.800" minWidth={55} height={20}>
 				<Typography variant="tag">...</Typography>
-			</AppPill>
+			</AppPill.Component>
 		</CardContainer>
 	);
 };

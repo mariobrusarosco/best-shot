@@ -28,7 +28,7 @@ export const Participant = ({ participant }: { participant: IParticipant }) => {
 	);
 };
 
-const Role = styled(AppPill)(
+const Role = styled(AppPill.Component)(
 	({ theme, memberRole }: { theme?: Theme; memberRole: string }) =>
 		theme?.unstable_sx({
 			display: "flex",

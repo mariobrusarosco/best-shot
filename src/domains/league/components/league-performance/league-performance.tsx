@@ -30,7 +30,7 @@ export const LeaguePerformance = ({
 					justifyContent: "space-between",
 				}}
 			>
-				<AppPill
+				<AppPill.Component
 					bgcolor="teal.500"
 					color="neutral.100"
 					width={130}
@@ -38,7 +38,7 @@ export const LeaguePerformance = ({
 					mb={2}
 				>
 					<Typography variant="tag">top 5 performances</Typography>
-				</AppPill>
+				</AppPill.Component>
 
 				<Box
 					sx={{

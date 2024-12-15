@@ -16,9 +16,9 @@ export const ScoreDisplay = ({ value }: { value: number | null }) => {
 			<Typography textTransform="uppercase" variant="tag">
 				score
 			</Typography>
-			<AppPill bgcolor={"black.500"} minWidth={30} height={20}>
+			<AppPill.Component bgcolor={"black.500"} minWidth={30} height={20}>
 				<Typography variant="tag">{value}</Typography>
-			</AppPill>
+			</AppPill.Component>
 		</Box>
 	);
 };

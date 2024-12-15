@@ -35,6 +35,7 @@ export const TYPOGRAPHY = {
 		},
 		topic: {
 			fontSize: 16,
+			fontWeight: 300,
 			fontFamily: "Montserrat",
 		},
 		label: {

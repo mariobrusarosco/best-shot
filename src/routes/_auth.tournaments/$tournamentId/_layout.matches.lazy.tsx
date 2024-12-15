@@ -78,7 +78,7 @@ export const TournamentMatchesScreen = () => {
 
 			<Rounds data-ui="rounds">
 				<RoundHeading>
-					<AppPill
+					<AppPill.Component
 						border="1px solid"
 						borderColor="teal.500"
 						width={80}
@@ -92,7 +92,7 @@ export const TournamentMatchesScreen = () => {
 						>
 							round {activeRound}
 						</Typography>
-					</AppPill>
+					</AppPill.Component>
 				</RoundHeading>
 
 				<Stack gap={1} className="round-games">

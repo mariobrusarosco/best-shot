@@ -30,7 +30,7 @@ export const TournamentRoundsBar = ({
 	return (
 		<Wrapper data-ui="tournament-rounds-bar">
 			<PillAndStandingLink>
-				<AppPill
+				<AppPill.Component
 					border="1px solid"
 					borderColor="teal.500"
 					bgcolor="black.800"
@@ -40,7 +40,7 @@ export const TournamentRoundsBar = ({
 					maxWidth="70px"
 				>
 					<Typography variant="tag">rounds</Typography>
-				</AppPill>
+				</AppPill.Component>
 
 				<AppLink
 					sx={{

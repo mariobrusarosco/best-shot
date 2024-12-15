@@ -18,9 +18,14 @@ export const InviteToLeague = ({
 
 	return (
 		<Box>
-			<AppPill bgcolor="teal.500" color="neutral.100" width={100} height={25}>
+			<AppPill.Component
+				bgcolor="teal.500"
+				color="neutral.100"
+				width={100}
+				height={25}
+			>
 				<Typography variant="tag">invitations</Typography>
-			</AppPill>
+			</AppPill.Component>
 
 			<Card
 				sx={{

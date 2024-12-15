@@ -49,9 +49,14 @@ export const LeagueTournaments = ({
 					mb: 2,
 				}}
 			>
-				<AppPill bgcolor="teal.500" color="neutral.100" width={100} height={25}>
+				<AppPill.Component
+					bgcolor="teal.500"
+					color="neutral.100"
+					width={100}
+					height={25}
+				>
 					<Typography variant="tag">Tournaments</Typography>
-				</AppPill>
+				</AppPill.Component>
 
 				{hasPermissionToEdit ? (
 					<EmptyStartButton onClick={toggleEditMode} sx={{ p: 1 }}>

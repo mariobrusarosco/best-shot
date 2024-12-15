@@ -125,37 +125,42 @@ export const MatchCard = ({ guess, match }: Props) => {
 const getStatusPill = (guess: IGuess) => {
 	if (guess.status === "paused")
 		return (
-			<AppPill bgcolor="pink.700" width={80} height={20}>
+			<AppPill.Component bgcolor="pink.700" width={80} height={20}>
 				<Typography variant="tag">postponed</Typography>
-			</AppPill>
+			</AppPill.Component>
 		);
 
 	if (guess.status === "expired")
 		return (
-			<AppPill border="1px solid" borderColor="red.400" width={60} height={20}>
+			<AppPill.Component
+				border="1px solid"
+				borderColor="red.400"
+				width={60}
+				height={20}
+			>
 				<Typography color="red.400" variant="tag">
 					expired
 				</Typography>
-			</AppPill>
+			</AppPill.Component>
 		);
 
 	if (guess.status === "waiting_for_game")
 		return (
-			<AppPill bgcolor="teal.500" width={120} height={20}>
+			<AppPill.Component bgcolor="teal.500" width={120} height={20}>
 				<Typography variant="tag">waiting for match</Typography>
-			</AppPill>
+			</AppPill.Component>
 		);
 
 	if (guess.status === "not-started")
 		return (
-			<AppPill
+			<AppPill.Component
 				border="1px solid"
 				borderColor="neutral.100"
 				width={75}
 				height={20}
 			>
 				<Typography variant="tag">give a shot!</Typography>
-			</AppPill>
+			</AppPill.Component>
 		);
 
 	return null;

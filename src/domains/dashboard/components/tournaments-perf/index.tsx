@@ -4,7 +4,9 @@ import { TournamentLogo } from "@/domains/tournament/components/tournament-headi
 import { AppButton } from "@/domains/ui-system/components/button/button";
 import { AppIcon } from "@/domains/ui-system/components/icon/icon";
 import { AppPill } from "@/domains/ui-system/components/pill/pill";
-import { Stack, Typography } from "@mui/material";
+import { shimmerEffect } from "@/domains/ui-system/components/skeleton/skeleton";
+import { Stack, styled, Typography } from "@mui/material";
+import { Box } from "@mui/system";
 import { Link } from "@tanstack/react-router";
 import { DashGrid } from "../dash-grid";
 
@@ -16,21 +18,25 @@ const TournamentsPerf = ({
 	performance: ReturnType<typeof useMemberPerformance>;
 }) => {
 	if (loading) return;
-
-	const tournaments = performance?.data?.tournaments;
+	const best = performance.data?.tournaments.best;
+	const worst = performance.data?.tournaments.worst;
 
 	return (
 		<Stack color="neutral.100" gap={3}>
-			<AppPill.Component
-				bgcolor="teal.500"
-				color="neutral.100"
-				height={30}
-				width="150px"
-			>
-				<Typography textTransform="uppercase" variant="label">
-					tournaments
-				</Typography>
-			</AppPill.Component>
+			<Stack direction="row" justifyContent="space-between">
+				<AppPill.Component
+					bgcolor="teal.500"
+					color="neutral.100"
+					height={30}
+					width="150px"
+				>
+					<Typography textTransform="uppercase" variant="label">
+						tournaments
+					</Typography>
+				</AppPill.Component>
+
+				<CardRouteButton to="/tournaments" />
+			</Stack>
 
 			<DashGrid>
 				<DashCard.Component>
@@ -47,21 +53,13 @@ const TournamentsPerf = ({
 						>
 							Best Ranked
 						</Typography>
-						<AppButton
-							sx={{
-								borderRadius: 1,
-								color: "teal.500",
-							}}
-						>
-							<Link
-								to="/tournaments/$tournamentId/matches"
-								params={{
-									tournamentId: tournaments?.best.tourmamentId as string,
-								}}
-							>
-								<AppIcon size="extra-small" name="ChevronRight" />
-							</Link>
-						</AppButton>
+
+						{best === null ? null : (
+							<CardRouteButton
+								to="tournaments/$tournamentId/matches"
+								params={{ tournamentId: best?.tourmamentId }}
+							/>
+						)}
 					</Stack>
 
 					<Stack
@@ -69,35 +67,41 @@ const TournamentsPerf = ({
 						justifyContent="space-between"
 						alignItems="end"
 					>
-						<Stack gap={1}>
-							<TournamentLogo
-								src={tournaments?.best?.badge}
-								sx={{
-									width: 40,
-									height: 40,
-								}}
-							/>
-							<Typography variant="label" color="neutral.500">
-								{tournaments?.best?.name}
-							</Typography>
-						</Stack>
+						{best ? (
+							<>
+								<Stack gap={1}>
+									<TournamentLogo
+										src={best?.badge}
+										sx={{
+											width: 40,
+											height: 40,
+										}}
+									/>
+									<Typography variant="label" color="neutral.100">
+										{best?.name}
+									</Typography>
+								</Stack>
 
-						<Stack gap={1} alignItems="end">
-							<Typography
-								textTransform="uppercase"
-								variant="h4"
-								color="neutral.100"
-							>
-								{tournaments?.best?.points}
-							</Typography>
-							<Typography
-								textTransform="uppercase"
-								variant="label"
-								color="teal.500"
-							>
-								points
-							</Typography>
-						</Stack>
+								<Stack gap={1} alignItems="end">
+									<Typography
+										textTransform="uppercase"
+										variant="h4"
+										color="neutral.100"
+									>
+										{best?.points}
+									</Typography>
+									<Typography
+										textTransform="uppercase"
+										variant="label"
+										color="teal.500"
+									>
+										points
+									</Typography>
+								</Stack>
+							</>
+						) : (
+							<EmptyState />
+						)}
 					</Stack>
 				</DashCard.Component>
 
@@ -115,21 +119,12 @@ const TournamentsPerf = ({
 						>
 							worst Ranked
 						</Typography>
-						<AppButton
-							sx={{
-								borderRadius: 1,
-								color: "teal.500",
-							}}
-						>
-							<Link
-								to="/tournaments/$tournamentId/matches"
-								params={{
-									tournamentId: tournaments?.worst.tourmamentId as string,
-								}}
-							>
-								<AppIcon size="extra-small" name="ChevronRight" />
-							</Link>
-						</AppButton>
+						{worst === null ? null : (
+							<CardRouteButton
+								to="tournaments/$tournamentId/matches"
+								params={{ tournamentId: worst?.tourmamentId }}
+							/>
+						)}
 					</Stack>
 
 					<Stack
@@ -137,35 +132,41 @@ const TournamentsPerf = ({
 						justifyContent="space-between"
 						alignItems="end"
 					>
-						<Stack gap={1}>
-							<TournamentLogo
-								src={tournaments?.worst?.badge}
-								sx={{
-									width: 40,
-									height: 40,
-								}}
-							/>
-							<Typography variant="label" color="neutral.500">
-								{tournaments?.worst?.name}
-							</Typography>
-						</Stack>
+						{worst ? (
+							<>
+								<Stack gap={1}>
+									<TournamentLogo
+										src={worst?.badge}
+										sx={{
+											width: 40,
+											height: 40,
+										}}
+									/>
+									<Typography variant="label" color="neutral.100">
+										{worst?.name}
+									</Typography>
+								</Stack>
 
-						<Stack gap={1} alignItems="end">
-							<Typography
-								textTransform="uppercase"
-								variant="h4"
-								color="neutral.100"
-							>
-								{tournaments?.worst?.points}
-							</Typography>
-							<Typography
-								textTransform="uppercase"
-								variant="label"
-								color="teal.500"
-							>
-								points
-							</Typography>
-						</Stack>
+								<Stack gap={1} alignItems="end">
+									<Typography
+										textTransform="uppercase"
+										variant="h4"
+										color="neutral.100"
+									>
+										{worst?.points}
+									</Typography>
+									<Typography
+										textTransform="uppercase"
+										variant="label"
+										color="teal.500"
+									>
+										points
+									</Typography>
+								</Stack>
+							</>
+						) : (
+							<EmptyState />
+						)}
 					</Stack>
 				</DashCard.Component>
 			</DashGrid>
@@ -173,10 +174,45 @@ const TournamentsPerf = ({
 	);
 };
 
+const EmptyState = () => (
+	<Typography variant="label" color="neutral.500">
+		You neeed to guess at least one match
+	</Typography>
+);
+
+// TODO This can be a <AppRouteButton />
+const CardRouteButton = ({ to, params = {} }: { to: string; params?: {} }) => {
+	return (
+		<AppButton
+			sx={{
+				borderRadius: 1,
+				color: "teal.500",
+			}}
+		>
+			<Link to={to} params={params}>
+				<AppIcon size="extra-small" name="ChevronRight" />
+			</Link>
+		</AppButton>
+	);
+};
+
+const CardRouteButtonSkeleton = styled(Box)(({ theme }) =>
+	theme?.unstable_sx({
+		...shimmerEffect(),
+		backgroundColor: "black.800",
+		minWidth: "30px",
+		borderRadius: 2,
+	}),
+);
+// TODO This can be a <AppRouteButton />
+
 const TournamentsPerfSkeleton = () => {
 	return (
 		<Stack color="neutral.100" gap={3}>
-			<AppPill.Skeleton height={30} width="150px" />
+			<Stack direction="row" justifyContent="space-between">
+				<AppPill.Skeleton height={30} width="150px" />
+				<CardRouteButtonSkeleton />
+			</Stack>
 
 			<DashGrid>
 				<DashCard.Skeleton />

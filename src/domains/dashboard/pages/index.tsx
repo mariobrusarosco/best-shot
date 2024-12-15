@@ -9,7 +9,8 @@ import { GridOfCards } from "@/domains/ui-system/components/grid-of-cards/grid-o
 
 import { ScreenLayout } from "@/domains/ui-system/layout/screen-layout";
 import { ScreenMainContent } from "@/domains/ui-system/layout/screen-main-content";
-import { Typography } from "@mui/material";
+import { UIHelper } from "@/theming/theme";
+import { styled, Typography } from "@mui/material";
 import { Box, Stack } from "@mui/system";
 import { DashCard } from "../components/dash-card/dash-card";
 import MainLeague from "../components/main-league";
@@ -25,10 +26,10 @@ const DashboardPage = () => {
 				<ScreenHeadingSkeleton />
 
 				<ScreenMainContent>
-					<Stack mt={3} gap={4}>
+					<Dashboard>
 						<TournamentsPerf.Skeleton />
 						<MainLeague.Skeleton />
-					</Stack>
+					</Dashboard>
 				</ScreenMainContent>
 			</ScreenLayout>
 		);
@@ -39,7 +40,9 @@ const DashboardPage = () => {
 			<ScreenLayout data-ui="dashboard-screen">
 				<ScreenHeading title="Dashboard" subtitle="" />
 
-				<ScreenMainContent>Error</ScreenMainContent>
+				<ScreenMainContent>
+					<Dashboard>Error</Dashboard>
+				</ScreenMainContent>
 			</ScreenLayout>
 		);
 	}
@@ -49,14 +52,39 @@ const DashboardPage = () => {
 			<ScreenHeading title="Hello," subtitle={member?.data?.nickName} />
 
 			<ScreenMainContent>
-				<Stack mt={3} gap={4}>
+				<Dashboard>
 					<TournamentsPerf.Component performance={performance} />
 					<MainLeague.Component performance={performance} />
-				</Stack>
+				</Dashboard>
 			</ScreenMainContent>
 		</ScreenLayout>
 	);
 };
+
+const Dashboard = styled(Box)(({ theme }) =>
+	theme?.unstable_sx({
+		display: "flex",
+
+		[UIHelper.whileIs("mobile")]: {
+			flexDirection: "column",
+			rowGap: 4,
+		},
+		[UIHelper.startsOn("tablet")]: {
+			columnGap: 4,
+			// 	overflow: "hidden",
+			// 	placeContent: "start",
+			// 	pt: 6,
+			// 	pb: 4,
+			// 	columnGap: 4,
+			// 	display: "flex",
+			// 	maxHeight:
+			// 		"calc(100vh - var(--screeh-heading-height-tablet) - var(--tournament-heading-height-tablet))",
+			// },
+			// [UIHelper.startsOn("desktop")]: {
+			// 	px: 4,
+		},
+	}),
+);
 
 // @ts-ignore
 const CurrentMonth = ({

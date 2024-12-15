@@ -60,6 +60,12 @@ export const GlobalCSS = () => (
 				scrollbarColor: "red teal",
 				scrollbarWidth: "thin",
 			},
+
+			"@keyframes shimmer": {
+				"100%": {
+					transform: "translateX(100%)",
+				},
+			},
 		}}
 	/>
 );

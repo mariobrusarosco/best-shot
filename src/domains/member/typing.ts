@@ -18,13 +18,14 @@ export interface IMemberPerformance {
 			points: number;
 		};
 	};
-	mainLeague: {
-		leader: {
+	leagues: {
+		best: {
 			leagueId: string;
 			name: string;
 			points: number;
 		};
-		you: {
+		worst: {
+			leagueId: string;
 			name: string;
 			points: number;
 		};

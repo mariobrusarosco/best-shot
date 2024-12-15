@@ -1,4 +1,4 @@
-import { skeletonAnimation } from "@/domains/ui-system/components/skeleton/skeleton";
+import { shimmerEffect } from "@/domains/ui-system/components/skeleton/skeleton";
 import { Surface } from "@/domains/ui-system/components/surface/surface";
 import { UIHelper } from "@/theming/theme";
 import { styled } from "@mui/system";
@@ -11,18 +11,24 @@ const Card = styled(Surface)(({ theme }) =>
 		borderRadius: 2,
 		display: "flex",
 		flexDirection: "column",
-		justifyContent: "center",
 		gap: 1,
+		justifyContent: "space-between",
+
+		[UIHelper.whileIs("mobile")]: {
+			// justifyContent: "center",
+		},
 
 		[UIHelper.startsOn("tablet")]: {
 			p: 3,
+			maxHeight: "160px",
+			minHeight: "160px",
 		},
 	}),
 );
 
 export const CardSkeleton = styled(Card)(({ theme }) =>
 	theme.unstable_sx({
-		...skeletonAnimation(),
+		...shimmerEffect(),
 	}),
 );
 

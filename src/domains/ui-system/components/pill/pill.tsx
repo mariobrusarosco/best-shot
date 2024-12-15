@@ -1,5 +1,5 @@
 import { Box, styled } from "@mui/system";
-import { skeletonAnimation } from "../skeleton/skeleton";
+import { shimmerEffect } from "../skeleton/skeleton";
 
 const Pill = styled(Box)(
 	({ theme }) => `
@@ -13,7 +13,7 @@ const Pill = styled(Box)(
 
 const PillSkeleton = styled(Pill)(({ theme }) =>
 	theme?.unstable_sx({
-		...skeletonAnimation(),
+		...shimmerEffect(),
 	}),
 );
 

@@ -1,4 +1,4 @@
-import { skeletonAnimation } from "@/domains/ui-system/components/skeleton/skeleton";
+import { shimmerEffect } from "@/domains/ui-system/components/skeleton/skeleton";
 import {
 	Surface,
 	SurfaceProps,
@@ -94,6 +94,6 @@ const TextBox = styled(Surface)(({ theme }) =>
 
 export const ScreenHeadingSkeleton = styled(Wrapper)(({ theme }) =>
 	theme?.unstable_sx({
-		...skeletonAnimation(),
+		...shimmerEffect(),
 	}),
 );

@@ -18,8 +18,10 @@ const TournamentsPerf = ({
 	performance: ReturnType<typeof useMemberPerformance>;
 }) => {
 	if (loading) return;
-	const best = performance.data?.tournaments.best;
-	const worst = performance.data?.tournaments.worst;
+	const best = performance.data?.tournaments?.at(0);
+	const worst =
+		performance.data?.tournaments?.at(-1) ||
+		performance.data?.tournaments?.at(0);
 
 	return (
 		<Stack color="neutral.100" gap={3}>

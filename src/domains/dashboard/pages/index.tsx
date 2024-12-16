@@ -4,15 +4,12 @@ import {
 } from "@/domains/global/components/screen-heading";
 import { useMember } from "@/domains/member/hooks/use-member";
 import { useMemberPerformance } from "@/domains/member/hooks/use-member-performance";
-import { TournamentLogo } from "@/domains/tournament/components/tournament-heading";
-import { GridOfCards } from "@/domains/ui-system/components/grid-of-cards/grid-of-cards";
 
 import { ScreenLayout } from "@/domains/ui-system/layout/screen-layout";
 import { ScreenMainContent } from "@/domains/ui-system/layout/screen-main-content";
 import { UIHelper } from "@/theming/theme";
-import { styled, Typography } from "@mui/material";
-import { Box, Stack } from "@mui/system";
-import { DashCard } from "../components/dash-card/dash-card";
+import { styled } from "@mui/material";
+import { Box } from "@mui/system";
 import MainLeague from "../components/main-league";
 import TournamentsPerf from "../components/tournaments-perf";
 
@@ -54,7 +51,7 @@ const DashboardPage = () => {
 			<ScreenMainContent>
 				<Dashboard>
 					<TournamentsPerf.Component performance={performance} />
-					<MainLeague.Component performance={performance} />
+					{/* <MainLeague.Component performance={performance} /> */}
 				</Dashboard>
 			</ScreenMainContent>
 		</ScreenLayout>
@@ -72,214 +69,9 @@ const Dashboard = styled(Box)(({ theme }) =>
 		},
 		[UIHelper.startsOn("tablet")]: {
 			columnGap: 4,
-			// 	overflow: "hidden",
-			// 	placeContent: "start",
-			// 	pt: 6,
-			// 	pb: 4,
-			// 	columnGap: 4,
-			// 	display: "flex",
-			// 	maxHeight:
-			// 		"calc(100vh - var(--screeh-heading-height-tablet) - var(--tournament-heading-height-tablet))",
-			// },
-			// [UIHelper.startsOn("desktop")]: {
-			// 	px: 4,
 		},
 	}),
 );
-
-// @ts-ignore
-const CurrentMonth = ({
-	performance,
-}: {
-	performance: ReturnType<typeof useMemberPerformance>;
-}) => {
-	const tournaments = performance?.data?.tournaments;
-
-	return (
-		<Box color="neutral.100" py={2} px={2}>
-			<Typography variant="h6">this month</Typography>
-
-			<GridOfCards>
-				<DashCard.Component>
-					<Typography variant="label" textTransform="uppercase">
-						best
-					</Typography>
-
-					<Stack direction="row" gap={1.5} alignItems="center">
-						<Typography
-							textTransform="uppercase"
-							variant="tag"
-							color="teal.500"
-						>
-							{tournaments?.best?.name}
-						</Typography>
-						<TournamentLogo
-							src={tournaments?.best?.badge}
-							sx={{
-								width: 25,
-								height: 30,
-							}}
-						/>
-					</Stack>
-
-					<Stack direction="row" gap={1.5} alignItems="center">
-						<Typography
-							textTransform="uppercase"
-							variant="tag"
-							color="teal.500"
-						>
-							points
-						</Typography>
-						<Typography
-							textTransform="uppercase"
-							variant="tag"
-							color="neutral.100"
-						>
-							{tournaments?.best?.points}
-						</Typography>
-					</Stack>
-				</DashCard.Component>
-
-				<DashCard.Component>
-					<Typography variant="label" textTransform="uppercase">
-						worst
-					</Typography>
-
-					<Stack direction="row" gap={1.5} alignItems="center">
-						<Typography
-							textTransform="uppercase"
-							variant="tag"
-							color="teal.500"
-						>
-							{tournaments?.worst?.name}
-						</Typography>
-						<TournamentLogo
-							src={tournaments?.worst?.badge}
-							sx={{
-								width: 25,
-								height: 30,
-							}}
-						/>
-					</Stack>
-
-					<Stack direction="row" gap={1.5} alignItems="center">
-						<Typography
-							textTransform="uppercase"
-							variant="tag"
-							color="teal.500"
-						>
-							points
-						</Typography>
-						<Typography
-							textTransform="uppercase"
-							variant="tag"
-							color="neutral.100"
-						>
-							{tournaments?.worst?.points}
-						</Typography>
-					</Stack>
-				</DashCard.Component>
-			</GridOfCards>
-		</Box>
-	);
-};
-
-// @ts-ignore
-const CurrentWeek = ({
-	performance,
-}: {
-	performance: ReturnType<typeof useMemberPerformance>;
-}) => {
-	const tournaments = performance?.data?.tournaments;
-
-	return (
-		<Box color="neutral.100" py={2} px={2}>
-			<Typography variant="h6">Tournaments</Typography>
-
-			<GridOfCards>
-				<DashCard.Component>
-					<Typography variant="label" textTransform="uppercase">
-						best
-					</Typography>
-
-					<Stack direction="row" gap={1.5} alignItems="center">
-						<Typography
-							textTransform="uppercase"
-							variant="tag"
-							color="teal.500"
-						>
-							{tournaments?.best?.name}
-						</Typography>
-						<TournamentLogo
-							src={tournaments?.best?.badge}
-							sx={{
-								width: 25,
-								height: 30,
-							}}
-						/>
-					</Stack>
-
-					<Stack direction="row" gap={1.5} alignItems="center">
-						<Typography
-							textTransform="uppercase"
-							variant="tag"
-							color="teal.500"
-						>
-							points
-						</Typography>
-						<Typography
-							textTransform="uppercase"
-							variant="tag"
-							color="neutral.100"
-						>
-							{tournaments?.best?.points}
-						</Typography>
-					</Stack>
-				</DashCard.Component>
-
-				<DashCard.Component>
-					<Typography variant="label" textTransform="uppercase">
-						worst
-					</Typography>
-
-					<Stack direction="row" gap={1.5} alignItems="center">
-						<Typography
-							textTransform="uppercase"
-							variant="tag"
-							color="teal.500"
-						>
-							{tournaments?.worst?.name}
-						</Typography>
-						<TournamentLogo
-							src={tournaments?.worst?.badge}
-							sx={{
-								width: 25,
-								height: 30,
-							}}
-						/>
-					</Stack>
-
-					<Stack direction="row" gap={1.5} alignItems="center">
-						<Typography
-							textTransform="uppercase"
-							variant="tag"
-							color="teal.500"
-						>
-							points
-						</Typography>
-						<Typography
-							textTransform="uppercase"
-							variant="tag"
-							color="neutral.100"
-						>
-							{tournaments?.worst?.points}
-						</Typography>
-					</Stack>
-				</DashCard.Component>
-			</GridOfCards>
-		</Box>
-	);
-};
 
 export { DashboardPage };
 performance;

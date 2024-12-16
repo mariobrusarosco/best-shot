@@ -5,19 +5,19 @@ export interface IMember {
 
 export interface IMemberPerformance {
 	tournaments: {
-		best: {
-			tourmamentId: string;
-			name: string;
-			badge: string;
-			points: number;
-		};
-		worst: {
-			tourmamentId: string;
-			name: string;
-			badge: string;
-			points: number;
-		};
-	};
+		// best: {
+		tourmamentId: string;
+		name: string;
+		badge: string;
+		points: number;
+		// };
+		// worst: {
+		// 	tourmamentId: string;
+		// 	name: string;
+		// 	badge: string;
+		// 	points: number;
+		// };
+	}[];
 	leagues: {
 		best: {
 			leagueId: string;

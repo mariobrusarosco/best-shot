@@ -36,8 +36,12 @@ export const Wrapper = styled(Box)(({ theme }) =>
 		alignItems: "center",
 		gap: 1,
 
-		"&[data-venue='away']": {
+		"[data-venue='away'] &": {
 			flexDirection: "row-reverse",
+		},
+
+		"[data-open='true'] &": {
+			display: "none",
 		},
 	}),
 );

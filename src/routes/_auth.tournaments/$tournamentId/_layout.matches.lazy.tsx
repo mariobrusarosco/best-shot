@@ -1,7 +1,7 @@
 import { useGuess } from "@/domains/guess/hooks/use-guess";
 import { IGuess } from "@/domains/guess/typing";
-import { MatchCard } from "@/domains/match/components/match-card/match-card";
-import { TournamentRoundsBar } from "@/domains/tournament/components/tournament-rounds-bar";
+import MatchCard from "@/domains/match/components/match-card/match-card";
+import TournamentRoundsBar from "@/domains/tournament/components/tournament-rounds-bar";
 import { TournamentSetup } from "@/domains/tournament/components/tournament-setup/tournament-setup";
 import { useTournament } from "@/domains/tournament/hooks/use-tournament";
 import { useTournamentMatches } from "@/domains/tournament/hooks/use-tournament-matches";
@@ -29,7 +29,6 @@ export const TournamentMatchesScreen = () => {
 		matchesQuery.isPending ||
 		guessesQuery.isPending ||
 		tournamentQuery.isPending;
-
 	console.log(
 		{ isPending },
 		matchesQuery.isPending,
@@ -56,10 +55,16 @@ export const TournamentMatchesScreen = () => {
 
 	if (isPending) {
 		return (
-			<Matches>
-				<Typography variant="h3" color="red.100">
-					...Loading....
-				</Typography>
+			<Matches data-ui="matches-screen-skeleton">
+				<TournamentRoundsBar.Skeleton />
+
+				<Rounds data-ui="rounds-skeleton">
+					<RoundHeading data-ui="rounds-heading-skeleton">
+						<AppPill.Skeleton width={80} height={25} />
+					</RoundHeading>
+
+					<RoundGamesSkeleton />
+				</Rounds>
 			</Matches>
 		);
 	}
@@ -74,7 +79,7 @@ export const TournamentMatchesScreen = () => {
 
 	return (
 		<Matches data-ui="matches">
-			<TournamentRoundsBar tournament={tournamentQuery.data} />
+			<TournamentRoundsBar.Component tournament={tournamentQuery.data} />
 
 			<Rounds data-ui="rounds">
 				<RoundHeading>
@@ -103,7 +108,11 @@ export const TournamentMatchesScreen = () => {
 
 						return (
 							<li key={match.id} className="round-item match-card">
-								<MatchCard key={match.id} match={match} guess={guess} />
+								<MatchCard.Component
+									key={match.id}
+									match={match}
+									guess={guess}
+								/>
 							</li>
 						);
 					})}
@@ -132,7 +141,7 @@ const Matches = styled(Box)(({ theme }) =>
 		flex: 1,
 		[UIHelper.whileIs("mobile")]: {
 			overflow: "auto",
-			pb: "200px",
+			pb: "170px",
 		},
 		[UIHelper.startsOn("tablet")]: {
 			overflow: "hidden",
@@ -163,17 +172,24 @@ const Rounds = styled(Box)(({ theme }) =>
 
 const RoundHeading = styled(Box)(({ theme }) =>
 	theme?.unstable_sx({
-		// position: "sticky",
-		// top: 0,
-		// width: "100%",
 		backgroundColor: "black.700",
 		pb: 3,
-
-		[UIHelper.whileIs("mobile")]: {},
-
-		[UIHelper.startsOn("desktop")]: {},
 	}),
 );
+
+const RoundGamesSkeleton = () => {
+	return (
+		<Stack gap={1} className="round-games-skeleton">
+			{Array.from({ length: 10 }).map((_, index) => {
+				return (
+					<li key={index} className="round-item match-card">
+						<MatchCard.Skeleton key={index} />
+					</li>
+				);
+			})}
+		</Stack>
+	);
+};
 
 export const Route = createLazyFileRoute(
 	"/_auth/tournaments/$tournamentId/_layout/matches",

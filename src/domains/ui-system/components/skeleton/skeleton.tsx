@@ -1,3 +1,5 @@
+import { Box, styled } from "@mui/material";
+
 export const shimmerEffect = () => ({
 	position: "relative",
 	overflow: "hidden",
@@ -19,3 +21,11 @@ export const shimmerEffect = () => ({
 		content: '""',
 	},
 });
+
+export const TypographySkeleton = styled(Box)(({ theme }) =>
+	theme.unstable_sx({
+		backgroundColor: "black.800",
+		borderRadius: 2,
+		...shimmerEffect(),
+	}),
+);

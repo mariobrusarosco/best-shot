@@ -1,6 +1,8 @@
-import { ScreenHeading } from "@/domains/global/components/screen-heading";
 import {
-	TournamentHeading,
+	ScreenHeading,
+	ScreenHeadingSkeleton,
+} from "@/domains/global/components/screen-heading";
+import TournamentHeading, {
 	TournamentLogo,
 } from "@/domains/tournament/components/tournament-heading";
 import { useTournament } from "@/domains/tournament/hooks/use-tournament";
@@ -13,13 +15,13 @@ import { ScreenMainContent } from "../ui-system/layout/screen-main-content";
 const TournamentLayout = () => {
 	const tournament = useTournament();
 
-	if (tournament.isLoading) {
+	if (tournament.isPending) {
 		return (
 			<ScreenLayout>
+				<ScreenHeadingSkeleton />
+
 				<ScreenMainContent>
-					<Typography variant="h3" color="neutral.10">
-						...Loading...
-					</Typography>
+					<TournamentHeading.Skeleton />
 				</ScreenMainContent>
 			</ScreenLayout>
 		);
@@ -50,7 +52,7 @@ const TournamentLayout = () => {
 			</ScreenHeading>
 
 			<ScreenMainContent data-ui="screen-main-content">
-				<TournamentHeading tournament={tournament} />
+				<TournamentHeading.Component tournament={tournament} />
 
 				<Outlet />
 			</ScreenMainContent>

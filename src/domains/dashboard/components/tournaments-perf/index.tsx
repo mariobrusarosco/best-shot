@@ -27,10 +27,10 @@ const TournamentsPerf = ({
 				<AppPill.Component
 					bgcolor="teal.500"
 					color="neutral.100"
-					height={30}
-					width="150px"
+					height={20}
+					width="120px"
 				>
-					<Typography textTransform="uppercase" variant="label">
+					<Typography textTransform="uppercase" variant="tag">
 						tournaments
 					</Typography>
 				</AppPill.Component>
@@ -47,7 +47,7 @@ const TournamentsPerf = ({
 						mb={2}
 					>
 						<Typography
-							fontWeight={700}
+							fontWeight={500}
 							textTransform="uppercase"
 							variant="tag"
 						>
@@ -56,7 +56,7 @@ const TournamentsPerf = ({
 
 						{best === null ? null : (
 							<CardRouteButton
-								to="tournaments/$tournamentId/matches"
+								to="/tournaments/$tournamentId/matches"
 								params={{ tournamentId: best?.tourmamentId }}
 							/>
 						)}
@@ -113,7 +113,7 @@ const TournamentsPerf = ({
 						mb={2}
 					>
 						<Typography
-							fontWeight={700}
+							fontWeight={500}
 							textTransform="uppercase"
 							variant="tag"
 						>
@@ -121,7 +121,7 @@ const TournamentsPerf = ({
 						</Typography>
 						{worst === null ? null : (
 							<CardRouteButton
-								to="tournaments/$tournamentId/matches"
+								to="/tournaments/$tournamentId/matches"
 								params={{ tournamentId: worst?.tourmamentId }}
 							/>
 						)}
@@ -210,7 +210,7 @@ const TournamentsPerfSkeleton = () => {
 	return (
 		<Stack color="neutral.100" gap={3}>
 			<Stack direction="row" justifyContent="space-between">
-				<AppPill.Skeleton height={30} width="150px" />
+				<AppPill.Skeleton height={20} width="120px" />
 				<CardRouteButtonSkeleton />
 			</Stack>
 

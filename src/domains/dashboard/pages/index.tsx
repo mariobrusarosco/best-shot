@@ -66,8 +66,9 @@ const Dashboard = styled(Box)(({ theme }) =>
 		display: "flex",
 
 		[UIHelper.whileIs("mobile")]: {
+			pt: 6,
 			flexDirection: "column",
-			rowGap: 4,
+			rowGap: 6,
 		},
 		[UIHelper.startsOn("tablet")]: {
 			columnGap: 4,

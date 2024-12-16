@@ -1,4 +1,5 @@
 import { CustomLink } from "@/domains/ui-system/components/link/link";
+import { shimmerEffect } from "@/domains/ui-system/components/skeleton/skeleton";
 import { Surface } from "@/domains/ui-system/components/surface/surface";
 import { UIHelper } from "@/theming/theme";
 import { Tab, Tabs, TabsList } from "@mui/base";
@@ -6,11 +7,7 @@ import { styled, Typography } from "@mui/material";
 import { useLocation } from "@tanstack/react-router";
 import { ITournament } from "../typing";
 
-export const TournamentTabs = ({
-	tournament,
-}: {
-	tournament?: ITournament;
-}) => {
+const TournamentTabs = ({ tournament }: { tournament?: ITournament }) => {
 	const location = useLocation();
 	const lastPath = location.pathname?.split("/").at(-1);
 
@@ -106,3 +103,15 @@ const CustomTab = styled(CustomLink)(({ theme }) =>
 		},
 	}),
 );
+
+export const TabsSkeleton = styled(Wrapper)(({ theme }) =>
+	theme.unstable_sx({
+		height: "41px",
+		border: "none",
+		...shimmerEffect(),
+	}),
+);
+export default {
+	Component: TournamentTabs,
+	Skeleton: TabsSkeleton,
+};

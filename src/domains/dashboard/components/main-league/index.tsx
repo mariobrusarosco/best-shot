@@ -28,10 +28,10 @@ const MainLeague = ({
 				<AppPill.Component
 					bgcolor="teal.500"
 					color="neutral.100"
-					height={30}
-					width="150px"
+					height={20}
+					width="120px"
 				>
-					<Typography textTransform="uppercase" variant="label">
+					<Typography textTransform="uppercase" variant="tag">
 						leagues
 					</Typography>
 				</AppPill.Component>
@@ -48,7 +48,7 @@ const MainLeague = ({
 						mb={2}
 					>
 						<Typography
-							fontWeight={700}
+							fontWeight={500}
 							textTransform="uppercase"
 							variant="tag"
 						>
@@ -113,7 +113,7 @@ const MainLeague = ({
 						mb={2}
 					>
 						<Typography
-							fontWeight={700}
+							fontWeight={500}
 							textTransform="uppercase"
 							variant="tag"
 						>
@@ -209,7 +209,7 @@ const MainLeagueSkeleton = () => {
 	return (
 		<Stack color="neutral.100" gap={3}>
 			<Stack direction="row" justifyContent="space-between">
-				<AppPill.Skeleton height={30} width="150px" />
+				<AppPill.Skeleton height={20} width="120px" />
 				<CardRouteButtonSkeleton />
 			</Stack>
 

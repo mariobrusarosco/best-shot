@@ -2,6 +2,8 @@ import { useGuessInputs } from "@/domains/guess/hooks/use-guess-inputs";
 import { IGuess } from "@/domains/guess/typing";
 import { AppIcon } from "@/domains/ui-system/components/icon/icon";
 import { AppPill } from "@/domains/ui-system/components/pill/pill";
+import { shimmerEffect } from "@/domains/ui-system/components/skeleton/skeleton";
+import { styled } from "@mui/material";
 import Divider from "@mui/material/Divider/Divider";
 import Typography from "@mui/material/Typography/Typography";
 import { Stack } from "@mui/system";
@@ -28,7 +30,7 @@ interface Props {
 	guess: IGuess;
 }
 
-export const MatchCard = ({ guess, match }: Props) => {
+const MatchCard = ({ guess, match }: Props) => {
 	const [isOpen, setIsOpen] = useState(false);
 	const guessInputs = useGuessInputs(guess, match);
 
@@ -164,4 +166,16 @@ const getStatusPill = (guess: IGuess) => {
 		);
 
 	return null;
+};
+
+const Skeleton = styled(Card)(({ theme }) =>
+	theme.unstable_sx({
+		height: "84px",
+		...shimmerEffect(),
+	}),
+);
+
+export default {
+	Component: MatchCard,
+	Skeleton,
 };

@@ -9,11 +9,7 @@ import { useEffect } from "react";
 import { useTournamentRounds } from "../hooks/use-tournament-rounds";
 import { ITournament } from "../typing";
 
-export const TournamentRoundsBar = ({
-	tournament,
-}: {
-	tournament: ITournament;
-}) => {
+const TournamentRoundsBar = ({ tournament }: { tournament: ITournament }) => {
 	const { activeRound, goToRound } = useTournamentRounds();
 
 	useEffect(() => {
@@ -93,7 +89,8 @@ const Wrapper = styled(Box)(({ theme }) =>
 			alignItems: "center",
 			overflow: "hidden",
 			position: "fixed",
-			bottom: "50px",
+			bottom: "55px",
+			left: 0,
 			px: 0,
 			pt: 2,
 			pb: 4,
@@ -168,3 +165,41 @@ const RoundButton = styled(AppButton)(
 		}
 	`,
 );
+
+const Skeleton = () => {
+	return (
+		<Wrapper
+			data-ui="tournament-rounds-bar-skeleton"
+			sx={{
+				[UIHelper.whileIs("mobile")]: {
+					display: "none",
+				},
+			}}
+		>
+			<PillAndStandingLink>
+				<AppPill.Skeleton
+					bgcolor="black.800"
+					color="neutral.100"
+					height={25}
+					width={100}
+					maxWidth="70px"
+				></AppPill.Skeleton>
+
+				<AppPill.Skeleton
+					bgcolor="black.800"
+					color="neutral.100"
+					height={25}
+					width={10}
+					maxWidth="70px"
+				></AppPill.Skeleton>
+			</PillAndStandingLink>
+
+			<Bar data-ui="bar"></Bar>
+		</Wrapper>
+	);
+};
+
+export default {
+	Component: TournamentRoundsBar,
+	Skeleton,
+};

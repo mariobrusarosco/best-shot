@@ -1,6 +1,7 @@
-import { TournamentPerformanceStats } from "@/domains/tournament/components/tournament-performance-stats/tournament-performance-stats";
+import TournamentPerformanceStats from "@/domains/tournament/components/tournament-performance-stats/tournament-performance-stats";
 import { useTournament } from "@/domains/tournament/hooks/use-tournament";
 import { useTournamentPerformance } from "@/domains/tournament/hooks/use-tournament-performance";
+import { TypographySkeleton } from "@/domains/ui-system/components/skeleton/skeleton";
 import { Typography } from "@mui/material";
 import { Box, styled } from "@mui/system";
 import { createLazyFileRoute } from "@tanstack/react-router";
@@ -10,7 +11,13 @@ export const TournamentPerformance = () => {
 	const performance = useTournamentPerformance();
 
 	if (performance.isPending || tournament.isPending) {
-		return <Performance>loading....</Performance>;
+		return (
+			<Performance>
+				<TypographySkeleton width={200} height={22} />
+
+				<TournamentPerformanceStats.Skeleton />
+			</Performance>
+		);
 	}
 
 	if (performance.isError || tournament.isError) {
@@ -30,7 +37,7 @@ export const TournamentPerformance = () => {
 				Your performance
 			</Typography>
 
-			<TournamentPerformanceStats
+			<TournamentPerformanceStats.Component
 				mutation={performance.mutation}
 				data={performance.data}
 			/>

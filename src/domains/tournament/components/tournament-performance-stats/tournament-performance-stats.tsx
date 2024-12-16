@@ -1,13 +1,16 @@
 import { AppButton } from "@/domains/ui-system/components/button/button";
 import { GridOfCards } from "@/domains/ui-system/components/grid-of-cards/grid-of-cards";
+import {
+	shimmerEffect,
+	TypographySkeleton,
+} from "@/domains/ui-system/components/skeleton/skeleton";
 import { Surface } from "@/domains/ui-system/components/surface/surface";
 import Typography from "@mui/material/Typography/Typography";
 import { Box, Stack, styled } from "@mui/system";
 import { useTournamentPerformance } from "../../hooks/use-tournament-performance";
 import { ITournamentPerformance } from "../../typing";
-import { GuessSection } from "./guess-section";
 
-export const TournamentPerformanceStats = ({
+const TournamentPerformanceStats = ({
 	data,
 	mutation,
 }: {
@@ -15,10 +18,6 @@ export const TournamentPerformanceStats = ({
 	mutation: ReturnType<typeof useTournamentPerformance>["mutation"];
 }) => {
 	if (!data) return null;
-
-	const guessesByStatus = Object.groupBy(data.details, ({ status }) => status);
-
-	console.log({ guessesByStatus });
 
 	return (
 		<Stack gap={4} pt={5}>
@@ -68,26 +67,29 @@ export const TournamentPerformanceStats = ({
 				</Box>
 			</Box>
 
-			<GridOfCards>
-				<PerfCard>
-					<Stack direction="row" gap={1.5} alignItems="center">
-						<Typography
-							textTransform="uppercase"
-							variant="paragraph"
-							color="teal.500"
-						>
-							points
-						</Typography>
-						<Typography
-							textTransform="uppercase"
-							variant="h1"
-							color="neutral.100"
-						>
-							{data?.points}
-						</Typography>
-					</Stack>
-				</PerfCard>
-			</GridOfCards>
+			<PerfCard>
+				<Stack
+					direction="row"
+					gap={1.5}
+					alignItems="start"
+					justifyContent="space-between"
+				>
+					<Typography
+						textTransform="uppercase"
+						variant="topic"
+						color="teal.500"
+					>
+						points
+					</Typography>
+					<Typography
+						textTransform="uppercase"
+						variant="h1"
+						color="neutral.100"
+					>
+						{data?.points}
+					</Typography>
+				</Stack>
+			</PerfCard>
 
 			<Stack>
 				<GridOfCards>
@@ -105,7 +107,7 @@ export const TournamentPerformanceStats = ({
 								variant="h4"
 								color="neutral.100"
 							>
-								{guessesByStatus["correct"]?.length ?? 0}
+								{data.details["correct"] ?? 0}
 							</Typography>
 						</Stack>
 					</PerfCard>
@@ -123,7 +125,7 @@ export const TournamentPerformanceStats = ({
 								variant="h4"
 								color="neutral.100"
 							>
-								{guessesByStatus["incorrect"]?.length ?? 0}
+								{data.details["incorrect"] ?? 0}
 							</Typography>
 						</Stack>
 					</PerfCard>
@@ -141,7 +143,7 @@ export const TournamentPerformanceStats = ({
 								variant="h4"
 								color="neutral.100"
 							>
-								{guessesByStatus["waiting_for_game"]?.length ?? 0}
+								{data.details["waiting_for_game"] ?? 0}
 							</Typography>
 						</Stack>
 					</PerfCard>
@@ -159,7 +161,7 @@ export const TournamentPerformanceStats = ({
 								variant="h4"
 								color="neutral.100"
 							>
-								{guessesByStatus["not-started"]?.length ?? 0}
+								{data.details["not-started"] ?? 0}
 							</Typography>
 						</Stack>
 					</PerfCard>
@@ -167,7 +169,7 @@ export const TournamentPerformanceStats = ({
 			</Stack>
 
 			<Stack>
-				<GuessSection groupName={"all"} groupOfGuesses={data.details} />
+				{/* <GuessSection groupName={"all"} groupOfGuesses={data.details} /> */}
 
 				{/* {Object.values(GUESS_STATUSES).map((status) => {
 					return (
@@ -194,3 +196,57 @@ const PerfCard = styled(Surface)(({ theme }) =>
 		gap: 1,
 	}),
 );
+
+const PerfCardSkeleton = styled(PerfCard)(({ theme }) =>
+	theme.unstable_sx({
+		...shimmerEffect(),
+	}),
+);
+
+export const Skeleton = () => {
+	return (
+		<Stack gap={4} pt={5}>
+			<Box
+				sx={{
+					display: "flex",
+					justifyContent: "space-between",
+				}}
+			>
+				<Box
+					sx={{
+						display: "flex",
+						alignItems: "center",
+						gap: 1,
+					}}
+				>
+					<TypographySkeleton width={100} height={20} />
+					<TypographySkeleton width={150} height={30} />
+				</Box>
+			</Box>
+
+			<PerfCardSkeleton>
+				<Stack
+					direction="row"
+					gap={1.5}
+					alignItems="start"
+					justifyContent="space-between"
+					height={102}
+				/>
+			</PerfCardSkeleton>
+
+			<Stack>
+				<GridOfCards>
+					<PerfCardSkeleton />
+					<PerfCardSkeleton />
+					<PerfCardSkeleton />
+					<PerfCardSkeleton />
+				</GridOfCards>
+			</Stack>
+		</Stack>
+	);
+};
+
+export default {
+	Component: TournamentPerformanceStats,
+	Skeleton,
+};

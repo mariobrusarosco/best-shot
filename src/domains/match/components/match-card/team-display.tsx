@@ -44,10 +44,16 @@ export const Display = styled(Box)(({ theme }) =>
 		display: "flex",
 		alignItems: "center",
 		gap: 1,
+
 		"[data-open='true'] &": {
+			order: 1,
 			flexDirection: "column",
 			alignItems: "flex-start",
 		},
+
+		// "[data-open='true'] [data-venue='away'] &": {
+		// 	alignItems: "flex-end",
+		// },
 	}),
 );
 

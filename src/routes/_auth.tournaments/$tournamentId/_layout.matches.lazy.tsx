@@ -146,7 +146,7 @@ const Matches = styled(Box)(({ theme }) =>
 		[UIHelper.startsOn("tablet")]: {
 			overflow: "hidden",
 			placeContent: "start",
-			pt: 6,
+			pt: 1,
 			pb: 4,
 			columnGap: 4,
 			display: "flex",
@@ -164,8 +164,9 @@ const Rounds = styled(Box)(({ theme }) =>
 		overflow: "auto",
 		pb: 2,
 
-		[UIHelper.startsOn("desktop")]: {
+		[UIHelper.startsOn("tablet")]: {
 			pr: 2,
+			width: "570px",
 		},
 	}),
 );

@@ -25,6 +25,7 @@
 		"@tanstack/react-router": "^1.47.1",
 		"axios": "^1.7.2",
 		"date-fns": "^4.1.0",
+		"dayjs": "^1.11.13",
 		"lodash": "^4.17.21",
 		"react": "^18.2.0",
 		"react-dom": "^18.2.0"

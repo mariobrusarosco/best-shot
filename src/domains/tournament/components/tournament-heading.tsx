@@ -16,11 +16,13 @@ export const TournamentHeading = ({ tournament }: Props) => {
 
 const Wrapper = styled(Box)(({ theme }) =>
 	theme?.unstable_sx({
-		py: 5,
+		pt: 2,
+		pb: 4,
 		gap: 2,
 
 		[UIHelper.startsOn("tablet")]: {
-			height: "var(--tournament-heading-height-tablet)",
+			pb: 2,
+			// height: "var(--tournament-heading-height-tablet)",
 		},
 	}),
 );

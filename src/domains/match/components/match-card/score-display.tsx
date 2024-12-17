@@ -1,24 +1,43 @@
 import { AppPill } from "@/domains/ui-system/components/pill/pill";
-import { Box, Typography } from "@mui/material";
+import { Box, styled, Typography } from "@mui/material";
 
-export const ScoreDisplay = ({ value }: { value: number | null }) => {
-	if (!value) return null;
-
+export const ScoreDisplay = ({
+	value,
+	expanded,
+}: {
+	value: number | null;
+	expanded: boolean;
+}) => {
 	return (
-		<Box
-			sx={{
-				display: "flex",
-				justifyContent: "space-between",
-				alignItems: "center",
-				gap: 1,
-			}}
-		>
-			<Typography textTransform="uppercase" variant="tag">
-				score
-			</Typography>
+		<Wrapper>
+			{expanded ? (
+				<Typography textTransform="uppercase" variant="tag">
+					score
+				</Typography>
+			) : null}
 			<AppPill.Component bgcolor={"black.500"} minWidth={30} height={20}>
-				<Typography variant="tag">{value}</Typography>
+				<Typography variant="tag">{value ?? "-"}</Typography>
 			</AppPill.Component>
-		</Box>
+		</Wrapper>
 	);
 };
+
+export const Wrapper = styled(Box)(({ theme }) =>
+	theme?.unstable_sx({
+		display: "flex",
+		justifyContent: "space-between",
+		alignItems: "center",
+		gap: 1,
+
+		"[data-open='true'] &": {
+			order: 2,
+		},
+		"[data-open='true'] [data-venue='away'] &": {
+			flexDirection: "row-reverse",
+		},
+
+		"[data-open='true'][data-guess-status='waiting_for_game'] &": {
+			display: "none",
+		},
+	}),
+);

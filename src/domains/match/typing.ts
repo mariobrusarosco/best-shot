@@ -40,4 +40,5 @@ export type IMatch = {
 		badge: IMatchResponse["home"]["badge"];
 		name: IMatchResponse["home"]["name"];
 	};
+	timebox: string;
 };

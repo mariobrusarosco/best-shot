@@ -47,9 +47,8 @@ export const ScoreInput = ({ value, handleInputChange }: InputProps) => {
 			placeholder="-"
 			value={value}
 			ref={ref}
+			readOnly
 			onChange={(_, val) => {
-				console.log(handleInputChange);
-
 				handleInputChange(val);
 			}}
 			onInputChange={(e) => {
@@ -102,6 +101,10 @@ export const InputBoxStyled = styled(Box)(({ theme }) =>
 		"& .decrement": { gridArea: "decrement", flex: 1, order: 1 },
 		"& .input": { gridArea: "input", flex: 1, order: 2 },
 		"& .increment": { gridArea: "increment", flex: 1, order: 3 },
+
+		"[data-open='true'] &": {
+			order: 2,
+		},
 	}),
 );
 

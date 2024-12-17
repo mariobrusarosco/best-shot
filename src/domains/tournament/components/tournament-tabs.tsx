@@ -80,7 +80,8 @@ const Wrapper = styled(Surface)(({ theme }) =>
 		gap: 0.5,
 
 		[UIHelper.startsOn("tablet")]: {
-			// gap: 3,
+			maxWidth: "400px",
+			marginLeft: "auto",
 		},
 	}),
 );

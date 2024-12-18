@@ -13,7 +13,6 @@ export const GlobalCSS = () => (
 			"#root": {
 				height: "100vh",
 				width: "100vw",
-				// display: "flex",
 			},
 			menu: {
 				margin: 0,
@@ -54,10 +53,10 @@ export const GlobalCSS = () => (
 			},
 			// /_ Handle _/
 			"::-webkit-scrollbar-thumb": {
-				background: theme.palette.teal["500"],
+				background: "#6a9b9614",
 			},
 			"[data-ui='scrollbar']": {
-				scrollbarColor: "red teal",
+				// scrollbarColor: " teal",
 				scrollbarWidth: "thin",
 			},
 

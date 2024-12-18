@@ -3,6 +3,7 @@ import { IGuess } from "@/domains/guess/typing";
 import MatchCard from "@/domains/match/components/match-card/match-card";
 import TournamentRoundsBar from "@/domains/tournament/components/tournament-rounds-bar";
 import { TournamentSetup } from "@/domains/tournament/components/tournament-setup/tournament-setup";
+import { TournamentStandings } from "@/domains/tournament/components/tournament-standings/tournament-standings";
 import { useTournament } from "@/domains/tournament/hooks/use-tournament";
 import { useTournamentMatches } from "@/domains/tournament/hooks/use-tournament-matches";
 import { useTournamentRounds } from "@/domains/tournament/hooks/use-tournament-rounds";
@@ -14,16 +15,28 @@ import { Box } from "@mui/system";
 import { createLazyFileRoute } from "@tanstack/react-router";
 import { useEffect } from "react";
 
+// const columns: GridColDef[] = [
+// 	{ field: "ordem", headerName: "pos", width: 70 },
+// 	{ field: "sigla", headerName: "name", width: 130 },
+// 	{ field: "jogos", headerName: "games", width: 70 },
+// 	{
+// 		field: "pontos",
+// 		headerName: "pts",
+// 		type: "number",
+// 		width: 70,
+// 	},
+// ];
+
 export const TournamentMatchesScreen = () => {
 	const { activeRound, goToRound } = useTournamentRounds();
 	const tournamentQuery = useTournament();
 	const guessesQuery = useGuess();
 	const matchesQuery = useTournamentMatches();
+	// const standings = useTournamentStandings();
 
 	// console.log("matches.isFetching", matches.isFetching);
 	// console.log("guess.isFetching", guesses.isFetching);
 	// console.log("guesses?.data", guesses?.data);
-	console.log({ activeRound });
 	const isEmptyState = guessesQuery.data?.length === 0;
 	const isPending =
 		matchesQuery.isPending ||
@@ -119,19 +132,7 @@ export const TournamentMatchesScreen = () => {
 				</Stack>
 			</Rounds>
 
-			<Box
-				data-ui="standings"
-				sx={{
-					display: {
-						all: "none",
-						tablet: "flex",
-					},
-				}}
-			>
-				<Typography variant="h6" color="neutral.100">
-					standings
-				</Typography>
-			</Box>
+			<TournamentStandings />
 		</Matches>
 	);
 };
@@ -154,7 +155,7 @@ const Matches = styled(Box)(({ theme }) =>
 				"calc(100vh - var(--screeh-heading-height-tablet) - var(--tournament-heading-height-tablet))",
 		},
 		[UIHelper.startsOn("desktop")]: {
-			px: 4,
+			// px: 4,
 		},
 	}),
 );

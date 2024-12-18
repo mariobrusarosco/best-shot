@@ -1,5 +1,4 @@
 import { AppButton } from "@/domains/ui-system/components/button/button";
-import { AppIcon } from "@/domains/ui-system/components/icon/icon";
 import { AppPill } from "@/domains/ui-system/components/pill/pill";
 import { UIHelper } from "@/theming/theme";
 import Typography from "@mui/material/Typography";
@@ -25,41 +24,23 @@ const TournamentRoundsBar = ({ tournament }: { tournament: ITournament }) => {
 
 	return (
 		<Wrapper data-ui="tournament-rounds-bar">
-			<PillAndStandingLink>
+			<Heading>
 				<AppPill.Component
 					border="1px solid"
 					borderColor="teal.500"
-					bgcolor="black.800"
-					color="neutral.100"
+					width={80}
 					height={25}
-					width={1}
-					maxWidth="70px"
-				>
-					<Typography variant="tag">rounds</Typography>
-				</AppPill.Component>
-
-				<AppLink
-					sx={{
-						color: "teal.500",
-						placeItems: "center",
-						p: 1,
-						gap: 1,
-						display: {
-							all: "flex",
-							tablet: "none",
-						},
-					}}
 				>
 					<Typography
 						variant="tag"
+						textTransform="uppercase"
 						color="neutral.100"
-						textTransform="lowercase"
+						fontWeight={500}
 					>
-						standings
+						rounds
 					</Typography>
-					<AppIcon name="ChevronRight" size="extra-small" />
-				</AppLink>
-			</PillAndStandingLink>
+				</AppPill.Component>
+			</Heading>
 
 			<Bar data-ui="bar">
 				{Array.from({
@@ -91,7 +72,6 @@ const Wrapper = styled(Box)(({ theme }) =>
 			position: "fixed",
 			bottom: "55px",
 			left: 0,
-			px: 0,
 			pt: 2,
 			pb: 4,
 			width: "100vw",
@@ -100,9 +80,7 @@ const Wrapper = styled(Box)(({ theme }) =>
 
 		[UIHelper.startsOn("tablet")]: {
 			overflowY: "auto",
-			// width: "80px",
-			// pb: 5,
-			// height: 1,
+			px: 1,
 		},
 	}),
 );
@@ -119,8 +97,6 @@ const PillAndStandingLink = styled(Box)(({ theme }) =>
 	}),
 );
 
-const AppLink = styled(Box)(({ theme }) => theme?.unstable_sx({}));
-
 const Bar = styled(Box)(({ theme }) =>
 	theme?.unstable_sx({
 		width: 1,
@@ -134,10 +110,11 @@ const Bar = styled(Box)(({ theme }) =>
 		},
 
 		[UIHelper.startsOn("tablet")]: {
+			backgroundColor: "black.800",
 			flexDirection: "column",
 			alignItems: "center",
 			px: 2,
-			mt: 2,
+			pt: 2,
 		},
 	}),
 );
@@ -164,6 +141,13 @@ const RoundButton = styled(AppButton)(
 			color: ${theme.palette.neutral[100]};
 		}
 	`,
+);
+
+const Heading = styled(Box)(({ theme }) =>
+	theme?.unstable_sx({
+		backgroundColor: "black.700",
+		pb: 3,
+	}),
 );
 
 const Skeleton = () => {

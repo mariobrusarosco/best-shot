@@ -32,3 +32,8 @@ export type ITournamentPerformance = {
 	lastUpdated: string;
 	points: string;
 };
+
+export type ITournamentStandings = {
+	lastUpdated: string;
+	classificacao: any[];
+};

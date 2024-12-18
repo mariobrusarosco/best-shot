@@ -16,8 +16,8 @@ export const GoBackButton = ({ backTo }: { backTo: string }) => {
 				position: "absolute",
 				top: { all: 22, tablet: 100 },
 				right: { all: 15, tablet: 40 },
+				display: { all: "flex", tablet: "none" },
 				color: "teal.500",
-				display: "flex",
 				placeItems: "center",
 				gap: 0.5,
 			}}

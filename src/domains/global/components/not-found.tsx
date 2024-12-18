@@ -1,21 +1,24 @@
 import { BestShotIcon } from "@/assets/best-shot-icon";
-import { theme, UIHelper } from "@/theming/theme";
+import { theme } from "@/theming/theme";
 import { styled, Typography } from "@mui/material";
 import { Stack } from "@mui/system";
+import { Link } from "@tanstack/react-router";
 
-const AppError = ({ error }: { error: Error }) => {
-	console.error("[BEST SHOT] - App General Error", error);
-
+export const AppNotFound = () => {
 	return (
 		<Wrapper data-iu="general-error-page">
-			<BestShotIcon fill={theme.palette.neutral[100]} />
+			<BestShotIcon width="350px" fill={theme.palette.black[500]} />
 
 			<Stack textAlign="center" gap={2}>
 				<Typography variant="h1" color={theme.palette.neutral[100]}>
-					Ops!
+					Not found
 				</Typography>
 				<Typography variant="paragraph" color={theme.palette.teal[500]}>
-					Something unexpected has happened.
+					This page doesn't exist. Please,{" "}
+					<Link to="/dashboard" style={{ color: theme.palette.neutral[100] }}>
+						<strong>click here</strong>
+					</Link>{" "}
+					and go back to dashboard
 				</Typography>
 			</Stack>
 		</Wrapper>
@@ -27,20 +30,9 @@ const Wrapper = styled(Stack)(({ theme }) => ({
 	backgroundColor: theme.palette.black[800],
 	display: "grid",
 	placeContent: "center",
+	placeItems: "center",
 	borderTopLeftRadius: theme.spacing(4),
 	borderTopRightRadius: theme.spacing(4),
 	gap: theme.spacing(3),
 	padding: theme.spacing(0, 2),
-
-	[UIHelper.whileIs("mobile")]: {
-		placeItems: "center",
-		margin: "20px auto 0",
-
-		maxWidth: "350px",
-		svg: {
-			width: "150px",
-		},
-	},
 }));
-
-export { AppError };

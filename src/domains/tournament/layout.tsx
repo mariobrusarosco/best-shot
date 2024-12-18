@@ -6,7 +6,6 @@ import TournamentHeading, {
 	TournamentLogo,
 } from "@/domains/tournament/components/tournament-heading";
 import { useTournament } from "@/domains/tournament/hooks/use-tournament";
-import { Typography } from "@mui/material";
 import { Box, styled } from "@mui/system";
 import { Outlet } from "@tanstack/react-router";
 import { ScreenLayout } from "../ui-system/layout/screen-layout";
@@ -28,15 +27,7 @@ const TournamentLayout = () => {
 	}
 
 	if (tournament.isError) {
-		return (
-			<ScreenLayout>
-				<ScreenMainContent>
-					<Typography variant="h3" color="neutral.10">
-						Ops! Something happened
-					</Typography>
-				</ScreenMainContent>
-			</ScreenLayout>
-		);
+		throw tournament.error;
 	}
 
 	return (

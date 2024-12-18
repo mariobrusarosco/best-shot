@@ -6,6 +6,7 @@ export const GlobalCSS = () => (
 		styles={{
 			body: {},
 			":root": {
+				"--screeh-header-height-mobile": "190px",
 				"--screeh-heading-height-mobile": "190px",
 				"--screeh-heading-height-tablet": "250px",
 				"--tournament-heading-height-tablet": "50px",
@@ -16,6 +17,7 @@ export const GlobalCSS = () => (
 			},
 			menu: {
 				margin: 0,
+				padding: 0,
 			},
 			li: {
 				listStyleType: "none",

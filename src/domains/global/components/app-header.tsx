@@ -22,7 +22,6 @@ const Header = styled(Stack)(({ theme }) => ({
 	alignItems: "center",
 	gap: theme.spacing(0.5),
 	padding: theme.spacing(2, 2),
-	paddingBottom: theme.spacing(0),
 	backgroundColor: theme.palette.black[800],
 
 	[UIHelper.whileIs("mobile")]: {

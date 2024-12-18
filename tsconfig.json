@@ -25,11 +25,13 @@
 		"baseUrl": ".",
 		"paths": {
 			"@/*": ["src/*"],
+			"@settings": ["settings/*"],
 			"@tabler/icons-react/*": ["node_modules/@tabler/icons-react/*"]
 		}
 	},
 	"include": [
 		"src",
+		"settings",
 		"global.d.ts",
 		"node_modules/@tabler/icons-react/**/*.mjs"
 		// "node_modules/@tabler/icons-react/dist/esm/tabler-icons-react.d.ts"

@@ -93,10 +93,10 @@ const Wrapper = styled(Box)(({ theme }) => ({
 	[startsOn("tablet")]: {
 		width: "auto",
 		justifyContent: "flex-start",
-
+		alignItems: "center",
 		flexDirection: "column",
 		padding: theme.spacing(2),
-		gap: "40px",
+		gap: theme.spacing(4),
 	},
 }));
 
@@ -117,12 +117,17 @@ const HeaderButton = ({ iconName }: { iconName: keyof typeof ICONS }) => {
 				padding: theme.spacing(1),
 				borderRadius: theme.shape.borderRadius,
 				display: "inline-flex",
-				minWidth: 24,
-				minHeight: 24,
+				width: 24,
+				height: 24,
 
 				".active &, &:hover": {
 					color: theme.palette.teal[500],
 					backgroundColor: theme.palette.neutral[100],
+				},
+
+				[startsOn("tablet")]: {
+					width: 44,
+					height: 44,
 				},
 			}}
 		>

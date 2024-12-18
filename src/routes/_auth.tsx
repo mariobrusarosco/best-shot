@@ -1,6 +1,7 @@
 import { useAppAuth } from "@/domains/authentication/hooks/use-app-auth";
 import { AppHeader } from "@/domains/global/components/app-header";
 import { Menu } from "@/domains/global/components/menu";
+import { AppNotFound } from "@/domains/global/components/not-found";
 import { Box } from "@mui/material";
 import { styled } from "@mui/system";
 import { createFileRoute, Outlet } from "@tanstack/react-router";
@@ -34,4 +35,5 @@ export const Layout = styled(Box)(({ theme }) =>
 
 export const Route = createFileRoute("/_auth")({
 	component: AuthLayout,
+	notFoundComponent: AppNotFound,
 });

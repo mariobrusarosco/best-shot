@@ -1,4 +1,5 @@
 import { useAppAuth } from "@/domains/authentication/hooks/use-app-auth";
+import { AppHeader } from "@/domains/global/components/app-header";
 import { Menu } from "@/domains/global/components/menu";
 import { Box } from "@mui/material";
 import { styled } from "@mui/system";
@@ -12,6 +13,7 @@ const AuthLayout = () => {
 	}
 	return (
 		<Layout data-ui="authenticated-layout">
+			<AppHeader />
 			<Menu />
 			<Outlet />
 		</Layout>

@@ -14,10 +14,6 @@ const Card = styled(Surface)(({ theme }) =>
 		gap: 1,
 		justifyContent: "space-between",
 
-		[UIHelper.whileIs("mobile")]: {
-			// justifyContent: "center",
-		},
-
 		[UIHelper.startsOn("tablet")]: {
 			p: 3,
 			maxHeight: "160px",

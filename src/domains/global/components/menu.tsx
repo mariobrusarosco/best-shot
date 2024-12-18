@@ -1,36 +1,13 @@
+import { BestShotIcon } from "@/assets/best-shot-icon";
 import { AppButton } from "@/domains/ui-system/components/button/button";
 import { AppIcon } from "@/domains/ui-system/components/icon/icon";
 import { ICONS } from "@/domains/ui-system/components/icon/mapper";
-import { UIHelper } from "@/theming/theme";
+import { theme, UIHelper } from "@/theming/theme";
 import { Box, Typography, useTheme } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { Link } from "@tanstack/react-router";
 
 const { startsOn, whileIs } = UIHelper;
-
-const Wrapper = styled(Box)(({ theme }) => ({
-	display: "flex",
-	justifyContent: "center",
-	borderTopRightRadius: "16px",
-	borderTopLeftRadius: "16px",
-	gap: theme.spacing(4),
-	backgroundColor: theme.palette.black[800],
-	maxHeight: "100vh",
-
-	[whileIs("mobile")]: {
-		padding: theme.spacing(3, 2),
-		width: "100vw",
-		position: "fixed",
-		bottom: 0,
-		zIndex: theme.zIndex.appBar,
-	},
-	[startsOn("tablet")]: {
-		width: "auto",
-		flexDirection: "column",
-		padding: theme.spacing(2),
-		gap: "40px",
-	},
-}));
 
 export const Menu = () => {
 	const isOpen = false;
@@ -38,13 +15,13 @@ export const Menu = () => {
 	return (
 		<Wrapper as="menu">
 			<Box
-				sx={{
-					display: {
-						mobile: "none",
-						tablet: "block",
-					},
-				}}
-			></Box>
+				width={50}
+				pt={2}
+				pb={10}
+				sx={{ display: { all: "none", tablet: "block" } }}
+			>
+				<BestShotIcon fill={theme.palette.neutral[100]} />
+			</Box>
 			<HeaderLink to="/dashboard">
 				<HeaderButton iconName="LayoutDashboard" />
 				{isOpen ? (
@@ -96,6 +73,32 @@ export const Menu = () => {
 		</Wrapper>
 	);
 };
+
+const Wrapper = styled(Box)(({ theme }) => ({
+	display: "flex",
+	borderTopRightRadius: "16px",
+	borderTopLeftRadius: "16px",
+	gap: theme.spacing(4),
+	backgroundColor: theme.palette.black[800],
+	maxHeight: "100vh",
+
+	[whileIs("mobile")]: {
+		justifyContent: "center",
+		padding: theme.spacing(3, 2),
+		width: "100vw",
+		position: "fixed",
+		bottom: 0,
+		zIndex: theme.zIndex.appBar,
+	},
+	[startsOn("tablet")]: {
+		width: "auto",
+		justifyContent: "flex-start",
+
+		flexDirection: "column",
+		padding: theme.spacing(2),
+		gap: "40px",
+	},
+}));
 
 const HeaderLink = styled(Link)(({ theme }) => ({
 	display: "flex",

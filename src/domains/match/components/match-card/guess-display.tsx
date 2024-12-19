@@ -1,14 +1,16 @@
 import { GUESS_STATUS, IGuess } from "@/domains/guess/typing";
-import { AppIcon } from "@/domains/ui-system/components/icon/icon";
 import { AppPill } from "@/domains/ui-system/components/pill/pill";
 import { Box, Typography } from "@mui/material";
 import { styled } from "@mui/system";
 
 interface Props {
 	data: IGuess["away"] | IGuess["away"];
+	cardExpanded: boolean;
 }
 
-export const GuessDisplay = ({ data }: Props) => {
+export const GuessDisplay = ({ data, cardExpanded }: Props) => {
+	if (cardExpanded) return null;
+
 	const value = getValueByStatus(data.value, data.status);
 	const { color } = getStylesByStatus(data?.status || null);
 
@@ -73,9 +75,9 @@ const getStylesByStatus = (status: GUESS_STATUS) => {
 };
 
 const getValueByStatus = (value: number | null, status: GUESS_STATUS) => {
-	if (status === "expired" || status === "not-started") {
-		return <AppIcon name="Minus" size="tiny" />;
-	}
+	// if (status === "expired" || status === "not-started") {
+	// 	return <AppIcon name="Minus" size="tiny" />;
+	// }
 
 	return (
 		<AppPill.Component
@@ -84,7 +86,7 @@ const getValueByStatus = (value: number | null, status: GUESS_STATUS) => {
 			padding={0}
 			sx={{ backgroundColor: "black.500" }}
 		>
-			<Typography variant="tag">{value}</Typography>
+			<Typography variant="tag">{value ?? "-"}</Typography>
 		</AppPill.Component>
 	);
 };

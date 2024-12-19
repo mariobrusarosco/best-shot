@@ -11,25 +11,20 @@ const ALLOW_SCORE_WHEN_GUESS_STATUS = new Set([
 
 export const ScoreDisplay = ({
 	score,
-	expanded,
+	cardExpanded,
 	guess,
 }: {
 	score: number | null;
-	expanded: boolean;
+	cardExpanded: boolean;
 	guess: IGuess;
 }) => {
-	const showScore = ALLOW_SCORE_WHEN_GUESS_STATUS.has(guess.status);
+	const showScore =
+		ALLOW_SCORE_WHEN_GUESS_STATUS.has(guess.status) && cardExpanded;
 
-	console.log(showScore);
+	if (!showScore) return null;
 
 	return (
 		<Wrapper>
-			{expanded ? (
-				<Typography textTransform="uppercase" variant="tag">
-					score
-				</Typography>
-			) : null}
-
 			<AppPill.Component bgcolor={"black.500"} minWidth={30} height={20}>
 				<Typography variant="tag">{score ?? "-"}</Typography>
 			</AppPill.Component>

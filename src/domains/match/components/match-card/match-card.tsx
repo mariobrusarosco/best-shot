@@ -49,7 +49,7 @@ const MatchCard = ({ guess, match }: Props) => {
 
 	return (
 		<Card
-			data-open={isOpen}
+			data-card-open={isOpen}
 			data-ui="card"
 			data-match-status={match.status}
 			data-guess-status={guess.status}
@@ -116,12 +116,12 @@ const MatchCard = ({ guess, match }: Props) => {
 						/>
 					) : null} */}
 
-					<GuessDisplay data={guess.home} />
-					<TeamDisplay expanded={isOpen} team={match.home} />
+					<GuessDisplay cardExpanded={isOpen} data={guess.home} />
+					<TeamDisplay cardExpanded={isOpen} team={match.home} />
 					<ScoreDisplay
 						guess={guess}
 						score={match.home.score}
-						expanded={isOpen}
+						cardExpanded={isOpen}
 					/>
 				</Team>
 
@@ -135,10 +135,10 @@ const MatchCard = ({ guess, match }: Props) => {
 					<ScoreDisplay
 						guess={guess}
 						score={match.away.score}
-						expanded={isOpen}
+						cardExpanded={isOpen}
 					/>
-					<TeamDisplay expanded={isOpen} team={match.away} />
-					<GuessDisplay data={guess.away} />
+					<TeamDisplay cardExpanded={isOpen} team={match.away} />
+					<GuessDisplay cardExpanded={isOpen} data={guess.away} />
 				</Team>
 			</Teams>
 		</Card>

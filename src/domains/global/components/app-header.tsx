@@ -6,9 +6,9 @@ import { Stack } from "@mui/system";
 export const AppHeader = () => {
 	return (
 		<Header as="header">
-			<BestShotIcon width={50} fill={theme.palette.neutral[100]} />
+			<BestShotIcon width={50} fill={theme.palette.teal[500]} />
 			<Typography
-				variant="h6"
+				variant="caption"
 				color={theme.palette.neutral[100]}
 				fontWeight={400}
 			>
@@ -20,7 +20,7 @@ export const AppHeader = () => {
 
 const Header = styled(Stack)(({ theme }) => ({
 	alignItems: "center",
-	gap: theme.spacing(2),
+	gap: theme.spacing(0.5),
 	padding: theme.spacing(2, 2),
 	backgroundColor: theme.palette.black[800],
 

@@ -117,17 +117,12 @@ const HeaderButton = ({ iconName }: { iconName: keyof typeof ICONS }) => {
 				padding: theme.spacing(1),
 				borderRadius: theme.shape.borderRadius,
 				display: "inline-flex",
-				width: 24,
-				height: 24,
+				width: 44,
+				height: 44,
 
 				".active &, &:hover": {
 					color: theme.palette.teal[500],
 					backgroundColor: theme.palette.neutral[100],
-				},
-
-				[startsOn("tablet")]: {
-					width: 44,
-					height: 44,
 				},
 			}}
 		>

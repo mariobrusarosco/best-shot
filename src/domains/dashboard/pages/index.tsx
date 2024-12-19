@@ -49,10 +49,10 @@ const DashboardPage = () => {
 			<ScreenHeading title="Hello," subtitle={member?.data?.nickName} />
 
 			<ScreenMainContent>
-				<Dashboard>
-					<TournamentsPerf.Component performance={performance} />
-					{/* <MainLeague.Component performance={performance} /> */}
-				</Dashboard>
+				{/* <Dashboard> */}
+				<TournamentsPerf.Component performance={performance} />
+				{/* <MainLeague.Component performance={performance} /> */}
+				{/* </Dashboard> */}
 			</ScreenMainContent>
 		</ScreenLayout>
 	);

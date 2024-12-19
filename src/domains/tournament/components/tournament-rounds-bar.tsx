@@ -1,4 +1,3 @@
-import { AppButton } from "@/domains/ui-system/components/button/button";
 import { AppPill } from "@/domains/ui-system/components/pill/pill";
 import { UIHelper } from "@/theming/theme";
 import Typography from "@mui/material/Typography";
@@ -24,24 +23,6 @@ const TournamentRoundsBar = ({ tournament }: { tournament: ITournament }) => {
 
 	return (
 		<Wrapper data-ui="tournament-rounds-bar">
-			<Heading>
-				<AppPill.Component
-					border="1px solid"
-					borderColor="teal.500"
-					width={80}
-					height={25}
-				>
-					<Typography
-						variant="tag"
-						textTransform="uppercase"
-						color="neutral.100"
-						fontWeight={500}
-					>
-						rounds
-					</Typography>
-				</AppPill.Component>
-			</Heading>
-
 			<Bar data-ui="bar">
 				{Array.from({
 					length: Number(tournament.rounds),
@@ -67,20 +48,17 @@ const Wrapper = styled(Box)(({ theme }) =>
 		boxShadow: "0 4px 30px rgba(0, 0, 0, 0.1)",
 
 		[UIHelper.whileIs("mobile")]: {
-			alignItems: "center",
+			alignItems: "flex-start",
 			overflow: "hidden",
 			position: "fixed",
 			bottom: "55px",
 			left: 0,
 			pt: 2,
 			pb: 4,
+			// pl: 1.5,
+			gap: 2,
 			width: "100vw",
 			backdropFilter: "blur(10px)",
-		},
-
-		[UIHelper.startsOn("tablet")]: {
-			overflowY: "auto",
-			px: 1,
 		},
 	}),
 );
@@ -93,73 +71,58 @@ const PillAndStandingLink = styled(Box)(({ theme }) =>
 		alignItems: "center",
 		gap: 2,
 		pb: 2,
-		// px: 2,
 	}),
 );
 
 const Bar = styled(Box)(({ theme }) =>
 	theme?.unstable_sx({
-		width: 1,
-		overflowX: "scroll",
 		display: "flex",
-		gap: 1.5,
-		pb: 1,
 
 		[UIHelper.whileIs("mobile")]: {
+			pb: 1,
 			px: 2,
 		},
 
 		[UIHelper.startsOn("tablet")]: {
-			backgroundColor: "black.800",
 			flexDirection: "column",
 			alignItems: "center",
-			px: 2,
-			pt: 2,
+			pr: 2,
+			overflowY: "auto",
+			overflowX: "hidden",
+			gap: 2,
 		},
 	}),
 );
 
-const RoundButton = styled(AppButton)(
-	({ theme }) => `
-	  scroll-snap-align: center; 
-		background-color: transparent;
-		color: ${theme.palette.neutral[100]};
-		padding: ${theme.spacing(1)};
-		border-radius: ${theme.shape.borderRadius}px;
-		min-width: 32px;
-		min-height: 32px;
-		max-width: 40px;
-		max-heigh: 40px;
-		display: grid;
-		place-items: center;
-		border-color: ${theme.palette.teal[500]};
-		border-width: 1px;
-		border-style: solid;
+const RoundButton = styled(Box)(({ theme }) => ({
+	color: theme.palette.neutral[100],
+	display: "flex",
+	alignItems: "center",
+	justifyContent: "center",
+	borderRadius: theme.spacing(1),
+	scrollSnapSlign: "center",
 
-		&[data-active="true"] {
-			background-color: ${theme.palette.teal[500]};
-			color: ${theme.palette.neutral[100]};
-		}
-	`,
-);
+	'&[data-active="true"]': {
+		backgroundColor: theme.palette.teal[500],
+		color: theme.palette.neutral[100],
+	},
 
-const Heading = styled(Box)(({ theme }) =>
-	theme?.unstable_sx({
-		backgroundColor: "black.700",
-		pb: 3,
-	}),
-);
+	[UIHelper.whileIs("mobile")]: {
+		width: "40px",
+		height: "40px",
+	},
+
+	[UIHelper.startsOn("tablet")]: {
+		backgroundColor: theme.palette.black[800],
+		width: "40px",
+		height: "40px",
+		padding: theme.spacing(1.5, 1.5),
+	},
+}));
 
 const Skeleton = () => {
 	return (
-		<Wrapper
-			data-ui="tournament-rounds-bar-skeleton"
-			sx={{
-				[UIHelper.whileIs("mobile")]: {
-					display: "none",
-				},
-			}}
-		>
+		<Wrapper data-ui="tournament-rounds-bar-skeleton">
 			<PillAndStandingLink>
 				<AppPill.Skeleton
 					bgcolor="black.800"

@@ -68,7 +68,7 @@ const Wrapper = styled(Surface)(({ theme }) =>
 			tablet: 6,
 		},
 		pt: {
-			all: 10,
+			all: 8,
 			tablet: 8,
 		},
 		pb: {

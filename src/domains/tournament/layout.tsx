@@ -31,7 +31,7 @@ const TournamentLayout = () => {
 	}
 
 	return (
-		<ScreenLayout data-ui="tournament-page">
+		<ScreenLayout data-ui="tournament-page" overflow="hidden">
 			<ScreenHeading
 				title={tournament.data?.label}
 				subtitle={tournament.data?.season}

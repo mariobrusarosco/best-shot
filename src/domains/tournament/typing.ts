@@ -35,5 +35,21 @@ export type ITournamentPerformance = {
 
 export type ITournamentStandings = {
 	lastUpdated: string;
-	classificacao: any[];
+	standings: {
+		id: string;
+		teamExternalId: string;
+		tournamentId: string;
+		order: string;
+		shortName: string;
+		longName: string;
+		points: string;
+		games: string;
+		wins: string;
+		draws: string;
+		losses: string;
+		gf: string;
+		ga: string;
+		gd: string;
+		provider: string;
+	}[];
 };

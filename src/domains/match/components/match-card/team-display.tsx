@@ -1,3 +1,5 @@
+import { useTournamentStandings } from "@/domains/tournament/hooks/use-tournament-standings";
+import { ITournamentStandings } from "@/domains/tournament/typing";
 import { UIHelper } from "@/theming/theme";
 import Typography from "@mui/material/Typography/Typography";
 import { Box, styled, useMediaQuery } from "@mui/system";
@@ -12,16 +14,23 @@ export const TeamDisplay = ({
 }) => {
 	const isDesktopScreen = useMediaQuery(UIHelper.startsOn("desktop"));
 	const displayFullname = expanded || isDesktopScreen;
+	const standings = useTournamentStandings();
+
+	const teamStandingsData = getTeamStandingsInfo(team.id, standings.data);
 
 	return (
 		<Display>
 			{expanded ? (
 				<Position>
-					<Typography textTransform="uppercase" variant="tag" color="teal.500">
+					<Typography
+						textTransform="uppercase"
+						variant="caption"
+						color="teal.500"
+					>
 						pos
 					</Typography>
-					<Typography variant="tag" color="neutral.100">
-						{0}
+					<Typography variant="label" color="neutral.100">
+						{teamStandingsData?.order}
 					</Typography>
 				</Position>
 			) : null}
@@ -50,10 +59,6 @@ export const Display = styled(Box)(({ theme }) =>
 			flexDirection: "column",
 			alignItems: "flex-start",
 		},
-
-		// "[data-open='true'] [data-venue='away'] &": {
-		// 	alignItems: "flex-end",
-		// },
 	}),
 );
 
@@ -90,3 +95,14 @@ export const Position = styled(Box)(({ theme }) =>
 		gap: 1,
 	}),
 );
+
+// TODO Move this to a util, and avoid repeating the word 'standings'
+const getTeamStandingsInfo = (
+	teamId: string,
+	standings: ITournamentStandings | undefined,
+) => {
+	if (!standings) return;
+	console.log(standings);
+
+	return standings.standings.find((team) => team.teamExternalId === teamId);
+};

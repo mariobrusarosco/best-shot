@@ -4,12 +4,14 @@ import { theme } from "./theme";
 export const GlobalCSS = () => (
 	<GlobalStyles
 		styles={{
-			body: {},
+			body: {
+				overflowX: "hidden",
+			},
 			":root": {
 				"--screeh-header-height-mobile": "190px",
 				"--screeh-heading-height-mobile": "190px",
 				"--screeh-heading-height-tablet": "250px",
-				"--tournament-heading-height-tablet": "50px",
+				"--tournament-heading-height-tablet": "80px",
 			},
 			"#root": {
 				height: "100vh",
@@ -46,7 +48,7 @@ export const GlobalCSS = () => (
 
 			"::-webkit-scrollbar": {
 				width: "5px",
-				height: "5px",
+				height: "8px",
 			},
 			// _ Track _/
 			"::-webkit-scrollbar-track": {
@@ -55,7 +57,8 @@ export const GlobalCSS = () => (
 			},
 			// /_ Handle _/
 			"::-webkit-scrollbar-thumb": {
-				background: "#6a9b9614",
+				// background: "#6a9b9614",
+				background: theme.palette.teal[500],
 			},
 			"[data-ui='scrollbar']": {
 				// scrollbarColor: " teal",

@@ -8,9 +8,9 @@ export const AppHeader = () => {
 		<Header as="header">
 			<BestShotIcon width={50} fill={theme.palette.neutral[100]} />
 			<Typography
-				variant="caption"
+				variant="h6"
 				color={theme.palette.neutral[100]}
-				textTransform="uppercase"
+				fontWeight={400}
 			>
 				best shot
 			</Typography>
@@ -20,7 +20,7 @@ export const AppHeader = () => {
 
 const Header = styled(Stack)(({ theme }) => ({
 	alignItems: "center",
-	gap: theme.spacing(0.5),
+	gap: theme.spacing(2),
 	padding: theme.spacing(2, 2),
 	backgroundColor: theme.palette.black[800],
 

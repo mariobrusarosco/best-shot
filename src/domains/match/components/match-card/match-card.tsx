@@ -67,17 +67,9 @@ const MatchCard = ({ guess, match }: Props) => {
 							? "-"
 							: format(new Date(match.date), "dd MMM - k:mm")}
 					</Typography>
-					{/* {isOpen ? getStatusPill(guess) : null} */}
 					{getStatusPill(guess)}
 
 					{showTimeBox ? (
-						// <AppPill.Component
-						// 	color="neutral.100"
-						// 	height={20}
-						// 	border="1px solid"
-						// 	borderColor="neutral.100"
-						// 	px={2}
-						// >
 						<Typography
 							variant="tag"
 							fontWeight={400}
@@ -85,8 +77,7 @@ const MatchCard = ({ guess, match }: Props) => {
 						>
 							{timebox}
 						</Typography>
-					) : // </AppPill.Component>
-					null}
+					) : null}
 				</Stack>
 
 				<CTA>
@@ -107,18 +98,8 @@ const MatchCard = ({ guess, match }: Props) => {
 					</ToggleButton>
 				</CTA>
 			</Header>
-
-			{/* <Divider
-				sx={{
-					bgcolor: "black.300",
-					height: "1px",
-				}}
-				orientation="horizontal"
-			/> */}
-
 			<Teams>
 				<Team data-venue="home">
-					{/* <ScoreAndGuess> */}
 					{showInputs ? (
 						<ScoreInput
 							value={guessInputs.homeGuess}
@@ -127,20 +108,17 @@ const MatchCard = ({ guess, match }: Props) => {
 					) : null}
 
 					<GuessDisplay data={guess.home} />
-					{/* </ScoreAndGuess> */}
 					<TeamDisplay expanded={isOpen} team={match.home} />
 					<ScoreDisplay value={match.home.score} expanded={isOpen} />
 				</Team>
 
 				<Team data-venue="away">
-					{/* <ScoreAndGuess> */}
 					{showInputs ? (
 						<ScoreInput
 							value={guessInputs.awayGuess}
 							handleInputChange={guessInputs.handleAwayGuess}
 						/>
 					) : null}
-					{/* </ScoreAndGuess> */}
 					<ScoreDisplay value={match.away.score} expanded={isOpen} />
 					<TeamDisplay expanded={isOpen} team={match.away} />
 					<GuessDisplay data={guess.away} />

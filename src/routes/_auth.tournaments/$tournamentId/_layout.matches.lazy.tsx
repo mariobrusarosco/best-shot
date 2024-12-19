@@ -15,39 +15,18 @@ import { Box } from "@mui/system";
 import { createLazyFileRoute } from "@tanstack/react-router";
 import { useEffect } from "react";
 
-// const columns: GridColDef[] = [
-// 	{ field: "ordem", headerName: "pos", width: 70 },
-// 	{ field: "sigla", headerName: "name", width: 130 },
-// 	{ field: "jogos", headerName: "games", width: 70 },
-// 	{
-// 		field: "pontos",
-// 		headerName: "pts",
-// 		type: "number",
-// 		width: 70,
-// 	},
-// ];
-
 export const TournamentMatchesScreen = () => {
 	const { activeRound, goToRound } = useTournamentRounds();
 	const tournamentQuery = useTournament();
 	const guessesQuery = useGuess();
 	const matchesQuery = useTournamentMatches();
-	// const standings = useTournamentStandings();
 
-	// console.log("matches.isFetching", matches.isFetching);
-	// console.log("guess.isFetching", guesses.isFetching);
-	// console.log("guesses?.data", guesses?.data);
 	const isEmptyState = guessesQuery.data?.length === 0;
 	const isPending =
 		matchesQuery.isPending ||
 		guessesQuery.isPending ||
 		tournamentQuery.isPending;
-	console.log(
-		{ isPending },
-		matchesQuery.isPending,
-		guessesQuery.isPending,
-		tournamentQuery.isPending,
-	);
+
 	const autoSelectARound = !tournamentQuery.isPending && !activeRound;
 
 	useEffect(() => {
@@ -139,23 +118,20 @@ export const TournamentMatchesScreen = () => {
 
 const Matches = styled(Box)(({ theme }) =>
 	theme?.unstable_sx({
+		display: "flex",
 		flex: 1,
+
 		[UIHelper.whileIs("mobile")]: {
+			flexDirection: "column",
 			overflow: "auto",
 			pb: "170px",
 		},
 		[UIHelper.startsOn("tablet")]: {
-			overflow: "hidden",
-			placeContent: "start",
-			pt: 1,
-			pb: 4,
+			py: 3,
 			columnGap: 4,
-			display: "flex",
-			maxHeight:
+			flexDirection: "row",
+			height:
 				"calc(100vh - var(--screeh-heading-height-tablet) - var(--tournament-heading-height-tablet))",
-		},
-		[UIHelper.startsOn("desktop")]: {
-			// px: 4,
 		},
 	}),
 );
@@ -163,11 +139,15 @@ const Matches = styled(Box)(({ theme }) =>
 const Rounds = styled(Box)(({ theme }) =>
 	theme?.unstable_sx({
 		overflow: "auto",
-		pb: 2,
+
+		[UIHelper.whileIs("mobile")]: {
+			pb: 5,
+		},
 
 		[UIHelper.startsOn("tablet")]: {
 			pr: 2,
-			width: "570px",
+			maxWidth: "600px",
+			flex: 1,
 		},
 	}),
 );

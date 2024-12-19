@@ -3,11 +3,14 @@ import { Box, styled } from "@mui/material";
 
 export const ScreenMainContent = styled(Box)(({ theme }) =>
 	theme?.unstable_sx({
-		px: 2,
-		py: 2,
+		[UIHelper.whileIs("mobile")]: {
+			px: 2,
+		},
 
 		[UIHelper.startsOn("tablet")]: {
 			pr: 1,
+			py: 2,
+			px: 2,
 		},
 
 		[UIHelper.startsOn("desktop")]: {

@@ -1,53 +1,20 @@
-import { AppButton } from "@/domains/ui-system/components/button/button";
+import { TournamentLogo } from "@/domains/tournament/components/tournament-heading";
+
 import { AppPill } from "@/domains/ui-system/components/pill/pill";
+import { Surface } from "@/domains/ui-system/components/surface/surface";
 import Typography from "@mui/material/Typography/Typography";
-import { Box, styled } from "@mui/system";
+import { Box, Stack, styled } from "@mui/system";
 import { useLeaguePerformance } from "../../hooks/use-league-performance";
 
 export const LeaguePerformanceStats = ({
 	performance,
-	mutation,
 }: {
 	performance?: ReturnType<typeof useLeaguePerformance>["performance"];
-	mutation: ReturnType<typeof useLeaguePerformance>["mutation"];
 }) => {
-	console.log({ performance, mutation });
+	console.log(performance?.data);
 
 	return (
 		<Box data-ui="league-performance-stats">
-			<Box
-				sx={{
-					display: "flex",
-					alignItems: "center",
-					gap: 1,
-					mb: 6,
-				}}
-			>
-				<Typography textTransform="uppercase" variant="tag" color="teal.500">
-					last updated at:
-				</Typography>
-				<Typography textTransform="uppercase" variant="tag" color="neutral.100">
-					{performance?.data?.lastUpdatedAt &&
-						new Date(performance.data.lastUpdatedAt).toUTCString()}
-				</Typography>
-				<AppButton
-					sx={{
-						width: "70px",
-						height: "30px",
-						borderRadius: 2,
-						backgroundColor: "teal.500",
-					}}
-					disabled={mutation.isPending}
-					onClick={async () => {
-						mutation.mutate();
-					}}
-				>
-					<Typography variant="caption" color="neutral.100">
-						Update
-					</Typography>
-				</AppButton>
-			</Box>
-
 			<Box
 				sx={{
 					display: "flex",
@@ -65,113 +32,96 @@ export const LeaguePerformanceStats = ({
 				</AppPill.Component>
 			</Box>
 
-			<GridOfCards
-				component="ul"
-				data-ui="league-performance-stats"
-				sx={{
-					maxHeight: "fit-content",
-					overflow: "auto",
-					pb: 2,
-				}}
-			>
-				{performance?.data?.performances.map((leagueMember, index) => (
-					<Card>
-						<Box
-							sx={{ display: "grid", placeContent: "space-between", gap: 0.5 }}
-						>
+			<Stack gap={4}>
+				{performance?.data?.map((tournament) => (
+					<Stack gap={1}>
+						<Stack direction="row" gap={1} alignItems="center">
+							<TournamentLogo sx={{ width: "20px" }} src={tournament?.logo} />
 							<Typography
 								variant="label"
-								textTransform="lowercase"
-								color="black.300"
-							>
-								pos
-							</Typography>
-							<AppPill.Component
-								bgcolor="teal.500"
+								textTransform="uppercase"
 								color="neutral.100"
-								width={15}
-								height={15}
 							>
-								<Typography variant="tag">{index + 1}</Typography>
-							</AppPill.Component>
-						</Box>
+								{tournament?.id}
+							</Typography>
+						</Stack>
 
-						<Box
-							sx={{ display: "grid", placeContent: "space-between", gap: 0.5 }}
-						>
-							<Typography
-								variant="label"
-								textTransform="lowercase"
-								color="black.300"
-							>
-								points
-							</Typography>
-							<Typography
-								color="neutral.100"
-								variant="topic"
-								textTransform="capitalize"
-							>
-								{leagueMember.points}
-							</Typography>
-						</Box>
+						<Stack direction="row" gap={2}>
+							{tournament?.members?.map((member, index) => (
+								<Card>
+									<Stack direction="row" gap={1} justifyContent="space-between">
+										<Stack
+											direction="row"
+											alignItems="center"
+											width={30}
+											sx={{
+												backgroundColor: "teal.500",
+												color: "neutral.100",
+												borderRadius: 2,
+												px: 1.5,
+											}}
+										>
+											<Typography variant="tag" textTransform="capitalize">
+												{index + 1}
+											</Typography>
+										</Stack>
 
-						<Box
-							sx={{
-								display: "grid",
-								placeContent: "space-between",
-								gap: 0.5,
-								flex: 1,
-							}}
-						>
-							<Typography
-								variant="label"
-								textTransform="lowercase"
-								color="black.300"
-							>
-								name
-							</Typography>
-							<Typography
-								color="neutral.100"
-								variant="topic"
-								textTransform="capitalize"
-								width="100%"
-								overflow="hidden"
-								textOverflow="ellipsis"
-							>
-								{leagueMember.name}
-							</Typography>
-						</Box>
-					</Card>
+										<Stack
+											direction="row"
+											gap={2}
+											alignItems="center"
+											justifyContent="center"
+											sx={{
+												backgroundColor: "black.500",
+												color: "neutral.100",
+												borderRadius: 2,
+												px: 1,
+												py: 0.5,
+											}}
+										>
+											<Typography
+												variant="tag"
+												textTransform="uppercase"
+												color="teal.500"
+											>
+												points
+											</Typography>
+											<Typography
+												color="neutral.100"
+												variant="topic"
+												textTransform="capitalize"
+											>
+												{member.points}
+											</Typography>
+										</Stack>
+									</Stack>
+
+									<Typography
+										color="neutral.100"
+										variant="label"
+										textTransform="capitalize"
+									>
+										{member.member}
+									</Typography>
+								</Card>
+							))}
+						</Stack>
+					</Stack>
 				))}
-			</GridOfCards>
+			</Stack>
 		</Box>
 	);
 };
 
 // TODO Unify this Card, if possible
-export const Card = styled(Box)(({ theme }) =>
+export const Card = styled(Surface)(({ theme }) =>
 	theme.unstable_sx({
 		backgroundColor: "black.800",
 		padding: 2,
 		borderRadius: 2,
 		display: "flex",
-		flexWrap: "nowrap",
+		flexDirection: "column",
 		gap: 2,
-	}),
-);
-
-const GridOfCards = styled(Box)(({ theme }) =>
-	theme.unstable_sx({
-		borderRadius: 1,
-		display: "grid",
-		gap: {
-			all: 2,
-			tablet: 3,
-		},
-		gridAutoColumns: "100%",
-		gridAutoRows: "1fr",
-		gridAutoFlow: "column",
-		gridTemplateColumns: "100%",
-		gridTemplateRows: "auto auto",
+		flex: 1,
 	}),
 );

@@ -33,7 +33,7 @@ const LeaguesPage = () => {
 		<ScreenLayout data-ui="leagues-screen screen">
 			<ScreenHeading title="leagues" backTo="/dashboard" />
 
-			<ScreenMainContent>
+			<ScreenMainContent maxWidth={700}>
 				<LeaguesList leagues={leagues.data} />
 
 				<NewLeague />

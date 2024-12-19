@@ -59,7 +59,7 @@ const TournamentsPerf = ({
 						{best === null ? null : (
 							<CardRouteButton
 								to="/tournaments/$tournamentId/matches"
-								params={{ tournamentId: best?.tourmamentId }}
+								params={{ tournamentId: best?.tournamentId }}
 							/>
 						)}
 					</Stack>
@@ -124,7 +124,7 @@ const TournamentsPerf = ({
 						{worst === null ? null : (
 							<CardRouteButton
 								to="/tournaments/$tournamentId/matches"
-								params={{ tournamentId: worst?.tourmamentId }}
+								params={{ tournamentId: worst?.tournamentId }}
 							/>
 						)}
 					</Stack>

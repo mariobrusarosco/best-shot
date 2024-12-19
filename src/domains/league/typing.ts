@@ -15,12 +15,13 @@ export type ILeague = {
 };
 
 export type ILeaguePerformance = {
-	lastUpdatedAt: string;
-	performances: {
-		name: string;
-		points: number;
+	id: string;
+	logo: string;
+	members: {
+		member: string;
+		points: string;
 	}[];
-};
+}[];
 
 export type IParticipant = {
 	nickName: string;

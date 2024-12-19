@@ -27,7 +27,7 @@ export const TournamentPerformance = () => {
 	console.log("====", performance.data);
 
 	return (
-		<Performance data-ui="screen performance-screen">
+		<Performance data-ui="screen performance-screen" maxWidth={700}>
 			<Typography
 				variant="paragraph"
 				textTransform="uppercase"

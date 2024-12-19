@@ -2,6 +2,7 @@ import { useLeague } from "@/domains/league/hooks/use-league";
 import { AppButton } from "@/domains/ui-system/components/button/button";
 import { GridOfCards } from "@/domains/ui-system/components/grid-of-cards/grid-of-cards";
 import { AppPill } from "@/domains/ui-system/components/pill/pill";
+import { Surface } from "@/domains/ui-system/components/surface/surface";
 import Typography from "@mui/material/Typography/Typography";
 import { Box, styled } from "@mui/system";
 import { useQueryClient } from "@tanstack/react-query";
@@ -91,11 +92,14 @@ export const LeaguePerformance = ({
 };
 
 // TODO Unify this Card, if possible
-export const Card = styled(GridOfCards)(({ theme }) =>
+export const Card = styled(Surface)(({ theme }) =>
 	theme.unstable_sx({
 		backgroundColor: "black.800",
 		padding: 2,
 		borderRadius: 2,
-		display: "grid",
+		display: "flex",
+		flexDirection: "column",
+		gap: 2,
+		flex: 1,
 	}),
 );

@@ -35,56 +35,67 @@ export const TeamDisplay = ({
 				</Position>
 			) : null}
 
-			<TeamBox>
-				<TeamLogoBox>
-					<TeamLogo src={team.badge} />
-				</TeamLogoBox>
+			<LogoAndLabel data-ui="logo-and-label">
+				{/* <TeamLogoBox> */}
+				<TeamLogo src={team.badge} />
+				{/* </TeamLogoBox> */}
 
 				<Typography variant="caption">
-					{displayFullname ? team.name : team.shortName}
+					{displayFullname ? team.name : team.name}
 				</Typography>
-			</TeamBox>
+			</LogoAndLabel>
 		</Display>
 	);
 };
 
-export const Display = styled(Box)(({ theme }) =>
-	theme?.unstable_sx({
-		display: "flex",
-		alignItems: "center",
-		gap: 1,
+export const Display = styled(Box)(({ theme }) => ({
+	display: "flex",
+	// flexDirection: "column",
+	// alignItems: "center",
+	// justifyContent: "flex-start",
+	gap: theme.spacing(1),
+	flex: 1,
+	// width: 1,
+	// height: "100%",
 
-		"[data-open='true'] &": {
-			order: 1,
-			flexDirection: "column",
-			alignItems: "flex-start",
-		},
-	}),
-);
+	// backgroundColor: "red",
+	justifyContent: "center",
 
-export const TeamBox = styled(Box)(({ theme }) =>
-	theme?.unstable_sx({
-		display: "flex",
-		placeItems: "center",
-		gap: 0.5,
-	}),
-);
+	"[data-open='true'] &": {
+		order: 1,
+		flexDirection: "column",
+		alignItems: "flex-start",
+	},
+}));
 
-export const TeamLogoBox = styled(Box)(({ theme }) =>
-	theme?.unstable_sx({
-		p: 0.5,
-		borderRadius: 1,
-		bgcolor: "black.500",
-		display: "grid",
-		placeItems: "center",
-	}),
-);
+export const LogoAndLabel = styled(Box)(({ theme }) => ({
+	// padding: theme.spacing(0, 0.5),
+	// borderRadius: theme.spacing(1),
+	// backgroundColor: theme.palette.black[500],
+	display: "inline-flex",
+	flexDirection: "column",
+	alignItems: "center",
+	// placeItems: "center",
+	flex: 1,
+	justifyContent: "center",
+	height: "50px",
+	// backgroundColor: "green",
+	textAlign: "center",
+	padding: theme.spacing(0, 1.5),
+}));
+
+export const TeamLogoBox = styled(Box)(({ theme }) => ({
+	padding: theme.spacing(0.5),
+	borderRadius: theme.spacing(0.5),
+	backgroundColor: theme.palette.black[500],
+	display: "flex",
+}));
 
 export const TeamLogo = styled("img")(({ theme }) =>
 	theme?.unstable_sx({
 		display: "inline-flex",
-		width: 16,
-		height: 16,
+		width: 18,
+		height: 18,
 	}),
 );
 

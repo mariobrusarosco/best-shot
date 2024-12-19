@@ -25,24 +25,24 @@ export const GuessDisplay = ({ data }: Props) => {
 	);
 };
 
-export const Wrapper = styled(Box)(({ theme }) =>
-	theme?.unstable_sx({
-		display: "flex",
-		flexDirection: "column",
-		justifyContent: "space-between",
-		alignItems: "center",
-		gap: 0.5,
+export const Wrapper = styled(Box)(({ theme }) => ({
+	display: "flex",
+	flexDirection: "column",
+	justifyContent: "center",
+	alignItems: "center",
+	gap: theme.spacing(0.5),
+	// backgroundColor: "tomato",
+	width: "35px",
 
-		"[data-open='true'] &": {
-			order: 3,
-			flexDirection: "row",
-			justifyContent: "space-between",
-		},
-		"[data-open='true'] [data-venue='away'] &": {
-			flexDirection: "row-reverse",
-		},
-	}),
-);
+	// "[data-open='true'] &": {
+	// 	order: 3,
+	// 	flexDirection: "row",
+	// 	justifyContent: "space-between",
+	// },
+	// "[data-open='true'] [data-venue='away'] &": {
+	// 	flexDirection: "row-reverse",
+	// },
+}));
 
 const getStylesByStatus = (status: GUESS_STATUS) => {
 	if (status === "expired") {

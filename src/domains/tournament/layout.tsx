@@ -6,6 +6,7 @@ import TournamentHeading, {
 	TournamentLogo,
 } from "@/domains/tournament/components/tournament-heading";
 import { useTournament } from "@/domains/tournament/hooks/use-tournament";
+import { UIHelper } from "@/theming/theme";
 import { Box, styled } from "@mui/system";
 import { Outlet } from "@tanstack/react-router";
 import { ScreenLayout } from "../ui-system/layout/screen-layout";
@@ -19,7 +20,13 @@ const TournamentLayout = () => {
 			<ScreenLayout>
 				<ScreenHeadingSkeleton />
 
-				<ScreenMainContent>
+				<ScreenMainContent
+					sx={{
+						[UIHelper.whileIs("mobile")]: {
+							px: 0.5,
+						},
+					}}
+				>
 					<TournamentHeading.Skeleton />
 				</ScreenMainContent>
 			</ScreenLayout>
@@ -42,7 +49,13 @@ const TournamentLayout = () => {
 				</LogoBox>
 			</ScreenHeading>
 
-			<ScreenMainContent data-ui="screen-main-content">
+			<ScreenMainContent
+				sx={{
+					[UIHelper.whileIs("mobile")]: {
+						px: 1,
+					},
+				}}
+			>
 				<TournamentHeading.Component tournament={tournament} />
 
 				<Outlet />

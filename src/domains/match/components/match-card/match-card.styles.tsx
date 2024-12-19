@@ -4,24 +4,25 @@ import { Box, Stack, styled } from "@mui/system";
 
 export const Card = styled(Surface)(({ theme }) =>
 	theme?.unstable_sx({
-		display: "grid",
+		// display: "grid",
+		display: "flex",
+		flexDirection: "column",
 		backgroundColor: "black.800",
-		alignItems: "center",
-		gridArea: "header",
-		gap: 1,
-		px: 1.5,
+		// alignItems: "center",
+		// gridArea: "header",
+		px: 2,
 		py: 2,
+		gap: 3.5,
 		borderRadius: 2,
-		"&[data-open=true]": {
-			gridTemplateAreas: '"header" "divider" "teams"',
-			gridTemplateColumns: "1fr",
-			gap: 1,
-		},
+		// "&[data-open=true]": {
+		// 	gridTemplateAreas: '"header" "divider" "teams"',
+		// 	gridTemplateColumns: "1fr",
+		// },
 
-		"&[data-open=false]": {
-			// gap: 1,
-			gridTemplateAreas: '"header" "divider" "teams"',
-		},
+		// "&[data-open=false]": {
+		// 	// gap: 1,
+		// 	gridTemplateAreas: '"header" "divider" "teams"',
+		// },
 	}),
 );
 
@@ -35,32 +36,29 @@ export const Header = styled(Stack)(({ theme }) =>
 	}),
 );
 
-export const Teams = styled(Box)(({ theme }) =>
-	theme?.unstable_sx({
-		display: "flex",
-		justifyContent: "space-between",
-		alignItems: "center",
-		gridArea: "teams",
-		gap: 3,
-	}),
-);
+export const Teams = styled(Box)(({ theme }) => ({
+	display: "flex",
+	justifyContent: "space-between",
+	// alignItems: "center",
+	gap: theme.spacing(0.5),
+	// background: "orange",
+}));
 
-export const Team = styled(Box)(({ theme }) =>
-	theme?.unstable_sx({
-		display: "flex",
-		justifyContent: "space-between",
-		alignItems: "center",
-		gap: 1,
-		flex: 1,
-		maxWidth: "50%",
+export const Team = styled(Box)(() => ({
+	display: "flex",
+	justifyContent: "space-between",
+	// alignItems: "center",
+	// gap: theme.spacing(0.5),
+	flex: 1,
+	maxWidth: "50%",
+	// backgroundColor: "blue",
 
-		"[data-open='true'] &": {
-			flexDirection: "column",
-			alignItems: "stretch",
-			gap: 2,
-		},
-	}),
-);
+	// "[data-open='true'] &": {
+	// 	flexDirection: "column",
+	// 	alignItems: "stretch",
+	// 	gap: 2,
+	// },
+}));
 
 export const CTA = styled(Stack)(({ theme }) =>
 	theme?.unstable_sx({

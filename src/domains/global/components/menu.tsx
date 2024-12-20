@@ -20,7 +20,7 @@ export const Menu = () => {
 				pb={10}
 				sx={{ display: { all: "none", tablet: "block" } }}
 			>
-				<BestShotIcon fill={theme.palette.neutral[100]} />
+				<BestShotIcon fill={theme.palette.teal[500]} />
 			</Box>
 			<HeaderLink to="/dashboard">
 				<HeaderButton iconName="LayoutDashboard" />

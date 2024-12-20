@@ -5,8 +5,7 @@ import {
 } from "@/domains/ui-system/components/surface/surface";
 import { GoBackButton } from "@/domains/ui-system/go-back-button/go-back-button";
 import { UIHelper } from "@/theming/theme";
-import { Typography, useMediaQuery } from "@mui/material";
-import { styled } from "@mui/system";
+import { styled, Typography, useMediaQuery } from "@mui/material";
 
 interface Props extends SurfaceProps {
 	children?: React.ReactNode;
@@ -53,33 +52,28 @@ export const ScreenHeading = (props: Props) => {
 	);
 };
 
-const Wrapper = styled(Surface)(({ theme }) =>
-	theme?.unstable_sx({
-		height: {
-			all: "var(--screeh-heading-height-mobile)",
-			tablet: "var(--screeh-heading-height-tablet)",
-		},
-		display: "flex",
-		justifyContent: "space-between",
-		alignItems: "center",
-		gap: 2,
-		px: {
-			all: 2,
-			tablet: 6,
-		},
-		pt: {
-			all: 8,
-			tablet: 8,
-		},
-		pb: {
-			all: 6,
-			tablet: 8,
-		},
-		bgcolor: "black.800",
-		borderBottomLeftRadius: "24px",
-		borderBottomRightRadius: "24px",
-	}),
-);
+export const Wrapper = styled(Surface)(({ theme }) => ({
+	display: "flex",
+	justifyContent: "space-between",
+	alignItems: "center",
+	gap: theme.spacing(2),
+	backgroundColor: theme.palette.black[800],
+	borderBottomLeftRadius: theme.spacing(3),
+	borderBottomRightRadius: theme.spacing(3),
+
+	[UIHelper.whileIs("mobile")]: {
+		height: "var(--screeh-heading-height-mobile)",
+		paddingBottom: theme.spacing(4),
+		paddingTop: theme.spacing(4),
+		paddingLeft: theme.spacing(2),
+		paddingRight: theme.spacing(2),
+	},
+	[UIHelper.startsOn("tablet")]: {
+		height: "var(--screeh-heading-height-tablet)",
+		padding: theme.spacing(4),
+	},
+	[UIHelper.startsOn("desktop")]: {},
+}));
 
 const TextBox = styled(Surface)(({ theme }) =>
 	theme?.unstable_sx({

@@ -85,11 +85,6 @@ export const ScoreInput = ({
 	);
 };
 
-// const toNullOrString = (value: string | number | null) => {
-// 	if (value === null || value === "") return null;
-// 	return String(value);
-// };
-
 const toSafeNumber = (str: string) => {
 	if (str === null || str === "" || str === undefined) return null;
 
@@ -115,13 +110,17 @@ export const InputBoxStyled = styled(Box)(({ theme }) =>
 );
 
 export const InputStyled = styled("input")(({ theme }) => ({
+	...resetInput(),
+
 	color: theme.palette.neutral[100],
 	padding: theme.spacing(1),
 	width: "32px",
 	textAlign: "center",
 	caretColor: "transparent",
-
-	...resetInput(),
+	backgroundColor: theme.palette.black[500],
+	borderRadius: theme.spacing(1.5),
+	height: "25px",
+	alignSelf: "center",
 }));
 
 const InputButtonStyled = styled(AppButton)(({ theme }) => ({

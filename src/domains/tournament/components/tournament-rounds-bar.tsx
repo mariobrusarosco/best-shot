@@ -1,7 +1,7 @@
 import { AppPill } from "@/domains/ui-system/components/pill/pill";
 import { UIHelper } from "@/theming/theme";
+import { styled } from "@mui/material";
 import Typography from "@mui/material/Typography";
-import { styled } from "@mui/system";
 import Box from "@mui/system/Box";
 import { useEffect } from "react";
 import { useTournamentRounds } from "../hooks/use-tournament-rounds";
@@ -74,25 +74,30 @@ const PillAndStandingLink = styled(Box)(({ theme }) =>
 	}),
 );
 
-const Bar = styled(Box)(({ theme }) =>
-	theme?.unstable_sx({
-		display: "flex",
+const Bar = styled(Box)(({ theme }) => ({
+	display: "flex",
 
-		[UIHelper.whileIs("mobile")]: {
-			pb: 1,
-			px: 2,
-		},
+	[UIHelper.whileIs("mobile")]: {
+		padding: theme.spacing(2, 2, 1),
+	},
 
-		[UIHelper.startsOn("tablet")]: {
-			flexDirection: "column",
-			alignItems: "center",
-			pr: 2,
-			overflowY: "auto",
-			overflowX: "hidden",
-			gap: 2,
+	[UIHelper.startsOn("tablet")]: {
+		flexDirection: "column",
+		alignItems: "center",
+		paddingRight: theme.spacing(2),
+
+		overflowX: "hidden",
+		gap: theme.spacing(2),
+	},
+
+	":hover": {
+		overflowY: "auto",
+
+		"::-webkit-scrollbar-thumb": {
+			background: "#394c4a",
 		},
-	}),
-);
+	},
+}));
 
 const RoundButton = styled(Box)(({ theme }) => ({
 	color: theme.palette.neutral[100],

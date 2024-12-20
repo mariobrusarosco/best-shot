@@ -16,7 +16,7 @@ export const LeagueHeading = ({ league }: Props) => {
 
 	return (
 		<Box
-			data-ui="tournament-heading"
+			data-ui="league-heading"
 			sx={{
 				marginTop: 1,
 				display: "flex",

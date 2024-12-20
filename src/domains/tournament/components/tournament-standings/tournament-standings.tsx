@@ -293,6 +293,12 @@ const Wrapper = styled(Box)(() => ({
 		flex: 1,
 		overflow: "auto",
 	},
+
+	":hover": {
+		"::-webkit-scrollbar-thumb": {
+			background: "#394c4a",
+		},
+	},
 }));
 
 const Heading = styled(Box)(({ theme }) =>

@@ -92,7 +92,7 @@ export const TournamentMatchesScreen = () => {
 					</AppPill.Component>
 				</RoundHeading>
 
-				<Stack gap={1} className="round-games">
+				<Games className="round-games">
 					{matchesQuery.data?.map((match) => {
 						const guess = guessesQuery.data?.find((guess: IGuess) => {
 							return guess.matchId === match.id;
@@ -108,7 +108,7 @@ export const TournamentMatchesScreen = () => {
 							</li>
 						);
 					})}
-				</Stack>
+				</Games>
 			</Rounds>
 
 			<TournamentStandings />
@@ -149,8 +149,18 @@ const Rounds = styled(Box)(({ theme }) =>
 			maxWidth: "600px",
 			flex: 1,
 		},
+
+		":hover": {
+			"::-webkit-scrollbar-thumb": {
+				background: "#394c4a",
+			},
+		},
 	}),
 );
+
+const Games = styled(Stack)(({ theme }) => ({
+	gap: theme.spacing(2),
+}));
 
 const RoundHeading = styled(Box)(({ theme }) =>
 	theme?.unstable_sx({

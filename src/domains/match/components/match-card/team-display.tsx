@@ -34,18 +34,26 @@ export const TeamDisplay = ({
 				</Position>
 			) : null}
 
-			<LogoAndLabel data-ui="logo-and-label">
+			<LogoAndName data-ui="logo-and-label">
 				<TeamLogo src={team.badge} />
 
 				<Typography
-					variant="caption"
+					variant="tag"
+					textTransform="uppercase"
+					fontWeight={500}
 					sx={{
-						overflowWrap: "anywhere",
+						textOverflow: "ellipsis",
+						overflow: "hidden",
+						width: "80px",
+
+						"[data-card-open='true'] &": {
+							width: "auto",
+						},
 					}}
 				>
 					{team.name}
 				</Typography>
-			</LogoAndLabel>
+			</LogoAndName>
 		</Display>
 	);
 };
@@ -61,14 +69,14 @@ export const Display = styled(Box)(({ theme }) => ({
 	},
 }));
 
-export const LogoAndLabel = styled(Box)(({ theme }) => ({
+export const LogoAndName = styled(Box)(({ theme }) => ({
 	display: "inline-flex",
 	flexDirection: "column",
 	alignItems: "center",
 	flex: 1,
-	justifyContent: "center",
+	justifyContent: "space-between",
 	textAlign: "center",
-	padding: theme.spacing(0, 1.5),
+	padding: theme.spacing(0, 1),
 
 	"[data-card-open='true'] &": {
 		flexDirection: "row",
@@ -105,7 +113,6 @@ const getTeamStandingsInfo = (
 	standings: ITournamentStandings | undefined,
 ) => {
 	if (!standings) return;
-	console.log(standings);
 
 	return standings.standings.find((team) => team.teamExternalId === teamId);
 };

@@ -1,5 +1,4 @@
 import GlobalStyles from "@mui/material/GlobalStyles";
-import { theme } from "./theme";
 
 export const GlobalCSS = () => (
 	<GlobalStyles
@@ -9,9 +8,9 @@ export const GlobalCSS = () => (
 			},
 			":root": {
 				"--screeh-header-height-mobile": "190px",
-				"--screeh-heading-height-mobile": "190px",
+				"--screeh-heading-height-mobile": "150px",
 				"--screeh-heading-height-tablet": "250px",
-				"--tournament-heading-height-tablet": "80px",
+				"--tournament-heading-height-tablet": "70px",
 			},
 			"#root": {
 				height: "100vh",
@@ -52,17 +51,16 @@ export const GlobalCSS = () => (
 			},
 			// _ Track _/
 			"::-webkit-scrollbar-track": {
-				background: theme.palette.black[500],
+				// background: theme.palette.black[500],
 				borderRadius: "5px",
 			},
 			// /_ Handle _/
 			"::-webkit-scrollbar-thumb": {
-				// background: "#6a9b9614",
-				background: theme.palette.teal[500],
+				// background: theme.palette.teal[500],
 			},
-			"[data-ui='scrollbar']": {
-				// scrollbarColor: " teal",
-				scrollbarWidth: "thin",
+
+			"::-webkit-scrollbar-thumb:hover": {
+				// background: theme.palette.teal[500],
 			},
 
 			"@keyframes shimmer": {

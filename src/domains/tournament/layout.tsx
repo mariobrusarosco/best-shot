@@ -6,6 +6,7 @@ import TournamentHeading, {
 	TournamentLogo,
 } from "@/domains/tournament/components/tournament-heading";
 import { useTournament } from "@/domains/tournament/hooks/use-tournament";
+import { UIHelper } from "@/theming/theme";
 import { Box, styled } from "@mui/system";
 import { Outlet } from "@tanstack/react-router";
 import { ScreenLayout } from "../ui-system/layout/screen-layout";
@@ -42,14 +43,21 @@ const TournamentLayout = () => {
 				</LogoBox>
 			</ScreenHeading>
 
-			<ScreenMainContent>
+			<CustomScreenContent>
 				<TournamentHeading.Component tournament={tournament} />
 
 				<Outlet />
-			</ScreenMainContent>
+			</CustomScreenContent>
 		</ScreenLayout>
 	);
 };
+
+const CustomScreenContent = styled(ScreenMainContent)(({ theme }) => ({
+	[UIHelper.whileIs("mobile")]: {
+		paddingLeft: theme.spacing(1),
+		paddingRight: theme.spacing(1),
+	},
+}));
 
 const LogoBox = styled(Box)(({ theme }) =>
 	theme?.unstable_sx({

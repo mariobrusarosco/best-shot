@@ -5,7 +5,7 @@ export const ScreenMainContent = styled(Box)(({ theme }) =>
 	theme?.unstable_sx({
 		[UIHelper.whileIs("mobile")]: {
 			px: 2,
-			pt: 4,
+			pt: 2,
 		},
 
 		[UIHelper.startsOn("tablet")]: {

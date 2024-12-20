@@ -1,5 +1,5 @@
 import { useGuessInputs } from "@/domains/guess/hooks/use-guess-inputs";
-import { IGuess } from "@/domains/guess/typing";
+import { GUESS_STATUS, GUESS_STATUSES, IGuess } from "@/domains/guess/typing";
 import { AppIcon } from "@/domains/ui-system/components/icon/icon";
 import { shimmerEffect } from "@/domains/ui-system/components/skeleton/skeleton";
 import { Divider, styled } from "@mui/material";
@@ -11,25 +11,22 @@ import { IMatch } from "../../typing";
 import { defineMatchTimebox } from "../../utils";
 import { GuessDisplay } from "./guess-display";
 import { GuessStatus } from "./guess-status";
-import {
-	Card,
-	CTA,
-	Header,
-	SaveButton,
-	Team,
-	Teams,
-	ToggleButton,
-} from "./match-card.styles";
+import { Button, Card, CTA, Header, Team, Teams } from "./match-card.styles";
 import { ScoreDisplay } from "./score-display";
+import { ScoreInput } from "./score-input";
 import { TeamDisplay } from "./team-display";
 
-const ALLOW_INPUT_WHEN_GUESS_STATUS = new Set([
-	"waiting_for_game",
-	"not-started",
+const SHOW_TIMEBOX_WHEN_GUESS_STATUS = new Set<GUESS_STATUS>([
+	GUESS_STATUSES.NOT_STARTED,
 ]);
-
-const SHOW_TIMEBOX_WHEN_GUESS_STATUS = new Set(["not-started"]);
-
+const SHOW_SAVE_BUTTON_WHEN_GUESS_STATUS = new Set<GUESS_STATUS>([
+	GUESS_STATUSES.WAITING_FOR_GAME,
+	GUESS_STATUSES.NOT_STARTED,
+]);
+const SHOW_CTA_BUTTON_WHEN_GUESS_STATUS = new Set<GUESS_STATUS>([
+	GUESS_STATUSES.WAITING_FOR_GAME,
+	GUESS_STATUSES.NOT_STARTED,
+]);
 interface Props {
 	match: IMatch;
 	guess: IGuess;
@@ -42,10 +39,10 @@ const MatchCard = ({ guess, match }: Props) => {
 	// Match
 	const timebox = defineMatchTimebox(match.date);
 
-	const showInputs = ALLOW_INPUT_WHEN_GUESS_STATUS.has(guess.status) && isOpen;
-
-	console.log(showInputs);
 	const showTimeBox = SHOW_TIMEBOX_WHEN_GUESS_STATUS.has(guess.status);
+	const showCTAButton = SHOW_CTA_BUTTON_WHEN_GUESS_STATUS.has(guess.status);
+	const showSaveButton =
+		SHOW_SAVE_BUTTON_WHEN_GUESS_STATUS.has(guess.status) && isOpen;
 
 	return (
 		<Card
@@ -88,57 +85,52 @@ const MatchCard = ({ guess, match }: Props) => {
 					) : null}
 				</Stack>
 
-				<CTA>
-					{isOpen ? (
-						<SaveButton
-							onClick={async () => {
-								await guessInputs.handleSave();
-								setIsOpen(false);
-							}}
-							disabled={!guessInputs.allowNewGuess}
-						>
-							<AppIcon name="Save" size="extra-small" />
-						</SaveButton>
-					) : null}
+				{}
 
-					<ToggleButton onClick={() => setIsOpen((prev) => !prev)}>
-						<AppIcon name={isOpen ? "Minus" : "Plus"} size="tiny" />
-					</ToggleButton>
-				</CTA>
+				{showCTAButton ? (
+					<CTA>
+						{showSaveButton ? (
+							<Button
+								onClick={async () => {
+									await guessInputs.handleSave();
+									setIsOpen(false);
+								}}
+								disabled={!guessInputs.allowNewGuess}
+							>
+								<AppIcon name="Save" size="extra-small" />
+							</Button>
+						) : null}
+
+						<Button onClick={() => setIsOpen((prev) => !prev)}>
+							<AppIcon name={isOpen ? "Minus" : "Plus"} size="tiny" />
+						</Button>
+					</CTA>
+				) : null}
 			</Header>
 
-			<Teams>
-				<Team data-venue="home">
-					{/* {showInputs ? (
-						<ScoreInput
-							value={guessInputs.homeGuess}
-							handleInputChange={guessInputs.handleHomeGuess}
-						/>
-					) : null} */}
-
+			<Teams data-ui="teams">
+				<Team data-venue="home" data-ui="team">
 					<GuessDisplay cardExpanded={isOpen} data={guess.home} />
 					<TeamDisplay cardExpanded={isOpen} team={match.home} />
-					<ScoreDisplay
-						guess={guess}
-						score={match.home.score}
+					<ScoreDisplay guess={guess} score={match.home.score} />
+					<ScoreInput
+						guessStatus={guess.status}
 						cardExpanded={isOpen}
+						value={guessInputs.homeGuess}
+						handleInputChange={guessInputs.handleHomeGuess}
 					/>
 				</Team>
 
-				<Team data-venue="away">
-					{/* {showInputs ? (
-						<ScoreInput
-							value={guessInputs.awayGuess}
-							handleInputChange={guessInputs.handleAwayGuess}
-						/>
-					) : null} */}
-					<ScoreDisplay
-						guess={guess}
-						score={match.away.score}
-						cardExpanded={isOpen}
-					/>
+				<Team data-venue="away" data-ui="team">
+					<ScoreDisplay guess={guess} score={match.away.score} />
 					<TeamDisplay cardExpanded={isOpen} team={match.away} />
 					<GuessDisplay cardExpanded={isOpen} data={guess.away} />
+					<ScoreInput
+						guessStatus={guess.status}
+						cardExpanded={isOpen}
+						value={guessInputs.awayGuess}
+						handleInputChange={guessInputs.handleAwayGuess}
+					/>
 				</Team>
 			</Teams>
 		</Card>

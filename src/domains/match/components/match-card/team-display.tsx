@@ -1,9 +1,8 @@
 import { useTournamentStandings } from "@/domains/tournament/hooks/use-tournament-standings";
 import { ITournamentStandings } from "@/domains/tournament/typing";
 import { AppPill } from "@/domains/ui-system/components/pill/pill";
-import { UIHelper } from "@/theming/theme";
 import Typography from "@mui/material/Typography/Typography";
-import { Box, styled, useMediaQuery } from "@mui/system";
+import { Box, styled } from "@mui/system";
 import { IMatch } from "../../typing";
 
 export const TeamDisplay = ({
@@ -13,13 +12,8 @@ export const TeamDisplay = ({
 	team: IMatch["home"] | IMatch["away"];
 	cardExpanded: boolean;
 }) => {
-	const isDesktopScreen = useMediaQuery(UIHelper.startsOn("desktop"));
-	const displayFullname = cardExpanded || isDesktopScreen;
 	const standings = useTournamentStandings();
-
 	const teamStandingsData = getTeamStandingsInfo(team.id, standings.data);
-
-	console.log("======", teamStandingsData?.order);
 
 	return (
 		<Display data-ui="team-display">
@@ -41,12 +35,15 @@ export const TeamDisplay = ({
 			) : null}
 
 			<LogoAndLabel data-ui="logo-and-label">
-				{/* <TeamLogoBox> */}
 				<TeamLogo src={team.badge} />
-				{/* </TeamLogoBox> */}
 
-				<Typography variant="caption">
-					{displayFullname ? team.name : team.name}
+				<Typography
+					variant="caption"
+					sx={{
+						overflowWrap: "anywhere",
+					}}
+				>
+					{team.name}
 				</Typography>
 			</LogoAndLabel>
 		</Display>
@@ -55,35 +52,21 @@ export const TeamDisplay = ({
 
 export const Display = styled(Box)(({ theme }) => ({
 	display: "flex",
-
-	// alignItems: "center",
-	// justifyContent: "flex-start",
 	gap: theme.spacing(1),
 	flex: 1,
-	// width: 1,
-	// height: "100%",
-
-	// backgroundColor: "red",
 	justifyContent: "center",
 	"[data-card-open='true'] &": {
 		flexDirection: "column",
-		// order: 1,
 		justifyContent: "flex-start",
 	},
 }));
 
 export const LogoAndLabel = styled(Box)(({ theme }) => ({
-	// padding: theme.spacing(0, 0.5),
-	// borderRadius: theme.spacing(1),
-	// backgroundColor: theme.palette.black[500],
 	display: "inline-flex",
 	flexDirection: "column",
 	alignItems: "center",
-	// placeItems: "center",
 	flex: 1,
 	justifyContent: "center",
-	// height: "50px",
-	// backgroundColor: "green",
 	textAlign: "center",
 	padding: theme.spacing(0, 1.5),
 

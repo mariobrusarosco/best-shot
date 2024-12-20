@@ -1,5 +1,4 @@
 import { api } from "@/api";
-import { APP_MODE } from "@/domains/global/utils";
 import { useMutation } from "@tanstack/react-query";
 import { createContext, useContext, useEffect, useState } from "react";
 import { IAuthHook } from "..";
@@ -7,9 +6,8 @@ import { IAuthHook } from "..";
 const ByPassAuthContext = createContext<IAuthHook | undefined>(undefined);
 
 const memberid =
-	APP_MODE === "local-dev"
-		? localStorage.getItem("local-member-id")
-		: import.meta.env.VITE_MOCKED_MEMBER_ID;
+	localStorage.getItem("local-member-id") ??
+	import.meta.env.VITE_MOCKED_MEMBER_ID;
 
 export const ByPassAuthProvider = ({
 	children,

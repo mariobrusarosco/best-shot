@@ -1,10 +1,11 @@
+import { GUESS_STATUS } from "@/domains/guess/typing";
 import { AppButton } from "@/domains/ui-system/components/button/button";
 import { AppIcon } from "@/domains/ui-system/components/icon/icon";
 import {
 	Unstable_NumberInput as BaseNumberInput,
 	NumberInputProps,
 } from "@mui/base/Unstable_NumberInput";
-import { Box, css, styled } from "@mui/system";
+import { Box, styled } from "@mui/system";
 import { forwardRef, useRef } from "react";
 
 export const NumberInput = forwardRef(
@@ -38,8 +39,30 @@ export const NumberInput = forwardRef(
 	},
 );
 
-export const ScoreInput = ({ value, handleInputChange }: InputProps) => {
+interface Props {
+	value: number | null;
+	cardExpanded: boolean;
+	guessStatus: GUESS_STATUS;
+	handleInputChange: (val: number | null) => void;
+}
+
+const ALLOW_INPUT_WHEN_GUESS_STATUS = new Set([
+	"waiting_for_game",
+	"not-started",
+]);
+
+export const ScoreInput = ({
+	value,
+	handleInputChange,
+	guessStatus,
+	cardExpanded,
+}: Props) => {
 	const ref = useRef<HTMLInputElement>(null);
+
+	const showInputs =
+		ALLOW_INPUT_WHEN_GUESS_STATUS.has(guessStatus) && cardExpanded;
+
+	if (!showInputs) return;
 
 	return (
 		<NumberInput
@@ -73,28 +96,11 @@ const toSafeNumber = (str: string) => {
 	return Number(str);
 };
 
-interface InputProps {
-	value: number | null;
-	handleInputChange: (val: number | null) => void;
-}
-
-// export const InputBoxStyled = styled("div")(
-// 	({ theme }) => `
-//     display: grid;
-//     grid-template-areas: 'decrement input increment';
-//     gap: ${theme.spacing(1)};
-
-//     & .input { grid-area: input;flex:1 };
-//     & .increment { grid-area: increment; flex:1 };
-//     & .decrement { grid-area: decrement; flex:1};
-//   `,
-// );
-
 export const InputBoxStyled = styled(Box)(({ theme }) =>
 	theme?.unstable_sx({
 		display: "flex",
 		justifyContent: "space-between",
-		alignItems: "center",
+		alignItems: "stretch",
 		gridArea: "teams",
 		gap: 1,
 
@@ -108,38 +114,33 @@ export const InputBoxStyled = styled(Box)(({ theme }) =>
 	}),
 );
 
-export const InputStyled = styled("input")(
-	({ theme }) => `
-    
-  background-color: transparent;
-  color: ${theme.palette.neutral[100]};
-  border: 1px solid ${theme.palette.teal[500]};
-  border-radius: ${theme.shape.borderRadius}px;
-  padding: ${theme.spacing(1)};
-  width: 32px;
-  text-align: center;
-	caret-color: transparent;
+export const InputStyled = styled("input")(({ theme }) => ({
+	color: theme.palette.neutral[100],
+	padding: theme.spacing(1),
+	width: "32px",
+	textAlign: "center",
+	caretColor: "transparent",
 
-  ${resetInput};
-  `,
-);
+	...resetInput(),
+}));
 
-const InputButtonStyled = styled(AppButton)(
-	({ theme }) => `
-  background-color: ${theme.palette.teal[500]};
-  color: ${theme.palette.neutral[100]};
-  border-radius: ${theme.shape.borderRadius}px;
-  padding: ${theme.spacing(1)};
+const InputButtonStyled = styled(AppButton)(({ theme }) => ({
+	backgroundColor: theme.palette.teal[500],
+	color: theme.palette.neutral[100],
+	borderRadius: theme.spacing(0.5),
+	padding: theme.spacing(1),
 	flex: 1,
+	height: "100%",
 
-  &[disabled] {
-    filter: grayscale(1);
-  } 
-`,
-);
+	"&[disabled]": {
+		color: "red",
+		filter: "grayscale(1)",
+	},
+}));
 
-const resetInput = () => css`
-	background-color: unset;
-	outline: none;
-	margin: 0;
-`;
+const resetInput = () => ({
+	outline: "none",
+	border: "none",
+	backgroundColor: "unset",
+	margin: "0",
+});

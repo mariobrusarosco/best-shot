@@ -1,26 +1,23 @@
 import { useTournamentStandings } from "@/domains/tournament/hooks/use-tournament-standings";
 import { ITournamentStandings } from "@/domains/tournament/typing";
-import { UIHelper } from "@/theming/theme";
+import { AppPill } from "@/domains/ui-system/components/pill/pill";
 import Typography from "@mui/material/Typography/Typography";
-import { Box, styled, useMediaQuery } from "@mui/system";
+import { Box, styled } from "@mui/system";
 import { IMatch } from "../../typing";
 
 export const TeamDisplay = ({
 	team,
-	expanded,
+	cardExpanded,
 }: {
 	team: IMatch["home"] | IMatch["away"];
-	expanded: boolean;
+	cardExpanded: boolean;
 }) => {
-	const isDesktopScreen = useMediaQuery(UIHelper.startsOn("desktop"));
-	const displayFullname = expanded || isDesktopScreen;
 	const standings = useTournamentStandings();
-
 	const teamStandingsData = getTeamStandingsInfo(team.id, standings.data);
 
 	return (
-		<Display>
-			{expanded ? (
+		<Display data-ui="team-display">
+			{cardExpanded ? (
 				<Position>
 					<Typography
 						textTransform="uppercase"
@@ -29,72 +26,78 @@ export const TeamDisplay = ({
 					>
 						pos
 					</Typography>
-					<Typography variant="label" color="neutral.100">
-						{teamStandingsData?.order}
-					</Typography>
+					<AppPill.Component bgcolor={"black.500"} minWidth={30} height={20}>
+						<Typography variant="label" color="neutral.100">
+							{teamStandingsData?.order}
+						</Typography>
+					</AppPill.Component>
 				</Position>
 			) : null}
 
-			<TeamBox>
-				<TeamLogoBox>
-					<TeamLogo src={team.badge} />
-				</TeamLogoBox>
+			<LogoAndLabel data-ui="logo-and-label">
+				<TeamLogo src={team.badge} />
 
-				<Typography variant="caption">
-					{displayFullname ? team.name : team.shortName}
+				<Typography
+					variant="caption"
+					sx={{
+						overflowWrap: "anywhere",
+					}}
+				>
+					{team.name}
 				</Typography>
-			</TeamBox>
+			</LogoAndLabel>
 		</Display>
 	);
 };
 
-export const Display = styled(Box)(({ theme }) =>
-	theme?.unstable_sx({
-		display: "flex",
-		alignItems: "center",
-		gap: 1,
+export const Display = styled(Box)(({ theme }) => ({
+	display: "flex",
+	gap: theme.spacing(1),
+	flex: 1,
+	justifyContent: "center",
+	"[data-card-open='true'] &": {
+		flexDirection: "column",
+		justifyContent: "flex-start",
+	},
+}));
 
-		"[data-open='true'] &": {
-			order: 1,
-			flexDirection: "column",
-			alignItems: "flex-start",
-		},
-	}),
-);
+export const LogoAndLabel = styled(Box)(({ theme }) => ({
+	display: "inline-flex",
+	flexDirection: "column",
+	alignItems: "center",
+	flex: 1,
+	justifyContent: "center",
+	textAlign: "center",
+	padding: theme.spacing(0, 1.5),
 
-export const TeamBox = styled(Box)(({ theme }) =>
-	theme?.unstable_sx({
-		display: "flex",
-		placeItems: "center",
-		gap: 0.5,
-	}),
-);
+	"[data-card-open='true'] &": {
+		flexDirection: "row",
+		padding: theme.spacing(0),
+		gap: theme.spacing(1),
+		justifyContent: "flex-start",
+	},
+}));
 
-export const TeamLogoBox = styled(Box)(({ theme }) =>
-	theme?.unstable_sx({
-		p: 0.5,
-		borderRadius: 1,
-		bgcolor: "black.500",
-		display: "grid",
-		placeItems: "center",
-	}),
-);
+export const TeamLogoBox = styled(Box)(({ theme }) => ({
+	padding: theme.spacing(0.5),
+	borderRadius: theme.spacing(0.5),
+	backgroundColor: theme.palette.black[500],
+	display: "flex",
+}));
 
 export const TeamLogo = styled("img")(({ theme }) =>
 	theme?.unstable_sx({
 		display: "inline-flex",
-		width: 16,
-		height: 16,
+		width: 18,
+		height: 18,
 	}),
 );
 
-export const Position = styled(Box)(({ theme }) =>
-	theme?.unstable_sx({
-		display: "flex",
-		alignItems: "center",
-		gap: 1,
-	}),
-);
+export const Position = styled(Box)(({ theme }) => ({
+	display: "flex",
+	alignItems: "center",
+	gap: theme.spacing(1),
+}));
 
 // TODO Move this to a util, and avoid repeating the word 'standings'
 const getTeamStandingsInfo = (

@@ -1,55 +1,50 @@
 import { GUESS_STATUS, IGuess } from "@/domains/guess/typing";
-import { AppIcon } from "@/domains/ui-system/components/icon/icon";
 import { AppPill } from "@/domains/ui-system/components/pill/pill";
 import { Box, Typography } from "@mui/material";
 import { styled } from "@mui/system";
 
 interface Props {
 	data: IGuess["away"] | IGuess["away"];
+	cardExpanded: boolean;
 }
 
-export const GuessDisplay = ({ data }: Props) => {
-	const value = getValueByStatus(data.value, data.status);
+export const GuessDisplay = ({ data, cardExpanded }: Props) => {
+	if (cardExpanded) return null;
+
+	const value = data.value;
 	const { color } = getStylesByStatus(data?.status || null);
 
-	// if (data.status === "expired") return null;
-
 	return (
-		<Wrapper color={color}>
+		<Wrapper color={color} data-ui="guess-display">
 			<Typography textTransform="uppercase" variant="tag" color={color}>
 				guess
 			</Typography>
-
-			{value}
+			<AppPill.Component
+				minWidth={30}
+				height={20}
+				padding={0}
+				sx={{ backgroundColor: "black.500" }}
+			>
+				<Typography variant="tag">{value ?? "-"}</Typography>
+			</AppPill.Component>
 		</Wrapper>
 	);
 };
 
-export const Wrapper = styled(Box)(({ theme }) =>
-	theme?.unstable_sx({
-		display: "flex",
-		flexDirection: "column",
-		justifyContent: "space-between",
-		alignItems: "center",
-		gap: 0.5,
-
-		"[data-open='true'] &": {
-			order: 3,
-			flexDirection: "row",
-			justifyContent: "space-between",
-		},
-		"[data-open='true'] [data-venue='away'] &": {
-			flexDirection: "row-reverse",
-		},
-	}),
-);
+export const Wrapper = styled(Box)(({ theme }) => ({
+	display: "flex",
+	flexDirection: "column",
+	justifyContent: "center",
+	alignItems: "center",
+	gap: theme.spacing(0.5),
+	width: "35px",
+}));
 
 const getStylesByStatus = (status: GUESS_STATUS) => {
 	if (status === "expired") {
 		return {
 			color: "red.400",
 			bgColor: "transparent",
-			// opacity: 0.2,
 		};
 	}
 
@@ -70,21 +65,4 @@ const getStylesByStatus = (status: GUESS_STATUS) => {
 		color: "neutral.100",
 		bgColor: "black.500",
 	};
-};
-
-const getValueByStatus = (value: number | null, status: GUESS_STATUS) => {
-	if (status === "expired" || status === "not-started") {
-		return <AppIcon name="Minus" size="tiny" />;
-	}
-
-	return (
-		<AppPill.Component
-			minWidth={30}
-			height={20}
-			padding={0}
-			sx={{ backgroundColor: "black.500" }}
-		>
-			<Typography variant="tag">{value}</Typography>
-		</AppPill.Component>
-	);
 };

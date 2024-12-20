@@ -1,43 +1,30 @@
+import { IGuess } from "@/domains/guess/typing";
 import { AppPill } from "@/domains/ui-system/components/pill/pill";
 import { Box, styled, Typography } from "@mui/material";
 
 export const ScoreDisplay = ({
-	value,
-	expanded,
+	score,
 }: {
-	value: number | null;
-	expanded: boolean;
+	score: number | null;
+	guess: IGuess;
 }) => {
 	return (
-		<Wrapper>
-			{expanded ? (
-				<Typography textTransform="uppercase" variant="tag">
-					score
-				</Typography>
-			) : null}
+		<Wrapper data-ui="score-display">
 			<AppPill.Component bgcolor={"black.500"} minWidth={30} height={20}>
-				<Typography variant="tag">{value ?? "-"}</Typography>
+				<Typography variant="tag">{score ?? "-"}</Typography>
 			</AppPill.Component>
 		</Wrapper>
 	);
 };
 
-export const Wrapper = styled(Box)(({ theme }) =>
-	theme?.unstable_sx({
-		display: "flex",
-		justifyContent: "space-between",
-		alignItems: "center",
-		gap: 1,
+export const Wrapper = styled(Box)(() => ({
+	display: "flex",
+	justifyContent: "space-between",
+	alignItems: "center",
+	gap: 1,
+	width: "30px",
 
-		"[data-open='true'] &": {
-			order: 2,
-		},
-		"[data-open='true'] [data-venue='away'] &": {
-			flexDirection: "row-reverse",
-		},
-
-		"[data-open='true'][data-guess-status='waiting_for_game'] &": {
-			display: "none",
-		},
-	}),
-);
+	"[data-card-open='true'] &": {
+		display: "none",
+	},
+}));

@@ -42,7 +42,7 @@ const TournamentLayout = () => {
 				</LogoBox>
 			</ScreenHeading>
 
-			<ScreenMainContent data-ui="screen-main-content">
+			<ScreenMainContent>
 				<TournamentHeading.Component tournament={tournament} />
 
 				<Outlet />

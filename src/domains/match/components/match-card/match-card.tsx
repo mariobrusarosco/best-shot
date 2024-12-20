@@ -40,7 +40,9 @@ const MatchCard = ({ guess, match }: Props) => {
 	const timebox = defineMatchTimebox(match.date);
 
 	const showTimeBox = SHOW_TIMEBOX_WHEN_GUESS_STATUS.has(guess.status);
-	const showCTAButton = SHOW_CTA_BUTTON_WHEN_GUESS_STATUS.has(guess.status);
+	const showCTAButton =
+		SHOW_CTA_BUTTON_WHEN_GUESS_STATUS.has(guess.status) &&
+		!guess.hasLostTimewindowToGuess;
 	const showSaveButton =
 		SHOW_SAVE_BUTTON_WHEN_GUESS_STATUS.has(guess.status) && isOpen;
 

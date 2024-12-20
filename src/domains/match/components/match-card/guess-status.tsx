@@ -32,7 +32,7 @@ export const GuessStatus = ({ guess }: { guess: IGuess }) => {
 				color="teal.500"
 				textTransform="uppercase"
 			>
-				done
+				good luck!
 			</Typography>
 		);
 

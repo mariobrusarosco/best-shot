@@ -146,7 +146,7 @@ const Rounds = styled(Box)(({ theme }) =>
 
 		[UIHelper.startsOn("tablet")]: {
 			pr: 2,
-			maxWidth: "600px",
+			maxWidth: "450px",
 			flex: 1,
 		},
 

@@ -17,6 +17,7 @@ export interface IGuess {
 	};
 	total: number | null;
 	status: GUESS_STATUS;
+	hasLostTimewindowToGuess: boolean;
 }
 
 export const GUESS_STATUSES = {

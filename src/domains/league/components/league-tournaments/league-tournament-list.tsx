@@ -46,7 +46,7 @@ export const LeagueTournaments = ({
 					display: "flex",
 					justifyContent: "space-between",
 					alignItems: "center",
-					mb: 2,
+					pb: 3,
 				}}
 			>
 				<AppPill.Component

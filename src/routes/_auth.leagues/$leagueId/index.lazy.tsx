@@ -2,11 +2,13 @@ import { ScreenHeading } from "@/domains/global/components/screen-heading";
 import { InviteToLeague } from "@/domains/league/components/invite-to-league/invite-to-league";
 import { LeaguePerformanceStats } from "@/domains/league/components/league-performance-stats/league-performance-stats";
 import { LeagueTournaments } from "@/domains/league/components/league-tournaments/league-tournament-list";
+import ParticipantsList from "@/domains/league/components/participants/participants";
 import { useLeague } from "@/domains/league/hooks/use-league";
 import { ScreenLayout } from "@/domains/ui-system/layout/screen-layout";
 import { ScreenMainContent } from "@/domains/ui-system/layout/screen-main-content";
 import { UIHelper } from "@/theming/theme";
-import { Box, Stack } from "@mui/system";
+import { styled } from "@mui/material";
+import { Box } from "@mui/system";
 import { createLazyFileRoute } from "@tanstack/react-router";
 
 const LeaguePage = () => {
@@ -15,13 +17,12 @@ const LeaguePage = () => {
 
 	console.log("league", league, performance);
 
-	if (league.isLoading) {
+	if (league.isPending) {
 		return (
 			<ScreenLayout data-ui="leagues-screen-loading">
 				<ScreenHeading title="league">
 					<ScreenMainContent>
-						...loading...
-						{/* <ParticipantsListSkeleton /> */}
+						<ParticipantsList.Skeleton />
 					</ScreenMainContent>
 				</ScreenHeading>
 			</ScreenLayout>
@@ -47,32 +48,33 @@ const LeaguePage = () => {
 			/>
 
 			<ScreenMainContent>
-				<Box
-					display="grid"
-					gap={4}
-					maxWidth={900}
-					overflow="auto"
-					maxHeight={"100%"}
-					pr={4}
-					sx={{
-						[UIHelper.startsOn("tablet")]: {
-							height:
-								"calc(100vh - var(--screeh-heading-height-tablet) - var(--tournament-heading-height-tablet))",
-						},
-					}}
-				>
-					{league ? (
-						<Stack>
-							<LeaguePerformanceStats performance={performance} />
-							<LeagueTournaments league={league} />
-							<InviteToLeague hasInvitePermission={hasInvitePermission} />
-						</Stack>
-					) : null}
-				</Box>
+				<Wrapper>
+					<LeaguePerformanceStats performance={performance} />
+					<LeagueTournaments league={league} />
+					<ParticipantsList.Component participants={league.data.participants} />
+					<InviteToLeague hasInvitePermission={hasInvitePermission} />
+				</Wrapper>
 			</ScreenMainContent>
 		</ScreenLayout>
 	);
 };
+
+const Wrapper = styled(Box)(({ theme }) => ({
+	padding: theme.spacing(0),
+	borderRadius: theme.spacing(1),
+	display: "flex",
+
+	[UIHelper.whileIs("mobile")]: {
+		flexDirection: "column",
+		gap: theme.spacing(2),
+	},
+
+	[UIHelper.startsOn("tablet")]: {
+		flexDirection: "row",
+		gap: theme.spacing(3),
+		height: "calc(100vh - var(--screeh-heading-height-tablet))",
+	},
+}));
 
 export const Route = createLazyFileRoute("/_auth/leagues/$leagueId/")({
 	component: LeaguePage,

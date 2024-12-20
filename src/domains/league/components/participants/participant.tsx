@@ -2,20 +2,16 @@ import { AppPill } from "@/domains/ui-system/components/pill/pill";
 import { Surface } from "@/domains/ui-system/components/surface/surface";
 import { Theme } from "@mui/material";
 import Typography from "@mui/material/Typography/Typography";
-import { Box, styled } from "@mui/system";
+import { styled } from "@mui/system";
 import { IParticipant } from "../../typing";
 
 export const Participant = ({ participant }: { participant: IParticipant }) => {
 	return (
-		<CardContainer>
-			<Box display="grid">
-				<Typography variant="label" textTransform="lowercase" color="black.300">
-					name
-				</Typography>
-				<Typography variant="paragraph" textTransform="capitalize">
-					{participant.nickName}
-				</Typography>
-			</Box>
+		<Card>
+			<Typography variant="caption" textTransform="capitalize">
+				{participant.nickName}
+			</Typography>
+
 			<Role
 				memberRole={participant.role}
 				bgcolor="teal.500"
@@ -24,7 +20,7 @@ export const Participant = ({ participant }: { participant: IParticipant }) => {
 			>
 				<Typography variant="tag">{participant.role}</Typography>
 			</Role>
-		</CardContainer>
+		</Card>
 	);
 };
 
@@ -64,19 +60,15 @@ const RoleColors: Record<
 	},
 };
 
-export const CardContainer = styled(Surface)(({ theme }) =>
+// TODO Unify this Card, if possible
+export const Card = styled(Surface)(({ theme }) =>
 	theme.unstable_sx({
 		backgroundColor: "black.800",
 		padding: 2,
 		borderRadius: 2,
 		display: "flex",
 		justifyContent: "space-between",
-		alignItems: "center",
-		height: "100%",
-		overflow: "hidden",
-		gap: {
-			all: 2,
-			tablet: 3,
-		},
+		gap: 2,
+		flex: 1,
 	}),
 );

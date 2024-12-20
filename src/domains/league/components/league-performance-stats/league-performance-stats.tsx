@@ -19,7 +19,7 @@ export const LeaguePerformanceStats = ({
 				sx={{
 					display: "flex",
 					justifyContent: "space-between",
-					my: 2,
+					pb: 3,
 				}}
 			>
 				<AppPill.Component
@@ -46,66 +46,71 @@ export const LeaguePerformanceStats = ({
 							</Typography>
 						</Stack>
 
-						<Stack direction="row" gap={2}>
-							{tournament?.members?.map((member, index) => (
-								<Card>
-									<Stack direction="row" gap={1} justifyContent="space-between">
-										<Stack
-											direction="row"
-											alignItems="center"
-											width={30}
-											sx={{
-												backgroundColor: "teal.500",
-												color: "neutral.100",
-												borderRadius: 2,
-												px: 1.5,
-											}}
-										>
-											<Typography variant="tag" textTransform="capitalize">
-												{index + 1}
-											</Typography>
-										</Stack>
-
-										<Stack
-											direction="row"
-											gap={2}
-											alignItems="center"
-											justifyContent="center"
-											sx={{
-												backgroundColor: "black.500",
-												color: "neutral.100",
-												borderRadius: 2,
-												px: 1,
-												py: 0.5,
-											}}
-										>
-											<Typography
-												variant="tag"
-												textTransform="uppercase"
-												color="teal.500"
-											>
-												points
-											</Typography>
-											<Typography
-												color="neutral.100"
-												variant="topic"
-												textTransform="capitalize"
-											>
-												{member.points}
-											</Typography>
-										</Stack>
+						{tournament?.members?.map((member, index) => (
+							<Card>
+								<Stack
+									direction="row"
+									gap={3}
+									justifyContent="space-between"
+									alignItems="center"
+								>
+									<Stack
+										direction="row"
+										alignItems="center"
+										justifyContent="center"
+										sx={{
+											width: 25,
+											height: 25,
+											backgroundColor: "teal.500",
+											color: "neutral.100",
+											borderRadius: 2,
+										}}
+									>
+										<Typography variant="label" textTransform="capitalize">
+											{index + 1}
+										</Typography>
 									</Stack>
 
 									<Typography
 										color="neutral.100"
 										variant="label"
+										textAlign="left"
 										textTransform="capitalize"
+										flex={1}
 									>
 										{member.member}
 									</Typography>
-								</Card>
-							))}
-						</Stack>
+									<Stack
+										direction="row"
+										gap={2}
+										alignItems="center"
+										justifyContent="center"
+										sx={{
+											backgroundColor: "black.500",
+											color: "neutral.100",
+											borderRadius: 2,
+											px: 1,
+											py: 0.5,
+										}}
+									>
+										<Typography
+											variant="tag"
+											textTransform="uppercase"
+											color="teal.500"
+										>
+											points
+										</Typography>
+										<Typography
+											color="neutral.100"
+											variant="topic"
+											textTransform="capitalize"
+										>
+											{member.points}
+										</Typography>
+									</Stack>
+								</Stack>
+							</Card>
+						))}
 					</Stack>
 				))}
 			</Stack>

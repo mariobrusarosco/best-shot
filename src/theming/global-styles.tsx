@@ -4,7 +4,7 @@ export const GlobalCSS = () => (
 	<GlobalStyles
 		styles={{
 			body: {
-				overflowX: "hidden",
+				// overflowX: "hidden",
 			},
 			":root": {
 				"--app-header-height-mobile": "64px",

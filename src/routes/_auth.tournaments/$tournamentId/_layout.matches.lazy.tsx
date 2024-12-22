@@ -74,45 +74,47 @@ export const TournamentMatchesScreen = () => {
 		<Matches data-ui="matches">
 			<TournamentRoundsBar.Component tournament={tournamentQuery.data} />
 
-			<Rounds data-ui="rounds">
-				<RoundHeading>
-					<AppPill.Component
-						border="1px solid"
-						borderColor="teal.500"
-						width={80}
-						height={25}
-					>
-						<Typography
-							variant="tag"
-							textTransform="uppercase"
-							color="neutral.100"
-							fontWeight={500}
+			<Stack gap={2} direction="row" height="100%">
+				<Rounds data-ui="rounds">
+					<RoundHeading>
+						<AppPill.Component
+							border="1px solid"
+							borderColor="teal.500"
+							width={80}
+							height={25}
 						>
-							round {activeRound}
-						</Typography>
-					</AppPill.Component>
-				</RoundHeading>
+							<Typography
+								variant="tag"
+								textTransform="uppercase"
+								color="neutral.100"
+								fontWeight={500}
+							>
+								round {activeRound}
+							</Typography>
+						</AppPill.Component>
+					</RoundHeading>
 
-				<Games className="round-games">
-					{matchesQuery.data?.map((match) => {
-						const guess = guessesQuery.data?.find((guess: IGuess) => {
-							return guess.matchId === match.id;
-						}) as IGuess;
+					<Games className="round-games">
+						{matchesQuery.data?.map((match) => {
+							const guess = guessesQuery.data?.find((guess: IGuess) => {
+								return guess.matchId === match.id;
+							}) as IGuess;
 
-						return (
-							<li key={match.id} className="round-item match-card">
-								<MatchCard.Component
-									key={match.id}
-									match={match}
-									guess={guess}
-								/>
-							</li>
-						);
-					})}
-				</Games>
-			</Rounds>
+							return (
+								<li key={match.id} className="round-item match-card">
+									<MatchCard.Component
+										key={match.id}
+										match={match}
+										guess={guess}
+									/>
+								</li>
+							);
+						})}
+					</Games>
+				</Rounds>
 
-			<TournamentStandings />
+				<TournamentStandings />
+			</Stack>
 		</Matches>
 	);
 };
@@ -120,17 +122,16 @@ export const TournamentMatchesScreen = () => {
 const Matches = styled(Box)(({ theme }) =>
 	theme?.unstable_sx({
 		display: "flex",
-		flex: 1,
+		flexDirection: "column",
+		// flex: 1,
 
 		[UIHelper.whileIs("mobile")]: {
-			flexDirection: "column",
 			overflow: "auto",
 			pb: "130px",
 		},
 		[UIHelper.startsOn("tablet")]: {
 			py: 3,
 			columnGap: 4,
-			flexDirection: "row",
 			height:
 				"calc(100vh - var(--screeh-heading-height-tablet) - var(--tournament-heading-height-tablet))",
 		},
@@ -139,6 +140,7 @@ const Matches = styled(Box)(({ theme }) =>
 
 const Rounds = styled(Box)(({ theme }) =>
 	theme?.unstable_sx({
+		flex: 1,
 		[UIHelper.whileIs("mobile")]: {
 			pb: 5,
 		},
@@ -146,7 +148,6 @@ const Rounds = styled(Box)(({ theme }) =>
 		[UIHelper.startsOn("tablet")]: {
 			pr: 2,
 			maxWidth: "450px",
-			flex: 1,
 		},
 
 		...OverflowOnHover(),

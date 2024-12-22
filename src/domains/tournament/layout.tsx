@@ -47,7 +47,7 @@ const TournamentLayout = () => {
 				</LogoBox>
 			</ScreenHeading>
 
-			<CustomScreenContent>
+			<CustomScreenContent data-ui="tournament-content">
 				{isEmptyState ? null : (
 					<TournamentHeading.Component tournament={tournament} />
 				)}
@@ -61,6 +61,11 @@ const TournamentLayout = () => {
 const CustomScreenContent = styled(ScreenMainContent)(({ theme }) => ({
 	[UIHelper.whileIs("mobile")]: {
 		padding: theme.spacing(0, 1),
+	},
+
+	[UIHelper.startsOn("tablet")]: {
+		display: "flex",
+		flexDirection: "column",
 	},
 }));
 

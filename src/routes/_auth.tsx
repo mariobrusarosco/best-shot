@@ -1,5 +1,6 @@
 import { useAppAuth } from "@/domains/authentication/hooks/use-app-auth";
 import { AppHeader } from "@/domains/global/components/app-header";
+import { AppLoader } from "@/domains/global/components/app-loader";
 import { Menu } from "@/domains/global/components/menu";
 import { AppNotFound } from "@/domains/global/components/not-found";
 import { UIHelper } from "@/theming/theme";
@@ -11,7 +12,7 @@ const AuthLayout = () => {
 	const { auth } = useAppAuth();
 
 	if (auth.isLoadingAuth) {
-		return <div style={{ color: "white", fontSize: 40 }}>LOADING</div>;
+		return <AppLoader />;
 	}
 	return (
 		<Layout data-ui="authenticated-layout">
@@ -25,7 +26,6 @@ const AuthLayout = () => {
 const Layout = styled(Box)(({ theme }) => ({
 	[UIHelper.whileIs("mobile")]: {
 		paddingTop: theme.spacing(8),
-		// flexDirection: "column",
 	},
 	[UIHelper.startsOn("tablet")]: {
 		display: "flex",

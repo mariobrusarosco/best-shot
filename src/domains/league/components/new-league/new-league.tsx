@@ -10,11 +10,7 @@ export const NewLeague = () => {
 	const { inputs, handleNewLeague } = useLeagues();
 
 	return (
-		<Box
-			sx={{
-				mt: 4,
-			}}
-		>
+		<Box>
 			<Typography
 				sx={{
 					mb: 1,

@@ -7,3 +7,11 @@ export const OverflowOnHover = () => ({
 		},
 	},
 });
+
+export const OverflowAuto = () => ({
+	overflow: "auto",
+
+	"::-webkit-scrollbar-thumb": {
+		background: "#394c4a",
+	},
+});

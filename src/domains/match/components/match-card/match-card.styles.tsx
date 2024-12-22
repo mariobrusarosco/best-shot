@@ -1,5 +1,6 @@
 import { AppButton } from "@/domains/ui-system/components/button/button";
 import { Surface } from "@/domains/ui-system/components/surface/surface";
+import { UIHelper } from "@/theming/theme";
 import { Box, Stack, styled } from "@mui/system";
 
 export const Card = styled(Surface)(({ theme }) => ({
@@ -13,6 +14,10 @@ export const Card = styled(Surface)(({ theme }) => ({
 
 	"[data-card-open='true']": {
 		gap: theme.spacing(3.5),
+	},
+
+	[UIHelper.startsOn("tablet")]: {
+		padding: theme.spacing(3, 2),
 	},
 }));
 

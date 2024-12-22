@@ -60,6 +60,10 @@ const Wrapper = styled(Box)(({ theme }) =>
 			width: "100vw",
 			backdropFilter: "blur(10px)",
 		},
+
+		[UIHelper.startsOn("tablet")]: {
+			width: "100%",
+		},
 	}),
 );
 
@@ -82,12 +86,18 @@ const Bar = styled(Box)(({ theme }) => ({
 	},
 
 	[UIHelper.startsOn("tablet")]: {
-		flexDirection: "column",
 		alignItems: "center",
 		paddingRight: theme.spacing(2),
+		paddingBottom: theme.spacing(1.5),
+		marginBottom: theme.spacing(3),
 
-		overflowX: "hidden",
 		gap: theme.spacing(2),
+		position: "relative",
+		overflow: "auto",
+
+		"::-webkit-scrollbar-thumb": {
+			background: "#394c4a",
+		},
 	},
 
 	...OverflowOnHover(),
@@ -99,7 +109,7 @@ const RoundButton = styled(Box)(({ theme }) => ({
 	alignItems: "center",
 	justifyContent: "center",
 	borderRadius: theme.spacing(1),
-	scrollSnapSlign: "center",
+	// scrollSnapSlign: "center",
 
 	'&[data-active="true"]': {
 		backgroundColor: theme.palette.teal[500],
@@ -116,6 +126,8 @@ const RoundButton = styled(Box)(({ theme }) => ({
 		width: "40px",
 		height: "40px",
 		padding: theme.spacing(1.5, 1.5),
+		// transform: "rotate(90deg)",
+		// transformOrigin: "right top",
 	},
 }));
 

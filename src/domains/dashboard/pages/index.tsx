@@ -19,7 +19,7 @@ const DashboardPage = () => {
 			<ScreenLayout data-ui="dashboard-screen">
 				<ScreenHeadingSkeleton />
 
-				<ScreenMainContent>
+				<ScreenMainContent data-ui="dashboard-content">
 					<TournamentsPerf.Skeleton />
 					<MainLeague.Skeleton />
 				</ScreenMainContent>

@@ -5,34 +5,22 @@ import { AppIcon } from "@/domains/ui-system/components/icon/icon";
 import { AppPill } from "@/domains/ui-system/components/pill/pill";
 import Typography from "@mui/material/Typography/Typography";
 import { Box, styled } from "@mui/system";
-import { getRouteApi } from "@tanstack/react-router";
-import { lazy } from "react";
-import { TournamentLeagueCard } from "../league-tournament-customization/league-tournament-customization";
-const LeagueTournamentCustomization = lazy(() =>
-	import(
-		"../league-tournament-customization/league-tournament-customization"
-	).then((module) => ({ default: module.LeagueTournamentCustomization })),
-);
-
-const route = getRouteApi("/_auth/leagues/$leagueId/");
+import { useState } from "react";
+import {
+	LeagueTournamentCustomization,
+	TournamentLeagueCard,
+} from "../league-tournament-customization/league-tournament-customization";
 
 export const LeagueTournaments = ({
 	league,
 }: {
 	league: ReturnType<typeof useLeague>["league"];
 }) => {
-	const { editMode } = route.useSearch() as { editMode: boolean };
-	const navigate = route.useNavigate();
+	const [editMode, setEditMode] = useState(false);
+
 	const { data: allAppAvailableTournamens } = useTournaments();
 	const toggleEditMode = () => {
-		navigate({
-			search: (prev: { editMode: boolean }) => ({
-				...prev,
-				editMode: !prev.editMode,
-			}),
-			replace: true,
-			resetScroll: false,
-		});
+		setEditMode((prev) => !prev);
 	};
 
 	const isEmptyState =
@@ -79,6 +67,7 @@ export const LeagueTournaments = ({
 					currentTournaments={league?.data?.tournaments}
 					allTournaments={allAppAvailableTournamens}
 					league={league.data}
+					onUpdate={toggleEditMode}
 				/>
 			)}
 

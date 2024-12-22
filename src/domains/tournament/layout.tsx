@@ -9,13 +9,17 @@ import { useTournament } from "@/domains/tournament/hooks/use-tournament";
 import { UIHelper } from "@/theming/theme";
 import { Box, styled } from "@mui/system";
 import { Outlet } from "@tanstack/react-router";
+import { useGuess } from "../guess/hooks/use-guess";
 import { ScreenLayout } from "../ui-system/layout/screen-layout";
 import { ScreenMainContent } from "../ui-system/layout/screen-main-content";
 
 const TournamentLayout = () => {
 	const tournament = useTournament();
+	const guessesQuery = useGuess();
 
-	if (tournament.isPending) {
+	const isEmptyState = guessesQuery.data?.length === 0;
+
+	if (tournament.isPending || guessesQuery.isPending) {
 		return (
 			<ScreenLayout>
 				<ScreenHeadingSkeleton />
@@ -44,7 +48,9 @@ const TournamentLayout = () => {
 			</ScreenHeading>
 
 			<CustomScreenContent>
-				<TournamentHeading.Component tournament={tournament} />
+				{isEmptyState ? null : (
+					<TournamentHeading.Component tournament={tournament} />
+				)}
 
 				<Outlet />
 			</CustomScreenContent>
@@ -54,8 +60,7 @@ const TournamentLayout = () => {
 
 const CustomScreenContent = styled(ScreenMainContent)(({ theme }) => ({
 	[UIHelper.whileIs("mobile")]: {
-		paddingLeft: theme.spacing(1),
-		paddingRight: theme.spacing(1),
+		padding: theme.spacing(0, 1),
 	},
 }));
 

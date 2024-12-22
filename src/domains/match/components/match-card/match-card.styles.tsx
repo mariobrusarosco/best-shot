@@ -6,9 +6,10 @@ export const Card = styled(Surface)(({ theme }) => ({
 	display: "flex",
 	flexDirection: "column",
 	backgroundColor: theme.palette.black[800],
-	padding: theme.spacing(2),
+	padding: theme.spacing(2, 1),
 	gap: theme.spacing(2),
 	borderRadius: theme.spacing(1),
+	maxWidth: "100%",
 
 	"[data-card-open='true']": {
 		gap: theme.spacing(3.5),

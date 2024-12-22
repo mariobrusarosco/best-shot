@@ -20,6 +20,10 @@ export const AppHeader = () => {
 
 const Header = styled(Stack)(({ theme }) => ({
 	alignItems: "center",
+	position: "fixed",
+	width: "100%",
+	left: 0,
+	top: 0,
 	gap: theme.spacing(1),
 	padding: theme.spacing(2, 2),
 	backgroundColor: theme.palette.black[800],

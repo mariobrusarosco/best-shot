@@ -12,7 +12,7 @@ export const useGuess = () => {
 	const guesses = useQuery({
 		queryKey: ["guess", { tournamentId, round }],
 		queryFn: getMemberGuesses,
-		enabled: !!tournamentId && !!round,
+		enabled: !!tournamentId,
 	});
 
 	return guesses;

@@ -7,14 +7,8 @@ import Typography from "@mui/material/Typography/Typography";
 import { Box, styled } from "@mui/system";
 import { useLeague } from "../../hooks/use-league";
 
-export const InviteToLeague = ({
-	hasInvitePermission,
-}: {
-	hasInvitePermission: boolean | undefined;
-}) => {
+export const InviteToLeague = () => {
 	const { inputs } = useLeague();
-
-	if (!hasInvitePermission) return null;
 
 	return (
 		<Box>

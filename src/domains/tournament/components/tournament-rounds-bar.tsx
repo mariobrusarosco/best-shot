@@ -1,4 +1,5 @@
 import { AppPill } from "@/domains/ui-system/components/pill/pill";
+import { OverflowOnHover } from "@/domains/ui-system/utils";
 import { UIHelper } from "@/theming/theme";
 import { styled } from "@mui/material";
 import Typography from "@mui/material/Typography";
@@ -55,7 +56,6 @@ const Wrapper = styled(Box)(({ theme }) =>
 			left: 0,
 			pt: 2,
 			pb: 4,
-			// pl: 1.5,
 			gap: 2,
 			width: "100vw",
 			backdropFilter: "blur(10px)",
@@ -90,13 +90,7 @@ const Bar = styled(Box)(({ theme }) => ({
 		gap: theme.spacing(2),
 	},
 
-	":hover": {
-		overflowY: "auto",
-
-		"::-webkit-scrollbar-thumb": {
-			background: "#394c4a",
-		},
-	},
+	...OverflowOnHover(),
 }));
 
 const RoundButton = styled(Box)(({ theme }) => ({

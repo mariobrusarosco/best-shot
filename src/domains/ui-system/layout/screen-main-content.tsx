@@ -1,21 +1,21 @@
 import { UIHelper } from "@/theming/theme";
 import { Box, styled } from "@mui/material";
 
-export const ScreenMainContent = styled(Box)(({ theme }) =>
-	theme?.unstable_sx({
-		[UIHelper.whileIs("mobile")]: {
-			px: 2,
-			pt: 2,
-		},
+export const ScreenMainContent = styled(Box)(({ theme }) => ({
+	// display: "flex",
+	// overflow: "hidden",
 
-		[UIHelper.startsOn("tablet")]: {
-			pr: 1,
-			py: 2,
-			px: 2,
-		},
+	[UIHelper.whileIs("mobile")]: {
+		padding: theme.spacing(4, 2),
+		// height: "100px",
+	},
 
-		[UIHelper.startsOn("desktop")]: {
-			pr: 6,
-		},
-	}),
-);
+	[UIHelper.startsOn("tablet")]: {
+		padding: theme.spacing(4),
+		height: "calc(100vh - var(--screeh-heading-height-tablet))",
+	},
+
+	[UIHelper.startsOn("desktop")]: {
+		paddingRight: 6,
+	},
+}));

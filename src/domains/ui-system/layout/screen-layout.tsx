@@ -1,15 +1,9 @@
 import { Box, styled } from "@mui/material";
 
-export const ScreenLayout = styled(Box)(({ theme }) =>
-	theme?.unstable_sx({
-		display: "flex",
-		flexDirection: "column",
-		width: {
-			all: "100vw",
-			tablet: "100%",
-		},
-		minHeight: {
-			all: "100vh",
-		},
-	}),
-);
+export const ScreenLayout = styled(Box)(() => ({}));
+
+// [UIHelper.whileIs("mobile")]: {
+// 	display: "flex",
+// },
+// [UIHelper.startsOn("tablet")]: {
+// }

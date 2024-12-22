@@ -13,6 +13,7 @@ const AppContainer = () => {
 			component="main"
 			sx={{
 				bgcolor: "black.700",
+				minHeight: "100dvh",
 			}}
 		>
 			<Outlet />

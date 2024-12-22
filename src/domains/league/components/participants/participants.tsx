@@ -34,7 +34,7 @@ const LeagueTournaments = ({
 	if (!participants) return null;
 
 	return (
-		<Stack gap={3} data-ui="league-participants">
+		<Stack gap={6.5} data-ui="league-participants" flex={1}>
 			<AppPill.Component
 				bgcolor="teal.500"
 				color="neutral.100"

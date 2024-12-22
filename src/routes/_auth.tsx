@@ -23,14 +23,15 @@ const AuthLayout = () => {
 };
 
 const Layout = styled(Box)(({ theme }) => ({
-	display: "flex",
+	// display: "flex",
 
 	[UIHelper.whileIs("mobile")]: {
-		flexDirection: "column",
+		paddingTop: theme.spacing(8),
+		// flexDirection: "column",
 	},
-	[UIHelper.startsOn("tablet")]: {
-		gap: theme.spacing(2),
-	},
+	// [UIHelper.startsOn("tablet")]: {
+	// 	gap: theme.spacing(2),
+	// },
 }));
 
 export const Route = createFileRoute("/_auth")({

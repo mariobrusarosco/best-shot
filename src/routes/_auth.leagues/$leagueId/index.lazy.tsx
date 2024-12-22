@@ -8,12 +8,13 @@ import { ScreenLayout } from "@/domains/ui-system/layout/screen-layout";
 import { ScreenMainContent } from "@/domains/ui-system/layout/screen-main-content";
 import { UIHelper } from "@/theming/theme";
 import { styled } from "@mui/material";
-import { Box } from "@mui/system";
+import { Box, Stack } from "@mui/system";
 import { createLazyFileRoute } from "@tanstack/react-router";
 
 const LeaguePage = () => {
 	const { league, performance } = useLeague();
 	const hasInvitePermission = league?.data?.permissions.invite;
+	const hasEditPermission = league?.data?.permissions.edit;
 
 	console.log("league", league, performance);
 
@@ -48,21 +49,24 @@ const LeaguePage = () => {
 			/>
 
 			<ScreenMainContent>
-				<Wrapper>
+				<League data-ui="league">
 					<LeaguePerformanceStats performance={performance} />
-					<LeagueTournaments league={league} />
 					<ParticipantsList.Component participants={league.data.participants} />
-					<InviteToLeague hasInvitePermission={hasInvitePermission} />
-				</Wrapper>
+					<Stack spacing={2} direction="column">
+						{hasEditPermission ? <LeagueTournaments league={league} /> : null}
+						{hasInvitePermission ? <InviteToLeague /> : null}
+					</Stack>
+				</League>
 			</ScreenMainContent>
 		</ScreenLayout>
 	);
 };
 
-const Wrapper = styled(Box)(({ theme }) => ({
+const League = styled(Box)(({ theme }) => ({
 	padding: theme.spacing(0),
 	borderRadius: theme.spacing(1),
 	display: "flex",
+	flex: 1,
 
 	[UIHelper.whileIs("mobile")]: {
 		flexDirection: "column",
@@ -70,9 +74,7 @@ const Wrapper = styled(Box)(({ theme }) => ({
 	},
 
 	[UIHelper.startsOn("tablet")]: {
-		flexDirection: "row",
-		gap: theme.spacing(3),
-		height: "calc(100vh - var(--screeh-heading-height-tablet))",
+		gap: theme.spacing(5),
 	},
 }));
 

@@ -87,8 +87,6 @@ const MatchCard = ({ guess, match }: Props) => {
 					) : null}
 				</Stack>
 
-				{}
-
 				{showCTAButton ? (
 					<CTA>
 						{showSaveButton ? (

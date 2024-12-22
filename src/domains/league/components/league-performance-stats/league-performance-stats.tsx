@@ -2,6 +2,7 @@ import { TournamentLogo } from "@/domains/tournament/components/tournament-headi
 
 import { AppPill } from "@/domains/ui-system/components/pill/pill";
 import { Surface } from "@/domains/ui-system/components/surface/surface";
+import { OverflowOnHover } from "@/domains/ui-system/utils";
 import Typography from "@mui/material/Typography/Typography";
 import { Box, Stack, styled } from "@mui/system";
 import { useLeaguePerformance } from "../../hooks/use-league-performance";
@@ -14,7 +15,7 @@ export const LeaguePerformanceStats = ({
 	console.log(performance?.data);
 
 	return (
-		<Box data-ui="league-performance-stats">
+		<Wrapper data-ui="league-performance-stats">
 			<Box
 				sx={{
 					display: "flex",
@@ -114,9 +115,26 @@ export const LeaguePerformanceStats = ({
 					</Stack>
 				))}
 			</Stack>
-		</Box>
+		</Wrapper>
 	);
 };
+
+const Wrapper = styled(Box)(() => ({
+	display: "flex",
+	flexDirection: "column",
+	flex: 1,
+
+	...OverflowOnHover(),
+	// [UIHelper.whileIs("mobile")]: {
+	// 	flexDirection: "column",
+	// 	gap: theme.spacing(2),
+	// },
+
+	// [UIHelper.startsOn("tablet")]: {
+	// 	gap: theme.spacing(5),
+	// 	height: "calc(100vh - var(--screeh-heading-height-tablet))",
+	// },
+}));
 
 // TODO Unify this Card, if possible
 export const Card = styled(Surface)(({ theme }) =>

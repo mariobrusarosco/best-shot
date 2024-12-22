@@ -8,7 +8,6 @@ import Typography from "@mui/material/Typography/Typography";
 import { Box, Stack, styled } from "@mui/system";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-import { useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { updateLeagueTournaments } from "../../server-side/mutations";
 import { ILeague } from "../../typing";
@@ -17,16 +16,17 @@ export const LeagueTournamentCustomization = ({
 	currentTournaments,
 	allTournaments,
 	league,
+	onUpdate,
 }: {
 	currentTournaments: ITournament[];
 	allTournaments: ITournament[];
 	league: ILeague;
+	onUpdate?: () => void;
 }) => {
 	const [tracked, setTracked] = useState(currentTournaments);
 	const [untracked, setUntracked] = useState(
 		allTournaments.filter((t) => !tracked.find((ct) => ct.id === t.id)),
 	);
-	const navigate = useNavigate();
 	const queryClient = useQueryClient();
 
 	const mutation = useMutation({
@@ -47,11 +47,7 @@ export const LeagueTournamentCustomization = ({
 			queryClient.invalidateQueries({
 				queryKey: ["leagues", { leagueId: league.id }],
 			});
-			navigate({
-				search: {
-					editMode: false,
-				} as any,
-			});
+			onUpdate?.();
 		},
 	});
 

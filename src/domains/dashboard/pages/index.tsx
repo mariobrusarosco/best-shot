@@ -41,7 +41,7 @@ const DashboardPage = () => {
 		<ScreenLayout data-ui="dashboard-screen">
 			<ScreenHeading title="Hello," subtitle={member?.data?.nickName} />
 
-			<ScreenMainContent>
+			<ScreenMainContent data-ui="dashboard-content">
 				<TournamentsPerf.Component performance={performance} />
 				{/* <MainLeague.Component performance={performance} /> */}
 			</ScreenMainContent>

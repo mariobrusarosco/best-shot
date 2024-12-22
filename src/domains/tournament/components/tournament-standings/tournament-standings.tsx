@@ -1,4 +1,5 @@
 import { AppPill } from "@/domains/ui-system/components/pill/pill";
+import { OverflowOnHover } from "@/domains/ui-system/utils";
 import { theme, UIHelper } from "@/theming/theme";
 import {
 	Box,
@@ -291,13 +292,8 @@ const Wrapper = styled(Box)(() => ({
 
 	[UIHelper.startsOn("tablet")]: {
 		flex: 1,
-		overflow: "auto",
-	},
 
-	":hover": {
-		"::-webkit-scrollbar-thumb": {
-			background: "#394c4a",
-		},
+		...OverflowOnHover(),
 	},
 }));
 

@@ -1,6 +1,7 @@
 import { useTournamentStandings } from "@/domains/tournament/hooks/use-tournament-standings";
 import { ITournamentStandings } from "@/domains/tournament/typing";
 import { AppPill } from "@/domains/ui-system/components/pill/pill";
+import { UIHelper } from "@/theming/theme";
 import Typography from "@mui/material/Typography/Typography";
 import { Box, styled } from "@mui/system";
 import { IMatch } from "../../typing";
@@ -47,6 +48,10 @@ export const TeamDisplay = ({
 						width: "80px",
 
 						"[data-card-open='true'] &": {
+							width: "auto",
+						},
+
+						[UIHelper.startsOn("tablet")]: {
 							width: "auto",
 						},
 					}}

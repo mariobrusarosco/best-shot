@@ -8,6 +8,7 @@ import { useTournament } from "@/domains/tournament/hooks/use-tournament";
 import { useTournamentMatches } from "@/domains/tournament/hooks/use-tournament-matches";
 import { useTournamentRounds } from "@/domains/tournament/hooks/use-tournament-rounds";
 import { AppPill } from "@/domains/ui-system/components/pill/pill";
+import { OverflowOnHover } from "@/domains/ui-system/utils";
 import { UIHelper } from "@/theming/theme";
 import { Stack, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
@@ -124,7 +125,7 @@ const Matches = styled(Box)(({ theme }) =>
 		[UIHelper.whileIs("mobile")]: {
 			flexDirection: "column",
 			overflow: "auto",
-			pb: "170px",
+			pb: "130px",
 		},
 		[UIHelper.startsOn("tablet")]: {
 			py: 3,
@@ -138,8 +139,6 @@ const Matches = styled(Box)(({ theme }) =>
 
 const Rounds = styled(Box)(({ theme }) =>
 	theme?.unstable_sx({
-		overflow: "auto",
-
 		[UIHelper.whileIs("mobile")]: {
 			pb: 5,
 		},
@@ -150,11 +149,7 @@ const Rounds = styled(Box)(({ theme }) =>
 			flex: 1,
 		},
 
-		":hover": {
-			"::-webkit-scrollbar-thumb": {
-				background: "#394c4a",
-			},
-		},
+		...OverflowOnHover(),
 	}),
 );
 
@@ -165,7 +160,7 @@ const Games = styled(Stack)(({ theme }) => ({
 const RoundHeading = styled(Box)(({ theme }) =>
 	theme?.unstable_sx({
 		backgroundColor: "black.700",
-		pb: 3,
+		// pb: 3,
 	}),
 );
 

@@ -13,7 +13,7 @@ export const getMemberGuesses = async ({ queryKey }: { queryKey: any }) => {
 
 	const response = await api.get(`/tournaments/${tournamentId}/guess`, {
 		params: {
-			round,
+			round: round ?? 1,
 		},
 	});
 

@@ -20,7 +20,7 @@ const TournamentLayout = () => {
 	const tournament = useTournament();
 	const guessesQuery = useGuess();
 
-	const isEmptyState = guessesQuery.data?.length === 0;
+	// const isEmptyState = guessesQuery.data?.length === 0;
 
 	if (tournament.isPending || guessesQuery.isPending) {
 		return (

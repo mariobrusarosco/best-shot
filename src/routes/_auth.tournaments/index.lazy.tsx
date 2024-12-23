@@ -24,17 +24,7 @@ const TournamentsPage = () => {
 		);
 	}
 
-	if (error) {
-		return (
-			<ScreenLayout>
-				<ScreenMainContent>
-					<Typography variant="h3" color="neutral.10">
-						Ops! Something happened
-					</Typography>
-				</ScreenMainContent>
-			</ScreenLayout>
-		);
-	}
+	if (error) throw error;
 
 	return (
 		<ScreenLayout data-ui="tournaments-screen">

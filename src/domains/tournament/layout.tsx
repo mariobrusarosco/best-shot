@@ -20,7 +20,7 @@ const TournamentLayout = () => {
 	const tournament = useTournament();
 	const guessesQuery = useGuess();
 
-	const isEmptyState = guessesQuery.data?.length === 0;
+	// const isEmptyState = guessesQuery.data?.length === 0;
 
 	if (tournament.isPending || guessesQuery.isPending) {
 		return (
@@ -71,9 +71,9 @@ const TournamentLayout = () => {
 			</ScreenHeading>
 
 			<CustomScreenContent data-ui="tournament-content">
-				{isEmptyState ? null : (
-					<TournamentHeading.Component tournament={tournament.data} />
-				)}
+				{/* {isEmptyState ? null : ( */}
+				<TournamentHeading.Component tournament={tournament.data} />
+				{/* )} */}
 
 				<Outlet />
 			</CustomScreenContent>

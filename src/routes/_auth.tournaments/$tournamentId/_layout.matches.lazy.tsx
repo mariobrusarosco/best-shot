@@ -1,7 +1,6 @@
 import { useGuess } from "@/domains/guess/hooks/use-guess";
 import { IGuess } from "@/domains/guess/typing";
 import MatchCard from "@/domains/match/components/match-card/match-card";
-import TournamentRoundsBar from "@/domains/tournament/components/tournament-rounds-bar";
 import { TournamentSetup } from "@/domains/tournament/components/tournament-setup/tournament-setup";
 import { TournamentStandings } from "@/domains/tournament/components/tournament-standings/tournament-standings";
 import { useTournament } from "@/domains/tournament/hooks/use-tournament";
@@ -49,8 +48,6 @@ export const TournamentMatchesScreen = () => {
 	if (isPending) {
 		return (
 			<Matches data-ui="matches-screen-skeleton">
-				<TournamentRoundsBar.Skeleton />
-
 				<Rounds data-ui="rounds-skeleton">
 					<RoundHeading data-ui="rounds-heading-skeleton">
 						<AppPill.Skeleton width={80} height={25} />
@@ -72,71 +69,62 @@ export const TournamentMatchesScreen = () => {
 
 	return (
 		<Matches data-ui="matches">
-			<TournamentRoundsBar.Component tournament={tournamentQuery.data} />
-
-			<Stack gap={2} direction="row" height="100%">
-				<Rounds data-ui="rounds">
-					<RoundHeading>
-						<AppPill.Component
-							border="1px solid"
-							borderColor="teal.500"
-							width={80}
-							height={25}
+			<Rounds data-ui="rounds">
+				<RoundHeading>
+					<AppPill.Component
+						border="1px solid"
+						borderColor="teal.500"
+						width={80}
+						height={25}
+					>
+						<Typography
+							variant="tag"
+							textTransform="uppercase"
+							color="neutral.100"
+							fontWeight={500}
 						>
-							<Typography
-								variant="tag"
-								textTransform="uppercase"
-								color="neutral.100"
-								fontWeight={500}
-							>
-								round {activeRound}
-							</Typography>
-						</AppPill.Component>
-					</RoundHeading>
+							round {activeRound}
+						</Typography>
+					</AppPill.Component>
+				</RoundHeading>
 
-					<Games className="round-games">
-						{matchesQuery.data?.map((match) => {
-							const guess = guessesQuery.data?.find((guess: IGuess) => {
-								return guess.matchId === match.id;
-							}) as IGuess;
+				<Games className="round-games">
+					{matchesQuery.data?.map((match) => {
+						const guess = guessesQuery.data?.find((guess: IGuess) => {
+							return guess.matchId === match.id;
+						}) as IGuess;
 
-							return (
-								<li key={match.id} className="round-item match-card">
-									<MatchCard.Component
-										key={match.id}
-										match={match}
-										guess={guess}
-									/>
-								</li>
-							);
-						})}
-					</Games>
-				</Rounds>
+						return (
+							<li key={match.id} className="round-item match-card">
+								<MatchCard.Component
+									key={match.id}
+									match={match}
+									guess={guess}
+								/>
+							</li>
+						);
+					})}
+				</Games>
+			</Rounds>
 
-				<TournamentStandings />
-			</Stack>
+			<TournamentStandings />
 		</Matches>
 	);
 };
 
-const Matches = styled(Box)(({ theme }) =>
-	theme?.unstable_sx({
-		display: "flex",
-		flexDirection: "column",
-		// flex: 1,
+const Matches = styled(Box)(({ theme }) => ({
+	display: "flex",
 
-		[UIHelper.whileIs("mobile")]: {
-			overflow: "auto",
-			pb: "130px",
-		},
-		[UIHelper.startsOn("tablet")]: {
-			py: 3,
-			columnGap: 4,
-			height:
-				"calc(100vh - var(--screeh-heading-height-tablet) - var(--tournament-heading-height-tablet))",
-		},
-	}),
-);
+	[UIHelper.whileIs("mobile")]: {
+		flexDirection: "column",
+		overflow: "auto",
+		paddingBottom: "130px",
+	},
+	[UIHelper.startsOn("tablet")]: {
+		height: "85%",
+		columnGap: theme.spacing(4),
+	},
+}));
 
 const Rounds = styled(Box)(({ theme }) =>
 	theme?.unstable_sx({

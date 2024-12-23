@@ -1,35 +1,37 @@
+import TournamentRoundsBar from "@/domains/tournament/components/tournament-rounds-bar";
 import { UIHelper } from "@/theming/theme";
 import { Box, styled } from "@mui/system";
-import { useTournament } from "../hooks/use-tournament";
-import TournamentTabs from "./tournament-tabs";
+import { ITournament } from "../typing";
+
 interface Props {
-	tournament: ReturnType<typeof useTournament>;
+	tournament: ITournament;
 }
 
 export const TournamentHeading = ({ tournament }: Props) => {
 	return (
 		<Wrapper data-ui="tournament-heading">
-			<TournamentTabs.Component tournament={tournament?.data} />
+			<TournamentRoundsBar.Component tournament={tournament} />
 		</Wrapper>
 	);
 };
 
-const Wrapper = styled(Box)(({ theme }) =>
-	theme?.unstable_sx({
-		[UIHelper.whileIs("mobile")]: {
-			pb: 4,
-		},
-	}),
-);
+const Wrapper = styled(Box)(({ theme }) => ({
+	[UIHelper.whileIs("mobile")]: {
+		paddingBottom: theme.spacing(4),
+	},
+	[UIHelper.startsOn("tablet")]: {
+		display: "flex",
+		justifyContent: "space-between",
+		gap: theme.spacing(2),
+	},
+}));
 
-export const TournamentLogo = styled("img")(({ theme }) =>
-	theme?.unstable_sx({}),
-);
+export const TournamentLogo = styled("img")(() => ({}));
 
 export const Skeleton = () => {
 	return (
 		<Wrapper data-ui="tournament-heading-skeleton">
-			<TournamentTabs.Skeleton />
+			<TournamentRoundsBar.Skeleton />
 		</Wrapper>
 	);
 };

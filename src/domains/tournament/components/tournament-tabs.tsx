@@ -80,7 +80,7 @@ const Wrapper = styled(Surface)(({ theme }) =>
 		gap: 0.5,
 
 		[UIHelper.startsOn("tablet")]: {
-			maxWidth: "400px",
+			// maxWidth: "400px",
 			marginLeft: "auto",
 		},
 	}),
@@ -100,7 +100,7 @@ const CustomTab = styled(CustomLink)(({ theme }) =>
 		},
 
 		[UIHelper.startsOn("tablet")]: {
-			// gap: 3,
+			minWidth: "200px",
 		},
 	}),
 );

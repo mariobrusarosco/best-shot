@@ -28,24 +28,28 @@ export const ScreenHeading = (props: Props) => {
 		<Wrapper data-ui="screen-heading">
 			{backTo ? <GoBackButton backTo={backTo} /> : null}
 
-			<TextBox data-ui="text-box">
-				<Typography
-					data-ui="title"
-					variant={titleVariant}
-					textTransform="lowercase"
-				>
-					{title}
-				</Typography>
+			{title ? (
+				<TextBox data-ui="text-box">
+					<Typography
+						data-ui="title"
+						variant={titleVariant}
+						textTransform="lowercase"
+					>
+						{title}
+					</Typography>
 
-				<Typography
-					data-ui="subtitle"
-					variant={subtitleVariant}
-					color="teal.500"
-					minHeight="18px"
-				>
-					{subtitle}
-				</Typography>
-			</TextBox>
+					{subtitle ? (
+						<Typography
+							data-ui="subtitle"
+							variant={subtitleVariant}
+							color="teal.500"
+							minHeight="18px"
+						>
+							{subtitle}
+						</Typography>
+					) : null}
+				</TextBox>
+			) : null}
 
 			{children ? children : null}
 		</Wrapper>

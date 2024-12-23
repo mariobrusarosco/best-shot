@@ -3,6 +3,8 @@ on:
   push:
     branches:
       - main
+      - staging
+      - v5
 env:
   AWS_BUCKET_ID: ${{secrets.AWS_BUCKET_ID}}
   AWS_CLOUDFRONT_ID: ${{secrets.AWS_CLOUDFRONT_ID}}
@@ -35,7 +37,7 @@ jobs:
         run: aws cloudfront create-invalidation --distribution-id ${AWS_CLOUDFRONT_ID}  --paths "/*"
 
   build-and-deploy-staging:
-    if: github.ref == 'refs/heads/staging'
+    if: github.ref == 'refs/heads/v5'
     environment: staging
     runs-on: ubuntu-latest
     steps:

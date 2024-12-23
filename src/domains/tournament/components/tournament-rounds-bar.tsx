@@ -126,8 +126,6 @@ const RoundButton = styled(Box)(({ theme }) => ({
 		width: "40px",
 		height: "40px",
 		padding: theme.spacing(1.5, 1.5),
-		// transform: "rotate(90deg)",
-		// transformOrigin: "right top",
 	},
 }));
 

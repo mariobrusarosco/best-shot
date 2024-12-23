@@ -71,9 +71,9 @@ const TournamentLayout = () => {
 			</ScreenHeading>
 
 			<CustomScreenContent data-ui="tournament-content">
-				{isEmptyState ? null : (
-					<TournamentHeading.Component tournament={tournament.data} />
-				)}
+				{/* {isEmptyState ? null : ( */}
+				<TournamentHeading.Component tournament={tournament.data} />
+				{/* )} */}
 
 				<Outlet />
 			</CustomScreenContent>

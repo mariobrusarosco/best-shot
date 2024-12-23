@@ -11,6 +11,7 @@ import { ITournament } from "../typing";
 const TournamentRoundsBar = ({ tournament }: { tournament: ITournament }) => {
 	const { activeRound, goToRound } = useTournamentRounds();
 
+	console.log(tournament.rounds);
 	useEffect(() => {
 		if (activeRound) {
 			const el = document.querySelector("[data-active='true']");
@@ -25,15 +26,13 @@ const TournamentRoundsBar = ({ tournament }: { tournament: ITournament }) => {
 	return (
 		<Wrapper data-ui="tournament-rounds-bar">
 			<Bar data-ui="bar">
-				{Array.from({
-					length: Number(tournament.rounds),
-				}).map((_, i) => (
+				{tournament.rounds.map(({ label }, i) => (
 					<RoundButton
 						onClick={() => goToRound(i + 1)}
 						data-active={activeRound === i + 1}
 					>
 						<Typography variant="label" color="currentcolor">
-							{i + 1}
+							{label}
 						</Typography>
 					</RoundButton>
 				))}
@@ -111,20 +110,18 @@ const RoundButton = styled(Box)(({ theme }) => ({
 	borderRadius: theme.spacing(1),
 	// scrollSnapSlign: "center",
 
+	minWidth: "40px",
+	minHeight: "40px",
+
 	'&[data-active="true"]': {
 		backgroundColor: theme.palette.teal[500],
 		color: theme.palette.neutral[100],
 	},
 
-	[UIHelper.whileIs("mobile")]: {
-		width: "40px",
-		height: "40px",
-	},
+	[UIHelper.whileIs("mobile")]: {},
 
 	[UIHelper.startsOn("tablet")]: {
 		backgroundColor: theme.palette.black[800],
-		width: "40px",
-		height: "40px",
 		padding: theme.spacing(1.5, 1.5),
 		// transform: "rotate(90deg)",
 		// transformOrigin: "right top",

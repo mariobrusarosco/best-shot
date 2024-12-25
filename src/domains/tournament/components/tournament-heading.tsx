@@ -1,3 +1,4 @@
+import { useGuess } from "@/domains/guess/hooks/use-guess";
 import TournamentRoundsBar from "@/domains/tournament/components/tournament-rounds-bar";
 import { UIHelper } from "@/theming/theme";
 import { Box, styled } from "@mui/system";
@@ -8,6 +9,12 @@ interface Props {
 }
 
 export const TournamentHeading = ({ tournament }: Props) => {
+	const guesses = useGuess();
+
+	if (guesses.isSuccess && guesses.data?.length === 0) {
+		return null;
+	}
+
 	return (
 		<Wrapper data-ui="tournament-heading">
 			<TournamentRoundsBar.Component tournament={tournament} />

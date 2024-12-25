@@ -2,7 +2,6 @@ import {
 	ScreenHeading,
 	ScreenHeadingSkeleton,
 } from "@/domains/global/components/screen-heading";
-import { useGuess } from "@/domains/guess/hooks/use-guess";
 import TournamentHeading, {
 	TournamentLogo,
 } from "@/domains/tournament/components/tournament-heading";
@@ -18,11 +17,9 @@ import { Outlet } from "@tanstack/react-router";
 
 const TournamentLayout = () => {
 	const tournament = useTournament();
-	const guessesQuery = useGuess();
+	const isEmptyState = tournament.data?.rounds?.length === 0;
 
-	const isEmptyState = guessesQuery.data?.length === 0;
-
-	if (tournament.isPending || guessesQuery.isPending) {
+	if (tournament.isPending) {
 		return (
 			<ScreenLayout>
 				<ScreenHeadingSkeleton />

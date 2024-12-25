@@ -8,7 +8,7 @@ export type ApiTournament = {
 	matches: IMatch[];
 	mode: string;
 	provider: string;
-	rounds: string;
+	rounds: { label: string; slug: string }[];
 	season: string;
 	slug: string;
 	createdAt: string;
@@ -24,7 +24,7 @@ export type ITournament = {
 	season: ApiTournament["season"];
 	slug: ApiTournament["slug"];
 	mode: ApiTournament["mode"];
-	starterRound: number;
+	starterRound: string;
 };
 
 export type ITournamentPerformance = {

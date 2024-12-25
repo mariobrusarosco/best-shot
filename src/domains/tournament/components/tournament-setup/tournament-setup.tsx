@@ -1,14 +1,13 @@
 import { AppButton } from "@/domains/ui-system/components/button/button";
 import { Stack } from "@mui/material";
 import Typography from "@mui/material/Typography/Typography";
+import { getRouteApi } from "@tanstack/react-router";
 import { useTournamentSetup } from "../../hooks/use-tournament-setup";
-import { ITournament } from "../../typing";
 
-export const TournamentSetup = ({
-	tournament,
-}: {
-	tournament: ITournament;
-}) => {
+const route = getRouteApi("/_auth/tournaments/$tournamentId");
+
+export const TournamentSetup = () => {
+	const tournamentId = route.useParams().tournamentId || "";
 	const setup = useTournamentSetup();
 
 	return (
@@ -52,7 +51,7 @@ export const TournamentSetup = ({
 				disabled={setup.isPending}
 				onClick={async () => {
 					await setup.mutateAsync({
-						tournamentId: tournament.id || "",
+						tournamentId,
 					});
 				}}
 			>

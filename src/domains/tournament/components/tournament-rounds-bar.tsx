@@ -25,15 +25,14 @@ const TournamentRoundsBar = ({ tournament }: { tournament: ITournament }) => {
 	return (
 		<Wrapper data-ui="tournament-rounds-bar">
 			<Bar data-ui="bar">
-				{Array.from({
-					length: Number(tournament.rounds),
-				}).map((_, i) => (
+				{tournament.rounds.map(({ label, slug }) => (
 					<RoundButton
-						onClick={() => goToRound(i + 1)}
-						data-active={activeRound === i + 1}
+						key={label}
+						onClick={() => goToRound(slug)}
+						data-active={activeRound === slug}
 					>
-						<Typography variant="label" color="currentcolor">
-							{i + 1}
+						<Typography component="p" variant="label" color="currentcolor">
+							{label}
 						</Typography>
 					</RoundButton>
 				))}
@@ -110,6 +109,8 @@ const RoundButton = styled(Box)(({ theme }) => ({
 	justifyContent: "center",
 	borderRadius: theme.spacing(1),
 	// scrollSnapSlign: "center",
+	cursor: "pointer",
+	flex: "0 0 auto",
 
 	'&[data-active="true"]': {
 		backgroundColor: theme.palette.teal[500],
@@ -123,8 +124,8 @@ const RoundButton = styled(Box)(({ theme }) => ({
 
 	[UIHelper.startsOn("tablet")]: {
 		backgroundColor: theme.palette.black[800],
-		width: "40px",
-		height: "40px",
+		minWidth: "40px",
+		// minHeight: "40px",
 		padding: theme.spacing(1.5, 1.5),
 		// transform: "rotate(90deg)",
 		// transformOrigin: "right top",

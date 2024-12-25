@@ -1,4 +1,5 @@
 import { AppPill } from "@/domains/ui-system/components/pill/pill";
+import { shimmerEffect } from "@/domains/ui-system/components/skeleton/skeleton";
 import { OverflowOnHover } from "@/domains/ui-system/utils";
 import { theme, UIHelper } from "@/theming/theme";
 import {
@@ -14,7 +15,7 @@ import {
 } from "@mui/material";
 import { useTournamentStandings } from "../../hooks/use-tournament-standings";
 
-export const TournamentStandings = () => {
+const TournamentStandings = () => {
 	const tournamentStandings = useTournamentStandings();
 
 	if (tournamentStandings.isPending) {
@@ -262,6 +263,30 @@ export const TournamentStandings = () => {
 			</TableContainer>
 		</Wrapper>
 	);
+};
+
+const Skeleton = () => {
+	return (
+		<Wrapper data-ui="standings">
+			<Heading sx={{ ...shimmerEffect() }}></Heading>
+
+			<TableContainer>
+				<StandingsTable size="small" aria-label="standings-table">
+					<TableHead>
+						<Row sx={{ ...shimmerEffect(), height: "20px" }} />
+					</TableHead>
+					<TableBody>
+						<Row sx={{ ...shimmerEffect(), py: 2 }} />
+					</TableBody>
+				</StandingsTable>
+			</TableContainer>
+		</Wrapper>
+	);
+};
+
+export default {
+	Component: TournamentStandings,
+	Skeleton,
 };
 
 const Cell = styled(TableCell)`

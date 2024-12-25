@@ -1,36 +1,28 @@
-import { useGuess } from "@/domains/guess/hooks/use-guess";
-import { IGuess } from "@/domains/guess/typing";
-import MatchCard from "@/domains/match/components/match-card/match-card";
-import { TournamentSetup } from "@/domains/tournament/components/tournament-setup/tournament-setup";
-import { TournamentStandings } from "@/domains/tournament/components/tournament-standings/tournament-standings";
+import TournamentRoundOfGames from "@/domains/tournament/components/tournament-round-of-games/tournament-round-of-games";
+import TournamentStandings from "@/domains/tournament/components/tournament-standings/tournament-standings";
 import { useTournament } from "@/domains/tournament/hooks/use-tournament";
-import { useTournamentMatches } from "@/domains/tournament/hooks/use-tournament-matches";
 import { useTournamentRounds } from "@/domains/tournament/hooks/use-tournament-rounds";
 import { AppPill } from "@/domains/ui-system/components/pill/pill";
 import { OverflowOnHover } from "@/domains/ui-system/utils";
 import { UIHelper } from "@/theming/theme";
-import { Stack, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { Box } from "@mui/system";
 import { createLazyFileRoute } from "@tanstack/react-router";
 import { useEffect } from "react";
-
 export const TournamentMatchesScreen = () => {
 	const { activeRound, goToRound } = useTournamentRounds();
 	const tournamentQuery = useTournament();
-	const guessesQuery = useGuess();
-	const matchesQuery = useTournamentMatches();
+	// const matchesQuery = useTournamentMatches();
 
-	const isEmptyState = guessesQuery.data?.length === 0;
-	const isPending =
-		matchesQuery.isPending ||
-		guessesQuery.isPending ||
-		tournamentQuery.isPending;
+	// const isEmptyState = guessesQuery.data?.length === 0;
+	// const isPending = matchesQuery.isPending || tournamentQuery.isPending;
 
 	const autoSelectARound = !tournamentQuery.isPending && !activeRound;
 
+	console.log("activeRound", activeRound);
 	useEffect(() => {
-		const starterRound = Number(tournamentQuery.data?.starterRound) || 1;
+		const starterRound = tournamentQuery.data?.starterRound || "1";
 
 		if (autoSelectARound) goToRound(starterRound);
 	}, [autoSelectARound]);
@@ -41,28 +33,6 @@ export const TournamentMatchesScreen = () => {
 				<Typography variant="h3" color="red.100">
 					Ops! Something went wrong
 				</Typography>
-			</Matches>
-		);
-	}
-
-	if (isPending) {
-		return (
-			<Matches data-ui="matches-screen-skeleton">
-				<Rounds data-ui="rounds-skeleton">
-					<RoundHeading data-ui="rounds-heading-skeleton">
-						<AppPill.Skeleton width={80} height={25} />
-					</RoundHeading>
-
-					<RoundGamesSkeleton />
-				</Rounds>
-			</Matches>
-		);
-	}
-
-	if (isEmptyState) {
-		return (
-			<Matches>
-				<TournamentSetup tournament={tournamentQuery.data} />
 			</Matches>
 		);
 	}
@@ -83,31 +53,15 @@ export const TournamentMatchesScreen = () => {
 							color="neutral.100"
 							fontWeight={500}
 						>
-							round {activeRound}
+							round
 						</Typography>
 					</AppPill.Component>
 				</RoundHeading>
 
-				<Games className="round-games">
-					{matchesQuery.data?.map((match) => {
-						const guess = guessesQuery.data?.find((guess: IGuess) => {
-							return guess.matchId === match.id;
-						}) as IGuess;
-
-						return (
-							<li key={match.id} className="round-item match-card">
-								<MatchCard.Component
-									key={match.id}
-									match={match}
-									guess={guess}
-								/>
-							</li>
-						);
-					})}
-				</Games>
+				<TournamentRoundOfGames.Component />
 			</Rounds>
 
-			<TournamentStandings />
+			<TournamentStandings.Component />
 		</Matches>
 	);
 };
@@ -142,30 +96,12 @@ const Rounds = styled(Box)(({ theme }) =>
 	}),
 );
 
-const Games = styled(Stack)(({ theme }) => ({
-	gap: theme.spacing(2),
-}));
-
 const RoundHeading = styled(Box)(({ theme }) =>
 	theme?.unstable_sx({
 		backgroundColor: "black.700",
 		// pb: 3,
 	}),
 );
-
-const RoundGamesSkeleton = () => {
-	return (
-		<Stack gap={1} className="round-games-skeleton">
-			{Array.from({ length: 10 }).map((_, index) => {
-				return (
-					<li key={index} className="round-item match-card">
-						<MatchCard.Skeleton key={index} />
-					</li>
-				);
-			})}
-		</Stack>
-	);
-};
 
 export const Route = createLazyFileRoute(
 	"/_auth/tournaments/$tournamentId/_layout/matches",

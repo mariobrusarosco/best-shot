@@ -9,7 +9,7 @@ interface Props {
 }
 
 export const GuessDisplay = ({ data, cardExpanded }: Props) => {
-	if (cardExpanded) return null;
+	if (cardExpanded || data.status === "expired") return null;
 
 	const value = data.value;
 	const { color } = getStylesByStatus(data?.status || null);

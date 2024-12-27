@@ -10,17 +10,13 @@ import { styled } from "@mui/material/styles";
 import { Box } from "@mui/system";
 import { createLazyFileRoute } from "@tanstack/react-router";
 import { useEffect } from "react";
+
 export const TournamentMatchesScreen = () => {
 	const { activeRound, goToRound } = useTournamentRounds();
 	const tournamentQuery = useTournament();
-	// const matchesQuery = useTournamentMatches();
-
-	// const isEmptyState = guessesQuery.data?.length === 0;
-	// const isPending = matchesQuery.isPending || tournamentQuery.isPending;
 
 	const autoSelectARound = !tournamentQuery.isPending && !activeRound;
 
-	console.log("activeRound", activeRound);
 	useEffect(() => {
 		const starterRound = tournamentQuery.data?.starterRound || "1";
 
@@ -31,7 +27,7 @@ export const TournamentMatchesScreen = () => {
 		return (
 			<Matches>
 				<Typography variant="h3" color="red.100">
-					Ops! Something went wrong
+					lorem
 				</Typography>
 			</Matches>
 		);
@@ -99,7 +95,6 @@ const Rounds = styled(Box)(({ theme }) =>
 const RoundHeading = styled(Box)(({ theme }) =>
 	theme?.unstable_sx({
 		backgroundColor: "black.700",
-		// pb: 3,
 	}),
 );
 
@@ -107,4 +102,5 @@ export const Route = createLazyFileRoute(
 	"/_auth/tournaments/$tournamentId/_layout/matches",
 )({
 	component: TournamentMatchesScreen,
+	// errorComponent: (error) => <Typography>{error.error.message}</Typography>,
 });

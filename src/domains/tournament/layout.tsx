@@ -32,7 +32,7 @@ const TournamentLayout = () => {
 	}
 
 	if (tournament.isError) {
-		throw tournament.error;
+		throw "sadsadsa";
 	}
 
 	return (

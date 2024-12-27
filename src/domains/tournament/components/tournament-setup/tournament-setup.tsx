@@ -1,4 +1,6 @@
+import { BestShotIcon } from "@/assets/best-shot-icon";
 import { AppButton } from "@/domains/ui-system/components/button/button";
+import { theme } from "@/theming/theme";
 import { Stack } from "@mui/material";
 import Typography from "@mui/material/Typography/Typography";
 import { getRouteApi } from "@tanstack/react-router";
@@ -55,13 +57,31 @@ export const TournamentSetup = () => {
 					});
 				}}
 			>
-				<Typography
-					textTransform="uppercase"
-					variant="label"
-					color="neutral.100"
-				>
-					{setup.isPending ? "...working on it..." : "finish the setup"}
-				</Typography>
+				{setup.isPending ? (
+					<Stack
+						gap={1}
+						direction="row"
+						alignItems="center"
+						justifyContent="center"
+					>
+						<Typography
+							textTransform="uppercase"
+							variant="label"
+							color="neutral.100"
+						>
+							loading
+						</Typography>
+						<BestShotIcon fill={theme.palette.neutral[100]} width={40} />
+					</Stack>
+				) : (
+					<Typography
+						textTransform="uppercase"
+						variant="label"
+						color="neutral.100"
+					>
+						finish setup
+					</Typography>
+				)}
 			</AppButton>
 		</Stack>
 	);

@@ -17,6 +17,7 @@ import { useTournamentStandings } from "../../hooks/use-tournament-standings";
 
 const TournamentStandings = () => {
 	const tournamentStandings = useTournamentStandings();
+	const standinds = tournamentStandings.data?.standings;
 
 	if (tournamentStandings.isPending) {
 		return (
@@ -33,6 +34,33 @@ const TournamentStandings = () => {
 			<Stack>
 				<Typography variant="h6" color={theme.palette.neutral[100]}>
 					Error
+				</Typography>
+			</Stack>
+		);
+	}
+
+	if (!standinds?.length) {
+		return (
+			<Stack>
+				<Heading>
+					<AppPill.Component
+						border="1px solid"
+						borderColor="teal.500"
+						width={80}
+						height={25}
+					>
+						<Typography
+							variant="tag"
+							textTransform="uppercase"
+							color="neutral.100"
+							fontWeight={500}
+						>
+							standings
+						</Typography>
+					</AppPill.Component>
+				</Heading>
+				<Typography variant="paragraph" color={theme.palette.neutral[100]}>
+					It seems that there are no standings available for this tournament
 				</Typography>
 			</Stack>
 		);

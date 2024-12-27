@@ -5,13 +5,19 @@ import { getTournamentStandings } from "../server-state/fetchers";
 const route = getRouteApi("/_auth/tournaments/$tournamentId");
 
 export const useTournamentStandings = () => {
-	const id = route.useParams().tournamentId;
+	const tournamentId = route.useParams().tournamentId;
 
 	const query = useQuery({
-		queryKey: ["tournament", { id }, "standings"],
+		queryKey: tournamentStandingsKey(tournamentId),
 		queryFn: getTournamentStandings,
-		enabled: !!id,
+		enabled: !!tournamentId,
 	});
 
 	return query;
 };
+
+export const tournamentStandingsKey = (id: string) => [
+	"tournament",
+	{ id },
+	"standings",
+];

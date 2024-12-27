@@ -16,3 +16,5 @@ export const useTournament = () => {
 
 	return query;
 };
+
+export const tournamentKey = (id: string) => ["tournament", { id }];

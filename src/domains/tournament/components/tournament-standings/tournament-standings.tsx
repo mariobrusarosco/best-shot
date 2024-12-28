@@ -14,10 +14,10 @@ import {
 	Typography,
 } from "@mui/material";
 import { useTournamentStandings } from "../../hooks/use-tournament-standings";
+import { ITournamentStandings } from "../../typing";
 
 const TournamentStandings = () => {
 	const tournamentStandings = useTournamentStandings();
-	const standinds = tournamentStandings.data?.standings;
 
 	if (tournamentStandings.isPending) {
 		return (
@@ -39,7 +39,9 @@ const TournamentStandings = () => {
 		);
 	}
 
-	if (!standinds?.length) {
+	const standings = parseStandinsByFormat(tournamentStandings.data);
+	// console.log({ standings });
+	if (!standings) {
 		return (
 			<Stack>
 				<Heading>
@@ -86,209 +88,233 @@ const TournamentStandings = () => {
 				</AppPill.Component>
 			</Heading>
 
-			<TableContainer>
-				<StandingsTable size="small" aria-label="standings-table">
-					<TableHead>
-						<Row>
-							<Cell sx={{ pt: 0, pb: 0, textAlign: "left" }}>
-								<Typography
-									variant="label"
-									textTransform="uppercase"
-									color="teal.500"
-								>
-									team
-								</Typography>
-							</Cell>
-							<Cell sx={{ pt: 0, pb: 0 }}>
-								<Typography
-									variant="label"
-									textTransform="uppercase"
-									color="teal.500"
-								>
-									pts
-								</Typography>
-							</Cell>
-							<Cell sx={{ pt: 0, pb: 0 }}>
-								<Typography
-									variant="label"
-									textTransform="uppercase"
-									color="teal.500"
-								>
-									g
-								</Typography>
-							</Cell>
-							<Cell sx={{ pt: 0, pb: 0 }}>
-								<Typography
-									variant="label"
-									textTransform="uppercase"
-									color="teal.500"
-								>
-									w
-								</Typography>
-							</Cell>
-							<Cell sx={{ pt: 0, pb: 0 }}>
-								<Typography
-									variant="label"
-									textTransform="uppercase"
-									color="teal.500"
-								>
-									d
-								</Typography>
-							</Cell>
-							<Cell sx={{ pt: 0, pb: 0 }}>
-								<Typography
-									variant="label"
-									textTransform="uppercase"
-									color="teal.500"
-								>
-									l
-								</Typography>
-							</Cell>
-							<Cell sx={{ pt: 0, pb: 0 }}>
-								<Typography
-									variant="label"
-									textTransform="uppercase"
-									color="teal.500"
-								>
-									gf
-								</Typography>
-							</Cell>
-							<Cell sx={{ pt: 0, pb: 0 }}>
-								<Typography
-									variant="label"
-									textTransform="uppercase"
-									color="teal.500"
-								>
-									ga
-								</Typography>
-							</Cell>
-							<Cell sx={{ pt: 0, pb: 0 }}>
-								<Typography
-									variant="label"
-									textTransform="uppercase"
-									color="teal.500"
-								>
-									gd
-								</Typography>
-							</Cell>
-						</Row>
-					</TableHead>
-					<TableBody>
-						{tournamentStandings.data.standings?.map((row) => {
-							return (
-								<Row key={row.order} sx={{ color: "neutral.100" }}>
-									<Cell sx={{ color: "neutral.100" }}>
-										<Stack direction="row" alignItems="center" gap={1}>
-											<Typography
-												variant="label"
-												textTransform="uppercase"
-												color="teal.500"
-											>
-												{row.order}
-											</Typography>
-											<Typography
-												variant="label"
-												textTransform="uppercase"
-												color="neutral.100"
-												sx={{
-													display: { all: "inline-block", tablet: "none" },
-												}}
-											>
-												{row.shortName}
-											</Typography>
+			{Object.keys(standings).map((group) => {
+				return (
+					<TableContainer key={group}>
+						<AppPill.Component
+							border="1px solid"
+							borderColor="teal.500"
+							width={80}
+							height={25}
+						>
+							<Typography
+								variant="tag"
+								textTransform="uppercase"
+								color="neutral.100"
+								fontWeight={500}
+							>
+								{group}
+							</Typography>
+						</AppPill.Component>
 
-											<Typography
-												variant="label"
-												textTransform="uppercase"
-												color="neutral.100"
-												sx={{
-													display: { all: "none", tablet: "inline-block" },
-												}}
-												overflow="hidden"
-												textOverflow="ellipsis"
-											>
-												{row.longName}
-											</Typography>
-										</Stack>
-									</Cell>
-									<Cell sx={{ color: "neutral.100" }}>
+						<StandingsTable
+							size="small"
+							aria-label={`standings-table-${group}`}
+						>
+							<TableHead>
+								<Row>
+									<Cell sx={{ pt: 0, pb: 0, textAlign: "left" }}>
 										<Typography
 											variant="label"
 											textTransform="uppercase"
-											color="neutral.100"
+											color="teal.500"
 										>
-											{row.points}
+											team
 										</Typography>
 									</Cell>
-									<Cell sx={{ color: "neutral.100" }} align="right">
+									<Cell sx={{ pt: 0, pb: 0 }}>
 										<Typography
 											variant="label"
 											textTransform="uppercase"
-											color="neutral.100"
+											color="teal.500"
 										>
-											{row.games}
+											pts
 										</Typography>
 									</Cell>
-									<Cell sx={{ color: "neutral.100" }} align="right">
+									<Cell sx={{ pt: 0, pb: 0 }}>
 										<Typography
 											variant="label"
 											textTransform="uppercase"
-											color="neutral.100"
+											color="teal.500"
 										>
-											{row.wins}
+											g
 										</Typography>
 									</Cell>
-									<Cell sx={{ color: "neutral.100" }} align="right">
+									<Cell sx={{ pt: 0, pb: 0 }}>
 										<Typography
 											variant="label"
 											textTransform="uppercase"
-											color="neutral.100"
+											color="teal.500"
 										>
-											{row.draws}
+											w
 										</Typography>
 									</Cell>
-									<Cell sx={{ color: "neutral.100" }} align="right">
+									<Cell sx={{ pt: 0, pb: 0 }}>
 										<Typography
 											variant="label"
 											textTransform="uppercase"
-											color="neutral.100"
+											color="teal.500"
 										>
-											{row.losses}
+											d
 										</Typography>
 									</Cell>
-									<Cell sx={{ color: "neutral.100" }} align="right">
+									<Cell sx={{ pt: 0, pb: 0 }}>
 										<Typography
 											variant="label"
 											textTransform="uppercase"
-											color="neutral.100"
+											color="teal.500"
 										>
-											{row.gf}
+											l
 										</Typography>
 									</Cell>
-									<Cell sx={{ color: "neutral.100" }} align="right">
+									<Cell sx={{ pt: 0, pb: 0 }}>
 										<Typography
 											variant="label"
 											textTransform="uppercase"
-											color="neutral.100"
+											color="teal.500"
 										>
-											{row.ga}
+											gf
 										</Typography>
 									</Cell>
-									<Cell sx={{ color: "neutral.100" }} align="right">
+									<Cell sx={{ pt: 0, pb: 0 }}>
 										<Typography
 											variant="label"
 											textTransform="uppercase"
-											color="neutral.100"
+											color="teal.500"
 										>
-											{row.gd}
+											ga
+										</Typography>
+									</Cell>
+									<Cell sx={{ pt: 0, pb: 0 }}>
+										<Typography
+											variant="label"
+											textTransform="uppercase"
+											color="teal.500"
+										>
+											gd
 										</Typography>
 									</Cell>
 								</Row>
-							);
-						})}
-					</TableBody>
-				</StandingsTable>
-			</TableContainer>
+							</TableHead>
+
+							<TableBody>
+								{standings[group]?.map((row) => {
+									return (
+										<Row key={row.order} sx={{ color: "neutral.100" }}>
+											<Cell sx={{ color: "neutral.100" }}>
+												<Stack direction="row" alignItems="center" gap={1}>
+													<Typography
+														variant="label"
+														textTransform="uppercase"
+														color="teal.500"
+													>
+														{row.order}
+													</Typography>
+													<Typography
+														variant="label"
+														textTransform="uppercase"
+														color="neutral.100"
+														sx={{
+															display: { all: "inline-block", tablet: "none" },
+														}}
+													>
+														{row.shortName}
+													</Typography>
+
+													<Typography
+														variant="label"
+														textTransform="uppercase"
+														color="neutral.100"
+														sx={{
+															display: { all: "none", tablet: "inline-block" },
+														}}
+														overflow="hidden"
+														textOverflow="ellipsis"
+													>
+														{row.longName}
+													</Typography>
+												</Stack>
+											</Cell>
+											<Cell sx={{ color: "neutral.100" }}>
+												<Typography
+													variant="label"
+													textTransform="uppercase"
+													color="neutral.100"
+												>
+													{row.points}
+												</Typography>
+											</Cell>
+											<Cell sx={{ color: "neutral.100" }} align="right">
+												<Typography
+													variant="label"
+													textTransform="uppercase"
+													color="neutral.100"
+												>
+													{row.games}
+												</Typography>
+											</Cell>
+											<Cell sx={{ color: "neutral.100" }} align="right">
+												<Typography
+													variant="label"
+													textTransform="uppercase"
+													color="neutral.100"
+												>
+													{row.wins}
+												</Typography>
+											</Cell>
+											<Cell sx={{ color: "neutral.100" }} align="right">
+												<Typography
+													variant="label"
+													textTransform="uppercase"
+													color="neutral.100"
+												>
+													{row.draws}
+												</Typography>
+											</Cell>
+											<Cell sx={{ color: "neutral.100" }} align="right">
+												<Typography
+													variant="label"
+													textTransform="uppercase"
+													color="neutral.100"
+												>
+													{row.losses}
+												</Typography>
+											</Cell>
+											<Cell sx={{ color: "neutral.100" }} align="right">
+												<Typography
+													variant="label"
+													textTransform="uppercase"
+													color="neutral.100"
+												>
+													{row.gf}
+												</Typography>
+											</Cell>
+											<Cell sx={{ color: "neutral.100" }} align="right">
+												<Typography
+													variant="label"
+													textTransform="uppercase"
+													color="neutral.100"
+												>
+													{row.ga}
+												</Typography>
+											</Cell>
+											<Cell sx={{ color: "neutral.100" }} align="right">
+												<Typography
+													variant="label"
+													textTransform="uppercase"
+													color="neutral.100"
+												>
+													{row.gd}
+												</Typography>
+											</Cell>
+										</Row>
+									);
+								})}
+							</TableBody>
+						</StandingsTable>
+					</TableContainer>
+				);
+			})}
 		</Wrapper>
 	);
 };
@@ -335,7 +361,7 @@ const Row = styled(TableRow)(() => ({
 const TableContainer = styled(Box)(({ theme }) => ({
 	border: "none",
 	padding: theme.spacing(0, 1, 0, 0),
-	height: "100%",
+	// height: "100%",
 }));
 
 const Wrapper = styled(Box)(() => ({
@@ -356,3 +382,13 @@ const Heading = styled(Box)(({ theme }) =>
 		pb: 3,
 	}),
 );
+
+const parseStandinsByFormat = (standings: ITournamentStandings) => {
+	if (!standings) return null;
+
+	if (standings.format === "multi-group") {
+		return Object.groupBy(standings.standings, (item) => item.groupName!);
+	}
+
+	return { "unique-group": standings.standings };
+};

@@ -5,29 +5,32 @@ import {
 import { useMember } from "@/domains/member/hooks/use-member";
 import { useMemberPerformance } from "@/domains/member/hooks/use-member-performance";
 
+import Matchday from "@/domains/dashboard/components/matchday";
+import { useDashboard } from "@/domains/dashboard/hooks/use-dashboard";
 import { ScreenLayout } from "@/domains/ui-system/layout/screen-layout";
 import { ScreenMainContent } from "@/domains/ui-system/layout/screen-main-content";
-import MainLeague from "../components/main-league";
+import { styled } from "@mui/system";
 import TournamentsPerf from "../components/tournaments-perf";
 
 const DashboardPage = () => {
 	const member = useMember();
 	const performance = useMemberPerformance();
+	const dashboard = useDashboard();
 
-	if (performance.isPending || performance.isPending) {
+	if (member.isPending || performance.isPending || dashboard.isPending) {
 		return (
 			<ScreenLayout data-ui="dashboard-screen">
 				<ScreenHeadingSkeleton />
 
 				<ScreenMainContent data-ui="dashboard-content">
+					<Matchday.Skeleton />
 					<TournamentsPerf.Skeleton />
-					<MainLeague.Skeleton />
 				</ScreenMainContent>
 			</ScreenLayout>
 		);
 	}
 
-	if (performance.isError || member.isError) {
+	if (performance.isError || member.isError || dashboard.isError) {
 		return (
 			<ScreenLayout data-ui="dashboard-screen">
 				<ScreenHeading title="Dashboard" subtitle="" />
@@ -41,13 +44,18 @@ const DashboardPage = () => {
 		<ScreenLayout data-ui="dashboard-screen">
 			<ScreenHeading title="Hello," subtitle={member?.data?.nickName} />
 
-			<ScreenMainContent data-ui="dashboard-content">
+			<Dashboard data-ui="dashboard-content">
+				<Matchday.Component matchday={dashboard.data.matchday} />
 				<TournamentsPerf.Component performance={performance} />
-				{/* <MainLeague.Component performance={performance} /> */}
-			</ScreenMainContent>
+			</Dashboard>
 		</ScreenLayout>
 	);
 };
+
+export const Dashboard = styled(ScreenMainContent)(({ theme }) => ({
+	flexDirection: "column",
+	gap: theme.spacing(4),
+}));
 
 export { DashboardPage };
 performance;

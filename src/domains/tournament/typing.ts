@@ -35,10 +35,12 @@ export type ITournamentPerformance = {
 
 export type ITournamentStandings = {
 	lastUpdated: string;
+	format: string;
 	standings: {
 		id: string;
 		teamExternalId: string;
 		tournamentId: string;
+		groupName?: string;
 		order: string;
 		shortName: string;
 		longName: string;

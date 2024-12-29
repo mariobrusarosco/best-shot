@@ -1,14 +1,8 @@
 import { useGuess } from "@/domains/guess/hooks/use-guess";
-import TournamentRoundsBar from "@/domains/tournament/components/tournament-rounds-bar";
 import { UIHelper } from "@/theming/theme";
 import { Box, styled } from "@mui/system";
-import { ITournament } from "../typing";
 
-interface Props {
-	tournament: ITournament;
-}
-
-export const TournamentHeading = ({ tournament }: Props) => {
+export const TournamentHeading = () => {
 	const guesses = useGuess();
 
 	if (guesses.isSuccess && guesses.data?.length === 0) {
@@ -17,7 +11,7 @@ export const TournamentHeading = ({ tournament }: Props) => {
 
 	return (
 		<Wrapper data-ui="tournament-heading">
-			<TournamentRoundsBar.Component tournament={tournament} />
+			{/* <TournamentRoundsBar.Component /> */}
 		</Wrapper>
 	);
 };
@@ -38,7 +32,7 @@ export const TournamentLogo = styled("img")(() => ({}));
 export const Skeleton = () => {
 	return (
 		<Wrapper data-ui="tournament-heading-skeleton">
-			<TournamentRoundsBar.Skeleton />
+			{/* <TournamentRoundsBar.Skeleton /> */}
 		</Wrapper>
 	);
 };

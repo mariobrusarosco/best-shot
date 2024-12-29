@@ -87,244 +87,263 @@ const TournamentStandings = () => {
 				</AppPill.Component>
 			</Heading>
 
-			{Object.keys(standings).map((group) => {
-				return (
-					<TableContainer key={group}>
-						{group !== "unique-group" ? (
-							<AppPill.Component
-								bgcolor="teal.500"
-								width={120}
-								height={25}
-								mb={3}
-							>
-								<Typography
-									variant="tag"
-									textTransform="uppercase"
-									color="neutral.100"
-									fontWeight={500}
+			<Stack gap={3}>
+				{Object.keys(standings).map((group) => {
+					return (
+						<TableContainer key={group}>
+							{group !== "unique-group" ? (
+								<AppPill.Component
+									bgcolor="teal.500"
+									width={120}
+									height={25}
+									mb={3}
 								>
-									{group}
-								</Typography>
-							</AppPill.Component>
-						) : null}
+									<Typography
+										variant="tag"
+										textTransform="uppercase"
+										color="neutral.100"
+										fontWeight={500}
+									>
+										{group}
+									</Typography>
+								</AppPill.Component>
+							) : null}
 
-						<StandingsTable
-							size="small"
-							aria-label={`standings-table-${group}`}
-						>
-							<TableHead>
-								<Row>
-									<Cell sx={{ pt: 0, pb: 0, textAlign: "left" }}>
-										<Typography
-											variant="label"
-											fontWeight={300}
-											textTransform="uppercase"
-											color="teal.500"
-										>
-											team
-										</Typography>
-									</Cell>
-									<Cell sx={{ pt: 0, pb: 0 }}>
-										<Typography
-											variant="label"
-											textTransform="uppercase"
-											color="teal.500"
-											fontWeight={300}
-										>
-											pts
-										</Typography>
-									</Cell>
-									<Cell sx={{ pt: 0, pb: 0 }}>
-										<Typography
-											variant="label"
-											textTransform="uppercase"
-											color="teal.500"
-											fontWeight={300}
-										>
-											g
-										</Typography>
-									</Cell>
-									<Cell sx={{ pt: 0, pb: 0 }}>
-										<Typography
-											variant="label"
-											textTransform="uppercase"
-											color="teal.500"
-											fontWeight={300}
-										>
-											w
-										</Typography>
-									</Cell>
-									<Cell sx={{ pt: 0, pb: 0 }}>
-										<Typography
-											variant="label"
-											textTransform="uppercase"
-											color="teal.500"
-											fontWeight={300}
-										>
-											d
-										</Typography>
-									</Cell>
-									<Cell sx={{ pt: 0, pb: 0 }}>
-										<Typography
-											variant="label"
-											textTransform="uppercase"
-											color="teal.500"
-											fontWeight={300}
-										>
-											l
-										</Typography>
-									</Cell>
-									<Cell sx={{ pt: 0, pb: 0 }}>
-										<Typography
-											variant="label"
-											textTransform="uppercase"
-											color="teal.500"
-											fontWeight={300}
-										>
-											gf
-										</Typography>
-									</Cell>
-									<Cell sx={{ pt: 0, pb: 0 }}>
-										<Typography
-											variant="label"
-											textTransform="uppercase"
-											color="teal.500"
-											fontWeight={300}
-										>
-											ga
-										</Typography>
-									</Cell>
-									<Cell sx={{ pt: 0, pb: 0 }}>
-										<Typography
-											variant="label"
-											textTransform="uppercase"
-											color="teal.500"
-											fontWeight={300}
-										>
-											gd
-										</Typography>
-									</Cell>
-								</Row>
-							</TableHead>
+							<StandingsTable
+								size="small"
+								aria-label={`standings-table-${group}`}
+							>
+								<TableHead>
+									<Row>
+										<Cell sx={{ pt: 0, pb: 0, textAlign: "left" }}>
+											<Typography
+												variant="label"
+												fontWeight={300}
+												textTransform="uppercase"
+												color="teal.500"
+											>
+												team
+											</Typography>
+										</Cell>
+										<Cell sx={{ pt: 0, pb: 0 }}>
+											<Typography
+												variant="label"
+												textTransform="uppercase"
+												color="teal.500"
+												fontWeight={300}
+											>
+												pts
+											</Typography>
+										</Cell>
+										<Cell sx={{ pt: 0, pb: 0 }}>
+											<Typography
+												variant="label"
+												textTransform="uppercase"
+												color="teal.500"
+												fontWeight={300}
+											>
+												g
+											</Typography>
+										</Cell>
+										<Cell sx={{ pt: 0, pb: 0 }}>
+											<Typography
+												variant="label"
+												textTransform="uppercase"
+												color="teal.500"
+												fontWeight={300}
+											>
+												w
+											</Typography>
+										</Cell>
+										<Cell sx={{ pt: 0, pb: 0 }}>
+											<Typography
+												variant="label"
+												textTransform="uppercase"
+												color="teal.500"
+												fontWeight={300}
+											>
+												d
+											</Typography>
+										</Cell>
+										<Cell sx={{ pt: 0, pb: 0 }}>
+											<Typography
+												variant="label"
+												textTransform="uppercase"
+												color="teal.500"
+												fontWeight={300}
+											>
+												l
+											</Typography>
+										</Cell>
+										<Cell sx={{ pt: 0, pb: 0 }}>
+											<Typography
+												variant="label"
+												textTransform="uppercase"
+												color="teal.500"
+												fontWeight={300}
+											>
+												gf
+											</Typography>
+										</Cell>
+										<Cell sx={{ pt: 0, pb: 0 }}>
+											<Typography
+												variant="label"
+												textTransform="uppercase"
+												color="teal.500"
+												fontWeight={300}
+											>
+												ga
+											</Typography>
+										</Cell>
+										<Cell sx={{ pt: 0, pb: 0 }}>
+											<Typography
+												variant="label"
+												textTransform="uppercase"
+												color="teal.500"
+												fontWeight={300}
+											>
+												gd
+											</Typography>
+										</Cell>
+									</Row>
+								</TableHead>
 
-							<TableBody>
-								{standings[group]?.map((row) => {
-									return (
-										<Row key={row.order} sx={{ color: "neutral.100" }}>
-											<Cell sx={{ color: "neutral.100" }}>
-												<Stack direction="row" alignItems="center" gap={1}>
+								<TableBody>
+									{standings[group]?.map((row) => {
+										return (
+											<Row key={row.order} sx={{ color: "neutral.100" }}>
+												<Cell sx={{ color: "neutral.100" }}>
+													<Stack direction="row" alignItems="center" gap={1}>
+														<Typography
+															variant="label"
+															textTransform="uppercase"
+															fontWeight={300}
+															color="teal.500"
+														>
+															{row.order}
+														</Typography>
+														<Typography
+															variant="label"
+															textTransform="uppercase"
+															fontWeight={300}
+															color="neutral.100"
+															sx={{
+																display: {
+																	all: "inline-block",
+																	tablet: "none",
+																},
+															}}
+														>
+															{row.shortName}
+														</Typography>
+
+														<Typography
+															variant="label"
+															textTransform="uppercase"
+															fontWeight={300}
+															color="neutral.100"
+															sx={{
+																display: {
+																	all: "none",
+																	tablet: "inline-block",
+																},
+															}}
+															overflow="hidden"
+															textOverflow="ellipsis"
+														>
+															{row.longName}
+														</Typography>
+													</Stack>
+												</Cell>
+												<Cell sx={{ color: "neutral.100" }}>
 													<Typography
 														variant="label"
 														textTransform="uppercase"
-														color="teal.500"
-													>
-														{row.order}
-													</Typography>
-													<Typography
-														variant="label"
-														textTransform="uppercase"
+														fontWeight={300}
 														color="neutral.100"
-														sx={{
-															display: { all: "inline-block", tablet: "none" },
-														}}
 													>
-														{row.shortName}
+														{row.points}
 													</Typography>
-
+												</Cell>
+												<Cell sx={{ color: "neutral.100" }} align="right">
 													<Typography
 														variant="label"
 														textTransform="uppercase"
+														fontWeight={300}
 														color="neutral.100"
-														sx={{
-															display: { all: "none", tablet: "inline-block" },
-														}}
-														overflow="hidden"
-														textOverflow="ellipsis"
 													>
-														{row.longName}
+														{row.games}
 													</Typography>
-												</Stack>
-											</Cell>
-											<Cell sx={{ color: "neutral.100" }}>
-												<Typography
-													variant="label"
-													textTransform="uppercase"
-													color="neutral.100"
-												>
-													{row.points}
-												</Typography>
-											</Cell>
-											<Cell sx={{ color: "neutral.100" }} align="right">
-												<Typography
-													variant="label"
-													textTransform="uppercase"
-													color="neutral.100"
-												>
-													{row.games}
-												</Typography>
-											</Cell>
-											<Cell sx={{ color: "neutral.100" }} align="right">
-												<Typography
-													variant="label"
-													textTransform="uppercase"
-													color="neutral.100"
-												>
-													{row.wins}
-												</Typography>
-											</Cell>
-											<Cell sx={{ color: "neutral.100" }} align="right">
-												<Typography
-													variant="label"
-													textTransform="uppercase"
-													color="neutral.100"
-												>
-													{row.draws}
-												</Typography>
-											</Cell>
-											<Cell sx={{ color: "neutral.100" }} align="right">
-												<Typography
-													variant="label"
-													textTransform="uppercase"
-													color="neutral.100"
-												>
-													{row.losses}
-												</Typography>
-											</Cell>
-											<Cell sx={{ color: "neutral.100" }} align="right">
-												<Typography
-													variant="label"
-													textTransform="uppercase"
-													color="neutral.100"
-												>
-													{row.gf}
-												</Typography>
-											</Cell>
-											<Cell sx={{ color: "neutral.100" }} align="right">
-												<Typography
-													variant="label"
-													textTransform="uppercase"
-													color="neutral.100"
-												>
-													{row.ga}
-												</Typography>
-											</Cell>
-											<Cell sx={{ color: "neutral.100" }} align="right">
-												<Typography
-													variant="label"
-													textTransform="uppercase"
-													color="neutral.100"
-												>
-													{row.gd}
-												</Typography>
-											</Cell>
-										</Row>
-									);
-								})}
-							</TableBody>
-						</StandingsTable>
-					</TableContainer>
-				);
-			})}
+												</Cell>
+												<Cell sx={{ color: "neutral.100" }} align="right">
+													<Typography
+														variant="label"
+														textTransform="uppercase"
+														fontWeight={300}
+														color="neutral.100"
+													>
+														{row.wins}
+													</Typography>
+												</Cell>
+												<Cell sx={{ color: "neutral.100" }} align="right">
+													<Typography
+														variant="label"
+														textTransform="uppercase"
+														fontWeight={300}
+														color="neutral.100"
+													>
+														{row.draws}
+													</Typography>
+												</Cell>
+												<Cell sx={{ color: "neutral.100" }} align="right">
+													<Typography
+														variant="label"
+														textTransform="uppercase"
+														fontWeight={300}
+														color="neutral.100"
+													>
+														{row.losses}
+													</Typography>
+												</Cell>
+												<Cell sx={{ color: "neutral.100" }} align="right">
+													<Typography
+														variant="label"
+														textTransform="uppercase"
+														fontWeight={300}
+														color="neutral.100"
+													>
+														{row.gf}
+													</Typography>
+												</Cell>
+												<Cell sx={{ color: "neutral.100" }} align="right">
+													<Typography
+														variant="label"
+														textTransform="uppercase"
+														fontWeight={300}
+														color="neutral.100"
+													>
+														{row.ga}
+													</Typography>
+												</Cell>
+												<Cell sx={{ color: "neutral.100" }} align="right">
+													<Typography
+														variant="label"
+														textTransform="uppercase"
+														fontWeight={300}
+														color="neutral.100"
+													>
+														{row.gd}
+													</Typography>
+												</Cell>
+											</Row>
+										);
+									})}
+								</TableBody>
+							</StandingsTable>
+						</TableContainer>
+					);
+				})}
+			</Stack>
 		</Wrapper>
 	);
 };

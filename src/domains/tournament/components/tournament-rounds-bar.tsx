@@ -5,11 +5,12 @@ import { styled } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/system/Box";
 import { useEffect } from "react";
+import { useTournament } from "../hooks/use-tournament";
 import { useTournamentRounds } from "../hooks/use-tournament-rounds";
-import { ITournament } from "../typing";
 
-const TournamentRoundsBar = ({ tournament }: { tournament: ITournament }) => {
+const TournamentRoundsBar = () => {
 	const { activeRound, goToRound } = useTournamentRounds();
+	const { data: tournament } = useTournament();
 
 	useEffect(() => {
 		if (activeRound) {
@@ -25,7 +26,7 @@ const TournamentRoundsBar = ({ tournament }: { tournament: ITournament }) => {
 	return (
 		<Wrapper data-ui="tournament-rounds-bar">
 			<Bar data-ui="bar">
-				{tournament.rounds.map(({ label, slug }) => (
+				{tournament?.rounds.map(({ label, slug }) => (
 					<RoundButton
 						key={label}
 						onClick={() => goToRound(slug)}
@@ -44,7 +45,7 @@ const TournamentRoundsBar = ({ tournament }: { tournament: ITournament }) => {
 const Wrapper = styled(Box)(({ theme }) =>
 	theme?.unstable_sx({
 		display: "flex",
-		flexDirection: "column",
+		// flexDirection: "column",
 		boxShadow: "0 4px 30px rgba(0, 0, 0, 0.1)",
 
 		[UIHelper.whileIs("mobile")]: {
@@ -61,7 +62,7 @@ const Wrapper = styled(Box)(({ theme }) =>
 		},
 
 		[UIHelper.startsOn("tablet")]: {
-			width: "100%",
+			// width: "100%",
 		},
 	}),
 );
@@ -86,6 +87,7 @@ const Bar = styled(Box)(({ theme }) => ({
 
 	[UIHelper.startsOn("tablet")]: {
 		alignItems: "center",
+		flexDirection: "column",
 		paddingRight: theme.spacing(2),
 		paddingBottom: theme.spacing(1.5),
 		marginBottom: theme.spacing(3),

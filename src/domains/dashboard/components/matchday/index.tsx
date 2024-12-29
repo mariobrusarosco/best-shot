@@ -1,13 +1,13 @@
 import { AppPill } from "@/domains/ui-system/components/pill/pill";
 import { Stack, Typography } from "@mui/material";
 
+import { AppLinkCard } from "@/domains/ui-system/components/link-card/link-card";
 import { theme } from "@/theming/theme";
 import { IMatchday } from "../../typing";
 import { DashCard } from "../dash-card/dash-card";
 import { MatchdayCard, MatchdayGrid } from "./styles";
 
 const Matchday = ({ matchday }: { matchday: IMatchday }) => {
-	console.log({ matchday });
 	const allMatches = matchday.all;
 
 	return (
@@ -31,21 +31,31 @@ const Matchday = ({ matchday }: { matchday: IMatchday }) => {
 				) : (
 					allMatches.map((match, i) => (
 						<MatchdayCard key={i}>
-							<Typography
-								fontWeight={500}
-								textTransform="uppercase"
-								variant="tag"
+							<AppLinkCard
+								to="/tournaments/$tournamentId/matches"
+								params={{ tournamentId: match.tournamentId }}
+								search={{ round: match.roundId }}
+								adornment={
+									<Typography
+										fontWeight={500}
+										textTransform="uppercase"
+										variant="tag"
+									>
+										{match.tournamentLabel}
+									</Typography>
+								}
+								replace={false}
+								resetScroll={false}
 							>
-								{match.tournamentLabel}
-							</Typography>
-							<Typography
-								fontWeight={500}
-								textTransform="uppercase"
-								variant="tag"
-								color={theme.palette.teal[500]}
-							>
-								round {match.roundId}
-							</Typography>
+								<Typography
+									fontWeight={500}
+									textTransform="uppercase"
+									variant="tag"
+									color={theme.palette.teal[500]}
+								>
+									round {match.roundId}
+								</Typography>
+							</AppLinkCard>
 						</MatchdayCard>
 					))
 				)}

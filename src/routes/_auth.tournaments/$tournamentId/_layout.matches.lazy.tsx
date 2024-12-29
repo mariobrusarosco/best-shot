@@ -1,4 +1,5 @@
 import TournamentRoundOfGames from "@/domains/tournament/components/tournament-round-of-games/tournament-round-of-games";
+import TournamentRoundsBar from "@/domains/tournament/components/tournament-rounds-bar";
 import TournamentStandings from "@/domains/tournament/components/tournament-standings/tournament-standings";
 import { useTournament } from "@/domains/tournament/hooks/use-tournament";
 import { useTournamentRounds } from "@/domains/tournament/hooks/use-tournament-rounds";
@@ -57,6 +58,8 @@ export const TournamentMatchesScreen = () => {
 				<TournamentRoundOfGames.Component />
 			</Rounds>
 
+			<TournamentRoundsBar.Component />
+
 			<TournamentStandings.Component />
 		</Matches>
 	);
@@ -71,7 +74,7 @@ const Matches = styled(Box)(({ theme }) => ({
 		paddingBottom: "130px",
 	},
 	[UIHelper.startsOn("tablet")]: {
-		height: "85%",
+		height: "100%",
 		columnGap: theme.spacing(4),
 	},
 }));
@@ -92,11 +95,10 @@ const Rounds = styled(Box)(({ theme }) =>
 	}),
 );
 
-const RoundHeading = styled(Box)(({ theme }) =>
-	theme?.unstable_sx({
-		backgroundColor: "black.700",
-	}),
-);
+const RoundHeading = styled(Box)(({ theme }) => ({
+	backgroundColor: theme.palette.black[700],
+	paddingBotto: theme.spacing(2),
+}));
 
 export const Route = createLazyFileRoute(
 	"/_auth/tournaments/$tournamentId/_layout/matches",

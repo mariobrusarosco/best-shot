@@ -6,6 +6,8 @@ import {
 import { useTournaments } from "@/domains/tournament/hooks/use-tournaments";
 import { ScreenLayout } from "@/domains/ui-system/layout/screen-layout";
 import { ScreenMainContent } from "@/domains/ui-system/layout/screen-main-content";
+import { UIHelper } from "@/theming/theme";
+import { styled } from "@mui/material";
 import Typography from "@mui/material/Typography/Typography";
 import { createLazyFileRoute } from "@tanstack/react-router";
 
@@ -44,13 +46,20 @@ const TournamentsPage = () => {
 				backTo="/dashboard"
 			/>
 
-			<ScreenMainContent>
+			<Tournaments data-ui="tournaments-main-content">
 				{isLoading ? <TournamentsListLoading /> : null}
 				{data ? <TournamentsList tournaments={data} /> : null}
-			</ScreenMainContent>
+			</Tournaments>
 		</ScreenLayout>
 	);
 };
+
+export const Tournaments = styled(ScreenMainContent)(({ theme }) => ({
+	[UIHelper.startsOn("tablet")]: {
+		paddingLeft: theme.spacing(0),
+		paddingRight: theme.spacing(2),
+	},
+}));
 
 export const Route = createLazyFileRoute("/_auth/tournaments/")({
 	component: TournamentsPage,

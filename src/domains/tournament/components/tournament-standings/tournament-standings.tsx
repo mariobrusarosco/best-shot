@@ -40,7 +40,6 @@ const TournamentStandings = () => {
 	}
 
 	const standings = parseStandinsByFormat(tournamentStandings.data);
-	// console.log({ standings });
 	if (!standings) {
 		return (
 			<Stack>
@@ -91,21 +90,23 @@ const TournamentStandings = () => {
 			{Object.keys(standings).map((group) => {
 				return (
 					<TableContainer key={group}>
-						<AppPill.Component
-							border="1px solid"
-							borderColor="teal.500"
-							width={80}
-							height={25}
-						>
-							<Typography
-								variant="tag"
-								textTransform="uppercase"
-								color="neutral.100"
-								fontWeight={500}
+						{group !== "unique-group" ? (
+							<AppPill.Component
+								bgcolor="teal.500"
+								width={120}
+								height={25}
+								mb={3}
 							>
-								{group}
-							</Typography>
-						</AppPill.Component>
+								<Typography
+									variant="tag"
+									textTransform="uppercase"
+									color="neutral.100"
+									fontWeight={500}
+								>
+									{group}
+								</Typography>
+							</AppPill.Component>
+						) : null}
 
 						<StandingsTable
 							size="small"
@@ -116,6 +117,7 @@ const TournamentStandings = () => {
 									<Cell sx={{ pt: 0, pb: 0, textAlign: "left" }}>
 										<Typography
 											variant="label"
+											fontWeight={300}
 											textTransform="uppercase"
 											color="teal.500"
 										>
@@ -127,6 +129,7 @@ const TournamentStandings = () => {
 											variant="label"
 											textTransform="uppercase"
 											color="teal.500"
+											fontWeight={300}
 										>
 											pts
 										</Typography>
@@ -136,6 +139,7 @@ const TournamentStandings = () => {
 											variant="label"
 											textTransform="uppercase"
 											color="teal.500"
+											fontWeight={300}
 										>
 											g
 										</Typography>
@@ -145,6 +149,7 @@ const TournamentStandings = () => {
 											variant="label"
 											textTransform="uppercase"
 											color="teal.500"
+											fontWeight={300}
 										>
 											w
 										</Typography>
@@ -154,6 +159,7 @@ const TournamentStandings = () => {
 											variant="label"
 											textTransform="uppercase"
 											color="teal.500"
+											fontWeight={300}
 										>
 											d
 										</Typography>
@@ -163,6 +169,7 @@ const TournamentStandings = () => {
 											variant="label"
 											textTransform="uppercase"
 											color="teal.500"
+											fontWeight={300}
 										>
 											l
 										</Typography>
@@ -172,6 +179,7 @@ const TournamentStandings = () => {
 											variant="label"
 											textTransform="uppercase"
 											color="teal.500"
+											fontWeight={300}
 										>
 											gf
 										</Typography>
@@ -181,6 +189,7 @@ const TournamentStandings = () => {
 											variant="label"
 											textTransform="uppercase"
 											color="teal.500"
+											fontWeight={300}
 										>
 											ga
 										</Typography>
@@ -190,6 +199,7 @@ const TournamentStandings = () => {
 											variant="label"
 											textTransform="uppercase"
 											color="teal.500"
+											fontWeight={300}
 										>
 											gd
 										</Typography>

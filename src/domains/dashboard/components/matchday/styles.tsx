@@ -20,7 +20,7 @@ export const MatchdayCard = styled(Surface)(({ theme }) => ({
 	justifyContent: "space-between",
 
 	[UIHelper.startsOn("tablet")]: {
-		padding: theme.spacing(3),
+		padding: theme.spacing(1),
 		// maxHeight: "160px",
 		// minHeight: "160px",
 	},

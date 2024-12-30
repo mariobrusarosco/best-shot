@@ -1,8 +1,11 @@
 import { AppPill } from "@/domains/ui-system/components/pill/pill";
 import { Stack, Typography } from "@mui/material";
 
-import { AppLinkCard } from "@/domains/ui-system/components/link-card/link-card";
+import { AppButton } from "@/domains/ui-system/components/button/button";
+import { AppCard } from "@/domains/ui-system/components/card/card";
+import { AppIcon } from "@/domains/ui-system/components/icon/icon";
 import { theme } from "@/theming/theme";
+import { Link } from "@tanstack/react-router";
 import { IMatchday } from "../../typing";
 import { DashCard } from "../dash-card/dash-card";
 import { MatchdayCard, MatchdayGrid } from "./styles";
@@ -31,31 +34,58 @@ const Matchday = ({ matchday }: { matchday: IMatchday }) => {
 				) : (
 					allMatches.map((match, i) => (
 						<MatchdayCard key={i}>
-							<AppLinkCard
+							<Link
 								to="/tournaments/$tournamentId/matches"
 								params={{ tournamentId: match.tournamentId }}
 								search={{ round: match.roundId }}
-								adornment={
-									<Typography
-										fontWeight={500}
-										textTransform="uppercase"
-										variant="tag"
-									>
-										{match.tournamentLabel}
-									</Typography>
-								}
 								replace={false}
 								resetScroll={false}
 							>
-								<Typography
-									fontWeight={500}
-									textTransform="uppercase"
-									variant="tag"
-									color={theme.palette.teal[500]}
+								<AppCard.Container
+									data-ui="card-container"
+									sx={{
+										gridTemplateRows: "10px auto",
+									}}
 								>
-									round {match.roundId}
-								</Typography>
-							</AppLinkCard>
+									<AppCard.Header
+										alignItems={"self-start"}
+										gap={2}
+										data-ui="card-header"
+									>
+										<Stack minWidth="100px">
+											<Typography
+												fontWeight={500}
+												textTransform="uppercase"
+												variant="tag"
+												maxWidth={"1200px"}
+												textOverflow={"ellipsis"}
+												overflow={"hidden"}
+												whiteSpace={"nowrap"}
+											>
+												{match.tournamentLabel}
+											</Typography>
+										</Stack>
+										<AppButton
+											sx={{
+												color: "teal.500",
+												p: 0,
+												borderRadius: "50%",
+												display: "grid",
+												placeItems: "center",
+											}}
+										>
+											<AppIcon name="ChevronRight" size="extra-small" />
+										</AppButton>
+									</AppCard.Header>
+									<Typography
+										variant="topic"
+										color={theme.palette.teal[500]}
+										fontWeight={400}
+									>
+										round {match.roundId}
+									</Typography>
+								</AppCard.Container>
+							</Link>
 						</MatchdayCard>
 					))
 				)}

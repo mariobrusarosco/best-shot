@@ -1,14 +1,18 @@
+import { Authentication } from "@/domains/authentication";
 import { ScreenHeading } from "@/domains/global/components/screen-heading";
 import { useMember } from "@/domains/member/hooks/use-member";
 import { AppButton } from "@/domains/ui-system/components/button/button";
 import { AuthenticatedScreenLayout } from "@/domains/ui-system/layout/authenticated";
 import { ScreenMainContent } from "@/domains/ui-system/layout/screen-main-content";
 import { styled, Typography } from "@mui/material";
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
+
+const { useAppAuth } = Authentication;
 
 export default function MyAccountScreen() {
-	// const { auth } = useAppAuth();
+	const auth = useAppAuth();
 	const member = useMember();
+	const navigate = useNavigate();
 
 	if (member.isLoading) {
 		return (
@@ -50,14 +54,15 @@ export default function MyAccountScreen() {
 				</Typography>
 
 				<LogoutButton
-				// slotProps={{
-				// 	root: {
-				// 		onClick: () => {
-				// 			console.log("logout");
-				// 			auth.logout();
-				// 		},
-				// 	},
-				// }}
+					slotProps={{
+						root: {
+							onClick: async () => {
+								console.log("logout");
+								await auth.logout();
+								navigate({ to: "/login" });
+							},
+						},
+					}}
 				>
 					Logout
 				</LogoutButton>

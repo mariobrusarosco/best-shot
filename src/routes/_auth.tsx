@@ -1,4 +1,4 @@
-import { useAppAuth } from "@/domains/authentication/hooks/use-app-auth";
+import { Authentication } from "@/domains/authentication";
 import { AppHeader } from "@/domains/global/components/app-header";
 import { AppLoader } from "@/domains/global/components/app-loader";
 import { Menu } from "@/domains/global/components/menu/menu";
@@ -11,8 +11,11 @@ import {
 	useLocation,
 } from "@tanstack/react-router";
 
+const useAppAuth = Authentication.useAppAuth;
+
 const AuthLayout = () => {
-	const { auth } = useAppAuth();
+	const auth = useAppAuth();
+	console.log("[AuthLayout] [auth", auth);
 	const location = useLocation();
 
 	if (auth.isLoadingAuth) {

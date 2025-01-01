@@ -1,14 +1,20 @@
+import { Authentication } from "@/domains/authentication";
 import { AppButton } from "@/domains/ui-system/components/button/button";
 import { PublicLayout } from "@/domains/ui-system/layout/public";
 import { theme } from "@/theming/theme";
 import { Box, Stack, styled } from "@mui/material";
 import Typography from "@mui/material/Typography/Typography";
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createLazyFileRoute, Link, useNavigate } from "@tanstack/react-router";
+
+const useAppAuth = Authentication.useAppAuth;
 
 const LoginScreen = () => {
-	// const { auth } = useAppAuth();
+	const auth = useAppAuth();
 	// const router = useRouter();
-	// console.log("LoginScreen - [router]", router);
+	console.log("LoginScreen - [auth]", auth);
+	// const login = useLogin();
+	const navigate = useNavigate();
+
 	return (
 		<PublicLayout>
 			<Login>
@@ -20,9 +26,14 @@ const LoginScreen = () => {
 					slotProps={{
 						root: {
 							onClick: async () => {
-								console.log("START loginWithPopup");
-								await auth.login?.();
-								console.log("END loginWithPopup");
+								try {
+									console.log("START loginWithPopup");
+									await auth.login();
+									console.log("END loginWithPopup");
+									navigate({ to: "/dashboard" });
+								} catch (error) {
+									console.log("!!!!error", error);
+								}
 							},
 						},
 					}}
@@ -70,6 +81,6 @@ const LoginBUtton = styled(AppButton)(({ theme }) => ({
 
 const RegisterNow = styled(Link)(() => ({}));
 
-export const Route = createFileRoute("/login")({
+export const Route = createLazyFileRoute("/login")({
 	component: LoginScreen,
 });

@@ -5,6 +5,7 @@ import { createRootRouteWithContext, Outlet } from "@tanstack/react-router";
 
 export interface RouterContext {
 	queryClient: QueryClient;
+	auth: any;
 }
 
 const RootComponent = () => {

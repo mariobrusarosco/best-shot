@@ -1,12 +1,8 @@
 import { api } from "@/api";
 import { Auth0Provider, useAuth0 as useAuthBase } from "@auth0/auth0-react";
-import { IAuthHook } from "..";
+import { IAuthHook } from "../typing";
 
-export default function OktaAuth0Provider({
-	children,
-}: {
-	children: React.ReactNode;
-}) {
+const Provider = ({ children }: { children: React.ReactNode }) => {
 	return (
 		<Auth0Provider
 			domain={import.meta.env.VITE_AUTH_DOMAIN}
@@ -18,9 +14,9 @@ export default function OktaAuth0Provider({
 			{children}
 		</Auth0Provider>
 	);
-}
+};
 
-export const useAuth0 = () => {
+const hook = () => {
 	const {
 		isAuthenticated,
 		isLoading,
@@ -29,24 +25,24 @@ export const useAuth0 = () => {
 		logout,
 		getIdTokenClaims,
 	} = useAuthBase();
-	// const router = useRouter();
-	// console.log({ router });
 
 	const appLogin = async () => {
-		await loginWithPopup({
-			authorizationParams: {
-				redirect_uri: "http://localhost:5173/dashboard/",
-				screen_hint: "login",
-			},
-		});
-		const user = await getIdTokenClaims();
+		try {
+			await loginWithPopup({
+				authorizationParams: {
+					screen_hint: "login",
+				},
+			});
+			const user = await getIdTokenClaims();
 
-		await api.get("whoami", {
-			params: { publicId: user?.sub },
-		});
+			await api.get("whoami", {
+				params: { publicId: user?.sub },
+			});
+		} catch (error) {
+			alert(error);
 
-		alert("Welcome back to Best Shot!");
-		// navigate({ from: "/", to: "/dashboard" });
+			return Promise.reject(error);
+		}
 	};
 
 	const appSignup = async () => {
@@ -57,11 +53,8 @@ export const useAuth0 = () => {
 				},
 			});
 			const user = await getIdTokenClaims();
-			alert("User created, welcome to Best Shot!");
 
-			console.log(user);
-
-			return api.post("whoami", {
+			await api.post("whoami", {
 				publicId: user?.sub,
 				email: user?.email,
 				firstName: user?.given_name,
@@ -69,17 +62,21 @@ export const useAuth0 = () => {
 				nickName: user?.nickname ?? user?.given_name,
 			});
 		} catch (error) {
+			alert(error);
+
 			return Promise.reject(error);
 		}
 	};
 
 	const appLogout = async () => {
-		logout({
-			logoutParams: {
-				returnTo: "http://localhost:5173/login",
-			},
-		});
-		await api.delete("whoami");
+		try {
+			await logout();
+			await api.delete("whoami");
+		} catch (error) {
+			alert(error);
+
+			return Promise.reject(error);
+		}
 	};
 
 	return {
@@ -91,3 +88,5 @@ export const useAuth0 = () => {
 		logout: appLogout,
 	} satisfies IAuthHook;
 };
+
+export default { hook, Provider };

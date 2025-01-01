@@ -1,15 +1,17 @@
-import { useAppAuth } from "@/domains/authentication/hooks/use-app-auth";
+import { Authentication } from "@/domains/authentication";
 import { AppButton } from "@/domains/ui-system/components/button/button";
 import { PublicLayout } from "@/domains/ui-system/layout/public";
 import { theme } from "@/theming/theme";
 import { Box, styled } from "@mui/material";
 import Typography from "@mui/material/Typography/Typography";
-import { createLazyFileRoute } from "@tanstack/react-router";
+import { createLazyFileRoute, Link, useNavigate } from "@tanstack/react-router";
+
+const useAppAuth = Authentication.useAppAuth;
 
 const SignUpScreen = () => {
-	const { auth } = useAppAuth();
+	const auth = useAppAuth();
+	const navigate = useNavigate();
 
-	// console.log("LoginScreen", auth);
 	return (
 		<PublicLayout>
 			<SignUp>
@@ -24,6 +26,7 @@ const SignUpScreen = () => {
 								console.log("START loginWithPopup");
 								await auth.signup?.();
 								console.log("END loginWithPopup");
+								navigate({ to: "/dashboard" });
 							},
 						},
 					}}
@@ -31,10 +34,21 @@ const SignUpScreen = () => {
 					SIGN UP
 				</SignUpBUtton>
 				<ProviderDisclaimer>
-					<Typography variant="caption" color={theme.palette.teal[500]}>
+					<Typography variant="tag" color={theme.palette.teal[500]}>
 						using Auth0 by Okta
 					</Typography>
 				</ProviderDisclaimer>
+
+				<Typography
+					variant="label"
+					color={theme.palette.neutral[100]}
+					textTransform="uppercase"
+				>
+					Already have an account?
+					<LoginPageLink to="/login" sx={{ color: theme.palette.teal[500] }}>
+						Login now!
+					</LoginPageLink>
+				</Typography>
 			</SignUp>
 		</PublicLayout>
 	);
@@ -43,6 +57,7 @@ const SignUpScreen = () => {
 const SignUp = styled(Box)(({ theme }) => ({
 	display: "grid",
 	placeContent: "center",
+	placeItems: "center",
 	flex: 1,
 	gap: theme.spacing(1),
 }));
@@ -55,6 +70,10 @@ const SignUpBUtton = styled(AppButton)(({ theme }) => ({
 }));
 
 const ProviderDisclaimer = styled(AppButton)(() => ({}));
+const LoginPageLink = styled(Link)(({ theme }) => ({
+	marginTop: theme.spacing(2),
+	padding: theme.spacing(1),
+}));
 
 export const Route = createLazyFileRoute("/signup")({
 	component: SignUpScreen,

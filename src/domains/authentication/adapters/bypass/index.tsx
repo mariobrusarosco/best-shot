@@ -9,18 +9,44 @@ const memberid =
 	localStorage.getItem("local-member-id") ??
 	import.meta.env.VITE_MOCKED_MEMBER_ID;
 
-export const ByPassAuthProvider = ({
-	children,
-}: {
-	children: React.ReactNode;
-}) => {
+export const Provider = ({ children }: { children: React.ReactNode }) => {
+	const appLogout = async () => {
+		try {
+			await api.delete("whoami");
+		} catch (error) {
+			alert(error);
+
+			return Promise.reject(error);
+		}
+	};
+
+	const appLogin = async () => {
+		try {
+			alert("[DEMO MESSAGE] You're now logged in!");
+			return Promise.resolve();
+		} catch (error) {
+			alert(error);
+			return Promise.reject(error);
+		}
+	};
+
+	const appSignup = async () => {
+		try {
+			alert("[DEMO MESSAGE] You're now signed up!");
+			return Promise.resolve();
+		} catch (error) {
+			alert(error);
+			return Promise.reject(error);
+		}
+	};
+
 	const [state, setState] = useState<IAuthHook>({
 		isAuthenticated: false,
 		authId: undefined,
 		isLoadingAuth: true,
-		logout: () => new Promise(() => {}),
-		login: () => new Promise(() => {}),
-		signup: () => new Promise(() => {}),
+		logout: appLogout,
+		login: appLogin,
+		signup: appSignup,
 	});
 
 	const { mutate } = useMutation({
@@ -45,12 +71,12 @@ export const ByPassAuthProvider = ({
 };
 
 export const authenticatedLocalMember = async (publicId: any) => {
-	const response = await api.post("whoami", { publicId });
+	const response = await api.get("whoami", { params: { publicId } });
 
 	return response.data;
 };
 
-export const useByPassAuth = () => {
+export const hook = () => {
 	const context = useContext(ByPassAuthContext);
 
 	if (context === undefined)
@@ -58,3 +84,5 @@ export const useByPassAuth = () => {
 
 	return context;
 };
+
+export default { hook, Provider };

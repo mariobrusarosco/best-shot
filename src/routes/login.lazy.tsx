@@ -10,9 +10,6 @@ const useAppAuth = Authentication.useAppAuth;
 
 const LoginScreen = () => {
 	const auth = useAppAuth();
-	// const router = useRouter();
-	console.log("LoginScreen - [auth]", auth);
-	// const login = useLogin();
 	const navigate = useNavigate();
 
 	return (
@@ -27,12 +24,10 @@ const LoginScreen = () => {
 						root: {
 							onClick: async () => {
 								try {
-									console.log("START loginWithPopup");
 									await auth.login();
-									console.log("END loginWithPopup");
 									navigate({ to: "/dashboard" });
 								} catch (error) {
-									console.log("!!!!error", error);
+									console.log(error);
 								}
 							},
 						},

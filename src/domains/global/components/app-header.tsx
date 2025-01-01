@@ -1,6 +1,7 @@
 import { BestShotIcon } from "@/assets/best-shot-icon";
 import { theme, UIHelper } from "@/theming/theme";
-import { styled, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
+import styled from "@mui/material/styles/styled";
 import { Stack } from "@mui/system";
 
 export const AppHeader = () => {

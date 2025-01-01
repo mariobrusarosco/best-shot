@@ -1,8 +1,10 @@
 import { useGuessInputs } from "@/domains/guess/hooks/use-guess-inputs";
 import { GUESS_STATUS, GUESS_STATUSES, IGuess } from "@/domains/guess/typing";
 import { AppIcon } from "@/domains/ui-system/components/icon/icon";
-import { shimmerEffect } from "@/domains/ui-system/components/skeleton/skeleton";
-import { Divider, styled } from "@mui/material";
+import { shimmerEffectNew } from "@/domains/ui-system/components/skeleton/skeleton";
+import { Divider } from "@mui/material";
+import styled from "@mui/material/styles/styled";
+
 import Typography from "@mui/material/Typography/Typography";
 import { Stack } from "@mui/system";
 import dayjs from "dayjs";
@@ -139,7 +141,7 @@ const MatchCard = ({ guess, match }: Props) => {
 
 const Skeleton = styled(Card)(() => ({
 	height: "84px",
-	...shimmerEffect(),
+	...shimmerEffectNew,
 }));
 
 export default {

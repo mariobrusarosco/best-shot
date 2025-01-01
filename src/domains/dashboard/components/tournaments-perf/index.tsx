@@ -5,8 +5,8 @@ import { AppButton } from "@/domains/ui-system/components/button/button";
 import { AppIcon } from "@/domains/ui-system/components/icon/icon";
 import { AppPill } from "@/domains/ui-system/components/pill/pill";
 import { shimmerEffect } from "@/domains/ui-system/components/skeleton/skeleton";
-import { Stack, styled, Typography } from "@mui/material";
-import { Box } from "@mui/system";
+import { Stack, Typography } from "@mui/material";
+import { Box, styled } from "@mui/system";
 import { Link } from "@tanstack/react-router";
 import { DashGrid } from "../dash-grid";
 

@@ -1,50 +1,84 @@
-import { createFileRoute } from "@tanstack/react-router";
-
 import { ScreenHeading } from "@/domains/global/components/screen-heading";
 import { useMember } from "@/domains/member/hooks/use-member";
-import { ScreenLayout } from "@/domains/ui-system/layout/screen-layout";
+import { AppButton } from "@/domains/ui-system/components/button/button";
+import { AuthenticatedScreenLayout } from "@/domains/ui-system/layout/authenticated";
 import { ScreenMainContent } from "@/domains/ui-system/layout/screen-main-content";
-import { Typography } from "@mui/material";
+import { styled, Typography } from "@mui/material";
+import { createFileRoute } from "@tanstack/react-router";
 
 export default function MyAccountScreen() {
+	// const { auth } = useAppAuth();
 	const member = useMember();
 
 	if (member.isLoading) {
 		return (
-			<ScreenLayout>
+			<AuthenticatedScreenLayout>
 				<ScreenMainContent>
 					<Typography variant="h1" color="neutral.100">
 						...loading
 					</Typography>
 				</ScreenMainContent>
-			</ScreenLayout>
+			</AuthenticatedScreenLayout>
 		);
 	}
 
 	if (member.isError) {
 		return (
-			<ScreenLayout>
+			<AuthenticatedScreenLayout>
 				<ScreenMainContent>
 					<Typography variant="h1" color="red.400">
 						Ops, something has happend
 					</Typography>
 				</ScreenMainContent>
-			</ScreenLayout>
+			</AuthenticatedScreenLayout>
 		);
 	}
 
 	return (
-		<ScreenLayout>
+		<AuthenticatedScreenLayout>
 			<ScreenHeading title="my account" />
 
-			<ScreenMainContent>
+			<MyAccount>
+				<Typography variant="topic" color="neutral.100">
+					{member.data?.id}
+				</Typography>
 				<Typography variant="h1" color="neutral.100">
 					{member.data?.nickName}
 				</Typography>
-			</ScreenMainContent>
-		</ScreenLayout>
+				<Typography variant="paragraph" color="neutral.100">
+					{member.data?.email}
+				</Typography>
+
+				<LogoutButton
+				// slotProps={{
+				// 	root: {
+				// 		onClick: () => {
+				// 			console.log("logout");
+				// 			auth.logout();
+				// 		},
+				// 	},
+				// }}
+				>
+					Logout
+				</LogoutButton>
+			</MyAccount>
+		</AuthenticatedScreenLayout>
 	);
 }
+
+const MyAccount = styled(ScreenMainContent)(({ theme }) => ({
+	flexDirection: "column",
+	gap: theme.spacing(4),
+}));
+
+const LogoutButton = styled(AppButton)(({ theme }) => ({
+	display: "block",
+	padding: theme.spacing(2, 4),
+	borderRadius: theme.spacing(1),
+	backgroundColor: theme.palette.teal[500],
+	color: theme.palette.neutral[100],
+	maxWidth: "fit-content",
+}));
 
 export const Route = createFileRoute("/_auth/my-account")({
 	component: MyAccountScreen,

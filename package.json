@@ -1,10 +1,11 @@
 {
 	"name": "best-shot",
 	"private": true,
-	"version": "0.53.1",
+	"version": "0.54.0",
 	"scripts": {
 		"start": "concurrently \"vite --mode local-dev\" \"cd ../api-best-shot && yarn dev\"",
 		"dev": "vite --mode local-dev",
+		"dev-prod": "vite --mode production",
 		"build": "tsc && vite build",
 		"preview": "vite preview",
 		"test": "vitest run --coverage",
@@ -19,7 +20,6 @@
 		"@mui/base": "^5.0.0-beta.64",
 		"@mui/material": "^6.2.0",
 		"@mui/system": "^5.15.15",
-		"@mui/x-data-grid": "^7.23.2",
 		"@sentry/react": "^8.46.0",
 		"@sentry/vite-plugin": "^2.22.7",
 		"@tabler/icons-react": "^3.22.0",
@@ -27,7 +27,6 @@
 		"@tanstack/react-query-devtools": "^5.51.9",
 		"@tanstack/react-router": "^1.47.1",
 		"axios": "^1.7.2",
-		"date-fns": "^4.1.0",
 		"dayjs": "^1.11.13",
 		"lodash": "^4.17.21",
 		"react": "^18.2.0",

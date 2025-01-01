@@ -7,7 +7,7 @@ import { useMemberPerformance } from "@/domains/member/hooks/use-member-performa
 
 import Matchday from "@/domains/dashboard/components/matchday";
 import { useDashboard } from "@/domains/dashboard/hooks/use-dashboard";
-import { ScreenLayout } from "@/domains/ui-system/layout/screen-layout";
+import { AuthenticatedScreenLayout } from "@/domains/ui-system/layout/authenticated";
 import { ScreenMainContent } from "@/domains/ui-system/layout/screen-main-content";
 import { styled } from "@mui/system";
 import TournamentsPerf from "../components/tournaments-perf";
@@ -19,36 +19,36 @@ const DashboardPage = () => {
 
 	if (member.isPending || performance.isPending || dashboard.isPending) {
 		return (
-			<ScreenLayout data-ui="dashboard-screen">
+			<AuthenticatedScreenLayout data-ui="dashboard-screen">
 				<ScreenHeadingSkeleton />
 
 				<ScreenMainContent data-ui="dashboard-content">
 					<Matchday.Skeleton />
 					<TournamentsPerf.Skeleton />
 				</ScreenMainContent>
-			</ScreenLayout>
+			</AuthenticatedScreenLayout>
 		);
 	}
 
 	if (performance.isError || member.isError || dashboard.isError) {
 		return (
-			<ScreenLayout data-ui="dashboard-screen">
+			<AuthenticatedScreenLayout data-ui="dashboard-screen">
 				<ScreenHeading title="Dashboard" subtitle="" />
 
 				<ScreenMainContent>Error</ScreenMainContent>
-			</ScreenLayout>
+			</AuthenticatedScreenLayout>
 		);
 	}
 
 	return (
-		<ScreenLayout data-ui="dashboard-screen">
+		<AuthenticatedScreenLayout data-ui="dashboard-screen">
 			<ScreenHeading title="Hello," subtitle={member?.data?.nickName} />
 
 			<Dashboard data-ui="dashboard-content">
 				<Matchday.Component matchday={dashboard.data.matchday} />
 				<TournamentsPerf.Component performance={performance} />
 			</Dashboard>
-		</ScreenLayout>
+		</AuthenticatedScreenLayout>
 	);
 };
 

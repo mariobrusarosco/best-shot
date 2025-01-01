@@ -17,7 +17,10 @@ export const ByPassAuthProvider = ({
 	const [state, setState] = useState<IAuthHook>({
 		isAuthenticated: false,
 		authId: undefined,
-		isLoadingAuth: false,
+		isLoadingAuth: true,
+		logout: () => new Promise(() => {}),
+		login: () => new Promise(() => {}),
+		signup: () => new Promise(() => {}),
 	});
 
 	const { mutate } = useMutation({
@@ -26,11 +29,12 @@ export const ByPassAuthProvider = ({
 
 	useEffect(() => {
 		mutate(memberid);
-		setState({
+		setState((prev) => ({
+			...prev,
 			authId: memberid as string,
 			isAuthenticated: true,
 			isLoadingAuth: false,
-		});
+		}));
 	}, []);
 
 	return (

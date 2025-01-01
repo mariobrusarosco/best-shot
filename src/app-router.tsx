@@ -17,9 +17,11 @@ const router = createRouter({
 });
 
 const AppRouter = () => {
+	const auth = useAppAuth();
+
 	return (
 		<>
-			<RouterProvider router={router} />
+			<RouterProvider router={router} context={auth} />
 		</>
 	);
 };

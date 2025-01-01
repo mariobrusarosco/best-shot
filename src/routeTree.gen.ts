@@ -23,6 +23,7 @@ import { Route as AuthTournamentsTournamentIdLayoutImport } from './routes/_auth
 
 // Create Virtual Routes
 
+const SignupLazyImport = createFileRoute('/signup')()
 const AuthTournamentsTournamentIdImport = createFileRoute(
   '/_auth/tournaments/$tournamentId',
 )()
@@ -45,6 +46,12 @@ const AuthTournamentsTournamentIdLayoutMatchesLazyImport = createFileRoute(
 )()
 
 // Create/Update Routes
+
+const SignupLazyRoute = SignupLazyImport.update({
+  id: '/signup',
+  path: '/signup',
+  getParentRoute: () => rootRoute,
+} as any).lazy(() => import('./routes/signup.lazy').then((d) => d.Route))
 
 const UiSystemRoute = UiSystemImport.update({
   id: '/ui-system',
@@ -195,6 +202,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof UiSystemImport
       parentRoute: typeof rootRoute
     }
+    '/signup': {
+      id: '/signup'
+      path: '/signup'
+      fullPath: '/signup'
+      preLoaderRoute: typeof SignupLazyImport
+      parentRoute: typeof rootRoute
+    }
     '/_auth/dashboard': {
       id: '/_auth/dashboard'
       path: '/dashboard'
@@ -342,6 +356,7 @@ export interface FileRoutesByFullPath {
   '': typeof AuthRouteWithChildren
   '/login': typeof LoginRoute
   '/ui-system': typeof UiSystemRoute
+  '/signup': typeof SignupLazyRoute
   '/dashboard': typeof AuthDashboardRoute
   '/my-account': typeof AuthMyAccountRoute
   '/leagues': typeof AuthLeaguesIndexLazyRoute
@@ -359,6 +374,7 @@ export interface FileRoutesByTo {
   '': typeof AuthRouteWithChildren
   '/login': typeof LoginRoute
   '/ui-system': typeof UiSystemRoute
+  '/signup': typeof SignupLazyRoute
   '/dashboard': typeof AuthDashboardRoute
   '/my-account': typeof AuthMyAccountRoute
   '/leagues': typeof AuthLeaguesIndexLazyRoute
@@ -377,6 +393,7 @@ export interface FileRoutesById {
   '/_auth': typeof AuthRouteWithChildren
   '/login': typeof LoginRoute
   '/ui-system': typeof UiSystemRoute
+  '/signup': typeof SignupLazyRoute
   '/_auth/dashboard': typeof AuthDashboardRoute
   '/_auth/my-account': typeof AuthMyAccountRoute
   '/_auth/leagues/': typeof AuthLeaguesIndexLazyRoute
@@ -397,6 +414,7 @@ export interface FileRouteTypes {
     | ''
     | '/login'
     | '/ui-system'
+    | '/signup'
     | '/dashboard'
     | '/my-account'
     | '/leagues'
@@ -413,6 +431,7 @@ export interface FileRouteTypes {
     | ''
     | '/login'
     | '/ui-system'
+    | '/signup'
     | '/dashboard'
     | '/my-account'
     | '/leagues'
@@ -429,6 +448,7 @@ export interface FileRouteTypes {
     | '/_auth'
     | '/login'
     | '/ui-system'
+    | '/signup'
     | '/_auth/dashboard'
     | '/_auth/my-account'
     | '/_auth/leagues/'
@@ -448,6 +468,7 @@ export interface RootRouteChildren {
   AuthRoute: typeof AuthRouteWithChildren
   LoginRoute: typeof LoginRoute
   UiSystemRoute: typeof UiSystemRoute
+  SignupLazyRoute: typeof SignupLazyRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
@@ -455,6 +476,7 @@ const rootRouteChildren: RootRouteChildren = {
   AuthRoute: AuthRouteWithChildren,
   LoginRoute: LoginRoute,
   UiSystemRoute: UiSystemRoute,
+  SignupLazyRoute: SignupLazyRoute,
 }
 
 export const routeTree = rootRoute
@@ -470,7 +492,8 @@ export const routeTree = rootRoute
         "/",
         "/_auth",
         "/login",
-        "/ui-system"
+        "/ui-system",
+        "/signup"
       ]
     },
     "/": {
@@ -492,6 +515,9 @@ export const routeTree = rootRoute
     },
     "/ui-system": {
       "filePath": "ui-system.tsx"
+    },
+    "/signup": {
+      "filePath": "signup.lazy.tsx"
     },
     "/_auth/dashboard": {
       "filePath": "_auth.dashboard.tsx",

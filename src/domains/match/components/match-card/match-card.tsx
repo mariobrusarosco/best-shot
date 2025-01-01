@@ -5,7 +5,7 @@ import { shimmerEffect } from "@/domains/ui-system/components/skeleton/skeleton"
 import { Divider, styled } from "@mui/material";
 import Typography from "@mui/material/Typography/Typography";
 import { Stack } from "@mui/system";
-import { format } from "date-fns";
+import dayjs from "dayjs";
 import { useState } from "react";
 import { IMatch } from "../../typing";
 import { defineMatchTimebox } from "../../utils";
@@ -66,7 +66,7 @@ const MatchCard = ({ guess, match }: Props) => {
 					>
 						{match.date === null
 							? "-"
-							: format(new Date(match.date), "dd MMM - k:mm")}
+							: dayjs(match.date).format("HH:mm MMM DD - YY")}
 					</Typography>
 
 					<Divider
@@ -137,12 +137,10 @@ const MatchCard = ({ guess, match }: Props) => {
 	);
 };
 
-const Skeleton = styled(Card)(({ theme }) =>
-	theme.unstable_sx({
-		height: "84px",
-		...shimmerEffect(),
-	}),
-);
+const Skeleton = styled(Card)(() => ({
+	height: "84px",
+	...shimmerEffect(),
+}));
 
 export default {
 	Component: MatchCard,

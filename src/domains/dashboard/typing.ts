@@ -6,7 +6,7 @@ export interface IMatchday {
 	all: {
 		tournamentLabel: string;
 		tournamentId: string;
-		roundId: string;
+		roundSlug: string;
 		date: string;
 		match: string;
 	}[];

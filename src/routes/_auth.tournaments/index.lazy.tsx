@@ -4,7 +4,7 @@ import {
 	TournamentsListLoading,
 } from "@/domains/tournament/components/tournaments-list";
 import { useTournaments } from "@/domains/tournament/hooks/use-tournaments";
-import { ScreenLayout } from "@/domains/ui-system/layout/screen-layout";
+import { AuthenticatedScreenLayout } from "@/domains/ui-system/layout/authenticated";
 import { ScreenMainContent } from "@/domains/ui-system/layout/screen-main-content";
 import { UIHelper } from "@/theming/theme";
 import { styled } from "@mui/material";
@@ -16,30 +16,30 @@ const TournamentsPage = () => {
 
 	if (isLoading) {
 		return (
-			<ScreenLayout>
+			<AuthenticatedScreenLayout>
 				<ScreenMainContent>
 					<Typography variant="h3" color="neutral.10">
 						...Loading...
 					</Typography>
 				</ScreenMainContent>
-			</ScreenLayout>
+			</AuthenticatedScreenLayout>
 		);
 	}
 
 	if (error) {
 		return (
-			<ScreenLayout>
+			<AuthenticatedScreenLayout>
 				<ScreenMainContent>
 					<Typography variant="h3" color="neutral.10">
 						Ops! Something happened
 					</Typography>
 				</ScreenMainContent>
-			</ScreenLayout>
+			</AuthenticatedScreenLayout>
 		);
 	}
 
 	return (
-		<ScreenLayout data-ui="tournaments-screen">
+		<AuthenticatedScreenLayout data-ui="tournaments-screen">
 			<ScreenHeading
 				title="tournaments"
 				subtitle="all current available tournaments"
@@ -50,7 +50,7 @@ const TournamentsPage = () => {
 				{isLoading ? <TournamentsListLoading /> : null}
 				{data ? <TournamentsList tournaments={data} /> : null}
 			</Tournaments>
-		</ScreenLayout>
+		</AuthenticatedScreenLayout>
 	);
 };
 

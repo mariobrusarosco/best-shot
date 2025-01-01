@@ -37,7 +37,7 @@ const Matchday = ({ matchday }: { matchday: IMatchday }) => {
 							<Link
 								to="/tournaments/$tournamentId/matches"
 								params={{ tournamentId: match.tournamentId }}
-								search={{ round: match.roundId }}
+								search={{ round: match.roundSlug }}
 								replace={false}
 								resetScroll={false}
 							>
@@ -82,7 +82,7 @@ const Matchday = ({ matchday }: { matchday: IMatchday }) => {
 										color={theme.palette.teal[500]}
 										fontWeight={400}
 									>
-										round {match.roundId}
+										round {match.roundSlug}
 									</Typography>
 								</AppCard.Container>
 							</Link>

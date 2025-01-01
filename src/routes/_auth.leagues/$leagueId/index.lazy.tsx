@@ -4,7 +4,7 @@ import { LeaguePerformanceStats } from "@/domains/league/components/league-perfo
 import { LeagueTournaments } from "@/domains/league/components/league-tournaments/league-tournament-list";
 import ParticipantsList from "@/domains/league/components/participants/participants";
 import { useLeague } from "@/domains/league/hooks/use-league";
-import { ScreenLayout } from "@/domains/ui-system/layout/screen-layout";
+import { AuthenticatedScreenLayout } from "@/domains/ui-system/layout/authenticated";
 import { ScreenMainContent } from "@/domains/ui-system/layout/screen-main-content";
 import { UIHelper } from "@/theming/theme";
 import { styled } from "@mui/material";
@@ -20,28 +20,28 @@ const LeaguePage = () => {
 
 	if (league.isPending) {
 		return (
-			<ScreenLayout data-ui="leagues-screen-loading">
+			<AuthenticatedScreenLayout data-ui="leagues-screen-loading">
 				<ScreenHeading title="league">
 					<ScreenMainContent>
 						<ParticipantsList.Skeleton />
 					</ScreenMainContent>
 				</ScreenHeading>
-			</ScreenLayout>
+			</AuthenticatedScreenLayout>
 		);
 	}
 
 	if (league.isError) {
 		return (
-			<ScreenLayout data-ui="leagues-screen-error">
+			<AuthenticatedScreenLayout data-ui="leagues-screen-error">
 				<ScreenHeading title="league">
 					<ScreenMainContent>...error...</ScreenMainContent>
 				</ScreenHeading>
-			</ScreenLayout>
+			</AuthenticatedScreenLayout>
 		);
 	}
 
 	return (
-		<ScreenLayout data-ui="leagues-screen screen">
+		<AuthenticatedScreenLayout data-ui="leagues-screen screen">
 			<ScreenHeading
 				backTo="/leagues"
 				title="league"
@@ -58,7 +58,7 @@ const LeaguePage = () => {
 					</Stack>
 				</League>
 			</ScreenMainContent>
-		</ScreenLayout>
+		</AuthenticatedScreenLayout>
 	);
 };
 

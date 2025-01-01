@@ -1,8 +1,14 @@
-import { useAppAuth } from "@/domains/authentication/hooks/use-app-auth";
+import { queryClient } from "@/configuration/app-query";
 import { AppError } from "@/domains/global/components/error";
 import { AppNotFound } from "@/domains/global/components/not-found";
+import { RouterContext } from "@/routes/__root";
+import { routeTree } from "@/routeTree.gen";
 import { createRouter, RouterProvider } from "@tanstack/react-router";
-import { routeTree } from "./routeTree.gen";
+import { Authentication } from "./domains/authentication";
+
+const { AuthProvider, useAppAuth } = Authentication;
+
+// Type-safety registration
 declare module "@tanstack/react-router" {
 	interface Register {
 		router: typeof router;
@@ -11,16 +17,33 @@ declare module "@tanstack/react-router" {
 
 const router = createRouter({
 	routeTree,
-	context: {} as ReturnType<typeof useAppAuth>,
+	context: {
+		queryClient,
+		auth: { isAuthenticated: false, isLoadingAuth: false },
+	} as RouterContext,
 	defaultErrorComponent: AppError,
 	defaultNotFoundComponent: AppNotFound,
 });
 
+const Router = () => {
+	const auth = useAppAuth();
+
+	return (
+		<RouterProvider
+			router={router}
+			context={{
+				queryClient,
+				auth,
+			}}
+		/>
+	);
+};
+
 const AppRouter = () => {
 	return (
-		<>
-			<RouterProvider router={router} />
-		</>
+		<AuthProvider>
+			<Router />
+		</AuthProvider>
 	);
 };
 

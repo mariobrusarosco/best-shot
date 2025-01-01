@@ -7,7 +7,7 @@ import TournamentHeading, {
 } from "@/domains/tournament/components/tournament-heading";
 import TournamentTabs from "@/domains/tournament/components/tournament-tabs";
 import { useTournament } from "@/domains/tournament/hooks/use-tournament";
-import { ScreenLayout } from "@/domains/ui-system/layout/screen-layout";
+import { AuthenticatedScreenLayout } from "@/domains/ui-system/layout/authenticated";
 import { ScreenMainContent } from "@/domains/ui-system/layout/screen-main-content";
 import { UIHelper } from "@/theming/theme";
 import { Stack } from "@mui/material";
@@ -21,13 +21,13 @@ const TournamentLayout = () => {
 
 	if (tournament.isPending) {
 		return (
-			<ScreenLayout>
+			<AuthenticatedScreenLayout>
 				<ScreenHeadingSkeleton />
 
 				<ScreenMainContent>
 					<TournamentHeading.Skeleton />
 				</ScreenMainContent>
-			</ScreenLayout>
+			</AuthenticatedScreenLayout>
 		);
 	}
 
@@ -36,7 +36,7 @@ const TournamentLayout = () => {
 	}
 
 	return (
-		<ScreenLayout data-ui="tournament-page" overflow="hidden">
+		<AuthenticatedScreenLayout data-ui="tournament-page" overflow="hidden">
 			<ScreenHeading backTo="/tournaments">
 				<CustomScreenHeading>
 					<LabelAndLogo>
@@ -72,7 +72,7 @@ const TournamentLayout = () => {
 
 				<Outlet />
 			</CustomScreenContent>
-		</ScreenLayout>
+		</AuthenticatedScreenLayout>
 	);
 };
 

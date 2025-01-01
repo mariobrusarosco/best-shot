@@ -1,5 +1,5 @@
 import { AppButton } from "@/domains/ui-system/components/button/button";
-import { ScreenLayout } from "@/domains/ui-system/layout/screen-layout";
+import { AuthenticatedScreenLayout } from "@/domains/ui-system/layout/authenticated";
 import { BORDER_RADIUS, COLORS, PADDING } from "@/theming/theme";
 import { useTheme } from "@mui/system";
 import Box from "@mui/system/Box";
@@ -11,7 +11,7 @@ const UiSystemScreen = () => {
 	console.log({ theme });
 
 	return (
-		<ScreenLayout>
+		<AuthenticatedScreenLayout>
 			<Box data-ui="test">
 				<h2>AppButton</h2>
 
@@ -50,7 +50,7 @@ const UiSystemScreen = () => {
 					))}
 				</Box>
 			</Box>
-		</ScreenLayout>
+		</AuthenticatedScreenLayout>
 	);
 };
 

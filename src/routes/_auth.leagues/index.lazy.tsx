@@ -1,7 +1,7 @@
 import { ScreenHeading } from "@/domains/global/components/screen-heading";
 import { LeaguesList } from "@/domains/league/components/leagues-list";
 import { NewLeague } from "@/domains/league/components/new-league/new-league";
-import { ScreenLayout } from "@/domains/ui-system/layout/screen-layout";
+import { AuthenticatedScreenLayout } from "@/domains/ui-system/layout/authenticated";
 import { ScreenMainContent } from "@/domains/ui-system/layout/screen-main-content";
 import { UIHelper } from "@/theming/theme";
 import { styled } from "@mui/material";
@@ -14,26 +14,26 @@ const LeaguesPage = () => {
 
 	if (leagues.isLoading) {
 		return (
-			<ScreenLayout>
+			<AuthenticatedScreenLayout>
 				<ScreenHeading title="leagues" />
 				<ScreenMainContent>Loading...</ScreenMainContent>
-			</ScreenLayout>
+			</AuthenticatedScreenLayout>
 		);
 	}
 
 	if (leagues.isError) {
 		return (
-			<ScreenLayout>
+			<AuthenticatedScreenLayout>
 				<ScreenHeading title="leagues" />
 				<ScreenMainContent>
 					There was an error loading the leagues
 				</ScreenMainContent>
-			</ScreenLayout>
+			</AuthenticatedScreenLayout>
 		);
 	}
 
 	return (
-		<ScreenLayout data-ui="leagues-screen screen">
+		<AuthenticatedScreenLayout data-ui="leagues-screen screen">
 			<ScreenHeading title="leagues" backTo="/dashboard" />
 
 			<ScreenMainContent data-ui="leagues-content">
@@ -43,7 +43,7 @@ const LeaguesPage = () => {
 					<NewLeague />
 				</Leagues>
 			</ScreenMainContent>
-		</ScreenLayout>
+		</AuthenticatedScreenLayout>
 	);
 };
 const Leagues = styled(Box)(({ theme }) => ({

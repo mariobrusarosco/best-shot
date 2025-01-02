@@ -13,11 +13,13 @@ import {
 	TableRow,
 	Typography,
 } from "@mui/material";
+import { useTournament } from "../../hooks/use-tournament";
 import { useTournamentStandings } from "../../hooks/use-tournament-standings";
 import { ITournamentStandings } from "../../typing";
 
 const TournamentStandings = () => {
 	const tournamentStandings = useTournamentStandings();
+	const tournamentQuery = useTournament();
 
 	if (tournamentStandings.isPending) {
 		return (
@@ -39,7 +41,35 @@ const TournamentStandings = () => {
 		);
 	}
 
+	if (tournamentQuery.data?.mode === "knockout-only") {
+		return (
+			<Stack>
+				<Heading>
+					<AppPill.Component
+						border="1px solid"
+						borderColor="teal.500"
+						width={80}
+						height={25}
+					>
+						<Typography
+							variant="tag"
+							textTransform="uppercase"
+							color="neutral.100"
+							fontWeight={500}
+						>
+							standings
+						</Typography>
+					</AppPill.Component>
+				</Heading>
+				<Typography variant="label" color={theme.palette.neutral[100]}>
+					Knockout tournaments do not have standings
+				</Typography>
+			</Stack>
+		);
+	}
+
 	const standings = parseStandinsByFormat(tournamentStandings.data);
+
 	if (!standings) {
 		return (
 			<Stack>

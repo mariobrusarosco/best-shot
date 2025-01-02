@@ -6,14 +6,14 @@ import ByPass from "./adapters/bypass";
 
 const AuthenticationAdapter: IAuthAdapter = {
 	"local-dev": {
-		AuthProvider: ByPass.Provider,
-		useAppAuth: ByPass.hook,
+		AuthProvider: Auth0.Provider,
+		useAppAuth: Auth0.hook,
 	},
 	demo: {
 		AuthProvider: ByPass.Provider,
 		useAppAuth: ByPass.hook,
 	},
-	staging: { AuthProvider: ByPass.Provider, useAppAuth: ByPass.hook },
+	staging: { AuthProvider: Auth0.Provider, useAppAuth: Auth0.hook },
 	production: { AuthProvider: Auth0.Provider, useAppAuth: Auth0.hook },
 };
 

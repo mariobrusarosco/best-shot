@@ -1,5 +1,6 @@
 import TournamentRoundOfGames from "@/domains/tournament/components/tournament-round-of-games/tournament-round-of-games";
 import TournamentRoundsBar from "@/domains/tournament/components/tournament-rounds-bar";
+import { TournamentSetup } from "@/domains/tournament/components/tournament-setup/tournament-setup";
 import TournamentStandings from "@/domains/tournament/components/tournament-standings/tournament-standings";
 import { useTournament } from "@/domains/tournament/hooks/use-tournament";
 import { useTournamentRounds } from "@/domains/tournament/hooks/use-tournament-rounds";
@@ -15,6 +16,9 @@ import { useEffect } from "react";
 export const TournamentMatchesScreen = () => {
 	const { activeRound, goToRound } = useTournamentRounds();
 	const tournamentQuery = useTournament();
+	const isEmptyState =
+		tournamentQuery.isSuccess &&
+		tournamentQuery.data?.onbordingCompleted === false;
 
 	const autoSelectARound = !tournamentQuery.isPending && !activeRound;
 
@@ -30,6 +34,14 @@ export const TournamentMatchesScreen = () => {
 				<Typography variant="h3" color="red.100">
 					lorem
 				</Typography>
+			</Matches>
+		);
+	}
+
+	if (isEmptyState) {
+		return (
+			<Matches data-ui="matches">
+				<TournamentSetup />
 			</Matches>
 		);
 	}

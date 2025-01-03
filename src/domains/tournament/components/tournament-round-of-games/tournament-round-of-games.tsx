@@ -4,12 +4,10 @@ import MatchCard from "@/domains/match/components/match-card/match-card";
 import { styled } from "@mui/material";
 import { Stack } from "@mui/system";
 import { useTournamentMatches } from "../../hooks/use-tournament-matches";
-import { TournamentSetup } from "../tournament-setup/tournament-setup";
 
 const TournamentRoundOfGames = () => {
 	const guessesQuery = useGuess();
 	const matchesQuery = useTournamentMatches();
-	const isEmptyState = guessesQuery.data?.length === 0;
 
 	if (guessesQuery.isError || matchesQuery.isError) {
 		throw new Error("Ops! We could not find games for this round!");
@@ -19,14 +17,6 @@ const TournamentRoundOfGames = () => {
 		return (
 			<Games>
 				<TournamentRoundOfGamesSkeleton />
-			</Games>
-		);
-	}
-
-	if (isEmptyState) {
-		return (
-			<Games>
-				<TournamentSetup />
 			</Games>
 		);
 	}

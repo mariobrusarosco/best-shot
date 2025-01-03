@@ -25,6 +25,7 @@ export type ITournament = {
 	slug: ApiTournament["slug"];
 	mode: ApiTournament["mode"];
 	starterRound: string;
+	onbordingCompleted: boolean;
 };
 
 export type ITournamentPerformance = {

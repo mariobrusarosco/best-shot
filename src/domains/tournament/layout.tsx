@@ -17,7 +17,8 @@ import { Outlet } from "@tanstack/react-router";
 
 const TournamentLayout = () => {
 	const tournament = useTournament();
-	const isEmptyState = tournament.data?.rounds?.length === 0;
+	const isEmptyState =
+		tournament.isSuccess && tournament.data?.onbordingCompleted === false;
 
 	if (tournament.isPending) {
 		return (
@@ -32,7 +33,7 @@ const TournamentLayout = () => {
 	}
 
 	if (tournament.isError) {
-		throw "sadsadsa";
+		throw "Error";
 	}
 
 	return (
@@ -63,7 +64,9 @@ const TournamentLayout = () => {
 						</LogoBox>
 					</LabelAndLogo>
 
-					<TournamentTabs.Component tournament={tournament.data} />
+					{isEmptyState ? null : (
+						<TournamentTabs.Component tournament={tournament.data} />
+					)}
 				</CustomScreenHeading>
 			</ScreenHeading>
 

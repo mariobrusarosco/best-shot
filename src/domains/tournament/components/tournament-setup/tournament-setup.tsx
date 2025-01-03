@@ -20,11 +20,7 @@ export const TournamentSetup = () => {
 				</Typography>
 			</Stack>
 			<Typography variant="topic" color="neutral.100">
-				We need to setup this tournament for you!
-			</Typography>
-
-			<Typography variant="topic" color="neutral.100">
-				After that you'll be able to guess{" "}
+				We need to setup this tournament for you, so you'll be able to guess{" "}
 				<Typography
 					textTransform="uppercase"
 					variant="label"

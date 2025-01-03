@@ -9,7 +9,7 @@ export const useTournament = () => {
 	const id = route.useParams().tournamentId;
 
 	const query = useQuery<ITournament>({
-		queryKey: ["tournament", { id }],
+		queryKey: tournamentKey(id),
 		queryFn: getTournament,
 		enabled: !!id,
 	});

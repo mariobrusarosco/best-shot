@@ -2,6 +2,7 @@ import { AppButton } from "@/domains/ui-system/components/button/button";
 import { Surface } from "@/domains/ui-system/components/surface/surface";
 import { UIHelper } from "@/theming/theme";
 import { Box, Stack, styled } from "@mui/system";
+import { motion } from "motion/react";
 
 export const Card = styled(Surface)(({ theme }) => ({
 	display: "flex",
@@ -39,7 +40,7 @@ export const Teams = styled(Box)(({ theme }) => ({
 	},
 }));
 
-export const Team = styled(Box)(({ theme }) => ({
+export const Team = styled(motion.div)(({ theme }) => ({
 	display: "flex",
 	justifyContent: "space-between",
 	flex: 1,

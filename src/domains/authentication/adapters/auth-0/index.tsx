@@ -1,5 +1,6 @@
 import { api } from "@/api";
 import { Auth0Provider, useAuth0 as useAuthBase } from "@auth0/auth0-react";
+import { useDatabaseAuth } from "../../hooks/use-database-auth";
 import { IAuthHook } from "../typing";
 
 const Provider = ({ children }: { children: React.ReactNode }) => {
@@ -25,6 +26,7 @@ const hook = () => {
 		logout,
 		getIdTokenClaims,
 	} = useAuthBase();
+	const databaseAuth = useDatabaseAuth(user?.sub);
 
 	const appLogin = async () => {
 		try {
@@ -33,11 +35,9 @@ const hook = () => {
 					screen_hint: "login",
 				},
 			});
-			const user = await getIdTokenClaims();
-
-			await api.get("whoami", {
-				params: { publicId: user?.sub },
-			});
+			console.log("login OK", { isLoading, user });
+			// const user = await getIdTokenClaims();
+			// console.log("got user", { isLoading, user });
 		} catch (error) {
 			alert(error);
 
@@ -54,16 +54,10 @@ const hook = () => {
 			});
 			const user = await getIdTokenClaims();
 
-			await api.post("whoami", {
-				publicId: user?.sub,
-				email: user?.email,
-				firstName: user?.given_name,
-				lastName: user?.family_name,
-				nickName: user?.nickname ?? user?.given_name,
-			});
+			databaseAuth.mutation.mutate(user);
 		} catch (error) {
 			alert(error);
-
+			useDatabaseAuth;
 			return Promise.reject(error);
 		}
 	};
@@ -80,8 +74,8 @@ const hook = () => {
 	};
 
 	return {
-		isAuthenticated,
-		isLoadingAuth: isLoading,
+		isAuthenticated: isAuthenticated && databaseAuth.isSuccess,
+		isLoadingAuth: isLoading || databaseAuth.isLoading,
 		authId: user?.sub,
 		signup: appSignup,
 		login: appLogin,

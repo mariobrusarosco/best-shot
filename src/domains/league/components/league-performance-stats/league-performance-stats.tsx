@@ -124,7 +124,7 @@ const Wrapper = styled(Box)(() => ({
 	flexDirection: "column",
 	flex: 1,
 
-	...OverflowOnHover(),
+	...OverflowOnHover,
 	// [UIHelper.whileIs("mobile")]: {
 	// 	flexDirection: "column",
 	// 	gap: theme.spacing(2),

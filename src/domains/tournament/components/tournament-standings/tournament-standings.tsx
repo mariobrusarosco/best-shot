@@ -90,7 +90,7 @@ const TournamentStandings = () => {
 						</Typography>
 					</AppPill.Component>
 				</Heading>
-				<Typography variant="paragraph" color={theme.palette.neutral[100]}>
+				<Typography variant="topic" color={theme.palette.neutral[100]}>
 					It seems that there are no standings available for this tournament
 				</Typography>
 			</Stack>
@@ -420,7 +420,6 @@ const Row = styled(TableRow)(() => ({
 const TableContainer = styled(Box)(({ theme }) => ({
 	border: "none",
 	padding: theme.spacing(0, 1, 0, 0),
-	// height: "100%",
 }));
 
 const Wrapper = styled(Box)(() => ({
@@ -431,23 +430,21 @@ const Wrapper = styled(Box)(() => ({
 	[UIHelper.startsOn("tablet")]: {
 		flex: 1,
 
-		...OverflowOnHover(),
+		...OverflowOnHover,
 	},
 }));
 
-const Heading = styled(Box)(({ theme }) =>
-	theme?.unstable_sx({
-		backgroundColor: "black.700",
-		pb: 3,
-	}),
-);
+const Heading = styled(Box)(() => ({
+	backgroundColor: theme.palette.black[700],
+	paddingBottom: theme.spacing(3),
+}));
 
 const parseStandinsByFormat = (standings: ITournamentStandings) => {
-	if (!standings) return null;
+	if (!standings?.teams?.length) return null;
 
 	if (standings.format === "multi-group") {
-		return Object.groupBy(standings.standings, (item) => item.groupName!);
+		return Object.groupBy(standings.teams, (item) => item.groupName!);
 	}
 
-	return { "unique-group": standings.standings };
+	return { "unique-group": standings.teams };
 };

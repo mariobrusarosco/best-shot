@@ -20,7 +20,7 @@ const TournamentLayout = () => {
 	const isEmptyState =
 		tournament.isSuccess && tournament.data?.onbordingCompleted === false;
 
-	if (tournament.isPending) {
+	if (tournament.isFetching || tournament.isPending) {
 		return (
 			<AuthenticatedScreenLayout>
 				<ScreenHeadingSkeleton />
@@ -47,7 +47,7 @@ const TournamentLayout = () => {
 								variant="h4"
 								textTransform="lowercase"
 							>
-								{tournament.data?.label}
+								{tournament.data.label}
 							</Typography>
 
 							<Typography

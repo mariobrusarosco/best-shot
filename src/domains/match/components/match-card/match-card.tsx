@@ -68,7 +68,7 @@ const MatchCard = ({ guess, match }: Props) => {
 					>
 						{match.date === null
 							? "-"
-							: dayjs(match.date).format("HH:mm MMM DD - YY")}
+							: dayjs(match.date).format("HH:mm - MMM DD - YYYY")}
 					</Typography>
 
 					<Divider
@@ -111,7 +111,16 @@ const MatchCard = ({ guess, match }: Props) => {
 			</Header>
 
 			<Teams data-ui="teams">
-				<Team data-venue="home" data-ui="team">
+				<Team
+					data-venue="home"
+					data-ui="team"
+					layout
+					transition={{
+						type: "spring",
+						damping: 15,
+						stiffness: 200,
+					}}
+				>
 					<GuessDisplay cardExpanded={isOpen} data={guess.home} />
 					<TeamDisplay cardExpanded={isOpen} team={match.home} />
 					<ScoreDisplay guess={guess} score={match.home.score} />
@@ -123,7 +132,16 @@ const MatchCard = ({ guess, match }: Props) => {
 					/>
 				</Team>
 
-				<Team data-venue="away" data-ui="team">
+				<Team
+					data-venue="away"
+					data-ui="team"
+					layout
+					transition={{
+						type: "spring",
+						damping: 15,
+						stiffness: 200,
+					}}
+				>
 					<ScoreDisplay guess={guess} score={match.away.score} />
 					<TeamDisplay cardExpanded={isOpen} team={match.away} />
 					<GuessDisplay cardExpanded={isOpen} data={guess.away} />

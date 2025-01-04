@@ -14,17 +14,27 @@ export const useTournamentSetup = () => {
 
 	const mutation = useMutation({
 		mutationFn: setupTournament,
-		onSuccess: () => {
+		onSuccess: async () => {
+			console.log(tournamentKey(tournamentId));
 			queryClient.refetchQueries({
 				queryKey: guessKey(tournamentId, round),
 			});
 			queryClient.invalidateQueries({
-				queryKey: tournamentKey(tournamentId),
+				queryKey: [
+					"tournament",
+					{ id: "c0389d9b-41f4-4ffb-b473-d13fabd758ae" },
+				],
 			});
 			queryClient.refetchQueries({
 				queryKey: tournamentStandingsKey(tournamentId),
 			});
 		},
+		// onSettled: () => {
+		// 	console.log(tournamentKey(tournamentId));
+		// 	queryClient.invalidateQueries({
+		// 		queryKey: tournamentKey(tournamentId),
+		// 	});
+		// },
 	});
 
 	return mutation;

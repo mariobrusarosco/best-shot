@@ -119,5 +119,5 @@ const getTeamStandingsInfo = (
 ) => {
 	if (!standings) return;
 
-	return standings.standings.find((team) => team.teamExternalId === teamId);
+	return standings.teams?.find((team) => team.teamExternalId === teamId);
 };

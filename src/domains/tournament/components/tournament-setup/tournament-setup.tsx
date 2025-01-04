@@ -54,21 +54,11 @@ export const TournamentSetup = () => {
 				}}
 			>
 				{setup.isPending ? (
-					<Stack
-						gap={1}
-						direction="row"
-						alignItems="center"
-						justifyContent="center"
-					>
-						<Typography
-							textTransform="uppercase"
-							variant="label"
-							color="neutral.100"
-						>
-							loading
-						</Typography>
-						<BestShotIcon fill={theme.palette.neutral[100]} width={40} />
-					</Stack>
+					<BestShotIcon
+						isAnimated
+						fill={theme.palette.neutral[100]}
+						width={30}
+					/>
 				) : (
 					<Typography
 						textTransform="uppercase"

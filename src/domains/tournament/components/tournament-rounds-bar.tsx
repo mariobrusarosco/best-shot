@@ -25,6 +25,24 @@ const TournamentRoundsBar = () => {
 
 	return (
 		<Wrapper data-ui="tournament-rounds-bar">
+			<BarHeading>
+				<AppPill.Component
+					border="1px solid"
+					borderColor="teal.500"
+					width={80}
+					height={25}
+				>
+					<Typography
+						variant="tag"
+						textTransform="uppercase"
+						color="neutral.100"
+						fontWeight={500}
+					>
+						rounds
+					</Typography>
+				</AppPill.Component>
+			</BarHeading>
+
 			<Bar data-ui="bar">
 				{tournament?.rounds.map(({ label, slug }) => (
 					<RoundButton
@@ -45,8 +63,7 @@ const TournamentRoundsBar = () => {
 const Wrapper = styled(Box)(({ theme }) =>
 	theme?.unstable_sx({
 		display: "flex",
-		// flexDirection: "column",
-		boxShadow: "0 4px 30px rgba(0, 0, 0, 0.1)",
+		flexDirection: "column",
 
 		[UIHelper.whileIs("mobile")]: {
 			alignItems: "flex-start",
@@ -77,6 +94,14 @@ const PillAndStandingLink = styled(Box)(({ theme }) =>
 		pb: 2,
 	}),
 );
+
+const BarHeading = styled(Box)(({ theme }) => ({
+	display: "flex",
+	alignItems: "center",
+	gap: theme.spacing(1),
+	backgroundColor: theme.palette.black[700],
+	paddingBottom: theme.spacing(3),
+}));
 
 const Bar = styled(Box)(({ theme }) => ({
 	display: "flex",

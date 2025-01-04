@@ -2,6 +2,7 @@ import { DashCard } from "@/domains/dashboard/components/dash-card/dash-card";
 import { useMemberPerformance } from "@/domains/member/hooks/use-member-performance";
 import { TournamentLogo } from "@/domains/tournament/components/tournament-heading";
 import { AppButton } from "@/domains/ui-system/components/button/button";
+import { Counter } from "@/domains/ui-system/components/counter/counter";
 import { AppIcon } from "@/domains/ui-system/components/icon/icon";
 import { AppPill } from "@/domains/ui-system/components/pill/pill";
 import { shimmerEffect } from "@/domains/ui-system/components/skeleton/skeleton";
@@ -90,7 +91,7 @@ const TournamentsPerf = ({
 										variant="h4"
 										color="neutral.100"
 									>
-										{best?.points}
+										<Counter initialValue={100} />
 									</Typography>
 									<Typography
 										textTransform="uppercase"

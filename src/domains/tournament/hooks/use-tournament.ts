@@ -1,3 +1,4 @@
+import { queryClient } from "@/configuration/app-query";
 import { useQuery } from "@tanstack/react-query";
 import { getRouteApi } from "@tanstack/react-router";
 import { getTournament } from "../server-state/fetchers";
@@ -6,12 +7,18 @@ import { ITournament } from "../typing";
 const route = getRouteApi("/_auth/tournaments/$tournamentId");
 
 export const useTournament = () => {
-	const id = route.useParams().tournamentId;
+	const params = route.useParams();
+	const id = params.tournamentId;
+
+	const cachedData = queryClient.getQueryData<ITournament>([
+		"tournament",
+		{ id },
+	]);
 
 	const query = useQuery<ITournament>({
-		queryKey: tournamentKey(id),
+		queryKey: ["tournament", { id }],
 		queryFn: getTournament,
-		enabled: !!id,
+		enabled: !!id && !cachedData,
 	});
 
 	return query;

@@ -91,7 +91,7 @@ const TournamentsPerf = ({
 										variant="h4"
 										color="neutral.100"
 									>
-										<Counter initialValue={100} />
+										<Counter initialValue={best?.points} />
 									</Typography>
 									<Typography
 										textTransform="uppercase"
@@ -156,7 +156,7 @@ const TournamentsPerf = ({
 										variant="h4"
 										color="neutral.100"
 									>
-										{worst?.points}
+										<Counter initialValue={worst?.points} />
 									</Typography>
 									<Typography
 										textTransform="uppercase"

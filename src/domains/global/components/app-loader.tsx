@@ -7,7 +7,7 @@ import { Stack } from "@mui/system";
 export const AppLoader = () => {
 	return (
 		<Wrapper data-iu="app-loader">
-			<BestShotIcon fill={theme.palette.neutral[100]} />
+			<BestShotIcon fill={theme.palette.neutral[100]} isAnimated />
 			<Typography
 				color={theme.palette.neutral[100]}
 				variant="h3"

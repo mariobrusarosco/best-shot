@@ -1,4 +1,5 @@
 import { api } from "@/api";
+import { useMember } from "@/domains/member/hooks/use-member";
 import { Auth0Provider, useAuth0 as useAuthBase } from "@auth0/auth0-react";
 import { useDatabaseAuth } from "../../hooks/use-database-auth";
 import { IAuthHook } from "../typing";
@@ -26,7 +27,8 @@ const hook = () => {
 		logout,
 		getIdTokenClaims,
 	} = useAuthBase();
-	const databaseAuth = useDatabaseAuth(user?.sub);
+	const databaseAuth = useDatabaseAuth();
+	const member = useMember({ fetchOnMount: true });
 
 	const appLogin = async () => {
 		try {
@@ -36,8 +38,6 @@ const hook = () => {
 				},
 			});
 			console.log("login OK", { isLoading, user });
-			// const user = await getIdTokenClaims();
-			// console.log("got user", { isLoading, user });
 		} catch (error) {
 			alert(error);
 
@@ -57,7 +57,6 @@ const hook = () => {
 			databaseAuth.mutation.mutate(user);
 		} catch (error) {
 			alert(error);
-			useDatabaseAuth;
 			return Promise.reject(error);
 		}
 	};
@@ -74,8 +73,8 @@ const hook = () => {
 	};
 
 	return {
-		isAuthenticated: isAuthenticated && databaseAuth.isSuccess,
-		isLoadingAuth: isLoading || databaseAuth.isLoading,
+		isAuthenticated: isAuthenticated && member.isSuccess,
+		isLoadingAuth: isLoading || member.isLoading,
 		authId: user?.sub,
 		signup: appSignup,
 		login: appLogin,

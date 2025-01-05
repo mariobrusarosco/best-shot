@@ -1,14 +1,8 @@
 import { api } from "@/api";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 export const useDatabaseAuth = (userId?: string) => {
 	const queryClient = useQueryClient();
-
-	const query = useQuery({
-		queryKey: ["auth", { userId }],
-		queryFn: getDatabaseAuth,
-		enabled: !!userId,
-	});
 
 	const mutation = useMutation({
 		mutationFn: authenticateOnDatabase,
@@ -16,7 +10,7 @@ export const useDatabaseAuth = (userId?: string) => {
 			queryClient.invalidateQueries({ queryKey: ["auth", { userId }] }),
 	});
 
-	return { ...query, mutation };
+	return { mutation };
 };
 
 const authenticateOnDatabase = async (user: any) => {

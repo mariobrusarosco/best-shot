@@ -25,6 +25,7 @@ const LoginScreen = () => {
 							onClick: async () => {
 								try {
 									await auth.login();
+
 									navigate({ to: "/dashboard" });
 								} catch (error) {
 									console.log(error);

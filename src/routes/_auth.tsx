@@ -15,8 +15,8 @@ const useAppAuth = Authentication.useAppAuth;
 
 const AuthLayout = () => {
 	const auth = useAppAuth();
-	// console.log("[AuthLayout] [auth", auth);
 	const location = useLocation();
+	console.log("[AuthLayout] [auth", auth);
 
 	if (auth.isLoadingAuth) {
 		return <AppLoader />;

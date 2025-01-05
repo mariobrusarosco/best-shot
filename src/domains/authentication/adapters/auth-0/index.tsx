@@ -28,7 +28,7 @@ const hook = () => {
 		getIdTokenClaims,
 	} = useAuthBase();
 	const databaseAuth = useDatabaseAuth();
-	const member = useMember({ fetchOnMount: true });
+	const member = useMember({ fetchOnMount: isAuthenticated });
 
 	const appLogin = async () => {
 		try {
@@ -37,7 +37,12 @@ const hook = () => {
 					screen_hint: "login",
 				},
 			});
+			const user = await getIdTokenClaims();
+			if (!user) throw new Error("User not found");
+
 			console.log("login OK", { isLoading, user });
+
+			return await databaseAuth.login.mutateAsync(user.sub);
 		} catch (error) {
 			alert(error);
 
@@ -48,13 +53,11 @@ const hook = () => {
 	const appSignup = async () => {
 		try {
 			await loginWithPopup({
-				authorizationParams: {
-					screen_hint: "signup",
-				},
+				authorizationParams: { screen_hint: "signup" },
 			});
 			const user = await getIdTokenClaims();
 
-			databaseAuth.mutation.mutate(user);
+			return databaseAuth.sign.mutate(user);
 		} catch (error) {
 			alert(error);
 			return Promise.reject(error);
@@ -63,8 +66,8 @@ const hook = () => {
 
 	const appLogout = async () => {
 		try {
-			await logout();
-			await api.delete("whoami");
+			await logout({ logoutParams: { returnTo: window.location.origin } });
+			await api.delete("auth");
 		} catch (error) {
 			alert(error);
 

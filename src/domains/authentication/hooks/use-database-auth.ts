@@ -1,36 +1,31 @@
 import { api } from "@/api";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 
-export const useDatabaseAuth = (userId?: string) => {
-	const queryClient = useQueryClient();
+export const useDatabaseAuth = () => {
+	const sign = useMutation({
+		mutationFn: async (user: any) => {
+			const response = await api.post("auth/create", {
+				publicId: user?.sub,
+				email: user?.email,
+				firstName: user?.given_name,
+				lastName: user?.family_name,
+				nickName: user?.nickname ?? user?.given_name,
+			});
 
-	const mutation = useMutation({
-		mutationFn: authenticateOnDatabase,
-		onSuccess: () =>
-			queryClient.invalidateQueries({ queryKey: ["auth", { userId }] }),
+			return response.data as string;
+		},
 	});
 
-	return { mutation };
-};
+	const login = useMutation({
+		mutationFn: async (userId: any) => {
+			const response = await api.post("auth", { publicId: userId });
 
-const authenticateOnDatabase = async (user: any) => {
-	const response = await api.post("whoami", {
-		publicId: user?.sub,
-		email: user?.email,
-		firstName: user?.given_name,
-		lastName: user?.family_name,
-		nickName: user?.nickname ?? user?.given_name,
+			return response.data as string;
+		},
 	});
 
-	return response.data as string;
-};
-
-export const getDatabaseAuth = async ({ queryKey }: { queryKey: any }) => {
-	const [_key, { userId }] = queryKey;
-
-	const response = await api.get("whoami", {
-		params: { publicId: userId },
-	});
-
-	return response.data as string;
+	return {
+		sign,
+		login,
+	};
 };

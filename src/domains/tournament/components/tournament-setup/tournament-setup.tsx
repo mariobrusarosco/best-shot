@@ -51,6 +51,7 @@ export const TournamentSetup = () => {
 					await setup.mutateAsync({
 						tournamentId,
 					});
+					console.log("Mutate is over");
 				}}
 			>
 				{setup.isPending ? (

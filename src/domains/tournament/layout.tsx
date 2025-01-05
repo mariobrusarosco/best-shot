@@ -16,11 +16,11 @@ import { Box, styled } from "@mui/system";
 import { Outlet } from "@tanstack/react-router";
 
 const TournamentLayout = () => {
-	const tournament = useTournament();
+	const tournament = useTournament({ fetchOnMount: true });
 	const isEmptyState =
 		tournament.isSuccess && tournament.data?.onbordingCompleted === false;
 
-	if (tournament.isFetching || tournament.isPending) {
+	if (tournament.isRefetching || tournament.isPending) {
 		return (
 			<AuthenticatedScreenLayout>
 				<ScreenHeadingSkeleton />

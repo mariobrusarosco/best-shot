@@ -4,13 +4,12 @@ import { PublicLayout } from "@/domains/ui-system/layout/public";
 import { theme } from "@/theming/theme";
 import { Box, styled } from "@mui/material";
 import Typography from "@mui/material/Typography/Typography";
-import { createLazyFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { createLazyFileRoute, Link } from "@tanstack/react-router";
 
 const useAppAuth = Authentication.useAppAuth;
 
 const SignUpScreen = () => {
 	const auth = useAppAuth();
-	const navigate = useNavigate();
 
 	return (
 		<PublicLayout>
@@ -25,8 +24,8 @@ const SignUpScreen = () => {
 							onClick: async () => {
 								console.log("START loginWithPopup");
 								await auth.signup?.();
-								console.log("END loginWithPopup");
-								navigate({ to: "/dashboard" });
+
+								window.location.reload();
 							},
 						},
 					}}

@@ -7,7 +7,7 @@ import {
 export const queryClient = new QueryClient({
 	defaultOptions: {
 		queries: {
-			refetchOnWindowFocus: true,
+			refetchOnWindowFocus: false,
 			retry: 0,
 		},
 	},

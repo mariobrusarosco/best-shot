@@ -26,25 +26,24 @@ export const GuessStatus = ({ guess }: { guess: IGuess }) => {
 
 	if (guess.status === "waiting_for_game")
 		return (
-			<Typography
-				fontWeight={600}
-				variant="tag"
-				color="teal.500"
-				textTransform="uppercase"
-			>
-				good luck!
-			</Typography>
+			<AppPill.Component bgcolor={"teal.500"} width={75} height={20}>
+				<Typography fontWeight={500} variant="tag" color="neutral.100">
+					good luck
+				</Typography>
+			</AppPill.Component>
 		);
 
 	if (guess.status === "not-started")
 		return (
-			<Typography
-				fontWeight={600}
-				variant="tag"
-				color="teal.500"
-				textTransform="uppercase"
+			<AppPill.Component
+				border="1px solid"
+				borderColor="neutral.100"
+				width={60}
+				height={20}
 			>
-				expires in
-			</Typography>
+				<Typography fontWeight={500} color="neutral.100" variant="tag">
+					open
+				</Typography>
+			</AppPill.Component>
 		);
 };

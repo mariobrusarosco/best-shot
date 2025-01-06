@@ -23,8 +23,10 @@ export const TournamentMatchesScreen = () => {
 	const autoSelectARound = !tournamentQuery.isPending && !activeRound;
 
 	useEffect(() => {
-		const starterRound = tournamentQuery.data?.starterRound || "1";
-
+		const starterRound =
+			tournamentQuery.data?.starterRound ||
+			tournamentQuery.data?.starterRound ||
+			"";
 		if (autoSelectARound) goToRound(starterRound);
 	}, [autoSelectARound]);
 
@@ -103,13 +105,15 @@ const Rounds = styled(Box)(({ theme }) =>
 			maxWidth: "450px",
 		},
 
+		minWidth: "450px",
+
 		...OverflowOnHover(),
 	}),
 );
 
 const RoundHeading = styled(Box)(({ theme }) => ({
 	backgroundColor: theme.palette.black[700],
-	paddingBotto: theme.spacing(2),
+	paddingBottom: theme.spacing(2),
 }));
 
 export const Route = createLazyFileRoute(

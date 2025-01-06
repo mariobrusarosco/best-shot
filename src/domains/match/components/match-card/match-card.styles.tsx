@@ -4,14 +4,15 @@ import { UIHelper } from "@/theming/theme";
 import { Box, Stack, styled } from "@mui/system";
 import { motion } from "motion/react";
 
-export const Card = styled(Surface)(({ theme }) => ({
+export const Card = styled(motion(Surface))(({ theme }) => ({
 	display: "flex",
 	flexDirection: "column",
 	backgroundColor: theme.palette.black[800],
 	padding: theme.spacing(2, 1),
-	gap: theme.spacing(2),
+	gap: theme.spacing(4),
 	borderRadius: theme.spacing(1),
 	maxWidth: "100%",
+	position: "relative",
 
 	"[data-card-open='true']": {
 		gap: theme.spacing(3.5),

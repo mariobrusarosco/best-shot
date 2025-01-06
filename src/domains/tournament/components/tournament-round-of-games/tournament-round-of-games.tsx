@@ -1,4 +1,5 @@
 import { useGuess } from "@/domains/guess/hooks/use-guess";
+import { useGuessMutation } from "@/domains/guess/hooks/use-guess-mutation";
 import { IGuess } from "@/domains/guess/typing";
 import MatchCard from "@/domains/match/components/match-card/match-card";
 import { styled } from "@mui/material";
@@ -8,6 +9,7 @@ import { useTournamentMatches } from "../../hooks/use-tournament-matches";
 const TournamentRoundOfGames = () => {
 	const guessesQuery = useGuess();
 	const matchesQuery = useTournamentMatches();
+	const guessMutation = useGuessMutation();
 
 	if (guessesQuery.isError || matchesQuery.isError) {
 		throw new Error("Ops! We could not find games for this round!");
@@ -30,7 +32,12 @@ const TournamentRoundOfGames = () => {
 
 				return (
 					<li key={match.id} className="round-item match-card">
-						<MatchCard.Component key={match.id} match={match} guess={guess} />
+						<MatchCard.Component
+							key={match.id}
+							match={match}
+							guess={guess}
+							guessMutation={guessMutation}
+						/>
 					</li>
 				);
 			})}

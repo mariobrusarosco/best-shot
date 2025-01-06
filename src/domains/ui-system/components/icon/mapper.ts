@@ -2,6 +2,7 @@ import IconChevronDown from "@tabler/icons-react/dist/esm/icons/IconChevronDown.
 import IconChevronLeft from "@tabler/icons-react/dist/esm/icons/IconChevronLeft.mjs";
 import IconChevronRight from "@tabler/icons-react/dist/esm/icons/IconChevronRight.mjs";
 import IconChevronUp from "@tabler/icons-react/dist/esm/icons/IconChevronUp.mjs";
+import IconClockFilled from "@tabler/icons-react/dist/esm/icons/IconClockFilled.mjs";
 import IconSave from "@tabler/icons-react/dist/esm/icons/IconDeviceFloppy.mjs";
 import IconInfoSquareRounded from "@tabler/icons-react/dist/esm/icons/IconInfoSquareRounded.mjs";
 import IconLayoutDashboard from "@tabler/icons-react/dist/esm/icons/IconLayoutDashboard.mjs";
@@ -29,4 +30,5 @@ export const ICONS = {
 	ChevronLeft: IconChevronLeft,
 	Settings: IconSettings,
 	Info: IconInfoSquareRounded,
+	ClockFilled: IconClockFilled,
 };

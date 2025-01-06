@@ -5,12 +5,16 @@ import { shimmerEffectNew } from "@/domains/ui-system/components/skeleton/skelet
 import { Divider } from "@mui/material";
 import styled from "@mui/material/styles/styled";
 
+import { BestShotIcon } from "@/assets/best-shot-icon";
+import { useGuessMutation } from "@/domains/guess/hooks/use-guess-mutation";
+import { theme } from "@/theming/theme";
 import Typography from "@mui/material/Typography/Typography";
 import { Stack } from "@mui/system";
 import dayjs from "dayjs";
 import { useState } from "react";
 import { IMatch } from "../../typing";
 import { defineMatchTimebox } from "../../utils";
+import { CardAnimation, LayerVariants } from "./animations";
 import { GuessDisplay } from "./guess-display";
 import { GuessStatus } from "./guess-status";
 import { Button, Card, CTA, Header, Team, Teams } from "./match-card.styles";
@@ -20,6 +24,7 @@ import { TeamDisplay } from "./team-display";
 
 const SHOW_TIMEBOX_WHEN_GUESS_STATUS = new Set<GUESS_STATUS>([
 	GUESS_STATUSES.NOT_STARTED,
+	GUESS_STATUSES.WAITING_FOR_GAME,
 ]);
 const SHOW_SAVE_BUTTON_WHEN_GUESS_STATUS = new Set<GUESS_STATUS>([
 	GUESS_STATUSES.WAITING_FOR_GAME,
@@ -32,11 +37,12 @@ const SHOW_CTA_BUTTON_WHEN_GUESS_STATUS = new Set<GUESS_STATUS>([
 interface Props {
 	match: IMatch;
 	guess: IGuess;
+	guessMutation: ReturnType<typeof useGuessMutation>;
 }
 
-const MatchCard = ({ guess, match }: Props) => {
+const MatchCard = ({ guess, match, guessMutation }: Props) => {
 	const [isOpen, setIsOpen] = useState(false);
-	const guessInputs = useGuessInputs(guess, match);
+	const guessInputs = useGuessInputs(guess, match, guessMutation);
 
 	// Match
 	const timebox = defineMatchTimebox(match.date);
@@ -48,58 +54,103 @@ const MatchCard = ({ guess, match }: Props) => {
 	const showSaveButton =
 		SHOW_SAVE_BUTTON_WHEN_GUESS_STATUS.has(guess.status) && isOpen;
 
+	console.log({ guessMutation: guessMutation.data });
+
 	return (
 		<Card
 			data-card-open={isOpen}
 			data-ui="card"
 			data-match-status={match.status}
 			data-guess-status={guess.status}
+			data-id={guess.id}
 		>
+			<CardAnimation
+				initial="hidden"
+				animate={guessMutation.data?.id === guess.id ? "animated" : "initial"}
+				// animate="animated"
+				variants={LayerVariants}
+			/>
 			<Header>
-				<Stack direction="row" gap={1} alignItems="center">
-					<Typography textTransform="uppercase" variant="tag" color="teal.500">
-						date
-					</Typography>
-
-					<Typography
-						textTransform="uppercase"
-						variant="tag"
-						color="neutral.100"
-					>
-						{match.date === null
-							? "-"
-							: dayjs(match.date).format("HH:mm - MMM DD - YYYY")}
-					</Typography>
-
-					<Divider
-						orientation="vertical"
-						sx={{ bgcolor: "black.300", width: "1px", height: "15px" }}
-					/>
-
-					<GuessStatus guess={guess} />
-
-					{showTimeBox ? (
+				<Stack gap={1} alignItems="start">
+					<Stack direction="row" gap={1} alignItems="center">
 						<Typography
-							variant="tag"
-							fontWeight={400}
 							textTransform="uppercase"
+							variant="tag"
+							color="teal.500"
 						>
-							{timebox}
+							date
 						</Typography>
-					) : null}
+
+						<Typography
+							textTransform="uppercase"
+							variant="tag"
+							color="neutral.100"
+						>
+							{match.date === null
+								? "-"
+								: dayjs(match.date).format("HH:mm - MMM DD")}
+						</Typography>
+
+						<Divider
+							orientation="vertical"
+							sx={{ bgcolor: "black.300", width: "1px", height: "15px" }}
+						/>
+
+						<GuessStatus guess={guess} />
+					</Stack>
+
+					{/* {showTimeBox ? (
+						<Stack direction="row" gap={1} alignItems="center">
+							<AppIcon
+								name="ClockFilled"
+								size="tiny"
+								color={theme.palette.teal[500]}
+							/>
+							<Typography
+								variant="tag"
+								fontWeight={400}
+								textTransform="uppercase"
+								color={theme.palette.teal[500]}
+							>
+								{timebox} to guess
+							</Typography>
+						</Stack>
+					) : null} */}
 				</Stack>
 
 				{showCTAButton ? (
 					<CTA>
+						{showTimeBox ? (
+							<Stack direction="row" gap={1} alignItems="center">
+								<AppIcon
+									name="ClockFilled"
+									size="tiny"
+									color={theme.palette.teal[500]}
+								/>
+								<Typography
+									variant="tag"
+									fontWeight={500}
+									textTransform="uppercase"
+									color={theme.palette.neutral[100]}
+								>
+									{timebox} to guess
+								</Typography>
+							</Stack>
+						) : null}
+
 						{showSaveButton ? (
 							<Button
 								onClick={async () => {
 									await guessInputs.handleSave();
 									setIsOpen(false);
 								}}
-								disabled={!guessInputs.allowNewGuess}
+								disabled={!guessInputs.allowNewGuess || guessInputs.isPending}
 							>
-								<AppIcon name="Save" size="extra-small" />
+								{guessInputs.isPending ? (
+									<BestShotIcon fill={theme.palette.neutral[100]} isAnimated />
+								) : (
+									<AppIcon name="Save" size="extra-small" />
+								)}
 							</Button>
 						) : null}
 
@@ -114,12 +165,12 @@ const MatchCard = ({ guess, match }: Props) => {
 				<Team
 					data-venue="home"
 					data-ui="team"
-					layout
-					transition={{
-						type: "spring",
-						damping: 15,
-						stiffness: 200,
-					}}
+					// layout
+					// transition={{
+					// 	type: "spring",
+					// 	damping: 15,
+					// 	stiffness: 200,
+					// }}
 				>
 					<GuessDisplay cardExpanded={isOpen} data={guess.home} />
 					<TeamDisplay cardExpanded={isOpen} team={match.home} />
@@ -135,12 +186,12 @@ const MatchCard = ({ guess, match }: Props) => {
 				<Team
 					data-venue="away"
 					data-ui="team"
-					layout
-					transition={{
-						type: "spring",
-						damping: 15,
-						stiffness: 200,
-					}}
+					// layout
+					// transition={{
+					// 	type: "spring",
+					// 	damping: 15,
+					// 	stiffness: 200,
+					// }}
 				>
 					<ScoreDisplay guess={guess} score={match.away.score} />
 					<TeamDisplay cardExpanded={isOpen} team={match.away} />

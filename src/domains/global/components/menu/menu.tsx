@@ -10,7 +10,10 @@ export const Menu = () => {
 	return (
 		<Wrapper as="menu">
 			<MenuLogo to="/">
-				<BestShotIcon fill={theme.palette.neutral[100]} />
+				<BestShotIcon
+					fill={theme.palette.neutral[100]}
+					// whileHover={"animated"}
+				/>
 				<Typography color={theme.palette.neutral[100]} variant="label">
 					best shot
 				</Typography>

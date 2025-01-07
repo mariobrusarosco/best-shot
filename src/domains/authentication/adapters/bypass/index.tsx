@@ -12,7 +12,7 @@ const memberid =
 
 export const Provider = ({ children }: { children: React.ReactNode }) => {
 	const [isAuthenticated, setisAuthenticated] = useState(false);
-	const member = useMember({ fetchOnMount: isAuthenticated });
+	useMember({ fetchOnMount: isAuthenticated });
 
 	const appLogout = async () => {
 		try {
@@ -63,6 +63,7 @@ export const Provider = ({ children }: { children: React.ReactNode }) => {
 				isLoadingAuth: false,
 			}));
 		},
+		onSettled: () => setisAuthenticated(true),
 	});
 
 	useEffect(() => {

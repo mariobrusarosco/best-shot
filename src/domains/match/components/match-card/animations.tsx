@@ -1,22 +1,6 @@
-import { styled } from "@mui/material";
-import { motion, Variants } from "motion/react";
-
-export const LayerVariants: Variants = {
-	hidden: {
-		scaleY: 0,
-		y: "0%",
-	},
-	animated: {
-		y: "100%",
-		scaleY: 1,
-
-		transition: {
-			stiffness: 200,
-			damping: 10,
-		},
-		transitionEnd: { scaleY: 0 },
-	},
-};
+import { styled, Typography } from "@mui/material";
+import { AnimationSequence, motion, useAnimate } from "motion/react";
+import { useEffect } from "react";
 
 const Layer = styled(motion.div)(({ theme }) => ({
 	position: "absolute",
@@ -24,19 +8,53 @@ const Layer = styled(motion.div)(({ theme }) => ({
 	left: 0,
 	height: "100%",
 	width: "100%",
-	backgroundColor: "#6a9b9621",
+	backgroundColor: theme.palette.teal[500],
 	borderRadius: theme.spacing(1),
-	transformOrigin: "top left",
+	transformOrigin: "center center",
+	display: "flex",
+	justifyContent: "center",
+	alignItems: "center",
+	gap: theme.spacing(1),
 }));
 
 export const CardAnimation = ({
-	initial,
-	animate,
-	variants,
+	lastSavedGuess,
 }: {
-	initial: string;
-	animate: string | boolean;
-	variants: Variants;
+	lastSavedGuess: boolean;
 }) => {
-	return <Layer initial={initial} animate={animate} variants={variants} />;
+	const [scope, animate] = useAnimate();
+
+	useEffect(() => {
+		if (lastSavedGuess) {
+			const sequence = [
+				[
+					scope.current,
+					{ scaleX: 1, x: "0%" },
+					{ type: "spring", duration: 1 },
+				],
+				[
+					scope.current,
+					{ scaleX: 0, x: "-200%" },
+					{ type: "spring", damping: 10 },
+				],
+				[scope.current, { x: "100%" }],
+			] as AnimationSequence;
+
+			animate(sequence);
+		}
+	}, [lastSavedGuess]);
+
+	return (
+		<Layer
+			ref={scope}
+			initial={{
+				x: "100%",
+				scaleX: 0,
+			}}
+		>
+			<Typography variant="topic" textTransform="lowercase">
+				Good Luck!
+			</Typography>
+		</Layer>
+	);
 };

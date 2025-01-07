@@ -32,6 +32,10 @@ export type ITournamentPerformance = {
 	details: Record<string, number>;
 	lastUpdated: string;
 	points: string;
+	guessesByOutcome: {
+		correct: number;
+		incorrect: number;
+	};
 };
 
 export type ITournamentStandings = {

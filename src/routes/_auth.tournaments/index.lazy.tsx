@@ -1,4 +1,8 @@
-import { ScreenHeading } from "@/domains/global/components/screen-heading";
+import {
+	ScreenHeading,
+	ScreenHeadingSkeleton,
+} from "@/domains/global/components/screen-heading";
+import TournamentHeading from "@/domains/tournament/components/tournament-heading";
 import {
 	TournamentsList,
 	TournamentsListLoading,
@@ -12,15 +16,16 @@ import Typography from "@mui/material/Typography/Typography";
 import { createLazyFileRoute } from "@tanstack/react-router";
 
 const TournamentsPage = () => {
-	const { data, error, isLoading } = useTournaments();
+	const { data, error, isPending } = useTournaments();
 
-	if (isLoading) {
+	if (isPending) {
 		return (
 			<AuthenticatedScreenLayout>
+				<ScreenHeadingSkeleton />
+
 				<ScreenMainContent>
-					<Typography variant="h3" color="neutral.10">
-						...Loading...
-					</Typography>
+					<TournamentHeading.Skeleton />
+					<TournamentsListLoading />
 				</ScreenMainContent>
 			</AuthenticatedScreenLayout>
 		);
@@ -47,8 +52,7 @@ const TournamentsPage = () => {
 			/>
 
 			<Tournaments data-ui="tournaments-main-content">
-				{isLoading ? <TournamentsListLoading /> : null}
-				{data ? <TournamentsList tournaments={data} /> : null}
+				<TournamentsList tournaments={data} />
 			</Tournaments>
 		</AuthenticatedScreenLayout>
 	);

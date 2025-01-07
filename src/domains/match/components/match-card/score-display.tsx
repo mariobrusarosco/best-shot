@@ -1,13 +1,7 @@
-import { IGuess } from "@/domains/guess/typing";
 import { AppPill } from "@/domains/ui-system/components/pill/pill";
 import { Box, styled, Typography } from "@mui/material";
 
-export const ScoreDisplay = ({
-	score,
-}: {
-	score: number | null;
-	guess: IGuess;
-}) => {
+export const ScoreDisplay = ({ score }: { score: number | null }) => {
 	return (
 		<Wrapper data-ui="score-display">
 			<AppPill.Component bgcolor={"black.500"} minWidth={30} height={20}>

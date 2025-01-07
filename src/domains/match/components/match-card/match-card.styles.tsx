@@ -13,6 +13,7 @@ export const Card = styled(motion(Surface))(({ theme }) => ({
 	borderRadius: theme.spacing(1),
 	maxWidth: "100%",
 	position: "relative",
+	overflow: "hidden",
 
 	"[data-card-open='true']": {
 		gap: theme.spacing(3.5),

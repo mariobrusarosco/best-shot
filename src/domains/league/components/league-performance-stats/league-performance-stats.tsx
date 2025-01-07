@@ -124,16 +124,7 @@ const Wrapper = styled(Box)(() => ({
 	flexDirection: "column",
 	flex: 1,
 
-	...OverflowOnHover,
-	// [UIHelper.whileIs("mobile")]: {
-	// 	flexDirection: "column",
-	// 	gap: theme.spacing(2),
-	// },
-
-	// [UIHelper.startsOn("tablet")]: {
-	// 	gap: theme.spacing(5),
-	// 	height: "calc(100vh - var(--screeh-heading-height-tablet))",
-	// },
+	...OverflowOnHover(),
 }));
 
 // TODO Unify this Card, if possible

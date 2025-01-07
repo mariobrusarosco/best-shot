@@ -39,7 +39,7 @@ const TournamentLayout = () => {
 	return (
 		<AuthenticatedScreenLayout data-ui="tournament-page" overflow="hidden">
 			<ScreenHeading backTo="/tournaments">
-				<CustomScreenHeading>
+				<CustomScreenHeading data-ui="custom-screen-heading">
 					<LabelAndLogo>
 						<Stack>
 							<Typography
@@ -91,12 +91,15 @@ const CustomScreenContent = styled(ScreenMainContent)(({ theme }) => ({
 }));
 
 const CustomScreenHeading = styled(Box)(({ theme }) => ({
+	display: "flex",
+	gap: theme.spacing(2),
+
 	[UIHelper.whileIs("mobile")]: {
 		padding: theme.spacing(0, 1),
+		flexDirection: "column",
 	},
 
 	[UIHelper.startsOn("tablet")]: {
-		display: "flex",
 		gap: theme.spacing(3),
 		alignItems: "center",
 		justifyContent: "space-between",

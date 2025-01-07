@@ -67,6 +67,22 @@ export const TournamentMatchesScreen = () => {
 							round
 						</Typography>
 					</AppPill.Component>
+
+					<AppPill.Component
+						bgcolor="black.500"
+						height={25}
+						width="auto"
+						padding={2}
+					>
+						<Typography
+							variant="tag"
+							textTransform="uppercase"
+							color="neutral.100"
+							fontWeight={500}
+						>
+							{activeRound}
+						</Typography>
+					</AppPill.Component>
 				</RoundHeading>
 
 				<TournamentRoundOfGames.Component />
@@ -93,27 +109,28 @@ const Matches = styled(Box)(({ theme }) => ({
 	},
 }));
 
-const Rounds = styled(Box)(({ theme }) =>
-	theme?.unstable_sx({
-		flex: 1,
-		[UIHelper.whileIs("mobile")]: {
-			pb: 5,
-		},
+const Rounds = styled(Box)(({ theme }) => ({
+	flex: 1,
 
-		[UIHelper.startsOn("tablet")]: {
-			pr: 2,
-			maxWidth: "450px",
-		},
+	[UIHelper.whileIs("mobile")]: {
+		paddingBottom: theme.spacing(16),
+	},
 
+	[UIHelper.startsOn("tablet")]: {
+		paddingRight: theme.spacing(2),
 		minWidth: "450px",
+		maxWidth: "450px",
+	},
 
-		...OverflowOnHover(),
-	}),
-);
+	...OverflowOnHover(),
+}));
 
 const RoundHeading = styled(Box)(({ theme }) => ({
 	backgroundColor: theme.palette.black[700],
 	paddingBottom: theme.spacing(2),
+	display: "flex",
+	alignItems: "center",
+	gap: theme.spacing(1),
 }));
 
 export const Route = createLazyFileRoute(

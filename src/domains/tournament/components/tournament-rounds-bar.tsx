@@ -25,7 +25,7 @@ const TournamentRoundsBar = () => {
 
 	return (
 		<Wrapper data-ui="tournament-rounds-bar">
-			<BarHeading>
+			<BarHeading data-ui="bar-heading">
 				<AppPill.Component
 					border="1px solid"
 					borderColor="teal.500"
@@ -69,7 +69,7 @@ const Wrapper = styled(Box)(({ theme }) =>
 			alignItems: "flex-start",
 			overflow: "hidden",
 			position: "fixed",
-			bottom: "55px",
+			bottom: "80px",
 			left: 0,
 			pt: 2,
 			pb: 4,
@@ -99,33 +99,25 @@ const BarHeading = styled(Box)(({ theme }) => ({
 	display: "flex",
 	alignItems: "center",
 	gap: theme.spacing(1),
-	backgroundColor: theme.palette.black[700],
-	paddingBottom: theme.spacing(3),
+	padding: theme.spacing(0, 2),
 }));
 
 const Bar = styled(Box)(({ theme }) => ({
 	display: "flex",
+	width: "100%",
+	justifyContent: "space-between",
 
 	[UIHelper.whileIs("mobile")]: {
-		padding: theme.spacing(2, 2, 1),
+		// padding: theme.spacing(2, 2, 1),
 	},
 
 	[UIHelper.startsOn("tablet")]: {
-		alignItems: "center",
 		flexDirection: "column",
 		paddingRight: theme.spacing(2),
-		paddingBottom: theme.spacing(1.5),
-		marginBottom: theme.spacing(3),
-
 		gap: theme.spacing(2),
 		position: "relative",
-		overflow: "auto",
-
-		"::-webkit-scrollbar-thumb": {
-			background: "#394c4a",
-		},
+		alignItems: "flex-start",
 	},
-
 	...OverflowOnHover(),
 }));
 
@@ -135,27 +127,19 @@ const RoundButton = styled(Box)(({ theme }) => ({
 	alignItems: "center",
 	justifyContent: "center",
 	borderRadius: theme.spacing(1),
-	// scrollSnapSlign: "center",
 	cursor: "pointer",
 	flex: "0 0 auto",
+	padding: theme.spacing(2),
+	minWidth: "40px",
 
 	'&[data-active="true"]': {
 		backgroundColor: theme.palette.teal[500],
 		color: theme.palette.neutral[100],
 	},
 
-	[UIHelper.whileIs("mobile")]: {
-		width: "40px",
-		height: "40px",
-	},
-
 	[UIHelper.startsOn("tablet")]: {
 		backgroundColor: theme.palette.black[800],
-		minWidth: "40px",
-		// minHeight: "40px",
-		padding: theme.spacing(1.5, 1.5),
-		// transform: "rotate(90deg)",
-		// transformOrigin: "right top",
+		padding: theme.spacing(1.5),
 	},
 }));
 
@@ -164,7 +148,6 @@ const Skeleton = () => {
 		<Wrapper data-ui="tournament-rounds-bar-skeleton">
 			<PillAndStandingLink>
 				<AppPill.Skeleton
-					bgcolor="black.800"
 					color="neutral.100"
 					height={25}
 					width={100}
@@ -172,7 +155,6 @@ const Skeleton = () => {
 				></AppPill.Skeleton>
 
 				<AppPill.Skeleton
-					bgcolor="black.800"
 					color="neutral.100"
 					height={25}
 					width={10}

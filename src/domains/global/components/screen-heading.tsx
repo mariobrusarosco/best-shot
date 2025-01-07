@@ -60,10 +60,10 @@ export const Wrapper = styled(Surface)(({ theme }) => ({
 	display: "flex",
 	justifyContent: "space-between",
 	alignItems: "center",
-	gap: theme.spacing(2),
 	backgroundColor: theme.palette.black[800],
 	borderBottomLeftRadius: theme.spacing(3),
 	borderBottomRightRadius: theme.spacing(3),
+	gap: theme.spacing(2),
 
 	[UIHelper.whileIs("mobile")]: {
 		height: "var(--screeh-heading-height-mobile)",

@@ -14,8 +14,9 @@ import dayjs from "dayjs";
 import { useState } from "react";
 import { IMatch } from "../../typing";
 import { defineMatchTimebox } from "../../utils";
-import { CardAnimation, LayerVariants } from "./animations";
+import { CardAnimation } from "./animations";
 import { GuessDisplay } from "./guess-display";
+import { GuessPoints } from "./guess-points";
 import { GuessStatus } from "./guess-status";
 import { Button, Card, CTA, Header, Team, Teams } from "./match-card.styles";
 import { ScoreDisplay } from "./score-display";
@@ -54,8 +55,6 @@ const MatchCard = ({ guess, match, guessMutation }: Props) => {
 	const showSaveButton =
 		SHOW_SAVE_BUTTON_WHEN_GUESS_STATUS.has(guess.status) && isOpen;
 
-	console.log({ guessMutation: guessMutation.data });
-
 	return (
 		<Card
 			data-card-open={isOpen}
@@ -64,12 +63,7 @@ const MatchCard = ({ guess, match, guessMutation }: Props) => {
 			data-guess-status={guess.status}
 			data-id={guess.id}
 		>
-			<CardAnimation
-				initial="hidden"
-				animate={guessMutation.data?.id === guess.id ? "animated" : "initial"}
-				// animate="animated"
-				variants={LayerVariants}
-			/>
+			<CardAnimation lastSavedGuess={guessMutation.data?.id === guess.id} />
 			<Header>
 				<Stack gap={1} alignItems="start">
 					<Stack direction="row" gap={1} alignItems="center">
@@ -77,6 +71,7 @@ const MatchCard = ({ guess, match, guessMutation }: Props) => {
 							textTransform="uppercase"
 							variant="tag"
 							color="teal.500"
+							fontWeight={500}
 						>
 							date
 						</Typography>
@@ -85,6 +80,7 @@ const MatchCard = ({ guess, match, guessMutation }: Props) => {
 							textTransform="uppercase"
 							variant="tag"
 							color="neutral.100"
+							fontWeight={500}
 						>
 							{match.date === null
 								? "-"
@@ -97,25 +93,8 @@ const MatchCard = ({ guess, match, guessMutation }: Props) => {
 						/>
 
 						<GuessStatus guess={guess} />
+						<GuessPoints guess={guess} />
 					</Stack>
-
-					{/* {showTimeBox ? (
-						<Stack direction="row" gap={1} alignItems="center">
-							<AppIcon
-								name="ClockFilled"
-								size="tiny"
-								color={theme.palette.teal[500]}
-							/>
-							<Typography
-								variant="tag"
-								fontWeight={400}
-								textTransform="uppercase"
-								color={theme.palette.teal[500]}
-							>
-								{timebox} to guess
-							</Typography>
-						</Stack>
-					) : null} */}
 				</Stack>
 
 				{showCTAButton ? (
@@ -174,7 +153,7 @@ const MatchCard = ({ guess, match, guessMutation }: Props) => {
 				>
 					<GuessDisplay cardExpanded={isOpen} data={guess.home} />
 					<TeamDisplay cardExpanded={isOpen} team={match.home} />
-					<ScoreDisplay guess={guess} score={match.home.score} />
+					<ScoreDisplay score={match.home.score} />
 					<ScoreInput
 						guessStatus={guess.status}
 						cardExpanded={isOpen}
@@ -193,7 +172,7 @@ const MatchCard = ({ guess, match, guessMutation }: Props) => {
 					// 	stiffness: 200,
 					// }}
 				>
-					<ScoreDisplay guess={guess} score={match.away.score} />
+					<ScoreDisplay score={match.away.score} />
 					<TeamDisplay cardExpanded={isOpen} team={match.away} />
 					<GuessDisplay cardExpanded={isOpen} data={guess.away} />
 					<ScoreInput

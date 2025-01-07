@@ -13,7 +13,6 @@ export const useGuessInputs = (
 ) => {
 	const tournamentId = route.useParams().tournamentId;
 
-	console.log(guess.id);
 	const [homeGuess, setHomeGuess] = useState<null | number>(
 		guess.home.value ?? null,
 	);

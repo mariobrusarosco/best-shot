@@ -4,11 +4,11 @@ export const GlobalCSS = () => (
 	<GlobalStyles
 		styles={{
 			body: {
-				// overflowX: "hidden",
+				overflowX: "hidden",
 			},
 			":root": {
 				"--app-header-height-mobile": "64px",
-				"--screeh-heading-height-mobile": "150px",
+				"--screeh-heading-height-mobile": "220px",
 				"--screeh-heading-height-tablet": "250px",
 				"--tournament-heading-height-tablet": "70px",
 			},

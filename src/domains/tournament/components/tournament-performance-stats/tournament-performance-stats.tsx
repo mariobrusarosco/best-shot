@@ -1,4 +1,5 @@
 import { AppButton } from "@/domains/ui-system/components/button/button";
+import { Counter } from "@/domains/ui-system/components/counter/counter";
 import { GridOfCards } from "@/domains/ui-system/components/grid-of-cards/grid-of-cards";
 import {
 	shimmerEffect,
@@ -55,7 +56,7 @@ const TournamentPerformanceStats = ({
 							borderRadius: 2,
 							backgroundColor: "teal.500",
 						}}
-						// disabled={setup.isPending}
+						disabled={mutation.isPending}
 						onClick={async () => {
 							mutation.mutate();
 						}}
@@ -86,7 +87,7 @@ const TournamentPerformanceStats = ({
 						variant="h1"
 						color="neutral.100"
 					>
-						{data?.points}
+						<Counter initialValue={Number(data?.points) ?? 0} />
 					</Typography>
 				</Stack>
 			</PerfCard>
@@ -107,7 +108,7 @@ const TournamentPerformanceStats = ({
 								variant="h4"
 								color="neutral.100"
 							>
-								{data.details["correct"] ?? 0}
+								<Counter initialValue={data.guessesByOutcome.correct} />
 							</Typography>
 						</Stack>
 					</PerfCard>
@@ -125,7 +126,7 @@ const TournamentPerformanceStats = ({
 								variant="h4"
 								color="neutral.100"
 							>
-								{data.details["incorrect"] ?? 0}
+								<Counter initialValue={data.guessesByOutcome.incorrect} />
 							</Typography>
 						</Stack>
 					</PerfCard>
@@ -143,7 +144,7 @@ const TournamentPerformanceStats = ({
 								variant="h4"
 								color="neutral.100"
 							>
-								{data.details["waiting_for_game"] ?? 0}
+								<Counter initialValue={data.details["waiting_for_game"]} />
 							</Typography>
 						</Stack>
 					</PerfCard>
@@ -161,7 +162,7 @@ const TournamentPerformanceStats = ({
 								variant="h4"
 								color="neutral.100"
 							>
-								{data.details["not-started"] ?? 0}
+								<Counter initialValue={data.details["not-started"]} />
 							</Typography>
 						</Stack>
 					</PerfCard>

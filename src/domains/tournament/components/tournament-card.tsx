@@ -26,7 +26,6 @@ export const TournamentCard = ({ tournament }: Props) => {
 			<AppLinkCard
 				to="/tournaments/$tournamentId/matches"
 				params={{ tournamentId: id }}
-				// search={{ round: 1 }}
 				adornment={<TournamentLogo src={tournament.logo} />}
 				replace={false}
 				resetScroll={false}

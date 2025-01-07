@@ -25,7 +25,7 @@ export const TournamentMatchesScreen = () => {
 	useEffect(() => {
 		const starterRound =
 			tournamentQuery.data?.starterRound ||
-			tournamentQuery.data?.starterRound ||
+			tournamentQuery.data?.rounds.at(-1)?.slug ||
 			"";
 		if (autoSelectARound) goToRound(starterRound);
 	}, [autoSelectARound]);

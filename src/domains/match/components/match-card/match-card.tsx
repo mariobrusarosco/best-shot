@@ -1,21 +1,21 @@
 import { useGuessInputs } from "@/domains/guess/hooks/use-guess-inputs";
 import { GUESS_STATUS, GUESS_STATUSES, IGuess } from "@/domains/guess/typing";
 import { AppIcon } from "@/domains/ui-system/components/icon/icon";
-import { shimmerEffectNew } from "@/domains/ui-system/components/skeleton/skeleton";
 import { Divider } from "@mui/material";
-import styled from "@mui/material/styles/styled";
 
 import { BestShotIcon } from "@/assets/best-shot-icon";
 import { useGuessMutation } from "@/domains/guess/hooks/use-guess-mutation";
+import { shimmerEffect } from "@/domains/ui-system/components/skeleton/skeleton";
 import { theme } from "@/theming/theme";
 import Typography from "@mui/material/Typography/Typography";
-import { Stack } from "@mui/system";
+import { Stack, styled } from "@mui/system";
 import dayjs from "dayjs";
 import { useState } from "react";
 import { IMatch } from "../../typing";
 import { defineMatchTimebox } from "../../utils";
 import { CardAnimation } from "./animations";
 import { GuessDisplay } from "./guess-display";
+import { GuessMatchOutcome } from "./guess-match-outcome";
 import { GuessPoints } from "./guess-points";
 import { GuessStatus } from "./guess-status";
 import { Button, Card, CTA, Header, Team, Teams } from "./match-card.styles";
@@ -93,6 +93,7 @@ const MatchCard = ({ guess, match, guessMutation }: Props) => {
 						/>
 
 						<GuessStatus guess={guess} />
+						<GuessMatchOutcome guess={guess} />
 						<GuessPoints guess={guess} />
 					</Stack>
 				</Stack>
@@ -141,16 +142,7 @@ const MatchCard = ({ guess, match, guessMutation }: Props) => {
 			</Header>
 
 			<Teams data-ui="teams">
-				<Team
-					data-venue="home"
-					data-ui="team"
-					// layout
-					// transition={{
-					// 	type: "spring",
-					// 	damping: 15,
-					// 	stiffness: 200,
-					// }}
-				>
+				<Team data-venue="home" data-ui="team">
 					<GuessDisplay cardExpanded={isOpen} data={guess.home} />
 					<TeamDisplay cardExpanded={isOpen} team={match.home} />
 					<ScoreDisplay score={match.home.score} />
@@ -162,16 +154,7 @@ const MatchCard = ({ guess, match, guessMutation }: Props) => {
 					/>
 				</Team>
 
-				<Team
-					data-venue="away"
-					data-ui="team"
-					// layout
-					// transition={{
-					// 	type: "spring",
-					// 	damping: 15,
-					// 	stiffness: 200,
-					// }}
-				>
+				<Team data-venue="away" data-ui="team">
 					<ScoreDisplay score={match.away.score} />
 					<TeamDisplay cardExpanded={isOpen} team={match.away} />
 					<GuessDisplay cardExpanded={isOpen} data={guess.away} />
@@ -188,8 +171,9 @@ const MatchCard = ({ guess, match, guessMutation }: Props) => {
 };
 
 const Skeleton = styled(Card)(() => ({
-	height: "84px",
-	...shimmerEffectNew,
+	minHeight: "140px",
+	position: "relative",
+	...shimmerEffect(),
 }));
 
 export default {

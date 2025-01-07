@@ -79,7 +79,7 @@ const Wrapper = styled(Box)(({ theme }) =>
 		},
 
 		[UIHelper.startsOn("tablet")]: {
-			// width: "100%",
+			gap: theme.spacing(3),
 		},
 	}),
 );
@@ -95,23 +95,20 @@ const PillAndStandingLink = styled(Box)(({ theme }) =>
 	}),
 );
 
-const BarHeading = styled(Box)(({ theme }) => ({
+const BarHeading = styled(Box)(() => ({
 	display: "flex",
-	alignItems: "center",
-	gap: theme.spacing(1),
-	padding: theme.spacing(0, 2),
 }));
 
 const Bar = styled(Box)(({ theme }) => ({
 	display: "flex",
-	width: "100%",
 	justifyContent: "space-between",
 
 	[UIHelper.whileIs("mobile")]: {
-		// padding: theme.spacing(2, 2, 1),
+		width: "100%",
 	},
 
 	[UIHelper.startsOn("tablet")]: {
+		width: "fit-content",
 		flexDirection: "column",
 		paddingRight: theme.spacing(2),
 		gap: theme.spacing(2),

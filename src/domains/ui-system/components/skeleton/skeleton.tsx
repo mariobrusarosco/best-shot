@@ -1,8 +1,8 @@
 import { Box, css, styled } from "@mui/material";
 
 export const shimmerEffect = () => ({
-	position: "relative",
 	overflow: "hidden",
+
 	"&::after": {
 		position: "absolute",
 		top: 0,
@@ -16,7 +16,7 @@ export const shimmerEffect = () => ({
 			rgba(255, 255, 255, 0.1) 20%,
 			rgba(255, 255, 255, 0.2) 60%,
 			rgba(255, 255, 255, 0) 100%
-		)`,
+			)`,
 		animation: "shimmer 2s infinite",
 		content: '""',
 	},

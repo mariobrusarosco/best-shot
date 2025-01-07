@@ -14,6 +14,7 @@ export interface IGuess {
 	fullMatch: {
 		status: GUESS_STATUS;
 		points: number | null;
+		label: string;
 	};
 	total: number | null;
 	status: GUESS_STATUS;

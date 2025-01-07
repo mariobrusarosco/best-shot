@@ -64,6 +64,7 @@ export const Wrapper = styled(Surface)(({ theme }) => ({
 	borderBottomLeftRadius: theme.spacing(3),
 	borderBottomRightRadius: theme.spacing(3),
 	gap: theme.spacing(2),
+	position: "relative",
 
 	[UIHelper.whileIs("mobile")]: {
 		height: "var(--screeh-heading-height-mobile)",

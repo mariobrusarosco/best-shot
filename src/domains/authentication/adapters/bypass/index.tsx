@@ -1,4 +1,5 @@
 import { api } from "@/api";
+import { useMember } from "@/domains/member/hooks/use-member";
 import { useMutation } from "@tanstack/react-query";
 import { createContext, useContext, useEffect, useState } from "react";
 import { IAuthHook } from "../typing";
@@ -10,6 +11,9 @@ const memberid =
 	import.meta.env.VITE_MOCKED_MEMBER_ID;
 
 export const Provider = ({ children }: { children: React.ReactNode }) => {
+	const [isAuthenticated, setisAuthenticated] = useState(false);
+	const member = useMember({ fetchOnMount: isAuthenticated });
+
 	const appLogout = async () => {
 		try {
 			await api.delete("whoami");
@@ -41,7 +45,7 @@ export const Provider = ({ children }: { children: React.ReactNode }) => {
 	};
 
 	const [state, setState] = useState<IAuthHook>({
-		isAuthenticated: false,
+		isAuthenticated,
 		authId: undefined,
 		isLoadingAuth: true,
 		logout: appLogout,
@@ -51,16 +55,18 @@ export const Provider = ({ children }: { children: React.ReactNode }) => {
 
 	const { mutate } = useMutation({
 		mutationFn: authenticatedLocalMember,
+		onSuccess: () => {
+			setState((prev) => ({
+				...prev,
+				authId: memberid as string,
+				isAuthenticated: true,
+				isLoadingAuth: false,
+			}));
+		},
 	});
 
 	useEffect(() => {
 		mutate(memberid);
-		setState((prev) => ({
-			...prev,
-			authId: memberid as string,
-			isAuthenticated: true,
-			isLoadingAuth: false,
-		}));
 	}, []);
 
 	return (
@@ -71,7 +77,7 @@ export const Provider = ({ children }: { children: React.ReactNode }) => {
 };
 
 export const authenticatedLocalMember = async (publicId: any) => {
-	const response = await api.get("whoami", { params: { publicId } });
+	const response = await api.post("auth", { publicId });
 
 	return response.data;
 };

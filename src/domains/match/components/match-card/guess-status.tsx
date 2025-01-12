@@ -1,5 +1,8 @@
 import { IGuess } from "@/domains/guess/typing";
+import { AppIcon } from "@/domains/ui-system/components/icon/icon";
 import { AppPill } from "@/domains/ui-system/components/pill/pill";
+import { theme } from "@/theming/theme";
+import { Stack } from "@mui/material";
 import Typography from "@mui/material/Typography/Typography";
 
 export const GuessStatus = ({ guess }: { guess: IGuess }) => {
@@ -21,6 +24,27 @@ export const GuessStatus = ({ guess }: { guess: IGuess }) => {
 				<Typography color="red.400" variant="tag">
 					expired
 				</Typography>
+			</AppPill.Component>
+		);
+
+	if (guess.status === "waiting_for_game" && guess.hasLostTimewindowToGuess)
+		return (
+			<AppPill.Component bgcolor={"teal.500"} width={105} height={25}>
+				<Stack
+					direction="row"
+					gap={1}
+					alignItems="center"
+					justifyContent={"center"}
+				>
+					<AppIcon
+						name="ClockFilled"
+						size="tiny"
+						color={theme.palette.neutral[100]}
+					/>
+					<Typography fontWeight={500} variant="tag" color="neutral.100">
+						waiting result
+					</Typography>
+				</Stack>
 			</AppPill.Component>
 		);
 

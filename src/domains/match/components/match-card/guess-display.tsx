@@ -50,19 +50,6 @@ const getStylesByStatus = (status: GUESS_STATUS) => {
 		};
 	}
 
-	if (status === "incorrect") {
-		return {
-			color: theme.palette.neutral[100],
-			bgColor: theme.palette.red[400],
-		};
-	}
-
-	if (status === "correct")
-		return {
-			color: theme.palette.neutral[100],
-			bgColor: theme.palette.green[200],
-		};
-
 	return {
 		color: "neutral.100",
 		bgColor: "black.500",

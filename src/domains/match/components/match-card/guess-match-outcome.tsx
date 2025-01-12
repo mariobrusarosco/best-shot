@@ -13,7 +13,7 @@ export const GuessMatchOutcome = ({ guess }: { guess: IGuess }) => {
 					color="neutral.100"
 					variant="tag"
 					fontWeight={600}
-					textTransform="uppercase"
+					textTransform="lowercase"
 				>
 					{label}
 				</Typography>
@@ -22,7 +22,12 @@ export const GuessMatchOutcome = ({ guess }: { guess: IGuess }) => {
 
 	return (
 		<AppPill.Component bgcolor={"green.200"} width={85} height={20}>
-			<Typography variant="tag" color="neutral.100" textTransform="uppercase">
+			<Typography
+				variant="tag"
+				color="neutral.100"
+				fontWeight={600}
+				textTransform="lowercase"
+			>
 				{label}
 			</Typography>
 		</AppPill.Component>

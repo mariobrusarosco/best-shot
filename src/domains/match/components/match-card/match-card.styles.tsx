@@ -9,7 +9,7 @@ export const Card = styled(motion(Surface))(({ theme }) => ({
 	flexDirection: "column",
 	backgroundColor: theme.palette.black[800],
 	padding: theme.spacing(2, 1),
-	gap: theme.spacing(4),
+	gap: theme.spacing(3),
 	borderRadius: theme.spacing(1),
 	maxWidth: "100%",
 	position: "relative",
@@ -20,7 +20,7 @@ export const Card = styled(motion(Surface))(({ theme }) => ({
 	},
 
 	[UIHelper.startsOn("tablet")]: {
-		padding: theme.spacing(3, 2),
+		padding: theme.spacing(2),
 	},
 }));
 

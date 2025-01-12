@@ -145,7 +145,7 @@ const MatchCard = ({ guess, match, guessMutation }: Props) => {
 				<Team data-venue="home" data-ui="team">
 					<GuessDisplay cardExpanded={isOpen} data={guess.home} />
 					<TeamDisplay cardExpanded={isOpen} team={match.home} />
-					<ScoreDisplay score={match.home.score} />
+					<ScoreDisplay matchVenueData={match.home} />
 					<ScoreInput
 						guessStatus={guess.status}
 						cardExpanded={isOpen}
@@ -155,7 +155,7 @@ const MatchCard = ({ guess, match, guessMutation }: Props) => {
 				</Team>
 
 				<Team data-venue="away" data-ui="team">
-					<ScoreDisplay score={match.away.score} />
+					<ScoreDisplay matchVenueData={match.away} />
 					<TeamDisplay cardExpanded={isOpen} team={match.away} />
 					<GuessDisplay cardExpanded={isOpen} data={guess.away} />
 					<ScoreInput

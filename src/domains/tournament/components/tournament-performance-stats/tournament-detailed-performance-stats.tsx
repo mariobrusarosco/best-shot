@@ -8,12 +8,14 @@ import {
 import { Surface } from "@/domains/ui-system/components/surface/surface";
 import Typography from "@mui/material/Typography/Typography";
 import { Box, Stack, styled } from "@mui/system";
-import { useTournamentDetailedPerformance } from "../../hooks/use-tournament-detailed-performance";
 import { useState } from "react";
+import { useTournamentDetailedPerformance } from "../../hooks/use-tournament-detailed-performance";
 
 const TournamentDetailedPerformanceStats = () => {
 	const [showDetailedPerformance, setShowDetailedPerformance] = useState(false);
-	const detailedPerformance = useTournamentDetailedPerformance({ enabled: showDetailedPerformance });
+	const detailedPerformance = useTournamentDetailedPerformance({
+		enabled: showDetailedPerformance,
+	});
 
 	return (
 		<Stack>
@@ -31,91 +33,105 @@ const TournamentDetailedPerformanceStats = () => {
 				</Typography>
 			</AppButton>
 
-		{detailedPerformance.data && <Stack gap={4} pt={5}>			
-			<Stack>
-				<GridOfCards>
-					<PerfCard>
-						<Stack direction="row" gap={1.5} alignItems="center">
-							<Typography
-								textTransform="uppercase"
-								variant="caption"
-								color="teal.500"
-							>
-								correct guesses
-							</Typography>
-							<Typography
-								textTransform="uppercase"
-								variant="h4"
-								color="neutral.100"
-							>
-								<Counter initialValue={detailedPerformance.data?.guessesByOutcome.correct} />
-							</Typography>
-						</Stack>
-					</PerfCard>
-					<PerfCard>
-						<Stack direction="row" gap={1.5} alignItems="center">
-							<Typography
-								textTransform="uppercase"
-								variant="caption"
-								color="teal.500"
-							>
-								incorrect guesses
-							</Typography>
-							<Typography
-								textTransform="uppercase"
-								variant="h4"
-								color="neutral.100"
-							>
-								<Counter initialValue={detailedPerformance.data.guessesByOutcome.incorrect} />
-							</Typography>
-						</Stack>
-					</PerfCard>
-					<PerfCard>
-						<Stack direction="row" gap={1.5} alignItems="center">
-							<Typography
-								textTransform="uppercase"
-								variant="caption"
-								color="teal.500"
-							>
-								waiting for macth outcome
-							</Typography>
-							<Typography
-								textTransform="uppercase"
-								variant="h4"
-								color="neutral.100"
-							>
-								<Counter initialValue={detailedPerformance.data.details["waiting_for_game"]} />
-							</Typography>
-						</Stack>
-					</PerfCard>
-					<PerfCard>
-						<Stack direction="row" gap={1.5} alignItems="center">
-							<Typography
-								textTransform="uppercase"
-								variant="caption"
-								color="teal.500"
-							>
-								you still can guess
-							</Typography>
-							<Typography
-								textTransform="uppercase"
-								variant="h4"
-								color="neutral.100"
-							>
-								<Counter initialValue={detailedPerformance.data?.details["not-started"]} />
-							</Typography>
-						</Stack>
-					</PerfCard>
-				</GridOfCards>
-			</Stack>
+			{detailedPerformance.data && (
+				<Stack gap={4} pt={5}>
+					<Stack>
+						<GridOfCards>
+							<PerfCard>
+								<Stack direction="row" gap={1.5} alignItems="center">
+									<Typography
+										textTransform="uppercase"
+										variant="caption"
+										color="teal.500"
+									>
+										correct guesses
+									</Typography>
+									<Typography
+										textTransform="uppercase"
+										variant="h4"
+										color="neutral.100"
+									>
+										<Counter
+											initialValue={
+												detailedPerformance.data?.guessesByOutcome.correct
+											}
+										/>
+									</Typography>
+								</Stack>
+							</PerfCard>
+							<PerfCard>
+								<Stack direction="row" gap={1.5} alignItems="center">
+									<Typography
+										textTransform="uppercase"
+										variant="caption"
+										color="teal.500"
+									>
+										incorrect guesses
+									</Typography>
+									<Typography
+										textTransform="uppercase"
+										variant="h4"
+										color="neutral.100"
+									>
+										<Counter
+											initialValue={
+												detailedPerformance.data.guessesByOutcome.incorrect
+											}
+										/>
+									</Typography>
+								</Stack>
+							</PerfCard>
+							<PerfCard>
+								<Stack direction="row" gap={1.5} alignItems="center">
+									<Typography
+										textTransform="uppercase"
+										variant="caption"
+										color="teal.500"
+									>
+										waiting for macth outcome
+									</Typography>
+									<Typography
+										textTransform="uppercase"
+										variant="h4"
+										color="neutral.100"
+									>
+										<Counter
+											initialValue={
+												detailedPerformance.data.details["waiting_for_game"]
+											}
+										/>
+									</Typography>
+								</Stack>
+							</PerfCard>
+							<PerfCard>
+								<Stack direction="row" gap={1.5} alignItems="center">
+									<Typography
+										textTransform="uppercase"
+										variant="caption"
+										color="teal.500"
+									>
+										you still can guess
+									</Typography>
+									<Typography
+										textTransform="uppercase"
+										variant="h4"
+										color="neutral.100"
+									>
+										<Counter
+											initialValue={
+												detailedPerformance.data?.details["not-started"]
+											}
+										/>
+									</Typography>
+								</Stack>
+							</PerfCard>
+						</GridOfCards>
+					</Stack>
 
-			<Stack>
-
-			</Stack>
+					<Stack></Stack>
+				</Stack>
+			)}
 		</Stack>
-		}
-		</Stack>
-
 	);
 };
 
@@ -134,6 +150,7 @@ const PerfCard = styled(Surface)(({ theme }) =>
 
 const PerfCardSkeleton = styled(PerfCard)(({ theme }) =>
 	theme.unstable_sx({
+		position: "relative",
 		...shimmerEffect(),
 	}),
 );

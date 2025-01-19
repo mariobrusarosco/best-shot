@@ -3,7 +3,7 @@ import { Box, styled } from "@mui/material";
 
 export const ScreenMainContent = styled(Box)(({ theme }) => ({
 	[UIHelper.whileIs("mobile")]: {
-		padding: theme.spacing(4, 2),
+		padding: theme.spacing(2),
 	},
 
 	[UIHelper.startsOn("tablet")]: {

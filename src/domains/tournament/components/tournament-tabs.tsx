@@ -107,6 +107,7 @@ const CustomTab = styled(CustomLink)(({ theme }) =>
 
 export const TabsSkeleton = styled(Wrapper)(({ theme }) =>
 	theme.unstable_sx({
+		position: "relative",
 		height: "41px",
 		border: "none",
 		...shimmerEffect(),

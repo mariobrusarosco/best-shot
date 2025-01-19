@@ -1,3 +1,4 @@
+import { shimmerEffect } from "@/domains/ui-system/components/skeleton/skeleton";
 import {
 	Surface,
 	SurfaceProps,
@@ -60,8 +61,8 @@ export const Wrapper = styled(Surface)(({ theme }) => ({
 	justifyContent: "space-between",
 	alignItems: "center",
 	backgroundColor: theme.palette.black[800],
-	borderBottomLeftRadius: theme.spacing(3),
-	borderBottomRightRadius: theme.spacing(3),
+	borderRadius: theme.spacing(1.5),
+
 	gap: theme.spacing(2),
 	position: "relative",
 
@@ -71,6 +72,7 @@ export const Wrapper = styled(Surface)(({ theme }) => ({
 		paddingTop: theme.spacing(4),
 		paddingLeft: theme.spacing(2),
 		paddingRight: theme.spacing(2),
+		margin: theme.spacing(1.5),
 	},
 	[UIHelper.startsOn("tablet")]: {
 		height: "var(--screeh-heading-height-tablet)",
@@ -79,21 +81,23 @@ export const Wrapper = styled(Surface)(({ theme }) => ({
 	[UIHelper.startsOn("desktop")]: {},
 }));
 
-const TextBox = styled(Surface)(({ theme }) =>
-	theme?.unstable_sx({
-		display: "flex",
-		flexDirection: "column",
-		gap: {
-			all: 0,
-			tablet: 0,
-		},
-	}),
-);
+const TextBox = styled(Surface)(({ theme }) => ({
+	display: "flex",
+	flexDirection: "column",
 
-export const ScreenHeadingSkeleton = styled(Wrapper)(({ theme }) =>
-	({
-		backgroundColor: theme.palette.black[800],
-		borderBottomLeftRadius: theme.spacing(3),
-		borderBottomRightRadius: theme.spacing(3),
-	}),
-);
+	[UIHelper.startsOn("tablet")]: {
+		flex: 1,
+	},
+	[UIHelper.startsOn("tablet")]: {
+		height: "var(--screeh-heading-height-tablet)",
+		padding: theme.spacing(4),
+	},
+}));
+
+export const ScreenHeadingSkeleton = styled(Wrapper)(({ theme }) => ({
+	backgroundColor: theme.palette.black[800],
+	borderBottomLeftRadius: theme.spacing(3),
+	borderBottomRightRadius: theme.spacing(3),
+	position: "relative",
+	...shimmerEffect(),
+}));

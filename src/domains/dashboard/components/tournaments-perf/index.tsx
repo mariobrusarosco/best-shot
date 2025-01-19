@@ -5,6 +5,7 @@ import { AppButton } from "@/domains/ui-system/components/button/button";
 import { Counter } from "@/domains/ui-system/components/counter/counter";
 import { AppIcon } from "@/domains/ui-system/components/icon/icon";
 import { AppPill } from "@/domains/ui-system/components/pill/pill";
+import { shimmerEffect } from "@/domains/ui-system/components/skeleton/skeleton";
 import { Stack, Typography } from "@mui/material";
 import { Box, styled } from "@mui/system";
 import { Link } from "@tanstack/react-router";
@@ -204,7 +205,7 @@ const CardRouteButtonSkeleton = styled(Box)(({ theme }) =>
 		backgroundColor: "black.800",
 		minWidth: "30px",
 		borderRadius: 2,
-		// ...shimmerEffect(),
+		...shimmerEffect(),
 	}),
 );
 // TODO This can be a <AppRouteButton />
@@ -218,8 +219,8 @@ const TournamentsPerfSkeleton = () => {
 			</Stack>
 
 			<DashGrid>
-				<DashCard.Skeleton />
-				<DashCard.Skeleton />
+				<DashCard.Skeleton sx={{ height: "111px" }} />
+				<DashCard.Skeleton sx={{ height: "111px" }} />
 			</DashGrid>
 		</Stack>
 	);

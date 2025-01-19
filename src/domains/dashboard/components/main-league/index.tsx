@@ -197,6 +197,7 @@ const EmptyState = () => (
 
 const CardRouteButtonSkeleton = styled(Box)(({ theme }) =>
 	theme?.unstable_sx({
+		position: "relative",
 		...shimmerEffect(),
 		backgroundColor: "black.800",
 		minWidth: "30px",

@@ -22,10 +22,10 @@ const DashboardPage = () => {
 			<AuthenticatedScreenLayout data-ui="dashboard-screen">
 				<ScreenHeadingSkeleton />
 
-				<ScreenMainContent data-ui="dashboard-content">
-					{/* <Matchday.Skeleton /> */}
+				<Dashboard data-ui="dashboard-content-skeleton">
+					<Matchday.Skeleton />
 					<TournamentsPerf.Skeleton />
-				</ScreenMainContent>
+				</Dashboard>
 			</AuthenticatedScreenLayout>
 		);
 	}
@@ -53,8 +53,9 @@ const DashboardPage = () => {
 };
 
 export const Dashboard = styled(ScreenMainContent)(({ theme }) => ({
+	display: "flex",
 	flexDirection: "column",
-	gap: theme.spacing(4),
+	gap: theme.spacing(2),
 }));
 
 export { DashboardPage };

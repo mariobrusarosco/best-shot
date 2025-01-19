@@ -14,7 +14,7 @@ const Matchday = ({ matchday }: { matchday: IMatchday }) => {
 	const allMatches = matchday.all;
 
 	return (
-		<Stack color="neutral.100" gap={3}>
+		<Stack color="neutral.100" gap={3} data-ui="matchday">
 			<Stack direction="row" justifyContent="space-between">
 				<AppPill.Component
 					bgcolor="teal.500"
@@ -33,7 +33,7 @@ const Matchday = ({ matchday }: { matchday: IMatchday }) => {
 					<EmptyState />
 				) : (
 					allMatches.map((match, i) => (
-						<MatchdayCard key={i}>
+						<MatchdayCard key={i} data-ui="matchday-card">
 							<Link
 								to="/tournaments/$tournamentId/matches"
 								params={{ tournamentId: match.tournamentId }}
@@ -52,7 +52,7 @@ const Matchday = ({ matchday }: { matchday: IMatchday }) => {
 										gap={2}
 										data-ui="card-header"
 									>
-										<Stack minWidth="100px">
+										<Stack>
 											<Typography
 												fontWeight={500}
 												textTransform="uppercase"
@@ -78,7 +78,7 @@ const Matchday = ({ matchday }: { matchday: IMatchday }) => {
 										</AppButton>
 									</AppCard.Header>
 									<Typography
-										variant="topic"
+										variant="tag"
 										color={theme.palette.teal[500]}
 										fontWeight={400}
 									>
@@ -102,14 +102,17 @@ const EmptyState = () => (
 
 const MatchdaySkeleton = () => {
 	return (
-		<Stack color="neutral.100" gap={3}>
+		<Stack color="neutral.100" gap={3} data-ui="matchday-skeleton">
 			<Stack direction="row" justifyContent="space-between">
 				<AppPill.Skeleton height={20} width="120px" />
 			</Stack>
 
 			<MatchdayGrid>
-				<DashCard.Skeleton />
-				<DashCard.Skeleton />
+				{Array.from({ length: 8 }).map((_, i) => (
+					<MatchdayCard key={i} data-ui="matchday-card-skeleton">
+						<DashCard.Skeleton sx={{ width: "100px", height: "71px" }} />
+					</MatchdayCard>
+				))}
 			</MatchdayGrid>
 		</Stack>
 	);

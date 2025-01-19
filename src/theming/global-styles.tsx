@@ -7,8 +7,8 @@ export const GlobalCSS = () => (
 				overflowX: "hidden",
 			},
 			":root": {
-				"--app-header-height-mobile": "64px",
-				"--screeh-heading-height-mobile": "220px",
+				"--app-header-height-mobile": "80px",
+				"--screeh-heading-height-mobile": "144px",
 				"--screeh-heading-height-tablet": "250px",
 				"--tournament-heading-height-tablet": "70px",
 			},

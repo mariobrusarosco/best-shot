@@ -6,7 +6,7 @@ export const AuthenticatedLayout = styled(Box)(({ theme }) => ({
 	minHeight: "100dvh",
 
 	[UIHelper.whileIs("mobile")]: {
-		paddingTop: theme.spacing(8),
+		paddingTop: "var(--app-header-height-mobile)",
 	},
 	[UIHelper.startsOn("tablet")]: {
 		display: "flex",

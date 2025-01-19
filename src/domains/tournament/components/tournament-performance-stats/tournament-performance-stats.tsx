@@ -12,7 +12,7 @@ import { useTournamentPerformance } from "../../hooks/use-tournament-performance
 import { ITournamentPerformance } from "../../typing";
 
 const TournamentPerformanceStats = ({
-	basicPerformance, 
+	basicPerformance,
 	mutation,
 }: {
 	basicPerformance: ITournamentPerformance;
@@ -47,7 +47,8 @@ const TournamentPerformanceStats = ({
 						variant="caption"
 						color="neutral.100"
 					>
-						{basicPerformance.lastUpdated && new Date(basicPerformance.lastUpdated).toUTCString()}
+						{basicPerformance.lastUpdated &&
+							new Date(basicPerformance.lastUpdated).toUTCString()}
 					</Typography>
 					<AppButton
 						sx={{
@@ -68,8 +69,6 @@ const TournamentPerformanceStats = ({
 				</Box>
 			</Box>
 
-
-			
 			<PerfCard>
 				<Stack
 					direction="row"
@@ -93,7 +92,6 @@ const TournamentPerformanceStats = ({
 					</Typography>
 				</Stack>
 			</PerfCard>
-
 		</Stack>
 	);
 };
@@ -113,6 +111,7 @@ const PerfCard = styled(Surface)(({ theme }) =>
 
 const PerfCardSkeleton = styled(PerfCard)(({ theme }) =>
 	theme.unstable_sx({
+		position: "relative",
 		...shimmerEffect(),
 	}),
 );

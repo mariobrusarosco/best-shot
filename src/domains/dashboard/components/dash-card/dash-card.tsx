@@ -17,7 +17,6 @@ const Card = styled(Surface)(({ theme }) =>
 		[UIHelper.startsOn("tablet")]: {
 			p: 3,
 			maxHeight: "160px",
-			minHeight: "160px",
 		},
 	}),
 );

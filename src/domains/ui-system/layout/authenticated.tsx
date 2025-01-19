@@ -12,6 +12,10 @@ export const AuthenticatedLayout = styled(Box)(({ theme }) => ({
 		display: "flex",
 		gap: theme.spacing(2),
 	},
+
+	[UIHelper.startsOn("desktop")]: {
+		gap: theme.spacing(4),
+	},
 }));
 
 export const AuthenticatedScreenLayout = styled(Box)(() => ({

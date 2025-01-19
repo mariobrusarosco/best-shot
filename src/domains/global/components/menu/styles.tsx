@@ -9,12 +9,11 @@ export const MenuLink = styled(Link)(({ theme }) => ({
 	gap: theme.spacing(2),
 }));
 
-export const Wrapper = styled(Box)(({ theme }) => ({
+export const LinkList = styled(Box)(({ theme }) => ({
 	display: "flex",
 	borderTopRightRadius: "16px",
 	borderTopLeftRadius: "16px",
 	gap: theme.spacing(4),
-	backgroundColor: theme.palette.black[800],
 	maxHeight: "100vh",
 
 	[UIHelper.whileIs("mobile")]: {
@@ -48,4 +47,11 @@ export const MenuLogo = styled(Link)(({ theme }) => ({
 		placeItems: "center",
 		gap: theme.spacing(1),
 	},
+}));
+
+export const Wrapper = styled(Box)(({ theme }) => ({
+	display: "flex",
+	flexDirection: "column",
+	gap: theme.spacing(2),
+	backgroundColor: theme.palette.black[800],
 }));

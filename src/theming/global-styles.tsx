@@ -9,7 +9,7 @@ export const GlobalCSS = () => (
 			":root": {
 				"--app-header-height-mobile": "80px",
 				"--screeh-heading-height-mobile": "144px",
-				"--screeh-heading-height-tablet": "250px",
+				"--screeh-heading-height-tablet": "200px",
 				"--tournament-heading-height-tablet": "70px",
 			},
 			"#root": {

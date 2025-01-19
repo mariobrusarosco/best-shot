@@ -25,7 +25,7 @@ const TournamentsPerf = ({
 		performance.data?.tournaments?.at(0);
 
 	return (
-		<Stack color="neutral.100" gap={3}>
+		<Wrapper data-ui="tournaments-perf">
 			<Stack direction="row" justifyContent="space-between">
 				<AppPill.Component
 					bgcolor="teal.500"
@@ -173,7 +173,7 @@ const TournamentsPerf = ({
 					</Stack>
 				</DashCard.Component>
 			</DashGrid>
-		</Stack>
+		</Wrapper>
 	);
 };
 
@@ -212,7 +212,7 @@ const CardRouteButtonSkeleton = styled(Box)(({ theme }) =>
 
 const TournamentsPerfSkeleton = () => {
 	return (
-		<Stack color="neutral.100" gap={3}>
+		<Wrapper data-ui="tournaments-perf-skeleton">
 			<Stack direction="row" justifyContent="space-between">
 				<AppPill.Skeleton height={20} width="120px" />
 				<CardRouteButtonSkeleton />
@@ -222,7 +222,7 @@ const TournamentsPerfSkeleton = () => {
 				<DashCard.Skeleton sx={{ height: "111px" }} />
 				<DashCard.Skeleton sx={{ height: "111px" }} />
 			</DashGrid>
-		</Stack>
+		</Wrapper>
 	);
 };
 
@@ -230,3 +230,8 @@ export default {
 	Component: TournamentsPerf,
 	Skeleton: TournamentsPerfSkeleton,
 };
+
+const Wrapper = styled(Stack)(({ theme }) => ({
+	gap: theme.spacing(3),
+	color: theme.palette.neutral["100"],
+}));

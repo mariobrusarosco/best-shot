@@ -7,7 +7,7 @@ import { Stack } from "@mui/system";
 export const AppHeader = () => {
 	return (
 		<Header as="header">
-			<BestShotIcon width={50} fill={theme.palette.teal[500]} />
+			<BestShotIcon width={50} fill={theme.palette.neutral[100]} />
 			<Typography
 				variant="paragraph"
 				color={theme.palette.neutral[100]}

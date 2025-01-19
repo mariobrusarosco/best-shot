@@ -8,7 +8,7 @@ export const ScreenMainContent = styled(Box)(({ theme }) => ({
 
 	[UIHelper.startsOn("tablet")]: {
 		overflow: "auto",
-		padding: theme.spacing(4, 2),
+		padding: theme.spacing(4, 2, 0, 0),
 		height: "calc(100vh - var(--screeh-heading-height-tablet))",
 		display: "flex",
 	},

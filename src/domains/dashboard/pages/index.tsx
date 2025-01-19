@@ -9,6 +9,7 @@ import Matchday from "@/domains/dashboard/components/matchday";
 import { useDashboard } from "@/domains/dashboard/hooks/use-dashboard";
 import { AuthenticatedScreenLayout } from "@/domains/ui-system/layout/authenticated";
 import { ScreenMainContent } from "@/domains/ui-system/layout/screen-main-content";
+import { UIHelper } from "@/theming/theme";
 import { styled } from "@mui/system";
 import TournamentsPerf from "../components/tournaments-perf";
 
@@ -56,6 +57,10 @@ export const Dashboard = styled(ScreenMainContent)(({ theme }) => ({
 	display: "flex",
 	flexDirection: "column",
 	gap: theme.spacing(2),
+
+	[UIHelper.startsOn("tablet")]: {
+		gap: theme.spacing(4),
+	},
 }));
 
 export { DashboardPage };

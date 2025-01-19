@@ -62,7 +62,6 @@ export const Wrapper = styled(Surface)(({ theme }) => ({
 	alignItems: "center",
 	backgroundColor: theme.palette.black[800],
 	borderRadius: theme.spacing(1.5),
-
 	gap: theme.spacing(2),
 	position: "relative",
 
@@ -81,16 +80,12 @@ export const Wrapper = styled(Surface)(({ theme }) => ({
 	[UIHelper.startsOn("desktop")]: {},
 }));
 
-const TextBox = styled(Surface)(({ theme }) => ({
+const TextBox = styled(Surface)(() => ({
 	display: "flex",
 	flexDirection: "column",
 
 	[UIHelper.startsOn("tablet")]: {
 		flex: 1,
-	},
-	[UIHelper.startsOn("tablet")]: {
-		height: "var(--screeh-heading-height-tablet)",
-		padding: theme.spacing(4),
 	},
 }));
 

@@ -12,6 +12,7 @@ const Pill = styled(Box)(({ theme }) =>
 
 const PillSkeleton = styled(Pill)(({ theme }) =>
 	theme?.unstable_sx({
+		position: "relative",
 		...shimmerEffect(),
 	}),
 );

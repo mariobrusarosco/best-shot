@@ -52,7 +52,7 @@ const LeaguePage = () => {
 				<League data-ui="league">
 					<LeaguePerformanceStats performance={performance} />
 					<ParticipantsList.Component participants={league.data.participants} />
-					<Stack spacing={2} direction="column">
+					<Stack spacing={2} direction="column" flex={1}>
 						{hasEditPermission ? <LeagueTournaments league={league} /> : null}
 						{hasInvitePermission ? <InviteToLeague /> : null}
 					</Stack>

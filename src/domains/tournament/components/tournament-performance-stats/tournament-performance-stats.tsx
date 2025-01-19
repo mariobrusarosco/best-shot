@@ -12,13 +12,13 @@ import { useTournamentPerformance } from "../../hooks/use-tournament-performance
 import { ITournamentPerformance } from "../../typing";
 
 const TournamentPerformanceStats = ({
-	data,
+	basicPerformance, 
 	mutation,
 }: {
-	data: ITournamentPerformance;
+	basicPerformance: ITournamentPerformance;
 	mutation: ReturnType<typeof useTournamentPerformance>["mutation"];
 }) => {
-	if (!data) return null;
+	if (!basicPerformance) return null;
 
 	return (
 		<Stack gap={4} pt={5}>
@@ -47,7 +47,7 @@ const TournamentPerformanceStats = ({
 						variant="caption"
 						color="neutral.100"
 					>
-						{data?.lastUpdated && new Date(data.lastUpdated).toUTCString()}
+						{basicPerformance.lastUpdated && new Date(basicPerformance.lastUpdated).toUTCString()}
 					</Typography>
 					<AppButton
 						sx={{
@@ -68,6 +68,8 @@ const TournamentPerformanceStats = ({
 				</Box>
 			</Box>
 
+
+			
 			<PerfCard>
 				<Stack
 					direction="row"
@@ -87,100 +89,11 @@ const TournamentPerformanceStats = ({
 						variant="h1"
 						color="neutral.100"
 					>
-						<Counter initialValue={Number(data?.points) ?? 0} />
+						<Counter initialValue={Number(basicPerformance?.points) ?? 0} />
 					</Typography>
 				</Stack>
 			</PerfCard>
 
-			<Stack>
-				<GridOfCards>
-					<PerfCard>
-						<Stack direction="row" gap={1.5} alignItems="center">
-							<Typography
-								textTransform="uppercase"
-								variant="caption"
-								color="teal.500"
-							>
-								correct guesses
-							</Typography>
-							<Typography
-								textTransform="uppercase"
-								variant="h4"
-								color="neutral.100"
-							>
-								<Counter initialValue={data.guessesByOutcome.correct} />
-							</Typography>
-						</Stack>
-					</PerfCard>
-					<PerfCard>
-						<Stack direction="row" gap={1.5} alignItems="center">
-							<Typography
-								textTransform="uppercase"
-								variant="caption"
-								color="teal.500"
-							>
-								incorrect guesses
-							</Typography>
-							<Typography
-								textTransform="uppercase"
-								variant="h4"
-								color="neutral.100"
-							>
-								<Counter initialValue={data.guessesByOutcome.incorrect} />
-							</Typography>
-						</Stack>
-					</PerfCard>
-					<PerfCard>
-						<Stack direction="row" gap={1.5} alignItems="center">
-							<Typography
-								textTransform="uppercase"
-								variant="caption"
-								color="teal.500"
-							>
-								waiting for macth outcome
-							</Typography>
-							<Typography
-								textTransform="uppercase"
-								variant="h4"
-								color="neutral.100"
-							>
-								<Counter initialValue={data.details["waiting_for_game"]} />
-							</Typography>
-						</Stack>
-					</PerfCard>
-					<PerfCard>
-						<Stack direction="row" gap={1.5} alignItems="center">
-							<Typography
-								textTransform="uppercase"
-								variant="caption"
-								color="teal.500"
-							>
-								you still can guess
-							</Typography>
-							<Typography
-								textTransform="uppercase"
-								variant="h4"
-								color="neutral.100"
-							>
-								<Counter initialValue={data.details["not-started"]} />
-							</Typography>
-						</Stack>
-					</PerfCard>
-				</GridOfCards>
-			</Stack>
-
-			<Stack>
-				{/* <GuessSection groupName={"all"} groupOfGuesses={data.details} /> */}
-
-				{/* {Object.values(GUESS_STATUSES).map((status) => {
-					return (
-						<GuessSection
-							groupName={status}
-							groupOfGuesses={guessesByStatus[status]}
-						/>
-					);
-				})} */}
-			</Stack>
 		</Stack>
 	);
 };

@@ -23,7 +23,7 @@ const DashboardPage = () => {
 				<ScreenHeadingSkeleton />
 
 				<ScreenMainContent data-ui="dashboard-content">
-					<Matchday.Skeleton />
+					{/* <Matchday.Skeleton /> */}
 					<TournamentsPerf.Skeleton />
 				</ScreenMainContent>
 			</AuthenticatedScreenLayout>

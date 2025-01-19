@@ -3,6 +3,7 @@ import { IMatch } from "@/domains/match/typing";
 import {
 	ITournament,
 	ITournamentPerformance,
+	ITournamentPerformanceWithDetails,
 	ITournamentStandings,
 } from "../typing";
 
@@ -45,6 +46,19 @@ export const getTournamentPerformance = async ({
 
 	return response.data as ITournamentPerformance;
 };
+
+export const getTournamentPerformanceDetails = async ({
+	queryKey,
+}: {
+	queryKey: any;
+}) => {
+	const [_key, { tournamentId }] = queryKey;
+
+	const response = await api.get(`tournaments/${tournamentId}/performance/details`);
+
+	return response.data as ITournamentPerformanceWithDetails
+};
+
 
 export const getTournamentStandings = async ({
 	queryKey,

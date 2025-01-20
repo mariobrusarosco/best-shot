@@ -105,6 +105,10 @@ const Matches = styled(Box)(({ theme }) => ({
 	},
 	[UIHelper.startsOn("tablet")]: {
 		height: "100%",
+		columnGap: theme.spacing(1),
+	},
+	[UIHelper.startsOn("desktop")]: {
+		height: "100%",
 		columnGap: theme.spacing(4),
 	},
 }));
@@ -117,6 +121,12 @@ const Rounds = styled(Box)(({ theme }) => ({
 	},
 
 	[UIHelper.startsOn("tablet")]: {
+		// paddingRight: theme.spacing(2),
+		minWidth: "380px",
+		// maxWidth: "450px",
+	},
+
+	[UIHelper.startsOn("desktop")]: {
 		paddingRight: theme.spacing(2),
 		minWidth: "450px",
 		maxWidth: "450px",

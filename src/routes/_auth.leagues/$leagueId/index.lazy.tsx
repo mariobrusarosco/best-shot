@@ -1,6 +1,6 @@
 import { ScreenHeading } from "@/domains/global/components/screen-heading";
 import { InviteToLeague } from "@/domains/league/components/invite-to-league/invite-to-league";
-import { LeaguePerformanceStats } from "@/domains/league/components/league-performance-stats/league-performance-stats";
+import LeaguePerformanceStats from "@/domains/league/components/league-performance-stats/league-performance-stats";
 import { LeagueTournaments } from "@/domains/league/components/league-tournaments/league-tournament-list";
 import ParticipantsList from "@/domains/league/components/participants/participants";
 import { useLeague } from "@/domains/league/hooks/use-league";
@@ -21,11 +21,13 @@ const LeaguePage = () => {
 	if (league.isPending) {
 		return (
 			<AuthenticatedScreenLayout data-ui="leagues-screen-loading">
-				<ScreenHeading title="league">
-					<ScreenMainContent>
+				<ScreenHeading title="league" />
+				<ScreenMainContent>
+					<League>
+						<LeaguePerformanceStats.Skeleton />
 						<ParticipantsList.Skeleton />
-					</ScreenMainContent>
-				</ScreenHeading>
+					</League>
+				</ScreenMainContent>
 			</AuthenticatedScreenLayout>
 		);
 	}
@@ -33,9 +35,8 @@ const LeaguePage = () => {
 	if (league.isError) {
 		return (
 			<AuthenticatedScreenLayout data-ui="leagues-screen-error">
-				<ScreenHeading title="league">
-					<ScreenMainContent>...error...</ScreenMainContent>
-				</ScreenHeading>
+				<ScreenHeading title="league" />
+				<ScreenMainContent>...error...</ScreenMainContent>
 			</AuthenticatedScreenLayout>
 		);
 	}
@@ -50,9 +51,13 @@ const LeaguePage = () => {
 
 			<ScreenMainContent>
 				<League data-ui="league">
-					<LeaguePerformanceStats performance={performance} />
-					<ParticipantsList.Component participants={league.data.participants} />
 					<Stack spacing={2} direction="column" flex={1}>
+						<LeaguePerformanceStats.Component performance={performance} />
+					</Stack>
+					<Stack spacing={2} direction="column" flex={1}>
+						<ParticipantsList.Component
+							participants={league.data.participants}
+						/>
 						{hasEditPermission ? <LeagueTournaments league={league} /> : null}
 						{hasInvitePermission ? <InviteToLeague /> : null}
 					</Stack>

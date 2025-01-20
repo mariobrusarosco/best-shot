@@ -15,6 +15,7 @@ export const LinkList = styled(Box)(({ theme }) => ({
 	borderTopLeftRadius: "16px",
 	gap: theme.spacing(4),
 	maxHeight: "100vh",
+	backgroundColor: theme.palette.black[800],
 
 	[UIHelper.whileIs("mobile")]: {
 		justifyContent: "center",
@@ -53,5 +54,8 @@ export const Wrapper = styled(Box)(({ theme }) => ({
 	display: "flex",
 	flexDirection: "column",
 	gap: theme.spacing(2),
-	backgroundColor: theme.palette.black[800],
+
+	[UIHelper.startsOn("tablet")]: {
+		backgroundColor: theme.palette.black[800],
+	},
 }));

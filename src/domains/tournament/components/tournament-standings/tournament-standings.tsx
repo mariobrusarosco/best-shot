@@ -117,7 +117,6 @@ const TournamentStandings = () => {
 				</AppPill.Component>
 			</Heading>
 
-			{/* <Stack gap={3}> */}
 			{Object.keys(standings).map((group) => {
 				return (
 					<>
@@ -259,27 +258,13 @@ const TournamentStandings = () => {
 														color="neutral.100"
 														sx={{
 															display: {
-																all: "inline-block",
-																tablet: "none",
-															},
-														}}
-													>
-														{row.shortName}
-													</Typography>
-
-													<Typography
-														variant="label"
-														textTransform="uppercase"
-														fontWeight={300}
-														color="neutral.100"
-														sx={{
-															display: {
 																all: "none",
 																tablet: "inline-block",
 															},
 														}}
 														overflow="hidden"
 														textOverflow="ellipsis"
+														textAlign="left"
 													>
 														{row.longName}
 													</Typography>

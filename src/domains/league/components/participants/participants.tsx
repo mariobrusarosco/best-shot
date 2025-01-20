@@ -1,23 +1,9 @@
 import { AppPill } from "@/domains/ui-system/components/pill/pill";
+import { shimmerEffect } from "@/domains/ui-system/components/skeleton/skeleton";
 import Typography from "@mui/material/Typography/Typography";
 import { Box, Stack, styled } from "@mui/system";
 import { IParticipant } from "../../typing";
 import { Participant } from "./participant";
-import { ParticipantSkeleton } from "./participant.skeleton";
-
-const ParticipantsListSkeleton = () => {
-	const participants = Array.from({ length: 6 }).map((_) => _);
-
-	return (
-		<ListGrid component="ul" data-ui="leagues-list">
-			{participants?.map((_) => (
-				<li>
-					<ParticipantSkeleton />
-				</li>
-			))}
-		</ListGrid>
-	);
-};
 
 const ListGrid = styled(Box)(({ theme }) => ({
 	display: "flex",
@@ -52,6 +38,26 @@ const LeagueTournaments = ({
 		</Stack>
 	);
 };
+
+const ParticipantsListSkeleton = () => {
+	const participants = Array.from({ length: 6 }).map((_) => _);
+
+	return (
+		<Stack gap={6.5} data-ui="league-participants-skeleton" flex={1}>
+			<AppPill.Skeleton width={100} height={25} />
+
+			<ListGrid component="ul" data-ui="leagues-list">
+				{participants?.map((_) => <Skeleton />)}
+			</ListGrid>
+		</Stack>
+	);
+};
+
+const Skeleton = styled(Box)(() => ({
+	position: "relative",
+	height: "87px",
+	...shimmerEffect(),
+}));
 
 export default {
 	Component: LeagueTournaments,

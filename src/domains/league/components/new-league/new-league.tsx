@@ -1,16 +1,17 @@
 import { AppButton } from "@/domains/ui-system/components/button/button";
 import { AppInput } from "@/domains/ui-system/components/input/input";
+import { shimmerEffect } from "@/domains/ui-system/components/skeleton/skeleton";
 import { Surface } from "@/domains/ui-system/components/surface/surface";
 import { TypographyProps } from "@mui/material";
 import Typography from "@mui/material/Typography/Typography";
 import { Box, styled } from "@mui/system";
 import { useLeagues } from "../../hooks/use-leagues";
 
-export const NewLeague = () => {
+const NewLeague = () => {
 	const { inputs, handleNewLeague } = useLeagues();
 
 	return (
-		<Box>
+		<Wrapper>
 			<Typography
 				sx={{
 					mb: 1,
@@ -45,9 +46,15 @@ export const NewLeague = () => {
 					create
 				</SubmitButton>
 			</Card>
-		</Box>
+		</Wrapper>
 	);
 };
+
+const Wrapper = styled(Box)(({ theme }) => ({
+	display: "flex",
+	flexDirection: "column",
+	gap: theme.spacing(2),
+}));
 
 const SubmitButton = styled(AppButton)(({ theme }) => ({
 	my: 2,
@@ -92,3 +99,22 @@ const Label = styled((props: MyCustomTypographyProps) => (
 		color: "neutral.100",
 	}),
 );
+
+const NewLeagueSkeleton = () => {
+	return (
+		<Wrapper>
+			<Skeleton height={22} />
+			<Skeleton height={154} />
+		</Wrapper>
+	);
+};
+
+const Skeleton = styled(Box)(() => ({
+	position: "relative",
+	...shimmerEffect(),
+}));
+
+export default {
+	Component: NewLeague,
+	Skeleton: NewLeagueSkeleton,
+};

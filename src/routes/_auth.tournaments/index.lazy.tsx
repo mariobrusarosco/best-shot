@@ -47,7 +47,7 @@ const TournamentsPage = () => {
 		<AuthenticatedScreenLayout data-ui="tournaments-screen">
 			<ScreenHeading
 				title="tournaments"
-				subtitle="all current available tournaments"
+				subtitle="2024/2025 season"
 				backTo="/dashboard"
 			/>
 

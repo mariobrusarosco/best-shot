@@ -29,7 +29,7 @@ const TournamentRoundsBar = () => {
 				<AppPill.Component
 					border="1px solid"
 					borderColor="teal.500"
-					width={80}
+					width={70}
 					height={25}
 				>
 					<Typography
@@ -108,13 +108,14 @@ const Bar = styled(Box)(({ theme }) => ({
 	},
 
 	[UIHelper.startsOn("tablet")]: {
-		width: "fit-content",
 		flexDirection: "column",
-		paddingRight: theme.spacing(2),
 		gap: theme.spacing(2),
 		position: "relative",
 		alignItems: "flex-start",
+		paddingRight: theme.spacing(1),
 	},
+
+	[UIHelper.startsOn("desktop")]: {},
 	...OverflowOnHover(),
 }));
 
@@ -137,7 +138,10 @@ const RoundButton = styled(Box)(({ theme }) => ({
 	[UIHelper.startsOn("tablet")]: {
 		backgroundColor: theme.palette.black[800],
 		padding: theme.spacing(1.5),
+		width: "100%",
 	},
+
+	[UIHelper.startsOn("desktop")]: {},
 }));
 
 const Skeleton = () => {

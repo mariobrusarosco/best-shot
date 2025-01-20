@@ -1,19 +1,18 @@
 import { TournamentLogo } from "@/domains/tournament/components/tournament-heading";
 
 import { AppPill } from "@/domains/ui-system/components/pill/pill";
+import { shimmerEffect } from "@/domains/ui-system/components/skeleton/skeleton";
 import { Surface } from "@/domains/ui-system/components/surface/surface";
 import { OverflowOnHover } from "@/domains/ui-system/utils";
 import Typography from "@mui/material/Typography/Typography";
 import { Box, Stack, styled } from "@mui/system";
 import { useLeaguePerformance } from "../../hooks/use-league-performance";
 
-export const LeaguePerformanceStats = ({
+const LeaguePerformanceStats = ({
 	performance,
 }: {
 	performance?: ReturnType<typeof useLeaguePerformance>["performance"];
 }) => {
-	console.log(performance?.data);
-
 	return (
 		<Wrapper data-ui="league-performance-stats">
 			<Box
@@ -139,3 +138,38 @@ export const Card = styled(Surface)(({ theme }) =>
 		flex: 1,
 	}),
 );
+
+const LeaguePerformanceStatsSkeleton = () => {
+	const stats = Array.from({ length: 6 }).map((_) => _);
+
+	return (
+		<Wrapper data-ui="league-performance-stats-skeleton">
+			<Box
+				sx={{
+					display: "flex",
+					justifyContent: "space-between",
+					pb: 3,
+				}}
+			>
+				<AppPill.Skeleton width={100} height={25} />
+			</Box>
+
+			<Stack gap={4}>
+				{stats.map(() => (
+					<Skeleton />
+				))}
+			</Stack>
+		</Wrapper>
+	);
+};
+
+const Skeleton = styled(Box)(() => ({
+	position: "relative",
+	height: "87px",
+	...shimmerEffect(),
+}));
+
+export default {
+	Component: LeaguePerformanceStats,
+	Skeleton: LeaguePerformanceStatsSkeleton,
+};

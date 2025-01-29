@@ -42,7 +42,9 @@ export const getTournamentPerformance = async ({
 }) => {
 	const [_key, { tournamentId }] = queryKey;
 
-	const response = await api.get(`tournaments/${tournamentId}/performance`);
+	const response = await api.get(`tournaments/${tournamentId}/performance`, {
+		baseURL: "http://localhost:9090/api/v2"
+	});
 
 	return response.data as ITournamentPerformance;
 };

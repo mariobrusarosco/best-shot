@@ -6,52 +6,32 @@ export interface IMember {
 
 export interface IMemberPerformance {
 	tournaments: {
-		// best: {
-		tournamentId: string;
-		name: string;
-		badge: string;
-		points: number;
-	}[];
-	leagues: {
-		best: {
-			leagueId: string;
-			name: string;
+		worstPerformance: {
+			id: string;
 			points: number;
+			label: string;
+			logo: string;
 		};
-		worst: {
-			leagueId: string;
-			name: string;
+		bestPerformance: {
+			id: string;
 			points: number;
+			label: string;
+			logo: string;
 		};
 	};
-	// currentMonth: {
-	// 	points: number;
-	// };
-	// currentWeek: {
-	// 	points: number;
-	// };
-	// leagues: {
-	// 	best: {
-	// 		name: string;
-	// 		badge: string;
-	// 		leader: {
-	// 			points: number;
-	// 			name: string;
-	// 		};
-	// 		member: {
-	// 			points: number;
-	// 		};
-	// 	};
-	// 	worst: {
-	// 		name: string;
-	// 		badge: string;
-	// 		leader: {
-	// 			points: number;
-	// 			name: string;
-	// 		};
-	// 		member: {
-	// 			points: number;
-	// 		};
-	// 	};
-	// };
+
+	leagues: {
+		worstPerformance: {
+			id: string;
+			points: number;
+			label: string;
+			logo: string;
+		};
+		bestPerformance: {
+			id: string;
+			points: number;
+			label: string;
+			logo: string;
+		};
+	};
 }

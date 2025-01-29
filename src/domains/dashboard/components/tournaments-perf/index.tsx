@@ -19,10 +19,10 @@ const TournamentsPerf = ({
 	performance: ReturnType<typeof useMemberPerformance>;
 }) => {
 	if (loading) return;
-	const best = performance.data?.tournaments?.at(0);
-	const worst =
-		performance.data?.tournaments?.at(-1) ||
-		performance.data?.tournaments?.at(0);
+
+	const tournaments = performance.data?.tournaments;
+
+	if (!tournaments) return null;
 
 	return (
 		<Wrapper data-ui="tournaments-perf">
@@ -57,10 +57,10 @@ const TournamentsPerf = ({
 							Best Ranked
 						</Typography>
 
-						{best === null ? null : (
+						{tournaments?.bestPerformance === null ? null : (
 							<CardRouteButton
 								to="/tournaments/$tournamentId/matches"
-								params={{ tournamentId: best?.tournamentId }}
+								params={{ tournamentId: tournaments?.bestPerformance?.id }}
 							/>
 						)}
 					</Stack>
@@ -70,18 +70,18 @@ const TournamentsPerf = ({
 						justifyContent="space-between"
 						alignItems="end"
 					>
-						{best ? (
+						{tournaments?.bestPerformance ? (
 							<>
 								<Stack gap={1}>
 									<TournamentLogo
-										src={best?.badge}
+										src={tournaments?.bestPerformance?.logo}
 										sx={{
 											width: 40,
 											height: 40,
 										}}
 									/>
 									<Typography variant="label" color="neutral.100">
-										{best?.name}
+										{tournaments?.bestPerformance?.label}
 									</Typography>
 								</Stack>
 
@@ -91,7 +91,7 @@ const TournamentsPerf = ({
 										variant="h4"
 										color="neutral.100"
 									>
-										<Counter initialValue={best?.points} />
+										<Counter initialValue={tournaments.bestPerformance.points} />
 									</Typography>
 									<Typography
 										textTransform="uppercase"
@@ -122,10 +122,10 @@ const TournamentsPerf = ({
 						>
 							worst Ranked
 						</Typography>
-						{worst === null ? null : (
+						{tournaments?.worstPerformance === null ? null : (
 							<CardRouteButton
 								to="/tournaments/$tournamentId/matches"
-								params={{ tournamentId: worst?.tournamentId }}
+								params={{ tournamentId: tournaments?.worstPerformance?.id }}
 							/>
 						)}
 					</Stack>
@@ -135,18 +135,18 @@ const TournamentsPerf = ({
 						justifyContent="space-between"
 						alignItems="end"
 					>
-						{worst ? (
+						{tournaments?.worstPerformance ? (
 							<>
 								<Stack gap={1}>
 									<TournamentLogo
-										src={worst?.badge}
+										src={tournaments?.worstPerformance?.logo}
 										sx={{
 											width: 40,
 											height: 40,
 										}}
 									/>
 									<Typography variant="label" color="neutral.100">
-										{worst?.name}
+										{tournaments?.worstPerformance?.label}
 									</Typography>
 								</Stack>
 
@@ -156,7 +156,7 @@ const TournamentsPerf = ({
 										variant="h4"
 										color="neutral.100"
 									>
-										<Counter initialValue={worst?.points} />
+										<Counter initialValue={tournaments?.worstPerformance?.points} />
 									</Typography>
 									<Typography
 										textTransform="uppercase"

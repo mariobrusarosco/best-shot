@@ -26,7 +26,9 @@ export const getLeague = async ({ queryKey }: { queryKey: any }) => {
 export const getLeaguePerformance = async ({ queryKey }: { queryKey: any }) => {
 	const [_, { leagueId }] = queryKey;
 
-	const response = await api.get(`leagues/${leagueId}/performance`);
+	const response = await api.get(`leagues/${leagueId}/performance`, {
+		baseURL: "http://localhost:9090/api/v2",
+	});
 
 	return response.data as ILeaguePerformance;
 };

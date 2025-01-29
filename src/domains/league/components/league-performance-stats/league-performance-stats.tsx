@@ -7,14 +7,41 @@ import { OverflowOnHover } from "@/domains/ui-system/utils";
 import Typography from "@mui/material/Typography/Typography";
 import { Box, Stack, styled } from "@mui/system";
 import { useLeaguePerformance } from "../../hooks/use-league-performance";
+import { AppButton } from "@/domains/ui-system/components/button/button";
 
 const LeaguePerformanceStats = ({
-	performance,
+	performance,	
+	mutation,
 }: {
 	performance?: ReturnType<typeof useLeaguePerformance>["performance"];
+	mutation?: ReturnType<typeof useLeaguePerformance>["mutation"];
 }) => {
+	if (!performance?.data) return null;
+
+	const lastUpdated = new Date(performance?.data.lastUpdated);
+	
+
 	return (
 		<Wrapper data-ui="league-performance-stats">
+			
+			<Stack direction="row" justifyContent="space-between" alignItems="center" pb={4}>	
+				<Stack direction="row" gap={1} alignItems="center">
+					<Typography variant="label" color="neutral.100">last updated: </Typography>
+					<Typography variant="label" color="neutral.100">{lastUpdated.toLocaleString()}</Typography>
+				</Stack>
+
+				<AppButton variant="text" color="neutral.100" sx={{
+								bgcolor: "teal.500",
+								borderRadius: 2,
+								padding: 1,
+							}}	
+							onClick={() => {
+								mutation?.mutate();
+							}}
+							>
+								<Typography variant="tag" color="neutral.100">Update Standings</Typography>
+							</AppButton>
+				</Stack>
 			<Box
 				sx={{
 					display: "flex",
@@ -33,7 +60,7 @@ const LeaguePerformanceStats = ({
 			</Box>
 
 			<Stack gap={4}>
-				{performance?.data?.map((tournament) => (
+				{Object.entries(performance?.data.standings || {}).map(([_, tournament]) => (
 					<Stack gap={1}>
 						<Stack direction="row" gap={1} alignItems="center">
 							<TournamentLogo sx={{ width: "20px" }} src={tournament?.logo} />
@@ -44,6 +71,7 @@ const LeaguePerformanceStats = ({
 							>
 								{tournament?.id}
 							</Typography>
+
 						</Stack>
 
 						{tournament?.members?.map((member, index) => (

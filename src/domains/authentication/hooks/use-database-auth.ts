@@ -18,7 +18,9 @@ export const useDatabaseAuth = () => {
 
 	const login = useMutation({
 		mutationFn: async (userId: any) => {
-			const response = await api.post("auth", { publicId: userId });
+			const response = await api.post("auth", { publicId: userId }, {
+				baseURL: "http://localhost:9090/api/v2",
+			});
 
 			return response.data as string;
 		},

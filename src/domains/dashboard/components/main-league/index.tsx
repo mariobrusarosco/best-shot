@@ -19,8 +19,7 @@ const MainLeague = ({
 }) => {
 	if (loading) return;
 
-	const best = performance.data?.leagues.best;
-	const worst = performance.data?.leagues.worst;
+	const tournaments = performance.data?.tournaments
 
 	return (
 		<Stack color="neutral.100" gap={3}>
@@ -55,10 +54,10 @@ const MainLeague = ({
 							Best Ranked
 						</Typography>
 
-						{best === null ? null : (
+						{tournaments?.bestPerformance === null ? null : (
 							<CardRouteButton
 								to="tournaments/$tournamentId/matches"
-								params={{ tournamentId: best?.leagueId }}
+								params={{ tournamentId: tournaments?.bestPerformance?.id }}
 							/>
 						)}
 					</Stack>
@@ -68,7 +67,7 @@ const MainLeague = ({
 						justifyContent="space-between"
 						alignItems="end"
 					>
-						{best ? (
+						{tournaments?.bestPerformance ? (
 							<>
 								<Stack gap={1}>
 									<Stack
@@ -78,7 +77,7 @@ const MainLeague = ({
 										}}
 									/>
 									<Typography variant="paragraph" color="neutral.100">
-										{best?.name}
+										{tournaments?.bestPerformance?.label}
 									</Typography>
 								</Stack>
 
@@ -88,7 +87,7 @@ const MainLeague = ({
 										variant="h4"
 										color="neutral.100"
 									>
-										{best?.points}
+										{tournaments?.bestPerformance?.points}
 									</Typography>
 									<Typography
 										textTransform="uppercase"
@@ -119,10 +118,10 @@ const MainLeague = ({
 						>
 							worst Ranked
 						</Typography>
-						{worst === null ? null : (
+						{tournaments?.worstPerformance === null ? null : (
 							<CardRouteButton
 								to="tournaments/$tournamentId/matches"
-								params={{ tournamentId: worst?.leagueId }}
+								params={{ tournamentId: tournaments?.worstPerformance?.id }}
 							/>
 						)}
 					</Stack>
@@ -132,7 +131,7 @@ const MainLeague = ({
 						justifyContent="space-between"
 						alignItems="end"
 					>
-						{worst ? (
+						{tournaments?.worstPerformance ? (
 							<>
 								<Stack gap={1}>
 									<Stack
@@ -142,7 +141,7 @@ const MainLeague = ({
 										}}
 									/>
 									<Typography variant="paragraph" color="neutral.100">
-										{worst?.name}
+										{tournaments?.worstPerformance?.label}
 									</Typography>
 								</Stack>
 
@@ -152,7 +151,7 @@ const MainLeague = ({
 										variant="h4"
 										color="neutral.100"
 									>
-										{worst?.points}
+										{tournaments?.worstPerformance	?.points}
 									</Typography>
 									<Typography
 										textTransform="uppercase"

@@ -12,7 +12,7 @@ import { Box, Stack } from "@mui/system";
 import { createLazyFileRoute } from "@tanstack/react-router";
 
 const LeaguePage = () => {
-	const { league, performance } = useLeague();
+	const { league, performance, mutation } = useLeague();
 	const hasInvitePermission = league?.data?.permissions.invite;
 	const hasEditPermission = league?.data?.permissions.edit;
 
@@ -52,7 +52,7 @@ const LeaguePage = () => {
 			<ScreenMainContent>
 				<League data-ui="league">
 					<Stack spacing={2} direction="column" flex={1}>
-						<LeaguePerformanceStats.Component performance={performance} />
+						<LeaguePerformanceStats.Component performance={performance} mutation={mutation} />
 					</Stack>
 					<Stack spacing={2} direction="column" flex={1}>
 						<ParticipantsList.Component

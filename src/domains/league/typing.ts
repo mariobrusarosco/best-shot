@@ -15,13 +15,16 @@ export type ILeague = {
 };
 
 export type ILeaguePerformance = {
+	standings: Record<string, {
 	id: string;
 	logo: string;
 	members: {
 		member: string;
 		points: string;
 	}[];
-}[];
+}>;
+	lastUpdated: string;
+};
 
 export type IParticipant = {
 	nickName: string;

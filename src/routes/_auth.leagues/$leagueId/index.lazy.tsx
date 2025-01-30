@@ -18,7 +18,7 @@ const LeaguePage = () => {
 
 	console.log("league", league, performance);
 
-	if (league.isPending) {
+	if (league.isPending || performance.isPending) {
 		return (
 			<AuthenticatedScreenLayout data-ui="leagues-screen-loading">
 				<ScreenHeading title="league" />

@@ -15,6 +15,11 @@ export type ILeague = {
 };
 
 export type ILeaguePerformance = {
+	leaderBoard: {
+		memberName: string;
+		points: string;
+		lastUpdated: string;
+	}[];
 	standings: Record<string, {
 	id: string;
 	logo: string;

@@ -7,24 +7,21 @@ import { OverflowOnHover } from "@/domains/ui-system/utils";
 import Typography from "@mui/material/Typography/Typography";
 import { Box, Stack, styled } from "@mui/system";
 import { useLeaguePerformance } from "../../hooks/use-league-performance";
-import { AppButton } from "@/domains/ui-system/components/button/button";
 
 const LeaguePerformanceStats = ({
 	performance,	
-	mutation,
 }: {
 	performance?: ReturnType<typeof useLeaguePerformance>["performance"];
 	mutation?: ReturnType<typeof useLeaguePerformance>["mutation"];
 }) => {
 	if (!performance?.data) return null;
 
-	const lastUpdated = new Date(performance?.data.lastUpdated);
-	
+	const leaderBoard = performance?.data.leaderBoard;
 
 	return (
 		<Wrapper data-ui="league-performance-stats">
 			
-			<Stack direction="row" justifyContent="space-between" alignItems="center" pb={4}>	
+			{/* <Stack direction="row" justifyContent="space-between" alignItems="center" pb={4}>	
 				<Stack direction="row" gap={1} alignItems="center">
 					<Typography variant="label" color="neutral.100">last updated: </Typography>
 					<Typography variant="label" color="neutral.100">{lastUpdated.toLocaleString()}</Typography>
@@ -41,7 +38,7 @@ const LeaguePerformanceStats = ({
 							>
 								<Typography variant="tag" color="neutral.100">Update Standings</Typography>
 							</AppButton>
-				</Stack>
+				</Stack> */}
 			<Box
 				sx={{
 					display: "flex",
@@ -58,6 +55,80 @@ const LeaguePerformanceStats = ({
 					<Typography variant="tag">leaderboard</Typography>
 				</AppPill.Component>
 			</Box>
+
+			{leaderBoard && (
+				<Stack gap={4}>
+					{leaderBoard.map((member, index) => (
+						<Stack>
+							<Card>
+								<Stack
+									direction="row"
+									gap={3}
+									justifyContent="space-between"
+									alignItems="center"
+							>
+								<Stack
+									direction="row"
+									alignItems="center"
+									justifyContent="center"
+									sx={{
+										width: 25,
+										height: 25,
+										backgroundColor: "teal.500",
+										color: "neutral.100",
+										borderRadius: 2,
+									}}
+								>
+									<Typography variant="label" textTransform="capitalize">
+										{index + 1}
+									</Typography>
+								</Stack>
+
+								<Typography
+									color="neutral.100"
+									variant="label"
+									textAlign="left"
+									textTransform="capitalize"
+									flex={1}
+								>
+									{member.memberName}
+								</Typography>
+								<Stack
+									direction="row"
+									gap={2}
+									alignItems="center"
+									justifyContent="center"
+									sx={{
+										backgroundColor: "black.500",
+										color: "neutral.100",
+										borderRadius: 2,
+										px: 1,
+										py: 0.5,
+									}}
+								>
+									<Typography
+										variant="tag"
+										textTransform="uppercase"
+										color="teal.500"
+									>
+										points
+									</Typography>
+									<Typography
+										color="neutral.100"
+										variant="topic"
+										textTransform="capitalize"
+									>
+										{member.points}
+									</Typography>
+								</Stack>
+							</Stack>
+						</Card>
+
+						<Typography variant="tag" color="neutral.100">{new Date(member.lastUpdated).toDateString()}</Typography>
+						</Stack>
+					))}
+				</Stack>
+			)}
 
 			<Stack gap={4}>
 				{Object.entries(performance?.data.standings || {}).map(([_, tournament]) => (

@@ -43,7 +43,7 @@ export const getTournamentPerformance = async ({
 	const [_key, { tournamentId }] = queryKey;
 
 	const response = await api.get(`tournaments/${tournamentId}/performance`, {
-		baseURL: process.env.VITE_BEST_SHOT_API_V2,
+		baseURL: import.meta.env.VITE_BEST_SHOT_API_V2,
 	});
 
 	return response.data as ITournamentPerformance;

@@ -15,10 +15,10 @@ export const getLeagueScore = async ({ queryKey }: { queryKey: any }) => {
 	return response.data;
 };
 
-export const getLeague = async ({ queryKey }: { queryKey: any }) => {
-	const [_, { leagueId }] = queryKey;
-
-	const response = await api.get(`leagues/${leagueId}`);
+export const getLeague = async () => {
+	const response = await api.get("league", {
+		baseURL: import.meta.env.VITE_BEST_SHOT_API_V2,
+	});
 
 	return response.data as ILeague;
 };
@@ -27,7 +27,7 @@ export const getLeaguePerformance = async ({ queryKey }: { queryKey: any }) => {
 	const [_, { leagueId }] = queryKey;
 
 	const response = await api.get(`leagues/${leagueId}/performance`, {
-		baseURL: "http://localhost:9090/api/v2",
+		baseURL: import.meta.env.VITE_BEST_SHOT_API_V2,
 	});
 
 	return response.data as ILeaguePerformance;

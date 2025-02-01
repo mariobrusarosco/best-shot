@@ -19,7 +19,7 @@ export const useDatabaseAuth = () => {
 	const login = useMutation({
 		mutationFn: async (userId: any) => {
 			const response = await api.post("auth", { publicId: userId }, {
-				baseURL: process.env.VITE_BEST_SHOT_API_V2,
+				baseURL: import.meta.env.VITE_BEST_SHOT_API_V2,
 			});
 
 			return response.data as string;

@@ -3,7 +3,7 @@ import { IMember, IMemberPerformance } from "@/domains/member/typing";
 
 export const getMember = async () => {
 	const response = await api.get("member", {
-		baseURL: "http://localhost:9090/api/v2",
+		baseURL: process.env.VITE_BEST_SHOT_API_V2,
 	});
 
 	return response.data as IMember;
@@ -11,7 +11,7 @@ export const getMember = async () => {
 
 export const getMemberPerformance = async () => {
 	const response = await api.get("member/performance", {
-		baseURL: "http://localhost:9090/api/v2",
+		baseURL: process.env.VITE_BEST_SHOT_API_V2,
 	});
 
 	return response.data as IMemberPerformance;

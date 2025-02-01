@@ -1,4 +1,4 @@
-import { api } from "@/api/index";
+import { api } from "@/api";
 import { IMatch } from "@/domains/match/typing";
 import {
 	ITournament,
@@ -43,7 +43,7 @@ export const getTournamentPerformance = async ({
 	const [_key, { tournamentId }] = queryKey;
 
 	const response = await api.get(`tournaments/${tournamentId}/performance`, {
-		baseURL: "http://localhost:9090/api/v2"
+		baseURL: process.env.VITE_BEST_SHOT_API_V2,
 	});
 
 	return response.data as ITournamentPerformance;

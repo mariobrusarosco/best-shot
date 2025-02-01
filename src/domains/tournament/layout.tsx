@@ -17,7 +17,7 @@ import { Outlet } from "@tanstack/react-router";
 const TournamentLayout = () => {
 	const tournament = useTournament({ fetchOnMount: true });
 	const isEmptyState =
-		tournament.isSuccess && tournament.data?.onbordingCompleted === false;
+		tournament.isSuccess && tournament.data?.onboardingCompleted === false;
 
 	if (tournament.isRefetching || tournament.isPending) {
 		return (

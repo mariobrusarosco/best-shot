@@ -24,12 +24,12 @@ export const NumberInput = forwardRef(
 					input: { className: "input" },
 					incrementButton: {
 						autoFocus: false,
-						children: <AppIcon name="Plus" size="extra-small" />,
+						children: <AppIcon name="Plus" size="tiny" />,
 						"aria-label": "increment-button",
 						className: "increment",
 					},
 					decrementButton: {
-						children: <AppIcon name="Minus" size="extra-small" />,
+						children: <AppIcon name="Minus" size="tiny" />,
 						"aria-label": "decrement-button",
 						className: "decrement",
 					},
@@ -94,6 +94,7 @@ const toSafeNumber = (str: string) => {
 export const InputBoxStyled = styled(Box)(({ theme }) =>
 	theme?.unstable_sx({
 		display: "flex",
+		width: "32px",
 		justifyContent: "space-between",
 		alignItems: "stretch",
 		gridArea: "teams",
@@ -118,8 +119,8 @@ export const InputStyled = styled("input")(({ theme }) => ({
 	textAlign: "center",
 	caretColor: "transparent",
 	backgroundColor: theme.palette.black[500],
-	borderRadius: theme.spacing(1.5),
-	height: "25px",
+	borderRadius: theme.spacing(0.5),
+	height: "30px",
 	alignSelf: "center",
 }));
 
@@ -132,7 +133,6 @@ const InputButtonStyled = styled(AppButton)(({ theme }) => ({
 	height: "100%",
 
 	"&[disabled]": {
-		color: "red",
 		filter: "grayscale(1)",
 	},
 }));

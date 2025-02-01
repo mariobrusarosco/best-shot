@@ -18,7 +18,7 @@ export const TournamentMatchesScreen = () => {
 	const tournamentQuery = useTournament();
 	const isEmptyState =
 		tournamentQuery.isSuccess &&
-		tournamentQuery.data?.onbordingCompleted === false;
+		tournamentQuery.data?.onboardingCompleted === false;
 
 	const autoSelectARound = !tournamentQuery.isPending && !activeRound;
 

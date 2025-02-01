@@ -42,9 +42,10 @@ interface Props {
 }
 
 const MatchCard = ({ guess, match, guessMutation }: Props) => {
-	const [isOpen, setIsOpen] = useState(false);
+	const [isOpen, setIsOpen] = useState(true);
 	const guessInputs = useGuessInputs(guess, match, guessMutation);
 
+	debugger
 	// Match
 	const timebox = defineMatchTimebox(match.date);
 
@@ -91,16 +92,7 @@ const MatchCard = ({ guess, match, guessMutation }: Props) => {
 							orientation="vertical"
 							sx={{ bgcolor: "black.300", width: "1px", height: "15px" }}
 						/>
-
-						<GuessStatus guess={guess} />
-						<GuessMatchOutcome guess={guess} />
-						<GuessPoints guess={guess} />
-					</Stack>
-				</Stack>
-
-				{showCTAButton ? (
-					<CTA>
-						{showTimeBox ? (
+					{showTimeBox ? (
 							<Stack direction="row" gap={1} alignItems="center">
 								<AppIcon
 									name="ClockFilled"
@@ -118,6 +110,17 @@ const MatchCard = ({ guess, match, guessMutation }: Props) => {
 							</Stack>
 						) : null}
 
+						<GuessMatchOutcome guess={guess} />
+						<GuessPoints guess={guess} />
+					</Stack>
+
+					<GuessStatus guess={guess} />
+
+
+				</Stack>
+
+				{showCTAButton ? (
+					<CTA>
 						{showSaveButton ? (
 							<Button
 								onClick={async () => {

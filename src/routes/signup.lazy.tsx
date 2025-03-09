@@ -22,10 +22,9 @@ const SignUpScreen = () => {
 					slotProps={{
 						root: {
 							onClick: async () => {
-								console.log("START loginWithPopup");
-								await auth.signup?.();
-
-								window.location.reload();
+								console.log("START SIGNUP");
+								const signuptResponse = await auth.signup?.();
+								console.log("SIGNUP RESPONSE", signuptResponse);
 							},
 						},
 					}}

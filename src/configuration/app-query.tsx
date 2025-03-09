@@ -12,9 +12,14 @@ export const queryClient = new QueryClient({
 		},
 	},
 	queryCache: new QueryCache({
-		onError: (error) => {
-			console.error("Error happened: ", error);
-		},
+		// onError: (error: any) => {
+		// 	ErrorHandling.logError({
+		// 		source: 'QUERY_CACHE',
+		// 		message: error.message,
+		// 		code: error?.code,
+		// 		details: error?.details,
+		// 	});
+		// },
 	}),
 });
 

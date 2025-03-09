@@ -56,8 +56,12 @@ const hook = () => {
 				authorizationParams: { screen_hint: "signup" },
 			});
 			const user = await getIdTokenClaims();
+			console.log("User from token", user);
+			
+			const mutation = databaseAuth.sign.mutate(user);
+			console.log("Mutation", mutation);
 
-			return databaseAuth.sign.mutate(user);
+			return mutation;
 		} catch (error) {
 			alert(error);
 			return Promise.reject(error);

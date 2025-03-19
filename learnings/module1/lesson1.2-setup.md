@@ -70,6 +70,7 @@ Let's understand the key files:
 ### `playwright.config.ts`
 
 This is the central configuration file for Playwright. It defines:
+
 - Which browsers to use
 - Test timeouts
 - Viewport sizes

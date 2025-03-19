@@ -15,6 +15,7 @@ export const Menu = () => {
 					textAlign="center"
 					color={theme.palette.neutral[100]}
 					variant="label"
+					data-id="menu-logo"
 				>
 					best shot
 				</Typography>

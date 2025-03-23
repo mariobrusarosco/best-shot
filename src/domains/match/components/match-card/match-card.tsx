@@ -22,6 +22,7 @@ import { Button, Card, CTA, Header, Team, Teams } from "./match-card.styles";
 import { ScoreDisplay } from "./score-display";
 import { ScoreInput } from "./score-input";
 import { TeamDisplay } from "./team-display";
+import AIPredictionButton from "@/domains/ai/components/AIPredictionButton";
 
 const SHOW_TIMEBOX_WHEN_GUESS_STATUS = new Set<GUESS_STATUS>([
 	GUESS_STATUSES.NOT_STARTED,
@@ -45,7 +46,6 @@ const MatchCard = ({ guess, match, guessMutation }: Props) => {
 	const [isOpen, setIsOpen] = useState(true);
 	const guessInputs = useGuessInputs(guess, match, guessMutation);
 
-	debugger
 	// Match
 	const timebox = defineMatchTimebox(match.date);
 
@@ -55,6 +55,11 @@ const MatchCard = ({ guess, match, guessMutation }: Props) => {
 		!guess.hasLostTimewindowToGuess;
 	const showSaveButton =
 		SHOW_SAVE_BUTTON_WHEN_GUESS_STATUS.has(guess.status) && isOpen;
+
+	const handleAIPrediction = (homeScore: number, awayScore: number) => {
+		guessInputs.handleHomeGuess(homeScore);
+		guessInputs.handleAwayGuess(awayScore);
+	};
 
 	return (
 		<Card
@@ -92,7 +97,7 @@ const MatchCard = ({ guess, match, guessMutation }: Props) => {
 							orientation="vertical"
 							sx={{ bgcolor: "black.300", width: "1px", height: "15px" }}
 						/>
-					{showTimeBox ? (
+						{showTimeBox ? (
 							<Stack direction="row" gap={1} alignItems="center">
 								<AppIcon
 									name="ClockFilled"
@@ -115,12 +120,16 @@ const MatchCard = ({ guess, match, guessMutation }: Props) => {
 					</Stack>
 
 					<GuessStatus guess={guess} />
-
-
 				</Stack>
 
 				{showCTAButton ? (
 					<CTA>
+						<AIPredictionButton
+							matchId={match.id}
+							onPredictionReceived={handleAIPrediction}
+							disabled={!guessInputs.allowNewGuess || guessInputs.isPending}
+						/>
+
 						{showSaveButton ? (
 							<Button
 								onClick={async () => {

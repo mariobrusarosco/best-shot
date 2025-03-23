@@ -29,11 +29,13 @@
     "@tanstack/react-router": "^1.47.1",
     "axios": "^1.7.2",
     "dayjs": "^1.11.13",
+    "drizzle-zod": "^0.7.0",
     "launchdarkly-react-client-sdk": "^3.6.1",
     "lodash": "^4.17.21",
     "lodash-es": "^4.17.21",
     "motion": "^11.15.0",
-    "react": "^18.2.0",
+    "openai": "^4.89.0",
+    "react": "^17.0.0 || ^18.0.0",
     "react-dom": "^18.2.0"
   },
   "devDependencies": {

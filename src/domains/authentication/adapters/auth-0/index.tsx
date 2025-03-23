@@ -12,6 +12,8 @@ const Provider = ({ children }: { children: React.ReactNode }) => {
 			authorizationParams={{
 				redirect_uri: window.location.origin,
 			}}
+			useRefreshTokens={true}
+			cacheLocation="localstorage"
 		>
 			{children}
 		</Auth0Provider>

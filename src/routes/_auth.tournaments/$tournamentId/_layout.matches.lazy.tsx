@@ -4,6 +4,7 @@ import { TournamentSetup } from "@/domains/tournament/components/tournament-setu
 import TournamentStandings from "@/domains/tournament/components/tournament-standings/tournament-standings";
 import { useTournament } from "@/domains/tournament/hooks/use-tournament";
 import { useTournamentRounds } from "@/domains/tournament/hooks/use-tournament-rounds";
+import { AppButton } from "@/domains/ui-system/components/button/button";
 import { AppPill } from "@/domains/ui-system/components/pill/pill";
 import { OverflowOnHover } from "@/domains/ui-system/utils";
 import { UIHelper } from "@/theming/theme";
@@ -12,6 +13,9 @@ import { styled } from "@mui/material/styles";
 import { Box } from "@mui/system";
 import { createLazyFileRoute } from "@tanstack/react-router";
 import { useEffect } from "react";
+import { useFeatureFlag } from "@/configuration/feature-flag/use-feature-flag";
+import { useFlags } from "launchdarkly-react-client-sdk";
+import { debugFeatureFlags } from "@/configuration/feature-flag/featureFlags";
 
 export const TournamentMatchesScreen = () => {
 	const { activeRound, goToRound } = useTournamentRounds();
@@ -21,6 +25,25 @@ export const TournamentMatchesScreen = () => {
 		tournamentQuery.data?.onboardingCompleted === false;
 
 	const autoSelectARound = !tournamentQuery.isPending && !activeRound;
+	const fillWithAI = useFeatureFlag("fill_round_guesses_with_ai");
+	const flags = useFlags();
+	console.log("flags", flags);
+	console.log("fillWithAI", fillWithAI);
+
+	useEffect(() => {
+		debugFeatureFlags(flags);
+
+		console.log("Feature flag values:");
+		console.log(
+			"- fill_round_guesses_with_ai (snake_case):",
+			flags["fill_round_guesses_with_ai"],
+		);
+		console.log(
+			"- fillRoundGuessesWithAi (camelCase):",
+			flags["fillRoundGuessesWithAi"],
+		);
+		console.log("- Using our hook:", fillWithAI);
+	}, [flags]);
 
 	useEffect(() => {
 		const starterRound =
@@ -83,6 +106,25 @@ export const TournamentMatchesScreen = () => {
 							{activeRound}
 						</Typography>
 					</AppPill.Component>
+
+					{fillWithAI && (
+						<AppButton
+							onClick={() => {
+								console.log("fill with AI");
+							}}
+							variant="outlined"
+							bgcolor="teal.500"
+						>
+							<Typography
+								variant="tag"
+								textTransform="uppercase"
+								color="neutral.100"
+								fontWeight={500}
+							>
+								Fill with AI
+							</Typography>
+						</AppButton>
+					)}
 				</RoundHeading>
 
 				<TournamentRoundOfGames.Component />

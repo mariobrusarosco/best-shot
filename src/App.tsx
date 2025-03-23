@@ -1,4 +1,6 @@
 import { AppQueryProvider } from "@/configuration/app-query";
+import { LaunchDarklyProvider } from "@/configuration/launch-darkly-provider";
+import LaunchDarklyUserIdentifier from "@/utils/LaunchDarklyUserIdentifier";
 import CssBaseline from "@mui/material/CssBaseline";
 import { ThemeProvider } from "@mui/material/styles";
 import { AppRouter } from "./app-router";
@@ -13,11 +15,14 @@ function App() {
 	return (
 		<>
 			<AppQueryProvider>
-				<ThemeProvider theme={theme}>
-					<CssBaseline />
-					<GlobalCSS />
-					<AppRouter />
-				</ThemeProvider>
+				<LaunchDarklyProvider>
+					<ThemeProvider theme={theme}>
+						<CssBaseline />
+						<GlobalCSS />
+						<AppRouter />
+						<LaunchDarklyUserIdentifier />
+					</ThemeProvider>
+				</LaunchDarklyProvider>
 			</AppQueryProvider>
 		</>
 	);

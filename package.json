@@ -29,6 +29,7 @@
     "@tanstack/react-router": "^1.47.1",
     "axios": "^1.7.2",
     "dayjs": "^1.11.13",
+    "launchdarkly-react-client-sdk": "^3.6.1",
     "lodash": "^4.17.21",
     "lodash-es": "^4.17.21",
     "motion": "^11.15.0",

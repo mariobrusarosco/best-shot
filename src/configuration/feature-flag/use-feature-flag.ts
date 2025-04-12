@@ -1,12 +1,6 @@
 import { useFlags } from "launchdarkly-react-client-sdk";
 
-/**
- * Converts camelCase to snake_case
- * @example camelToSnake("myFlagName") // returns "my_flag_name"
- */
-const camelToSnake = (str: string) => {
-	return str.replace(/[A-Z]/g, (letter) => `_${letter.toLowerCase()}`);
-};
+
 
 /**
  * Converts snake_case to camelCase

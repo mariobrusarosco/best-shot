@@ -3,7 +3,7 @@ import { AppLinkCard } from "@/domains/ui-system/components/link-card/link-card"
 import { SurfaceProps } from "@/domains/ui-system/components/surface/surface";
 import Typography from "@mui/material/Typography";
 import { Box } from "@mui/system";
-import { ITournament } from "../typing";
+import { ITournament } from "../schemas";
 import { TournamentLogo } from "./tournament-logo";
 
 interface Props extends SurfaceProps {

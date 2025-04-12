@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { getRouteApi } from "@tanstack/react-router";
 import { getTournament } from "../server-state/fetchers";
-import { ITournament } from "../typing";
+import { ITournament } from "../schemas";
 
 const route = getRouteApi("/_auth/tournaments/$tournamentId");
 

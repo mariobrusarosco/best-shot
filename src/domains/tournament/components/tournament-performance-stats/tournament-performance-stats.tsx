@@ -9,7 +9,7 @@ import { Surface } from "@/domains/ui-system/components/surface/surface";
 import Typography from "@mui/material/Typography/Typography";
 import { Box, Stack, styled } from "@mui/system";
 import { useTournamentPerformance } from "../../hooks/use-tournament-performance";
-import { ITournamentPerformance } from "../../typing";
+import { ITournamentPerformance } from "../../schemas";
 
 const TournamentPerformanceStats = ({
 	basicPerformance,

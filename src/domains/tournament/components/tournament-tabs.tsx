@@ -4,7 +4,7 @@ import { UIHelper } from "@/theming/theme";
 import { Tab, Tabs, TabsList } from "@mui/base";
 import { Box, styled, Typography } from "@mui/material";
 import { useLocation } from "@tanstack/react-router";
-import { ITournament } from "../typing";
+import { ITournament } from "../schemas";
 
 const TournamentTabs = ({ tournament }: { tournament?: ITournament }) => {
 	const location = useLocation();

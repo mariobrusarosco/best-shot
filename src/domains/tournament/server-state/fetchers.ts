@@ -1,22 +1,22 @@
-import { api } from "@/api";
+import { api, API } from "@/api";
 import { IMatch } from "@/domains/match/typing";
 import {
-	ITournament,
 	ITournamentPerformance,
 	ITournamentPerformanceWithDetails,
 	ITournamentStandings,
-} from "../typing";
+	TournamentSchema,
+} from "@/domains/tournament/schemas";
 
 export const getTournament = async ({ queryKey }: { queryKey: any }) => {
 	const [_key, { id, round }] = queryKey;
 
-	const response = await api.get(`tournaments/${id}`, {
+	const response = await API.get(`tournaments/${id}`, TournamentSchema, {
 		params: {
 			round,
 		},
 	});
 
-	return response.data as ITournament;
+	return response;
 };
 
 export const getTournaments = async () => {

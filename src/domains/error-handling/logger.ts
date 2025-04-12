@@ -7,12 +7,10 @@ export const logError = (errorDetails: IErrorStructure): void | null => {
 
   const { source, message, code, details } = errorDetails;
 
-  console.error({
-    source,
-    message,
+  console.error(`${source}: ${message}`, {
     code,
     details,
-    });
+  });
     
     // Here we could also send the error to a monitoring service like Sentry
     // if (process.env.NODE_ENV === 'production') {

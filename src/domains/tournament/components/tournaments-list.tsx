@@ -1,7 +1,7 @@
 import { UIHelper } from "@/theming/theme";
 import { styled } from "@mui/material";
 import { Box } from "@mui/system";
-import { ITournament } from "../typing";
+import { ITournament } from "../schemas";
 import { TournamentCard, TournamentCardSkeleton } from "./tournament-card";
 
 interface Props {

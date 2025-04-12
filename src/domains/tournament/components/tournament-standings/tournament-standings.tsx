@@ -15,7 +15,7 @@ import {
 } from "@mui/material";
 import { useTournament } from "../../hooks/use-tournament";
 import { useTournamentStandings } from "../../hooks/use-tournament-standings";
-import { ITournamentStandings } from "../../typing";
+import { ITournamentStandings } from "../../schemas";
 
 const TournamentStandings = () => {
 	const tournamentStandings = useTournamentStandings();

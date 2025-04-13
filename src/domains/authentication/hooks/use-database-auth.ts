@@ -12,7 +12,11 @@ export const useDatabaseAuth = () => {
 				firstName: user?.given_name,
 				lastName: user?.family_name,
 				nickName: user?.nickname ?? user?.given_name,
-			});
+			}, 
+			{
+				baseURL: import.meta.env.VITE_BEST_SHOT_API_V2,
+			}
+		);
 
 			return response.data as string;
 		},

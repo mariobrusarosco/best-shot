@@ -6,7 +6,7 @@ import { routeTree } from "@/routeTree.gen";
 import { createRouter, RouterProvider } from "@tanstack/react-router";
 import { Authentication } from "./domains/authentication";
 
-const { AuthProvider, useAppAuth } = Authentication;
+const {  useAppAuth } = Authentication;
 
 // Type-safety registration
 declare module "@tanstack/react-router" {
@@ -41,9 +41,7 @@ const Router = () => {
 
 const AppRouter = () => {
 	return (
-		<AuthProvider>
 			<Router />
-		</AuthProvider>
 	);
 };
 

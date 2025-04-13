@@ -1,5 +1,5 @@
 import { useTournaments } from "@/domains/tournament/hooks/use-tournaments";
-import { ITournament } from "@/domains/tournament/typing";
+import { ITournament } from "@/domains/tournament/schemas";
 import { useState } from "react";
 
 export const useLeagueTournaments = (currentTournaments: ITournament[]) => {

@@ -1,5 +1,5 @@
 import { useTournamentStandings } from "@/domains/tournament/hooks/use-tournament-standings";
-import { ITournamentStandings } from "@/domains/tournament/typing";
+import { ITournamentStandings } from "@/domains/tournament/schemas";
 import { AppPill } from "@/domains/ui-system/components/pill/pill";
 import { UIHelper } from "@/theming/theme";
 import Typography from "@mui/material/Typography/Typography";
@@ -119,5 +119,5 @@ const getTeamStandingsInfo = (
 ) => {
 	if (!standings) return;
 
-	return standings.teams?.find((team) => team.teamExternalId === teamId);
+	return standings.teams?.find((team: { teamExternalId: string }) => team.teamExternalId === teamId);
 };

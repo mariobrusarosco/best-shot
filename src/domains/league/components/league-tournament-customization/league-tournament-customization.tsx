@@ -1,4 +1,4 @@
-import { ITournament } from "@/domains/tournament/typing";
+import { ITournament } from "@/domains/tournament/schemas";
 import { AppButton } from "@/domains/ui-system/components/button/button";
 import { AppIcon } from "@/domains/ui-system/components/icon/icon";
 import { Surface } from "@/domains/ui-system/components/surface/surface";

@@ -14,13 +14,16 @@ export const getTournament = async ({ queryKey }: { queryKey: any }) => {
 		params: {
 			round,
 		},
+		baseURL: import.meta.env.VITE_BEST_SHOT_API_V2,
 	});
 
 	return response;
 };
 
 export const getTournaments = async () => {
-	const response = await api.get("tournaments");
+	const response = await api.get("tournaments", {
+		baseURL: import.meta.env.VITE_BEST_SHOT_API_V2,
+	});
 
 	return response.data;
 };
@@ -30,7 +33,7 @@ export const getTournamentMatches = async ({ queryKey }: { queryKey: any }) => {
 
 	const response = await api.get(
 		`tournaments/${tournamentId}/matches/${round}`,
-	);
+		);
 
 	return response.data as IMatch[];
 };

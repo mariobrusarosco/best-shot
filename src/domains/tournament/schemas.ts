@@ -1,7 +1,6 @@
 import { z } from "zod";
 
 export const TournamentSchema = z.object({
-	baseUrl: z.string(),
 	id: z.string(),
 	label: z.string(),
 	logo: z.string(),
@@ -10,7 +9,7 @@ export const TournamentSchema = z.object({
 	onboardingCompleted: z.boolean(),
 	provider: z.string(),
 	rounds: z.array(z.object({ label: z.string(), slug: z.string() })),
-	standings: z.string(),
+	standingsMode: z.string(),
 	slug: z.string(),	
 	season: z.string().optional(),
 	starterRound: z.string(),

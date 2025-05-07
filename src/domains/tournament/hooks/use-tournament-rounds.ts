@@ -8,6 +8,7 @@ export const useTournamentRounds = () => {
 
 	const goToRound = (round: string) => {
 		navigate({
+			to: "/tournaments/$tournamentId/matches",
 			search: (prev) => ({ ...prev, round }),
 			resetScroll: false,
 			replace: false,

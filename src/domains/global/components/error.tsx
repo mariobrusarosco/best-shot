@@ -25,6 +25,7 @@ const AppError = ({ error }: { error: Error }) => {
 
 const Wrapper = styled(Stack)(({ theme }) => ({
 	height: "100dvh",
+	width: "100%",
 	backgroundColor: theme.palette.black[800],
 	display: "grid",
 	placeContent: "center",

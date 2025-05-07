@@ -6,7 +6,7 @@ import { Link } from "@tanstack/react-router";
 
 export const AppNotFound = () => {
 	return (
-		<Wrapper data-iu="general-error-page">
+		<Wrapper data-iu="not-found-page">
 			<BestShotIcon width={350} fill={theme.palette.black[500]} />
 
 			<Stack textAlign="center" gap={2}>

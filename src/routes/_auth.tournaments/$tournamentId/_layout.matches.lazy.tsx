@@ -26,24 +26,7 @@ export const TournamentMatchesScreen = () => {
 
 	const autoSelectARound = !tournamentQuery.isPending && !activeRound;
 	const fillWithAI = useFeatureFlag("fill_round_guesses_with_ai");
-	const flags = useFlags();
-	console.log("flags", flags);
-	console.log("fillWithAI", fillWithAI);
 
-	useEffect(() => {
-		debugFeatureFlags(flags);
-
-		console.log("Feature flag values:");
-		console.log(
-			"- fill_round_guesses_with_ai (snake_case):",
-			flags["fill_round_guesses_with_ai"],
-		);
-		console.log(
-			"- fillRoundGuessesWithAi (camelCase):",
-			flags["fillRoundGuessesWithAi"],
-		);
-		console.log("- Using our hook:", fillWithAI);
-	}, [flags]);
 
 	useEffect(() => {
 		const starterRound =

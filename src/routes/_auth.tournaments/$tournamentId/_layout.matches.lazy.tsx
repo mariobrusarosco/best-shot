@@ -1,6 +1,5 @@
 import TournamentRoundOfGames from "@/domains/tournament/components/tournament-round-of-games/tournament-round-of-games";
 import TournamentRoundsBar from "@/domains/tournament/components/tournament-rounds-bar";
-import { TournamentSetup } from "@/domains/tournament/components/tournament-setup/tournament-setup";
 import TournamentStandings from "@/domains/tournament/components/tournament-standings/tournament-standings";
 import { useTournament } from "@/domains/tournament/hooks/use-tournament";
 import { useTournamentRounds } from "@/domains/tournament/hooks/use-tournament-rounds";
@@ -12,29 +11,12 @@ import { Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { Box } from "@mui/system";
 import { createLazyFileRoute } from "@tanstack/react-router";
-import { useEffect } from "react";
 import { useFeatureFlag } from "@/configuration/feature-flag/use-feature-flag";
-import { useFlags } from "launchdarkly-react-client-sdk";
-import { debugFeatureFlags } from "@/configuration/feature-flag/featureFlags";
 
 export const TournamentMatchesScreen = () => {
-	const { activeRound, goToRound } = useTournamentRounds();
+	const { activeRound } = useTournamentRounds();
 	const tournamentQuery = useTournament();
-	const isEmptyState =
-		tournamentQuery.isSuccess &&
-		tournamentQuery.data?.onboardingCompleted === false;
-
-	const autoSelectARound = !tournamentQuery.isPending && !activeRound;
 	const fillWithAI = useFeatureFlag("fill_round_guesses_with_ai");
-
-
-	useEffect(() => {
-		const starterRound =
-			tournamentQuery.data?.starterRound ||
-			tournamentQuery.data?.rounds.at(-1)?.slug ||
-			"";
-		if (autoSelectARound) goToRound(starterRound);
-	}, [autoSelectARound]);
 
 	if (tournamentQuery.isError) {
 		return (
@@ -42,14 +24,6 @@ export const TournamentMatchesScreen = () => {
 				<Typography variant="h3" color="red.100">
 					lorem
 				</Typography>
-			</Matches>
-		);
-	}
-
-	if (isEmptyState) {
-		return (
-			<Matches data-ui="matches">
-				<TournamentSetup />
 			</Matches>
 		);
 	}

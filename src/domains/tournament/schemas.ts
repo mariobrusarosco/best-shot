@@ -10,9 +10,8 @@ export const TournamentSchema = z.object({
 	provider: z.string(),
 	rounds: z.array(z.object({ label: z.string(), slug: z.string() })),
 	standingsMode: z.string(),
-	slug: z.string(),	
 	season: z.string().optional(),
-	starterRound: z.string(),
+	starterRound: z.string().optional(),
 	createdAt: z.string().optional(),
 	updatedAt: z.string().optional(),
 });

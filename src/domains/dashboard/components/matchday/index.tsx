@@ -13,6 +13,8 @@ import { MatchdayCard, MatchdayGrid } from "./styles";
 const Matchday = ({ matchday }: { matchday: IMatchday }) => {
 	const allMatches = matchday.all;
 
+	console.log({ matchday });
+
 	return (
 		<Stack color="neutral.100" gap={3} data-ui="matchday">
 			<Stack direction="row" justifyContent="space-between">

@@ -12,6 +12,7 @@ import { ScreenMainContent } from "@/domains/ui-system/layout/screen-main-conten
 import { UIHelper } from "@/theming/theme";
 import { styled } from "@mui/system";
 import TournamentsPerf from "../components/tournaments-perf";
+import { Typography } from "@mui/material";
 
 const DashboardPage = () => {
 	const member = useMember();
@@ -31,12 +32,16 @@ const DashboardPage = () => {
 		);
 	}
 
-	if (performance.isError || member.isError || dashboard.isError) {
+	if (member.isError || performance.isError || dashboard.isError) {
 		return (
 			<AuthenticatedScreenLayout data-ui="dashboard-screen">
 				<ScreenHeading title="Dashboard" subtitle="" />
 
-				<ScreenMainContent>Error</ScreenMainContent>
+				<ScreenMainContent>
+					<Typography variant="h6" color="error"	>
+						Error
+					</Typography>
+				</ScreenMainContent>
 			</AuthenticatedScreenLayout>
 		);
 	}

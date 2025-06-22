@@ -419,7 +419,7 @@ const Heading = styled(Box)(() => ({
 const parseStandinsByFormat = (standings: ITournamentStandings) => {
 	if (!standings?.teams?.length) return null;
 
-	if (standings.format === "multi-group") {
+	if (standings.format === "multiple-groups") {
 		return Object.groupBy(standings.teams, (item) => item.groupName!);
 	}
 

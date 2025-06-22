@@ -1,12 +1,15 @@
 import { api } from "@/api";
-import { IMember, IMemberPerformance } from "@/domains/member/typing";
+import {
+	I_Member,
+	I_MemberPerformance,
+} from "@/domains/member/typing/types-and-interfaces";
 
 export const getMember = async () => {
 	const response = await api.get("member", {
 		baseURL: import.meta.env.VITE_BEST_SHOT_API_V2,
 	});
 
-	return response.data as IMember;
+	return response.data as I_Member;
 };
 
 export const getMemberPerformance = async () => {
@@ -14,5 +17,5 @@ export const getMemberPerformance = async () => {
 		baseURL: import.meta.env.VITE_BEST_SHOT_API_V2,
 	});
 
-	return response.data as IMemberPerformance;
+	return response.data as I_MemberPerformance;
 };

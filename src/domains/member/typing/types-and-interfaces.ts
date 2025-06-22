@@ -1,10 +1,12 @@
-export interface IMember {
+export interface I_Member {
 	id: string;
 	nickName: string;
 	email: string;
+	firstName: string;
+	lastName: string;
 }
 
-export interface IMemberPerformance {
+export interface I_MemberPerformance {
 	tournaments: {
 		worstPerformance: {
 			id: string;

@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
-import { getMember } from "../server-side/fetchers";
+import { getMember } from "@/domains/member/api/fetchers";
+import { memberKey } from "@/domains/member/api/key";
 
 export const useMember = ({
 	fetchOnMount = false,
@@ -12,5 +13,3 @@ export const useMember = ({
 
 	return query;
 };
-
-const memberKey = () => ["member"];

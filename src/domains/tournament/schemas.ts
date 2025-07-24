@@ -1,20 +1,27 @@
 import { z } from "zod";
 
+export const TournamentStatusSchema = z.enum(["active", "archived", "draft"]);
+export type ITournamentStatus = z.infer<typeof TournamentStatusSchema>;
+
 export const TournamentSchema = z.object({
-	id: z.string(),
-	label: z.string(),
-	logo: z.string(),
-	memberId: z.string(),
-	mode: z.string(),
+	id: z.string().uuid(),
+	label: z.string().min(3).max(50),
+	logo: z.string().url(),
+	memberId: z.string().uuid(),
+	mode: z.string().min(3),
+	status: TournamentStatusSchema.default("active"),
 	onboardingCompleted: z.boolean(),
-	provider: z.string(),
-	rounds: z.array(z.object({ label: z.string(), slug: z.string() })),
-	standingsMode: z.string(),
-	season: z.string().optional(),
-	starterRound: z.string().optional(),
-	createdAt: z.string().optional(),
-	updatedAt: z.string().optional(),
-});
+	provider: z.string().min(3),
+	rounds: z.array(z.object({ 
+		label: z.string().min(1).max(30),
+		slug: z.string().min(1).max(30) 
+	})),
+	standingsMode: z.string().min(3),
+	season: z.string().min(4).max(20).optional(),
+	starterRound: z.string().min(1).max(30).optional(),
+	createdAt: z.string().datetime().optional(),
+	updatedAt: z.string().datetime().optional(),
+}).describe("A tournament competition where users make predictions");
 
 export type ITournament = z.infer<typeof TournamentSchema>;
 

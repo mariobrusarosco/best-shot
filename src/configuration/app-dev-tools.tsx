@@ -1,6 +1,6 @@
-import { APP_MODE } from "@/domains/global/utils";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { TanStackRouterDevtools } from "@tanstack/router-devtools";
+import { APP_MODE } from "@/domains/global/utils";
 
 export const AppDevTools = () => {
 	if (APP_MODE !== "local-dev") return null;

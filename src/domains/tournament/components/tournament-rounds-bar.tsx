@@ -1,10 +1,10 @@
-import { AppPill } from "@/domains/ui-system/components/pill/pill";
-import { OverflowOnHover } from "@/domains/ui-system/utils";
-import { UIHelper } from "@/theming/theme";
 import { styled } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/system/Box";
 import { useEffect } from "react";
+import { AppPill } from "@/domains/ui-system/components/pill/pill";
+import { OverflowOnHover } from "@/domains/ui-system/utils";
+import { UIHelper } from "@/theming/theme";
 import { useTournament } from "../hooks/use-tournament";
 import { useTournamentRounds } from "../hooks/use-tournament-rounds";
 
@@ -26,18 +26,8 @@ const TournamentRoundsBar = () => {
 	return (
 		<Wrapper data-ui="tournament-rounds-bar">
 			<BarHeading data-ui="bar-heading">
-				<AppPill.Component
-					border="1px solid"
-					borderColor="teal.500"
-					width={70}
-					height={25}
-				>
-					<Typography
-						variant="tag"
-						textTransform="uppercase"
-						color="neutral.100"
-						fontWeight={500}
-					>
+				<AppPill.Component border="1px solid" borderColor="teal.500" width={70} height={25}>
+					<Typography variant="tag" textTransform="uppercase" color="neutral.100" fontWeight={500}>
 						rounds
 					</Typography>
 				</AppPill.Component>
@@ -81,7 +71,7 @@ const Wrapper = styled(Box)(({ theme }) =>
 		[UIHelper.startsOn("tablet")]: {
 			gap: theme.spacing(3),
 		},
-	}),
+	})
 );
 
 const PillAndStandingLink = styled(Box)(({ theme }) =>
@@ -92,7 +82,7 @@ const PillAndStandingLink = styled(Box)(({ theme }) =>
 		alignItems: "center",
 		gap: 2,
 		pb: 2,
-	}),
+	})
 );
 
 const BarHeading = styled(Box)(() => ({

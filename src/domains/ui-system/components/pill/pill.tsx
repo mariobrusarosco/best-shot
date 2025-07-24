@@ -7,14 +7,14 @@ const Pill = styled(Box)(({ theme }) =>
 		placeContent: "center",
 		alignItems: "center",
 		borderRadius: 2.5,
-	}),
+	})
 );
 
 const PillSkeleton = styled(Pill)(({ theme }) =>
 	theme?.unstable_sx({
 		position: "relative",
 		...shimmerEffect(),
-	}),
+	})
 );
 
 export const AppPill = {

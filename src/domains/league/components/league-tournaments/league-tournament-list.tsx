@@ -1,10 +1,10 @@
-import { useLeague } from "@/domains/league/hooks/use-league";
+import { Box, styled, Typography } from "@mui/material";
+import { useState } from "react";
+import type { useLeague } from "@/domains/league/hooks/use-league";
 import { useTournaments } from "@/domains/tournament/hooks/use-tournaments";
 import { AppButton } from "@/domains/ui-system/components/button/button";
 import { AppIcon } from "@/domains/ui-system/components/icon/icon";
 import { AppPill } from "@/domains/ui-system/components/pill/pill";
-import { Box, styled, Typography } from "@mui/material";
-import { useState } from "react";
 import {
 	LeagueTournamentCustomization,
 	TournamentLeagueCard,
@@ -22,8 +22,7 @@ export const LeagueTournaments = ({
 		setEditMode((prev) => !prev);
 	};
 
-	const isEmptyState =
-		league?.isSuccess && league.data?.tournaments.length === 0;
+	const isEmptyState = league?.isSuccess && league.data?.tournaments.length === 0;
 	const hasPermissionToEdit = league?.data?.permissions.edit;
 
 	return (
@@ -36,12 +35,7 @@ export const LeagueTournaments = ({
 					pb: 3,
 				}}
 			>
-				<AppPill.Component
-					bgcolor="teal.500"
-					color="neutral.100"
-					width={100}
-					height={25}
-				>
+				<AppPill.Component bgcolor="teal.500" color="neutral.100" width={100} height={25}>
 					<Typography variant="tag">Tournaments</Typography>
 				</AppPill.Component>
 
@@ -55,8 +49,7 @@ export const LeagueTournaments = ({
 			{isEmptyState && !editMode && (
 				<EmptyState>
 					<Typography variant="caption">
-						It seems you don't have selected any tournament to be used on this
-						league scout
+						It seems you don't have selected any tournament to be used on this league scout
 					</Typography>
 				</EmptyState>
 			)}
@@ -92,7 +85,7 @@ const EmptyState = styled(Box)(({ theme }) =>
 		py: 4,
 		mt: 4,
 		color: "neutral.100",
-	}),
+	})
 );
 
 const EmptyStartButton = styled(AppButton)(({ theme }) =>
@@ -102,7 +95,7 @@ const EmptyStartButton = styled(AppButton)(({ theme }) =>
 		p: 1,
 		borderRadius: 2,
 		maxWidth: "180px",
-	}),
+	})
 );
 
 const ListGrid = styled("ul")(({ theme }) =>
@@ -113,5 +106,5 @@ const ListGrid = styled("ul")(({ theme }) =>
 		margin: 0,
 		padding: 0,
 		listStyle: "none",
-	}),
+	})
 );

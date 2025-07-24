@@ -1,3 +1,5 @@
+import { Box, Stack, styled, Typography } from "@mui/material";
+import { useState } from "react";
 import { AppButton } from "@/domains/ui-system/components/button/button";
 import { Counter } from "@/domains/ui-system/components/counter/counter";
 import { GridOfCards } from "@/domains/ui-system/components/grid-of-cards/grid-of-cards";
@@ -6,8 +8,6 @@ import {
 	TypographySkeleton,
 } from "@/domains/ui-system/components/skeleton/skeleton";
 import { Surface } from "@/domains/ui-system/components/surface/surface";
-import { Box, Stack, styled, Typography } from "@mui/material";
-import { useState } from "react";
 import { useTournamentDetailedPerformance } from "../../hooks/use-tournament-detailed-performance";
 
 const TournamentDetailedPerformanceStats = () => {
@@ -38,89 +38,41 @@ const TournamentDetailedPerformanceStats = () => {
 						<GridOfCards>
 							<PerfCard>
 								<Stack direction="row" gap={1.5} alignItems="center">
-									<Typography
-										textTransform="uppercase"
-										variant="caption"
-										color="teal.500"
-									>
+									<Typography textTransform="uppercase" variant="caption" color="teal.500">
 										correct guesses
 									</Typography>
-									<Typography
-										textTransform="uppercase"
-										variant="h4"
-										color="neutral.100"
-									>
-										<Counter
-											initialValue={
-												detailedPerformance.data?.guessesByOutcome.correct
-											}
-										/>
+									<Typography textTransform="uppercase" variant="h4" color="neutral.100">
+										<Counter initialValue={detailedPerformance.data?.guessesByOutcome.correct} />
 									</Typography>
 								</Stack>
 							</PerfCard>
 							<PerfCard>
 								<Stack direction="row" gap={1.5} alignItems="center">
-									<Typography
-										textTransform="uppercase"
-										variant="caption"
-										color="teal.500"
-									>
+									<Typography textTransform="uppercase" variant="caption" color="teal.500">
 										incorrect guesses
 									</Typography>
-									<Typography
-										textTransform="uppercase"
-										variant="h4"
-										color="neutral.100"
-									>
-										<Counter
-											initialValue={
-												detailedPerformance.data.guessesByOutcome.incorrect
-											}
-										/>
+									<Typography textTransform="uppercase" variant="h4" color="neutral.100">
+										<Counter initialValue={detailedPerformance.data.guessesByOutcome.incorrect} />
 									</Typography>
 								</Stack>
 							</PerfCard>
 							<PerfCard>
 								<Stack direction="row" gap={1.5} alignItems="center">
-									<Typography
-										textTransform="uppercase"
-										variant="caption"
-										color="teal.500"
-									>
+									<Typography textTransform="uppercase" variant="caption" color="teal.500">
 										waiting for macth outcome
 									</Typography>
-									<Typography
-										textTransform="uppercase"
-										variant="h4"
-										color="neutral.100"
-									>
-										<Counter
-											initialValue={
-												detailedPerformance.data.details["waiting_for_game"]
-											}
-										/>
+									<Typography textTransform="uppercase" variant="h4" color="neutral.100">
+										<Counter initialValue={detailedPerformance.data.details["waiting_for_game"]} />
 									</Typography>
 								</Stack>
 							</PerfCard>
 							<PerfCard>
 								<Stack direction="row" gap={1.5} alignItems="center">
-									<Typography
-										textTransform="uppercase"
-										variant="caption"
-										color="teal.500"
-									>
+									<Typography textTransform="uppercase" variant="caption" color="teal.500">
 										you still can guess
 									</Typography>
-									<Typography
-										textTransform="uppercase"
-										variant="h4"
-										color="neutral.100"
-									>
-										<Counter
-											initialValue={
-												detailedPerformance.data?.details["not-started"]
-											}
-										/>
+									<Typography textTransform="uppercase" variant="h4" color="neutral.100">
+										<Counter initialValue={detailedPerformance.data?.details["not-started"]} />
 									</Typography>
 								</Stack>
 							</PerfCard>
@@ -144,14 +96,14 @@ const PerfCard = styled(Surface)(({ theme }) =>
 		flexDirection: "column",
 		justifyContent: "center",
 		gap: 1,
-	}),
+	})
 );
 
 const PerfCardSkeleton = styled(PerfCard)(({ theme }) =>
 	theme.unstable_sx({
 		position: "relative",
 		...shimmerEffect(),
-	}),
+	})
 );
 
 export const Skeleton = () => {

@@ -1,8 +1,8 @@
+import { Box, styled, Typography, type TypographyProps } from "@mui/material";
 import { AppButton } from "@/domains/ui-system/components/button/button";
 import { AppInput } from "@/domains/ui-system/components/input/input";
 import { shimmerEffect } from "@/domains/ui-system/components/skeleton/skeleton";
 import { Surface } from "@/domains/ui-system/components/surface/surface";
-import { Box, styled, Typography, TypographyProps } from "@mui/material";
 import { useLeagues } from "../../hooks/use-leagues";
 
 const NewLeague = () => {
@@ -78,7 +78,7 @@ const Card = styled(Surface)(({ theme }) =>
 		flexDirection: "column",
 		justifyContent: "center",
 		gap: 1,
-	}),
+	})
 );
 
 interface MyCustomTypographyProps extends TypographyProps {
@@ -86,16 +86,12 @@ interface MyCustomTypographyProps extends TypographyProps {
 }
 
 const Label = styled((props: MyCustomTypographyProps) => (
-	<Typography
-		variant="label"
-		component={props.component || "label"}
-		{...props}
-	/>
+	<Typography variant="label" component={props.component || "label"} {...props} />
 ))(({ theme }) =>
 	theme.unstable_sx({
 		textTransform: "uppercase",
 		color: "neutral.100",
-	}),
+	})
 );
 
 const NewLeagueSkeleton = () => {

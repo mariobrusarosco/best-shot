@@ -1,18 +1,13 @@
+import { styled, Typography } from "@mui/material";
+import { Stack } from "@mui/system";
 import { BestShotIcon } from "@/assets/best-shot-icon";
 import { theme, UIHelper } from "@/theming/theme";
-import { Typography } from "@mui/material";
-import { styled } from "@mui/material";
-import { Stack } from "@mui/system";
 
 export const AppHeader = () => {
 	return (
 		<Header as="header">
 			<BestShotIcon width={50} fill={theme.palette.neutral[100]} />
-			<Typography
-				variant="paragraph"
-				color={theme.palette.neutral[100]}
-				fontWeight={400}
-			>
+			<Typography variant="paragraph" color={theme.palette.neutral[100]} fontWeight={400}>
 				best shot
 			</Typography>
 		</Header>

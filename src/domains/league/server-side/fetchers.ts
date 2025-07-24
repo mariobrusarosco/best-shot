@@ -1,5 +1,5 @@
 import { api } from "@/api";
-import { ILeague, ILeaguePerformance } from "../typing";
+import type { ILeague, ILeaguePerformance } from "../typing";
 
 export const getLeagues = async () => {
 	const response = await api.get("leagues");

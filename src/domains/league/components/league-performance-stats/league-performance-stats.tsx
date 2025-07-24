@@ -1,14 +1,13 @@
+import { Box, Stack, styled, Typography } from "@mui/material";
 import { TournamentLogo } from "@/domains/tournament/components/tournament-heading";
-
 import { AppPill } from "@/domains/ui-system/components/pill/pill";
 import { shimmerEffect } from "@/domains/ui-system/components/skeleton/skeleton";
 import { Surface } from "@/domains/ui-system/components/surface/surface";
 import { OverflowOnHover } from "@/domains/ui-system/utils";
-import { Box, Stack, styled, Typography } from "@mui/material";
-import { useLeaguePerformance } from "../../hooks/use-league-performance";
+import type { useLeaguePerformance } from "../../hooks/use-league-performance";
 
 const LeaguePerformanceStats = ({
-	performance,	
+	performance,
 }: {
 	performance?: ReturnType<typeof useLeaguePerformance>["performance"];
 	mutation?: ReturnType<typeof useLeaguePerformance>["mutation"];
@@ -19,7 +18,6 @@ const LeaguePerformanceStats = ({
 
 	return (
 		<Wrapper data-ui="league-performance-stats">
-			
 			{/* <Stack direction="row" justifyContent="space-between" alignItems="center" pb={4}>	
 				<Stack direction="row" gap={1} alignItems="center">
 					<Typography variant="label" color="neutral.100">last updated: </Typography>
@@ -45,12 +43,7 @@ const LeaguePerformanceStats = ({
 					pb: 3,
 				}}
 			>
-				<AppPill.Component
-					bgcolor="teal.500"
-					color="neutral.100"
-					width={100}
-					height={25}
-				>
+				<AppPill.Component bgcolor="teal.500" color="neutral.100" width={100} height={25}>
 					<Typography variant="tag">leaderboard</Typography>
 				</AppPill.Component>
 			</Box>
@@ -60,70 +53,59 @@ const LeaguePerformanceStats = ({
 					{leaderBoard.map((member, index) => (
 						<Stack>
 							<Card>
-								<Stack
-									direction="row"
-									gap={3}
-									justifyContent="space-between"
-									alignItems="center"
-							>
-								<Stack
-									direction="row"
-									alignItems="center"
-									justifyContent="center"
-									sx={{
-										width: 25,
-										height: 25,
-										backgroundColor: "teal.500",
-										color: "neutral.100",
-										borderRadius: 2,
-									}}
-								>
-									<Typography variant="label" textTransform="capitalize">
-										{index + 1}
-									</Typography>
-								</Stack>
-
-								<Typography
-									color="neutral.100"
-									variant="label"
-									textAlign="left"
-									textTransform="capitalize"
-									flex={1}
-								>
-									{member.memberName}
-								</Typography>
-								<Stack
-									direction="row"
-									gap={2}
-									alignItems="center"
-									justifyContent="center"
-									sx={{
-										backgroundColor: "black.500",
-										color: "neutral.100",
-										borderRadius: 2,
-										px: 1,
-										py: 0.5,
-									}}
-								>
-									<Typography
-										variant="tag"
-										textTransform="uppercase"
-										color="teal.500"
+								<Stack direction="row" gap={3} justifyContent="space-between" alignItems="center">
+									<Stack
+										direction="row"
+										alignItems="center"
+										justifyContent="center"
+										sx={{
+											width: 25,
+											height: 25,
+											backgroundColor: "teal.500",
+											color: "neutral.100",
+											borderRadius: 2,
+										}}
 									>
-										points
-									</Typography>
+										<Typography variant="label" textTransform="capitalize">
+											{index + 1}
+										</Typography>
+									</Stack>
+
 									<Typography
 										color="neutral.100"
-										variant="topic"
+										variant="label"
+										textAlign="left"
 										textTransform="capitalize"
+										flex={1}
 									>
-										{member.points}
+										{member.memberName}
 									</Typography>
+									<Stack
+										direction="row"
+										gap={2}
+										alignItems="center"
+										justifyContent="center"
+										sx={{
+											backgroundColor: "black.500",
+											color: "neutral.100",
+											borderRadius: 2,
+											px: 1,
+											py: 0.5,
+										}}
+									>
+										<Typography variant="tag" textTransform="uppercase" color="teal.500">
+											points
+										</Typography>
+										<Typography color="neutral.100" variant="topic" textTransform="capitalize">
+											{member.points}
+										</Typography>
+									</Stack>
 								</Stack>
-							</Stack>
-						</Card>
+							</Card>
 
-						<Typography variant="tag" color="neutral.100">{new Date(member.lastUpdated).toDateString()}</Typography>
+							<Typography variant="tag" color="neutral.100">
+								{new Date(member.lastUpdated).toDateString()}
+							</Typography>
 						</Stack>
 					))}
 				</Stack>
@@ -134,24 +116,14 @@ const LeaguePerformanceStats = ({
 					<Stack gap={1}>
 						<Stack direction="row" gap={1} alignItems="center">
 							<TournamentLogo sx={{ width: "20px" }} src={tournament?.logo} />
-							<Typography
-								variant="label"
-								textTransform="uppercase"
-								color="neutral.100"
-							>
+							<Typography variant="label" textTransform="uppercase" color="neutral.100">
 								{tournament?.id}
 							</Typography>
-
 						</Stack>
 
 						{tournament?.members?.map((member, index) => (
 							<Card>
-								<Stack
-									direction="row"
-									gap={3}
-									justifyContent="space-between"
-									alignItems="center"
-								>
+								<Stack direction="row" gap={3} justifyContent="space-between" alignItems="center">
 									<Stack
 										direction="row"
 										alignItems="center"
@@ -191,18 +163,10 @@ const LeaguePerformanceStats = ({
 											py: 0.5,
 										}}
 									>
-										<Typography
-											variant="tag"
-											textTransform="uppercase"
-											color="teal.500"
-										>
+										<Typography variant="tag" textTransform="uppercase" color="teal.500">
 											points
 										</Typography>
-										<Typography
-											color="neutral.100"
-											variant="topic"
-											textTransform="capitalize"
-										>
+										<Typography color="neutral.100" variant="topic" textTransform="capitalize">
 											{member.points}
 										</Typography>
 									</Stack>
@@ -234,7 +198,7 @@ export const Card = styled(Surface)(({ theme }) =>
 		flexDirection: "column",
 		gap: 2,
 		flex: 1,
-	}),
+	})
 );
 
 const LeaguePerformanceStatsSkeleton = () => {

@@ -1,3 +1,4 @@
+import { Box, Stack, styled, Typography } from "@mui/material";
 import { AppButton } from "@/domains/ui-system/components/button/button";
 import { Counter } from "@/domains/ui-system/components/counter/counter";
 import { GridOfCards } from "@/domains/ui-system/components/grid-of-cards/grid-of-cards";
@@ -6,9 +7,8 @@ import {
 	TypographySkeleton,
 } from "@/domains/ui-system/components/skeleton/skeleton";
 import { Surface } from "@/domains/ui-system/components/surface/surface";
-import { Box, Stack, styled, Typography } from "@mui/material";
-import { useTournamentPerformance } from "../../hooks/use-tournament-performance";
-import { ITournamentPerformance } from "../../schemas";
+import type { useTournamentPerformance } from "../../hooks/use-tournament-performance";
+import type { ITournamentPerformance } from "../../schemas";
 
 const TournamentPerformanceStats = ({
 	basicPerformance,
@@ -34,20 +34,11 @@ const TournamentPerformanceStats = ({
 						gap: 1,
 					}}
 				>
-					<Typography
-						textTransform="uppercase"
-						variant="caption"
-						color="teal.500"
-					>
+					<Typography textTransform="uppercase" variant="caption" color="teal.500">
 						last updated at:
 					</Typography>
-					<Typography
-						textTransform="uppercase"
-						variant="caption"
-						color="neutral.100"
-					>
-						{basicPerformance.lastUpdated &&
-							new Date(basicPerformance.lastUpdated).toUTCString()}
+					<Typography textTransform="uppercase" variant="caption" color="neutral.100">
+						{basicPerformance.lastUpdated && new Date(basicPerformance.lastUpdated).toUTCString()}
 					</Typography>
 					<AppButton
 						sx={{
@@ -69,24 +60,11 @@ const TournamentPerformanceStats = ({
 			</Box>
 
 			<PerfCard>
-				<Stack
-					direction="row"
-					gap={1.5}
-					alignItems="start"
-					justifyContent="space-between"
-				>
-					<Typography
-						textTransform="uppercase"
-						variant="topic"
-						color="teal.500"
-					>
+				<Stack direction="row" gap={1.5} alignItems="start" justifyContent="space-between">
+					<Typography textTransform="uppercase" variant="topic" color="teal.500">
 						points
 					</Typography>
-					<Typography
-						textTransform="uppercase"
-						variant="h1"
-						color="neutral.100"
-					>
+					<Typography textTransform="uppercase" variant="h1" color="neutral.100">
 						<Counter initialValue={Number(basicPerformance?.points) ?? 0} />
 					</Typography>
 				</Stack>
@@ -105,14 +83,14 @@ const PerfCard = styled(Surface)(({ theme }) =>
 		flexDirection: "column",
 		justifyContent: "center",
 		gap: 1,
-	}),
+	})
 );
 
 const PerfCardSkeleton = styled(PerfCard)(({ theme }) =>
 	theme.unstable_sx({
 		position: "relative",
 		...shimmerEffect(),
-	}),
+	})
 );
 
 export const Skeleton = () => {

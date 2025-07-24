@@ -1,5 +1,5 @@
-import { UIHelper } from "@/theming/theme";
 import { Box, styled } from "@mui/material";
+import { UIHelper } from "@/theming/theme";
 
 export const AuthenticatedLayout = styled(Box)(({ theme }) => ({
 	backgroundColor: theme.palette.black[700],

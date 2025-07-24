@@ -1,24 +1,20 @@
-import { IMatch } from "@/domains/match/typing";
 import { getRouteApi } from "@tanstack/react-router";
 import { useState } from "react";
-import { IGuess } from "../typing";
-import { useGuessMutation } from "./use-guess-mutation";
+import type { IMatch } from "@/domains/match/typing";
+import type { IGuess } from "../typing";
+import type { useGuessMutation } from "./use-guess-mutation";
 
 const route = getRouteApi("/_auth/tournaments/$tournamentId");
 
 export const useGuessInputs = (
 	guess: IGuess,
 	match: IMatch,
-	guessMutation: ReturnType<typeof useGuessMutation>,
+	guessMutation: ReturnType<typeof useGuessMutation>
 ) => {
 	const tournamentId = route.useParams().tournamentId;
 
-	const [homeGuess, setHomeGuess] = useState<null | number>(
-		guess.home.value ?? null,
-	);
-	const [awayGuess, setAwayGuess] = useState<null | number>(
-		guess.away.value ?? null,
-	);
+	const [homeGuess, setHomeGuess] = useState<null | number>(guess.home.value ?? null);
+	const [awayGuess, setAwayGuess] = useState<null | number>(guess.away.value ?? null);
 
 	const handleHomeGuess = (value: number | null) => {
 		setHomeGuess(value);

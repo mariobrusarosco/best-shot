@@ -1,14 +1,14 @@
+import { Stack, Typography } from "@mui/material";
+import { Box, styled } from "@mui/system";
+import { Link } from "@tanstack/react-router";
 import { DashCard } from "@/domains/dashboard/components/dash-card/dash-card";
-import { useMemberPerformance } from "@/domains/member/hooks/use-member-performance";
+import type { useMemberPerformance } from "@/domains/member/hooks/use-member-performance";
 import { TournamentLogo } from "@/domains/tournament/components/tournament-heading";
 import { AppButton } from "@/domains/ui-system/components/button/button";
 import { Counter } from "@/domains/ui-system/components/counter/counter";
 import { AppIcon } from "@/domains/ui-system/components/icon/icon";
 import { AppPill } from "@/domains/ui-system/components/pill/pill";
 import { shimmerEffect } from "@/domains/ui-system/components/skeleton/skeleton";
-import { Stack, Typography } from "@mui/material";
-import { Box, styled } from "@mui/system";
-import { Link } from "@tanstack/react-router";
 import { DashGrid } from "../dash-grid";
 
 const TournamentsPerf = ({
@@ -27,12 +27,7 @@ const TournamentsPerf = ({
 	return (
 		<Wrapper data-ui="tournaments-perf">
 			<Stack direction="row" justifyContent="space-between">
-				<AppPill.Component
-					bgcolor="teal.500"
-					color="neutral.100"
-					height={20}
-					width="120px"
-				>
+				<AppPill.Component bgcolor="teal.500" color="neutral.100" height={20} width="120px">
 					<Typography textTransform="uppercase" variant="tag">
 						tournaments
 					</Typography>
@@ -43,17 +38,8 @@ const TournamentsPerf = ({
 
 			<DashGrid>
 				<DashCard.Component>
-					<Stack
-						direction="row"
-						justifyContent="space-between"
-						alignItems="center"
-						mb={2}
-					>
-						<Typography
-							fontWeight={500}
-							textTransform="uppercase"
-							variant="tag"
-						>
+					<Stack direction="row" justifyContent="space-between" alignItems="center" mb={2}>
+						<Typography fontWeight={500} textTransform="uppercase" variant="tag">
 							Best Ranked
 						</Typography>
 
@@ -65,11 +51,7 @@ const TournamentsPerf = ({
 						)}
 					</Stack>
 
-					<Stack
-						direction="row"
-						justifyContent="space-between"
-						alignItems="end"
-					>
+					<Stack direction="row" justifyContent="space-between" alignItems="end">
 						{tournaments?.bestPerformance ? (
 							<>
 								<Stack gap={1}>
@@ -86,18 +68,10 @@ const TournamentsPerf = ({
 								</Stack>
 
 								<Stack gap={1} alignItems="end">
-									<Typography
-										textTransform="uppercase"
-										variant="h4"
-										color="neutral.100"
-									>
+									<Typography textTransform="uppercase" variant="h4" color="neutral.100">
 										<Counter initialValue={tournaments.bestPerformance.points} />
 									</Typography>
-									<Typography
-										textTransform="uppercase"
-										variant="label"
-										color="teal.500"
-									>
+									<Typography textTransform="uppercase" variant="label" color="teal.500">
 										points
 									</Typography>
 								</Stack>
@@ -109,17 +83,8 @@ const TournamentsPerf = ({
 				</DashCard.Component>
 
 				<DashCard.Component>
-					<Stack
-						direction="row"
-						justifyContent="space-between"
-						alignItems="center"
-						mb={2}
-					>
-						<Typography
-							fontWeight={500}
-							textTransform="uppercase"
-							variant="tag"
-						>
+					<Stack direction="row" justifyContent="space-between" alignItems="center" mb={2}>
+						<Typography fontWeight={500} textTransform="uppercase" variant="tag">
 							worst Ranked
 						</Typography>
 						{tournaments?.worstPerformance === null ? null : (
@@ -130,11 +95,7 @@ const TournamentsPerf = ({
 						)}
 					</Stack>
 
-					<Stack
-						direction="row"
-						justifyContent="space-between"
-						alignItems="end"
-					>
+					<Stack direction="row" justifyContent="space-between" alignItems="end">
 						{tournaments?.worstPerformance ? (
 							<>
 								<Stack gap={1}>
@@ -151,18 +112,10 @@ const TournamentsPerf = ({
 								</Stack>
 
 								<Stack gap={1} alignItems="end">
-									<Typography
-										textTransform="uppercase"
-										variant="h4"
-										color="neutral.100"
-									>
+									<Typography textTransform="uppercase" variant="h4" color="neutral.100">
 										<Counter initialValue={tournaments?.worstPerformance?.points} />
 									</Typography>
-									<Typography
-										textTransform="uppercase"
-										variant="label"
-										color="teal.500"
-									>
+									<Typography textTransform="uppercase" variant="label" color="teal.500">
 										points
 									</Typography>
 								</Stack>
@@ -206,7 +159,7 @@ const CardRouteButtonSkeleton = styled(Box)(({ theme }) =>
 		minWidth: "30px",
 		borderRadius: 2,
 		...shimmerEffect(),
-	}),
+	})
 );
 // TODO This can be a <AppRouteButton />
 

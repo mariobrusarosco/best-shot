@@ -1,14 +1,11 @@
-import {
-	ScreenHeading,
-	ScreenHeadingSkeleton,
-} from "@/domains/global/components/screen-heading";
+import { Box, styled } from "@mui/material";
+import { createLazyFileRoute } from "@tanstack/react-router";
+import { ScreenHeading, ScreenHeadingSkeleton } from "@/domains/global/components/screen-heading";
 import LeaguesList from "@/domains/league/components/leagues-list";
 import NewLeague from "@/domains/league/components/new-league/new-league";
 import { AuthenticatedScreenLayout } from "@/domains/ui-system/layout/authenticated";
 import { ScreenMainContent } from "@/domains/ui-system/layout/screen-main-content";
 import { UIHelper } from "@/theming/theme";
-import { Box, styled } from "@mui/material";
-import { createLazyFileRoute } from "@tanstack/react-router";
 import { useLeagues } from "../../domains/league/hooks/use-leagues";
 
 const LeaguesPage = () => {
@@ -32,9 +29,7 @@ const LeaguesPage = () => {
 		return (
 			<AuthenticatedScreenLayout>
 				<ScreenHeading title="leagues" />
-				<ScreenMainContent>
-					There was an error loading the leagues
-				</ScreenMainContent>
+				<ScreenMainContent>There was an error loading the leagues</ScreenMainContent>
 			</AuthenticatedScreenLayout>
 		);
 	}

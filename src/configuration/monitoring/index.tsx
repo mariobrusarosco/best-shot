@@ -6,10 +6,7 @@ export const Monitoring = {
 
 		Sentry.init({
 			dsn: "https://b56572183c3d505201d237f3e06d598d@o4506356341276672.ingest.us.sentry.io/4508489696673792",
-			integrations: [
-				Sentry.browserTracingIntegration(),
-				Sentry.replayIntegration(),
-			],
+			integrations: [Sentry.browserTracingIntegration(), Sentry.replayIntegration()],
 			// Tracing
 			tracesSampleRate: 1.0, //  Capture 100% of the transactions
 			// Set 'tracePropagationTargets' to control for which URLs distributed tracing should be enabled

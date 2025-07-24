@@ -1,8 +1,8 @@
+import { styled, Typography } from "@mui/material";
+import { useNavigate } from "@tanstack/react-router";
 import { AppButton } from "@/domains/ui-system/components/button/button";
 import { AppIcon } from "@/domains/ui-system/components/icon/icon";
 import { UIHelper } from "@/theming/theme";
-import { styled, Typography } from "@mui/material";
-import { useNavigate } from "@tanstack/react-router";
 
 export const GoBackButton = ({ backTo }: { backTo: string }) => {
 	const navigate = useNavigate();

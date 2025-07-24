@@ -1,4 +1,4 @@
-import { ITournament } from "../tournament/schemas";
+import type { ITournament } from "../tournament/schemas";
 
 export type ILeague = {
 	id: string;
@@ -20,14 +20,17 @@ export type ILeaguePerformance = {
 		points: string;
 		lastUpdated: string;
 	}[];
-	standings: Record<string, {
-	id: string;
-	logo: string;
-	members: {
-		member: string;
-		points: string;
-	}[];
-}>;
+	standings: Record<
+		string,
+		{
+			id: string;
+			logo: string;
+			members: {
+				member: string;
+				points: string;
+			}[];
+		}
+	>;
 	lastUpdated: string;
 };
 

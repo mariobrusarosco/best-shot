@@ -1,9 +1,9 @@
-import { useAIPrediction } from "@/domains/ai/hooks/use-ai-prediction";
-import { AppButton } from "@/domains/ui-system/components/button/button";
-import { AppIcon } from "@/domains/ui-system/components/icon/icon";
 import { Typography } from "@mui/material";
 import { styled } from "@mui/system";
 import { memo, useState } from "react";
+import { useAIPrediction } from "@/domains/ai/hooks/use-ai-prediction";
+import { AppButton } from "@/domains/ui-system/components/button/button";
+import { AppIcon } from "@/domains/ui-system/components/icon/icon";
 
 interface AIPredictionButtonProps {
 	matchId: string;
@@ -15,11 +15,7 @@ interface AIPredictionButtonProps {
  * AI Prediction Button that fetches and applies predictions to match guesses
  */
 const AIPredictionButton = memo(
-	({
-		matchId,
-		onPredictionReceived,
-		disabled = false,
-	}: AIPredictionButtonProps) => {
+	({ matchId, onPredictionReceived, disabled = false }: AIPredictionButtonProps) => {
 		const [isAnalyzing, setIsAnalyzing] = useState(false);
 		const [hasError, setHasError] = useState(false);
 		const { refetch } = useAIPrediction(matchId);
@@ -35,9 +31,7 @@ const AIPredictionButton = memo(
 
 				if (result.data && onPredictionReceived) {
 					// Parse the predicted score (assuming format like "2-1")
-					const [homeScore, awayScore] = result.data.predictedScore
-						.split("-")
-						.map(Number);
+					const [homeScore, awayScore] = result.data.predictedScore.split("-").map(Number);
 
 					if (!isNaN(homeScore) && !isNaN(awayScore)) {
 						onPredictionReceived(homeScore, awayScore);
@@ -69,14 +63,10 @@ const AIPredictionButton = memo(
 					)}
 				</PredictButton>
 
-				{hasError && (
-					<ErrorMessage variant="caption">
-						Failed to get prediction
-					</ErrorMessage>
-				)}
+				{hasError && <ErrorMessage variant="caption">Failed to get prediction</ErrorMessage>}
 			</ButtonWrapper>
 		);
-	},
+	}
 );
 
 const ButtonWrapper = styled("div")(({ theme }) => ({

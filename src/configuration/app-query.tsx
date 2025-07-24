@@ -1,8 +1,4 @@
-import {
-	QueryCache,
-	QueryClient,
-	QueryClientProvider,
-} from "@tanstack/react-query";
+import { QueryCache, QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 export const queryClient = new QueryClient({
 	defaultOptions: {
@@ -24,9 +20,7 @@ export const queryClient = new QueryClient({
 });
 
 const AppQueryProvider = ({ children }: { children: React.ReactNode }) => {
-	return (
-		<QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
-	);
+	return <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>;
 };
 
 export { AppQueryProvider };

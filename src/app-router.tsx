@@ -1,12 +1,12 @@
+import { createRouter, RouterProvider } from "@tanstack/react-router";
 import { queryClient } from "@/configuration/app-query";
 import { AppError } from "@/domains/global/components/error";
 import { AppNotFound } from "@/domains/global/components/not-found";
-import { RouterContext } from "@/routes/__root";
+import type { RouterContext } from "@/routes/__root";
 import { routeTree } from "@/routeTree.gen";
-import { createRouter, RouterProvider } from "@tanstack/react-router";
 import { Authentication } from "./domains/authentication";
 
-const {  useAppAuth } = Authentication;
+const { useAppAuth } = Authentication;
 
 // Type-safety registration
 declare module "@tanstack/react-router" {
@@ -40,9 +40,7 @@ const Router = () => {
 };
 
 const AppRouter = () => {
-	return (
-			<Router />
-	);
+	return <Router />;
 };
 
 export { AppRouter };

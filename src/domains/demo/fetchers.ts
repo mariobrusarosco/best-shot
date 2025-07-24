@@ -1,5 +1,5 @@
 import { api } from "../../api";
-import { IGuess } from "../guess/typing";
+import type { IGuess } from "../guess/typing";
 
 export const getMembers = async ({ queryKey }: { queryKey: any }) => {
 	const [_key, { memberId }] = queryKey;

@@ -1,13 +1,12 @@
-import TournamentPerformanceStats from "@/domains/tournament/components/tournament-performance-stats/tournament-performance-stats";
+import { Box, styled, Typography } from "@mui/material";
+import { createLazyFileRoute } from "@tanstack/react-router";
 import TournamentDetailedPerformanceStats from "@/domains/tournament/components/tournament-performance-stats/tournament-detailed-performance-stats";
+import TournamentPerformanceStats from "@/domains/tournament/components/tournament-performance-stats/tournament-performance-stats";
 import { useTournament } from "@/domains/tournament/hooks/use-tournament";
 import { useTournamentPerformance } from "@/domains/tournament/hooks/use-tournament-performance";
 import { TypographySkeleton } from "@/domains/ui-system/components/skeleton/skeleton";
-import { Box, styled, Typography } from "@mui/material";
-import { createLazyFileRoute } from "@tanstack/react-router";
 
 export const TournamentPerformance = () => {
-	
 	const tournament = useTournament();
 	const performance = useTournamentPerformance();
 
@@ -25,7 +24,6 @@ export const TournamentPerformance = () => {
 		return <Performance>error....</Performance>;
 	}
 
-
 	return (
 		<Performance data-ui="screen performance-screen" maxWidth={700}>
 			<Typography
@@ -42,7 +40,7 @@ export const TournamentPerformance = () => {
 				basicPerformance={performance.data}
 			/>
 
-			<TournamentDetailedPerformanceStats.Component			/>
+			<TournamentDetailedPerformanceStats.Component />
 		</Performance>
 	);
 };
@@ -53,11 +51,9 @@ const Performance = styled(Box)(({ theme }) =>
 		py: 2,
 		pt: 4,
 		pb: 12,
-	}),
+	})
 );
 
-export const Route = createLazyFileRoute(
-	"/_auth/tournaments/$tournamentId/_layout/performance",
-)({
+export const Route = createLazyFileRoute("/_auth/tournaments/$tournamentId/_layout/performance")({
 	component: TournamentPerformance,
 });

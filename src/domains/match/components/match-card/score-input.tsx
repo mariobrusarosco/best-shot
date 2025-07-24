@@ -1,12 +1,12 @@
-import { GUESS_STATUS } from "@/domains/guess/typing";
-import { AppButton } from "@/domains/ui-system/components/button/button";
-import { AppIcon } from "@/domains/ui-system/components/icon/icon";
 import {
 	Unstable_NumberInput as BaseNumberInput,
-	NumberInputProps,
+	type NumberInputProps,
 } from "@mui/base/Unstable_NumberInput";
 import { Box, styled } from "@mui/system";
 import { forwardRef, useRef } from "react";
+import type { GUESS_STATUS } from "@/domains/guess/typing";
+import { AppButton } from "@/domains/ui-system/components/button/button";
+import { AppIcon } from "@/domains/ui-system/components/icon/icon";
 
 export const NumberInput = forwardRef(
 	(props: NumberInputProps, ref: React.ForwardedRef<HTMLDivElement>) => {
@@ -36,7 +36,7 @@ export const NumberInput = forwardRef(
 				}}
 			/>
 		);
-	},
+	}
 );
 
 interface Props {
@@ -46,21 +46,12 @@ interface Props {
 	handleInputChange: (val: number | null) => void;
 }
 
-const ALLOW_INPUT_WHEN_GUESS_STATUS = new Set([
-	"waiting_for_game",
-	"not-started",
-]);
+const ALLOW_INPUT_WHEN_GUESS_STATUS = new Set(["waiting_for_game", "not-started"]);
 
-export const ScoreInput = ({
-	value,
-	handleInputChange,
-	guessStatus,
-	cardExpanded,
-}: Props) => {
+export const ScoreInput = ({ value, handleInputChange, guessStatus, cardExpanded }: Props) => {
 	const ref = useRef<HTMLInputElement>(null);
 
-	const showInputs =
-		ALLOW_INPUT_WHEN_GUESS_STATUS.has(guessStatus) && cardExpanded;
+	const showInputs = ALLOW_INPUT_WHEN_GUESS_STATUS.has(guessStatus) && cardExpanded;
 
 	if (!showInputs) return;
 
@@ -107,7 +98,7 @@ export const InputBoxStyled = styled(Box)(({ theme }) =>
 		"[data-open='true'] &": {
 			order: 2,
 		},
-	}),
+	})
 );
 
 export const InputStyled = styled("input")(({ theme }) => ({

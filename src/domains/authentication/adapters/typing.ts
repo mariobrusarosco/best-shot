@@ -1,10 +1,6 @@
-import { APP_MODES } from "@/domains/global/typing";
+import type { APP_MODES } from "@/domains/global/typing";
 
-export type IAuthProvider = ({
-	children,
-}: {
-	children: React.ReactNode;
-}) => JSX.Element;
+export type IAuthProvider = ({ children }: { children: React.ReactNode }) => JSX.Element;
 
 export type IAuthHook = {
 	isAuthenticated: boolean;

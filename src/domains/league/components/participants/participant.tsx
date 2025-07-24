@@ -1,7 +1,7 @@
+import { styled, type Theme, Typography } from "@mui/material";
 import { AppPill } from "@/domains/ui-system/components/pill/pill";
 import { Surface } from "@/domains/ui-system/components/surface/surface";
-import { styled, Theme, Typography } from "@mui/material";
-import { IParticipant } from "../../typing";
+import type { IParticipant } from "../../typing";
 
 export const Participant = ({ participant }: { participant: IParticipant }) => {
 	return (
@@ -10,12 +10,7 @@ export const Participant = ({ participant }: { participant: IParticipant }) => {
 				{participant.nickName}
 			</Typography>
 
-			<Role
-				memberRole={participant.role}
-				bgcolor="teal.500"
-				minWidth={55}
-				height={20}
-			>
+			<Role memberRole={participant.role} bgcolor="teal.500" minWidth={55} height={20}>
 				<Typography variant="tag">{participant.role}</Typography>
 			</Role>
 		</Card>
@@ -30,7 +25,7 @@ const Role = styled(AppPill.Component)(
 			backgroundColor: RoleColors[memberRole].bgColor,
 			borderColor: RoleColors[memberRole].borderColor,
 			color: RoleColors[memberRole].color,
-		}),
+		})
 );
 
 const RoleColors: Record<
@@ -68,5 +63,5 @@ export const Card = styled(Surface)(({ theme }) =>
 		justifyContent: "space-between",
 		gap: 2,
 		flex: 1,
-	}),
+	})
 );

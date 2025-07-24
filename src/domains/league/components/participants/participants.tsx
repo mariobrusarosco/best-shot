@@ -1,7 +1,7 @@
+import { Box, Stack, styled, Typography } from "@mui/material";
 import { AppPill } from "@/domains/ui-system/components/pill/pill";
 import { shimmerEffect } from "@/domains/ui-system/components/skeleton/skeleton";
-import { Box, Stack, styled, Typography } from "@mui/material";
-import { IParticipant } from "../../typing";
+import type { IParticipant } from "../../typing";
 import { Participant } from "./participant";
 
 const ListGrid = styled(Box)(({ theme }) => ({
@@ -11,21 +11,12 @@ const ListGrid = styled(Box)(({ theme }) => ({
 	borderRadius: theme.spacing(1),
 }));
 
-const LeagueTournaments = ({
-	participants,
-}: {
-	participants: IParticipant[] | undefined;
-}) => {
+const LeagueTournaments = ({ participants }: { participants: IParticipant[] | undefined }) => {
 	if (!participants) return null;
 
 	return (
 		<Stack gap={6.5} data-ui="league-participants" flex={1}>
-			<AppPill.Component
-				bgcolor="teal.500"
-				color="neutral.100"
-				width={100}
-				height={25}
-			>
+			<AppPill.Component bgcolor="teal.500" color="neutral.100" width={100} height={25}>
 				<Typography variant="tag">Participants</Typography>
 			</AppPill.Component>
 
@@ -46,7 +37,9 @@ const ParticipantsListSkeleton = () => {
 			<AppPill.Skeleton width={100} height={25} />
 
 			<ListGrid data-ui="leagues-list">
-				{participants?.map((_) => <Skeleton />)}
+				{participants?.map((_) => (
+					<Skeleton />
+				))}
 			</ListGrid>
 		</Stack>
 	);

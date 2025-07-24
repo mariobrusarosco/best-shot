@@ -1,8 +1,8 @@
-import { GUESS_STATUS, IGuess } from "@/domains/guess/typing";
-import { AppPill } from "@/domains/ui-system/components/pill/pill";
-import { theme } from "@/theming/theme";
 import { Box, Typography } from "@mui/material";
 import { styled } from "@mui/system";
+import type { GUESS_STATUS, IGuess } from "@/domains/guess/typing";
+import { AppPill } from "@/domains/ui-system/components/pill/pill";
+import { theme } from "@/theming/theme";
 
 interface Props {
 	data: IGuess["away"] | IGuess["away"];
@@ -20,13 +20,7 @@ export const GuessDisplay = ({ data, cardExpanded }: Props) => {
 			<Typography textTransform="uppercase" variant="tag" fontWeight={500}>
 				guess
 			</Typography>
-			<AppPill.Component
-				minWidth={30}
-				height={20}
-				padding={0}
-				color={color}
-				bgcolor={bgColor}
-			>
+			<AppPill.Component minWidth={30} height={20} padding={0} color={color} bgcolor={bgColor}>
 				<Typography variant="tag">{value ?? "-"}</Typography>
 			</AppPill.Component>
 		</Wrapper>

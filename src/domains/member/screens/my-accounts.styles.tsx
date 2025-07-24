@@ -1,6 +1,6 @@
+import { styled } from "@mui/material";
 import { AppButton } from "@/domains/ui-system/components/button/button";
 import { ScreenMainContent } from "@/domains/ui-system/layout/screen-main-content";
-import { styled } from "@mui/material";
 
 export const MyAccount = styled(ScreenMainContent)(({ theme }) => ({
 	display: "flex",

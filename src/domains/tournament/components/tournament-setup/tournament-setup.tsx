@@ -1,8 +1,8 @@
+import { Stack, Typography } from "@mui/material";
+import { getRouteApi } from "@tanstack/react-router";
 import { BestShotIcon } from "@/assets/best-shot-icon";
 import { AppButton } from "@/domains/ui-system/components/button/button";
 import { theme } from "@/theming/theme";
-import { Stack, Typography } from "@mui/material";
-import { getRouteApi } from "@tanstack/react-router";
 import { useTournamentSetup } from "../../hooks/use-tournament-setup";
 
 const route = getRouteApi("/_auth/tournaments/$tournamentId");
@@ -20,21 +20,11 @@ export const TournamentSetup = () => {
 			</Stack>
 			<Typography variant="topic" color="neutral.100">
 				We need to setup this tournament for you, so you'll be able to guess{" "}
-				<Typography
-					textTransform="uppercase"
-					variant="label"
-					color="teal.500"
-					fontWeight={700}
-				>
+				<Typography textTransform="uppercase" variant="label" color="teal.500" fontWeight={700}>
 					scores
 				</Typography>{" "}
 				and then check your{" "}
-				<Typography
-					textTransform="uppercase"
-					variant="label"
-					color="teal.500"
-					fontWeight={700}
-				>
+				<Typography textTransform="uppercase" variant="label" color="teal.500" fontWeight={700}>
 					performance
 				</Typography>
 			</Typography>
@@ -54,17 +44,9 @@ export const TournamentSetup = () => {
 				}}
 			>
 				{setup.isPending ? (
-					<BestShotIcon
-						isAnimated
-						fill={theme.palette.neutral[100]}
-						width={30}
-					/>
+					<BestShotIcon isAnimated fill={theme.palette.neutral[100]} width={30} />
 				) : (
-					<Typography
-						textTransform="uppercase"
-						variant="label"
-						color="neutral.100"
-					>
+					<Typography textTransform="uppercase" variant="label" color="neutral.100">
 						finish setup
 					</Typography>
 				)}

@@ -1,7 +1,3 @@
-import { AppPill } from "@/domains/ui-system/components/pill/pill";
-import { shimmerEffect } from "@/domains/ui-system/components/skeleton/skeleton";
-import { OverflowOnHover } from "@/domains/ui-system/utils";
-import { theme, UIHelper } from "@/theming/theme";
 import {
 	Box,
 	Stack,
@@ -13,9 +9,13 @@ import {
 	TableRow,
 	Typography,
 } from "@mui/material";
+import { AppPill } from "@/domains/ui-system/components/pill/pill";
+import { shimmerEffect } from "@/domains/ui-system/components/skeleton/skeleton";
+import { OverflowOnHover } from "@/domains/ui-system/utils";
+import { theme, UIHelper } from "@/theming/theme";
 import { useTournament } from "../../hooks/use-tournament";
 import { useTournamentStandings } from "../../hooks/use-tournament-standings";
-import { ITournamentStandings } from "../../schemas";
+import type { ITournamentStandings } from "../../schemas";
 
 const TournamentStandings = () => {
 	const tournamentStandings = useTournamentStandings();
@@ -45,12 +45,7 @@ const TournamentStandings = () => {
 		return (
 			<Wrapper>
 				<Heading>
-					<AppPill.Component
-						border="1px solid"
-						borderColor="teal.500"
-						width={80}
-						height={25}
-					>
+					<AppPill.Component border="1px solid" borderColor="teal.500" width={80} height={25}>
 						<Typography
 							variant="tag"
 							textTransform="uppercase"
@@ -74,12 +69,7 @@ const TournamentStandings = () => {
 		return (
 			<Stack>
 				<Heading>
-					<AppPill.Component
-						border="1px solid"
-						borderColor="teal.500"
-						width={80}
-						height={25}
-					>
+					<AppPill.Component border="1px solid" borderColor="teal.500" width={80} height={25}>
 						<Typography
 							variant="tag"
 							textTransform="uppercase"
@@ -100,18 +90,8 @@ const TournamentStandings = () => {
 	return (
 		<Wrapper data-ui="standings">
 			<Heading>
-				<AppPill.Component
-					border="1px solid"
-					borderColor="teal.500"
-					width={80}
-					height={25}
-				>
-					<Typography
-						variant="tag"
-						textTransform="uppercase"
-						color="neutral.100"
-						fontWeight={500}
-					>
+				<AppPill.Component border="1px solid" borderColor="teal.500" width={80} height={25}>
+					<Typography variant="tag" textTransform="uppercase" color="neutral.100" fontWeight={500}>
 						standings
 					</Typography>
 				</AppPill.Component>
@@ -121,12 +101,7 @@ const TournamentStandings = () => {
 				return (
 					<>
 						{group !== "unique-group" ? (
-							<AppPill.Component
-								bgcolor="teal.500"
-								width={120}
-								height={25}
-								mb={3}
-							>
+							<AppPill.Component bgcolor="teal.500" width={120} height={25} mb={3}>
 								<Typography
 									variant="tag"
 									textTransform="uppercase"
@@ -138,10 +113,7 @@ const TournamentStandings = () => {
 							</AppPill.Component>
 						) : null}
 
-						<StandingsTable
-							size="small"
-							aria-label={`standings-table-${group}`}
-						>
+						<StandingsTable size="small" aria-label={`standings-table-${group}`}>
 							<TableHead>
 								<Row>
 									<Cell sx={{ pt: 0, pb: 0, textAlign: "left" }}>

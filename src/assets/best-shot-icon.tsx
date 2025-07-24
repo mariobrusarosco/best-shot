@@ -1,4 +1,4 @@
-import { motion, Variants } from "motion/react";
+import { motion, type Variants } from "motion/react";
 
 const BallVariants = {
 	animated: {

@@ -1,11 +1,8 @@
+import { styled, Typography, useMediaQuery } from "@mui/material";
 import { shimmerEffect } from "@/domains/ui-system/components/skeleton/skeleton";
-import {
-	Surface,
-	SurfaceProps,
-} from "@/domains/ui-system/components/surface/surface";
+import { Surface, type SurfaceProps } from "@/domains/ui-system/components/surface/surface";
 import { GoBackButton } from "@/domains/ui-system/go-back-button/go-back-button";
 import { UIHelper } from "@/theming/theme";
-import { styled, Typography, useMediaQuery } from "@mui/material";
 
 interface Props extends SurfaceProps {
 	children?: React.ReactNode;
@@ -30,11 +27,7 @@ export const ScreenHeading = (props: Props & WrapperProps) => {
 
 			{title ? (
 				<TextBox data-ui="text-box">
-					<Typography
-						data-ui="title"
-						variant={titleVariant}
-						textTransform="lowercase"
-					>
+					<Typography data-ui="title" variant={titleVariant} textTransform="lowercase">
 						{title}
 					</Typography>
 
@@ -96,22 +89,20 @@ const TextBox = styled(Surface)(() => ({
 	},
 }));
 
-export const ScreenHeadingSkeleton = styled(Wrapper)(
-	({ theme, dynamicHeight }) => ({
-		backgroundColor: theme.palette.black[800],
-		borderBottomLeftRadius: theme.spacing(3),
-		borderBottomRightRadius: theme.spacing(3),
-		position: "relative",
-		minHeight: dynamicHeight ?? "150px",
+export const ScreenHeadingSkeleton = styled(Wrapper)(({ theme, dynamicHeight }) => ({
+	backgroundColor: theme.palette.black[800],
+	borderBottomLeftRadius: theme.spacing(3),
+	borderBottomRightRadius: theme.spacing(3),
+	position: "relative",
+	minHeight: dynamicHeight ?? "150px",
 
-		...shimmerEffect(),
+	...shimmerEffect(),
 
-		[UIHelper.startsOn("tablet")]: {
-			minHeight: dynamicHeight ?? "200px",
-		},
+	[UIHelper.startsOn("tablet")]: {
+		minHeight: dynamicHeight ?? "200px",
+	},
 
-		[UIHelper.startsOn("desktop")]: {
-			minHeight: dynamicHeight ?? "200px",
-		},
-	}),
-);
+	[UIHelper.startsOn("desktop")]: {
+		minHeight: dynamicHeight ?? "200px",
+	},
+}));

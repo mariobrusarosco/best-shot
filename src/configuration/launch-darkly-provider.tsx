@@ -1,8 +1,5 @@
-import { ReactNode, useEffect, useState } from "react";
-import {
-	LDProvider,
-	createLDUser,
-} from "@/configuration/feature-flag/featureFlags";
+import { type ReactNode, useEffect, useState } from "react";
+import { createLDUser, LDProvider } from "@/configuration/feature-flag/featureFlags";
 import { APP_MODE } from "@/domains/global/utils";
 
 interface LaunchDarklyProviderProps {
@@ -16,9 +13,7 @@ interface LaunchDarklyProviderProps {
  * It sets up an anonymous user initially - the actual user identification
  * is handled by the LaunchDarklyUserIdentifier component.
  */
-export const LaunchDarklyProvider = ({
-	children,
-}: LaunchDarklyProviderProps) => {
+export const LaunchDarklyProvider = ({ children }: LaunchDarklyProviderProps) => {
 	const [ldClientId, setLdClientId] = useState<string>("");
 
 	useEffect(() => {
@@ -27,9 +22,7 @@ export const LaunchDarklyProvider = ({
 		setLdClientId(clientKey || "");
 
 		if (!clientKey) {
-			console.warn(
-				"LaunchDarkly client key not found in environment variables",
-			);
+			console.warn("LaunchDarkly client key not found in environment variables");
 		}
 	}, []);
 

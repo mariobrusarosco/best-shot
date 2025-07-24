@@ -6,13 +6,26 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 **Package Manager**: Use `yarn` for all package management (not npm)
 
+### Core Development
 - `yarn dev` - Start development server in local-dev mode
 - `yarn dev-demo` - Start development server in demo mode  
 - `yarn dev-prod` - Start development server in production mode
 - `yarn start` - Start both frontend and backend servers concurrently
 - `yarn build` - TypeScript compilation and production build
+
+### Code Quality (Biome.js)
+- `yarn lint` - Run Biome linting
+- `yarn lint:fix` - Run Biome linting with auto-fix
+- `yarn format` - Run Biome formatting
+- `yarn format:fix` - Run Biome formatting with auto-fix
+- `yarn check` - Run both linting and formatting
+- `yarn check:fix` - Auto-fix both linting and formatting issues
+
+### Testing
 - `yarn test` - Run tests with coverage using Vitest
 - `yarn test:dev` - Run tests in watch mode
+
+### Package Management
 - `yarn add <package>` - Add dependencies
 - `yarn add -D <package>` - Add dev dependencies
 

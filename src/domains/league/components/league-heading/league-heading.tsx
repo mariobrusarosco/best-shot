@@ -1,6 +1,6 @@
-import { UIHelper } from "@/theming/theme";
 import { Box, Typography, useMediaQuery } from "@mui/material";
-import { useLeagues } from "../../hooks/use-leagues";
+import { UIHelper } from "@/theming/theme";
+import type { useLeagues } from "../../hooks/use-leagues";
 
 const { startsOn } = UIHelper;
 

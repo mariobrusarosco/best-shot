@@ -1,10 +1,10 @@
-import { ILeague } from "@/domains/league/typing";
+import { Box, styled, Typography } from "@mui/material";
+import type { ILeague } from "@/domains/league/typing";
 import { AppIcon } from "@/domains/ui-system/components/icon/icon";
 import { AppLinkCard } from "@/domains/ui-system/components/link-card/link-card";
 import { shimmerEffect } from "@/domains/ui-system/components/skeleton/skeleton";
 import { OverflowAuto } from "@/domains/ui-system/utils";
 import { UIHelper } from "@/theming/theme";
-import { Box, styled, Typography } from "@mui/material";
 
 const LeaguesList = ({ leagues }: { leagues: ILeague[] }) => {
 	return (
@@ -57,7 +57,7 @@ const GridOfCards = styled("ul")(({ theme }) =>
 			gridTemplateColumns: "repeat(auto-fill, minmax(150px, 160px))",
 			gridTemplateRows: "repeat(auto-fit, 130px)",
 		},
-	}),
+	})
 );
 
 const LeaguesListSkeleton = () => {

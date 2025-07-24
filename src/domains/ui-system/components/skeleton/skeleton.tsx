@@ -50,5 +50,5 @@ export const TypographySkeleton = styled(Box)(({ theme }) =>
 		backgroundColor: "black.800",
 		borderRadius: 2,
 		...shimmerEffect(),
-	}),
+	})
 );

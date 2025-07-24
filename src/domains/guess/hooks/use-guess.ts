@@ -18,7 +18,7 @@ export const useGuess = () => {
 	return guesses;
 };
 
-export const guessKey = (
-	tournamentId: string,
-	round: string | undefined = undefined,
-) => ["guess", { tournamentId, round }];
+export const guessKey = (tournamentId: string, round: string | undefined = undefined) => [
+	"guess",
+	{ tournamentId, round },
+];

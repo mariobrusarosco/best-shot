@@ -16,5 +16,5 @@ export const DashGrid = styled(Box)(({ theme }) =>
 		gridAutoRows: {
 			all: "auto",
 		},
-	}),
+	})
 );

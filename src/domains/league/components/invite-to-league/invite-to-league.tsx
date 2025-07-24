@@ -1,8 +1,8 @@
+import { Box, styled, Typography, type TypographyProps } from "@mui/material";
 import { AppButton } from "@/domains/ui-system/components/button/button";
 import { AppInput } from "@/domains/ui-system/components/input/input";
 import { AppPill } from "@/domains/ui-system/components/pill/pill";
 import { Surface } from "@/domains/ui-system/components/surface/surface";
-import { Box, styled, Typography, TypographyProps } from "@mui/material";
 import { useLeague } from "../../hooks/use-league";
 
 export const InviteToLeague = () => {
@@ -10,12 +10,7 @@ export const InviteToLeague = () => {
 
 	return (
 		<Box>
-			<AppPill.Component
-				bgcolor="teal.500"
-				color="neutral.100"
-				width={100}
-				height={25}
-			>
+			<AppPill.Component bgcolor="teal.500" color="neutral.100" width={100} height={25}>
 				<Typography variant="tag">invitations</Typography>
 			</AppPill.Component>
 
@@ -45,9 +40,7 @@ export const InviteToLeague = () => {
 						value={inputs.guestIdInput}
 						onChange={inputs.handleGuestIdInput}
 					/>
-					<SubmitButton onClick={inputs.handleLeagueInvite}>
-						Invite
-					</SubmitButton>
+					<SubmitButton onClick={inputs.handleLeagueInvite}>Invite</SubmitButton>
 				</Box>
 			</Card>
 		</Box>
@@ -78,7 +71,7 @@ const Card = styled(Surface)(({ theme }) =>
 		flexDirection: "column",
 		justifyContent: "center",
 		gap: 1,
-	}),
+	})
 );
 
 interface MyCustomTypographyProps extends TypographyProps {
@@ -86,14 +79,10 @@ interface MyCustomTypographyProps extends TypographyProps {
 }
 
 const Label = styled((props: MyCustomTypographyProps) => (
-	<Typography
-		variant="label"
-		component={props.component || "label"}
-		{...props}
-	/>
+	<Typography variant="label" component={props.component || "label"} {...props} />
 ))(({ theme }) =>
 	theme.unstable_sx({
 		textTransform: "uppercase",
 		color: "neutral.100",
-	}),
+	})
 );

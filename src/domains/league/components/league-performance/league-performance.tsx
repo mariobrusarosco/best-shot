@@ -1,10 +1,10 @@
-import { useLeague } from "@/domains/league/hooks/use-league";
+import { Box, styled, Typography } from "@mui/material";
+import { useQueryClient } from "@tanstack/react-query";
+import type { useLeague } from "@/domains/league/hooks/use-league";
 import { AppButton } from "@/domains/ui-system/components/button/button";
 import { GridOfCards } from "@/domains/ui-system/components/grid-of-cards/grid-of-cards";
 import { AppPill } from "@/domains/ui-system/components/pill/pill";
 import { Surface } from "@/domains/ui-system/components/surface/surface";
-import { Box, styled, Typography } from "@mui/material";
-import { useQueryClient } from "@tanstack/react-query";
 
 export const LeaguePerformance = ({
 	league,
@@ -30,13 +30,7 @@ export const LeaguePerformance = ({
 					justifyContent: "space-between",
 				}}
 			>
-				<AppPill.Component
-					bgcolor="teal.500"
-					color="neutral.100"
-					width={130}
-					height={25}
-					mb={2}
-				>
+				<AppPill.Component bgcolor="teal.500" color="neutral.100" width={130} height={25} mb={2}>
 					<Typography variant="tag">top 5 performances</Typography>
 				</AppPill.Component>
 
@@ -47,18 +41,10 @@ export const LeaguePerformance = ({
 						gap: 1,
 					}}
 				>
-					<Typography
-						textTransform="uppercase"
-						variant="caption"
-						color="teal.500"
-					>
+					<Typography textTransform="uppercase" variant="caption" color="teal.500">
 						last updated at:
 					</Typography>
-					<Typography
-						textTransform="uppercase"
-						variant="caption"
-						color="neutral.100"
-					>
+					<Typography textTransform="uppercase" variant="caption" color="neutral.100">
 						{new Date().toISOString()}
 					</Typography>
 					<AppButton
@@ -100,5 +86,5 @@ export const Card = styled(Surface)(({ theme }) =>
 		flexDirection: "column",
 		gap: 2,
 		flex: 1,
-	}),
+	})
 );

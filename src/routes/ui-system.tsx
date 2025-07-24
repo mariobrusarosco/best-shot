@@ -1,9 +1,9 @@
-import { AppButton } from "@/domains/ui-system/components/button/button";
-import { AuthenticatedScreenLayout } from "@/domains/ui-system/layout/authenticated";
-import { BORDER_RADIUS, COLORS, PADDING } from "@/theming/theme";
 import { useTheme } from "@mui/system";
 import Box from "@mui/system/Box";
 import { createFileRoute } from "@tanstack/react-router";
+import { AppButton } from "@/domains/ui-system/components/button/button";
+import { AuthenticatedScreenLayout } from "@/domains/ui-system/layout/authenticated";
+import { BORDER_RADIUS, COLORS, PADDING } from "@/theming/theme";
 
 const UiSystemScreen = () => {
 	const theme = useTheme();

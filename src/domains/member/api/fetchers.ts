@@ -1,8 +1,5 @@
 import { api } from "@/api";
-import {
-	I_Member,
-	I_MemberPerformance,
-} from "@/domains/member/typing/types-and-interfaces";
+import type { I_Member, I_MemberPerformance } from "@/domains/member/typing/types-and-interfaces";
 
 export const getMember = async () => {
 	const response = await api.get("member", {

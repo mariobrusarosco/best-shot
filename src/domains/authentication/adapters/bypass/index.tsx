@@ -1,14 +1,12 @@
-import { api } from "@/api";
-import { useMember } from "@/domains/member/hooks/use-member";
 import { useMutation } from "@tanstack/react-query";
 import { createContext, useContext, useEffect, useState } from "react";
-import { IAuthHook } from "../typing";
+import { api } from "@/api";
+import { useMember } from "@/domains/member/hooks/use-member";
+import type { IAuthHook } from "../typing";
 
 const ByPassAuthContext = createContext<IAuthHook | undefined>(undefined);
 
-const memberid =
-	localStorage.getItem("local-member-id") ??
-	import.meta.env.VITE_MOCKED_MEMBER_ID;
+const memberid = localStorage.getItem("local-member-id") ?? import.meta.env.VITE_MOCKED_MEMBER_ID;
 
 export const Provider = ({ children }: { children: React.ReactNode }) => {
 	const [isAuthenticated, setisAuthenticated] = useState(false);
@@ -70,11 +68,7 @@ export const Provider = ({ children }: { children: React.ReactNode }) => {
 		mutate(memberid);
 	}, []);
 
-	return (
-		<ByPassAuthContext.Provider value={state}>
-			{children}
-		</ByPassAuthContext.Provider>
-	);
+	return <ByPassAuthContext.Provider value={state}>{children}</ByPassAuthContext.Provider>;
 };
 
 export const authenticatedLocalMember = async (publicId: any) => {

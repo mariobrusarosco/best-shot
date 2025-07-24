@@ -1,7 +1,6 @@
-import {
-	ScreenHeading,
-	ScreenHeadingSkeleton,
-} from "@/domains/global/components/screen-heading";
+import { Box, styled, Typography } from "@mui/material";
+import { Outlet } from "@tanstack/react-router";
+import { ScreenHeading, ScreenHeadingSkeleton } from "@/domains/global/components/screen-heading";
 import TournamentHeading, {
 	TournamentLogo,
 } from "@/domains/tournament/components/tournament-heading";
@@ -10,13 +9,10 @@ import { useTournament } from "@/domains/tournament/hooks/use-tournament";
 import { AuthenticatedScreenLayout } from "@/domains/ui-system/layout/authenticated";
 import { ScreenMainContent } from "@/domains/ui-system/layout/screen-main-content";
 import { UIHelper } from "@/theming/theme";
-import { Box, styled, Typography } from "@mui/material";
-import { Outlet } from "@tanstack/react-router";
 
 const TournamentLayout = () => {
 	const tournament = useTournament({ fetchOnMount: true });
-	const isEmptyState =
-		tournament.isSuccess && tournament.data?.onboardingCompleted === false;
+	const isEmptyState = tournament.isSuccess && tournament.data?.onboardingCompleted === false;
 
 	if (tournament.isRefetching || tournament.isPending) {
 		return (
@@ -48,9 +44,7 @@ const TournamentLayout = () => {
 						</LogoBox>
 					</LabelAndLogo>
 
-					{isEmptyState ? null : (
-						<TournamentTabs.Component tournament={tournament.data} />
-					)}
+					{isEmptyState ? null : <TournamentTabs.Component tournament={tournament.data} />}
 				</CustomScreenHeading>
 			</ScreenHeading>
 

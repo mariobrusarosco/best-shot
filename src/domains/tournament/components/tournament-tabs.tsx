@@ -1,10 +1,10 @@
-import { CustomLink } from "@/domains/ui-system/components/link/link";
-import { shimmerEffect } from "@/domains/ui-system/components/skeleton/skeleton";
-import { UIHelper } from "@/theming/theme";
 import { Tab, Tabs, TabsList } from "@mui/base";
 import { Box, styled, Typography } from "@mui/material";
 import { useLocation } from "@tanstack/react-router";
-import { ITournament } from "../schemas";
+import { CustomLink } from "@/domains/ui-system/components/link/link";
+import { shimmerEffect } from "@/domains/ui-system/components/skeleton/skeleton";
+import { UIHelper } from "@/theming/theme";
+import type { ITournament } from "../schemas";
 
 const TournamentTabs = ({ tournament }: { tournament?: ITournament }) => {
 	const location = useLocation();
@@ -71,7 +71,7 @@ const List = styled(Box)(({ theme }) =>
 			// marginTop: "auto",
 			justifyItems: "flex-start",
 		},
-	}),
+	})
 );
 
 const CustomTab = styled(CustomLink)(({ theme }) =>
@@ -90,7 +90,7 @@ const CustomTab = styled(CustomLink)(({ theme }) =>
 		[UIHelper.startsOn("desktop")]: {
 			minWidth: "200px",
 		},
-	}),
+	})
 );
 
 export const TabsSkeleton = styled(Wrapper)(({ theme }) =>
@@ -99,7 +99,7 @@ export const TabsSkeleton = styled(Wrapper)(({ theme }) =>
 		height: "41px",
 		border: "none",
 		...shimmerEffect(),
-	}),
+	})
 );
 export default {
 	Component: TournamentTabs,

@@ -1,9 +1,9 @@
-import { useGuess } from "@/domains/guess/hooks/use-guess";
-import { useGuessMutation } from "@/domains/guess/hooks/use-guess-mutation";
-import { IGuess } from "@/domains/guess/typing";
-import MatchCard from "@/domains/match/components/match-card/match-card";
 import { styled } from "@mui/material";
 import { Stack } from "@mui/system";
+import { useGuess } from "@/domains/guess/hooks/use-guess";
+import { useGuessMutation } from "@/domains/guess/hooks/use-guess-mutation";
+import type { IGuess } from "@/domains/guess/typing";
+import MatchCard from "@/domains/match/components/match-card/match-card";
 import { useTournamentMatches } from "../../hooks/use-tournament-matches";
 
 const TournamentRoundOfGames = () => {

@@ -1,16 +1,16 @@
-import { useGuessInputs } from "@/domains/guess/hooks/use-guess-inputs";
-import { GUESS_STATUS, GUESS_STATUSES, IGuess } from "@/domains/guess/typing";
-import { AppIcon } from "@/domains/ui-system/components/icon/icon";
-import { Divider } from "@mui/material";
-
-import { BestShotIcon } from "@/assets/best-shot-icon";
-import { useGuessMutation } from "@/domains/guess/hooks/use-guess-mutation";
-import { shimmerEffect } from "@/domains/ui-system/components/skeleton/skeleton";
-import { theme } from "@/theming/theme";
-import { Stack, styled, Typography } from "@mui/material";
+import { Divider, Stack, styled, Typography } from "@mui/material";
 import dayjs from "dayjs";
 import { useState } from "react";
-import { IMatch } from "../../typing";
+
+import { BestShotIcon } from "@/assets/best-shot-icon";
+import AIPredictionButton from "@/domains/ai/components/AIPredictionButton";
+import { useGuessInputs } from "@/domains/guess/hooks/use-guess-inputs";
+import type { useGuessMutation } from "@/domains/guess/hooks/use-guess-mutation";
+import { type GUESS_STATUS, GUESS_STATUSES, type IGuess } from "@/domains/guess/typing";
+import { AppIcon } from "@/domains/ui-system/components/icon/icon";
+import { shimmerEffect } from "@/domains/ui-system/components/skeleton/skeleton";
+import { theme } from "@/theming/theme";
+import type { IMatch } from "../../typing";
 import { defineMatchTimebox } from "../../utils";
 import { CardAnimation } from "./animations";
 import { GuessDisplay } from "./guess-display";
@@ -21,7 +21,6 @@ import { Button, Card, CTA, Header, Team, Teams } from "./match-card.styles";
 import { ScoreDisplay } from "./score-display";
 import { ScoreInput } from "./score-input";
 import { TeamDisplay } from "./team-display";
-import AIPredictionButton from "@/domains/ai/components/AIPredictionButton";
 
 const SHOW_TIMEBOX_WHEN_GUESS_STATUS = new Set<GUESS_STATUS>([
 	GUESS_STATUSES.NOT_STARTED,
@@ -50,10 +49,8 @@ const MatchCard = ({ guess, match, guessMutation }: Props) => {
 
 	const showTimeBox = SHOW_TIMEBOX_WHEN_GUESS_STATUS.has(guess.status);
 	const showCTAButton =
-		SHOW_CTA_BUTTON_WHEN_GUESS_STATUS.has(guess.status) &&
-		!guess.hasLostTimewindowToGuess;
-	const showSaveButton =
-		SHOW_SAVE_BUTTON_WHEN_GUESS_STATUS.has(guess.status) && isOpen;
+		SHOW_CTA_BUTTON_WHEN_GUESS_STATUS.has(guess.status) && !guess.hasLostTimewindowToGuess;
+	const showSaveButton = SHOW_SAVE_BUTTON_WHEN_GUESS_STATUS.has(guess.status) && isOpen;
 
 	const handleAIPrediction = (homeScore: number, awayScore: number) => {
 		guessInputs.handleHomeGuess(homeScore);
@@ -72,12 +69,7 @@ const MatchCard = ({ guess, match, guessMutation }: Props) => {
 			<Header>
 				<Stack gap={1} alignItems="start">
 					<Stack direction="row" gap={1} alignItems="center">
-						<Typography
-							textTransform="uppercase"
-							variant="tag"
-							color="teal.500"
-							fontWeight={500}
-						>
+						<Typography textTransform="uppercase" variant="tag" color="teal.500" fontWeight={500}>
 							date
 						</Typography>
 
@@ -87,9 +79,7 @@ const MatchCard = ({ guess, match, guessMutation }: Props) => {
 							color="neutral.100"
 							fontWeight={500}
 						>
-							{match.date === null
-								? "-"
-								: dayjs(match.date).format("HH:mm - MMM DD")}
+							{match.date === null ? "-" : dayjs(match.date).format("HH:mm - MMM DD")}
 						</Typography>
 
 						<Divider
@@ -98,11 +88,7 @@ const MatchCard = ({ guess, match, guessMutation }: Props) => {
 						/>
 						{showTimeBox ? (
 							<Stack direction="row" gap={1} alignItems="center">
-								<AppIcon
-									name="ClockFilled"
-									size="tiny"
-									color={theme.palette.teal[500]}
-								/>
+								<AppIcon name="ClockFilled" size="tiny" color={theme.palette.teal[500]} />
 								<Typography
 									variant="tag"
 									fontWeight={500}

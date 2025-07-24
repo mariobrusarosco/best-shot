@@ -1,9 +1,9 @@
+import { Box, styled, Typography } from "@mui/material";
+import { createLazyFileRoute, Link } from "@tanstack/react-router";
 import { Authentication } from "@/domains/authentication";
 import { AppButton } from "@/domains/ui-system/components/button/button";
 import { PublicLayout } from "@/domains/ui-system/layout/public";
 import { theme } from "@/theming/theme";
-import { Box, styled, Typography } from "@mui/material";
-import { createLazyFileRoute, Link } from "@tanstack/react-router";
 
 const useAppAuth = Authentication.useAppAuth;
 
@@ -36,11 +36,7 @@ const SignUpScreen = () => {
 					</Typography>
 				</ProviderDisclaimer>
 
-				<Typography
-					variant="label"
-					color={theme.palette.neutral[100]}
-					textTransform="uppercase"
-				>
+				<Typography variant="label" color={theme.palette.neutral[100]} textTransform="uppercase">
 					Already have an account?
 					<LoginPageLink to="/login" sx={{ color: theme.palette.teal[500] }}>
 						Login now!

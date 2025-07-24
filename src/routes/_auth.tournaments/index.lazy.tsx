@@ -1,7 +1,6 @@
-import {
-	ScreenHeading,
-	ScreenHeadingSkeleton,
-} from "@/domains/global/components/screen-heading";
+import { styled, Typography } from "@mui/material";
+import { createLazyFileRoute } from "@tanstack/react-router";
+import { ScreenHeading, ScreenHeadingSkeleton } from "@/domains/global/components/screen-heading";
 import TournamentHeading from "@/domains/tournament/components/tournament-heading";
 import {
 	TournamentsList,
@@ -11,8 +10,6 @@ import { useTournaments } from "@/domains/tournament/hooks/use-tournaments";
 import { AuthenticatedScreenLayout } from "@/domains/ui-system/layout/authenticated";
 import { ScreenMainContent } from "@/domains/ui-system/layout/screen-main-content";
 import { UIHelper } from "@/theming/theme";
-import { styled, Typography } from "@mui/material";
-import { createLazyFileRoute } from "@tanstack/react-router";
 
 const TournamentsPage = () => {
 	const { data, error, isPending } = useTournaments();
@@ -44,11 +41,7 @@ const TournamentsPage = () => {
 
 	return (
 		<AuthenticatedScreenLayout data-ui="tournaments-screen">
-			<ScreenHeading
-				title="tournaments"
-				subtitle="2024/2025 season"
-				backTo="/dashboard"
-			/>
+			<ScreenHeading title="tournaments" subtitle="2024/2025 season" backTo="/dashboard" />
 
 			<Tournaments data-ui="tournaments-main-content">
 				<TournamentsList tournaments={data} />

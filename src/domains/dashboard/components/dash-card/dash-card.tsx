@@ -1,7 +1,7 @@
+import { styled } from "@mui/system";
 import { shimmerEffect } from "@/domains/ui-system/components/skeleton/skeleton";
 import { Surface } from "@/domains/ui-system/components/surface/surface";
 import { UIHelper } from "@/theming/theme";
-import { styled } from "@mui/system";
 
 const Card = styled(Surface)(({ theme }) =>
 	theme.unstable_sx({
@@ -18,7 +18,7 @@ const Card = styled(Surface)(({ theme }) =>
 			p: 3,
 			maxHeight: "160px",
 		},
-	}),
+	})
 );
 
 export const CardSkeleton = styled(Card)(() => ({

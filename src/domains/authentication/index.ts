@@ -1,8 +1,7 @@
 import { APP_MODE } from "../global/utils";
-import { IAuthAdapter } from "./adapters/typing";
-
 import Auth0 from "./adapters/auth-0";
 import ByPass from "./adapters/bypass";
+import type { IAuthAdapter } from "./adapters/typing";
 
 const AuthenticationAdapter: IAuthAdapter = {
 	"local-dev": {

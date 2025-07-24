@@ -1,6 +1,6 @@
-import { AppPill } from "@/domains/ui-system/components/pill/pill";
 import { Box, styled, Typography } from "@mui/material";
-import { IMatch } from "../../typing";
+import { AppPill } from "@/domains/ui-system/components/pill/pill";
+import type { IMatch } from "../../typing";
 
 export const ScoreDisplay = ({
 	matchVenueData,
@@ -14,9 +14,7 @@ export const ScoreDisplay = ({
 			</AppPill.Component>
 			{matchVenueData.penaltiesScore !== null ? (
 				<AppPill.Component bgcolor={"black.500"} minWidth={30} height={20}>
-					<Typography variant="tag">
-						{matchVenueData.penaltiesScore ?? "-"}
-					</Typography>
+					<Typography variant="tag">{matchVenueData.penaltiesScore ?? "-"}</Typography>
 				</AppPill.Component>
 			) : null}
 		</Wrapper>

@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { Authentication } from "@/domains/authentication";
-import { useIdentifyUser } from "../configuration/feature-flag/featureFlags";
 import { APP_MODE } from "@/domains/global/utils";
+import { useIdentifyUser } from "../configuration/feature-flag/featureFlags";
 
 const { useAppAuth } = Authentication;
 
@@ -36,17 +36,13 @@ export const LaunchDarklyUserIdentifier = () => {
 				"Identified authenticated user to LaunchDarkly:",
 				authId,
 				"Environment:",
-				APP_MODE,
+				APP_MODE
 			);
 		} else {
 			// User is not authenticated - use anonymous identification but still include environment
 			identifyUser(undefined, userAttributes);
 
-			console.log(
-				"Identified anonymous user to LaunchDarkly",
-				"Environment:",
-				APP_MODE,
-			);
+			console.log("Identified anonymous user to LaunchDarkly", "Environment:", APP_MODE);
 		}
 	}, [isAuthenticated, isLoadingAuth, authId, identifyUser]);
 

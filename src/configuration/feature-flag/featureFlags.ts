@@ -1,9 +1,9 @@
 import {
+	type LDFlagSet,
 	LDProvider,
-	useLDClient,
 	useFlags,
+	useLDClient,
 	withLDProvider,
-	LDFlagSet,
 } from "launchdarkly-react-client-sdk";
 import { useCallback } from "react";
 import { APP_MODE } from "@/domains/global/utils";
@@ -22,15 +22,11 @@ export {
  * @param attributes - Additional user attributes for targeting
  * @returns A user object for LaunchDarkly
  */
-export const createLDUser = (
-	userId?: string,
-	attributes?: Record<string, any>,
-) => {
+export const createLDUser = (userId?: string, attributes?: Record<string, any>) => {
 	const isAnonymous = !userId;
 
 	// Create a random anonymous ID if no user ID is provided
-	const key =
-		userId || `anonymous-${Math.random().toString(36).substring(2, 15)}`;
+	const key = userId || `anonymous-${Math.random().toString(36).substring(2, 15)}`;
 
 	return {
 		key,
@@ -53,7 +49,7 @@ export const useIdentifyUser = () => {
 			const user = createLDUser(userId, attributes);
 			client.identify(user);
 		},
-		[client],
+		[client]
 	);
 };
 
@@ -67,7 +63,7 @@ export const useIdentifyUser = () => {
 export const isFeatureEnabled = (
 	flags: LDFlagSet,
 	flagKey: string,
-	defaultValue = false,
+	defaultValue = false
 ): boolean => {
 	if (flags === undefined || flags[flagKey] === undefined) {
 		return defaultValue;
@@ -102,10 +98,7 @@ export const debugFeatureFlags = (flags: LDFlagSet) => {
 	Object.keys(flags).forEach((key) => {
 		const value = flags[key];
 		const snakeVersion = camelToSnake(key);
-		console.log(
-			`• ${key}${key !== snakeVersion ? ` (snake_case: ${snakeVersion})` : ""}:`,
-			value,
-		);
+		console.log(`• ${key}${key !== snakeVersion ? ` (snake_case: ${snakeVersion})` : ""}:`, value);
 	});
 
 	console.groupEnd();

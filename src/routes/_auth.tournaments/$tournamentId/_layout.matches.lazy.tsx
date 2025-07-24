@@ -1,3 +1,8 @@
+import { Typography } from "@mui/material";
+import { styled } from "@mui/material/styles";
+import { Box } from "@mui/system";
+import { createLazyFileRoute } from "@tanstack/react-router";
+import { useFeatureFlag } from "@/configuration/feature-flag/use-feature-flag";
 import TournamentRoundOfGames from "@/domains/tournament/components/tournament-round-of-games/tournament-round-of-games";
 import TournamentRoundsBar from "@/domains/tournament/components/tournament-rounds-bar";
 import TournamentStandings from "@/domains/tournament/components/tournament-standings/tournament-standings";
@@ -7,11 +12,6 @@ import { AppButton } from "@/domains/ui-system/components/button/button";
 import { AppPill } from "@/domains/ui-system/components/pill/pill";
 import { OverflowOnHover } from "@/domains/ui-system/utils";
 import { UIHelper } from "@/theming/theme";
-import { Typography } from "@mui/material";
-import { styled } from "@mui/material/styles";
-import { Box } from "@mui/system";
-import { createLazyFileRoute } from "@tanstack/react-router";
-import { useFeatureFlag } from "@/configuration/feature-flag/use-feature-flag";
 
 export const TournamentMatchesScreen = () => {
 	const { activeRound } = useTournamentRounds();
@@ -32,12 +32,7 @@ export const TournamentMatchesScreen = () => {
 		<Matches data-ui="matches">
 			<Rounds data-ui="rounds">
 				<RoundHeading>
-					<AppPill.Component
-						border="1px solid"
-						borderColor="teal.500"
-						width={80}
-						height={25}
-					>
+					<AppPill.Component border="1px solid" borderColor="teal.500" width={80} height={25}>
 						<Typography
 							variant="tag"
 							textTransform="uppercase"
@@ -48,12 +43,7 @@ export const TournamentMatchesScreen = () => {
 						</Typography>
 					</AppPill.Component>
 
-					<AppPill.Component
-						bgcolor="black.500"
-						height={25}
-						width="auto"
-						padding={2}
-					>
+					<AppPill.Component bgcolor="black.500" height={25} width="auto" padding={2}>
 						<Typography
 							variant="tag"
 							textTransform="uppercase"
@@ -142,9 +132,7 @@ const RoundHeading = styled(Box)(({ theme }) => ({
 	gap: theme.spacing(1),
 }));
 
-export const Route = createLazyFileRoute(
-	"/_auth/tournaments/$tournamentId/_layout/matches",
-)({
+export const Route = createLazyFileRoute("/_auth/tournaments/$tournamentId/_layout/matches")({
 	component: TournamentMatchesScreen,
 	// errorComponent: (error) => <Typography>{error.error.message}</Typography>,
 });

@@ -1,12 +1,12 @@
-import { AppPill } from "@/domains/ui-system/components/pill/pill";
 import { Stack, Typography } from "@mui/material";
+import { Link } from "@tanstack/react-router";
 
 import { AppButton } from "@/domains/ui-system/components/button/button";
 import { AppCard } from "@/domains/ui-system/components/card/card";
 import { AppIcon } from "@/domains/ui-system/components/icon/icon";
+import { AppPill } from "@/domains/ui-system/components/pill/pill";
 import { theme } from "@/theming/theme";
-import { Link } from "@tanstack/react-router";
-import { IMatchday } from "../../typing";
+import type { IMatchday } from "../../typing";
 import { DashCard } from "../dash-card/dash-card";
 import { MatchdayCard, MatchdayGrid } from "./styles";
 
@@ -18,12 +18,7 @@ const Matchday = ({ matchday }: { matchday: IMatchday }) => {
 	return (
 		<Stack color="neutral.100" gap={3} data-ui="matchday">
 			<Stack direction="row" justifyContent="space-between">
-				<AppPill.Component
-					bgcolor="teal.500"
-					color="neutral.100"
-					height={20}
-					width="120px"
-				>
+				<AppPill.Component bgcolor="teal.500" color="neutral.100" height={20} width="120px">
 					<Typography textTransform="uppercase" variant="tag">
 						Matchday
 					</Typography>
@@ -49,11 +44,7 @@ const Matchday = ({ matchday }: { matchday: IMatchday }) => {
 										gridTemplateRows: "10px auto",
 									}}
 								>
-									<AppCard.Header
-										alignItems={"self-start"}
-										gap={2}
-										data-ui="card-header"
-									>
+									<AppCard.Header alignItems={"self-start"} gap={2} data-ui="card-header">
 										<Stack>
 											<Typography
 												fontWeight={500}
@@ -79,11 +70,7 @@ const Matchday = ({ matchday }: { matchday: IMatchday }) => {
 											<AppIcon name="ChevronRight" size="extra-small" />
 										</AppButton>
 									</AppCard.Header>
-									<Typography
-										variant="tag"
-										color={theme.palette.teal[500]}
-										fontWeight={400}
-									>
+									<Typography variant="tag" color={theme.palette.teal[500]} fontWeight={400}>
 										round {match.roundSlug}
 									</Typography>
 								</AppCard.Container>

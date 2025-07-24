@@ -1,12 +1,11 @@
-import { useMember } from "@/domains/member/hooks/use-member";
+import { Box, Typography } from "@mui/material";
 import { useNavigate } from "@tanstack/react-router";
 import { Authentication } from "@/domains/authentication";
 import { ScreenHeading } from "@/domains/global/components/screen-heading";
-import { ScreenMainContent } from "@/domains/ui-system/layout/screen-main-content";
-import { Box, Typography } from "@mui/material";
+import { useMember } from "@/domains/member/hooks/use-member";
+import { LogoutButton, MyAccount } from "@/domains/member/screens/my-accounts.styles";
 import { AuthenticatedScreenLayout } from "@/domains/ui-system/layout/authenticated";
-import { MyAccount } from "@/domains/member/screens/my-accounts.styles";
-import { LogoutButton } from "@/domains/member/screens/my-accounts.styles";
+import { ScreenMainContent } from "@/domains/ui-system/layout/screen-main-content";
 
 const { useAppAuth } = Authentication;
 

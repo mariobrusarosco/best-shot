@@ -16,8 +16,4 @@ export const useTournamentStandings = () => {
 	return query;
 };
 
-export const tournamentStandingsKey = (id: string) => [
-	"tournament",
-	{ id },
-	"standings",
-];
+export const tournamentStandingsKey = (id: string) => ["tournament", { id }, "standings"];

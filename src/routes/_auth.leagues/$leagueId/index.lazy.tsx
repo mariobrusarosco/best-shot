@@ -1,3 +1,5 @@
+import { Box, Stack, styled } from "@mui/material";
+import { createLazyFileRoute } from "@tanstack/react-router";
 import { ScreenHeading } from "@/domains/global/components/screen-heading";
 import { InviteToLeague } from "@/domains/league/components/invite-to-league/invite-to-league";
 import LeaguePerformanceStats from "@/domains/league/components/league-performance-stats/league-performance-stats";
@@ -7,8 +9,6 @@ import { useLeague } from "@/domains/league/hooks/use-league";
 import { AuthenticatedScreenLayout } from "@/domains/ui-system/layout/authenticated";
 import { ScreenMainContent } from "@/domains/ui-system/layout/screen-main-content";
 import { UIHelper } from "@/theming/theme";
-import { Box, Stack, styled } from "@mui/material";
-import { createLazyFileRoute } from "@tanstack/react-router";
 
 const LeaguePage = () => {
 	const { league, performance, mutation } = useLeague();
@@ -42,11 +42,7 @@ const LeaguePage = () => {
 
 	return (
 		<AuthenticatedScreenLayout data-ui="leagues-screen screen">
-			<ScreenHeading
-				backTo="/leagues"
-				title="league"
-				subtitle={league.data?.label}
-			/>
+			<ScreenHeading backTo="/leagues" title="league" subtitle={league.data?.label} />
 
 			<ScreenMainContent>
 				<League data-ui="league">
@@ -54,9 +50,7 @@ const LeaguePage = () => {
 						<LeaguePerformanceStats.Component performance={performance} mutation={mutation} />
 					</Stack>
 					<Stack spacing={2} direction="column" flex={1}>
-						<ParticipantsList.Component
-							participants={league.data.participants}
-						/>
+						<ParticipantsList.Component participants={league.data.participants} />
 						{hasEditPermission ? <LeagueTournaments league={league} /> : null}
 						{hasInvitePermission ? <InviteToLeague /> : null}
 					</Stack>

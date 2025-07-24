@@ -1,7 +1,7 @@
+import { useTheme } from "@mui/material";
 import { AppButton } from "@/domains/ui-system/components/button/button";
 import { AppIcon } from "@/domains/ui-system/components/icon/icon";
-import { ICONS } from "@/domains/ui-system/components/icon/mapper";
-import { useTheme } from "@mui/material";
+import type { ICONS } from "@/domains/ui-system/components/icon/mapper";
 
 export const MenuButton = ({ iconName }: { iconName: keyof typeof ICONS }) => {
 	const theme = useTheme();

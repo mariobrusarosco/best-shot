@@ -1,18 +1,14 @@
-import {
-	ScreenHeading,
-	ScreenHeadingSkeleton,
-} from "@/domains/global/components/screen-heading";
-import { useMember } from "@/domains/member/hooks/use-member";
-import { useMemberPerformance } from "@/domains/member/hooks/use-member-performance";
-
+import { Typography } from "@mui/material";
+import { styled } from "@mui/system";
 import Matchday from "@/domains/dashboard/components/matchday";
 import { useDashboard } from "@/domains/dashboard/hooks/use-dashboard";
+import { ScreenHeading, ScreenHeadingSkeleton } from "@/domains/global/components/screen-heading";
+import { useMember } from "@/domains/member/hooks/use-member";
+import { useMemberPerformance } from "@/domains/member/hooks/use-member-performance";
 import { AuthenticatedScreenLayout } from "@/domains/ui-system/layout/authenticated";
 import { ScreenMainContent } from "@/domains/ui-system/layout/screen-main-content";
 import { UIHelper } from "@/theming/theme";
-import { styled } from "@mui/system";
 import TournamentsPerf from "../components/tournaments-perf";
-import { Typography } from "@mui/material";
 
 const DashboardPage = () => {
 	const member = useMember();
@@ -38,7 +34,7 @@ const DashboardPage = () => {
 				<ScreenHeading title="Dashboard" subtitle="" />
 
 				<ScreenMainContent>
-					<Typography variant="h6" color="error"	>
+					<Typography variant="h6" color="error">
 						Error
 					</Typography>
 				</ScreenMainContent>

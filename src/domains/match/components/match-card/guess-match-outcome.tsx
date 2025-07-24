@@ -1,6 +1,6 @@
-import { IGuess } from "@/domains/guess/typing";
-import { AppPill } from "@/domains/ui-system/components/pill/pill";
 import { Typography } from "@mui/material";
+import type { IGuess } from "@/domains/guess/typing";
+import { AppPill } from "@/domains/ui-system/components/pill/pill";
 
 export const GuessMatchOutcome = ({ guess }: { guess: IGuess }) => {
 	if (guess.status !== "finalized") return null;
@@ -9,12 +9,7 @@ export const GuessMatchOutcome = ({ guess }: { guess: IGuess }) => {
 	if (guess.fullMatch.status === "incorrect")
 		return (
 			<AppPill.Component bgcolor="red.400" width={85} height={20}>
-				<Typography
-					color="neutral.100"
-					variant="tag"
-					fontWeight={600}
-					textTransform="lowercase"
-				>
+				<Typography color="neutral.100" variant="tag" fontWeight={600} textTransform="lowercase">
 					{label}
 				</Typography>
 			</AppPill.Component>
@@ -22,12 +17,7 @@ export const GuessMatchOutcome = ({ guess }: { guess: IGuess }) => {
 
 	return (
 		<AppPill.Component bgcolor={"green.200"} width={85} height={20}>
-			<Typography
-				variant="tag"
-				color="neutral.100"
-				fontWeight={600}
-				textTransform="lowercase"
-			>
+			<Typography variant="tag" color="neutral.100" fontWeight={600} textTransform="lowercase">
 				{label}
 			</Typography>
 		</AppPill.Component>

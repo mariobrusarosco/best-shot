@@ -1,9 +1,9 @@
+import { Box, Stack, styled, Typography } from "@mui/material";
+import { createLazyFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { Authentication } from "@/domains/authentication";
 import { AppButton } from "@/domains/ui-system/components/button/button";
 import { PublicLayout } from "@/domains/ui-system/layout/public";
 import { theme } from "@/theming/theme";
-import { Box, Stack, styled, Typography } from "@mui/material";
-import { createLazyFileRoute, Link, useNavigate } from "@tanstack/react-router";
 
 const useAppAuth = Authentication.useAppAuth;
 
@@ -36,21 +36,12 @@ const LoginScreen = () => {
 					LOGIN
 				</LoginBUtton>
 
-				<Stack
-					gap={2}
-					direction="row"
-					alignItems="center"
-					justifyContent="space-between"
-				>
+				<Stack gap={2} direction="row" alignItems="center" justifyContent="space-between">
 					<Typography variant="topic" color={theme.palette.neutral[100]}>
 						New to Best Shot?
 					</Typography>
 					<RegisterNow to="/signup">
-						<Typography
-							variant="label"
-							color={theme.palette.teal[500]}
-							textTransform="uppercase"
-						>
+						<Typography variant="label" color={theme.palette.teal[500]} textTransform="uppercase">
 							Register now!
 						</Typography>
 					</RegisterNow>

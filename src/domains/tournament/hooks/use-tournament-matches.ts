@@ -1,6 +1,6 @@
-import { getTournamentMatches } from "@/domains/tournament/server-state/fetchers";
 import { useQuery } from "@tanstack/react-query";
 import { getRouteApi } from "@tanstack/react-router";
+import { getTournamentMatches } from "@/domains/tournament/server-state/fetchers";
 
 const route = getRouteApi("/_auth/tournaments/$tournamentId");
 

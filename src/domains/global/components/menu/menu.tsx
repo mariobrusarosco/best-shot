@@ -1,6 +1,6 @@
+import { Typography } from "@mui/material";
 import { BestShotIcon } from "@/assets/best-shot-icon";
 import { theme } from "@/theming/theme";
-import { Typography } from "@mui/material";
 import { MenuButton } from "./menu-button";
 import { LinkList, MenuLink, MenuLogo, Wrapper } from "./styles";
 
@@ -24,11 +24,7 @@ export const Menu = () => {
 				<MenuLink to="/dashboard">
 					<MenuButton iconName="LayoutDashboard" />
 					{isOpen ? (
-						<Typography
-							color="black.400"
-							variant="topic"
-							textTransform="uppercase"
-						>
+						<Typography color="black.400" variant="topic" textTransform="uppercase">
 							dashboard
 						</Typography>
 					) : null}
@@ -36,11 +32,7 @@ export const Menu = () => {
 				<MenuLink to="/tournaments">
 					<MenuButton iconName="Trophy" />
 					{isOpen ? (
-						<Typography
-							color="black.400"
-							variant="topic"
-							textTransform="uppercase"
-						>
+						<Typography color="black.400" variant="topic" textTransform="uppercase">
 							tournaments
 						</Typography>
 					) : null}
@@ -48,11 +40,7 @@ export const Menu = () => {
 				<MenuLink to="/leagues">
 					<MenuButton iconName="Users" />
 					{isOpen ? (
-						<Typography
-							color="black.400"
-							variant="topic"
-							textTransform="uppercase"
-						>
+						<Typography color="black.400" variant="topic" textTransform="uppercase">
 							leagues
 						</Typography>
 					) : null}
@@ -60,11 +48,7 @@ export const Menu = () => {
 				<MenuLink to="/my-account">
 					<MenuButton iconName="User" />
 					{isOpen ? (
-						<Typography
-							color="black.400"
-							variant="topic"
-							textTransform="uppercase"
-						>
+						<Typography color="black.400" variant="topic" textTransform="uppercase">
 							my account
 						</Typography>
 					) : null}

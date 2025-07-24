@@ -1,8 +1,8 @@
+import { Box, Stack, styled } from "@mui/system";
+import { motion } from "motion/react";
 import { AppButton } from "@/domains/ui-system/components/button/button";
 import { Surface } from "@/domains/ui-system/components/surface/surface";
 import { UIHelper } from "@/theming/theme";
-import { Box, Stack, styled } from "@mui/system";
-import { motion } from "motion/react";
 
 export const Card = styled(motion(Surface))(({ theme }) => ({
 	display: "flex",

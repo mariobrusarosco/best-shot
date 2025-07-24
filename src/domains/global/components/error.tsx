@@ -1,7 +1,7 @@
-import { BestShotIcon } from "@/assets/best-shot-icon";
-import { theme, UIHelper } from "@/theming/theme";
 import { styled, Typography } from "@mui/material";
 import { Stack } from "@mui/system";
+import { BestShotIcon } from "@/assets/best-shot-icon";
+import { theme, UIHelper } from "@/theming/theme";
 
 const DEFAULT_ERROR_MESSAGE = "Something unexpected has happened.";
 

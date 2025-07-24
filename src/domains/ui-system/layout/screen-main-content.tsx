@@ -1,5 +1,5 @@
-import { UIHelper } from "@/theming/theme";
 import { Box, styled } from "@mui/material";
+import { UIHelper } from "@/theming/theme";
 
 export const ScreenMainContent = styled(Box)(({ theme }) => ({
 	[UIHelper.whileIs("mobile")]: {

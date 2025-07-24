@@ -1,6 +1,6 @@
+import { Box, styled } from "@mui/system";
 import { useGuess } from "@/domains/guess/hooks/use-guess";
 import { UIHelper } from "@/theming/theme";
-import { Box, styled } from "@mui/system";
 
 export const TournamentHeading = () => {
 	const guesses = useGuess();
@@ -9,11 +9,7 @@ export const TournamentHeading = () => {
 		return null;
 	}
 
-	return (
-		<Wrapper data-ui="tournament-heading">
-			{/* <TournamentRoundsBar.Component /> */}
-		</Wrapper>
-	);
+	return <Wrapper data-ui="tournament-heading">{/* <TournamentRoundsBar.Component /> */}</Wrapper>;
 };
 
 const Wrapper = styled(Box)(({ theme }) => ({

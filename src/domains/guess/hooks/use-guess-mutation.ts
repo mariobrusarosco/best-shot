@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { getRouteApi } from "@tanstack/react-router";
 import { createGuess } from "../server-side/mutations";
-import { IGuess } from "../typing";
+import type { IGuess } from "../typing";
 
 const route = getRouteApi("/_auth/tournaments/$tournamentId");
 
@@ -17,7 +17,7 @@ export const useGuessMutation = () => {
 		onSuccess: (newGuess) => {
 			const previousGuesses = queryClient.getQueryData(queryKey) as IGuess[];
 			const updatedGuesses = previousGuesses.map((guess) =>
-				guess.id === newGuess.id ? newGuess : guess,
+				guess.id === newGuess.id ? newGuess : guess
 			);
 
 			queryClient.setQueryData(queryKey, updatedGuesses);

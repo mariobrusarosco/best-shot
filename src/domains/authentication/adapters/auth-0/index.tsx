@@ -1,8 +1,8 @@
+import { Auth0Provider, useAuth0 as useAuthBase } from "@auth0/auth0-react";
 import { api } from "@/api";
 import { useMember } from "@/domains/member/hooks/use-member";
-import { Auth0Provider, useAuth0 as useAuthBase } from "@auth0/auth0-react";
 import { useDatabaseAuth } from "../../hooks/use-database-auth";
-import { IAuthHook } from "../typing";
+import type { IAuthHook } from "../typing";
 
 const Provider = ({ children }: { children: React.ReactNode }) => {
 	return (
@@ -21,14 +21,8 @@ const Provider = ({ children }: { children: React.ReactNode }) => {
 };
 
 const hook = () => {
-	const {
-		isAuthenticated,
-		isLoading,
-		user,
-		loginWithPopup,
-		logout,
-		getIdTokenClaims,
-	} = useAuthBase();
+	const { isAuthenticated, isLoading, user, loginWithPopup, logout, getIdTokenClaims } =
+		useAuthBase();
 	const databaseAuth = useDatabaseAuth();
 	const member = useMember({ fetchOnMount: isAuthenticated });
 
@@ -59,7 +53,7 @@ const hook = () => {
 			});
 			const user = await getIdTokenClaims();
 			console.log("User from token", user);
-			
+
 			const mutation = databaseAuth.sign.mutate(user);
 			console.log("Mutation", mutation);
 

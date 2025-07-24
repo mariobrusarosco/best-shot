@@ -1,5 +1,5 @@
 import { styled, Typography } from "@mui/material";
-import { AnimationSequence, motion, useAnimate } from "motion/react";
+import { type AnimationSequence, motion, useAnimate } from "motion/react";
 import { useEffect } from "react";
 
 const Layer = styled(motion.div)(({ theme }) => ({
@@ -17,26 +17,14 @@ const Layer = styled(motion.div)(({ theme }) => ({
 	gap: theme.spacing(1),
 }));
 
-export const CardAnimation = ({
-	lastSavedGuess,
-}: {
-	lastSavedGuess: boolean;
-}) => {
+export const CardAnimation = ({ lastSavedGuess }: { lastSavedGuess: boolean }) => {
 	const [scope, animate] = useAnimate();
 
 	useEffect(() => {
 		if (lastSavedGuess) {
 			const sequence = [
-				[
-					scope.current,
-					{ scaleX: 1, x: "0%" },
-					{ type: "spring", duration: 1 },
-				],
-				[
-					scope.current,
-					{ scaleX: 0, x: "-200%" },
-					{ type: "spring", damping: 10 },
-				],
+				[scope.current, { scaleX: 1, x: "0%" }, { type: "spring", duration: 1 }],
+				[scope.current, { scaleX: 0, x: "-200%" }, { type: "spring", damping: 10 }],
 				[scope.current, { x: "100%" }],
 			] as AnimationSequence;
 

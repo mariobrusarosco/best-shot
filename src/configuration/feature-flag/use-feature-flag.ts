@@ -1,7 +1,5 @@
 import { useFlags } from "launchdarkly-react-client-sdk";
 
-
-
 /**
  * Converts snake_case to camelCase
  * @example snakeToCamel("my_flag_name") // returns "myFlagName"
@@ -16,10 +14,7 @@ const snakeToCamel = (str: string) => {
  * @param defaultValue - Default value if flag is not found
  * @returns boolean indicating if the feature is enabled
  */
-export const useFeatureFlag = (
-	flagKey: string,
-	defaultValue = false,
-): boolean => {
+export const useFeatureFlag = (flagKey: string, defaultValue = false): boolean => {
 	const flags = useFlags();
 
 	// Try the original key first (for flags that might actually be defined as camelCase)

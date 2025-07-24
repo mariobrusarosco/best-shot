@@ -15,5 +15,5 @@ export const GridOfCards = styled(Box)(({ theme }) =>
 		gridAutoRows: {
 			all: "115px",
 		},
-	}),
+	})
 );

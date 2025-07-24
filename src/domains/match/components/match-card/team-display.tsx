@@ -1,9 +1,9 @@
+import { Box, styled, Typography } from "@mui/material";
 import { useTournamentStandings } from "@/domains/tournament/hooks/use-tournament-standings";
-import { ITournamentStandings } from "@/domains/tournament/schemas";
+import type { ITournamentStandings } from "@/domains/tournament/schemas";
 import { AppPill } from "@/domains/ui-system/components/pill/pill";
 import { UIHelper } from "@/theming/theme";
-import { Box, styled, Typography } from "@mui/material";
-import { IMatch } from "../../typing";
+import type { IMatch } from "../../typing";
 
 export const TeamDisplay = ({
 	team,
@@ -19,11 +19,7 @@ export const TeamDisplay = ({
 		<Display data-ui="team-display">
 			{cardExpanded ? (
 				<Position>
-					<Typography
-						textTransform="uppercase"
-						variant="caption"
-						color="teal.500"
-					>
+					<Typography textTransform="uppercase" variant="caption" color="teal.500">
 						pos
 					</Typography>
 					<AppPill.Component bgcolor={"black.500"} minWidth={30} height={20}>
@@ -102,7 +98,7 @@ export const TeamLogo = styled("img")(({ theme }) =>
 		display: "inline-flex",
 		width: 18,
 		height: 18,
-	}),
+	})
 );
 
 export const Position = styled(Box)(({ theme }) => ({
@@ -112,11 +108,10 @@ export const Position = styled(Box)(({ theme }) => ({
 }));
 
 // TODO Move this to a util, and avoid repeating the word 'standings'
-const getTeamStandingsInfo = (
-	teamId: string,
-	standings: ITournamentStandings | undefined,
-) => {
+const getTeamStandingsInfo = (teamId: string, standings: ITournamentStandings | undefined) => {
 	if (!standings) return;
 
-	return standings.teams?.find((team: { teamExternalId: string }) => team.teamExternalId === teamId);
+	return standings.teams?.find(
+		(team: { teamExternalId: string }) => team.teamExternalId === teamId
+	);
 };

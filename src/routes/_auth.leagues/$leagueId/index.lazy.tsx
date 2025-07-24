@@ -7,8 +7,7 @@ import { useLeague } from "@/domains/league/hooks/use-league";
 import { AuthenticatedScreenLayout } from "@/domains/ui-system/layout/authenticated";
 import { ScreenMainContent } from "@/domains/ui-system/layout/screen-main-content";
 import { UIHelper } from "@/theming/theme";
-import { styled } from "@mui/material";
-import { Box, Stack } from "@mui/system";
+import { Box, Stack, styled } from "@mui/material";
 import { createLazyFileRoute } from "@tanstack/react-router";
 
 const LeaguePage = () => {

@@ -1,8 +1,7 @@
 import { BestShotIcon } from "@/assets/best-shot-icon";
 import { AppButton } from "@/domains/ui-system/components/button/button";
 import { theme } from "@/theming/theme";
-import { Stack } from "@mui/material";
-import Typography from "@mui/material/Typography/Typography";
+import { Stack, Typography } from "@mui/material";
 import { getRouteApi } from "@tanstack/react-router";
 import { useTournamentSetup } from "../../hooks/use-tournament-setup";
 

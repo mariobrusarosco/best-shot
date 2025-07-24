@@ -4,12 +4,11 @@ import { AppLinkCard } from "@/domains/ui-system/components/link-card/link-card"
 import { shimmerEffect } from "@/domains/ui-system/components/skeleton/skeleton";
 import { OverflowAuto } from "@/domains/ui-system/utils";
 import { UIHelper } from "@/theming/theme";
-import Typography from "@mui/material/Typography/Typography";
-import { Box, styled } from "@mui/system";
+import { Box, styled, Typography } from "@mui/material";
 
 const LeaguesList = ({ leagues }: { leagues: ILeague[] }) => {
 	return (
-		<GridOfCards component="ul" data-ui="leagues-list">
+		<GridOfCards data-ui="leagues-list">
 			{leagues?.map((league: ILeague) => (
 				<li>
 					<AppLinkCard
@@ -34,10 +33,13 @@ const LeaguesList = ({ leagues }: { leagues: ILeague[] }) => {
 	);
 };
 
-const GridOfCards = styled(Box)(({ theme }) =>
+const GridOfCards = styled("ul")(({ theme }) =>
 	theme.unstable_sx({
 		borderRadius: theme.spacing(1),
 		display: "grid",
+		margin: 0,
+		padding: 0,
+		listStyle: "none",
 		...OverflowAuto(),
 
 		[UIHelper.whileIs("mobile")]: {
@@ -60,7 +62,7 @@ const GridOfCards = styled(Box)(({ theme }) =>
 
 const LeaguesListSkeleton = () => {
 	return (
-		<GridOfCards component="ul" data-ui="leagues-list-skeleton">
+		<GridOfCards data-ui="leagues-list-skeleton">
 			{Array.from({ length: 6 }).map((_, index) => (
 				<li key={index}>
 					<Skeleton />

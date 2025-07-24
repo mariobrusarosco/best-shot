@@ -11,8 +11,7 @@ import { useTournaments } from "@/domains/tournament/hooks/use-tournaments";
 import { AuthenticatedScreenLayout } from "@/domains/ui-system/layout/authenticated";
 import { ScreenMainContent } from "@/domains/ui-system/layout/screen-main-content";
 import { UIHelper } from "@/theming/theme";
-import { styled } from "@mui/material";
-import Typography from "@mui/material/Typography/Typography";
+import { styled, Typography } from "@mui/material";
 import { createLazyFileRoute } from "@tanstack/react-router";
 
 const TournamentsPage = () => {

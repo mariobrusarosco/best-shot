@@ -3,8 +3,7 @@ import TournamentDetailedPerformanceStats from "@/domains/tournament/components/
 import { useTournament } from "@/domains/tournament/hooks/use-tournament";
 import { useTournamentPerformance } from "@/domains/tournament/hooks/use-tournament-performance";
 import { TypographySkeleton } from "@/domains/ui-system/components/skeleton/skeleton";
-import { Typography } from "@mui/material";
-import { Box, styled } from "@mui/system";
+import { Box, styled, Typography } from "@mui/material";
 import { createLazyFileRoute } from "@tanstack/react-router";
 
 export const TournamentPerformance = () => {

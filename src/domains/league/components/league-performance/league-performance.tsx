@@ -3,8 +3,7 @@ import { AppButton } from "@/domains/ui-system/components/button/button";
 import { GridOfCards } from "@/domains/ui-system/components/grid-of-cards/grid-of-cards";
 import { AppPill } from "@/domains/ui-system/components/pill/pill";
 import { Surface } from "@/domains/ui-system/components/surface/surface";
-import Typography from "@mui/material/Typography/Typography";
-import { Box, styled } from "@mui/system";
+import { Box, styled, Typography } from "@mui/material";
 import { useQueryClient } from "@tanstack/react-query";
 
 export const LeaguePerformance = ({

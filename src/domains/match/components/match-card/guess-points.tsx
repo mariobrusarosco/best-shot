@@ -1,7 +1,6 @@
 import { IGuess } from "@/domains/guess/typing";
 import { AppPill } from "@/domains/ui-system/components/pill/pill";
-import { Stack } from "@mui/material";
-import Typography from "@mui/material/Typography/Typography";
+import { Stack, Typography } from "@mui/material";
 
 export const GuessPoints = ({ guess }: { guess: IGuess }) => {
 	if (guess.status !== "finalized") return;

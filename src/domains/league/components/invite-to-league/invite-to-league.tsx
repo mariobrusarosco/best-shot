@@ -2,9 +2,7 @@ import { AppButton } from "@/domains/ui-system/components/button/button";
 import { AppInput } from "@/domains/ui-system/components/input/input";
 import { AppPill } from "@/domains/ui-system/components/pill/pill";
 import { Surface } from "@/domains/ui-system/components/surface/surface";
-import { TypographyProps } from "@mui/material";
-import Typography from "@mui/material/Typography/Typography";
-import { Box, styled } from "@mui/system";
+import { Box, styled, Typography, TypographyProps } from "@mui/material";
 import { useLeague } from "../../hooks/use-league";
 
 export const InviteToLeague = () => {

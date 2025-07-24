@@ -1,8 +1,6 @@
 import { AppPill } from "@/domains/ui-system/components/pill/pill";
 import { Surface } from "@/domains/ui-system/components/surface/surface";
-import { Theme } from "@mui/material";
-import Typography from "@mui/material/Typography/Typography";
-import { styled } from "@mui/system";
+import { styled, Theme, Typography } from "@mui/material";
 import { IParticipant } from "../../typing";
 
 export const Participant = ({ participant }: { participant: IParticipant }) => {

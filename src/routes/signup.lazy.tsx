@@ -2,8 +2,7 @@ import { Authentication } from "@/domains/authentication";
 import { AppButton } from "@/domains/ui-system/components/button/button";
 import { PublicLayout } from "@/domains/ui-system/layout/public";
 import { theme } from "@/theming/theme";
-import { Box, styled } from "@mui/material";
-import Typography from "@mui/material/Typography/Typography";
+import { Box, styled, Typography } from "@mui/material";
 import { createLazyFileRoute, Link } from "@tanstack/react-router";
 
 const useAppAuth = Authentication.useAppAuth;

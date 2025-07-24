@@ -6,8 +6,7 @@ import {
 	TypographySkeleton,
 } from "@/domains/ui-system/components/skeleton/skeleton";
 import { Surface } from "@/domains/ui-system/components/surface/surface";
-import Typography from "@mui/material/Typography/Typography";
-import { Box, Stack, styled } from "@mui/system";
+import { Box, Stack, styled, Typography } from "@mui/material";
 import { useState } from "react";
 import { useTournamentDetailedPerformance } from "../../hooks/use-tournament-detailed-performance";
 

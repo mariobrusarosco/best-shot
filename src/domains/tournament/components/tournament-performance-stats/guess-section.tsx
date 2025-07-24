@@ -2,8 +2,7 @@ import { IGuess } from "@/domains/guess/typing";
 import { AppButton } from "@/domains/ui-system/components/button/button";
 import { AppIcon } from "@/domains/ui-system/components/icon/icon";
 import { Surface } from "@/domains/ui-system/components/surface/surface";
-import Typography from "@mui/material/Typography/Typography";
-import { Box, Stack, styled } from "@mui/system";
+import { Box, Stack, styled, Typography } from "@mui/material";
 import { useState } from "react";
 
 export const GuessSection = ({

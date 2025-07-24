@@ -1,8 +1,7 @@
 import { AppButton } from "@/domains/ui-system/components/button/button";
 import { AppIcon } from "@/domains/ui-system/components/icon/icon";
 import { UIHelper } from "@/theming/theme";
-import { styled } from "@mui/material";
-import Typography from "@mui/material/Typography/Typography";
+import { styled, Typography } from "@mui/material";
 import { useNavigate } from "@tanstack/react-router";
 
 export const GoBackButton = ({ backTo }: { backTo: string }) => {

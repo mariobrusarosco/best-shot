@@ -10,8 +10,7 @@ import { useTournament } from "@/domains/tournament/hooks/use-tournament";
 import { AuthenticatedScreenLayout } from "@/domains/ui-system/layout/authenticated";
 import { ScreenMainContent } from "@/domains/ui-system/layout/screen-main-content";
 import { UIHelper } from "@/theming/theme";
-import Typography from "@mui/material/Typography/Typography";
-import { Box, styled } from "@mui/system";
+import { Box, styled, Typography } from "@mui/material";
 import { Outlet } from "@tanstack/react-router";
 
 const TournamentLayout = () => {

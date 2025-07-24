@@ -3,8 +3,7 @@ import { useTournaments } from "@/domains/tournament/hooks/use-tournaments";
 import { AppButton } from "@/domains/ui-system/components/button/button";
 import { AppIcon } from "@/domains/ui-system/components/icon/icon";
 import { AppPill } from "@/domains/ui-system/components/pill/pill";
-import Typography from "@mui/material/Typography/Typography";
-import { Box, styled } from "@mui/system";
+import { Box, styled, Typography } from "@mui/material";
 import { useState } from "react";
 import {
 	LeagueTournamentCustomization,
@@ -72,7 +71,7 @@ export const LeagueTournaments = ({
 			)}
 
 			{!editMode && allAppAvailableTournamens && league.data && (
-				<ListGrid component="ul" data-ui="league-tournament-list">
+				<ListGrid data-ui="league-tournament-list">
 					{league?.data?.tournaments.map((tournament) => (
 						<TournamentLeagueCard tournament={tournament} />
 					))}
@@ -106,10 +105,13 @@ const EmptyStartButton = styled(AppButton)(({ theme }) =>
 	}),
 );
 
-const ListGrid = styled(Box)(({ theme }) =>
+const ListGrid = styled("ul")(({ theme }) =>
 	theme.unstable_sx({
 		display: "flex",
 		gap: 1,
 		flexWrap: "wrap",
+		margin: 0,
+		padding: 0,
+		listStyle: "none",
 	}),
 );

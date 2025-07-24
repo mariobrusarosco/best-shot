@@ -1,7 +1,6 @@
 import { AppPill } from "@/domains/ui-system/components/pill/pill";
 import { shimmerEffect } from "@/domains/ui-system/components/skeleton/skeleton";
-import Typography from "@mui/material/Typography/Typography";
-import { Box, Stack, styled } from "@mui/system";
+import { Box, Stack, styled, Typography } from "@mui/material";
 import { IParticipant } from "../../typing";
 import { Participant } from "./participant";
 
@@ -46,7 +45,7 @@ const ParticipantsListSkeleton = () => {
 		<Stack gap={6.5} data-ui="league-participants-skeleton" flex={1}>
 			<AppPill.Skeleton width={100} height={25} />
 
-			<ListGrid component="ul" data-ui="leagues-list">
+			<ListGrid data-ui="leagues-list">
 				{participants?.map((_) => <Skeleton />)}
 			</ListGrid>
 		</Stack>

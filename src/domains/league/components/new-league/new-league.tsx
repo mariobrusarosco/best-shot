@@ -2,9 +2,7 @@ import { AppButton } from "@/domains/ui-system/components/button/button";
 import { AppInput } from "@/domains/ui-system/components/input/input";
 import { shimmerEffect } from "@/domains/ui-system/components/skeleton/skeleton";
 import { Surface } from "@/domains/ui-system/components/surface/surface";
-import { TypographyProps } from "@mui/material";
-import Typography from "@mui/material/Typography/Typography";
-import { Box, styled } from "@mui/system";
+import { Box, styled, Typography, TypographyProps } from "@mui/material";
 import { useLeagues } from "../../hooks/use-leagues";
 
 const NewLeague = () => {

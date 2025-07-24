@@ -87,5 +87,6 @@ Uses Zod schemas extensively for runtime validation, particularly in tournament 
 
 
 ### Guides
-- Guides are stored in `docs/guides/` directory, providing best practices and usage examples.
+- Guides are stored in `docs/guides/` directory, providing best practices and usage examples
+- Guide are made to help other developers understand how to use the codebase effectively.
 - Each guide is a Markdown file with a unique ID (e.g., `0001-creating-a-screen.md`).

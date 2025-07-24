@@ -63,6 +63,9 @@ The codebase follows a domain-driven structure under `src/domains/`:
 - React Router context for auth state
 - No global state management library - uses React patterns
 
+**Import Aliases**:
+- Always use absolute imports with aliases like `@domains`, `@components`, etc.
+
 ### Validation
 Uses Zod schemas extensively for runtime validation, particularly in tournament and API layers.
 
@@ -84,9 +87,11 @@ Uses Zod schemas extensively for runtime validation, particularly in tournament 
 ### Plans
 - Plans are stored in `docs/plans/` directory, outlining future features and improvements.
 - Each plan is a Markdown file with a unique ID (e.g., `0001-add-league-management.md`).
+- Use Decision Matrix to evaluate options.
 
 
 ### Guides
 - Guides are stored in `docs/guides/` directory, providing best practices and usage examples
 - Guide are made to help other developers understand how to use the codebase effectively.
 - Each guide is a Markdown file with a unique ID (e.g., `0001-creating-a-screen.md`).
+- Use Decision Matrix to explain when and how to use specific features or components.

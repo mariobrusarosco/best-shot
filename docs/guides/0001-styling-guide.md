@@ -1,50 +1,54 @@
-# Guide 0001: Styling Guide for Best Shot
+# Guide 0001: Styling Architecture for Best Shot
 
 ## Overview
 
-This guide provides comprehensive guidelines for styling components in the Best Shot application using Material-UI v7, our custom theme system, and established patterns.
+This guide establishes **opinionated styling patterns** for Best Shot based on Material-UI v7 best practices and performance research. We use **only 2 core patterns** that cover all styling needs while optimizing for performance and maintainability.
+
+## Architecture Philosophy
+
+**Performance-First**: Research shows runtime CSS-in-JS can increase render times by 3x. Our patterns minimize runtime work while preserving developer experience.
+
+**Component-Scoped**: All styles are tied to specific components, preventing global CSS issues and enabling safe refactoring.
+
+**Theme-Driven**: Every style uses our design system tokens, ensuring consistency and easy theme updates.
 
 ## Table of Contents
 
-1. [Quick Reference](#quick-reference)
-2. [Design System](#design-system)
-3. [Styling Approaches](#styling-approaches)
-4. [Component Creation Patterns](#component-creation-patterns)
-5. [Responsive Design](#responsive-design)
-6. [Best Practices](#best-practices)
-7. [Migration Notes (MUI v7)](#migration-notes-mui-v7)
+1. [The Two Patterns](#the-two-patterns)
+2. [Design System](#design-system) 
+3. [Pattern 1: Static Styled Components](#pattern-1-static-styled-components)
+4. [Pattern 2: Dynamic sx Prop](#pattern-2-dynamic-sx-prop)
+5. [Decision Matrix](#decision-matrix)
+6. [Migration Notes](#migration-notes)
 
-## Quick Reference
+## The Two Patterns
 
-### Essential Imports
+### Pattern 1: Static Styled Components
+**When:** Reusable UI components, complex styling, performance-critical areas
 ```tsx
-// Core styling
-import { styled, useTheme } from "@mui/material";
-import { Box, Typography } from "@mui/material";
-
-// Theme and utilities
-import { theme, UIHelper } from "@/theming/theme";
-
-// Custom components
-import { Surface } from "@/domains/ui-system/components/surface/surface";
-```
-
-### Common Patterns
-```tsx
-// ✅ Good: Styled component with theme
-const StyledCard = styled(Surface)(({ theme }) => ({
+const TournamentCard = styled(Surface)(({ theme }) => ({
   backgroundColor: theme.palette.black[800],
   padding: theme.spacing(2),
   borderRadius: theme.spacing(1),
+  // All styles defined statically - no runtime work
 }));
-
-// ✅ Good: Using sx prop for quick styling
-<Box sx={{ display: "flex", gap: 2, p: 3 }}>
-
-// ✅ Good: Runtime theme access
-const theme = useTheme();
-const buttonColor = theme.palette.teal[500];
 ```
+
+### Pattern 2: Dynamic sx Prop  
+**When:** Instance-specific styling, prototyping, conditional styles
+```tsx
+<Box sx={{ 
+  display: "flex", 
+  gap: 2, 
+  backgroundColor: isActive ? "teal.500" : "black.400" 
+}}>
+```
+
+### ❌ What We Don't Use
+- `useTheme()` hook (creates unnecessary runtime work)
+- CSS files or CSS modules (breaks component isolation)
+- Inline styles (no theme access)
+- Multiple CSS-in-JS libraries (complexity)
 
 ## Design System
 
@@ -128,155 +132,76 @@ PADDING["extra-large"] // 20px
 PADDING.huge          // 24px
 ```
 
-## Styling Approaches
+## Pattern 1: Static Styled Components
 
-### 1. Styled Components (Recommended for Reusable Components)
+**Purpose:** Reusable UI components, complex styling, performance-critical components.
 
-**When to use:** Creating reusable components, complex styling logic, or when you need theme access.
+**Key Principles:**
+- Define styles outside render functions (static performance)
+- Use theme tokens exclusively
+- Component-scoped styling
+- Single source of truth for component styles
 
-```tsx
-import { styled } from "@mui/material";
-
-// ✅ Basic styled component
-const CardContainer = styled(Surface)(({ theme }) => ({
-  backgroundColor: theme.palette.black[800],
-  padding: theme.spacing(2),
-  borderRadius: theme.spacing(1),
-  display: "grid",
-  height: "100%",
-  overflow: "hidden",
-}));
-
-// ✅ With responsive design
-const ResponsiveCard = styled(Box)(({ theme }) => ({
-  padding: theme.spacing(2),
-  
-  [UIHelper.whileIs("mobile")]: {
-    padding: theme.spacing(1),
-    fontSize: "14px",
-  },
-  
-  [UIHelper.startsOn("tablet")]: {
-    padding: theme.spacing(3),
-    fontSize: "16px",
-  },
-}));
-
-// ✅ Using theme.unstable_sx for responsive objects
-const ModernCard = styled(Surface)(({ theme }) =>
-  theme.unstable_sx({
-    backgroundColor: "black.800",
-    padding: 2,
-    borderRadius: 2,
-    gap: {
-      all: 2,
-      tablet: 3,
-    },
-  })
-);
-```
-
-### 2. sx Prop (Recommended for One-off Styling)
-
-**When to use:** Quick styling, prototyping, or component-specific adjustments.
-
-```tsx
-// ✅ Basic sx usage
-<Box sx={{ 
-  display: "flex", 
-  gap: 2, 
-  p: 3,
-  backgroundColor: "black.800" 
-}}>
-
-// ✅ Responsive sx
-<Typography sx={{
-  fontSize: { mobile: 14, tablet: 16, desktop: 18 },
-  color: "teal.500",
-}}>
-
-// ✅ Using theme in sx
-<Button sx={(theme) => ({
-  backgroundColor: theme.palette.teal[500],
-  color: theme.palette.neutral[100],
-  '&:hover': {
-    backgroundColor: theme.palette.teal[400],
-  },
-})}>
-```
-
-### 3. Runtime Theme Access (Recommended for Dynamic Styling)
-
-**When to use:** Conditional styling based on props, state, or complex logic.
-
-```tsx
-import { useTheme } from "@mui/material";
-
-const DynamicComponent = ({ variant, isActive }) => {
-  const theme = useTheme();
-  
-  const buttonColor = isActive 
-    ? theme.palette.teal[500] 
-    : theme.palette.black[400];
-    
-  return (
-    <Button sx={{ backgroundColor: buttonColor }}>
-      {children}
-    </Button>
-  );
-};
-```
-
-## Component Creation Patterns
-
-### Pattern 1: Single Component with Styled Base
+### Basic Implementation
 
 ```tsx
 import { styled } from "@mui/material";
 import { Surface } from "@/domains/ui-system/components/surface/surface";
 
-const StyledButton = styled(Surface)(({ theme }) => ({
+// ✅ CORRECT: Static styled component
+const TournamentCard = styled(Surface)(({ theme }) => ({
+  backgroundColor: theme.palette.black[800],
+  padding: theme.spacing(2),
+  borderRadius: theme.spacing(1),
   display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  padding: theme.spacing(1, 2),
-  backgroundColor: theme.palette.teal[500],
-  color: theme.palette.neutral[100],
-  borderRadius: theme.spacing(0.5),
-  cursor: "pointer",
+  flexDirection: "column",
+  gap: theme.spacing(1),
   
+  // Hover states
   "&:hover": {
-    backgroundColor: theme.palette.teal[400],
+    transform: "translateY(-2px)",
+    transition: "transform 0.2s ease",
+  },
+  
+  // Responsive design with UIHelper
+  [UIHelper.whileIs("mobile")]: {
+    padding: theme.spacing(1.5),
+  },
+  
+  [UIHelper.startsOn("tablet")]: {
+    padding: theme.spacing(2.5),
   },
 }));
 
-export const AppButton = StyledButton;
+// Usage
+export const TournamentCard = ({ tournament }) => (
+  <TournamentCard>
+    <Typography variant="h6">{tournament.name}</Typography>
+  </TournamentCard>
+);
 ```
 
-### Pattern 2: Compound Component Pattern (Recommended for UI System)
+### Advanced: Compound Components
 
 ```tsx
-import { styled } from "@mui/material";
+// ✅ CORRECT: Compound component pattern for UI system
+const CardContainer = styled(Surface)(({ theme }) => ({
+  backgroundColor: theme.palette.black[800],
+  padding: theme.spacing(2),
+  borderRadius: theme.spacing(1),
+}));
 
-const CardContainer = styled(Surface)(({ theme }) =>
-  theme.unstable_sx({
-    backgroundColor: "black.800",
-    padding: 2,
-    borderRadius: 2,
-  })
-);
+const CardHeader = styled(Box)(({ theme }) => ({
+  display: "flex",
+  justifyContent: "space-between",
+  alignItems: "center",
+  marginBottom: theme.spacing(1),
+}));
 
-const CardHeader = styled(Box)(({ theme }) =>
-  theme.unstable_sx({
-    display: "flex",
-    justifyContent: "space-between",
-    marginBottom: 2,
-  })
-);
-
-const CardSkeleton = () => (
-  <CardContainer sx={{ opacity: 0.4 }} />
-);
+const CardSkeleton = styled(CardContainer)(({ theme }) => ({
+  opacity: 0.4,
+  animation: "pulse 2s ease-in-out infinite",
+}));
 
 // Export as compound component
 export const AppCard = {
@@ -288,292 +213,288 @@ export const AppCard = {
 // Usage
 <AppCard.Container>
   <AppCard.Header>
-    <Typography variant="h6">Card Title</Typography>
+    <Typography variant="h6">Title</Typography>
+    <Button>Action</Button>
   </AppCard.Header>
-  <Box>Card content...</Box>
+  <Box>Content...</Box>
 </AppCard.Container>
 ```
 
-### Pattern 3: CSS Utility Functions
+## Pattern 2: Dynamic sx Prop
+
+**Purpose:** Instance-specific styling, conditional styles, rapid prototyping.
+
+**Key Principles:**
+- Use for one-off customizations
+- Leverage MUI's optimized CSS-in-JS
+- Keep conditional logic simple
+- Theme token access through string notation
+
+### Basic Implementation
 
 ```tsx
-import { css } from "@mui/system";
+// ✅ CORRECT: Simple sx prop usage
+<Box sx={{ 
+  display: "flex", 
+  gap: 2, 
+  p: 3,
+  backgroundColor: "black.800",
+  borderRadius: 1,
+}}>
 
-// ✅ Reusable style utilities
-const resetButton = () => css`
-  background-color: unset;
-  outline: none;
-  border: none;
-  padding: 0;
-  margin: 0;
-`;
+// ✅ CORRECT: Conditional styling
+<Typography 
+  sx={{ 
+    color: isActive ? "teal.500" : "black.400",
+    fontWeight: isImportant ? 600 : 400,
+  }}
+>
+  {text}
+</Typography>
 
-const shimmerEffect = () => css`
-  position: relative;
-  overflow: hidden;
-  
-  &::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
-    animation: shimmer 2s infinite;
-  }
-`;
-
-// Usage in styled component
-const LoadingCard = styled(Box)`
-  ${shimmerEffect};
-`;
+// ✅ CORRECT: Responsive sx
+<Container sx={{
+  padding: { mobile: 2, tablet: 3, desktop: 4 },
+  gridTemplateColumns: { 
+    mobile: "1fr", 
+    tablet: "repeat(2, 1fr)",
+    desktop: "repeat(3, 1fr)" 
+  },
+}}>
 ```
 
-## Responsive Design
-
-### Using UIHelper (Recommended)
+### Advanced: Complex Conditional Logic
 
 ```tsx
-import { UIHelper } from "@/theming/theme";
-
-const ResponsiveComponent = styled(Box)(({ theme }) => ({
-  padding: theme.spacing(2),
-  
-  // Mobile only (0-768px)
-  [UIHelper.whileIs("mobile")]: {
-    padding: theme.spacing(1),
-    flexDirection: "column",
-  },
-  
-  // Tablet and up (769px+)
-  [UIHelper.startsOn("tablet")]: {
-    padding: theme.spacing(3),
-    flexDirection: "row",
-  },
-  
-  // Desktop and up (1440px+)
-  [UIHelper.startsOn("desktop")]: {
-    padding: theme.spacing(4),
-  },
-}));
-```
-
-### Using theme.unstable_sx with Responsive Objects
-
-```tsx
-const ResponsiveCard = styled(Surface)(({ theme }) =>
-  theme.unstable_sx({
-    padding: {
-      all: 2,        // Mobile: 16px
-      tablet: 3,     // Tablet+: 24px
-      desktop: 4,    // Desktop+: 32px
+// ✅ CORRECT: Complex sx with function
+<Button 
+  sx={(theme) => ({
+    backgroundColor: variant === "primary" 
+      ? theme.palette.teal[500] 
+      : theme.palette.black[400],
+    color: theme.palette.neutral[100],
+    padding: size === "large" 
+      ? theme.spacing(2, 4) 
+      : theme.spacing(1, 2),
+      
+    "&:hover": {
+      backgroundColor: variant === "primary"
+        ? theme.palette.teal[400]
+        : theme.palette.black[300],
     },
-    
-    gridTemplateColumns: {
-      all: "1fr",
-      tablet: "repeat(2, 1fr)",
-      desktop: "repeat(3, 1fr)",
-    },
-  })
-);
+  })}
+>
+  {children}
+</Button>
 ```
 
-### Using useMediaQuery for Runtime Responsiveness
+## Decision Matrix
+
+| Scenario | Pattern | Reason |
+|----------|---------|---------|
+| UI System component (Button, Card, etc.) | **Static Styled** | Reusable, performance-critical |
+| Domain component (TournamentCard, etc.) | **Static Styled** | Complex styling, reusable |
+| One-off layout adjustment | **sx Prop** | Instance-specific |
+| Conditional styling (isActive, variant) | **sx Prop** | Dynamic logic |
+| Prototyping new components | **sx Prop** | Quick iteration |
+| Performance-critical animations | **Static Styled** | No runtime overhead |
+| Theme-dependent calculations | **sx Prop** | MUI optimization |
+
+## File Organization Architecture
+
+### **1. Global Styles Placement**
+
+| Style Type | Location | Reason | Example |
+|------------|----------|---------|---------|
+| **CSS Reset/Base** | `src/theming/global-styles.tsx` | Single source, affects all | `body { margin: 0 }` |
+| **Theme Config** | `src/theming/theme.ts` | Centralized design system | Color palette, breakpoints |
+| **Typography** | `src/theming/typography.ts` | Reusable across components | Font definitions, variants |
+| **CSS Variables** | `src/theming/global-styles.tsx` | Performance, theme switching | `--app-header-height: 80px` |
+| **Keyframes** | `src/theming/global-styles.tsx` | Reusable animations | `@keyframes shimmer` |
 
 ```tsx
-import { useMediaQuery } from "@mui/material";
-
-const ResponsiveComponent = () => {
-  const isMobile = useMediaQuery("(max-width: 768px)");
-  const isTablet = useMediaQuery("(min-width: 769px) and (max-width: 1023px)");
-  
-  return (
-    <Box>
-      {isMobile && <MobileLayout />}
-      {isTablet && <TabletLayout />}
-      {!isMobile && !isTablet && <DesktopLayout />}
-    </Box>
-  );
-};
+// ✅ CORRECT: Global styles structure
+src/theming/
+├── global-styles.tsx    # CSS reset, variables, keyframes
+├── theme.ts            # MUI theme, colors, breakpoints  
+├── typography.ts       # Font system, variants
+└── load-configuration.ts # Theme setup logic
 ```
 
-## Best Practices
+### **2. Screen-Level Styles**
+
+| Scenario | Pattern | Location | Reason |
+|----------|---------|----------|---------|
+| **Simple Layout** | **Co-located** | `screen.tsx` | Styles < 50 lines |
+| **Complex Layout** | **Separate File** | `screen.styles.tsx` | Styles > 50 lines |
+| **Multiple Views** | **Separate File** | `screen.styles.tsx` | Better organization |
+| **Performance Critical** | **Static Styled** | `screen.tsx` | No runtime overhead |
+
+```tsx
+// ✅ CORRECT: Complex screen with separate styles
+src/domains/member/screens/
+├── my-accounts.tsx
+└── my-accounts.styles.tsx
+
+// ✅ CORRECT: Simple screen with co-located styles
+src/domains/dashboard/pages/
+└── index.tsx              # Styles inside component
+```
+
+### **3. UI-System Components**
+
+| Component Type | Pattern | Location | Reason |
+|----------------|---------|----------|---------|
+| **Simple Component** | **Co-located** | `component.tsx` | Styles < 30 lines |
+| **Complex Component** | **Co-located** | `component.tsx` | Compound pattern |
+| **With Animations** | **Co-located** | `component.tsx` | Behavior + styles together |
+
+```tsx
+// ✅ CORRECT: UI System organization
+src/domains/ui-system/components/
+├── button/
+│   └── button.tsx              # All styles inside
+├── card/
+│   └── card.tsx                # Compound component
+├── surface/
+│   └── surface.tsx             # Base component
+└── skeleton/
+    └── skeleton.tsx            # With animations
+```
+
+### **4. Domain Components**
+
+```tsx
+// ✅ CORRECT: Domain component patterns
+src/domains/tournament/components/
+├── tournament-card/
+│   ├── tournament-card.tsx     # Simple: co-located styles
+│   └── tournament-card.types.ts
+└── tournament-list/
+    ├── tournament-list.tsx
+    ├── tournament-list.styles.tsx  # Complex: separate styles
+    └── tournament-list.utils.ts
+```
+
+### **5. CSS Files vs Component Isolation**
+
+| Approach | Isolation | Performance | Maintenance | Bundle Impact |
+|----------|-----------|-------------|-------------|---------------|
+| **CSS Files** | ❌ Poor | ✅ Fast | ❌ Hard | ❌ Larger |
+| **CSS Modules** | ⚠️ Medium | ✅ Fast | ⚠️ Medium | ⚠️ Medium |
+| **Styled Components** | ✅ Excellent | ⚠️ Medium | ✅ Easy | ✅ Optimal |
+| **sx Prop** | ✅ Excellent | ❌ Slower | ✅ Easy | ✅ Optimal |
+
+**Decision:** Use only **Styled Components + sx Prop** for complete component isolation and theme integration.
+
+### **6. File Naming Conventions**
+
+| File Type | Pattern | Example | Reason |
+|-----------|---------|---------|---------|
+| **Component** | `kebab-case.tsx` | `tournament-card.tsx` | Consistency with URLs |
+| **Styles File** | `component.styles.tsx` | `tournament-card.styles.tsx` | Clear separation |
+| **Types** | `component.types.ts` | `tournament-card.types.ts` | TypeScript convention |
+| **Utils** | `component.utils.ts` | `tournament-card.utils.ts` | Logic separation |
+| **Tests** | `component.test.tsx` | `tournament-card.test.tsx` | Testing convention |
+
+### **7. Import Organization**
+
+| Import Type | Order | Pattern | Example |
+|-------------|-------|---------|---------|
+| **External Libraries** | 1st | Direct imports | `import { styled } from "@mui/material"` |
+| **Internal Components** | 2nd | Absolute paths only | `import { Surface } from "@/domains/ui-system/components/surface"` |
+| **Domain Components** | 3rd | Absolute paths only | `import { TournamentCard } from "@/domains/tournament/components/tournament-card"` |
+| **Types** | 4th | Absolute paths only | `import type { Tournament } from "@/domains/tournament/types"` |
+| **Styles** | 5th | Absolute paths only | `import { CardContainer } from "@/domains/tournament/components/tournament-list.styles"` |
+
+**Rule:** Always use absolute imports with `@/` prefix for all internal code - no relative imports allowed.
+
+```tsx
+// ✅ CORRECT: All absolute imports
+import { styled } from "@mui/material";
+import { Box, Typography } from "@mui/material";
+
+import { Surface } from "@/domains/ui-system/components/surface";
+import { AppIcon } from "@/domains/ui-system/components/icon";
+
+import { formatDate } from "@/domains/tournament/utils/date-formatter";
+import { TournamentCard } from "@/domains/tournament/components/tournament-card";
+
+import type { Tournament } from "@/domains/tournament/types/tournament.types";
+import type { ComponentProps } from "react";
+
+import { CardContainer, CardHeader } from "@/domains/tournament/components/tournament-list.styles";
+```
+
+### **8. Performance Optimization Matrix**
+
+| Scenario | Pattern | Implementation | Performance Impact |
+|----------|---------|----------------|-------------------|
+| **Static UI** | Styled Components | Outside render | ✅ 0ms overhead |
+| **Conditional Styles** | sx Prop | Inside render | ⚠️ ~2ms per render |
+| **Animation** | Styled + CSS | Keyframes | ✅ 60fps smooth |
+| **Theme Switching** | Both patterns | CSS Variables | ✅ Instant |
+| **List Items** | Styled Components | Memoized | ✅ Optimized |
+| **Form Inputs** | sx Prop | Dynamic validation | ⚠️ Acceptable |
+
+```tsx
+// ✅ CORRECT: Performance-optimized list
+const MemoizedTournamentCard = memo(styled(Surface)(({ theme }) => ({
+  backgroundColor: theme.palette.black[800],
+  // Static styles - no runtime work
+})));
+
+// ✅ CORRECT: Dynamic validation with sx
+<TextField 
+  sx={{ 
+    borderColor: hasError ? "red.400" : "black.400",
+    // Dynamic logic - acceptable for forms
+  }}
+/>
+```
+
+## Performance Rules
 
 ### ✅ Do's
-
-1. **Use the theme system consistently**
-   ```tsx
-   // ✅ Good
-   backgroundColor: theme.palette.black[800]
-   padding: theme.spacing(2)
-   
-   // ❌ Avoid
-   backgroundColor: "#232424"
-   padding: "16px"
-   ```
-
-2. **Prefer semantic color names**
-   ```tsx
-   // ✅ Good  
-   color: "teal.500"
-   backgroundColor: "black.800"
-   
-   // ❌ Avoid
-   color: "#6A9B96"
-   backgroundColor: "#232424"
-   ```
-
-3. **Use compound components for complex UI**
-   ```tsx
-   // ✅ Good
-   export const AppCard = {
-     Container: CardContainer,
-     Header: CardHeader,
-     Content: CardContent,
-   };
-   ```
-
-4. **Follow the file organization pattern**
-   ```
-   src/domains/ui-system/components/
-   ├── button/
-   │   └── button.tsx
-   ├── card/
-   │   ├── card.tsx
-   │   └── card.styles.tsx (if complex)
-   ```
-
-5. **Use styled components for reusable patterns**
-6. **Use sx prop for one-off adjustments**
-7. **Use UIHelper for responsive design**
-
-### ❌ Don'ts
-
-1. **Don't mix styling approaches unnecessarily**
-2. **Don't use inline styles**
-3. **Don't hardcode values that exist in the theme**
-4. **Don't create styled components for single-use cases**
-5. **Don't use deprecated MUI patterns**
-
-## Migration Notes (MUI v7)
-
-### Breaking Changes Addressed
-
-1. **Deep imports removed**
-   ```tsx
-   // ❌ Old (v6)
-   import Typography from '@mui/material/Typography/Typography';
-   import styled from '@mui/material/styles/styled';
-   
-   // ✅ New (v7)
-   import { Typography, styled } from '@mui/material';
-   ```
-
-2. **Box component prop changes**
-   ```tsx
-   // ❌ Old (v6)
-   const ListGrid = styled(Box)(styles);
-   <ListGrid component="ul">
-   
-   // ✅ New (v7)
-   const ListGrid = styled("ul")(styles);
-   <ListGrid>
-   ```
-
-3. **Import patterns standardized**
-   ```tsx
-   // ✅ Always use named imports
-   import { styled, useTheme, Typography, Box } from "@mui/material";
-   ```
-
-### Updated Patterns
-
-- All styled components now use named imports
-- Box components with `component` prop converted to direct HTML element styling
-- Theme access remains the same
-- sx prop usage unchanged
-
-## Examples
-
-### Complete Component Example
-
 ```tsx
-import { styled, Typography, Box } from "@mui/material";
-import { UIHelper } from "@/theming/theme";
-import { Surface } from "@/domains/ui-system/components/surface/surface";
-
-// Styled components
-const TournamentCardContainer = styled(Surface)(({ theme }) => ({
-  backgroundColor: theme.palette.black[800],
-  padding: theme.spacing(2),
-  borderRadius: theme.spacing(1),
-  display: "flex",
-  flexDirection: "column",
-  gap: theme.spacing(1),
-  transition: "transform 0.2s ease",
-  
-  "&:hover": {
-    transform: "translateY(-2px)",
-  },
-  
-  [UIHelper.whileIs("mobile")]: {
-    padding: theme.spacing(1.5),
-  },
-  
-  [UIHelper.startsOn("tablet")]: {
-    padding: theme.spacing(2.5),
-  },
+// ✅ Static styled component (no runtime work)
+const Card = styled(Surface)(({ theme }) => ({
+  backgroundColor: theme.palette.black[800], // Static reference
 }));
 
-const TournamentHeader = styled(Box)(({ theme }) => ({
-  display: "flex",
-  justifyContent: "space-between",
-  alignItems: "center",
-  marginBottom: theme.spacing(1),
-}));
+// ✅ sx prop with simple conditionals
+<Box sx={{ color: isActive ? "teal.500" : "black.400" }}>
 
-// Component
-export const TournamentCard = ({ tournament, actions }) => {
-  return (
-    <TournamentCardContainer>
-      <TournamentHeader>
-        <Typography variant="h6" color="neutral.100">
-          {tournament.name}
-        </Typography>
-        <Box sx={{ color: "teal.500" }}>
-          {actions}
-        </Box>
-      </TournamentHeader>
-      
-      <Typography variant="topic" color="black.300">
-        {tournament.description}
-      </Typography>
-      
-      <Box sx={{ 
-        display: "flex", 
-        gap: 1, 
-        mt: 2,
-        flexWrap: "wrap" 
-      }}>
-        {tournament.tags.map(tag => (
-          <Typography 
-            key={tag}
-            variant="tag" 
-            sx={{ 
-              backgroundColor: "black.700", 
-              px: 1, 
-              py: 0.5, 
-              borderRadius: 0.5 
-            }}
-          >
-            {tag}
-          </Typography>
-        ))}
-      </Box>
-    </TournamentCardContainer>
-  );
-};
+// ✅ Theme tokens as strings (optimized by MUI)
+<Typography color="teal.500" variant="h6">
 ```
 
-This guide should be your go-to reference for styling components in the Best Shot application. For questions or additions, please update this guide or create new ADRs for architectural decisions.
+### ❌ Don'ts
+```tsx
+// ❌ useTheme in render (creates runtime work)
+const theme = useTheme();
+const color = theme.palette.teal[500];
+
+// ❌ Inline styles (no theme access)
+<div style={{ backgroundColor: "#232424" }}>
+
+// ❌ Complex calculations in sx
+<Box sx={(theme) => ({
+  color: calculateColor(theme, props, state), // Runtime work
+})}>
+```
+
+## Migration Notes
+
+**From Current Guide → New Architecture:**
+
+1. **Remove useTheme() patterns** → Use sx prop or static styled
+2. **Consolidate styling approaches** → Only 2 patterns allowed
+3. **Update compound components** → Follow AppCard pattern
+4. **Standardize file organization** → One component per file
+
+**MUI v7 Compatibility:**
+- ✅ All patterns work with v7
+- ✅ Named imports only
+- ✅ No deprecated APIs used
+- ✅ Performance optimized

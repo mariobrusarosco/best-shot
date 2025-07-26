@@ -72,7 +72,13 @@ export const Provider = ({ children }: { children: React.ReactNode }) => {
 };
 
 export const authenticatedLocalMember = async (publicId: any) => {
-	const response = await api.post("auth", { publicId });
+	const response = await api.post(
+		"auth",
+		{ publicId },
+		{
+			baseURL: import.meta.env.VITE_BEST_SHOT_API_V2,
+		}
+	);
 
 	return response.data;
 };

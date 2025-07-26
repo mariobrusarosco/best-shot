@@ -1,12 +1,31 @@
-import { Box, styled, Typography, type TypographyProps } from "@mui/material";
+import { Box, styled, Typography } from "@mui/material";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { AppButton } from "@/domains/ui-system/components/button/button";
-import { AppInput } from "@/domains/ui-system/components/input/input";
+import { AppFormInput } from "@/domains/ui-system/components/form";
 import { shimmerEffect } from "@/domains/ui-system/components/skeleton/skeleton";
 import { Surface } from "@/domains/ui-system/components/surface/surface";
 import { useLeagues } from "../../hooks/use-leagues";
+import { createLeagueSchema, type CreateLeagueFormData } from "../../schemas";
 
 const NewLeague = () => {
-	const { inputs, handleNewLeague } = useLeagues();
+	const { createLeagueMutation } = useLeagues();
+	
+	const { control, handleSubmit, reset, formState } = useForm<CreateLeagueFormData>({
+		resolver: zodResolver(createLeagueSchema),
+		defaultValues: {
+			label: "",
+			description: "",
+		},
+	});
+
+	const onSubmit = (data: CreateLeagueFormData) => {
+		createLeagueMutation.mutate(data, {
+			onSuccess: () => {
+				reset();
+			},
+		});
+	};
 
 	return (
 		<Wrapper>
@@ -21,29 +40,44 @@ const NewLeague = () => {
 				create a new league
 			</Typography>
 
-			<Card
-				sx={{
-					mt: 2,
-					py: 2,
-					gap: 1,
-					backgroundColor: "black.800",
-				}}
-				className="league-creation"
+			<Box
+				component="form"
+				onSubmit={handleSubmit(onSubmit)}
 			>
-				<Label htmlFor="league-label">Name</Label>
-
-				<AppInput
-					type="text"
-					id="league-label"
-					name="league-label"
-					value={inputs.labelInput}
-					onChange={inputs.handleLabelChange}
+				<Card
+					sx={{
+						mt: 2,
+						py: 2,
+						gap: 1,
+						backgroundColor: "black.800",
+					}}
+					className="league-creation"
+				>
+				<AppFormInput
+					name="label"
+					control={control}
+					label="League Name"
+					placeholder="Enter league name..."
+					required
 				/>
 
-				<SubmitButton type="submit" onClick={handleNewLeague}>
-					create
+				<AppFormInput
+					name="description"
+					control={control}
+					label="Description"
+					placeholder="Enter league description (optional)..."
+					multiline
+					rows={3}
+				/>
+
+				<SubmitButton 
+					type="submit" 
+					disabled={createLeagueMutation.isPending || !formState.isValid}
+				>
+					{createLeagueMutation.isPending ? "Creating..." : "Create League"}
 				</SubmitButton>
-			</Card>
+				</Card>
+			</Box>
 		</Wrapper>
 	);
 };
@@ -81,18 +115,6 @@ const Card = styled(Surface)(({ theme }) =>
 	})
 );
 
-interface MyCustomTypographyProps extends TypographyProps {
-	htmlFor?: string;
-}
-
-const Label = styled((props: MyCustomTypographyProps) => (
-	<Typography variant="label" component={props.component || "label"} {...props} />
-))(({ theme }) =>
-	theme.unstable_sx({
-		textTransform: "uppercase",
-		color: "neutral.100",
-	})
-);
 
 const NewLeagueSkeleton = () => {
 	return (

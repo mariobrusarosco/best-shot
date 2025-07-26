@@ -6,7 +6,8 @@ import type { IAuthHook } from "../typing";
 
 const ByPassAuthContext = createContext<IAuthHook | undefined>(undefined);
 
-const memberid = localStorage.getItem("local-member-id") ?? import.meta.env.VITE_MOCKED_MEMBER_ID;
+const memberid =
+	localStorage.getItem("local-member-id") ?? import.meta.env.VITE_MOCKED_MEMBER_PUBLIC_ID;
 
 export const Provider = ({ children }: { children: React.ReactNode }) => {
 	const [isAuthenticated, setisAuthenticated] = useState(false);

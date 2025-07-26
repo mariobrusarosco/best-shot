@@ -296,7 +296,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@biomejs/biome@npm:^2.1.2":
+"@biomejs/biome@npm:2.1.2":
   version: 2.1.2
   resolution: "@biomejs/biome@npm:2.1.2"
   dependencies:
@@ -967,6 +967,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@hookform/resolvers@npm:^3.3.4":
+  version: 3.10.0
+  resolution: "@hookform/resolvers@npm:3.10.0"
+  peerDependencies:
+    react-hook-form: ^7.0.0
+  checksum: e062f10bebff696a669fe37388f64f6b7c322eb524e99008c0e157e7adf68d2cee4d86fce1a7304a80d7f6fdd6d92facc37320a539cb195235a31a680415760c
+  languageName: node
+  linkType: hard
+
 "@isaacs/cliui@npm:^8.0.2":
   version: 8.0.2
   resolution: "@isaacs/cliui@npm:8.0.2"
@@ -1110,6 +1119,15 @@ __metadata:
     "@types/react":
       optional: true
   checksum: 43a5a446b104ca8ddc18afa4195492ee14f3119065472f0c46a090639442b2df7459a0028b039af8b149c4082d7544701ca53b7047364aebe8d3dccf698c34e4
+  languageName: node
+  linkType: hard
+
+"@mui/mcp@npm:latest":
+  version: 0.1.0
+  resolution: "@mui/mcp@npm:0.1.0"
+  bin:
+    mcp: dist/stdio.cjs.js
+  checksum: 04a43f21ed9e31a9cc279dd0577eb8aa05b97ceb040c9821c88aa56e3b36f309892113926c14886816eb377af4b5cf1ff9654bd76ad88633e61953da45566d26
   languageName: node
   linkType: hard
 
@@ -1764,6 +1782,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@tanstack/react-store@npm:^0.7.3":
+  version: 0.7.3
+  resolution: "@tanstack/react-store@npm:0.7.3"
+  dependencies:
+    "@tanstack/store": 0.7.2
+    use-sync-external-store: ^1.5.0
+  peerDependencies:
+    react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+    react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+  checksum: 50e70a2ff03915d60e6abcd4d8d14d61cf88dff748687addb6d48e5a943e703d94ba8ae6b365f879ec95a08544022af15cb78cc3d428e1f29de9f8ae2ff8af9f
+  languageName: node
+  linkType: hard
+
 "@tanstack/router-core@npm:1.115.3, @tanstack/router-core@npm:^1.115.3":
   version: 1.115.3
   resolution: "@tanstack/router-core@npm:1.115.3"
@@ -1887,6 +1918,13 @@ __metadata:
   version: 0.7.0
   resolution: "@tanstack/store@npm:0.7.0"
   checksum: b72641667fa09640bcd8a4507c51f89348e4b7bd93e0f9339612c38abbf3970da875a802efbbbe6ead1d7e56e017cfd8ad3947fd984bec95b64c489dc379eb6e
+  languageName: node
+  linkType: hard
+
+"@tanstack/store@npm:0.7.2, @tanstack/store@npm:^0.7.2":
+  version: 0.7.2
+  resolution: "@tanstack/store@npm:0.7.2"
+  checksum: 19466d51e40e7a4574e39a05d6a72cbf28b6b69fc1d176c10644e508571264f0b63a7e134194f4afc705ba4b6b38c6c3cd464647ebc30f0260fc9777647fedde
   languageName: node
   linkType: hard
 
@@ -2400,13 +2438,15 @@ __metadata:
   resolution: "best-shot@workspace:."
   dependencies:
     "@auth0/auth0-react": ^2.2.4
-    "@biomejs/biome": ^2.1.2
+    "@biomejs/biome": 2.1.2
     "@emotion/react": ^11.11.4
     "@emotion/styled": ^11.11.5
     "@fontsource/montserrat": ^5.1.0
     "@fontsource/poppins": ^5.1.0
+    "@hookform/resolvers": ^3.3.4
     "@mui/base": ^5.0.0-beta.70
     "@mui/material": ^7.2.0
+    "@mui/mcp": latest
     "@mui/system": ^7.2.0
     "@playwright/test": ^1.51.1
     "@sentry/react": ^8.46.0
@@ -2415,8 +2455,10 @@ __metadata:
     "@tanstack/react-query": ^5.51.9
     "@tanstack/react-query-devtools": ^5.51.9
     "@tanstack/react-router": ^1.47.1
+    "@tanstack/react-store": ^0.7.3
     "@tanstack/router-devtools": ^1.47.1
     "@tanstack/router-plugin": ^1.47.0
+    "@tanstack/store": ^0.7.2
     "@testing-library/jest-dom": ^6.4.2
     "@testing-library/react": ^15.0.6
     "@types/lodash-es": ^4.17.12
@@ -2437,12 +2479,13 @@ __metadata:
     openai: ^4.89.0
     react: ^17.0.0 || ^18.0.0
     react-dom: ^18.2.0
+    react-hook-form: ^7.61.1
     rollup-plugin-visualizer: ^5.12.0
     typescript: ^5.4.0
     vite: ^5.2.0
     vite-plugin-checker: ^0.8.0
     vitest: ^1.5.3
-    zod: ^3.24.2
+    zod: ^3.23.8
   peerDependencies:
     react: ^17.0.0 || ^18.0.0
   languageName: unknown
@@ -4902,6 +4945,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-hook-form@npm:^7.61.1":
+  version: 7.61.1
+  resolution: "react-hook-form@npm:7.61.1"
+  peerDependencies:
+    react: ^16.8.0 || ^17 || ^18 || ^19
+  checksum: 2cd69df3fbdd0175c38c08f12749a0d6029475eb5601940ac5326182d40026c6a6e0a08d8c5bf83ff8849c82037759ead7052f7e5c962723e847d642e27ff637
+  languageName: node
+  linkType: hard
+
 "react-is@npm:^16.13.1, react-is@npm:^16.7.0":
   version: 16.13.1
   resolution: "react-is@npm:16.13.1"
@@ -5763,7 +5815,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"use-sync-external-store@npm:^1.4.0":
+"use-sync-external-store@npm:^1.4.0, use-sync-external-store@npm:^1.5.0":
   version: 1.5.0
   resolution: "use-sync-external-store@npm:1.5.0"
   peerDependencies:
@@ -6248,6 +6300,13 @@ __metadata:
   version: 1.2.1
   resolution: "yocto-queue@npm:1.2.1"
   checksum: 0843d6c2c0558e5c06e98edf9c17942f25c769e21b519303a5c2adefd5b738c9b2054204dc856ac0cd9d134b1bc27d928ce84fd23c9e2423b7e013d5a6f50577
+  languageName: node
+  linkType: hard
+
+"zod@npm:^3.23.8":
+  version: 3.25.76
+  resolution: "zod@npm:3.25.76"
+  checksum: c9a403a62b329188a5f6bd24d5d935d2bba345f7ab8151d1baa1505b5da9f227fb139354b043711490c798e91f3df75991395e40142e6510a4b16409f302b849
   languageName: node
   linkType: hard
 

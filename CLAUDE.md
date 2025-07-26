@@ -13,13 +13,16 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - `yarn start` - Start both frontend and backend servers concurrently
 - `yarn build` - TypeScript compilation and production build
 
-### Code Quality (Biome.js)
+### Code Quality (Biome.js + TypeScript)
 - `yarn lint` - Run Biome linting
 - `yarn lint:fix` - Run Biome linting with auto-fix
 - `yarn format` - Run Biome formatting
 - `yarn format:fix` - Run Biome formatting with auto-fix
-- `yarn check` - Run both linting and formatting
-- `yarn check:fix` - Auto-fix both linting and formatting issues
+- `yarn typecheck` - Run TypeScript type checking only
+- `yarn check` - Run both linting/formatting AND TypeScript type checking
+- `yarn check:fix` - Auto-fix linting/formatting issues AND run type checking
+
+**IMPORTANT**: Always run `yarn check` before considering any development task complete. This ensures both code quality and TypeScript type safety.
 
 ### Testing
 - `yarn test` - Run tests with coverage using Vitest
@@ -78,6 +81,17 @@ The codebase follows a domain-driven structure under `src/domains/`:
 
 **Import Aliases**:
 - Always use absolute imports with aliases like `@domains`, `@components`, etc.
+
+### Form Handling
+- **Forms**: React Hook Form with TypeScript integration for form state and validation
+- **Components**: Reusable form components in `src/domains/ui-system/components/form/`
+  - `AppFormInput` - Text inputs with custom styling and validation
+  - `AppFormSelect` - Dropdown selects with options
+  - `AppFormCheckbox` - Checkbox inputs with custom styling
+  - `AppFormFieldArray` - Dynamic arrays of form fields
+  - `AppFormScoreInput` - Sports-specific dual score inputs
+- **Validation**: Zod schemas with `@hookform/resolvers/zod` for runtime validation
+- **Patterns**: See guides 0005 (React Hook Form) and 0006 (Zod Validation) for implementation details
 
 ### Validation
 Uses Zod schemas extensively for runtime validation, particularly in tournament and API layers.

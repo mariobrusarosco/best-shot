@@ -44,11 +44,11 @@ const GridOfCards = styled(Box)(({ theme }) => ({
 	[UIHelper.startsOn("tablet")]: {
 		flex: 1,
 		gap: theme.spacing(2),
-		gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))",
+		gridTemplateColumns: "repeat(auto-fit, minmax(140px, 250px))",
 		gridAutoRows: "115px",
 	},
 	[UIHelper.startsOn("desktop")]: {
-		gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
+		gridTemplateColumns: "repeat(auto-fit, minmax(300px, 280px))",
 	},
 }));
 

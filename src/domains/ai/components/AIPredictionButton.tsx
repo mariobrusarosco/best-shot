@@ -1,5 +1,5 @@
 import { Typography } from "@mui/material";
-import { styled } from "@mui/system";
+import { styled } from "@mui/material";
 import { memo, useState } from "react";
 import { useAIPrediction } from "@/domains/ai/hooks/use-ai-prediction";
 import { AppButton } from "@/domains/ui-system/components/button/button";
@@ -104,8 +104,8 @@ const PredictButton = styled(AppButton)(({ theme }) => ({
 }));
 
 const ErrorMessage = styled(Typography)(({ theme }) => ({
-	color: theme.palette.error.main,
-	fontSize: "10px",
+	color: theme.palette.red[400],
+	fontSize: theme.typography.tag.fontSize, // Use defined typography token
 }));
 
 export default AIPredictionButton;

@@ -59,7 +59,7 @@ const MatchCard = ({ guess, match, guessMutation }: Props) => {
 
 	return (
 		<Card
-			data-card-open={isOpen}
+			data-card-open={false}
 			data-ui="card"
 			data-match-status={match.status}
 			data-guess-status={guess.status}

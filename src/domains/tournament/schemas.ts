@@ -19,7 +19,7 @@ export const TournamentSchema = z
 				slug: z.string().min(1).max(30),
 			})
 		),
-		standingsMode: z.string().min(3),
+		standingsMode: z.string().min(1),
 		season: z.string().min(4).max(20).optional(),
 		starterRound: z.string().min(1).max(30).optional(),
 		createdAt: z.string().datetime().optional(),

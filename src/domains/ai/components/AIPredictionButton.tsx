@@ -93,7 +93,8 @@ const PredictButton = styled(AppButton)(({ theme }) => ({
 	},
 
 	"&:hover": {
-		backgroundColor: theme.palette.teal[600],
+		backgroundColor: theme.palette.teal[500],
+		opacity: 0.8,
 	},
 
 	"&:disabled": {
@@ -105,7 +106,7 @@ const PredictButton = styled(AppButton)(({ theme }) => ({
 
 const ErrorMessage = styled(Typography)(({ theme }) => ({
 	color: theme.palette.red[400],
-	fontSize: theme.typography.tag.fontSize, // Use defined typography token
+	fontSize: theme.typography.caption.fontSize,
 }));
 
 export default AIPredictionButton;

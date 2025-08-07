@@ -109,6 +109,10 @@ export const MUI_PALETTE_COLORS = {
 	// Custom color extensions
 	black: NEUTRAL_COLORS.black,
 	neutral: NEUTRAL_COLORS.neutral,
+	teal: PRIMARY_COLORS.teal,
+	green: SEMANTIC_COLORS.success,
+	red: SEMANTIC_COLORS.error,
+	pink: ACCENT_COLORS.pink,
 } as const;
 
 // Legacy export for backward compatibility

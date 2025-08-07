@@ -182,11 +182,19 @@ declare module '@mui/material/styles' {
 	interface Palette {
 		black: typeof DESIGN_SYSTEM_COLORS.black;
 		neutral: typeof DESIGN_SYSTEM_COLORS.neutral;
+		teal: typeof DESIGN_SYSTEM_COLORS.primary;
+		green: typeof DESIGN_SYSTEM_COLORS.success;
+		red: typeof DESIGN_SYSTEM_COLORS.error;
+		pink: typeof DESIGN_SYSTEM_COLORS.pink;
 	}
 	
 	interface PaletteOptions {
 		black?: typeof DESIGN_SYSTEM_COLORS.black;
 		neutral?: typeof DESIGN_SYSTEM_COLORS.neutral;
+		teal?: typeof DESIGN_SYSTEM_COLORS.primary;
+		green?: typeof DESIGN_SYSTEM_COLORS.success;
+		red?: typeof DESIGN_SYSTEM_COLORS.error;
+		pink?: typeof DESIGN_SYSTEM_COLORS.pink;
 	}
 	
 	// Extend button variants

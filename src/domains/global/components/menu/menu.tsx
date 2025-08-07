@@ -2,7 +2,7 @@ import { Typography, styled } from "@mui/material";
 import { Box } from "@mui/system";
 import { Link } from "@tanstack/react-router";
 import { BestShotIcon } from "@/assets/best-shot-icon";
-import { theme, UIHelper } from "@/theming/theme";
+import { UIHelper } from "@/theming/theme";
 import { MenuButton } from "./menu-button";
 
 export const Menu = () => {
@@ -11,10 +11,10 @@ export const Menu = () => {
 	return (
 		<Wrapper as="menu">
 			<MenuLogo to="/">
-				<BestShotIcon fill={theme.palette.neutral[100]} />
+				<BestShotIcon fill="currentColor" />
 				<Typography
 					textAlign="center"
-					color={theme.palette.neutral[100]}
+					color="neutral.100"
 					variant="label"
 					data-id="menu-logo"
 				>
@@ -77,6 +77,7 @@ const MenuLogo = styled(Link)(({ theme }) => ({
 	paddingTop: theme.spacing(2),
 	paddingBottom: theme.spacing(10),
 	display: "none",
+	color: theme.palette.neutral[100], // Provide color for currentColor fill
 
 	'& svg': {
 		width: "40px",

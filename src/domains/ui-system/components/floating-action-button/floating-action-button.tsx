@@ -173,40 +173,69 @@ export const FloatingActionButton = () => {
 	);
 };
 
-const FABContainer = styled(Box)(() => ({
+// ===== STYLED COMPONENTS (Following Static Styled Components Pattern) =====
+
+const FABContainer = styled(Box)(({ theme }) => ({
 	position: "fixed",
-	transition: "transform 0.2s ease-in-out",
-	zIndex: 1200,
+	transition: theme.transitions.create(['transform'], {
+		duration: theme.transitions.duration.short,
+	}),
+	zIndex: theme.zIndex.fab,
 	pointerEvents: "auto",
 }));
 
 const FABButton = styled(IconButton)(({ theme }) => ({
 	width: 56,
 	height: 56,
-	backgroundColor: theme.palette.teal[500],
-	color: theme.palette.neutral[100],
-	boxShadow: "0 4px 12px rgba(0, 0, 0, 0.3)",
 	
+	// Use design system tokens instead of hardcoded colors
+	backgroundColor: theme.palette.primary.main,
+	color: theme.palette.primary.contrastText,
+	boxShadow: theme.shadows[6],
+	
+	// Interactive states with theme tokens
 	"&:hover": {
-		backgroundColor: theme.palette.black[500],
-		boxShadow: "0 6px 16px rgba(0, 0, 0, 0.4)",
+		backgroundColor: theme.palette.primary.dark,
+		boxShadow: theme.shadows[8],
+		transform: "scale(1.02)",
+		transition: theme.transitions.create(['background-color', 'box-shadow', 'transform'], {
+			duration: theme.transitions.duration.short,
+		}),
 	},
 	
 	"&:active": {
-		backgroundColor: theme.palette.black[700],
+		backgroundColor: theme.palette.primary.dark,
+		transform: "scale(0.98)",
 	},
 	
 	// Ensure the button stays circular
 	borderRadius: "50%",
 	
-	// Disable text selection
+	// Disable text selection for better UX
 	userSelect: "none",
 	WebkitUserSelect: "none",
 	
+	// Enhanced accessibility
+	"&:focus-visible": {
+		outline: `2px solid ${theme.palette.primary.main}`,
+		outlineOffset: "4px",
+	},
+	
 	// Better touch targets for mobile
+	[theme.breakpoints.down("tablet")]: {
+		width: 48,
+		height: 48,
+		"& svg": {
+			width: 24,
+			height: 24,
+		},
+	},
+	
+	// Disable hover effects on touch devices
 	"@media (hover: none)": {
 		"&:hover": {
-			backgroundColor: theme.palette.teal[500],
+			backgroundColor: theme.palette.primary.main,
+			transform: "none",
 		},
 	},
 }));

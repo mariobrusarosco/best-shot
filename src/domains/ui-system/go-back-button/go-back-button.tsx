@@ -1,6 +1,6 @@
 import { styled, Typography } from "@mui/material";
 import { useNavigate } from "@tanstack/react-router";
-import { AppButton } from "@/domains/ui-system/components/button/button";
+import { AppButton } from "@/domains/ui-system/components/app-button/app-button";
 import { AppIcon } from "@/domains/ui-system/components/icon/icon";
 import { UIHelper } from "@/theming/theme";
 
@@ -27,7 +27,7 @@ const StyledButton = styled(AppButton)(({ theme }) => ({
 	right: 15,
 	display: "flex",
 	placeItems: "center",
-	color: theme.palette.teal[500],
+	color: theme.palette.primary.main,
 	gap: theme.spacing(0.5),
 	zIndex: theme.zIndex.appBar,
 

@@ -9,7 +9,7 @@ import AIPredictionButton from "@/domains/ai/components/AIPredictionButton";
 import { useGuessInputs } from "@/domains/guess/hooks/use-guess-inputs";
 import type { useGuessMutation } from "@/domains/guess/hooks/use-guess-mutation";
 import { type GUESS_STATUS, GUESS_STATUSES, type IGuess } from "@/domains/guess/typing";
-import { AppButton } from "@/domains/ui-system/components/button/button";
+import { AppButton } from "@/domains/ui-system/components/app-button/app-button";
 import { AppIcon } from "@/domains/ui-system/components/icon/icon";
 import { shimmerEffect } from "@/domains/ui-system/components/skeleton/skeleton";
 import { Surface } from "@/domains/ui-system/components/surface/surface";

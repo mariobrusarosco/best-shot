@@ -1,6 +1,6 @@
 import Typography from "@mui/material/Typography";
 import { Box } from "@mui/system";
-import { AppCard } from "@/domains/ui-system/components/card/card";
+import { AppCard } from "@/domains/ui-system/components/app-card/AppCard";
 import { AppLinkCard } from "@/domains/ui-system/components/link-card/link-card";
 import type { SurfaceProps } from "@/domains/ui-system/components/surface/surface";
 import type { ITournament } from "../schemas";
@@ -60,7 +60,7 @@ export const TournamentCardSkeleton = () => {
 				},
 			}}
 		>
-			<AppCard.Skeleton />
+			<AppCard loading />
 		</Box>
 	);
 };

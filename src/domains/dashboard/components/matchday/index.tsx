@@ -1,11 +1,10 @@
 import { Stack, Typography } from "@mui/material";
 import { Link } from "@tanstack/react-router";
 
-import { AppButton } from "@/domains/ui-system/components/button/button";
-import { AppCard } from "@/domains/ui-system/components/card/card";
+import { AppButton } from "@/domains/ui-system/components/app-button/app-button";
+import { AppCard } from "@/domains/ui-system/components/app-card/AppCard";
 import { AppIcon } from "@/domains/ui-system/components/icon/icon";
 import { AppPill } from "@/domains/ui-system/components/pill/pill";
-import { theme } from "@/theming/theme";
 import type { IMatchday } from "../../typing";
 import { DashCard } from "../dash-card/dash-card";
 import { MatchdayCard, MatchdayGrid } from "./styles";
@@ -38,13 +37,18 @@ const Matchday = ({ matchday }: { matchday: IMatchday }) => {
 								replace={false}
 								resetScroll={false}
 							>
-								<AppCard.Container
+								<AppCard
+									variant="match"
 									data-ui="card-container"
 									sx={{
 										gridTemplateRows: "10px auto",
+										display: "flex",
+										flexDirection: "column",
+										gap: 2,
+										p: 2,
 									}}
 								>
-									<AppCard.Header alignItems={"self-start"} gap={2} data-ui="card-header">
+									<Stack direction="row" alignItems="flex-start" justifyContent="space-between" gap={2} data-ui="card-header">
 										<Stack>
 											<Typography
 												fontWeight={500}
@@ -69,11 +73,11 @@ const Matchday = ({ matchday }: { matchday: IMatchday }) => {
 										>
 											<AppIcon name="ChevronRight" size="extra-small" />
 										</AppButton>
-									</AppCard.Header>
-									<Typography variant="tag" color={theme.palette.teal[500]} fontWeight={400}>
+									</Stack>
+									<Typography variant="tag" color="primary.main" fontWeight={400}>
 										round {match.roundSlug}
 									</Typography>
-								</AppCard.Container>
+								</AppCard>
 							</Link>
 						</MatchdayCard>
 					))

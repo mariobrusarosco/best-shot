@@ -1,7 +1,7 @@
 import { Box, styled, Typography } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { AppButton } from "@/domains/ui-system/components/button/button";
+import { AppButton } from "@/domains/ui-system/components/app-button/app-button";
 import { AppFormInput } from "@/domains/ui-system/components/form";
 import { shimmerEffect } from "@/domains/ui-system/components/skeleton/skeleton";
 import { Surface } from "@/domains/ui-system/components/surface/surface";
@@ -89,31 +89,29 @@ const Wrapper = styled(Box)(({ theme }) => ({
 }));
 
 const SubmitButton = styled(AppButton)(({ theme }) => ({
-	my: 2,
+	marginY: theme.spacing(2),
 	width: 150,
 	marginTop: theme.spacing(2),
 	padding: theme.spacing(1.5),
-	borderRadius: 2,
-	backgroundColor: theme.palette.teal[500],
+	borderRadius: theme.spacing(0.5),
+	backgroundColor: theme.palette.primary.main,
 	color: theme.palette.neutral[100],
 
 	"&:hover": {
-		backgroundColor: theme.palette.black[500],
+		backgroundColor: theme.palette.primary.dark,
 	},
 }));
 
-const Card = styled(Surface)(({ theme }) =>
-	theme.unstable_sx({
-		backgroundColor: "black.800",
-		px: 2,
-		py: 2,
-		borderRadius: 2,
-		display: "flex",
-		flexDirection: "column",
-		justifyContent: "center",
-		gap: 1,
-	})
-);
+const Card = styled(Surface)(({ theme }) => ({
+	backgroundColor: theme.palette.black[800],
+	paddingX: theme.spacing(2),
+	paddingY: theme.spacing(2),
+	borderRadius: theme.spacing(0.5),
+	display: "flex",
+	flexDirection: "column",
+	justifyContent: "center",
+	gap: theme.spacing(1),
+}));
 
 
 const NewLeagueSkeleton = () => {

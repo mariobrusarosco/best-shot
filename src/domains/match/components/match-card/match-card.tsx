@@ -1,4 +1,6 @@
 import { Divider, Stack, styled, Typography } from "@mui/material";
+import { Box } from "@mui/system";
+import { motion } from "motion/react";
 import dayjs from "dayjs";
 import { useState } from "react";
 
@@ -7,9 +9,11 @@ import AIPredictionButton from "@/domains/ai/components/AIPredictionButton";
 import { useGuessInputs } from "@/domains/guess/hooks/use-guess-inputs";
 import type { useGuessMutation } from "@/domains/guess/hooks/use-guess-mutation";
 import { type GUESS_STATUS, GUESS_STATUSES, type IGuess } from "@/domains/guess/typing";
+import { AppButton } from "@/domains/ui-system/components/button/button";
 import { AppIcon } from "@/domains/ui-system/components/icon/icon";
 import { shimmerEffect } from "@/domains/ui-system/components/skeleton/skeleton";
-import { theme } from "@/theming/theme";
+import { Surface } from "@/domains/ui-system/components/surface/surface";
+import { theme, UIHelper } from "@/theming/theme";
 import type { IMatch } from "../../typing";
 import { defineMatchTimebox } from "../../utils";
 import { CardAnimation } from "./animations";
@@ -17,7 +21,6 @@ import { GuessDisplay } from "./guess-display";
 import { GuessMatchOutcome } from "./guess-match-outcome";
 import { GuessPoints } from "./guess-points";
 import { GuessStatus } from "./guess-status";
-import { Button, Card, CTA, Header, Team, Teams } from "./match-card.styles";
 import { ScoreDisplay } from "./score-display";
 import { ScoreInput } from "./score-input";
 import { TeamDisplay } from "./team-display";
@@ -167,6 +170,86 @@ const MatchCard = ({ guess, match, guessMutation }: Props) => {
 	);
 };
 
+// ===== STYLED COMPONENTS (Following Static Styled Components Pattern) =====
+
+// Main match card container with motion support
+const Card = styled(motion(Surface))(({ theme }) => ({
+	display: "flex",
+	flexDirection: "column",
+	backgroundColor: theme.palette.black[800],
+	padding: theme.spacing(2, 1),
+	gap: theme.spacing(3),
+	borderRadius: theme.spacing(1),
+	maxWidth: "100%",
+	position: "relative",
+	overflow: "hidden",
+
+	"[data-card-open='true']": {
+		gap: theme.spacing(3.5),
+	},
+
+	[UIHelper.startsOn("tablet")]: {
+		padding: theme.spacing(2),
+	},
+}));
+
+// Header section with match details
+const Header = styled(Stack)(({ theme }) => ({
+	flexDirection: "row",
+	justifyContent: "space-between",
+	alignItems: "center",
+	gridArea: "header",
+	gap: theme.spacing(2),
+}));
+
+// Teams container
+const Teams = styled(Box)(({ theme }) => ({
+	display: "flex",
+	justifyContent: "space-between",
+	gap: theme.spacing(0.5),
+
+	"[data-card-open='true'] &": {
+		gap: theme.spacing(4),
+	},
+}));
+
+// Individual team container with motion support
+const Team = styled(motion.div)(({ theme }) => ({
+	display: "flex",
+	justifyContent: "space-between",
+	flex: 1,
+	maxWidth: "50%",
+
+	"[data-card-open='true'] &": {
+		flexDirection: "column",
+		alignItems: "stretch",
+		gap: theme.spacing(2),
+	},
+}));
+
+// Call-to-action container
+const CTA = styled(Stack)(({ theme }) => ({
+	flexDirection: "row",
+	justifyContent: "space-between",
+	alignItems: "center",
+	gap: theme.spacing(1),
+}));
+
+// Action button (save, expand/collapse)
+const Button = styled(AppButton)(({ theme }) => ({
+	borderRadius: theme.spacing(0.5),
+	color: theme.palette.neutral[100],
+	backgroundColor: theme.palette.teal[500],
+	width: "24px",
+	height: "24px",
+
+	"&[disabled]": {
+		filter: "grayscale(1)",
+		opacity: "0.5",
+	},
+}));
+
+// Loading skeleton
 const Skeleton = styled(Card)(() => ({
 	minHeight: "140px",
 	position: "relative",

@@ -1,8 +1,9 @@
-import { Typography } from "@mui/material";
+import { Typography, styled } from "@mui/material";
+import { Box } from "@mui/system";
+import { Link } from "@tanstack/react-router";
 import { BestShotIcon } from "@/assets/best-shot-icon";
-import { theme } from "@/theming/theme";
+import { theme, UIHelper } from "@/theming/theme";
 import { MenuButton } from "./menu-button";
-import { LinkList, MenuLink, MenuLogo, Wrapper } from "./styles";
 
 export const Menu = () => {
 	const isOpen = false;
@@ -57,3 +58,74 @@ export const Menu = () => {
 		</Wrapper>
 	);
 };
+
+// ===== STYLED COMPONENTS (Following Static Styled Components Pattern) =====
+
+// Navigation menu wrapper
+const Wrapper = styled(Box)(({ theme }) => ({
+	display: "flex",
+	flexDirection: "column",
+	gap: theme.spacing(2),
+
+	[UIHelper.startsOn("tablet")]: {
+		backgroundColor: theme.palette.black[800],
+	},
+}));
+
+// Menu logo link with branding
+const MenuLogo = styled(Link)(({ theme }) => ({
+	paddingTop: theme.spacing(2),
+	paddingBottom: theme.spacing(10),
+	display: "none",
+
+	'& svg': {
+		width: "40px",
+	},
+	
+	[UIHelper.startsOn("tablet")]: {
+		display: "grid",
+		placeItems: "center",
+		gap: theme.spacing(1),
+	},
+}));
+
+// Navigation links container
+const LinkList = styled(Box)(({ theme }) => ({
+	display: "flex",
+	borderTopRightRadius: "16px",
+	borderTopLeftRadius: "16px",
+	gap: theme.spacing(4),
+	maxHeight: "100vh",
+	backgroundColor: theme.palette.black[800],
+
+	[UIHelper.whileIs("mobile")]: {
+		justifyContent: "center",
+		padding: theme.spacing(3, 2),
+		width: "100vw",
+		position: "fixed",
+		bottom: 0,
+		zIndex: theme.zIndex.appBar,
+	},
+	
+	[UIHelper.startsOn("tablet")]: {
+		width: "auto",
+		justifyContent: "flex-start",
+		alignItems: "center",
+		flexDirection: "column",
+		padding: theme.spacing(2),
+		gap: theme.spacing(4),
+	},
+}));
+
+// Individual menu link
+const MenuLink = styled(Link)(({ theme }) => ({
+	display: "flex",
+	alignItems: "center",
+	gap: theme.spacing(2),
+	textDecoration: "none",
+
+	'&:hover': {
+		transform: 'scale(1.05)',
+		transition: theme.transitions.create(['transform']),
+	},
+}));

@@ -1,0 +1,3 @@
+# Authentication flow tests will be placed here
+# Currently focused on protected route testing
+# Future implementation will include login/logout scenarios

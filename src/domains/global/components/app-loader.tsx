@@ -1,14 +1,14 @@
 import { Typography } from "@mui/material";
-import { styled } from "@mui/material/styles";
+import { styled, useTheme } from "@mui/material/styles";
 import { Stack } from "@mui/system";
 import { BestShotIcon } from "@/assets/best-shot-icon";
-import { theme, UIHelper } from "@/theming/theme";
 
 export const AppLoader = () => {
+	const theme = useTheme();
 	return (
 		<Wrapper data-iu="app-loader">
-			<BestShotIcon fill={theme.palette.neutral[100]} isAnimated />
-			<Typography color={theme.palette.neutral[100]} variant="h3" fontWeight={200}>
+			<BestShotIcon fill={theme.palette.neutral?.[100] || '#FDFCFC'} isAnimated />
+			<Typography color="neutral.100" variant="h3" fontWeight={200}>
 				best shot
 			</Typography>
 		</Wrapper>
@@ -25,7 +25,7 @@ const Wrapper = styled(Stack)(({ theme }) => ({
 	padding: theme.spacing(0, 2),
 	svg: { width: "150px" },
 
-	[UIHelper.startsOn("tablet")]: {
+	[theme.breakpoints.up("tablet")]: {
 		svg: { width: "450px" },
 	},
 }));

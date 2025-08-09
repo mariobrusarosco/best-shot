@@ -70,7 +70,7 @@ export const buttonOverrides: Components<Theme>['MuiButton'] = {
 			},
 		}),
 		
-		outlined: ({ theme }) => ({
+		outlined: () => ({
 			borderWidth: '2px',
 			
 			'&:hover': {

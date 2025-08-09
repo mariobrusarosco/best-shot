@@ -75,7 +75,8 @@ export default defineConfig({
 		use: { 
 			...devices[browserName === 'chromium' ? 'Desktop Chrome' : 
 					browserName === 'firefox' ? 'Desktop Firefox' : 
-					'Desktop Safari'] 
+					browserName === 'webkit' ? 'Desktop Safari' :
+					'Desktop Chrome'] 
 		},
 	})),
 	

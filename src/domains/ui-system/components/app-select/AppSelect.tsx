@@ -83,11 +83,11 @@ const StyledFormControl = styled(FormControl)<{ error?: boolean; success?: boole
 }));
 
 // Enhanced select with design system integration
-const StyledSelect = styled(MuiSelect)<AppSelectProps>(({ theme, variant, loading }) => ({
+const StyledSelect = styled(MuiSelect)<{$variant?: string; $loading?: boolean}>(({ theme, $variant, $loading }) => ({
 	borderRadius: theme.spacing(1),
 	
 	// Loading state
-	...(loading && {
+	...($loading && {
 		opacity: 0.7,
 		pointerEvents: 'none',
 	}),
@@ -108,7 +108,7 @@ const StyledSelect = styled(MuiSelect)<AppSelectProps>(({ theme, variant, loadin
 	},
 	
 	// Variant-specific styles
-	...(variant === 'tournament' && {
+	...($variant === 'tournament' && {
 		backgroundColor: theme.palette.black[800],
 		color: theme.palette.neutral[100],
 		'& .MuiOutlinedInput-notchedOutline': {
@@ -119,14 +119,14 @@ const StyledSelect = styled(MuiSelect)<AppSelectProps>(({ theme, variant, loadin
 		},
 	}),
 	
-	...(variant === 'league' && {
+	...($variant === 'league' && {
 		backgroundColor: theme.palette.background.paper,
 		'& .MuiOutlinedInput-notchedOutline': {
 			borderColor: theme.palette.primary.main,
 		},
 	}),
 	
-	...(variant === 'compact' && {
+	...($variant === 'compact' && {
 		minHeight: '36px',
 		'& .MuiSelect-select': {
 			paddingTop: theme.spacing(1),
@@ -228,8 +228,8 @@ export const AppSelect = forwardRef<HTMLDivElement, AppSelectProps>(
 				<StyledSelect
 					labelId={`${props.id || 'select'}-label`}
 					label={label}
-					variant={variant}
-					loading={loading}
+					$variant={variant}
+					$loading={loading}
 					disabled={loading || props.disabled}
 					{...props}
 				>

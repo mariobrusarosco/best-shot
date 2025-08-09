@@ -60,7 +60,28 @@ const theme = createTheme({
 		fontFamily: ["Poppins", "Montserrat", "sans-serif"].join(","),
 		...TYPOGRAPHY.variants,
 	},
-	palette: COLORS,
+	palette: {
+		primary: {
+			main: COLORS.teal[500],
+		},
+		secondary: {
+			main: COLORS.pink[700],
+		},
+		error: {
+			main: COLORS.red[400],
+		},
+		success: {
+			main: COLORS.green[200],
+		},
+		background: {
+			default: COLORS.neutral[100],
+			paper: COLORS.neutral[0],
+		},
+		text: {
+			primary: COLORS.black[800],
+			secondary: COLORS.black[500],
+		},
+	} as any,
 	components: {
 		MuiTypography: {
 			// defaultProps: {

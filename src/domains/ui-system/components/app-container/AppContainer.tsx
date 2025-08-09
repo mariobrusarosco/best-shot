@@ -157,7 +157,7 @@ export const AppContainer = forwardRef<HTMLDivElement, AppContainerProps>(
 		children, 
 		variant = 'default', 
 		spacing = 'default',
-		maxWidth = 'lg',
+		maxWidth = 'laptop' as const,
 		...props 
 	}, ref) => {
 		return (

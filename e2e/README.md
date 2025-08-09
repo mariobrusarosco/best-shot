@@ -79,21 +79,29 @@ The framework is configured to test the following protected routes:
 - `/leagues`
 - `/my-account`
 
+## Setup
+
+### Install Playwright Browsers
+```bash
+# Install Playwright browsers (run once after cloning)
+yarn test:e2e:install
+```
+
 ## Usage
 
 ### Running Tests
 ```bash
 # Run all E2E tests against demo environment
-npx playwright test
+yarn test:e2e
 
 # Run tests against specific environment
-TEST_ENV=staging npx playwright test
+yarn test:e2e:staging
 
 # Run specific test category
-npx playwright test tests/screens/
+yarn test:e2e tests/screens/
 
 # Run tests with UI mode
-npx playwright test --ui
+yarn test:e2e:ui
 ```
 
 ### Creating New Tests

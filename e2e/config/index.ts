@@ -4,7 +4,14 @@
  */
 
 export { BasePage } from '../page-objects/base/BasePage';
-export { TestHelpers } from '../utils/TestHelpers';
+export { TestHelpers, ErrorContext } from '../utils/TestHelpers';
+export { 
+	PageObjectValidator, 
+	ValidationResult, 
+	ErrorHandlingResult, 
+	PerformanceResult, 
+	ValidationReport 
+} from '../utils/PageObjectValidator';
 export { 
 	TestConfig, 
 	EnvironmentConfig, 

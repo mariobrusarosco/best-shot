@@ -10,7 +10,7 @@ import { styled } from '@mui/material/styles';
 import { forwardRef } from 'react';
 
 // Extended card props for our design system
-export interface AppCardProps extends MuiCardProps {
+export interface AppCardProps extends Omit<MuiCardProps, 'variant'> {
 	/**
 	 * Card variant for different use cases
 	 */
@@ -25,12 +25,12 @@ export interface AppCardProps extends MuiCardProps {
 	loading?: boolean;
 }
 
-// Enhanced styled card with design system improvements
-const StyledCard = styled(MuiCard)<AppCardProps>(({ theme, interactive, loading }) => ({
+// Enhanced styled card with design system improvements  
+const StyledCard = styled(MuiCard)<{$interactive?: boolean; $loading?: boolean; $variant?: string}>(({ theme, $interactive, $loading }) => ({
 	// Design system base styles (handled by theme overrides)
 	// Additional component-specific styles
 	
-	...(interactive && {
+	...($interactive && {
 		cursor: 'pointer',
 		transition: theme.transitions.create([
 			'transform',
@@ -51,7 +51,7 @@ const StyledCard = styled(MuiCard)<AppCardProps>(({ theme, interactive, loading 
 		},
 	}),
 	
-	...(loading && {
+	...($loading && {
 		opacity: 0.7,
 		pointerEvents: 'none',
 		
@@ -68,7 +68,7 @@ const StyledCard = styled(MuiCard)<AppCardProps>(({ theme, interactive, loading 
 	}),
 	
 	// Focus styles for accessibility when interactive
-	...(interactive && {
+	...($interactive && {
 		'&:focus-visible': {
 			outline: `2px solid ${theme.palette.primary.main}`,
 			outlineOffset: '2px',
@@ -109,9 +109,9 @@ export const AppCard = forwardRef<HTMLDivElement, AppCardProps>(
 		return (
 			<StyledCard
 				ref={ref}
-				variant={variant}
-				interactive={interactive}
-				loading={loading}
+				$interactive={interactive}
+				$loading={loading}
+				$variant={variant}
 				tabIndex={interactive ? tabIndex || 0 : tabIndex}
 				role={interactive ? 'button' : undefined}
 				{...props}

@@ -5,8 +5,12 @@
  * Replaces unstable_sx usage with stable styled component pattern.
  */
 
-import { Box, styled } from "@mui/system";
+import { Box } from "@mui/system";
+import { styled } from "@mui/material/styles";
 import { shimmerEffect } from "../skeleton/skeleton";
+
+// Import theme to ensure TypeScript picks up our augmentations
+import "../../theme/index";
 
 // ===== STYLED COMPONENTS (Following Static Styled Components Pattern) =====
 
@@ -19,7 +23,7 @@ const Pill = styled(Box)(({ theme }) => ({
 	// Enhanced styling for better consistency
 	padding: theme.spacing(0.5, 1.5),
 	fontSize: theme.typography.caption.fontSize,
-	fontWeight: theme.typography.fontWeightMedium,
+	fontWeight: theme.typography.caption.fontWeight,
 	minHeight: theme.spacing(3),
 	
 	// Default styling
@@ -27,7 +31,7 @@ const Pill = styled(Box)(({ theme }) => ({
 	color: theme.palette.primary.contrastText,
 	
 	// Responsive text size
-	[theme.breakpoints.down("tablet")]: {
+	[theme.breakpoints.down('md')]: {
 		fontSize: theme.typography.caption.fontSize,
 		padding: theme.spacing(0.25, 1),
 	},

@@ -1,9 +1,17 @@
 /**
  * Test data models and fixtures for E2E tests
+ * 
+ * @deprecated Use TestDataManager and EnvironmentFixtures for centralized test data management
+ * This file is maintained for backward compatibility with existing tests
  */
 
+import { TestDataManager, TestUserData, TestScenarioData } from './TestDataManager';
+import { getEnvironmentFixtures } from './EnvironmentFixtures';
+import { getTestConfig } from '../config/TestConfig';
+
 /**
- * Test user model for authentication scenarios
+ * Legacy test user model for backward compatibility
+ * @deprecated Use TestUserData from TestDataManager instead
  */
 export interface TestUser {
 	email: string;
@@ -16,7 +24,8 @@ export interface TestUser {
 }
 
 /**
- * Test scenario model for structured test execution
+ * Legacy test scenario model for backward compatibility
+ * @deprecated Use TestScenarioData from TestDataManager instead
  */
 export interface TestScenario {
 	name: string;
@@ -38,7 +47,29 @@ export interface TestStep {
 }
 
 /**
+ * Get centralized test data manager instance
+ */
+export function getTestDataManager(environment: string = 'demo'): TestDataManager {
+	const config = getTestConfig(environment);
+	return TestDataManager.getInstance(config);
+}
+
+/**
+ * Get environment-specific test fixtures
+ */
+export function getTestFixtures(environment: string = 'demo') {
+	const config = getTestConfig(environment);
+	return getEnvironmentFixtures(environment, config);
+}
+
+/**
+ * Legacy test data - maintained for backward compatibility
+ * @deprecated Use centralized test data management system instead
+ */
+
+/**
  * Navigation test data
+ * @deprecated Use getTestFixtures().getDemoNavigationData() instead
  */
 export const navigationTestData = {
 	menuLinks: [
@@ -53,6 +84,7 @@ export const navigationTestData = {
 
 /**
  * Dashboard test data
+ * @deprecated Use getTestFixtures().getDemoDashboardData() instead
  */
 export const dashboardTestData = {
 	selectors: {
@@ -72,6 +104,7 @@ export const dashboardTestData = {
 
 /**
  * Protected routes test data
+ * @deprecated Use centralized test data management system instead
  */
 export const protectedRoutesTestData = {
 	routes: [
@@ -87,6 +120,7 @@ export const protectedRoutesTestData = {
 
 /**
  * Browser and viewport test data
+ * @deprecated Use centralized test data management system instead
  */
 export const browserTestData = {
 	viewports: [
@@ -99,6 +133,7 @@ export const browserTestData = {
 
 /**
  * Test scenarios for smoke testing
+ * @deprecated Use getTestFixtures().getDemoTestScenarios() instead
  */
 export const smokeTestScenarios: TestScenario[] = [
 	{
@@ -137,6 +172,7 @@ export const smokeTestScenarios: TestScenario[] = [
 
 /**
  * Error scenarios for testing error handling
+ * @deprecated Use centralized test data management system instead
  */
 export const errorTestScenarios = {
 	networkErrors: [

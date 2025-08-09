@@ -85,32 +85,32 @@ This plan outlines a comprehensive, systematic refactoring of the Best Shot appl
 **Goal**: Migrate existing components to new patterns systematically
 
 #### Task 2.1: UI System Components Migration
-- [ ] **Form Components**: Migrate all form components in `/ui-system/components/form/`
-- [ ] **Layout Components**: Migrate grid, surface, layout components  
-- [ ] **Interactive Components**: Migrate buttons, links, floating action buttons
-- [ ] **Display Components**: Migrate cards, pills, skeletons, icons
+- [x] **Form Components**: Migrate all form components in `/ui-system/components/form/`
+- [x] **Layout Components**: Migrate grid, surface, layout components  
+- [x] **Interactive Components**: Migrate buttons, links, floating action buttons
+- [x] **Display Components**: Migrate cards, pills, skeletons, icons
 
 **Target**: 20+ UI system components fully migrated
 
 #### Task 2.2: AI Domain Migration
-- [ ] **AIPredictionButton**: Refactor to use consistent theme tokens
-- [ ] **AI Insights Components**: Create using new base components
-- [ ] **AI-related UI Elements**: Standardize styling patterns
+- [x] **AIPredictionButton**: Refactor to use consistent theme tokens
+- [x] **AI Insights Components**: Create using new base components
+- [x] **AI-related UI Elements**: Standardize styling patterns
 
 **Target**: 100% AI domain styling consistency
 
 #### Task 2.3: Match Domain Migration
-- [ ] **match-card.styles.tsx**: Consolidate into `match-card.tsx` using Static Styled pattern
-- [ ] **Match Card Subcomponents**: Migrate score display, team display, guess components
-- [ ] **Match List Components**: Apply consistent styling patterns
+- [x] **match-card.styles.tsx**: Consolidate into `match-card.tsx` using Static Styled pattern
+- [x] **Match Card Subcomponents**: Migrate score display, team display, guess components
+- [x] **Match List Components**: Apply consistent styling patterns
 
 **Target**: Zero separate styles files in match domain
 
 #### Task 2.4: Core Domains Migration (Tournament, League, Dashboard)
-- [ ] **Tournament Components**: Tournament cards, standings, performance stats
-- [ ] **League Components**: League lists, participants, customization
-- [ ] **Dashboard Components**: Main dashboard, performance metrics
-- [ ] **Global Components**: Menu, header, navigation
+- [x] **Tournament Components**: Tournament cards, standings, performance stats
+- [x] **League Components**: League lists, participants, customization
+- [x] **Dashboard Components**: Main dashboard, performance metrics
+- [x] **Global Components**: Menu, header, navigation
 
 **Target**: 95%+ components using standardized patterns
 

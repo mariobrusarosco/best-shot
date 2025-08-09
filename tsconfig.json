@@ -31,10 +31,9 @@
 	},
 	"include": [
 		"src",
-		"settings",
+		"settings", 
 		"global.d.ts",
 		"node_modules/@tabler/icons-react/**/*.mjs"
-		// "node_modules/@tabler/icons-react/dist/esm/tabler-icons-react.d.ts"
 	],
 	"references": [{ "path": "./tsconfig.node.json" }]
 }

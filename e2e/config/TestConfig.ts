@@ -48,7 +48,7 @@ export const demoConfig: TestConfig = {
 	baseURL: 'https://best-shot-demo.mariobrusarosco.com',
 	timeout: 30000,
 	retries: 2,
-	browsers: ['chromium'],
+	browsers: ['chromium', 'firefox', 'webkit'],
 	viewport: { width: 1280, height: 720 },
 	auth: {
 		protectedRoutes: [

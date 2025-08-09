@@ -13,6 +13,7 @@
  */
 
 import { createTheme } from '@mui/material/styles';
+import React from 'react';
 
 // Foundation imports
 import { MUI_PALETTE_COLORS, DESIGN_SYSTEM_COLORS } from './foundation/colors';
@@ -24,14 +25,21 @@ import { MUI_BREAKPOINTS_CONFIG, createUIHelper } from './foundation/breakpoints
 import { buttonOverrides } from './components/button';
 import { cardOverrides } from './components/card';
 
-// Create the enhanced theme
-const theme = createTheme({
+// Create the base theme first
+const baseTheme = createTheme({
 	// === FOUNDATION ===
 	
-	// Color system
+	// Color system - only standard MUI colors first
 	palette: {
 		mode: 'light',
-		...MUI_PALETTE_COLORS,
+		primary: MUI_PALETTE_COLORS.primary,
+		secondary: MUI_PALETTE_COLORS.secondary,
+		error: MUI_PALETTE_COLORS.error,
+		warning: MUI_PALETTE_COLORS.warning,
+		info: MUI_PALETTE_COLORS.info,
+		success: MUI_PALETTE_COLORS.success,
+		background: MUI_PALETTE_COLORS.background,
+		text: MUI_PALETTE_COLORS.text,
 	},
 	
 	// Typography system  
@@ -43,7 +51,9 @@ const theme = createTheme({
 	spacing: MUI_SPACING_CONFIG,
 	
 	// Breakpoint system
-	breakpoints: MUI_BREAKPOINTS_CONFIG,
+	breakpoints: {
+		values: MUI_BREAKPOINTS_CONFIG.values,
+	},
 	
 	// Shape system
 	shape: {
@@ -168,8 +178,10 @@ const theme = createTheme({
 
 // === EXTENDED THEME WITH DESIGN SYSTEM ===
 
-// Augment the theme with our design system tokens
+// === MUI MODULE AUGMENTATIONS ===
+
 declare module '@mui/material/styles' {
+	// Extend theme with design system tokens
 	interface Theme {
 		designSystem: typeof DESIGN_SYSTEM_COLORS & typeof DESIGN_SYSTEM_SPACING;
 	}
@@ -178,7 +190,21 @@ declare module '@mui/material/styles' {
 		designSystem?: typeof DESIGN_SYSTEM_COLORS & typeof DESIGN_SYSTEM_SPACING;
 	}
 	
-	// Extend palette with custom colors
+	// Custom breakpoints (matching existing system)
+	interface BreakpointOverrides {
+		xs: false;
+		sm: false;
+		md: false;
+		lg: false;
+		xl: false;
+		all: true;
+		mobile: true;
+		tablet: true;
+		laptop: true;
+		desktop: true;
+	}
+	
+	// Custom palette colors
 	interface Palette {
 		black: typeof DESIGN_SYSTEM_COLORS.black;
 		neutral: typeof DESIGN_SYSTEM_COLORS.neutral;
@@ -197,14 +223,50 @@ declare module '@mui/material/styles' {
 		pink?: typeof DESIGN_SYSTEM_COLORS.pink;
 	}
 	
-	// Extend button variants
+	// Custom typography variants
+	interface TypographyVariants {
+		paragraph: React.CSSProperties;
+		topic: React.CSSProperties;
+		label: React.CSSProperties;
+		tag: React.CSSProperties;
+	}
+	
+	interface TypographyVariantsOptions {
+		paragraph?: React.CSSProperties;
+		topic?: React.CSSProperties;
+		label?: React.CSSProperties;
+		tag?: React.CSSProperties;
+	}
+}
+
+// Update Typography component prop variants
+declare module '@mui/material/Typography' {
+	interface TypographyPropsVariantOverrides {
+		paragraph: true;
+		topic: true;
+		label: true;
+		tag: true;
+		// Don't override caption as it's a built-in MUI variant
+		// Disable unused variants to match global.d.ts
+		h5: false;
+		subtitle1: false;
+		subtitle2: false;
+		body1: false;
+		body2: false;
+	}
+}
+
+// Button variant overrides
+declare module '@mui/material/Button' {
 	interface ButtonPropsVariantOverrides {
 		tournament: true;
 		aiPrediction: true;
 	}
-	
-	// Extend card variants
-	interface CardPropsVariantOverrides {
+}
+
+// Paper/Card variant overrides  
+declare module '@mui/material/Paper' {
+	interface PaperPropsVariantOverrides {
 		tournament: true;
 		match: true;
 		league: true;
@@ -214,8 +276,18 @@ declare module '@mui/material/styles' {
 	}
 }
 
-// Add design system tokens to theme
+// Add design system tokens and custom palette colors to theme
 const enhancedTheme = createTheme(theme, {
+	palette: {
+		...theme.palette,
+		// Add custom colors that MUI doesn't recognize by default
+		black: MUI_PALETTE_COLORS.black,
+		neutral: MUI_PALETTE_COLORS.neutral,
+		teal: MUI_PALETTE_COLORS.teal,
+		green: MUI_PALETTE_COLORS.green,
+		red: MUI_PALETTE_COLORS.red,
+		pink: MUI_PALETTE_COLORS.pink,
+	},
 	designSystem: {
 		...DESIGN_SYSTEM_COLORS,
 		...DESIGN_SYSTEM_SPACING,

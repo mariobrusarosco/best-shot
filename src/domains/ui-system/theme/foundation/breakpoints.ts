@@ -73,7 +73,7 @@ export const MUI_BREAKPOINTS_CONFIG = {
 	// Unit for breakpoint values
 	unit: 'px',
 	// Custom breakpoint names (not readonly to satisfy MUI)
-	keys: ['all', 'mobile', 'tablet', 'laptop', 'desktop'],
+	keys: ['all', 'mobile', 'tablet', 'laptop', 'desktop'] as const,
 };
 
 // Responsive Design Tokens

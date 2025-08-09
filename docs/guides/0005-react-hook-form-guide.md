@@ -97,7 +97,7 @@ export const CustomForm = ({ onSubmit, defaultValues, isLoading }: FormProps) =>
 ```tsx
 // src/domains/ui-system/components/form/form-input.tsx
 import { Controller, type Control, type FieldPath, type FieldValues } from "react-hook-form";
-import { AppInput } from "@/domains/ui-system/components/input/input";
+import { AppInput } from "@/domains/ui-system/components";
 import { Typography } from "@mui/material";
 
 interface AppFormInputProps<T extends FieldValues> {
@@ -283,7 +283,7 @@ export const AppFormCheckbox = <T extends FieldValues>({
 import { useFieldArray, type Control, type FieldPath, type FieldValues } from "react-hook-form";
 import { IconButton, Box } from "@mui/material";
 import { IconPlus, IconTrash } from "@tabler/icons-react";
-import { AppButton } from "@/domains/ui-system/components/button/button";
+import { AppButton } from "@/domains/ui-system/components";
 
 interface AppFormFieldArrayProps<T extends FieldValues> {
   name: FieldPath<T>;

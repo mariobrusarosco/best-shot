@@ -4,7 +4,7 @@ import { useLocation } from "@tanstack/react-router";
 import { CustomLink } from "@/domains/ui-system/components/link/link";
 import { shimmerEffect } from "@/domains/ui-system/components/skeleton/skeleton";
 import { UIHelper } from "@/theming/theme";
-import type { ITournament } from "../schemas";
+import type { ITournament } from "../schema";
 
 const TournamentTabs = ({ tournament }: { tournament?: ITournament }) => {
 	const location = useLocation();

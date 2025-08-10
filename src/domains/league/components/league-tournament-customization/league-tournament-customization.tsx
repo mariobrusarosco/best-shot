@@ -1,7 +1,7 @@
 import { Box, Divider, Stack, styled, Tooltip, Typography } from "@mui/material";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
-import type { ITournament } from "@/domains/tournament/schemas";
+import type { ITournament } from "@/domains/tournament/schema";
 import { AppButton } from "@/domains/ui-system/components/button/button";
 import { AppIcon } from "@/domains/ui-system/components/icon/icon";
 import { Surface } from "@/domains/ui-system/components/surface/surface";

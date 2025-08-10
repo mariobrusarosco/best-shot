@@ -8,7 +8,7 @@ import {
 } from "@/domains/ui-system/components/skeleton/skeleton";
 import { Surface } from "@/domains/ui-system/components/surface/surface";
 import type { useTournamentPerformance } from "../../hooks/use-tournament-performance";
-import type { ITournamentPerformance } from "../../schemas";
+import type { ITournamentPerformance } from "../../schema";
 
 const TournamentPerformanceStats = ({
 	basicPerformance,

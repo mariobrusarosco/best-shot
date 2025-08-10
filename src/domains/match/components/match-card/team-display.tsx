@@ -1,6 +1,6 @@
 import { Box, styled, Typography } from "@mui/material";
 import { useTournamentStandings } from "@/domains/tournament/hooks/use-tournament-standings";
-import type { ITournamentStandings } from "@/domains/tournament/schemas";
+import type { ITournamentStandings } from "@/domains/tournament/schema";
 import { AppPill } from "@/domains/ui-system/components/pill/pill";
 import { UIHelper } from "@/theming/theme";
 import type { IMatch } from "../../typing";

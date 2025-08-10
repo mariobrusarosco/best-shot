@@ -27,7 +27,7 @@ export const TournamentSchema = z
 	})
 	.describe("A tournament competition where users make predictions");
 
-export type ITournament = z.infer<typeof TournamentSchema>;
+export type I_Tournament = z.infer<typeof TournamentSchema>;
 
 const TournamentPerformanceSchema = z.object({
 	lastUpdated: z.string(),

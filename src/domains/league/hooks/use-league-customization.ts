@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useTournaments } from "@/domains/tournament/hooks/use-tournaments";
-import type { ITournament } from "@/domains/tournament/schemas";
+import type { ITournament } from "@/domains/tournament/schema";
 
 export const useLeagueTournaments = (currentTournaments: ITournament[]) => {
 	const [customMode, setCustomMode] = useState(false);

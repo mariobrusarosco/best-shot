@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import type { ITournament } from "../schemas";
+import type { ITournament } from "../schema";
 import { getTournaments } from "../server-state/fetchers";
 
 export const useTournaments = () => {

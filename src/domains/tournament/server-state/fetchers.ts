@@ -5,7 +5,7 @@ import {
 	type ITournamentPerformanceWithDetails,
 	type ITournamentStandings,
 	TournamentSchema,
-} from "@/domains/tournament/schemas";
+} from "@/domains/tournament/schema";
 
 export const getTournament = async ({ queryKey }: { queryKey: any }) => {
 	const [_key, { id, round }] = queryKey;

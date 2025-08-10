@@ -1,7 +1,7 @@
 import { styled } from "@mui/material";
 import { Box } from "@mui/system";
 import { UIHelper } from "@/theming/theme";
-import type { ITournament } from "../schemas";
+import type { ITournament } from "../schema";
 import { TournamentCard, TournamentCardSkeleton } from "./tournament-card";
 
 interface Props {

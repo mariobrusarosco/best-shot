@@ -15,7 +15,7 @@ import { OverflowOnHover } from "@/domains/ui-system/utils";
 import { theme, UIHelper } from "@/theming/theme";
 import { useTournament } from "../../hooks/use-tournament";
 import { useTournamentStandings } from "../../hooks/use-tournament-standings";
-import type { ITournamentStandings } from "../../schemas";
+import type { ITournamentStandings } from "../../schema";
 
 const TournamentStandings = () => {
 	const tournamentStandings = useTournamentStandings();

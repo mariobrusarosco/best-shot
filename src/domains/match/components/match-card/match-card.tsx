@@ -10,9 +10,9 @@ import { useGuessInputs } from "@/domains/guess/hooks/use-guess-inputs";
 import type { useGuessMutation } from "@/domains/guess/hooks/use-guess-mutation";
 import { type GUESS_STATUS, GUESS_STATUSES, type IGuess } from "@/domains/guess/typing";
 import { AppButton } from "@/domains/ui-system/components/app-button/app-button";
-import { AppIcon } from "@/domains/ui-system/components/icon/icon";
-import { shimmerEffect } from "@/domains/ui-system/components/skeleton/skeleton";
-import { Surface } from "@/domains/ui-system/components/surface/surface";
+import { AppIcon } from "@/domains/ui-system/components/app-icon";
+import { appShimmerEffect } from "@/domains/ui-system/components/app-skeleton";
+import { AppSurface } from "@/domains/ui-system/components/app-surface";
 import { theme, UIHelper } from "@/theming/theme";
 import type { IMatch } from "../../typing";
 import { defineMatchTimebox } from "../../utils";
@@ -173,7 +173,7 @@ const MatchCard = ({ guess, match, guessMutation }: Props) => {
 // ===== STYLED COMPONENTS (Following Static Styled Components Pattern) =====
 
 // Main match card container with motion support
-const Card = styled(motion(Surface))(({ theme }) => ({
+const Card = styled(motion(AppSurface))(({ theme }) => ({
 	display: "flex",
 	flexDirection: "column",
 	backgroundColor: theme.palette.black[800],
@@ -253,7 +253,7 @@ const Button = styled(AppButton)(({ theme }) => ({
 const Skeleton = styled(Card)(() => ({
 	minHeight: "140px",
 	position: "relative",
-	...shimmerEffect(),
+	...appShimmerEffect(),
 }));
 
 export default {

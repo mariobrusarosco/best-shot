@@ -1,5 +1,5 @@
 import { styled } from "@mui/material";
-import { AppButton } from "@/domains/ui-system/components/button/button";
+import { AppButtonBase } from "@/domains/ui-system/components/app-button-base";
 import { ScreenMainContent } from "@/domains/ui-system/layout/screen-main-content";
 
 export const MyAccount = styled(ScreenMainContent)(({ theme }) => ({
@@ -8,7 +8,7 @@ export const MyAccount = styled(ScreenMainContent)(({ theme }) => ({
 	gap: theme.spacing(2),
 }));
 
-export const LogoutButton = styled(AppButton)(({ theme }) => ({
+export const LogoutButton = styled(AppButtonBase)(({ theme }) => ({
 	display: "block",
 	padding: theme.spacing(2, 4),
 	borderRadius: theme.spacing(1),

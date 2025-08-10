@@ -1,7 +1,7 @@
 import { Box, Typography } from "@mui/material";
 import { styled } from "@mui/system";
 import type { GUESS_STATUS, IGuess } from "@/domains/guess/typing";
-import { AppPill } from "@/domains/ui-system/components/pill/pill";
+import { AppPill } from "@/domains/ui-system/components/app-pill";
 import { theme } from "@/theming/theme";
 
 interface Props {

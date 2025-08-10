@@ -1,5 +1,5 @@
 import { Box, styled, Typography } from "@mui/material";
-import { AppPill } from "@/domains/ui-system/components/pill/pill";
+import { AppPill } from "@/domains/ui-system/components/app-pill";
 import type { IMatch } from "../../typing";
 
 export const ScoreDisplay = ({

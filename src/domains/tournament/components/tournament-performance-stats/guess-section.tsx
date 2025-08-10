@@ -1,9 +1,9 @@
 import { Box, Stack, styled, Typography } from "@mui/material";
 import { useState } from "react";
 import type { IGuess } from "@/domains/guess/typing";
-import { AppButton } from "@/domains/ui-system/components/button/button";
-import { AppIcon } from "@/domains/ui-system/components/icon/icon";
-import { Surface } from "@/domains/ui-system/components/surface/surface";
+import { AppButtonBase } from "@/domains/ui-system/components/app-button-base";
+import { AppIcon } from "@/domains/ui-system/components/app-icon";
+import { AppSurface } from "@/domains/ui-system/components/app-surface";
 
 export const GuessSection = ({
 	groupOfGuesses,
@@ -83,7 +83,7 @@ export const GuessSection = ({
 	);
 };
 
-export const ToggleButton = styled(AppButton)(
+export const ToggleButton = styled(AppButtonBase)(
 	({ theme }) => `
 		border-radius: 50%;
 		color: ${theme.palette.neutral[100]};
@@ -93,7 +93,7 @@ export const ToggleButton = styled(AppButton)(
 	`
 );
 
-const GuessCard = styled(Surface)(({ theme }) =>
+const GuessCard = styled(AppSurface)(({ theme }) =>
 	theme.unstable_sx({
 		backgroundColor: "black.800",
 		px: 2,

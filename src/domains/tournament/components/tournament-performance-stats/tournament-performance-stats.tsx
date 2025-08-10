@@ -1,12 +1,12 @@
 import { Box, Stack, styled, Typography } from "@mui/material";
-import { AppButton } from "@/domains/ui-system/components/button/button";
-import { Counter } from "@/domains/ui-system/components/counter/counter";
-import { GridOfCards } from "@/domains/ui-system/components/grid-of-cards/grid-of-cards";
+import { AppButtonBase } from "@/domains/ui-system/components/app-button-base";
+import { AppCounter } from "@/domains/ui-system/components/app-counter";
+import { AppGridOfCards } from "@/domains/ui-system/components/app-grid-of-cards";
 import {
-	shimmerEffect,
-	TypographySkeleton,
-} from "@/domains/ui-system/components/skeleton/skeleton";
-import { Surface } from "@/domains/ui-system/components/surface/surface";
+	AppTypographySkeleton,
+	appShimmerEffect,
+} from "@/domains/ui-system/components/app-skeleton";
+import { AppSurface } from "@/domains/ui-system/components/app-surface";
 import type { useTournamentPerformance } from "../../hooks/use-tournament-performance";
 import type { ITournamentPerformance } from "../../schema";
 
@@ -40,7 +40,7 @@ const TournamentPerformanceStats = ({
 					<Typography textTransform="uppercase" variant="caption" color="neutral.100">
 						{basicPerformance.lastUpdated && new Date(basicPerformance.lastUpdated).toUTCString()}
 					</Typography>
-					<AppButton
+					<AppButtonBase
 						sx={{
 							width: "150px",
 							height: "30px",
@@ -55,7 +55,7 @@ const TournamentPerformanceStats = ({
 						<Typography variant="caption" color="neutral.100">
 							Update
 						</Typography>
-					</AppButton>
+					</AppButtonBase>
 				</Box>
 			</Box>
 
@@ -65,7 +65,7 @@ const TournamentPerformanceStats = ({
 						points
 					</Typography>
 					<Typography textTransform="uppercase" variant="h1" color="neutral.100">
-						<Counter initialValue={Number(basicPerformance?.points) ?? 0} />
+						<AppCounter initialValue={Number(basicPerformance?.points) ?? 0} />
 					</Typography>
 				</Stack>
 			</PerfCard>
@@ -73,7 +73,7 @@ const TournamentPerformanceStats = ({
 	);
 };
 
-const PerfCard = styled(Surface)(({ theme }) =>
+const PerfCard = styled(AppSurface)(({ theme }) =>
 	theme.unstable_sx({
 		backgroundColor: "black.800",
 		px: 2,
@@ -89,7 +89,7 @@ const PerfCard = styled(Surface)(({ theme }) =>
 const PerfCardSkeleton = styled(PerfCard)(({ theme }) =>
 	theme.unstable_sx({
 		position: "relative",
-		...shimmerEffect(),
+		...appShimmerEffect(),
 	})
 );
 
@@ -109,8 +109,8 @@ export const Skeleton = () => {
 						gap: 1,
 					}}
 				>
-					<TypographySkeleton width={100} height={20} />
-					<TypographySkeleton width={150} height={30} />
+					<AppTypographySkeleton width={100} height={20} />
+					<AppTypographySkeleton width={150} height={30} />
 				</Box>
 			</Box>
 
@@ -125,12 +125,12 @@ export const Skeleton = () => {
 			</PerfCardSkeleton>
 
 			<Stack>
-				<GridOfCards>
+				<AppGridOfCards>
 					<PerfCardSkeleton />
 					<PerfCardSkeleton />
 					<PerfCardSkeleton />
 					<PerfCardSkeleton />
-				</GridOfCards>
+				</AppGridOfCards>
 			</Stack>
 		</Stack>
 	);

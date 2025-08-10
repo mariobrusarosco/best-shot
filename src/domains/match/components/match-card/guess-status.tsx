@@ -1,7 +1,7 @@
 import { Stack, Typography } from "@mui/material";
 import type { IGuess } from "@/domains/guess/typing";
-import { AppIcon } from "@/domains/ui-system/components/icon/icon";
-import { AppPill } from "@/domains/ui-system/components/pill/pill";
+import { AppIcon } from "@/domains/ui-system/components/app-icon";
+import { AppPill } from "@/domains/ui-system/components/app-pill";
 import { theme } from "@/theming/theme";
 
 export const GuessStatus = ({ guess }: { guess: IGuess }) => {

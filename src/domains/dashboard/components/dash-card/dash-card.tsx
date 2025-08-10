@@ -1,9 +1,9 @@
 import { styled } from "@mui/system";
-import { shimmerEffect } from "@/domains/ui-system/components/skeleton/skeleton";
-import { Surface } from "@/domains/ui-system/components/surface/surface";
+import { appShimmerEffect } from "@/domains/ui-system/components/app-skeleton";
+import { AppSurface } from "@/domains/ui-system/components/app-surface";
 import { UIHelper } from "@/theming/theme";
 
-const Card = styled(Surface)(({ theme }) =>
+const Card = styled(AppSurface)(({ theme }) =>
 	theme.unstable_sx({
 		backgroundColor: "black.800",
 		p: 2,
@@ -23,7 +23,7 @@ const Card = styled(Surface)(({ theme }) =>
 
 export const CardSkeleton = styled(Card)(() => ({
 	position: "relative",
-	...shimmerEffect(),
+	...appShimmerEffect(),
 }));
 
 export const DashCard = {

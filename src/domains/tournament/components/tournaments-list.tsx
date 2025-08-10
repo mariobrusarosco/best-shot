@@ -12,25 +12,25 @@ const TournamentsList = ({ tournaments }: Props) => {
 	if (tournaments === undefined) return null;
 
 	return (
-		<GridOfCards data-ui="tournaments-list" as="ul">
+		<AppGridOfCards data-ui="tournaments-list" as="ul">
 			{tournaments?.map((tournament) => (
 				<TournamentCard tournament={tournament} key={tournament.id} />
 			))}
-		</GridOfCards>
+		</AppGridOfCards>
 	);
 };
 
 const TournamentsListLoading = () => {
 	return (
-		<GridOfCards data-ui="tournaments-list" as="ul">
+		<AppGridOfCards data-ui="tournaments-list" as="ul">
 			{Array.from({ length: 10 }).map((_) => (
 				<TournamentCardSkeleton />
 			))}
-		</GridOfCards>
+		</AppGridOfCards>
 	);
 };
 
-const GridOfCards = styled(Box)(({ theme }) => ({
+const AppGridOfCards = styled(Box)(({ theme }) => ({
 	borderRadius: theme.spacing(1),
 	display: "grid",
 	gap: theme.spacing(2),

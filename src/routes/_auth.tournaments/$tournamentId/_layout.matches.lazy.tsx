@@ -8,8 +8,8 @@ import TournamentRoundsBar from "@/domains/tournament/components/tournament-roun
 import TournamentStandings from "@/domains/tournament/components/tournament-standings/tournament-standings";
 import { useTournament } from "@/domains/tournament/hooks/use-tournament";
 import { useTournamentRounds } from "@/domains/tournament/hooks/use-tournament-rounds";
-import { AppButton } from "@/domains/ui-system/components/button/button";
-import { AppPill } from "@/domains/ui-system/components/pill/pill";
+import { AppButtonBase } from "@/domains/ui-system/components/app-button-base";
+import { AppPill } from "@/domains/ui-system/components/app-pill";
 import { OverflowOnHover } from "@/domains/ui-system/utils";
 import { UIHelper } from "@/theming/theme";
 
@@ -55,7 +55,7 @@ export const TournamentMatchesScreen = () => {
 					</AppPill.Component>
 
 					{fillWithAI && (
-						<AppButton
+						<AppButtonBase
 							onClick={() => {
 								console.log("fill with AI");
 							}}
@@ -70,7 +70,7 @@ export const TournamentMatchesScreen = () => {
 							>
 								Fill with AI
 							</Typography>
-						</AppButton>
+						</AppButtonBase>
 					)}
 				</RoundHeading>
 

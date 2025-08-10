@@ -1,8 +1,8 @@
 import { Tab, Tabs, TabsList } from "@mui/base";
 import { Box, styled, Typography } from "@mui/material";
 import { useLocation } from "@tanstack/react-router";
-import { CustomLink } from "@/domains/ui-system/components/link/link";
-import { shimmerEffect } from "@/domains/ui-system/components/skeleton/skeleton";
+import { CustomLink } from "@/domains/ui-system/components/app-link/link";
+import { appShimmerEffect } from "@/domains/ui-system/components/app-skeleton";
 import { UIHelper } from "@/theming/theme";
 import type { ITournament } from "../schema";
 
@@ -98,7 +98,7 @@ export const TabsSkeleton = styled(Wrapper)(({ theme }) =>
 		position: "relative",
 		height: "41px",
 		border: "none",
-		...shimmerEffect(),
+		...appShimmerEffect(),
 	})
 );
 export default {

@@ -1,8 +1,8 @@
 import { Box, styled, Typography, type TypographyProps } from "@mui/material";
-import { AppButton } from "@/domains/ui-system/components/button/button";
-import { AppInput } from "@/domains/ui-system/components/input/input";
-import { AppPill } from "@/domains/ui-system/components/pill/pill";
-import { Surface } from "@/domains/ui-system/components/surface/surface";
+import { AppButtonBase } from "@/domains/ui-system/components/app-button-base";
+import { AppInput } from "@/domains/ui-system/components/app-input";
+import { AppPill } from "@/domains/ui-system/components/app-pill";
+import { AppSurface } from "@/domains/ui-system/components/app-surface";
 import { useLeague } from "../../hooks/use-league";
 
 export const InviteToLeague = () => {
@@ -47,7 +47,7 @@ export const InviteToLeague = () => {
 	);
 };
 
-const SubmitButton = styled(AppButton)(({ theme }) => ({
+const SubmitButton = styled(AppButtonBase)(({ theme }) => ({
 	my: 2,
 	width: 150,
 	marginTop: theme.spacing(2),
@@ -61,7 +61,7 @@ const SubmitButton = styled(AppButton)(({ theme }) => ({
 	},
 }));
 
-const Card = styled(Surface)(({ theme }) =>
+const Card = styled(AppSurface)(({ theme }) =>
 	theme.unstable_sx({
 		backgroundColor: "black.800",
 		px: 2,

@@ -4,11 +4,11 @@ import { Link } from "@tanstack/react-router";
 import { DashCard } from "@/domains/dashboard/components/dash-card/dash-card";
 import type { useMemberPerformance } from "@/domains/member/hooks/use-member-performance";
 import { TournamentLogo } from "@/domains/tournament/components/tournament-heading";
-import { AppButton } from "@/domains/ui-system/components/button/button";
-import { Counter } from "@/domains/ui-system/components/counter/counter";
-import { AppIcon } from "@/domains/ui-system/components/icon/icon";
-import { AppPill } from "@/domains/ui-system/components/pill/pill";
-import { shimmerEffect } from "@/domains/ui-system/components/skeleton/skeleton";
+import { AppButtonBase } from "@/domains/ui-system/components/app-button-base";
+import { AppCounter } from "@/domains/ui-system/components/app-counter";
+import { AppIcon } from "@/domains/ui-system/components/app-icon";
+import { AppPill } from "@/domains/ui-system/components/app-pill";
+import { appShimmerEffect } from "@/domains/ui-system/components/app-skeleton";
 import { DashGrid } from "../dash-grid";
 
 const TournamentsPerf = ({
@@ -69,7 +69,7 @@ const TournamentsPerf = ({
 
 								<Stack gap={1} alignItems="end">
 									<Typography textTransform="uppercase" variant="h4" color="neutral.100">
-										<Counter initialValue={tournaments.bestPerformance.points} />
+										<AppCounter initialValue={tournaments.bestPerformance.points} />
 									</Typography>
 									<Typography textTransform="uppercase" variant="label" color="teal.500">
 										points
@@ -113,7 +113,7 @@ const TournamentsPerf = ({
 
 								<Stack gap={1} alignItems="end">
 									<Typography textTransform="uppercase" variant="h4" color="neutral.100">
-										<Counter initialValue={tournaments?.worstPerformance?.points} />
+										<AppCounter initialValue={tournaments?.worstPerformance?.points} />
 									</Typography>
 									<Typography textTransform="uppercase" variant="label" color="teal.500">
 										points
@@ -139,7 +139,7 @@ const EmptyState = () => (
 // TODO This can be a <AppRouteButton />
 const CardRouteButton = ({ to, params = {} }: { to: string; params?: {} }) => {
 	return (
-		<AppButton
+		<AppButtonBase
 			sx={{
 				borderRadius: 1,
 				color: "teal.500",
@@ -148,7 +148,7 @@ const CardRouteButton = ({ to, params = {} }: { to: string; params?: {} }) => {
 			<Link to={to} params={params}>
 				<AppIcon size="extra-small" name="ChevronRight" />
 			</Link>
-		</AppButton>
+		</AppButtonBase>
 	);
 };
 
@@ -158,7 +158,7 @@ const CardRouteButtonSkeleton = styled(Box)(({ theme }) =>
 		backgroundColor: "black.800",
 		minWidth: "30px",
 		borderRadius: 2,
-		...shimmerEffect(),
+		...appShimmerEffect(),
 	})
 );
 // TODO This can be a <AppRouteButton />

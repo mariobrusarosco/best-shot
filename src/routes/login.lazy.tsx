@@ -1,7 +1,7 @@
 import { Box, Stack, styled, Typography } from "@mui/material";
 import { createLazyFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { Authentication } from "@/domains/authentication";
-import { AppButton } from "@/domains/ui-system/components/button/button";
+import { AppButtonBase } from "@/domains/ui-system/components/app-button-base";
 import { PublicLayout } from "@/domains/ui-system/layout/public";
 import { theme } from "@/theming/theme";
 
@@ -58,7 +58,7 @@ const Login = styled(Box)(({ theme }) => ({
 	gap: theme.spacing(4),
 }));
 
-const LoginBUtton = styled(AppButton)(({ theme }) => ({
+const LoginBUtton = styled(AppButtonBase)(({ theme }) => ({
 	padding: theme.spacing(2, 4),
 	borderRadius: theme.spacing(1),
 	backgroundColor: theme.palette.teal[500],

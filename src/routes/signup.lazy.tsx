@@ -1,7 +1,7 @@
 import { Box, styled, Typography } from "@mui/material";
 import { createLazyFileRoute, Link } from "@tanstack/react-router";
 import { Authentication } from "@/domains/authentication";
-import { AppButton } from "@/domains/ui-system/components/button/button";
+import { AppButtonBase } from "@/domains/ui-system/components/app-button-base";
 import { PublicLayout } from "@/domains/ui-system/layout/public";
 import { theme } from "@/theming/theme";
 
@@ -55,14 +55,14 @@ const SignUp = styled(Box)(({ theme }) => ({
 	gap: theme.spacing(1),
 }));
 
-const SignUpBUtton = styled(AppButton)(({ theme }) => ({
+const SignUpBUtton = styled(AppButtonBase)(({ theme }) => ({
 	padding: theme.spacing(2, 4),
 	borderRadius: theme.spacing(1),
 	backgroundColor: theme.palette.teal[500],
 	color: theme.palette.neutral[100],
 }));
 
-const ProviderDisclaimer = styled(AppButton)(() => ({}));
+const ProviderDisclaimer = styled(AppButtonBase)(() => ({}));
 const LoginPageLink = styled(Link)(({ theme }) => ({
 	marginTop: theme.spacing(2),
 	padding: theme.spacing(1),

@@ -1,11 +1,11 @@
 import { Box, Stack, styled, Typography } from "@mui/material";
 import { Link } from "@tanstack/react-router";
 import type { useMemberPerformance } from "@/domains/member/hooks/use-member-performance";
-import { AppButton } from "@/domains/ui-system/components/button/button";
-import { GridOfCards } from "@/domains/ui-system/components/grid-of-cards/grid-of-cards";
-import { AppIcon } from "@/domains/ui-system/components/icon/icon";
-import { AppPill } from "@/domains/ui-system/components/pill/pill";
-import { shimmerEffect } from "@/domains/ui-system/components/skeleton/skeleton";
+import { AppButtonBase } from "@/domains/ui-system/components/app-button-base";
+import { AppGridOfCards } from "@/domains/ui-system/components/app-grid-of-cards";
+import { AppIcon } from "@/domains/ui-system/components/app-icon";
+import { AppPill } from "@/domains/ui-system/components/app-pill";
+import { appShimmerEffect } from "@/domains/ui-system/components/app-skeleton";
 
 import { DashCard } from "../dash-card/dash-card";
 import { DashGrid } from "../dash-grid";
@@ -128,7 +128,7 @@ const MainLeague = ({
 // TODO This can be a <AppRouteButton />
 const CardRouteButton = ({ to, params = {} }: { to: string; params?: {} }) => {
 	return (
-		<AppButton
+		<AppButtonBase
 			sx={{
 				borderRadius: 1,
 				color: "teal.500",
@@ -137,7 +137,7 @@ const CardRouteButton = ({ to, params = {} }: { to: string; params?: {} }) => {
 			<Link to={to} params={params}>
 				<AppIcon size="extra-small" name="ChevronRight" />
 			</Link>
-		</AppButton>
+		</AppButtonBase>
 	);
 };
 
@@ -150,7 +150,7 @@ const EmptyState = () => (
 const CardRouteButtonSkeleton = styled(Box)(({ theme }) =>
 	theme?.unstable_sx({
 		position: "relative",
-		...shimmerEffect(),
+		...appShimmerEffect(),
 		backgroundColor: "black.800",
 		minWidth: "30px",
 		borderRadius: 2,
@@ -166,10 +166,10 @@ const MainLeagueSkeleton = () => {
 				<CardRouteButtonSkeleton />
 			</Stack>
 
-			<GridOfCards>
+			<AppGridOfCards>
 				<DashCard.Skeleton />
 				<DashCard.Skeleton />
-			</GridOfCards>
+			</AppGridOfCards>
 		</Stack>
 	);
 };

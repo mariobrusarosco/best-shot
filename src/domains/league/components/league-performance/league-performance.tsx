@@ -1,10 +1,10 @@
 import { Box, styled, Typography } from "@mui/material";
 import { useQueryClient } from "@tanstack/react-query";
 import type { useLeague } from "@/domains/league/hooks/use-league";
-import { AppButton } from "@/domains/ui-system/components/button/button";
-import { GridOfCards } from "@/domains/ui-system/components/grid-of-cards/grid-of-cards";
-import { AppPill } from "@/domains/ui-system/components/pill/pill";
-import { Surface } from "@/domains/ui-system/components/surface/surface";
+import { AppButtonBase } from "@/domains/ui-system/components/app-button-base";
+import { AppGridOfCards } from "@/domains/ui-system/components/app-grid-of-cards";
+import { AppPill } from "@/domains/ui-system/components/app-pill";
+import { AppSurface } from "@/domains/ui-system/components/app-surface";
 
 export const LeaguePerformance = ({
 	league,
@@ -47,7 +47,7 @@ export const LeaguePerformance = ({
 					<Typography textTransform="uppercase" variant="caption" color="neutral.100">
 						{new Date().toISOString()}
 					</Typography>
-					<AppButton
+					<AppButtonBase
 						sx={{
 							width: "150px",
 							height: "30px",
@@ -65,19 +65,19 @@ export const LeaguePerformance = ({
 						<Typography variant="caption" color="neutral.100">
 							Update leaderboard
 						</Typography>
-					</AppButton>
+					</AppButtonBase>
 				</Box>
 			</Box>
 
-			<GridOfCards>
+			<AppGridOfCards>
 				<Card>adsda</Card>
-			</GridOfCards>
+			</AppGridOfCards>
 		</Box>
 	);
 };
 
 // TODO Unify this Card, if possible
-export const Card = styled(Surface)(({ theme }) =>
+export const Card = styled(AppSurface)(({ theme }) =>
 	theme.unstable_sx({
 		backgroundColor: "black.800",
 		padding: 2,

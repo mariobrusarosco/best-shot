@@ -3,7 +3,7 @@ import { styled } from "@mui/material";
 import { memo, useState } from "react";
 import { useAIPrediction } from "@/domains/ai/hooks/use-ai-prediction";
 import { AppButton } from "@/domains/ui-system/components/app-button/app-button";
-import { AppIcon } from "@/domains/ui-system/components/icon/icon";
+import { AppIcon } from "@/domains/ui-system/components/app-icon";
 
 interface AIPredictionButtonProps {
 	matchId: string;

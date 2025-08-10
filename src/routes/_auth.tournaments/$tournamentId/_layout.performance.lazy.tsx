@@ -4,7 +4,7 @@ import TournamentDetailedPerformanceStats from "@/domains/tournament/components/
 import TournamentPerformanceStats from "@/domains/tournament/components/tournament-performance-stats/tournament-performance-stats";
 import { useTournament } from "@/domains/tournament/hooks/use-tournament";
 import { useTournamentPerformance } from "@/domains/tournament/hooks/use-tournament-performance";
-import { TypographySkeleton } from "@/domains/ui-system/components/skeleton/skeleton";
+import { AppTypographySkeleton } from "@/domains/ui-system/components/app-skeleton";
 
 export const TournamentPerformance = () => {
 	const tournament = useTournament();
@@ -13,7 +13,7 @@ export const TournamentPerformance = () => {
 	if (performance.isPending || performance.isRefetching || tournament.isPending) {
 		return (
 			<Performance>
-				<TypographySkeleton width={200} height={22} />
+				<AppTypographySkeleton width={200} height={22} />
 
 				<TournamentPerformanceStats.Skeleton />
 			</Performance>

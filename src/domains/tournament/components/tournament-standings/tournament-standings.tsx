@@ -9,8 +9,8 @@ import {
 	TableRow,
 	Typography,
 } from "@mui/material";
-import { AppPill } from "@/domains/ui-system/components/pill/pill";
-import { shimmerEffect } from "@/domains/ui-system/components/skeleton/skeleton";
+import { AppPill } from "@/domains/ui-system/components/app-pill";
+import { appShimmerEffect } from "@/domains/ui-system/components/app-skeleton";
 import { OverflowOnHover } from "@/domains/ui-system/utils";
 import { theme, UIHelper } from "@/theming/theme";
 import { useTournament } from "../../hooks/use-tournament";
@@ -338,14 +338,14 @@ const TournamentStandings = () => {
 const Skeleton = () => {
 	return (
 		<Wrapper data-ui="standings">
-			<Heading sx={{ ...shimmerEffect() }}></Heading>
+			<Heading sx={{ ...appShimmerEffect() }}></Heading>
 
 			<StandingsTable size="small" aria-label="standings-table">
 				<TableHead>
-					<Row sx={{ ...shimmerEffect(), height: "20px" }} />
+					<Row sx={{ ...appShimmerEffect(), height: "20px" }} />
 				</TableHead>
 				<TableBody>
-					<Row sx={{ ...shimmerEffect(), py: 2 }} />
+					<Row sx={{ ...appShimmerEffect(), py: 2 }} />
 				</TableBody>
 			</StandingsTable>
 		</Wrapper>

@@ -2,9 +2,9 @@ import { Box, Divider, Stack, styled, Tooltip, Typography } from "@mui/material"
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import type { ITournament } from "@/domains/tournament/schema";
-import { AppButton } from "@/domains/ui-system/components/button/button";
-import { AppIcon } from "@/domains/ui-system/components/icon/icon";
-import { Surface } from "@/domains/ui-system/components/surface/surface";
+import { AppButtonBase } from "@/domains/ui-system/components/app-button-base";
+import { AppIcon } from "@/domains/ui-system/components/app-icon";
+import { AppSurface } from "@/domains/ui-system/components/app-surface";
 import { updateLeagueTournaments } from "../../server-side/mutations";
 import type { ILeague } from "../../typing";
 
@@ -233,7 +233,7 @@ const ListGrid = styled(Box)(({ theme }) =>
 	})
 );
 
-const Card = styled(Surface)(({ theme }) =>
+const Card = styled(AppSurface)(({ theme }) =>
 	theme.unstable_sx({
 		display: "flex",
 		justifyContent: "space-between",
@@ -278,7 +278,7 @@ const IconBox = styled(Box)(({ theme }) =>
 	})
 );
 
-const SaveButton = styled(AppButton)(({ theme }) =>
+const SaveButton = styled(AppButtonBase)(({ theme }) =>
 	theme.unstable_sx({
 		backgroundColor: "teal.500",
 		color: "neutral.100",

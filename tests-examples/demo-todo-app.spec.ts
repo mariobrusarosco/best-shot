@@ -256,7 +256,7 @@ test.describe('Editing', () => {
   });
 });
 
-test.describe('Counter', () => {
+test.describe('AppCounter', () => {
   test('should display the current number of todo items', async ({ page }) => {
     // create a new todo locator
     const newTodo = page.getByPlaceholder('What needs to be done?');

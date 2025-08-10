@@ -1,10 +1,10 @@
 import { styled, Typography, useMediaQuery } from "@mui/material";
-import { shimmerEffect } from "@/domains/ui-system/components/skeleton/skeleton";
-import { Surface, type SurfaceProps } from "@/domains/ui-system/components/surface/surface";
-import { GoBackButton } from "@/domains/ui-system/go-back-button/go-back-button";
+import { appShimmerEffect } from "@/domains/ui-system/components/app-skeleton";
+import { AppSurface, type AppSurfaceProps } from "@/domains/ui-system/components/app-surface";
+import { GoBackButton } from "@/domains/global/components/go-back-button/go-back-button";
 import { UIHelper } from "@/theming/theme";
 
-interface Props extends SurfaceProps {
+interface Props extends AppSurfaceProps {
 	children?: React.ReactNode;
 	title?: string;
 	subtitle?: string;
@@ -49,11 +49,11 @@ export const ScreenHeading = (props: Props & WrapperProps) => {
 	);
 };
 
-interface WrapperProps extends SurfaceProps {
+interface WrapperProps extends AppSurfaceProps {
 	dynamicHeight?: string | number;
 }
 
-export const Wrapper = styled(Surface)<WrapperProps>(({ theme }) => ({
+export const Wrapper = styled(AppSurface)<WrapperProps>(({ theme }) => ({
 	display: "flex",
 	justifyContent: "space-between",
 	alignItems: "center",
@@ -80,7 +80,7 @@ export const Wrapper = styled(Surface)<WrapperProps>(({ theme }) => ({
 	},
 }));
 
-const TextBox = styled(Surface)(() => ({
+const TextBox = styled(AppSurface)(() => ({
 	display: "flex",
 	flexDirection: "column",
 
@@ -96,7 +96,7 @@ export const ScreenHeadingSkeleton = styled(Wrapper)(({ theme, dynamicHeight }) 
 	position: "relative",
 	minHeight: dynamicHeight ?? "150px",
 
-	...shimmerEffect(),
+	...appShimmerEffect(),
 
 	[UIHelper.startsOn("tablet")]: {
 		minHeight: dynamicHeight ?? "200px",

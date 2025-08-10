@@ -2,9 +2,9 @@ import { Box, styled, Typography } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AppButton } from "@/domains/ui-system/components/app-button/app-button";
-import { AppFormInput } from "@/domains/ui-system/components/form";
-import { shimmerEffect } from "@/domains/ui-system/components/skeleton/skeleton";
-import { Surface } from "@/domains/ui-system/components/surface/surface";
+import { AppFormInput } from "@/domains/ui-system/components/app-form";
+import { appShimmerEffect } from "@/domains/ui-system/components/app-skeleton";
+import { AppSurface } from "@/domains/ui-system/components/app-surface";
 import { useLeagues } from "../../hooks/use-leagues";
 import { createLeagueSchema, type CreateLeagueFormData } from "../../schemas";
 
@@ -102,7 +102,7 @@ const SubmitButton = styled(AppButton)(({ theme }) => ({
 	},
 }));
 
-const Card = styled(Surface)(({ theme }) => ({
+const Card = styled(AppSurface)(({ theme }) => ({
 	backgroundColor: theme.palette.black[800],
 	paddingX: theme.spacing(2),
 	paddingY: theme.spacing(2),
@@ -125,7 +125,7 @@ const NewLeagueSkeleton = () => {
 
 const Skeleton = styled(Box)(() => ({
 	position: "relative",
-	...shimmerEffect(),
+	...appShimmerEffect(),
 }));
 
 export default {

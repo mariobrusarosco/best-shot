@@ -5,8 +5,8 @@ import {
 import { Box, styled } from "@mui/system";
 import { forwardRef, useRef } from "react";
 import type { GUESS_STATUS } from "@/domains/guess/typing";
-import { AppButton } from "@/domains/ui-system/components/button/button";
-import { AppIcon } from "@/domains/ui-system/components/icon/icon";
+import { AppButtonBase } from "@/domains/ui-system/components/app-button-base";
+import { AppIcon } from "@/domains/ui-system/components/app-icon";
 
 export const NumberInput = forwardRef(
 	(props: NumberInputProps, ref: React.ForwardedRef<HTMLDivElement>) => {
@@ -115,7 +115,7 @@ export const InputStyled = styled("input")(({ theme }) => ({
 	alignSelf: "center",
 }));
 
-const InputButtonStyled = styled(AppButton)(({ theme }) => ({
+const InputButtonStyled = styled(AppButtonBase)(({ theme }) => ({
 	backgroundColor: theme.palette.teal[500],
 	color: theme.palette.neutral[100],
 	borderRadius: theme.spacing(0.5),

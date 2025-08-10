@@ -1,7 +1,7 @@
 import { styled } from "@mui/material";
 import { Box } from "@mui/system";
-import { shimmerEffectNew } from "@/domains/ui-system/components/skeleton/skeleton";
-import { Surface } from "@/domains/ui-system/components/surface/surface";
+import { appShimmerEffectNew } from "@/domains/ui-system/components/app-skeleton";
+import { AppSurface } from "@/domains/ui-system/components/app-surface";
 import { UIHelper } from "@/theming/theme";
 
 export const MatchdayGrid = styled(Box)(({ theme }) => ({
@@ -11,7 +11,7 @@ export const MatchdayGrid = styled(Box)(({ theme }) => ({
 	overflow: "auto",
 }));
 
-export const MatchdayCard = styled(Surface)(({ theme }) => ({
+export const MatchdayCard = styled(AppSurface)(({ theme }) => ({
 	backgroundColor: theme.palette.black[800],
 	borderRadius: theme.spacing(2),
 	display: "flex",
@@ -27,6 +27,6 @@ export const MatchdayCard = styled(Surface)(({ theme }) => ({
 export const MatchdayCardSkeleton = styled(Box)(() => {
 	return {
 		position: "relative",
-		...shimmerEffectNew,
+		...appShimmerEffectNew,
 	};
 });

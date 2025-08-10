@@ -1,13 +1,13 @@
 import { Box, Stack, styled, Typography } from "@mui/material";
 import { useState } from "react";
-import { AppButton } from "@/domains/ui-system/components/button/button";
-import { Counter } from "@/domains/ui-system/components/counter/counter";
-import { GridOfCards } from "@/domains/ui-system/components/grid-of-cards/grid-of-cards";
+import { AppButtonBase } from "@/domains/ui-system/components/app-button-base";
+import { AppCounter } from "@/domains/ui-system/components/app-counter";
+import { AppGridOfCards } from "@/domains/ui-system/components/app-grid-of-cards";
 import {
-	shimmerEffect,
-	TypographySkeleton,
-} from "@/domains/ui-system/components/skeleton/skeleton";
-import { Surface } from "@/domains/ui-system/components/surface/surface";
+	appShimmerEffect,
+	AppTypographySkeleton,
+} from "@/domains/ui-system/components/app-skeleton";
+import { AppSurface } from "@/domains/ui-system/components/app-surface";
 import { useTournamentDetailedPerformance } from "../../hooks/use-tournament-detailed-performance";
 
 const TournamentDetailedPerformanceStats = () => {
@@ -18,7 +18,7 @@ const TournamentDetailedPerformanceStats = () => {
 
 	return (
 		<Stack>
-			<AppButton
+			<AppButtonBase
 				sx={{
 					width: "150px",
 					height: "30px",
@@ -30,19 +30,19 @@ const TournamentDetailedPerformanceStats = () => {
 				<Typography variant="caption" color="neutral.100">
 					see more
 				</Typography>
-			</AppButton>
+			</AppButtonBase>
 
 			{detailedPerformance.data && (
 				<Stack gap={4} pt={5}>
 					<Stack>
-						<GridOfCards>
+						<AppGridOfCards>
 							<PerfCard>
 								<Stack direction="row" gap={1.5} alignItems="center">
 									<Typography textTransform="uppercase" variant="caption" color="teal.500">
 										correct guesses
 									</Typography>
 									<Typography textTransform="uppercase" variant="h4" color="neutral.100">
-										<Counter initialValue={detailedPerformance.data?.guessesByOutcome.correct} />
+										<AppCounter initialValue={detailedPerformance.data?.guessesByOutcome.correct} />
 									</Typography>
 								</Stack>
 							</PerfCard>
@@ -52,7 +52,7 @@ const TournamentDetailedPerformanceStats = () => {
 										incorrect guesses
 									</Typography>
 									<Typography textTransform="uppercase" variant="h4" color="neutral.100">
-										<Counter initialValue={detailedPerformance.data.guessesByOutcome.incorrect} />
+										<AppCounter initialValue={detailedPerformance.data.guessesByOutcome.incorrect} />
 									</Typography>
 								</Stack>
 							</PerfCard>
@@ -62,7 +62,7 @@ const TournamentDetailedPerformanceStats = () => {
 										waiting for macth outcome
 									</Typography>
 									<Typography textTransform="uppercase" variant="h4" color="neutral.100">
-										<Counter initialValue={detailedPerformance.data.details["waiting_for_game"]} />
+										<AppCounter initialValue={detailedPerformance.data.details["waiting_for_game"]} />
 									</Typography>
 								</Stack>
 							</PerfCard>
@@ -72,11 +72,11 @@ const TournamentDetailedPerformanceStats = () => {
 										you still can guess
 									</Typography>
 									<Typography textTransform="uppercase" variant="h4" color="neutral.100">
-										<Counter initialValue={detailedPerformance.data?.details["not-started"]} />
+										<AppCounter initialValue={detailedPerformance.data?.details["not-started"]} />
 									</Typography>
 								</Stack>
 							</PerfCard>
-						</GridOfCards>
+						</AppGridOfCards>
 					</Stack>
 
 					<Stack></Stack>
@@ -86,7 +86,7 @@ const TournamentDetailedPerformanceStats = () => {
 	);
 };
 
-const PerfCard = styled(Surface)(({ theme }) =>
+const PerfCard = styled(AppSurface)(({ theme }) =>
 	theme.unstable_sx({
 		backgroundColor: "black.800",
 		px: 2,
@@ -102,7 +102,7 @@ const PerfCard = styled(Surface)(({ theme }) =>
 const PerfCardSkeleton = styled(PerfCard)(({ theme }) =>
 	theme.unstable_sx({
 		position: "relative",
-		...shimmerEffect(),
+		...appShimmerEffect(),
 	})
 );
 
@@ -122,8 +122,8 @@ export const Skeleton = () => {
 						gap: 1,
 					}}
 				>
-					<TypographySkeleton width={100} height={20} />
-					<TypographySkeleton width={150} height={30} />
+					<AppTypographySkeleton width={100} height={20} />
+					<AppTypographySkeleton width={150} height={30} />
 				</Box>
 			</Box>
 
@@ -138,12 +138,12 @@ export const Skeleton = () => {
 			</PerfCardSkeleton>
 
 			<Stack>
-				<GridOfCards>
+				<AppGridOfCards>
 					<PerfCardSkeleton />
 					<PerfCardSkeleton />
 					<PerfCardSkeleton />
 					<PerfCardSkeleton />
-				</GridOfCards>
+				</AppGridOfCards>
 			</Stack>
 		</Stack>
 	);

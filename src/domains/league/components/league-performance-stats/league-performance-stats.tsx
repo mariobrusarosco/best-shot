@@ -1,8 +1,8 @@
 import { Box, Stack, styled, Typography } from "@mui/material";
 import { TournamentLogo } from "@/domains/tournament/components/tournament-heading";
-import { AppPill } from "@/domains/ui-system/components/pill/pill";
-import { shimmerEffect } from "@/domains/ui-system/components/skeleton/skeleton";
-import { Surface } from "@/domains/ui-system/components/surface/surface";
+import { AppPill } from "@/domains/ui-system/components/app-pill";
+import { appShimmerEffect } from "@/domains/ui-system/components/app-skeleton";
+import { AppSurface } from "@/domains/ui-system/components/app-surface";
 import { OverflowOnHover } from "@/domains/ui-system/utils";
 import type { useLeaguePerformance } from "../../hooks/use-league-performance";
 
@@ -189,7 +189,7 @@ const Wrapper = styled(Box)(() => ({
 }));
 
 // TODO Unify this Card, if possible
-export const Card = styled(Surface)(({ theme }) =>
+export const Card = styled(AppSurface)(({ theme }) =>
 	theme.unstable_sx({
 		backgroundColor: "black.800",
 		padding: 2,
@@ -228,7 +228,7 @@ const LeaguePerformanceStatsSkeleton = () => {
 const Skeleton = styled(Box)(() => ({
 	position: "relative",
 	height: "87px",
-	...shimmerEffect(),
+	...appShimmerEffect(),
 }));
 
 export default {

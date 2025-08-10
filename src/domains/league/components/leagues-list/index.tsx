@@ -1,14 +1,14 @@
 import { Box, styled, Typography } from "@mui/material";
 import type { ILeague } from "@/domains/league/typing";
-import { AppIcon } from "@/domains/ui-system/components/icon/icon";
-import { AppLinkCard } from "@/domains/ui-system/components/link-card/link-card";
-import { shimmerEffect } from "@/domains/ui-system/components/skeleton/skeleton";
+import { AppIcon } from "@/domains/ui-system/components/app-icon";
+import { AppLinkCard } from "@/domains/ui-system/components/app-link-card";
+import { appShimmerEffect } from "@/domains/ui-system/components/app-skeleton";
 import { OverflowAuto } from "@/domains/ui-system/utils";
 import { UIHelper } from "@/theming/theme";
 
 const LeaguesList = ({ leagues }: { leagues: ILeague[] }) => {
 	return (
-		<GridOfCards data-ui="leagues-list">
+		<AppGridOfCards data-ui="leagues-list">
 			{leagues?.map((league: ILeague) => (
 				<li>
 					<AppLinkCard
@@ -29,11 +29,11 @@ const LeaguesList = ({ leagues }: { leagues: ILeague[] }) => {
 					</AppLinkCard>
 				</li>
 			))}
-		</GridOfCards>
+		</AppGridOfCards>
 	);
 };
 
-const GridOfCards = styled("ul")(({ theme }) =>
+const AppGridOfCards = styled("ul")(({ theme }) =>
 	theme.unstable_sx({
 		borderRadius: theme.spacing(1),
 		display: "grid",
@@ -62,20 +62,20 @@ const GridOfCards = styled("ul")(({ theme }) =>
 
 const LeaguesListSkeleton = () => {
 	return (
-		<GridOfCards data-ui="leagues-list-skeleton">
+		<AppGridOfCards data-ui="leagues-list-skeleton">
 			{Array.from({ length: 6 }).map((_, index) => (
 				<li key={index}>
 					<Skeleton />
 				</li>
 			))}
-		</GridOfCards>
+		</AppGridOfCards>
 	);
 };
 
 const Skeleton = styled(Box)(() => ({
 	position: "relative",
 	height: "110px",
-	...shimmerEffect(),
+	...appShimmerEffect(),
 }));
 
 export default {

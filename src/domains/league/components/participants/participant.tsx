@@ -1,6 +1,6 @@
 import { styled, type Theme, Typography } from "@mui/material";
-import { AppPill } from "@/domains/ui-system/components/pill/pill";
-import { Surface } from "@/domains/ui-system/components/surface/surface";
+import { AppPill } from "@/domains/ui-system/components/app-pill";
+import { AppSurface } from "@/domains/ui-system/components/app-surface";
 import type { IParticipant } from "../../typing";
 
 export const Participant = ({ participant }: { participant: IParticipant }) => {
@@ -54,7 +54,7 @@ const RoleColors: Record<
 };
 
 // TODO Unify this Card, if possible
-export const Card = styled(Surface)(({ theme }) =>
+export const Card = styled(AppSurface)(({ theme }) =>
 	theme.unstable_sx({
 		backgroundColor: "black.800",
 		padding: 2,

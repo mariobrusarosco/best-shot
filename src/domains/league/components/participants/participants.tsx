@@ -1,6 +1,6 @@
 import { Box, Stack, styled, Typography } from "@mui/material";
-import { AppPill } from "@/domains/ui-system/components/pill/pill";
-import { shimmerEffect } from "@/domains/ui-system/components/skeleton/skeleton";
+import { AppPill } from "@/domains/ui-system/components/app-pill";
+import { appShimmerEffect } from "@/domains/ui-system/components/app-skeleton";
 import type { IParticipant } from "../../typing";
 import { Participant } from "./participant";
 
@@ -48,7 +48,7 @@ const ParticipantsListSkeleton = () => {
 const Skeleton = styled(Box)(() => ({
 	position: "relative",
 	height: "87px",
-	...shimmerEffect(),
+	...appShimmerEffect(),
 }));
 
 export default {

@@ -117,3 +117,18 @@ Minor local override via `sx`
   - No hardcoded hex/px
   - Breakpoint objects used for responsiveness
   - Minimal theme overrides
+
+## Recommended render branching order
+- Loading → Error → Empty State → Main Content
+
+Example
+```tsx
+export function Screen() {
+  const { data, isPending, error } = useQuery(...);
+
+  if (isPending) return <LoadingSkeleton />;        // Loading first
+  if (error) return <ErrorState />;                 // Then error
+  if (!data || data.length === 0) return <Empty />; // Then empty
+  return <MainContent data={data} />;               // Finally main content
+}
+```

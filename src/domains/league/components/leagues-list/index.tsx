@@ -4,7 +4,7 @@ import { AppIcon } from "@/domains/ui-system/components/app-icon";
 import { AppLinkCard } from "@/domains/ui-system/components/app-link-card";
 import { appShimmerEffect } from "@/domains/ui-system/components/app-skeleton";
 import { OverflowAuto } from "@/domains/ui-system/utils";
-import { UIHelper } from "@/theming/theme";
+import { UIHelper } from "@/domains/ui-system/theme/migration";
 
 const LeaguesList = ({ leagues }: { leagues: ILeague[] }) => {
 	return (

@@ -13,7 +13,7 @@ import { AppButton } from "@/domains/ui-system/components/app-button/app-button"
 import { AppIcon } from "@/domains/ui-system/components/app-icon";
 import { appShimmerEffect } from "@/domains/ui-system/components/app-skeleton";
 import { AppSurface } from "@/domains/ui-system/components/app-surface";
-import { theme, UIHelper } from "@/theming/theme";
+import { theme, UIHelper } from "@/domains/ui-system/theme/migration";
 import type { IMatch } from "../../typing";
 import { defineMatchTimebox } from "../../utils";
 import { CardAnimation } from "./animations";

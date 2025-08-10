@@ -10,7 +10,7 @@ import { useMemberPerformance } from "@/domains/member/hooks/use-member-performa
 import { AuthenticatedScreenLayout } from "@/domains/ui-system/layout/authenticated";
 import { ScreenMainContent } from "@/domains/ui-system/layout/screen-main-content";
 import { AppDatePicker } from "@/domains/ui-system/components/app-date-picker";
-import { UIHelper } from "@/theming/theme";
+import { UIHelper } from "@/domains/ui-system/theme/migration";
 import TournamentsPerf from "../components/tournaments-perf";
 
 const DashboardPage = () => {

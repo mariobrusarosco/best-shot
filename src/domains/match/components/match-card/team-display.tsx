@@ -2,7 +2,7 @@ import { Box, styled, Typography } from "@mui/material";
 import { useTournamentStandings } from "@/domains/tournament/hooks/use-tournament-standings";
 import type { ITournamentStandings } from "@/domains/tournament/schema";
 import { AppPill } from "@/domains/ui-system/components/app-pill";
-import { UIHelper } from "@/theming/theme";
+import { UIHelper } from "@/domains/ui-system/theme/migration";
 import type { IMatch } from "../../typing";
 
 export const TeamDisplay = ({

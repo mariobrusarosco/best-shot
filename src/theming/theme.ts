@@ -1,17 +1,11 @@
 import { createTheme } from "@mui/material/styles";
 import { TYPOGRAPHY } from "./typography";
 
-// TOKENS
-const BREAKPOINTS = {
-	values: {
-		all: 0,
-		mobile: 768,
-		tablet: 769,
-		laptop: 1024,
-		desktop: 1440,
-	},
-};
+// NOTE: This is legacy theme configuration
+// The official theme is in /src/domains/ui-system/theme/
+// TODO: Migrate remaining components to use the new design system theme
 
+// Legacy TOKENS - TODO: Remove after migration to new design system
 export const COLORS = {
 	teal: {
 		500: "#6A9B96",
@@ -60,7 +54,8 @@ const theme = createTheme({
 		fontFamily: ["Poppins", "Montserrat", "sans-serif"].join(","),
 		...TYPOGRAPHY.variants,
 	},
-	palette: COLORS,
+	// NOTE: Palette removed - conflicts with new design system theme
+	// palette: COLORS,
 	components: {
 		MuiTypography: {
 			// defaultProps: {
@@ -73,7 +68,8 @@ const theme = createTheme({
 			},
 		},
 	},
-	breakpoints: BREAKPOINTS,
+	// NOTE: Breakpoints removed - conflicts with new design system theme  
+	// breakpoints: BREAKPOINTS,
 });
 
 export const UIHelper = (() => {

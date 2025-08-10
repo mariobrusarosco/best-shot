@@ -3,7 +3,7 @@ import { createLazyFileRoute, Link } from "@tanstack/react-router";
 import { Authentication } from "@/domains/authentication";
 import { AppButtonBase } from "@/domains/ui-system/components/app-button-base";
 import { PublicLayout } from "@/domains/ui-system/layout/public";
-import { theme } from "@/theming/theme";
+import { theme } from "@/domains/ui-system/theme/migration";
 
 const useAppAuth = Authentication.useAppAuth;
 

@@ -2,7 +2,7 @@ import { styled } from "@mui/material";
 import { Box } from "@mui/system";
 import { appShimmerEffectNew } from "@/domains/ui-system/components/app-skeleton";
 import { AppSurface } from "@/domains/ui-system/components/app-surface";
-import { UIHelper } from "@/theming/theme";
+import { UIHelper } from "@/domains/ui-system/theme/migration";
 
 export const MatchdayGrid = styled(Box)(({ theme }) => ({
 	borderRadius: theme.spacing(1),

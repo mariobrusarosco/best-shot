@@ -11,7 +11,7 @@ import { useTournamentRounds } from "@/domains/tournament/hooks/use-tournament-r
 import { AppButtonBase } from "@/domains/ui-system/components/app-button-base";
 import { AppPill } from "@/domains/ui-system/components/app-pill";
 import { OverflowOnHover } from "@/domains/ui-system/utils";
-import { UIHelper } from "@/theming/theme";
+import { UIHelper } from "@/domains/ui-system/theme/migration";
 
 export const TournamentMatchesScreen = () => {
 	const { activeRound } = useTournamentRounds();

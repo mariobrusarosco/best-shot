@@ -12,7 +12,7 @@ import {
 import { AppPill } from "@/domains/ui-system/components/app-pill";
 import { appShimmerEffect } from "@/domains/ui-system/components/app-skeleton";
 import { OverflowOnHover } from "@/domains/ui-system/utils";
-import { theme, UIHelper } from "@/theming/theme";
+import { theme, UIHelper } from "@/domains/ui-system/theme/migration";
 import { useTournament } from "../../hooks/use-tournament";
 import { useTournamentStandings } from "../../hooks/use-tournament-standings";
 import type { ITournamentStandings } from "../../schema";

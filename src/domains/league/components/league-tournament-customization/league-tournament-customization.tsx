@@ -1,10 +1,10 @@
 import { Box, Divider, Stack, styled, Tooltip, Typography } from "@mui/material";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
-import type { ITournament } from "@/domains/tournament/schema";
-import { AppButtonBase } from "@/domains/ui-system/components/app-button-base";
-import { AppIcon } from "@/domains/ui-system/components/app-icon";
-import { AppSurface } from "@/domains/ui-system/components/app-surface";
+import type { I_Tournament } from "@/domains/tournament/schema";
+import { AppButton } from "@/domains/ui-system/components/app-button/app-button";
+import { AppIcon } from "@/domains/ui-system/components/app-icon/icon/app-icon";
+import { AppSurface } from "@/domains/ui-system/components/app-surface/app-surface";
 import { updateLeagueTournaments } from "../../server-side/mutations";
 import type { ILeague } from "../../typing";
 
@@ -14,8 +14,8 @@ export const LeagueTournamentCustomization = ({
 	league,
 	onUpdate,
 }: {
-	currentTournaments: ITournament[];
-	allTournaments: ITournament[];
+	currentTournaments: I_Tournament[];
+	allTournaments: I_Tournament[];
 	league: ILeague;
 	onUpdate?: () => void;
 }) => {
@@ -48,7 +48,7 @@ export const LeagueTournamentCustomization = ({
 	});
 
 	// TODO Consider using a Set/Map + using tournament's ID and Logo only
-	const addTournament = (tournament: ITournament) => {
+	const addTournament = (tournament: I_Tournament) => {
 		setTracked((prev) => {
 			if (prev.find((t) => t.id === tournament.id)) return prev;
 			return [...prev, tournament];
@@ -56,7 +56,7 @@ export const LeagueTournamentCustomization = ({
 		setUntracked((prev) => prev?.filter((t) => t.id !== tournament.id));
 	};
 	// TODO Consider using a Set/Map + using tournament's ID and Logo only
-	const removeTournament = (tournament: ITournament) => {
+	const removeTournament = (tournament: I_Tournament) => {
 		setUntracked((prev) => {
 			if (prev.find((t) => t.id === tournament.id)) return prev;
 			return [...prev, tournament];
@@ -110,7 +110,7 @@ export const LeagueTournamentCustomization = ({
 							save
 						</Typography>
 						<SaveButton
-							onClick={mutation.mutate}
+							onClick={() => mutation.mutate()}
 							sx={{ p: 1 }}
 							disabled={noTournamentIncluded || mutation.isPending}
 							aria-disabled={noTournamentIncluded || mutation.isPending}
@@ -129,6 +129,7 @@ export const LeagueTournamentCustomization = ({
 
 					{tracked?.map((tournament) => (
 						<TournamentLeagueCard
+							key={tournament.id}
 							tournament={tournament}
 							onRemove={() => removeTournament(tournament)}
 							status="tracked"
@@ -173,6 +174,7 @@ export const LeagueTournamentCustomization = ({
 					) : (
 						untracked?.map((tournament) => (
 							<TournamentLeagueCard
+								key={tournament.id}
 								tournament={tournament}
 								onAdd={() => addTournament(tournament)}
 								status="untracked"
@@ -193,7 +195,7 @@ export const TournamentLeagueCard = ({
 	onRemove,
 	status = "read-only",
 }: {
-	tournament: ITournament;
+	tournament: I_Tournament;
 	onAdd?: () => void;
 	onRemove?: () => void;
 	status?: "tracked" | "untracked" | "read-only";
@@ -206,7 +208,7 @@ export const TournamentLeagueCard = ({
 				</Typography>
 
 				<LogoBox>
-					<img src={tournament.logo} />
+					<img src={tournament.logo} alt={tournament.label} />
 				</LogoBox>
 			</CardHeading>
 
@@ -278,7 +280,7 @@ const IconBox = styled(Box)(({ theme }) =>
 	})
 );
 
-const SaveButton = styled(AppButtonBase)(({ theme }) =>
+const SaveButton = styled(AppButton)(({ theme }) =>
 	theme.unstable_sx({
 		backgroundColor: "teal.500",
 		color: "neutral.100",

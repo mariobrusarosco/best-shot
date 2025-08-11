@@ -1,6 +1,6 @@
 import { styled, type Theme, Typography } from "@mui/material";
-import { AppPill } from "@/domains/ui-system/components/app-pill";
-import { AppSurface } from "@/domains/ui-system/components/app-surface";
+import { AppPill } from "@/domains/ui-system/components/app-pill/app-pill";
+import { AppSurface } from "@/domains/ui-system/components/app-surface/app-surface";
 import type { IParticipant } from "../../typing";
 
 export const Participant = ({ participant }: { participant: IParticipant }) => {

@@ -1,8 +1,8 @@
 import { Box, styled, Typography, type TypographyProps } from "@mui/material";
-import { AppButtonBase } from "@/domains/ui-system/components/app-button-base";
-import { AppInput } from "@/domains/ui-system/components/app-input";
-import { AppPill } from "@/domains/ui-system/components/app-pill";
-import { AppSurface } from "@/domains/ui-system/components/app-surface";
+import { AppButton } from "@/domains/ui-system/components/app-button/app-button";
+import { AppInput } from "@/domains/ui-system/components/app-input/input/app-input";
+import { AppPill } from "@/domains/ui-system/components/app-pill/app-pill";
+import { AppSurface } from "@/domains/ui-system/components/app-surface/app-surface";
 import { useLeague } from "../../hooks/use-league";
 
 export const InviteToLeague = () => {
@@ -47,7 +47,7 @@ export const InviteToLeague = () => {
 	);
 };
 
-const SubmitButton = styled(AppButtonBase)(({ theme }) => ({
+const SubmitButton = styled(AppButton)(({ theme }) => ({
 	my: 2,
 	width: 150,
 	marginTop: theme.spacing(2),

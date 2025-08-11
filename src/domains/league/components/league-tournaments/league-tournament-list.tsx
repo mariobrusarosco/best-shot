@@ -2,9 +2,9 @@ import { Box, styled, Typography } from "@mui/material";
 import { useState } from "react";
 import type { useLeague } from "@/domains/league/hooks/use-league";
 import { useTournaments } from "@/domains/tournament/hooks/use-tournaments";
-import { AppButtonBase } from "@/domains/ui-system/components/app-button-base";
-import { AppIcon } from "@/domains/ui-system/components/app-icon";
-import { AppPill } from "@/domains/ui-system/components/app-pill";
+import { AppButton } from "@/domains/ui-system/components/app-button/app-button";
+import { AppIcon } from "@/domains/ui-system/components/app-icon/icon/app-icon";
+import { AppPill } from "@/domains/ui-system/components/app-pill/app-pill";
 import {
 	LeagueTournamentCustomization,
 	TournamentLeagueCard,
@@ -88,7 +88,7 @@ const EmptyState = styled(Box)(({ theme }) =>
 	})
 );
 
-const EmptyStartButton = styled(AppButtonBase)(({ theme }) =>
+const EmptyStartButton = styled(AppButton)(({ theme }) =>
 	theme.unstable_sx({
 		backgroundColor: "teal.500",
 		color: "neutral.100",

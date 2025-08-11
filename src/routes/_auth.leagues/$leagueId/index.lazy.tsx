@@ -8,7 +8,7 @@ import ParticipantsList from "@/domains/league/components/participants/participa
 import { useLeague } from "@/domains/league/hooks/use-league";
 import { AuthenticatedScreenLayout } from "@/domains/ui-system/layout/authenticated";
 import { ScreenMainContent } from "@/domains/ui-system/layout/screen-main-content";
-import { UIHelper } from "@/domains/ui-system/theme/migration";
+import { UIHelper } from "@/domains/ui-system/theme";
 
 const LeaguePage = () => {
 	const { league, performance, mutation } = useLeague();

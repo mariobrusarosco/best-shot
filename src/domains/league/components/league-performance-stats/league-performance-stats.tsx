@@ -1,8 +1,8 @@
 import { Box, Stack, styled, Typography } from "@mui/material";
 import { TournamentLogo } from "@/domains/tournament/components/tournament-heading";
-import { AppPill } from "@/domains/ui-system/components/app-pill";
-import { appShimmerEffect } from "@/domains/ui-system/components/app-skeleton";
-import { AppSurface } from "@/domains/ui-system/components/app-surface";
+import { AppPill } from "@/domains/ui-system/components/app-pill/app-pill";
+import { appShimmerEffect } from "@/domains/ui-system/components/app-skeleton/app-skeleton";
+import { AppSurface } from "@/domains/ui-system/components/app-surface/app-surface";
 import { OverflowOnHover } from "@/domains/ui-system/utils";
 import type { useLeaguePerformance } from "../../hooks/use-league-performance";
 

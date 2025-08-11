@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 export const TournamentStatusSchema = z.enum(["active", "archived", "draft"]);
-export type ITournamentStatus = z.infer<typeof TournamentStatusSchema>;
+export type I_TournamentStatus = z.infer<typeof TournamentStatusSchema>;
 
 export const TournamentSchema = z
 	.object({
@@ -34,7 +34,7 @@ const TournamentPerformanceSchema = z.object({
 	points: z.string(),
 });
 
-export type ITournamentPerformance = z.infer<typeof TournamentPerformanceSchema>;
+export type I_TournamentPerformance = z.infer<typeof TournamentPerformanceSchema>;
 
 const TournamentPerformanceWithDetailsSchema = TournamentPerformanceSchema.extend({
 	details: z.record(z.number()),
@@ -43,7 +43,7 @@ const TournamentPerformanceWithDetailsSchema = TournamentPerformanceSchema.exten
 		incorrect: z.number(),
 	}),
 });
-export type ITournamentPerformanceWithDetails = z.infer<
+export type I_TournamentPerformanceWithDetails = z.infer<
 	typeof TournamentPerformanceWithDetailsSchema
 >;
 
@@ -72,4 +72,4 @@ const TournamentStandingsSchema = z.object({
 	),
 });
 
-export type ITournamentStandings = z.infer<typeof TournamentStandingsSchema>;
+export type I_TournamentStandings = z.infer<typeof TournamentStandingsSchema>;

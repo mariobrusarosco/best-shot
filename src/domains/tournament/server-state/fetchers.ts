@@ -1,9 +1,9 @@
 import { API, api } from "@/api";
 import type { IMatch } from "@/domains/match/typing";
 import {
-	type ITournamentPerformance,
-	type ITournamentPerformanceWithDetails,
-	type ITournamentStandings,
+	type I_TournamentPerformance,
+	type I_TournamentPerformanceWithDetails,
+	type I_TournamentStandings,
 	TournamentSchema,
 } from "@/domains/tournament/schema";
 
@@ -47,7 +47,7 @@ export const getTournamentPerformance = async ({ queryKey }: { queryKey: any }) 
 		baseURL: import.meta.env.VITE_BEST_SHOT_API_V2,
 	});
 
-	return response.data as ITournamentPerformance;
+	return response.data as I_TournamentPerformance;
 };
 
 export const getTournamentPerformanceDetails = async ({ queryKey }: { queryKey: any }) => {
@@ -55,7 +55,7 @@ export const getTournamentPerformanceDetails = async ({ queryKey }: { queryKey: 
 
 	const response = await api.get(`tournaments/${tournamentId}/performance/details`);
 
-	return response.data as ITournamentPerformanceWithDetails;
+	return response.data as I_TournamentPerformanceWithDetails;
 };
 
 export const getTournamentStandings = async ({ queryKey }: { queryKey: any }) => {
@@ -63,5 +63,5 @@ export const getTournamentStandings = async ({ queryKey }: { queryKey: any }) =>
 
 	const response = await api.get(`tournaments/${id}/standings`);
 
-	return response.data as ITournamentStandings;
+	return response.data as I_TournamentStandings;
 };

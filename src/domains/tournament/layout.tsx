@@ -8,7 +8,7 @@ import TournamentTabs from "@/domains/tournament/components/tournament-tabs";
 import { useTournament } from "@/domains/tournament/hooks/use-tournament";
 import { AuthenticatedScreenLayout } from "@/domains/ui-system/layout/authenticated";
 import { ScreenMainContent } from "@/domains/ui-system/layout/screen-main-content";
-import { UIHelper } from "@/domains/ui-system/theme/migration";
+import { UIHelper } from "@/domains/ui-system/theme";
 
 const TournamentLayout = () => {
 	const tournament = useTournament({ fetchOnMount: true });

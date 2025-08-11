@@ -1,8 +1,8 @@
 import { Box, styled, Typography } from "@mui/material";
 import { useTournamentStandings } from "@/domains/tournament/hooks/use-tournament-standings";
-import type { ITournamentStandings } from "@/domains/tournament/schema";
-import { AppPill } from "@/domains/ui-system/components/app-pill";
-import { UIHelper } from "@/domains/ui-system/theme/migration";
+import type { I_TournamentStandings } from "@/domains/tournament/schema";
+import { AppPill } from "@/domains/ui-system/components/app-pill/app-pill";
+import { UIHelper } from "@/domains/ui-system/theme";
 import type { IMatch } from "../../typing";
 
 export const TeamDisplay = ({
@@ -108,7 +108,7 @@ export const Position = styled(Box)(({ theme }) => ({
 }));
 
 // TODO Move this to a util, and avoid repeating the word 'standings'
-const getTeamStandingsInfo = (teamId: string, standings: ITournamentStandings | undefined) => {
+const getTeamStandingsInfo = (teamId: string, standings: I_TournamentStandings | undefined) => {
 	if (!standings) return;
 
 	return standings.teams?.find(

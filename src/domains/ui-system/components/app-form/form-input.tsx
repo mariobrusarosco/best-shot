@@ -1,6 +1,6 @@
-import { Box, Typography, TextField } from "@mui/material";
-import { Controller, type Control, type FieldPath, type FieldValues } from "react-hook-form";
-import { AppInput } from "@/domains/ui-system/components/app-input";
+import { Box, TextField, Typography } from "@mui/material";
+import { type Control, Controller, type FieldPath, type FieldValues } from "react-hook-form";
+import { AppInput } from "@/domains/ui-system/components/app-input/input/app-input";
 
 interface AppFormInputProps<T extends FieldValues> {
 	name: FieldPath<T>;
@@ -35,8 +35,8 @@ export const AppFormInput = <T extends FieldValues>({
 				{label && (
 					<Typography
 						variant="caption"
-						sx={{ 
-							mb: 0.5, 
+						sx={{
+							mb: 0.5,
 							display: "block",
 							fontWeight: 500,
 							textTransform: "uppercase",
@@ -49,7 +49,7 @@ export const AppFormInput = <T extends FieldValues>({
 					</Typography>
 				)}
 
-{multiline ? (
+				{multiline ? (
 					<TextField
 						{...field}
 						placeholder={placeholder}
@@ -103,8 +103,8 @@ export const AppFormInput = <T extends FieldValues>({
 					<Typography
 						variant="caption"
 						color={fieldState.error ? "error.main" : "text.secondary"}
-						sx={{ 
-							mt: 0.5, 
+						sx={{
+							mt: 0.5,
 							display: "block",
 							fontSize: "0.75rem",
 						}}

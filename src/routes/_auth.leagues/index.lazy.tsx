@@ -5,7 +5,7 @@ import LeaguesList from "@/domains/league/components/leagues-list";
 import NewLeague from "@/domains/league/components/new-league/new-league";
 import { AuthenticatedScreenLayout } from "@/domains/ui-system/layout/authenticated";
 import { ScreenMainContent } from "@/domains/ui-system/layout/screen-main-content";
-import { UIHelper } from "@/domains/ui-system/theme/migration";
+import { UIHelper } from "@/domains/ui-system/theme";
 import { useLeagues } from "../../domains/league/hooks/use-leagues";
 
 const LeaguesPage = () => {

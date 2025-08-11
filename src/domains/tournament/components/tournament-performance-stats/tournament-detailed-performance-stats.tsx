@@ -1,13 +1,13 @@
 import { Box, Stack, styled, Typography } from "@mui/material";
 import { useState } from "react";
-import { AppButtonBase } from "@/domains/ui-system/components/app-button-base";
-import { AppCounter } from "@/domains/ui-system/components/app-counter";
-import { AppGridOfCards } from "@/domains/ui-system/components/app-grid-of-cards";
+import { AppButton } from "@/domains/ui-system/components/app-button/app-button";
+import { AppCounter } from "@/domains/ui-system/components/app-counter/app-counter";
+import { AppGridOfCards } from "@/domains/ui-system/components/app-grid-of-cards/grid-of-cards/app-grid-of-cards";
 import {
-	appShimmerEffect,
 	AppTypographySkeleton,
-} from "@/domains/ui-system/components/app-skeleton";
-import { AppSurface } from "@/domains/ui-system/components/app-surface";
+	appShimmerEffect,
+} from "@/domains/ui-system/components/app-skeleton/app-skeleton";
+import { AppSurface } from "@/domains/ui-system/components/app-surface/app-surface";
 import { useTournamentDetailedPerformance } from "../../hooks/use-tournament-detailed-performance";
 
 const TournamentDetailedPerformanceStats = () => {
@@ -18,7 +18,7 @@ const TournamentDetailedPerformanceStats = () => {
 
 	return (
 		<Stack>
-			<AppButtonBase
+			<AppButton
 				sx={{
 					width: "150px",
 					height: "30px",
@@ -30,7 +30,7 @@ const TournamentDetailedPerformanceStats = () => {
 				<Typography variant="caption" color="neutral.100">
 					see more
 				</Typography>
-			</AppButtonBase>
+			</AppButton>
 
 			{detailedPerformance.data && (
 				<Stack gap={4} pt={5}>
@@ -52,7 +52,9 @@ const TournamentDetailedPerformanceStats = () => {
 										incorrect guesses
 									</Typography>
 									<Typography textTransform="uppercase" variant="h4" color="neutral.100">
-										<AppCounter initialValue={detailedPerformance.data.guessesByOutcome.incorrect} />
+										<AppCounter
+											initialValue={detailedPerformance.data.guessesByOutcome.incorrect}
+										/>
 									</Typography>
 								</Stack>
 							</PerfCard>
@@ -62,7 +64,9 @@ const TournamentDetailedPerformanceStats = () => {
 										waiting for macth outcome
 									</Typography>
 									<Typography textTransform="uppercase" variant="h4" color="neutral.100">
-										<AppCounter initialValue={detailedPerformance.data.details["waiting_for_game"]} />
+										<AppCounter
+											initialValue={detailedPerformance.data.details["waiting_for_game"]}
+										/>
 									</Typography>
 								</Stack>
 							</PerfCard>

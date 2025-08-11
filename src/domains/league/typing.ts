@@ -1,10 +1,10 @@
-import type { ITournament } from "../tournament/schema";
+import type { I_Tournament } from "../tournament/schema";
 
 export type ILeague = {
 	id: string;
 	label: string;
 	description?: string;
-	tournaments: ITournament[];
+	tournaments: I_Tournament[];
 	permissions: {
 		edit: boolean;
 		invite: boolean;

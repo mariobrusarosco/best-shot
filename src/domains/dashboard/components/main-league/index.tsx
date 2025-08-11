@@ -1,11 +1,11 @@
 import { Box, Stack, styled, Typography } from "@mui/material";
 import { Link } from "@tanstack/react-router";
 import type { useMemberPerformance } from "@/domains/member/hooks/use-member-performance";
-import { AppButtonBase } from "@/domains/ui-system/components/app-button-base";
-import { AppGridOfCards } from "@/domains/ui-system/components/app-grid-of-cards";
-import { AppIcon } from "@/domains/ui-system/components/app-icon";
-import { AppPill } from "@/domains/ui-system/components/app-pill";
-import { appShimmerEffect } from "@/domains/ui-system/components/app-skeleton";
+import { AppButton } from "@/domains/ui-system/components/app-button/app-button";
+import { AppGridOfCards } from "@/domains/ui-system/components/app-grid-of-cards/grid-of-cards/app-grid-of-cards";
+import { AppIcon } from "@/domains/ui-system/components/app-icon/icon/app-icon";
+import { AppPill } from "@/domains/ui-system/components/app-pill/app-pill";
+import { appShimmerEffect } from "@/domains/ui-system/components/app-skeleton/app-skeleton";
 
 import { DashCard } from "../dash-card/dash-card";
 import { DashGrid } from "../dash-grid";
@@ -128,7 +128,7 @@ const MainLeague = ({
 // TODO This can be a <AppRouteButton />
 const CardRouteButton = ({ to, params = {} }: { to: string; params?: {} }) => {
 	return (
-		<AppButtonBase
+		<AppButton
 			sx={{
 				borderRadius: 1,
 				color: "teal.500",
@@ -137,7 +137,7 @@ const CardRouteButton = ({ to, params = {} }: { to: string; params?: {} }) => {
 			<Link to={to} params={params}>
 				<AppIcon size="extra-small" name="ChevronRight" />
 			</Link>
-		</AppButtonBase>
+		</AppButton>
 	);
 };
 

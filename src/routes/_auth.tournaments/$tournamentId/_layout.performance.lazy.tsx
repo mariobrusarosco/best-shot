@@ -4,7 +4,7 @@ import TournamentDetailedPerformanceStats from "@/domains/tournament/components/
 import TournamentPerformanceStats from "@/domains/tournament/components/tournament-performance-stats/tournament-performance-stats";
 import { useTournament } from "@/domains/tournament/hooks/use-tournament";
 import { useTournamentPerformance } from "@/domains/tournament/hooks/use-tournament-performance";
-import { AppTypographySkeleton } from "@/domains/ui-system/components/app-skeleton";
+import { AppTypographySkeleton } from "@/domains/ui-system/components/app-skeleton/app-skeleton";
 
 export const TournamentPerformance = () => {
 	const tournament = useTournament();

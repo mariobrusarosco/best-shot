@@ -1,20 +1,20 @@
 import { Box, Stack, styled, Typography } from "@mui/material";
-import { AppButtonBase } from "@/domains/ui-system/components/app-button-base";
-import { AppCounter } from "@/domains/ui-system/components/app-counter";
-import { AppGridOfCards } from "@/domains/ui-system/components/app-grid-of-cards";
+import { AppButton } from "@/domains/ui-system/components/app-button/app-button";
+import { AppCounter } from "@/domains/ui-system/components/app-counter/app-counter";
+import { AppGridOfCards } from "@/domains/ui-system/components/app-grid-of-cards/grid-of-cards/app-grid-of-cards";
 import {
 	AppTypographySkeleton,
 	appShimmerEffect,
-} from "@/domains/ui-system/components/app-skeleton";
-import { AppSurface } from "@/domains/ui-system/components/app-surface";
+} from "@/domains/ui-system/components/app-skeleton/app-skeleton";
+import { AppSurface } from "@/domains/ui-system/components/app-surface/app-surface";
 import type { useTournamentPerformance } from "../../hooks/use-tournament-performance";
-import type { ITournamentPerformance } from "../../schema";
+import type { I_TournamentPerformance } from "../../schema";
 
 const TournamentPerformanceStats = ({
 	basicPerformance,
 	mutation,
 }: {
-	basicPerformance: ITournamentPerformance;
+	basicPerformance: I_TournamentPerformance;
 	mutation: ReturnType<typeof useTournamentPerformance>["mutation"];
 }) => {
 	if (!basicPerformance) return null;
@@ -40,7 +40,7 @@ const TournamentPerformanceStats = ({
 					<Typography textTransform="uppercase" variant="caption" color="neutral.100">
 						{basicPerformance.lastUpdated && new Date(basicPerformance.lastUpdated).toUTCString()}
 					</Typography>
-					<AppButtonBase
+					<AppButton
 						sx={{
 							width: "150px",
 							height: "30px",
@@ -55,7 +55,7 @@ const TournamentPerformanceStats = ({
 						<Typography variant="caption" color="neutral.100">
 							Update
 						</Typography>
-					</AppButtonBase>
+					</AppButton>
 				</Box>
 			</Box>
 

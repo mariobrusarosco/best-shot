@@ -1,8 +1,8 @@
 import { Stack, Typography } from "@mui/material";
 import { getRouteApi } from "@tanstack/react-router";
 import { BestShotIcon } from "@/assets/best-shot-icon";
-import { AppButtonBase } from "@/domains/ui-system/components/app-button-base";
-import { theme } from "@/domains/ui-system/theme/migration";
+import { AppButton } from "@/domains/ui-system/components/app-button/app-button";
+import { theme } from "@/domains/ui-system/theme";
 import { useTournamentSetup } from "../../hooks/use-tournament-setup";
 
 const route = getRouteApi("/_auth/tournaments/$tournamentId");
@@ -28,7 +28,7 @@ export const TournamentSetup = () => {
 					performance
 				</Typography>
 			</Typography>
-			<AppButtonBase
+			<AppButton
 				sx={{
 					width: "150px",
 					height: "50px",
@@ -50,7 +50,7 @@ export const TournamentSetup = () => {
 						finish setup
 					</Typography>
 				)}
-			</AppButtonBase>
+			</AppButton>
 		</Stack>
 	);
 };

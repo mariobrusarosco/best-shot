@@ -2,9 +2,9 @@ import { Stack, Typography } from "@mui/material";
 import { Link } from "@tanstack/react-router";
 
 import { AppButton } from "@/domains/ui-system/components/app-button/app-button";
-import { AppCard } from "@/domains/ui-system/components/app-card/AppCard";
-import { AppIcon } from "@/domains/ui-system/components/app-icon";
-import { AppPill } from "@/domains/ui-system/components/app-pill";
+import { AppCard } from "@/domains/ui-system/components/app-card/app-card";
+import { AppIcon } from "@/domains/ui-system/components/app-icon/icon/app-icon";
+import { AppPill } from "@/domains/ui-system/components/app-pill/app-pill";
 import type { IMatchday } from "../../typing";
 import { DashCard } from "../dash-card/dash-card";
 import { MatchdayCard, MatchdayGrid } from "./styles";
@@ -48,7 +48,13 @@ const Matchday = ({ matchday }: { matchday: IMatchday }) => {
 										p: 2,
 									}}
 								>
-									<Stack direction="row" alignItems="flex-start" justifyContent="space-between" gap={2} data-ui="card-header">
+									<Stack
+										direction="row"
+										alignItems="flex-start"
+										justifyContent="space-between"
+										gap={2}
+										data-ui="card-header"
+									>
 										<Stack>
 											<Typography
 												fontWeight={500}

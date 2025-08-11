@@ -1,8 +1,11 @@
 import { styled, Typography, useMediaQuery } from "@mui/material";
 import { GoBackButton } from "@/domains/global/components/go-back-button/go-back-button";
-import { appShimmerEffect } from "@/domains/ui-system/components/app-skeleton";
-import { AppSurface, type AppSurfaceProps } from "@/domains/ui-system/components/app-surface";
-import { UIHelper } from "@/domains/ui-system/theme/migration";
+import { appShimmerEffect } from "@/domains/ui-system/components/app-skeleton/app-skeleton";
+import {
+	AppSurface,
+	type AppSurfaceProps,
+} from "@/domains/ui-system/components/app-surface/app-surface";
+import { UIHelper } from "@/domains/ui-system/theme";
 
 interface Props extends AppSurfaceProps {
 	children?: React.ReactNode;

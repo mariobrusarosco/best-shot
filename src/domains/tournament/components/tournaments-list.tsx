@@ -1,11 +1,11 @@
 import { styled } from "@mui/material";
 import { Box } from "@mui/system";
-import { UIHelper } from "@/domains/ui-system/theme/migration";
-import type { ITournament } from "../schema";
+import { UIHelper } from "@/domains/ui-system/theme";
+import type { I_Tournament } from "../schema";
 import { TournamentCard, TournamentCardSkeleton } from "./tournament-card";
 
 interface Props {
-	tournaments: ITournament[];
+	tournaments: I_Tournament[];
 }
 
 const TournamentsList = ({ tournaments }: Props) => {

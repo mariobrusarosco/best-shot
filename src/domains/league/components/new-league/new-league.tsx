@@ -1,16 +1,16 @@
+import { zodResolver } from "@hookform/resolvers/zod";
 import { Box, styled, Typography } from "@mui/material";
 import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { AppButton } from "@/domains/ui-system/components/app-button/app-button";
-import { AppFormInput } from "@/domains/ui-system/components/app-form";
-import { appShimmerEffect } from "@/domains/ui-system/components/app-skeleton";
-import { AppSurface } from "@/domains/ui-system/components/app-surface";
+import { AppFormInput } from "@/domains/ui-system/components/app-form/form-input";
+import { appShimmerEffect } from "@/domains/ui-system/components/app-skeleton/app-skeleton";
+import { AppSurface } from "@/domains/ui-system/components/app-surface/app-surface";
 import { useLeagues } from "../../hooks/use-leagues";
-import { createLeagueSchema, type CreateLeagueFormData } from "../../schemas";
+import { type CreateLeagueFormData, createLeagueSchema } from "../../schemas";
 
 const NewLeague = () => {
 	const { createLeagueMutation } = useLeagues();
-	
+
 	const { control, handleSubmit, reset, formState } = useForm<CreateLeagueFormData>({
 		resolver: zodResolver(createLeagueSchema),
 		defaultValues: {
@@ -40,10 +40,7 @@ const NewLeague = () => {
 				create a new league
 			</Typography>
 
-			<Box
-				component="form"
-				onSubmit={handleSubmit(onSubmit)}
-			>
+			<Box component="form" onSubmit={handleSubmit(onSubmit)}>
 				<Card
 					sx={{
 						mt: 2,
@@ -53,29 +50,29 @@ const NewLeague = () => {
 					}}
 					className="league-creation"
 				>
-				<AppFormInput
-					name="label"
-					control={control}
-					label="League Name"
-					placeholder="Enter league name..."
-					required
-				/>
+					<AppFormInput
+						name="label"
+						control={control}
+						label="League Name"
+						placeholder="Enter league name..."
+						required
+					/>
 
-				<AppFormInput
-					name="description"
-					control={control}
-					label="Description"
-					placeholder="Enter league description (optional)..."
-					multiline
-					rows={3}
-				/>
+					<AppFormInput
+						name="description"
+						control={control}
+						label="Description"
+						placeholder="Enter league description (optional)..."
+						multiline
+						rows={3}
+					/>
 
-				<SubmitButton 
-					type="submit" 
-					disabled={createLeagueMutation.isPending || !formState.isValid}
-				>
-					{createLeagueMutation.isPending ? "Creating..." : "Create League"}
-				</SubmitButton>
+					<SubmitButton
+						type="submit"
+						disabled={createLeagueMutation.isPending || !formState.isValid}
+					>
+						{createLeagueMutation.isPending ? "Creating..." : "Create League"}
+					</SubmitButton>
 				</Card>
 			</Box>
 		</Wrapper>
@@ -112,7 +109,6 @@ const Card = styled(AppSurface)(({ theme }) => ({
 	justifyContent: "center",
 	gap: theme.spacing(1),
 }));
-
 
 const NewLeagueSkeleton = () => {
 	return (

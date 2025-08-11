@@ -1,6 +1,6 @@
 import { Box, styled } from "@mui/system";
 import { useGuess } from "@/domains/guess/hooks/use-guess";
-import { UIHelper } from "@/domains/ui-system/theme/migration";
+import { UIHelper } from "@/domains/ui-system/theme";
 
 export const TournamentHeading = () => {
 	const guesses = useGuess();

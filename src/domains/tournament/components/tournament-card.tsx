@@ -1,13 +1,13 @@
 import Typography from "@mui/material/Typography";
 import { Box } from "@mui/system";
-import { AppCard } from "@/domains/ui-system/components/app-card/AppCard";
-import { AppLinkCard } from "@/domains/ui-system/components/app-link-card";
-import type { AppSurfaceProps } from "@/domains/ui-system/components/app-surface";
-import type { ITournament } from "../schema";
+import { AppCard } from "@/domains/ui-system/components/app-card/app-card";
+import { AppLinkCard } from "@/domains/ui-system/components/app-link-card/link-card/app-link-card";
+import type { AppSurfaceProps } from "@/domains/ui-system/components/app-surface/app-surface";
+import type { I_Tournament } from "../schema";
 import { TournamentLogo } from "./tournament-logo";
 
 interface Props extends AppSurfaceProps {
-	tournament: ITournament;
+	tournament: I_Tournament;
 }
 
 export const TournamentCard = ({ tournament }: Props) => {

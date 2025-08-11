@@ -1,13 +1,13 @@
 /**
  * AppButton - Enhanced Base Button Component
- * 
+ *
  * Design system base button following our MUI architecture patterns.
  * This component serves as the foundation for all button variants across domains.
  */
 
-import { Button as MuiButton, ButtonProps as MuiButtonProps } from '@mui/material';
-import { styled } from '@mui/material/styles';
-import { forwardRef } from 'react';
+import { Button as MuiButton, type ButtonProps as MuiButtonProps } from "@mui/material";
+import { styled } from "@mui/material/styles";
+import { forwardRef } from "react";
 
 // Extended button props for our design system
 export interface AppButtonProps extends MuiButtonProps {
@@ -29,35 +29,35 @@ export interface AppButtonProps extends MuiButtonProps {
 const StyledButton = styled(MuiButton)<AppButtonProps>(({ theme, loading }) => ({
 	// Design system base styles (handled by theme overrides)
 	// Additional component-specific styles
-	
+
 	...(loading && {
 		opacity: 0.7,
-		pointerEvents: 'none',
-		cursor: 'not-allowed',
+		pointerEvents: "none",
+		cursor: "not-allowed",
 	}),
-	
+
 	// Consistent focus styles for accessibility
-	'&:focus-visible': {
+	"&:focus-visible": {
 		outline: `2px solid ${theme.palette.primary.main}`,
-		outlineOffset: '2px',
+		outlineOffset: "2px",
 	},
 }));
 
 /**
  * AppButton Component
- * 
+ *
  * Enhanced button component that serves as the base for all buttons
  * in the Best Shot application. Includes loading states, icons, and
  * follows our design system patterns.
- * 
+ *
  * @example
  * ```tsx
  * <AppButton variant="contained" onClick={handleClick}>
  *   Save Tournament
  * </AppButton>
- * 
- * <AppButton 
- *   variant="tournament" 
+ *
+ * <AppButton
+ *   variant="tournament"
  *   loading={isLoading}
  *   startIcon={<TrophyIcon />}
  * >
@@ -76,13 +76,13 @@ export const AppButton = forwardRef<HTMLButtonElement, AppButtonProps>(
 				endIcon={loading ? undefined : endIcon}
 				{...props}
 			>
-				{loading ? 'Loading...' : children}
+				{loading ? "Loading..." : children}
 			</StyledButton>
 		);
 	}
 );
 
-AppButton.displayName = 'AppButton';
+AppButton.displayName = "AppButton";
 
 // Export for backward compatibility
 export { AppButton as default };

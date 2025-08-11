@@ -1,10 +1,10 @@
 import { Box, styled, Typography } from "@mui/material";
 import { useQueryClient } from "@tanstack/react-query";
 import type { useLeague } from "@/domains/league/hooks/use-league";
-import { AppButtonBase } from "@/domains/ui-system/components/app-button-base";
-import { AppGridOfCards } from "@/domains/ui-system/components/app-grid-of-cards";
-import { AppPill } from "@/domains/ui-system/components/app-pill";
-import { AppSurface } from "@/domains/ui-system/components/app-surface";
+import { AppButton } from "@/domains/ui-system/components/app-button/app-button";
+import { AppGridOfCards } from "@/domains/ui-system/components/app-grid-of-cards/grid-of-cards/app-grid-of-cards";
+import { AppPill } from "@/domains/ui-system/components/app-pill/app-pill";
+import { AppSurface } from "@/domains/ui-system/components/app-surface/app-surface";
 
 export const LeaguePerformance = ({
 	league,
@@ -47,7 +47,7 @@ export const LeaguePerformance = ({
 					<Typography textTransform="uppercase" variant="caption" color="neutral.100">
 						{new Date().toISOString()}
 					</Typography>
-					<AppButtonBase
+					<AppButton
 						sx={{
 							width: "150px",
 							height: "30px",
@@ -65,7 +65,7 @@ export const LeaguePerformance = ({
 						<Typography variant="caption" color="neutral.100">
 							Update leaderboard
 						</Typography>
-					</AppButtonBase>
+					</AppButton>
 				</Box>
 			</Box>
 

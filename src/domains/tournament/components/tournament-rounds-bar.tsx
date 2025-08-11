@@ -2,9 +2,9 @@ import { styled } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/system/Box";
 import { useEffect } from "react";
-import { AppPill } from "@/domains/ui-system/components/app-pill";
+import { AppPill } from "@/domains/ui-system/components/app-pill/app-pill";
+import { UIHelper } from "@/domains/ui-system/theme";
 import { OverflowOnHover } from "@/domains/ui-system/utils";
-import { UIHelper } from "@/domains/ui-system/theme/migration";
 import { useTournament } from "../hooks/use-tournament";
 import { useTournamentRounds } from "../hooks/use-tournament-rounds";
 

@@ -1,7 +1,13 @@
-import { Box, Typography, IconButton } from "@mui/material";
-import { useFieldArray, type Control, type FieldValues, type ArrayPath, type FieldArray } from "react-hook-form";
+import { Box, IconButton, Typography } from "@mui/material";
 import { IconPlus, IconTrash } from "@tabler/icons-react";
-import { AppButtonBase } from "@/domains/ui-system/components/app-button-base";
+import {
+	type ArrayPath,
+	type Control,
+	type FieldArray,
+	type FieldValues,
+	useFieldArray,
+} from "react-hook-form";
+import { AppButton } from "@/domains/ui-system/components/app-button/app-button";
 
 interface AppFormFieldArrayProps<T extends FieldValues> {
 	name: ArrayPath<T>;
@@ -39,8 +45,8 @@ export const AppFormFieldArray = <T extends FieldValues>({
 			{label && (
 				<Typography
 					variant="caption"
-					sx={{ 
-						mb: 1, 
+					sx={{
+						mb: 1,
 						display: "block",
 						fontWeight: 500,
 						textTransform: "uppercase",
@@ -68,16 +74,16 @@ export const AppFormFieldArray = <T extends FieldValues>({
 						<Typography color="text.secondary" sx={{ mb: 2, fontSize: "0.875rem" }}>
 							No items added yet
 						</Typography>
-						
+
 						{canAdd && (
-							<AppButtonBase
+							<AppButton
 								variant="outlined"
 								startIcon={<IconPlus size={16} />}
 								onClick={() => append(defaultItem)}
 								size="small"
 							>
 								{addButtonText}
-							</AppButtonBase>
+							</AppButton>
 						)}
 					</Box>
 				) : (
@@ -116,9 +122,7 @@ export const AppFormFieldArray = <T extends FieldValues>({
 									</IconButton>
 								)}
 
-								<Box sx={{ pr: canRemove ? 5 : 0 }}>
-									{renderField(index, field, remove)}
-								</Box>
+								<Box sx={{ pr: canRemove ? 5 : 0 }}>{renderField(index, field, remove)}</Box>
 							</Box>
 						))}
 					</Box>
@@ -126,7 +130,7 @@ export const AppFormFieldArray = <T extends FieldValues>({
 			</Box>
 
 			{fields.length > 0 && canAdd && (
-				<AppButtonBase
+				<AppButton
 					variant="outlined"
 					startIcon={<IconPlus size={16} />}
 					onClick={() => append(defaultItem)}
@@ -134,14 +138,14 @@ export const AppFormFieldArray = <T extends FieldValues>({
 					sx={{ mb: 1 }}
 				>
 					{addButtonText}
-				</AppButtonBase>
+				</AppButton>
 			)}
 
 			{helperText && (
 				<Typography
 					variant="caption"
 					color="text.secondary"
-					sx={{ 
+					sx={{
 						display: "block",
 						fontSize: "0.75rem",
 					}}
@@ -154,7 +158,7 @@ export const AppFormFieldArray = <T extends FieldValues>({
 			<Typography
 				variant="caption"
 				color="text.secondary"
-				sx={{ 
+				sx={{
 					display: "block",
 					fontSize: "0.7rem",
 					mt: 0.5,

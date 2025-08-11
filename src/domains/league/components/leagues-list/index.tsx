@@ -1,10 +1,10 @@
 import { Box, styled, Typography } from "@mui/material";
 import type { ILeague } from "@/domains/league/typing";
-import { AppIcon } from "@/domains/ui-system/components/app-icon";
-import { AppLinkCard } from "@/domains/ui-system/components/app-link-card";
-import { appShimmerEffect } from "@/domains/ui-system/components/app-skeleton";
+import { AppIcon } from "@/domains/ui-system/components/app-icon/icon/app-icon";
+import { AppLinkCard } from "@/domains/ui-system/components/app-link-card/link-card/app-link-card";
+import { appShimmerEffect } from "@/domains/ui-system/components/app-skeleton/app-skeleton";
+import { UIHelper } from "@/domains/ui-system/theme";
 import { OverflowAuto } from "@/domains/ui-system/utils";
-import { UIHelper } from "@/domains/ui-system/theme/migration";
 
 const LeaguesList = ({ leagues }: { leagues: ILeague[] }) => {
 	return (

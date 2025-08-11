@@ -1,6 +1,6 @@
 import { Box, Stack, styled, Typography } from "@mui/material";
-import { AppPill } from "@/domains/ui-system/components/app-pill";
-import { appShimmerEffect } from "@/domains/ui-system/components/app-skeleton";
+import { AppPill } from "@/domains/ui-system/components/app-pill/app-pill";
+import { appShimmerEffect } from "@/domains/ui-system/components/app-skeleton/app-skeleton";
 import type { IParticipant } from "../../typing";
 import { Participant } from "./participant";
 

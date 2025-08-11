@@ -9,13 +9,13 @@ import {
 	TableRow,
 	Typography,
 } from "@mui/material";
-import { AppPill } from "@/domains/ui-system/components/app-pill";
-import { appShimmerEffect } from "@/domains/ui-system/components/app-skeleton";
+import { AppPill } from "@/domains/ui-system/components/app-pill/app-pill";
+import { appShimmerEffect } from "@/domains/ui-system/components/app-skeleton/app-skeleton";
+import { theme, UIHelper } from "@/domains/ui-system/theme";
 import { OverflowOnHover } from "@/domains/ui-system/utils";
-import { theme, UIHelper } from "@/domains/ui-system/theme/migration";
 import { useTournament } from "../../hooks/use-tournament";
 import { useTournamentStandings } from "../../hooks/use-tournament-standings";
-import type { ITournamentStandings } from "../../schema";
+import type { I_TournamentStandings } from "../../schema";
 
 const TournamentStandings = () => {
 	const tournamentStandings = useTournamentStandings();
@@ -388,7 +388,7 @@ const Heading = styled(Box)(() => ({
 	paddingBottom: theme.spacing(3),
 }));
 
-const parseStandinsByFormat = (standings: ITournamentStandings) => {
+const parseStandinsByFormat = (standings: I_TournamentStandings) => {
 	if (!standings?.teams?.length) return null;
 
 	if (standings.format === "multiple-groups") {

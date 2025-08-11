@@ -1,2 +1,0 @@
-export { AppPill } from "./pill";
-

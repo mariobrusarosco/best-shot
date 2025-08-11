@@ -1,9 +1,9 @@
 import { Box, Stack, styled, Typography } from "@mui/material";
 import { createLazyFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { Authentication } from "@/domains/authentication";
-import { AppButtonBase } from "@/domains/ui-system/components/app-button-base";
+import { AppButton } from "@/domains/ui-system/components/app-button/app-button";
 import { PublicLayout } from "@/domains/ui-system/layout/public";
-import { theme } from "@/domains/ui-system/theme/migration";
+import { theme } from "@/domains/ui-system/theme";
 
 const useAppAuth = Authentication.useAppAuth;
 
@@ -19,18 +19,14 @@ const LoginScreen = () => {
 				</Typography>
 
 				<LoginBUtton
-					slotProps={{
-						root: {
-							onClick: async () => {
-								try {
-									await auth.login();
+					onClick={async () => {
+						try {
+							await auth.login();
 
-									navigate({ to: "/dashboard" });
-								} catch (error) {
-									console.log(error);
-								}
-							},
-						},
+							navigate({ to: "/dashboard" });
+						} catch (error) {
+							console.log(error);
+						}
 					}}
 				>
 					LOGIN
@@ -58,7 +54,7 @@ const Login = styled(Box)(({ theme }) => ({
 	gap: theme.spacing(4),
 }));
 
-const LoginBUtton = styled(AppButtonBase)(({ theme }) => ({
+const LoginBUtton = styled(AppButton)(({ theme }) => ({
 	padding: theme.spacing(2, 4),
 	borderRadius: theme.spacing(1),
 	backgroundColor: theme.palette.teal[500],

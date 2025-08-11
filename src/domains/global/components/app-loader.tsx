@@ -2,7 +2,7 @@ import { Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { Stack } from "@mui/system";
 import { BestShotIcon } from "@/assets/best-shot-icon";
-import { theme, UIHelper } from "@/domains/ui-system/theme/migration";
+import { theme, UIHelper } from "@/domains/ui-system/theme";
 
 export const AppLoader = () => {
 	return (

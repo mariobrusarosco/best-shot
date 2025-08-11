@@ -9,7 +9,7 @@ import { useTournaments } from "@/domains/tournament/hooks/use-tournaments";
 import type { I_Tournament } from "@/domains/tournament/schema";
 import { AuthenticatedScreenLayout } from "@/domains/ui-system/layout/authenticated";
 import { ScreenMainContent } from "@/domains/ui-system/layout/screen-main-content";
-import { UIHelper } from "@/domains/ui-system/theme/migration";
+import { UIHelper } from "@/domains/ui-system/theme";
 
 export const TournamentsScreen = () => {
 	const { data, error, isPending } = useTournaments();

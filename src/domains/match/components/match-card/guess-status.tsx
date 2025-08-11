@@ -1,8 +1,8 @@
 import { Stack, Typography } from "@mui/material";
 import type { IGuess } from "@/domains/guess/typing";
-import { AppIcon } from "@/domains/ui-system/components/app-icon";
-import { AppPill } from "@/domains/ui-system/components/app-pill";
-import { theme } from "@/domains/ui-system/theme/migration";
+import { AppIcon } from "@/domains/ui-system/components/app-icon/icon/app-icon";
+import { AppPill } from "@/domains/ui-system/components/app-pill/app-pill";
+import { theme } from "@/domains/ui-system/theme";
 
 export const GuessStatus = ({ guess }: { guess: IGuess }) => {
 	if (guess.status === "paused")

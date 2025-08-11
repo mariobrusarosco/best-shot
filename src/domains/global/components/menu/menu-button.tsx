@@ -1,13 +1,13 @@
 import { useTheme } from "@mui/material";
-import { AppButtonBase } from "@/domains/ui-system/components/app-button-base";
-import { AppIcon } from "@/domains/ui-system/components/app-icon";
+import { AppButton } from "@/domains/ui-system/components/app-button/app-button";
+import { AppIcon } from "@/domains/ui-system/components/app-icon/icon/app-icon";
 import type { ICONS } from "@/domains/ui-system/components/app-icon/icon/mapper";
 
 export const MenuButton = ({ iconName }: { iconName: keyof typeof ICONS }) => {
 	const theme = useTheme();
 
 	return (
-		<AppButtonBase
+		<AppButton
 			sx={{
 				backgroundColor: theme.palette.teal[500],
 				color: theme.palette.neutral[100],
@@ -24,6 +24,6 @@ export const MenuButton = ({ iconName }: { iconName: keyof typeof ICONS }) => {
 			}}
 		>
 			<AppIcon name={iconName} size="small" stroke={2} width={20} height={20} />
-		</AppButtonBase>
+		</AppButton>
 	);
 };

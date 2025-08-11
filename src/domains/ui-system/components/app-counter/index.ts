@@ -1,2 +1,0 @@
-export { AppCounter } from "./counter";
-

@@ -1,9 +1,9 @@
 import { Box, styled, Typography } from "@mui/material";
 import { createLazyFileRoute, Link } from "@tanstack/react-router";
 import { Authentication } from "@/domains/authentication";
-import { AppButtonBase } from "@/domains/ui-system/components/app-button-base";
+import { AppButton } from "@/domains/ui-system/components/app-button/app-button";
 import { PublicLayout } from "@/domains/ui-system/layout/public";
-import { theme } from "@/domains/ui-system/theme/migration";
+import { theme } from "@/domains/ui-system/theme";
 
 const useAppAuth = Authentication.useAppAuth;
 
@@ -18,14 +18,10 @@ const SignUpScreen = () => {
 				</Typography>
 
 				<SignUpBUtton
-					slotProps={{
-						root: {
-							onClick: async () => {
-								console.log("START SIGNUP");
-								const signuptResponse = await auth.signup?.();
-								console.log("SIGNUP RESPONSE", signuptResponse);
-							},
-						},
+					onClick={async () => {
+						console.log("START SIGNUP");
+						const signuptResponse = await auth.signup?.();
+						console.log("SIGNUP RESPONSE", signuptResponse);
 					}}
 				>
 					SIGN UP
@@ -55,14 +51,14 @@ const SignUp = styled(Box)(({ theme }) => ({
 	gap: theme.spacing(1),
 }));
 
-const SignUpBUtton = styled(AppButtonBase)(({ theme }) => ({
+const SignUpBUtton = styled(AppButton)(({ theme }) => ({
 	padding: theme.spacing(2, 4),
 	borderRadius: theme.spacing(1),
 	backgroundColor: theme.palette.teal[500],
 	color: theme.palette.neutral[100],
 }));
 
-const ProviderDisclaimer = styled(AppButtonBase)(() => ({}));
+const ProviderDisclaimer = styled(AppButton)(() => ({}));
 const LoginPageLink = styled(Link)(({ theme }) => ({
 	marginTop: theme.spacing(2),
 	padding: theme.spacing(1),

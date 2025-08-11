@@ -1,12 +1,12 @@
 import { Tab, Tabs, TabsList } from "@mui/base";
 import { Box, styled, Typography } from "@mui/material";
 import { useLocation } from "@tanstack/react-router";
-import { CustomLink } from "@/domains/ui-system/components/app-link/link";
-import { appShimmerEffect } from "@/domains/ui-system/components/app-skeleton";
-import { UIHelper } from "@/domains/ui-system/theme/migration";
-import type { ITournament } from "../schema";
+import { CustomLink } from "@/domains/ui-system/components/app-link/app-link";
+import { appShimmerEffect } from "@/domains/ui-system/components/app-skeleton/app-skeleton";
+import { UIHelper } from "@/domains/ui-system/theme";
+import type { I_Tournament } from "../schema";
 
-const TournamentTabs = ({ tournament }: { tournament?: ITournament }) => {
+const TournamentTabs = ({ tournament }: { tournament?: I_Tournament }) => {
 	const location = useLocation();
 	const lastPath = location.pathname?.split("/").at(-1);
 

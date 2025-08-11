@@ -1,7 +1,7 @@
 import { Divider, Stack, styled, Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import { motion } from "motion/react";
 import dayjs from "dayjs";
+import { motion } from "motion/react";
 import { useState } from "react";
 
 import { BestShotIcon } from "@/assets/best-shot-icon";
@@ -10,10 +10,10 @@ import { useGuessInputs } from "@/domains/guess/hooks/use-guess-inputs";
 import type { useGuessMutation } from "@/domains/guess/hooks/use-guess-mutation";
 import { type GUESS_STATUS, GUESS_STATUSES, type IGuess } from "@/domains/guess/typing";
 import { AppButton } from "@/domains/ui-system/components/app-button/app-button";
-import { AppIcon } from "@/domains/ui-system/components/app-icon";
-import { appShimmerEffect } from "@/domains/ui-system/components/app-skeleton";
-import { AppSurface } from "@/domains/ui-system/components/app-surface";
-import { theme, UIHelper } from "@/domains/ui-system/theme/migration";
+import { AppIcon } from "@/domains/ui-system/components/app-icon/icon/app-icon";
+import { appShimmerEffect } from "@/domains/ui-system/components/app-skeleton/app-skeleton";
+import { AppSurface } from "@/domains/ui-system/components/app-surface/app-surface";
+import { theme, UIHelper } from "@/domains/ui-system/theme";
 import type { IMatch } from "../../typing";
 import { defineMatchTimebox } from "../../utils";
 import { CardAnimation } from "./animations";

@@ -73,14 +73,10 @@ export default function MyAccountScreen() {
 				</Box>
 
 				<LogoutButton
-					slotProps={{
-						root: {
-							onClick: async () => {
-								console.log("logout");
-								await auth.logout();
-								navigate({ to: "/login" });
-							},
-						},
+					onClick={async () => {
+						console.log("logout");
+						await auth.logout();
+						navigate({ to: "/login" });
 					}}
 				>
 					Logout

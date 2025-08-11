@@ -1,4 +1,5 @@
 import { test, expect, Page } from '@playwright/test';
+import { AuthenticationHelper } from '../../page-objects/auth/AuthenticationHelper';
 
 const getScreenHeading = (page: Page) => {
   return page.locator('[data-ui="screen-heading"]');
@@ -6,6 +7,8 @@ const getScreenHeading = (page: Page) => {
 
 test.describe('Dashboard Screen', () => {
   test.beforeEach(async ({ page }) => {
+    const authHelper = new AuthenticationHelper(page);
+    await authHelper.ensureAuthenticated();
     await page.goto('/dashboard');
   });
 

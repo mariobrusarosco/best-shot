@@ -1,2 +1,0 @@
-export { AppButtonBase } from "./button";
-

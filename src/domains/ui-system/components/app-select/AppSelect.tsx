@@ -83,7 +83,9 @@ const StyledFormControl = styled(FormControl)<{ error?: boolean; success?: boole
 }));
 
 // Enhanced select with design system integration
-const StyledSelect = styled(MuiSelect)<AppSelectProps>(({ theme, variant, loading }) => ({
+const StyledSelect = styled(MuiSelect, {
+	shouldForwardProp: (prop) => !['variant', 'loading'].includes(prop as string),
+})<AppSelectProps>(({ theme, variant, loading }) => ({
 	borderRadius: theme.spacing(1),
 	
 	// Loading state
@@ -228,6 +230,7 @@ export const AppSelect = forwardRef<HTMLDivElement, AppSelectProps>(
 				<StyledSelect
 					labelId={`${props.id || 'select'}-label`}
 					label={label}
+					// @ts-ignore - Custom variant handled by styled component
 					variant={variant}
 					loading={loading}
 					disabled={loading || props.disabled}

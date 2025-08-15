@@ -13,7 +13,7 @@
  * Uses Dynamic sx prop pattern for layout-specific customizations.
  */
 
-import { Container as MuiContainer, ContainerProps as MuiContainerProps } from '@mui/material';
+import { Container as MuiContainer, ContainerProps as MuiContainerProps, Breakpoint } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { forwardRef } from 'react';
 
@@ -157,7 +157,7 @@ export const AppContainer = forwardRef<HTMLDivElement, AppContainerProps>(
 		children, 
 		variant = 'default', 
 		spacing = 'default',
-		maxWidth = 'lg',
+		maxWidth = 'laptop' as Breakpoint,
 		...props 
 	}, ref) => {
 		return (

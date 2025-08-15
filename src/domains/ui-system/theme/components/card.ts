@@ -6,6 +6,7 @@
  */
 
 import type { Components, Theme } from '@mui/material/styles';
+import '../../../../types/mui-overrides';
 
 export const cardOverrides: Components<Theme>['MuiCard'] = {
 	styleOverrides: {
@@ -49,7 +50,7 @@ export const cardOverrides: Components<Theme>['MuiCard'] = {
 	variants: [
 		// Tournament Card variant
 		{
-			props: { variant: 'tournament' },
+			props: { variant: 'tournament' as any },
 			style: ({ theme }) => ({
 				backgroundColor: theme.palette.black?.[800] || theme.palette.grey[800],
 				color: theme.palette.common.white,
@@ -64,7 +65,7 @@ export const cardOverrides: Components<Theme>['MuiCard'] = {
 		
 		// Match Card variant
 		{
-			props: { variant: 'match' },
+			props: { variant: 'match' as any },
 			style: ({ theme }) => ({
 				minHeight: '200px',
 				padding: theme.spacing(3),
@@ -81,7 +82,7 @@ export const cardOverrides: Components<Theme>['MuiCard'] = {
 		
 		// League Card variant
 		{
-			props: { variant: 'league' },
+			props: { variant: 'league' as any },
 			style: ({ theme }) => ({
 				padding: theme.spacing(2.5),
 				borderRadius: theme.spacing(2), // 16px for more modern look
@@ -95,7 +96,7 @@ export const cardOverrides: Components<Theme>['MuiCard'] = {
 		
 		// AI Insight Card variant
 		{
-			props: { variant: 'aiInsight' },
+			props: { variant: 'aiInsight' as any },
 			style: ({ theme }) => ({
 				background: `linear-gradient(135deg, ${theme.palette.primary.main}10, ${theme.palette.primary.main}05)`,
 				borderColor: theme.palette.primary.main,
@@ -108,7 +109,7 @@ export const cardOverrides: Components<Theme>['MuiCard'] = {
 		
 		// Elevated card for important content
 		{
-			props: { variant: 'elevated' },
+			props: { variant: 'elevated' as any },
 			style: ({ theme }) => ({
 				boxShadow: theme.shadows[8],
 				border: 'none',
@@ -122,7 +123,7 @@ export const cardOverrides: Components<Theme>['MuiCard'] = {
 		
 		// Flat card for subtle content
 		{
-			props: { variant: 'flat' },
+			props: { variant: 'flat' as any },
 			style: ({ theme }) => ({
 				boxShadow: 'none',
 				backgroundColor: theme.palette.background.default,

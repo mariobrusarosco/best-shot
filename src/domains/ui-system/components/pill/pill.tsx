@@ -18,8 +18,8 @@ const Pill = styled(Box)(({ theme }) => ({
 	
 	// Enhanced styling for better consistency
 	padding: theme.spacing(0.5, 1.5),
-	fontSize: theme.typography.caption.fontSize,
-	fontWeight: theme.typography.fontWeightMedium,
+	fontSize: '0.75rem',
+	fontWeight: 500,
 	minHeight: theme.spacing(3),
 	
 	// Default styling
@@ -28,7 +28,7 @@ const Pill = styled(Box)(({ theme }) => ({
 	
 	// Responsive text size
 	[theme.breakpoints.down("tablet")]: {
-		fontSize: theme.typography.caption.fontSize,
+		fontSize: '0.7rem',
 		padding: theme.spacing(0.25, 1),
 	},
 }));

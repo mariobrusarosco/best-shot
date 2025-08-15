@@ -7,10 +7,11 @@
 
 import { Card as MuiCard, CardProps as MuiCardProps } from '@mui/material';
 import { styled } from '@mui/material/styles';
+import '../../types/mui-overrides';
 import { forwardRef } from 'react';
 
 // Extended card props for our design system
-export interface AppCardProps extends MuiCardProps {
+export interface AppCardProps extends Omit<MuiCardProps, 'variant'> {
 	/**
 	 * Card variant for different use cases
 	 */
@@ -26,9 +27,46 @@ export interface AppCardProps extends MuiCardProps {
 }
 
 // Enhanced styled card with design system improvements
-const StyledCard = styled(MuiCard)<AppCardProps>(({ theme, interactive, loading }) => ({
+const StyledCard = styled(MuiCard, {
+	shouldForwardProp: (prop) => !['variant', 'interactive', 'loading'].includes(prop as string),
+})<AppCardProps>(({ theme, interactive, loading, variant }) => ({
 	// Design system base styles (handled by theme overrides)
 	// Additional component-specific styles
+	
+	// Variant-specific styles
+	...(variant === 'tournament' && {
+		backgroundColor: theme.palette.black?.[800] || '#232424',
+		color: theme.palette.common.white,
+		border: 'none',
+	}),
+	
+	...(variant === 'match' && {
+		minHeight: '200px',
+		padding: theme.spacing(3),
+		display: 'flex',
+		flexDirection: 'column',
+		justifyContent: 'space-between',
+	}),
+	
+	...(variant === 'league' && {
+		padding: theme.spacing(2.5),
+		borderRadius: theme.spacing(2),
+	}),
+	
+	...(variant === 'aiInsight' && {
+		background: `linear-gradient(135deg, ${theme.palette.primary.main}10, ${theme.palette.primary.main}05)`,
+		borderColor: theme.palette.primary.main,
+	}),
+	
+	...(variant === 'elevated' && {
+		boxShadow: theme.shadows[8],
+		border: 'none',
+	}),
+	
+	...(variant === 'flat' && {
+		boxShadow: 'none',
+		backgroundColor: theme.palette.background.default,
+	}),
 	
 	...(interactive && {
 		cursor: 'pointer',
@@ -109,6 +147,7 @@ export const AppCard = forwardRef<HTMLDivElement, AppCardProps>(
 		return (
 			<StyledCard
 				ref={ref}
+				// @ts-ignore - Custom variant handled by styled component
 				variant={variant}
 				interactive={interactive}
 				loading={loading}

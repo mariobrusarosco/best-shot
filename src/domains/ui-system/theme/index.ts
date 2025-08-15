@@ -13,6 +13,7 @@
  */
 
 import { createTheme } from '@mui/material/styles';
+import '../../../types/mui-overrides';
 
 // Foundation imports
 import { MUI_PALETTE_COLORS, DESIGN_SYSTEM_COLORS } from './foundation/colors';
@@ -43,7 +44,7 @@ const theme = createTheme({
 	spacing: MUI_SPACING_CONFIG,
 	
 	// Breakpoint system
-	breakpoints: MUI_BREAKPOINTS_CONFIG,
+	breakpoints: MUI_BREAKPOINTS_CONFIG as any,
 	
 	// Shape system
 	shape: {
@@ -197,21 +198,7 @@ declare module '@mui/material/styles' {
 		pink?: typeof DESIGN_SYSTEM_COLORS.pink;
 	}
 	
-	// Extend button variants
-	interface ButtonPropsVariantOverrides {
-		tournament: true;
-		aiPrediction: true;
-	}
-	
-	// Extend card variants
-	interface CardPropsVariantOverrides {
-		tournament: true;
-		match: true;
-		league: true;
-		aiInsight: true;
-		elevated: true;
-		flat: true;
-	}
+	// Note: Button and Card variant overrides are declared in src/types/mui-overrides.ts
 }
 
 // Add design system tokens to theme

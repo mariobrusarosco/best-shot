@@ -101,7 +101,6 @@ Uses Zod schemas extensively for runtime validation, particularly in tournament 
 - E2E tests: Playwright with tests in `e2e/` directory
 - Test setup in `vitest.setup.ts`
 
-
 ### ADR 
 
 - ADRs (Architectural Decision Records) are stored in `docs/adr/` directory, documenting key decisions like:
@@ -115,7 +114,6 @@ Uses Zod schemas extensively for runtime validation, particularly in tournament 
 - Plans are stored in `docs/plans/` directory, outlining future features and improvements.
 - Each plan is a Markdown file with a unique ID (e.g., `0001-add-league-management.md`).
 - Use Decision Matrix to evaluate options.
-
 
 ### Guides
 - Guides are stored in `docs/guides/` directory, providing best practices and usage examples

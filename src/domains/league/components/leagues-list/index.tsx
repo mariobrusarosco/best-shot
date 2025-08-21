@@ -10,7 +10,7 @@ const LeaguesList = ({ leagues }: { leagues: ILeague[] }) => {
 	return (
 		<GridOfCards data-ui="leagues-list">
 			{leagues?.map((league: ILeague) => (
-				<li>
+				<li key={league.id}>
 					<AppLinkCard
 						to="/leagues/$leagueId"
 						params={{ leagueId: league.id }}

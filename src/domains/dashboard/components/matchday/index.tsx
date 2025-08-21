@@ -29,7 +29,7 @@ const Matchday = ({ matchday }: { matchday: IMatchday }) => {
 					<EmptyState />
 				) : (
 					allMatches.map((match, i) => (
-						<MatchdayCard key={i} data-ui="matchday-card">
+						<MatchdayCard key={`match-${match.tournamentId}-${match.roundSlug}-${i}`} data-ui="matchday-card">
 							<Link
 								to="/tournaments/$tournamentId/matches"
 								params={{ tournamentId: match.tournamentId }}
@@ -102,7 +102,7 @@ const MatchdaySkeleton = () => {
 
 			<MatchdayGrid>
 				{Array.from({ length: 8 }).map((_, i) => (
-					<MatchdayCard key={i} data-ui="matchday-card-skeleton">
+					<MatchdayCard key={`skeleton-${i}`} data-ui="matchday-card-skeleton">
 						<DashCard.Skeleton sx={{ width: "100px", height: "71px" }} />
 					</MatchdayCard>
 				))}

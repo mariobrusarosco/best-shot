@@ -1,4 +1,5 @@
-import { Box, Grid2, styled, Typography } from "@mui/material";
+import { Box, Grid, styled } from "@mui/material";
+import { AppTypography } from "@/domains/ui-system/components";
 import { IconActivity, IconAlertTriangle, IconCheck, IconClock } from "@tabler/icons-react";
 import { AppLoader } from "@/domains/global/components/app-loader";
 import { Surface } from "@/domains/ui-system/components/surface/surface";
@@ -14,156 +15,156 @@ export const AdminDashboard = () => {
 	if (!statistics) {
 		return (
 			<Surface sx={{ p: 3, textAlign: "center" }}>
-				<Typography variant="body1" color="text.secondary">
+				<AppTypography variant="h6" color="text.secondary">
 					No scraper statistics available
-				</Typography>
+				</AppTypography>
 			</Surface>
 		);
 	}
 
 	return (
 		<DashboardContainer>
-			<Typography variant="h4" sx={{ mb: 4, color: "neutral.100" }}>
+			<AppTypography variant="h4" sx={{ mb: 4, color: "neutral.100" }}>
 				Admin Dashboard
-			</Typography>
+			</AppTypography>
 
-			<Grid2 container spacing={3}>
-				<Grid2 size={{ xs: 12, sm: 6, md: 3 }}>
+			<Grid container spacing={3}>
+				<Grid size={{ all: 12, mobile: 6, tablet: 3 }}>
 					<StatCard>
 						<StatIcon sx={{ backgroundColor: "primary.main" }}>
 							<IconActivity size={24} />
 						</StatIcon>
 						<Box>
-							<Typography variant="h3" color="neutral.100">
+							<AppTypography variant="h3" color="neutral.100">
 								{statistics.totalJobs}
-							</Typography>
-							<Typography variant="caption" color="text.secondary">
+							</AppTypography>
+							<AppTypography variant="caption" color="text.secondary">
 								Total Jobs
-							</Typography>
+							</AppTypography>
 						</Box>
 					</StatCard>
-				</Grid2>
+				</Grid>
 
-				<Grid2 size={{ xs: 12, sm: 6, md: 3 }}>
+				<Grid size={{ all: 12, mobile: 6, tablet: 3 }}>
 					<StatCard>
 						<StatIcon sx={{ backgroundColor: "success.main" }}>
 							<IconCheck size={24} />
 						</StatIcon>
 						<Box>
-							<Typography variant="h3" color="neutral.100">
+							<AppTypography variant="h3" color="neutral.100">
 								{statistics.activeJobs}
-							</Typography>
-							<Typography variant="caption" color="text.secondary">
+							</AppTypography>
+							<AppTypography variant="caption" color="text.secondary">
 								Active Jobs
-							</Typography>
+							</AppTypography>
 						</Box>
 					</StatCard>
-				</Grid2>
+				</Grid>
 
-				<Grid2 size={{ xs: 12, sm: 6, md: 3 }}>
+				<Grid size={{ all: 12, mobile: 6, tablet: 3 }}>
 					<StatCard>
 						<StatIcon sx={{ backgroundColor: "warning.main" }}>
 							<IconClock size={24} />
 						</StatIcon>
 						<Box>
-							<Typography variant="h3" color="neutral.100">
+							<AppTypography variant="h3" color="neutral.100">
 								{statistics.pausedJobs}
-							</Typography>
-							<Typography variant="caption" color="text.secondary">
+							</AppTypography>
+							<AppTypography variant="caption" color="text.secondary">
 								Paused Jobs
-							</Typography>
+							</AppTypography>
 						</Box>
 					</StatCard>
-				</Grid2>
+				</Grid>
 
-				<Grid2 size={{ xs: 12, sm: 6, md: 3 }}>
+				<Grid size={{ all: 12, mobile: 6, tablet: 3 }}>
 					<StatCard>
 						<StatIcon sx={{ backgroundColor: "error.main" }}>
 							<IconAlertTriangle size={24} />
 						</StatIcon>
 						<Box>
-							<Typography variant="h3" color="neutral.100">
+							<AppTypography variant="h3" color="neutral.100">
 								{statistics.failedJobs}
-							</Typography>
-							<Typography variant="caption" color="text.secondary">
+							</AppTypography>
+							<AppTypography variant="caption" color="text.secondary">
 								Failed Jobs
-							</Typography>
+							</AppTypography>
 						</Box>
 					</StatCard>
-				</Grid2>
-			</Grid2>
+				</Grid>
+			</Grid>
 
-			<Grid2 container spacing={3} sx={{ mt: 2 }}>
-				<Grid2 size={{ xs: 12, md: 6 }}>
+			<Grid container spacing={3} sx={{ mt: 2 }}>
+				<Grid size={{ all: 12, tablet: 6 }}>
 					<Surface sx={{ p: 3 }}>
-						<Typography variant="h6" sx={{ mb: 2, color: "neutral.100" }}>
+						<AppTypography variant="h6" sx={{ mb: 2, color: "neutral.100" }}>
 							24 Hour Statistics
-						</Typography>
+						</AppTypography>
 						<Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
 							<StatRow>
-								<Typography variant="body2" color="text.secondary">
+								<AppTypography variant="body2" color="text.secondary">
 									Total Executions
-								</Typography>
-								<Typography variant="body1" color="neutral.100">
+								</AppTypography>
+								<AppTypography variant="body1" color="neutral.100">
 									{statistics.totalExecutions24h}
-								</Typography>
+								</AppTypography>
 							</StatRow>
 							<StatRow>
-								<Typography variant="body2" color="text.secondary">
+								<AppTypography variant="body2" color="text.secondary">
 									Successful
-								</Typography>
-								<Typography variant="body1" color="success.main">
+								</AppTypography>
+								<AppTypography variant="body1" color="success.main">
 									{statistics.successfulExecutions24h}
-								</Typography>
+								</AppTypography>
 							</StatRow>
 							<StatRow>
-								<Typography variant="body2" color="text.secondary">
+								<AppTypography variant="body2" color="text.secondary">
 									Failed
-								</Typography>
-								<Typography variant="body1" color="error.main">
+								</AppTypography>
+								<AppTypography variant="body1" color="error.main">
 									{statistics.failedExecutions24h}
-								</Typography>
+								</AppTypography>
 							</StatRow>
 						</Box>
 					</Surface>
-				</Grid2>
+				</Grid>
 
-				<Grid2 size={{ xs: 12, md: 6 }}>
+				<Grid size={{ all: 12, tablet: 6 }}>
 					<Surface sx={{ p: 3 }}>
-						<Typography variant="h6" sx={{ mb: 2, color: "neutral.100" }}>
+						<AppTypography variant="h6" sx={{ mb: 2, color: "neutral.100" }}>
 							System Health
-						</Typography>
+						</AppTypography>
 						<Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
 							<StatRow>
-								<Typography variant="body2" color="text.secondary">
+								<AppTypography variant="body2" color="text.secondary">
 									Success Rate
-								</Typography>
-								<Typography variant="body1" color="neutral.100">
+								</AppTypography>
+								<AppTypography variant="body1" color="neutral.100">
 									{statistics.averageSuccessRate.toFixed(1)}%
-								</Typography>
+								</AppTypography>
 							</StatRow>
 							<StatRow>
-								<Typography variant="body2" color="text.secondary">
+								<AppTypography variant="body2" color="text.secondary">
 									Last Execution
-								</Typography>
-								<Typography variant="body1" color="neutral.100">
+								</AppTypography>
+								<AppTypography variant="body1" color="neutral.100">
 									{new Date(statistics.lastExecutionTime).toLocaleString()}
-								</Typography>
+								</AppTypography>
 							</StatRow>
 							{statistics.nextScheduledRun && (
 								<StatRow>
-									<Typography variant="body2" color="text.secondary">
+									<AppTypography variant="body2" color="text.secondary">
 										Next Scheduled Run
-									</Typography>
-									<Typography variant="body1" color="neutral.100">
+									</AppTypography>
+									<AppTypography variant="body1" color="neutral.100">
 										{new Date(statistics.nextScheduledRun).toLocaleString()}
-									</Typography>
+									</AppTypography>
 								</StatRow>
 							)}
 						</Box>
 					</Surface>
-				</Grid2>
-			</Grid2>
+				</Grid>
+			</Grid>
 		</DashboardContainer>
 	);
 };

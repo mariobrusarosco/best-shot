@@ -1,5 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Box, Dialog, DialogActions, DialogContent, DialogTitle, Typography } from "@mui/material";
+import { Box, Dialog, DialogActions, DialogContent, DialogTitle } from "@mui/material";
+import { AppTypography } from "@/domains/ui-system/components";
 import { useForm } from "react-hook-form";
 import type { z } from "zod";
 import { AppButton } from "@/domains/ui-system/components/app-button/app-button";
@@ -41,7 +42,6 @@ export const RescheduleJobModal = ({ jobId, onClose }: RescheduleJobModalProps) 
 	const {
 		control,
 		handleSubmit,
-		formState: { errors },
 		watch,
 		setValue,
 	} = useForm<RescheduleJobInput>({
@@ -69,19 +69,19 @@ export const RescheduleJobModal = ({ jobId, onClose }: RescheduleJobModalProps) 
 	};
 
 	return (
-		<Dialog open onClose={onClose} maxWidth="md" fullWidth>
+		<Dialog open onClose={onClose} maxWidth="tablet" fullWidth>
 			<DialogTitle>
-				<Typography variant="h6" color="neutral.100">
+				<AppTypography variant="h6" color="neutral.100">
 					Reschedule Scraper Job
-				</Typography>
+				</AppTypography>
 			</DialogTitle>
 
 			<DialogContent sx={{ pb: 2 }}>
 				<Box component="form" onSubmit={handleSubmit(onSubmit)} sx={{ mt: 2 }}>
 					<Box sx={{ mb: 3 }}>
-						<Typography variant="subtitle2" sx={{ mb: 2, color: "neutral.100" }}>
+						<AppTypography variant="subtitle2" sx={{ mb: 2, color: "neutral.100" }}>
 							Quick Select Common Schedules
-						</Typography>
+						</AppTypography>
 						<Box sx={{ display: "flex", flexWrap: "wrap", gap: 1 }}>
 							{commonCronExpressions.map((option) => (
 								<AppButton
@@ -104,17 +104,16 @@ export const RescheduleJobModal = ({ jobId, onClose }: RescheduleJobModalProps) 
 						control={control}
 						label="Cron Expression"
 						placeholder="0 */6 * * * (every 6 hours)"
-						error={errors.cronExpression?.message}
 						required
 					/>
 
 					<Box sx={{ mt: 2 }}>
-						<Typography variant="caption" color="text.secondary">
+						<AppTypography variant="caption" color="text.secondary">
 							Cron format: minute hour day month weekday
-						</Typography>
-						<Typography variant="caption" display="block" color="text.secondary">
+						</AppTypography>
+						<AppTypography variant="caption" display="block" color="text.secondary">
 							Examples: "0 */6 * * *" (every 6 hours), "0 0 * * 1" (weekly on Monday)
-						</Typography>
+						</AppTypography>
 					</Box>
 
 					<Box sx={{ mt: 3 }}>
@@ -123,7 +122,6 @@ export const RescheduleJobModal = ({ jobId, onClose }: RescheduleJobModalProps) 
 							control={control}
 							label="Timezone"
 							options={timezones}
-							error={errors.timezone?.message}
 						/>
 					</Box>
 
@@ -136,12 +134,12 @@ export const RescheduleJobModal = ({ jobId, onClose }: RescheduleJobModalProps) 
 								borderRadius: 1,
 							}}
 						>
-							<Typography variant="caption" color="text.secondary">
+							<AppTypography variant="caption" color="text.secondary">
 								Schedule Preview
-							</Typography>
-							<Typography variant="body2" color="neutral.100">
+							</AppTypography>
+							<AppTypography variant="body2" color="neutral.100">
 								{cronExpression}
-							</Typography>
+							</AppTypography>
 						</Box>
 					)}
 				</Box>

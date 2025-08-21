@@ -1,37 +1,31 @@
 import { z } from "zod";
 
-// Base user schema
+// User schema
 export const UserSchema = z.object({
 	id: z.number(),
-	name: z.string(),
 	email: z.string().email(),
-	role: z.enum(["admin", "user", "guest"]).optional(),
+	name: z.string(),
 	createdAt: z.string().datetime(),
+	updatedAt: z.string().datetime(),
 });
 
-// Type inference from the schema
-export type User = z.infer<typeof UserSchema>;
-
-// List of users
+// User list schema
 export const UserListSchema = z.array(UserSchema);
 
 // Login request schema
 export const LoginRequestSchema = z.object({
 	email: z.string().email(),
-	password: z.string().min(8),
+	password: z.string().min(1),
 });
 
 // Login response schema
 export const LoginResponseSchema = z.object({
-	token: z.string(),
 	user: UserSchema,
+	token: z.string(),
+	refreshToken: z.string().optional(),
 });
 
-// User creation schema (without id and createdAt which are server-generated)
-export const UserCreateSchema = UserSchema.omit({
-	id: true,
-	createdAt: true,
-});
-
-// User update schema (all fields optional)
-export const UserUpdateSchema = UserCreateSchema.partial();
+// Export types
+export type User = z.infer<typeof UserSchema>;
+export type LoginRequest = z.infer<typeof LoginRequestSchema>;
+export type LoginResponse = z.infer<typeof LoginResponseSchema>;

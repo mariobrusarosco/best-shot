@@ -11,7 +11,7 @@ export const useTournamentSetup = () => {
 
 	const mutation = useMutation({
 		mutationFn: setupTournament,
-		onSuccess: async () => {
+		onSuccess: () => {
 			console.log("on Success start");
 			queryClient.invalidateQueries({
 				queryKey: tournamentKey(tournamentId),

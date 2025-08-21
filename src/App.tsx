@@ -15,18 +15,16 @@ AppConfiguration.init();
 
 function App() {
 	return (
-		<>
-			<AppQueryProvider>
-				<AuthProvider>
-					<ThemeProvider theme={theme}>
-						<CssBaseline />
-						<GlobalCSS />
-						<AppRouter />
-						<LaunchDarklyUserIdentifier />
-					</ThemeProvider>
-				</AuthProvider>
-			</AppQueryProvider>
-		</>
+		<AppQueryProvider>
+			<AuthProvider>
+				<ThemeProvider theme={theme}>
+					<CssBaseline />
+					<GlobalCSS />
+					<AppRouter />
+					<LaunchDarklyUserIdentifier />
+				</ThemeProvider>
+			</AuthProvider>
+		</AppQueryProvider>
 	);
 }
 

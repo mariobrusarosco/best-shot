@@ -34,7 +34,7 @@ const UiSystemScreen = () => {
 					}}
 				>
 					{Array.from({ length: 8 }).map((_, i) => (
-						<li key={i}>
+						<li key={`button-${i}`}>
 							<AppButton
 								sx={{
 									backgroundColor: COLORS.teal[500],

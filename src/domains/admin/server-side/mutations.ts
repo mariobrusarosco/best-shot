@@ -51,6 +51,9 @@ export const triggerScraperJob = async (jobId: string): Promise<void> => {
 };
 
 // Update tournament metadata
-export const updateTournamentMetadata = async (tournamentId: string, data: any): Promise<void> => {
+export const updateTournamentMetadata = async (
+	tournamentId: string,
+	data: Record<string, unknown>
+): Promise<void> => {
 	await api.put(`/admin/tournaments/${tournamentId}/metadata`, data);
 };

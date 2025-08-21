@@ -127,13 +127,14 @@ export const LeagueTournamentCustomization = ({
 						</Typography>
 					)}
 
-					{tracked?.map((tournament) => (
-						<TournamentLeagueCard
-							tournament={tournament}
-							onRemove={() => removeTournament(tournament)}
-							status="tracked"
-						/>
-					))}
+											{tracked?.map((tournament) => (
+							<TournamentLeagueCard
+								key={`tracked-${tournament.id}`}
+								tournament={tournament}
+								onRemove={() => removeTournament(tournament)}
+								status="tracked"
+							/>
+						))}
 				</ListGrid>
 			</Stack>
 
@@ -173,6 +174,7 @@ export const LeagueTournamentCustomization = ({
 					) : (
 						untracked?.map((tournament) => (
 							<TournamentLeagueCard
+								key={`untracked-${tournament.id}`}
 								tournament={tournament}
 								onAdd={() => addTournament(tournament)}
 								status="untracked"
@@ -206,7 +208,7 @@ export const TournamentLeagueCard = ({
 				</Typography>
 
 				<LogoBox>
-					<img src={tournament.logo} />
+					<img src={tournament.logo} alt={`${tournament.label} logo`} />
 				</LogoBox>
 			</CardHeading>
 

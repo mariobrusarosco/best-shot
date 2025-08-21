@@ -23,8 +23,8 @@ const TournamentsList = ({ tournaments }: Props) => {
 const TournamentsListLoading = () => {
 	return (
 		<GridOfCards data-ui="tournaments-list" as="ul">
-			{Array.from({ length: 10 }).map((_) => (
-				<TournamentCardSkeleton />
+			{Array.from({ length: 10 }).map((_, index) => (
+				<TournamentCardSkeleton key={`skeleton-${index}`} />
 			))}
 		</GridOfCards>
 	);

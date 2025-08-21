@@ -48,7 +48,7 @@ const TournamentPerformanceStats = ({
 							backgroundColor: "teal.500",
 						}}
 						disabled={mutation.isPending}
-						onClick={async () => {
+						onClick={() => {
 							mutation.mutate();
 						}}
 					>

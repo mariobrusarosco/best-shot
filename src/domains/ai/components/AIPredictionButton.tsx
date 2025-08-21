@@ -52,7 +52,7 @@ const AIPredictionButton = memo(
 					// Parse the predicted score (assuming format like "2-1")
 					const [homeScore, awayScore] = result.data.predictedScore.split("-").map(Number);
 
-					if (!isNaN(homeScore) && !isNaN(awayScore)) {
+					if (!Number.isNaN(homeScore) && !Number.isNaN(awayScore)) {
 						onPredictionReceived(homeScore, awayScore);
 					}
 				}

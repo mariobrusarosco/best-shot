@@ -1,4 +1,5 @@
-import { Box, Grid2, Typography } from "@mui/material";
+import { Box, Grid } from "@mui/material";
+import { AppTypography } from "@/domains/ui-system/components";
 import { useState } from "react";
 import { AppLoader } from "@/domains/global/components/app-loader";
 import { Surface } from "@/domains/ui-system/components/surface/surface";
@@ -37,13 +38,13 @@ export const ScraperJobsList = () => {
 	if (!jobs || jobs.length === 0) {
 		return (
 			<Box sx={{ p: 3 }}>
-				<Typography variant="h4" sx={{ mb: 4, color: "neutral.100" }}>
+				<AppTypography variant="h4" sx={{ mb: 4, color: "neutral.100" }}>
 					Scraper Jobs
-				</Typography>
+				</AppTypography>
 				<Surface sx={{ p: 3, textAlign: "center" }}>
-					<Typography variant="body1" color="text.secondary">
+					<AppTypography variant="h6" color="text.secondary">
 						No scraper jobs found
-					</Typography>
+					</AppTypography>
 				</Surface>
 			</Box>
 		);
@@ -51,22 +52,22 @@ export const ScraperJobsList = () => {
 
 	return (
 		<Box sx={{ p: 3 }}>
-			<Typography variant="h4" sx={{ mb: 4, color: "neutral.100" }}>
+			<AppTypography variant="h4" sx={{ mb: 4, color: "neutral.100" }}>
 				Scraper Jobs ({jobs.length})
-			</Typography>
+			</AppTypography>
 
-			<Grid2 container spacing={3}>
+			<Grid container spacing={3}>
 				{jobs.map((job) => (
-					<Grid2 size={{ xs: 12, md: 6, xl: 4 }} key={job.id}>
+					<Grid size={{ all: 12, tablet: 6, desktop: 4 }} key={job.id}>
 						<ScraperJobCard
 							job={job}
 							onReschedule={handleReschedule}
 							onToggleStatus={handleToggleStatus}
 							onTrigger={handleTrigger}
 						/>
-					</Grid2>
+					</Grid>
 				))}
-			</Grid2>
+			</Grid>
 
 			{selectedJobId && <RescheduleJobModal jobId={selectedJobId} onClose={handleCloseModal} />}
 		</Box>

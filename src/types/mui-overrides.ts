@@ -30,19 +30,9 @@ declare module '@mui/material/styles' {
     compact: true;
   }
 
-  // Extend Breakpoint with custom breakpoint names
-  interface BreakpointOverrides {
-    xs: false; // disable default xs
-    sm: false; // disable default sm
-    md: false; // disable default md
-    lg: false; // disable default lg
-    xl: false; // disable default xl
-    all: true;
-    mobile: true;
-    tablet: true;
-    laptop: true;
-    desktop: true;
-  }
+
+
+
 }
 
 // Export for module recognition

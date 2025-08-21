@@ -1,5 +1,6 @@
-import { Box, Chip, IconButton, styled, Typography } from "@mui/material";
-import { IconClock, IconPause, IconPlay, IconSettings, IconTrendingUp } from "@tabler/icons-react";
+import { Box, Chip, IconButton, styled } from "@mui/material";
+import { AppTypography } from "@/domains/ui-system/components";
+import { IconClock, IconPlayerPause, IconPlayerPlay, IconSettings, IconTrendingUp } from "@tabler/icons-react";
 import { useState } from "react";
 import { AppButton } from "@/domains/ui-system/components/app-button/app-button";
 import { Surface } from "@/domains/ui-system/components/surface/surface";
@@ -20,7 +21,7 @@ export const ScraperJobCard = ({
 }: ScraperJobCardProps) => {
 	const [isExpanded, setIsExpanded] = useState(false);
 
-	const getStatusColor = (status: string) => {
+	const getStatusColor = (status: string): "success" | "info" | "warning" | "error" | "default" => {
 		switch (status) {
 			case "active":
 				return "success";
@@ -50,17 +51,17 @@ export const ScraperJobCard = ({
 		<JobCard>
 			<CardHeader>
 				<Box>
-					<Typography variant="h6" color="neutral.100" sx={{ mb: 1 }}>
+					<AppTypography variant="h6" color="neutral.100" sx={{ mb: 1 }}>
 						{job.name}
-					</Typography>
-					<Typography variant="body2" color="text.secondary">
+					</AppTypography>
+					<AppTypography variant="body2" color="text.secondary">
 						{job.tournamentName}
-					</Typography>
+					</AppTypography>
 				</Box>
 				<Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
 					<Chip
 						label={job.status}
-						color={getStatusColor(job.status) as any}
+						color={getStatusColor(job.status)}
 						size="small"
 						variant="filled"
 					/>
@@ -71,76 +72,76 @@ export const ScraperJobCard = ({
 				<StatItem>
 					<IconTrendingUp size={16} color="#10b981" />
 					<Box>
-						<Typography variant="caption" color="text.secondary">
+						<AppTypography variant="caption" color="text.secondary">
 							Success Rate
-						</Typography>
-						<Typography variant="body2" color="success.main">
+						</AppTypography>
+						<AppTypography variant="body2" color="success.main">
 							{getSuccessRate()}%
-						</Typography>
+						</AppTypography>
 					</Box>
 				</StatItem>
 
 				<StatItem>
 					<IconClock size={16} />
 					<Box>
-						<Typography variant="caption" color="text.secondary">
+						<AppTypography variant="caption" color="text.secondary">
 							Next Run
-						</Typography>
-						<Typography variant="body2" color="neutral.100">
+						</AppTypography>
+						<AppTypography variant="body2" color="neutral.100">
 							{new Date(job.schedule.nextRun).toLocaleString()}
-						</Typography>
+						</AppTypography>
 					</Box>
 				</StatItem>
 			</StatsGrid>
 
 			<ScheduleInfo>
-				<Typography variant="caption" color="text.secondary">
+				<AppTypography variant="caption" color="text.secondary">
 					Schedule: {job.schedule.cron} ({job.schedule.timezone})
-				</Typography>
+				</AppTypography>
 			</ScheduleInfo>
 
 			{isExpanded && (
 				<ExpandedContent>
-					<Typography variant="subtitle2" color="neutral.100" sx={{ mb: 1 }}>
+					<AppTypography variant="subtitle2" color="neutral.100" sx={{ mb: 1 }}>
 						Statistics
-					</Typography>
+					</AppTypography>
 					<StatsGrid>
 						<StatItem>
-							<Typography variant="caption" color="text.secondary">
+							<AppTypography variant="caption" color="text.secondary">
 								Total Success
-							</Typography>
-							<Typography variant="body2" color="success.main">
+							</AppTypography>
+							<AppTypography variant="body2" color="success.main">
 								{job.statistics.successCount}
-							</Typography>
+							</AppTypography>
 						</StatItem>
 						<StatItem>
-							<Typography variant="caption" color="text.secondary">
+							<AppTypography variant="caption" color="text.secondary">
 								Total Failures
-							</Typography>
-							<Typography variant="body2" color="error.main">
+							</AppTypography>
+							<AppTypography variant="body2" color="error.main">
 								{job.statistics.failureCount}
-							</Typography>
+							</AppTypography>
 						</StatItem>
 						<StatItem>
-							<Typography variant="caption" color="text.secondary">
+							<AppTypography variant="caption" color="text.secondary">
 								Avg Runtime
-							</Typography>
-							<Typography variant="body2" color="neutral.100">
+							</AppTypography>
+							<AppTypography variant="body2" color="neutral.100">
 								{job.statistics.averageRunTime}s
-							</Typography>
+							</AppTypography>
 						</StatItem>
 					</StatsGrid>
 
-					<Typography variant="subtitle2" color="neutral.100" sx={{ mb: 1, mt: 2 }}>
+					<AppTypography variant="subtitle2" color="neutral.100" sx={{ mb: 1, mt: 2 }}>
 						Data Source
-					</Typography>
+					</AppTypography>
 					<Box>
-						<Typography variant="caption" color="text.secondary">
+						<AppTypography variant="caption" color="text.secondary">
 							Provider: {job.dataSource.provider}
-						</Typography>
-						<Typography variant="caption" display="block" color="text.secondary">
+						</AppTypography>
+						<AppTypography variant="caption" display="block" color="text.secondary">
 							URL: {job.dataSource.url}
-						</Typography>
+						</AppTypography>
 					</Box>
 				</ExpandedContent>
 			)}
@@ -153,7 +154,7 @@ export const ScraperJobCard = ({
 						disabled={job.status === "running"}
 						sx={{ color: "neutral.100" }}
 					>
-						{job.status === "active" ? <IconPause size={16} /> : <IconPlay size={16} />}
+						{job.status === "active" ? <IconPlayerPause size={16} /> : <IconPlayerPlay size={16} />}
 					</IconButton>
 
 					<IconButton
@@ -202,7 +203,7 @@ const StatsGrid = styled(Box)(({ theme }) => ({
 	display: "grid",
 	gridTemplateColumns: "1fr 1fr",
 	gap: theme.spacing(2),
-	[theme.breakpoints.up("md")]: {
+	[theme.breakpoints.up("tablet")]: {
 		gridTemplateColumns: "1fr 1fr 1fr",
 	},
 }));
@@ -221,7 +222,7 @@ const ScheduleInfo = styled(Box)(({ theme }) => ({
 
 const ExpandedContent = styled(Box)(({ theme }) => ({
 	paddingTop: theme.spacing(2),
-	borderTop: `1px solid ${theme.palette.black[600]}`,
+	borderTop: `1px solid ${theme.palette.black[500]}`,
 }));
 
 const ActionBar = styled(Box)({

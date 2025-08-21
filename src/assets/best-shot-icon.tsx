@@ -41,6 +41,8 @@ export const BestShotIcon = ({ isAnimated = false, fill, ...rest }: Props) => {
 			{...rest}
 			viewBox="0 0 152 144"
 			xmlns="http://www.w3.org/2000/svg"
+			role="img"
+			aria-label="Best Shot Icon"
 		>
 			<motion.path
 				variants={PentagonsVariants}

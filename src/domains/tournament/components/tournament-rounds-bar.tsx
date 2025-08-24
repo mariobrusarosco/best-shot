@@ -35,7 +35,7 @@ const TournamentRoundsBar = () => {
 			</BarHeading>
 
 			<Bar data-ui="bar">
-				{tournament?.rounds.map(({ label, slug }) => (
+				{tournament?.rounds?.map(({ label, slug }) => (
 					<RoundButton
 						key={label}
 						onClick={() => goToRound(slug)}
@@ -134,8 +134,6 @@ const RoundButton = styled(Box)(({ theme }) => ({
 		padding: theme.spacing(1.5),
 		width: "100%",
 	},
-
-	[UIHelper.startsOn("desktop")]: {},
 }));
 
 const Skeleton = () => {

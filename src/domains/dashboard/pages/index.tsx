@@ -1,7 +1,7 @@
 import { Typography, Box } from "@mui/material";
 import { styled } from "@mui/system";
 import { useState } from "react";
-import dayjs, { Dayjs } from "dayjs";
+import dayjs, { type Dayjs } from "dayjs";
 import Matchday from "@/domains/dashboard/components/matchday";
 import { useDashboard } from "@/domains/dashboard/hooks/use-dashboard";
 import { ScreenHeading, ScreenHeadingSkeleton } from "@/domains/global/components/screen-heading";

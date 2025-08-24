@@ -47,7 +47,7 @@ export const BORDER_RADIUS = {
 export const PADDING = {
 	none: "0",
 	tiny: "4px",
-	["extra-small"]: "12px",
+	"extra-small": "12px",
 	small: "8px",
 	medium: "12px",
 	large: "16px",

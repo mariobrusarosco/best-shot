@@ -40,7 +40,7 @@ export const GuessSection = ({
 				<Stack maxHeight="400px" overflow="auto">
 					<GridOfGuesses>
 						{groupOfGuesses.map((guess, index) => (
-							<GuessCard>
+							<GuessCard key={`guess-${index}`}>
 								<Stack direction="row" gap={2}>
 									<Typography
 										variant="caption"

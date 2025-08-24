@@ -9,17 +9,17 @@ import {
 import { createApiValidator } from "./validation";
 
 // Example function to fetch a user
-export async function fetchUser(userId: number): Promise<User> {
+export function fetchUser(userId: number): Promise<User> {
 	return apiGet(`/users/${userId}`, UserSchema);
 }
 
 // Example function to fetch all users
-export async function fetchAllUsers(): Promise<User[]> {
+export function fetchAllUsers(): Promise<User[]> {
 	return apiGet("/users", UserListSchema);
 }
 
 // Example function to login
-export async function login(email: string, password: string) {
+export function login(email: string, password: string) {
 	const loginData = { email, password };
 
 	// Validate request data before sending

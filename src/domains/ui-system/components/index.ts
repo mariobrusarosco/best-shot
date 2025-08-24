@@ -27,6 +27,9 @@ export type { AppSelectProps } from './app-select/AppSelect';
 export { AppCheckbox } from './app-checkbox/AppCheckbox';
 export type { AppCheckboxProps } from './app-checkbox/AppCheckbox';
 
+export { AppTypography } from './typography';
+export type { AppTypographyProps } from './typography/app-typography';
+
 // Existing Components (for backward compatibility)
 export { AppIcon } from './icon/icon';
 export { Surface as AppSurface } from './surface/surface';
@@ -45,6 +48,7 @@ import { AppBox } from './app-box/AppBox';
 import { AppTextField } from './app-text-field/app-text-field';
 import { AppSelect } from './app-select/AppSelect';
 import { AppCheckbox } from './app-checkbox/AppCheckbox';
+import { AppTypography } from './typography';
 import { AppIcon } from './icon/icon';
 import { Surface as AppSurface } from './surface/surface';
 
@@ -56,6 +60,7 @@ export const BaseComponents = {
 	AppTextField,
 	AppSelect,
 	AppCheckbox,
+	AppTypography,
 } as const;
 
 export const UIComponents = {

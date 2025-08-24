@@ -1,7 +1,7 @@
 import { isEmpty } from "lodash-es";
 import type { IErrorStructure } from "./typing";
 
-export const logError = (errorDetails: IErrorStructure): void | null => {
+export const logError = (errorDetails: IErrorStructure): undefined | null => {
 	if (isEmpty(errorDetails)) return null;
 
 	const { source, message, code, details } = errorDetails;

@@ -66,7 +66,7 @@ export const LeagueTournaments = ({
 			{!editMode && allAppAvailableTournamens && league.data && (
 				<ListGrid data-ui="league-tournament-list">
 					{league?.data?.tournaments.map((tournament) => (
-						<TournamentLeagueCard tournament={tournament} />
+						<TournamentLeagueCard key={tournament.id} tournament={tournament} />
 					))}
 				</ListGrid>
 			)}

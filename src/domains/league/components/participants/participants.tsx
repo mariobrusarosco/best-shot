@@ -37,8 +37,8 @@ const ParticipantsListSkeleton = () => {
 			<AppPill.Skeleton width={100} height={25} />
 
 			<ListGrid data-ui="leagues-list">
-				{participants?.map((_) => (
-					<Skeleton />
+				{participants?.map((_, index) => (
+					<Skeleton key={`skeleton-${index}`} />
 				))}
 			</ListGrid>
 		</Stack>

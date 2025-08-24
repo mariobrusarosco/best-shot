@@ -198,6 +198,28 @@ declare module '@mui/material/styles' {
 		pink?: typeof DESIGN_SYSTEM_COLORS.pink;
 	}
 	
+	// Extend Typography variant overrides
+	interface TypographyPropsVariantOverrides {
+		body1: true;
+		body2: true;
+		subtitle1: true;
+		subtitle2: true;
+	}
+	
+	// Extend Breakpoint with custom breakpoint names
+	interface BreakpointOverrides {
+		xs: false; // disable default xs
+		sm: false; // disable default sm
+		md: false; // disable default md
+		lg: false; // disable default lg
+		xl: false; // disable default xl
+		all: true;
+		mobile: true;
+		tablet: true;
+		laptop: true;
+		desktop: true;
+	}
+	
 	// Note: Button and Card variant overrides are declared in src/types/mui-overrides.ts
 }
 

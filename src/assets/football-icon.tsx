@@ -20,6 +20,8 @@ export const FootballIcon = ({
 			xmlns="http://www.w3.org/2000/svg"
 			fill={fill}
 			className={className}
+			role="img"
+			aria-label="Football Icon"
 			{...rest}
 		>
 			<path

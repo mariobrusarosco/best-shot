@@ -23,7 +23,7 @@ export const Provider = ({ children }: { children: React.ReactNode }) => {
 		}
 	};
 
-	const appLogin = async () => {
+	const appLogin = () => {
 		try {
 			alert("[DEMO MESSAGE] You're now logged in!");
 			return Promise.resolve();
@@ -33,7 +33,7 @@ export const Provider = ({ children }: { children: React.ReactNode }) => {
 		}
 	};
 
-	const appSignup = async () => {
+	const appSignup = () => {
 		try {
 			alert("[DEMO MESSAGE] You're now signed up!");
 			return Promise.resolve();
@@ -67,7 +67,7 @@ export const Provider = ({ children }: { children: React.ReactNode }) => {
 
 	useEffect(() => {
 		mutate(memberid);
-	}, []);
+	}, [mutate]);
 
 	return <ByPassAuthContext.Provider value={state}>{children}</ByPassAuthContext.Provider>;
 };

@@ -126,7 +126,7 @@ const MainLeague = ({
 };
 
 // TODO This can be a <AppRouteButton />
-const CardRouteButton = ({ to, params = {} }: { to: string; params?: {} }) => {
+const CardRouteButton = ({ to, params = {} }: { to: string; params?: Record<string, string> }) => {
 	return (
 		<AppButton
 			sx={{

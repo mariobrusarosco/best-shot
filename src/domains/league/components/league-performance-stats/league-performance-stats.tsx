@@ -51,7 +51,7 @@ const LeaguePerformanceStats = ({
 			{leaderBoard && (
 				<Stack gap={4}>
 					{leaderBoard.map((member, index) => (
-						<Stack>
+						<Stack key={`leaderboard-${member.memberName}-${index}`}>
 							<Card>
 								<Stack direction="row" gap={3} justifyContent="space-between" alignItems="center">
 									<Stack
@@ -112,8 +112,8 @@ const LeaguePerformanceStats = ({
 			)}
 
 			<Stack gap={4}>
-				{Object.entries(performance?.data.standings || {}).map(([_, tournament]) => (
-					<Stack gap={1}>
+				{Object.entries(performance?.data.standings || {}).map(([key, tournament]) => (
+					<Stack key={`tournament-${key}`} gap={1}>
 						<Stack direction="row" gap={1} alignItems="center">
 							<TournamentLogo sx={{ width: "20px" }} src={tournament?.logo} />
 							<Typography variant="label" textTransform="uppercase" color="neutral.100">
@@ -122,7 +122,7 @@ const LeaguePerformanceStats = ({
 						</Stack>
 
 						{tournament?.members?.map((member, index) => (
-							<Card>
+							<Card key={`member-${member.memberName}-${index}`}>
 								<Stack direction="row" gap={3} justifyContent="space-between" alignItems="center">
 									<Stack
 										direction="row"
@@ -217,8 +217,8 @@ const LeaguePerformanceStatsSkeleton = () => {
 			</Box>
 
 			<Stack gap={4}>
-				{stats.map(() => (
-					<Skeleton />
+				{stats.map((_, index) => (
+					<Skeleton key={`skeleton-${index}`} />
 				))}
 			</Stack>
 		</Wrapper>

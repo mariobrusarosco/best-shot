@@ -4,6 +4,7 @@ export interface I_Member {
 	email: string;
 	firstName: string;
 	lastName: string;
+	role?: "admin" | "user" | "guest";
 }
 
 export interface I_MemberPerformance {

@@ -10,8 +10,6 @@ declare global {
 	}
 }
 
-export {};
-
 // TODO Move Breakpoint-related code to a .d.ts
 declare module "@mui/material/styles" {
 	interface BreakpointOverrides {

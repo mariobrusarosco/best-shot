@@ -1,6 +1,6 @@
 /**
  * Design System Foundation: Typography
- * 
+ *
  * Typography scale and variants following the Best Shot design system.
  * Uses Poppins for headings (clean, modern) and Montserrat for content (readable).
  */
@@ -24,17 +24,17 @@ export const FONT_WEIGHTS = {
 
 // Font Sizes (in rem for scalability)
 export const FONT_SIZES = {
-	xs: "0.625rem",   // 10px
-	sm: "0.75rem",    // 12px
+	xs: "0.625rem", // 10px
+	sm: "0.75rem", // 12px
 	base: "0.875rem", // 14px
-	md: "1rem",       // 16px
-	lg: "1.125rem",   // 18px
-	xl: "1.25rem",    // 20px
-	"2xl": "1.5rem",  // 24px
+	md: "1rem", // 16px
+	lg: "1.125rem", // 18px
+	xl: "1.25rem", // 20px
+	"2xl": "1.5rem", // 24px
 	"3xl": "1.875rem", // 30px
 	"4xl": "2.25rem", // 36px
 	"5xl": "2.625rem", // 42px
-	"6xl": "3rem",    // 48px
+	"6xl": "3rem", // 48px
 	"7xl": "3.75rem", // 60px
 } as const;
 
@@ -85,7 +85,7 @@ export const TYPOGRAPHY_VARIANTS = {
 		fontWeight: FONT_WEIGHTS.medium,
 		lineHeight: LINE_HEIGHTS.relaxed, // 1.5 (existing)
 	},
-	
+
 	// Body Text (Montserrat - readable)
 	body1: {
 		fontFamily: FONT_FAMILIES.body,
@@ -99,7 +99,7 @@ export const TYPOGRAPHY_VARIANTS = {
 		fontWeight: FONT_WEIGHTS.regular,
 		lineHeight: LINE_HEIGHTS.normal,
 	},
-	
+
 	// Custom Variants (from existing system)
 	paragraph: {
 		fontFamily: FONT_FAMILIES.body,
@@ -125,7 +125,7 @@ export const TYPOGRAPHY_VARIANTS = {
 		fontWeight: FONT_WEIGHTS.regular,
 		lineHeight: LINE_HEIGHTS.normal,
 	},
-	
+
 	// Additional useful variants
 	caption: {
 		fontFamily: FONT_FAMILIES.body,
@@ -141,7 +141,7 @@ export const TYPOGRAPHY_VARIANTS = {
 		letterSpacing: "0.1em",
 		lineHeight: LINE_HEIGHTS.normal,
 	},
-	
+
 	// Subtitles
 	subtitle1: {
 		fontFamily: FONT_FAMILIES.body,

@@ -122,7 +122,7 @@ const LeaguePerformanceStats = ({
 						</Stack>
 
 						{tournament?.members?.map((member, index) => (
-							<Card key={`member-${member.memberName}-${index}`}>
+							<Card key={`member-${member.member}-${index}`}>
 								<Stack direction="row" gap={3} justifyContent="space-between" alignItems="center">
 									<Stack
 										direction="row"
@@ -202,7 +202,8 @@ export const Card = styled(Surface)(({ theme }) =>
 );
 
 const LeaguePerformanceStatsSkeleton = () => {
-	const stats = Array.from({ length: 6 }).map((_) => _);
+	// Generate stable keys for skeleton items
+	const skeletonKeys = Array.from({ length: 6 }, (_, i) => `skeleton-item-${i}`);
 
 	return (
 		<Wrapper data-ui="league-performance-stats-skeleton">
@@ -217,8 +218,8 @@ const LeaguePerformanceStatsSkeleton = () => {
 			</Box>
 
 			<Stack gap={4}>
-				{stats.map((_, index) => (
-					<Skeleton key={`skeleton-${index}`} />
+				{skeletonKeys.map((key) => (
+					<Skeleton key={key} />
 				))}
 			</Stack>
 		</Wrapper>

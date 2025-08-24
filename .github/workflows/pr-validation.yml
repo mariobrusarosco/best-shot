@@ -1,0 +1,41 @@
+name: PR Validation
+on:
+  pull_request:
+    branches: [ main, staging ]
+  push:
+    branches: [ main, staging ]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+          
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "dir=$(yarn cache dir)" >> $GITHUB_OUTPUT
+        
+      - name: Cache dependencies
+        uses: actions/cache@v3
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          
+      - name: Install dependencies
+        run: yarn
+        env:
+          HUSKY: 0
+        
+      - name: Run code quality checks
+        run: yarn check
+        
+      - name: Test build
+        run: |
+          yarn build --mode staging
+          rm -rf dist

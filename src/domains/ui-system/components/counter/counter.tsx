@@ -8,7 +8,7 @@ export const Counter = ({ initialValue }: { initialValue: number }) => {
 	useEffect(() => {
 		const controls = animate(count, initialValue, { duration: 1 });
 		return () => controls.stop();
-	}, []);
+	}, [count, initialValue]);
 
 	return <motion.span>{rounded}</motion.span>;
 };

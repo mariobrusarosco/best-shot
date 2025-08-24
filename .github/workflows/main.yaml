@@ -30,6 +30,11 @@ jobs:
 
       - name: Install dependencies
         run: yarn
+        env:
+          HUSKY: 0
+
+      - name: Run code quality checks
+        run: yarn check
 
       - name: Build
         run: yarn build --mode demo
@@ -67,6 +72,11 @@ jobs:
 
       - name: Install dependencies
         run: yarn
+        env:
+          HUSKY: 0
+
+      - name: Run code quality checks
+        run: yarn check
 
       - name: Build
         run: yarn build --mode staging
@@ -105,6 +115,11 @@ jobs:
 
       - name: Install dependencies
         run: yarn
+        env:
+          HUSKY: 0
+
+      - name: Run code quality checks
+        run: yarn check
 
       - name: Build
         run: yarn build --mode production

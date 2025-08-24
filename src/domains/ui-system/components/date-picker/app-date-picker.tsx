@@ -1,9 +1,9 @@
+import { TextField } from "@mui/material";
+import { styled } from "@mui/system";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { styled } from "@mui/system";
-import { TextField } from "@mui/material";
-import { Dayjs } from "dayjs";
+import type { Dayjs } from "dayjs";
 
 interface AppDatePickerProps {
 	label?: string;

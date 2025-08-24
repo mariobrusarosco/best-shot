@@ -6,8 +6,8 @@ import { AppRouter } from "./app-router";
 import { AppConfiguration } from "./configuration";
 import { GlobalCSS } from "./theming/global-styles";
 import "./theming/load-configuration";
-import { Authentication } from "./domains/authentication";
 import { theme } from "@/domains/ui-system/theme";
+import { Authentication } from "./domains/authentication";
 
 const { AuthProvider } = Authentication;
 

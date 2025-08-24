@@ -1,7 +1,7 @@
 import { Box, Grid } from "@mui/material";
-import { AppTypography } from "@/domains/ui-system/components";
 import { useState } from "react";
 import { AppLoader } from "@/domains/global/components/app-loader";
+import { AppTypography } from "@/domains/ui-system/components";
 import { Surface } from "@/domains/ui-system/components/surface/surface";
 import { useScraperJobs } from "../../hooks/use-scraper-jobs";
 import { useTriggerScraperJob } from "../../hooks/use-trigger-scraper-job";

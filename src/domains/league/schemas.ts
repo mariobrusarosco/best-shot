@@ -13,10 +13,7 @@ export const createLeagueSchema = z.object({
 			/^[a-zA-Z0-9\s\-_']+$/,
 			"League name can only contain letters, numbers, spaces, hyphens, underscores, and apostrophes"
 		),
-	description: z
-		.string()
-		.max(200, "Description must not exceed 200 characters")
-		.optional(),
+	description: z.string().max(200, "Description must not exceed 200 characters").optional(),
 });
 
 /**

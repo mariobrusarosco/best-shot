@@ -30,7 +30,7 @@ export const CardAnimation = ({ lastSavedGuess }: { lastSavedGuess: boolean }) =
 
 			animate(sequence);
 		}
-	}, [lastSavedGuess]);
+	}, [lastSavedGuess, animate, scope.current]);
 
 	return (
 		<Layer

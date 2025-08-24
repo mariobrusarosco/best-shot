@@ -1,5 +1,5 @@
 import { Box, IconButton, styled } from "@mui/material";
-import { useRef, useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { FootballIcon } from "@/assets/football-icon";
 import { useFAB } from "@/hooks/use-ui-store";
 
@@ -20,10 +20,10 @@ export const FloatingActionButton = () => {
 	const constrainPosition = useCallback((x: number, y: number) => {
 		const buttonSize = 56; // FAB size
 		const margin = 8; // Minimum margin from edges
-		
+
 		const maxX = window.innerWidth - buttonSize - margin;
 		const maxY = window.innerHeight - buttonSize - margin;
-		
+
 		return {
 			x: Math.max(margin, Math.min(x, maxX)),
 			y: Math.max(margin, Math.min(y, maxY)),
@@ -31,80 +31,95 @@ export const FloatingActionButton = () => {
 	}, []);
 
 	// Handle mouse down - start dragging
-	const handleMouseDown = useCallback((e: React.MouseEvent) => {
-		e.preventDefault();
-		if (dragRef.current) {
-			const rect = dragRef.current.getBoundingClientRect();
-			const offset = {
-				x: e.clientX - rect.left,
-				y: e.clientY - rect.top,
-			};
-			setDragState({ isDragging: true, offset });
-			setDragging(true);
-		}
-	}, [setDragging]);
+	const handleMouseDown = useCallback(
+		(e: React.MouseEvent) => {
+			e.preventDefault();
+			if (dragRef.current) {
+				const rect = dragRef.current.getBoundingClientRect();
+				const offset = {
+					x: e.clientX - rect.left,
+					y: e.clientY - rect.top,
+				};
+				setDragState({ isDragging: true, offset });
+				setDragging(true);
+			}
+		},
+		[setDragging]
+	);
 
 	// Handle mouse move - dragging
-	const handleMouseMove = useCallback((e: MouseEvent) => {
-		if (dragState.isDragging) {
-			const newPosition = constrainPosition(
-				e.clientX - dragState.offset.x,
-				e.clientY - dragState.offset.y
-			);
-			// Update position in memory only, don't persist during drag
-			setPosition(newPosition, false);
-		}
-	}, [dragState.isDragging, dragState.offset, constrainPosition, setPosition]);
+	const handleMouseMove = useCallback(
+		(e: MouseEvent) => {
+			if (dragState.isDragging) {
+				const newPosition = constrainPosition(
+					e.clientX - dragState.offset.x,
+					e.clientY - dragState.offset.y
+				);
+				// Update position in memory only, don't persist during drag
+				setPosition(newPosition, false);
+			}
+		},
+		[dragState.isDragging, dragState.offset, constrainPosition, setPosition]
+	);
 
 	// Handle mouse up - stop dragging
 	const handleMouseUp = useCallback(() => {
 		if (dragState.isDragging) {
 			setDragState({ isDragging: false, offset: { x: 0, y: 0 } });
 			setDragging(false);
-			
+
 			// Persist the final position to localStorage only when drag ends
 			setPosition(fab.position, true);
 		}
 	}, [dragState.isDragging, setDragging, fab.position, setPosition]);
 
 	// Handle touch events for mobile
-	const handleTouchStart = useCallback((e: React.TouchEvent) => {
-		e.preventDefault();
-		if (dragRef.current && e.touches.length === 1) {
-			const touch = e.touches[0];
-			const rect = dragRef.current.getBoundingClientRect();
-			const offset = {
-				x: touch.clientX - rect.left,
-				y: touch.clientY - rect.top,
-			};
-			setDragState({ isDragging: true, offset });
-			setDragging(true);
-		}
-	}, [setDragging]);
-
-	const handleTouchMove = useCallback((e: TouchEvent) => {
-		if (dragState.isDragging && e.touches.length === 1) {
+	const handleTouchStart = useCallback(
+		(e: React.TouchEvent) => {
 			e.preventDefault();
-			const touch = e.touches[0];
-			const newPosition = constrainPosition(
-				touch.clientX - dragState.offset.x,
-				touch.clientY - dragState.offset.y
-			);
-			// Update position in memory only, don't persist during drag
-			setPosition(newPosition, false);
-		}
-	}, [dragState.isDragging, dragState.offset, constrainPosition, setPosition]);
+			if (dragRef.current && e.touches.length === 1) {
+				const touch = e.touches[0];
+				const rect = dragRef.current.getBoundingClientRect();
+				const offset = {
+					x: touch.clientX - rect.left,
+					y: touch.clientY - rect.top,
+				};
+				setDragState({ isDragging: true, offset });
+				setDragging(true);
+			}
+		},
+		[setDragging]
+	);
 
-	const handleTouchEnd = useCallback((e: TouchEvent) => {
-		if (dragState.isDragging) {
-			e.preventDefault();
-			setDragState({ isDragging: false, offset: { x: 0, y: 0 } });
-			setDragging(false);
-			
-			// Persist the final position to localStorage only when touch ends
-			setPosition(fab.position, true);
-		}
-	}, [dragState.isDragging, setDragging, fab.position, setPosition]);
+	const handleTouchMove = useCallback(
+		(e: TouchEvent) => {
+			if (dragState.isDragging && e.touches.length === 1) {
+				e.preventDefault();
+				const touch = e.touches[0];
+				const newPosition = constrainPosition(
+					touch.clientX - dragState.offset.x,
+					touch.clientY - dragState.offset.y
+				);
+				// Update position in memory only, don't persist during drag
+				setPosition(newPosition, false);
+			}
+		},
+		[dragState.isDragging, dragState.offset, constrainPosition, setPosition]
+	);
+
+	const handleTouchEnd = useCallback(
+		(e: TouchEvent) => {
+			if (dragState.isDragging) {
+				e.preventDefault();
+				setDragState({ isDragging: false, offset: { x: 0, y: 0 } });
+				setDragging(false);
+
+				// Persist the final position to localStorage only when touch ends
+				setPosition(fab.position, true);
+			}
+		},
+		[dragState.isDragging, setDragging, fab.position, setPosition]
+	);
 
 	// Add global event listeners for mouse/touch events
 	useEffect(() => {
@@ -163,11 +178,7 @@ export const FloatingActionButton = () => {
 				color="primary"
 				aria-label="Floating action button"
 			>
-				<FootballIcon 
-					width={32} 
-					height={30} 
-					fill="currentColor"
-				/>
+				<FootballIcon width={32} height={30} fill="currentColor" />
 			</FABButton>
 		</FABContainer>
 	);
@@ -177,7 +188,7 @@ export const FloatingActionButton = () => {
 
 const FABContainer = styled(Box)(({ theme }) => ({
 	position: "fixed",
-	transition: theme.transitions.create(['transform'], {
+	transition: theme.transitions.create(["transform"], {
 		duration: theme.transitions.duration.short,
 	}),
 	zIndex: theme.zIndex.fab,
@@ -187,40 +198,40 @@ const FABContainer = styled(Box)(({ theme }) => ({
 const FABButton = styled(IconButton)(({ theme }) => ({
 	width: 56,
 	height: 56,
-	
+
 	// Use design system tokens instead of hardcoded colors
 	backgroundColor: theme.palette.primary.main,
 	color: theme.palette.primary.contrastText,
 	boxShadow: theme.shadows[6],
-	
+
 	// Interactive states with theme tokens
 	"&:hover": {
 		backgroundColor: theme.palette.primary.dark,
 		boxShadow: theme.shadows[8],
 		transform: "scale(1.02)",
-		transition: theme.transitions.create(['background-color', 'box-shadow', 'transform'], {
+		transition: theme.transitions.create(["background-color", "box-shadow", "transform"], {
 			duration: theme.transitions.duration.short,
 		}),
 	},
-	
+
 	"&:active": {
 		backgroundColor: theme.palette.primary.dark,
 		transform: "scale(0.98)",
 	},
-	
+
 	// Ensure the button stays circular
 	borderRadius: "50%",
-	
+
 	// Disable text selection for better UX
 	userSelect: "none",
 	WebkitUserSelect: "none",
-	
+
 	// Enhanced accessibility
 	"&:focus-visible": {
 		outline: `2px solid ${theme.palette.primary.main}`,
 		outlineOffset: "4px",
 	},
-	
+
 	// Better touch targets for mobile
 	[theme.breakpoints.down("tablet")]: {
 		width: 48,
@@ -230,7 +241,7 @@ const FABButton = styled(IconButton)(({ theme }) => ({
 			height: 24,
 		},
 	},
-	
+
 	// Disable hover effects on touch devices
 	"@media (hover: none)": {
 		"&:hover": {

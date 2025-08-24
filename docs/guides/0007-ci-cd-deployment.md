@@ -35,11 +35,29 @@ The primary deployment workflow handles three environments:
 - **Build Mode**: `yarn build --mode production`
 - **Deployment**: AWS S3 + CloudFront invalidation
 
+### PR Validation Workflow (.github/workflows/pr-validation.yml)
+
+- **Trigger**: Pull requests and pushes to `main` and `staging` branches
+- **Purpose**: Validates code quality and build integrity before deployment
+- **Steps**:
+  - Runs `yarn check` (Biome linting + TypeScript validation)
+  - Tests build
+  - Prevents merging if validation fails
+
 ### E2E Testing Workflow (.github/workflows/playwright.yml)
 
-- **Trigger**: Push/PR to `main` or `master` branches
-- **Purpose**: Runs Playwright end-to-end tests
-- **Artifacts**: Stores test reports for 30 days
+- **Trigger**: 
+  - Scheduled daily at 2:00 AM UTC via cron
+  - Manual dispatch with environment selection (staging/production)
+- **Purpose**: Runs Playwright end-to-end tests against live environments
+- **Environments**: Configurable (staging by default, production optional)
+- **Artifacts**: 
+  - Test reports stored for 30 days
+  - Test videos on failure stored for 7 days
+- **Features**:
+  - Dependency caching for faster runs
+  - Environment-specific base URLs
+  - Manual trigger capability for on-demand testing
 
 ## AWS Infrastructure
 
@@ -119,9 +137,10 @@ VITE_LAUNCHDARKLY_CLIENT_KEY="sdk-client-123456789012345678901234567890-demo"
 ```bash
 VITE_AUTH_DOMAIN="bestshot.us.auth0.com"
 VITE_AUTH_CLIENT_ID="Y8ALFfSOz3hwsCeaEbh3SqUioRaGD4H0"
-VITE_BEST_SHOT_API="https://api-best-shot-demo.up.railway.app/api/v1"
+VITE_BEST_SHOT_API="https://api-best-shot-staging.mariobrusarosco.com/api/v1"
 VITE_BEST_SHOT_API_V2="https://api-best-shot-staging.mariobrusarosco.com/api/v2"
 VITE_MOCKED_MEMBER_PUBLIC_ID="14e1b53a-9f54-4fe8-b639-af357cf9d52f"
+VITE_LAUNCHDARKLY_CLIENT_KEY="sdk-client-123456789012345678901234567890-staging"
 ```
 
 #### Production Environment (.env.production)
@@ -181,14 +200,95 @@ yarn preview
 
 - **`main`**: Deploys to both demo and production environments
 - **`staging`**: Deploys to staging environment
-- **Feature branches**: Run tests only (no deployment)
+- **Feature branches**: No automated testing or deployment
 
 ## Development Workflow
 
 1. **Feature Development**: Work on feature branches
-2. **Testing**: Push triggers Playwright tests automatically
+2. **Pull Request**: Create PR to `staging` or `main` branch
+   - Triggers automatic validation (code quality + build tests)
+   - PR can only be merged if all validations pass
 3. **Staging**: Merge to `staging` branch for staging deployment
+   - Runs validation checks before deployment
+   - Deploys to staging environment if all checks pass
 4. **Production**: Merge to `main` branch for production deployment
+   - Runs validation checks before deployment
+   - Deploys to demo and production environments if all checks pass
+5. **E2E Testing**: Automated daily tests run against live environments via scheduled workflow
+
+### E2E Testing Strategy
+
+E2E tests are **decoupled from the CI/CD pipeline** and run on a separate schedule:
+
+- **Scheduled Runs**: Daily at 2:00 AM UTC against staging environment
+- **Manual Runs**: Can be triggered manually via GitHub Actions UI with environment selection
+- **Environment Testing**: Tests run against live deployed environments (not during build process)
+- **Failure Handling**: Test failures don't block deployments but provide monitoring feedback
+
+## Build Validation Strategy
+
+The project implements a **fail-fast** approach to prevent TypeScript errors and code quality issues from reaching production:
+
+### Pre-Deployment Validation
+- **All deployment workflows** run `yarn check` before building
+- **`yarn check`** combines Biome linting + TypeScript type checking
+- **Deployment fails** if any validation errors are found
+
+### Pull Request Validation
+- **PR Validation workflow** runs on all PRs to `main` and `staging`
+- **Tests builds** for all environments (demo, staging, production)
+- **Prevents merging** if code doesn't build successfully
+- **Catches issues early** before they reach deployment branches
+
+### Local Pre-Commit Hooks
+- **Husky + lint-staged**: Automatically runs quality checks before commits
+- **Cross-platform compatibility**: Simple shell scripts work across Windows/Mac/Linux
+- **Staged file processing**: Only checks files being committed (faster execution)
+- **Auto-fixing**: Automatically fixes formatting and linting issues when possible
+- **Test exclusion**: Configured to skip `.test` and `.spec` files via biome.json
+
+### Benefits
+- **No broken builds in production**: TypeScript errors caught before deployment
+- **Code quality enforcement**: Biome linting prevents style/quality issues
+- **Multi-environment testing**: Ensures code works across all build modes
+- **Fast feedback**: Developers get immediate feedback on PRs and commits
+- **Consistent formatting**: Pre-commit hooks ensure consistent code style
+
+## Developer Setup
+
+### First-Time Setup
+When cloning the repository, developers need to install dependencies to enable pre-commit hooks:
+
+```bash
+# Install dependencies (this automatically sets up Husky hooks)
+yarn install
+
+# Verify hooks are installed
+ls .husky/
+```
+
+### Working with Pre-Commit Hooks
+Pre-commit hooks run automatically on `git commit` and will:
+1. Run `yarn check:fix` on staged TypeScript/JavaScript files
+2. Run `yarn format:fix` on staged JSON/Markdown files
+3. Prevent commit if TypeScript errors are found
+4. Auto-fix formatting issues when possible
+
+### Bypassing Hooks (When Necessary)
+```bash
+# Skip pre-commit hooks for emergency commits
+git commit --no-verify -m "emergency fix"
+
+# Temporarily disable hooks for bulk operations
+HUSKY=0 git commit -m "bulk update"
+```
+
+### Troubleshooting
+- **Hooks not running**: Ensure you ran `yarn install` after cloning
+- **Permission issues**: Run `chmod +x .husky/pre-commit` if needed
+- **CI failing but local passing**: Make sure to run `yarn check` locally before pushing
+
+For detailed information about code quality tools and configuration, see [Guide 0008: Code Quality and Validation](./0008-code-quality-validation.md).
 
 ## Monitoring and Debugging
 

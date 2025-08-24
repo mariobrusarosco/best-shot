@@ -4,16 +4,17 @@ import { api } from "@/api";
 import { ErrorHandling } from "@/domains/error-handling";
 
 export const useDatabaseAuth = () => {
-	const sign = useMutation<string, AxiosError, any>({
-		mutationFn: async (user: any) => {
+	const sign = useMutation<string, AxiosError, unknown>({
+		mutationFn: async (user: unknown) => {
+			const userData = user as Record<string, unknown>;
 			const response = await api.post(
 				"auth/create",
 				{
-					publicId: user?.sub,
-					email: user?.email,
-					firstName: user?.given_name,
-					lastName: user?.family_name,
-					nickName: user?.nickname ?? user?.given_name,
+					publicId: userData?.sub as string,
+					email: userData?.email as string,
+					firstName: userData?.given_name as string,
+					lastName: userData?.family_name as string,
+					nickName: (userData?.nickname as string) ?? (userData?.given_name as string),
 				},
 				{
 					baseURL: import.meta.env.VITE_BEST_SHOT_API_V2,
@@ -32,8 +33,8 @@ export const useDatabaseAuth = () => {
 		// },
 	});
 
-	const login = useMutation<string, AxiosError, any>({
-		mutationFn: async (userId: any) => {
+	const login = useMutation<string, AxiosError, unknown>({
+		mutationFn: async (userId: unknown) => {
 			const response = await api.post(
 				"auth",
 				{ publicId: userId },

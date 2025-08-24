@@ -1,5 +1,5 @@
-import { Box, Typography, Select, MenuItem, FormControl } from "@mui/material";
-import { Controller, type Control, type FieldPath, type FieldValues } from "react-hook-form";
+import { Box, FormControl, MenuItem, Select, Typography } from "@mui/material";
+import { type Control, Controller, type FieldPath, type FieldValues } from "react-hook-form";
 
 interface SelectOption {
 	value: string | number;
@@ -36,8 +36,8 @@ export const AppFormSelect = <T extends FieldValues>({
 				{label && (
 					<Typography
 						variant="caption"
-						sx={{ 
-							mb: 0.5, 
+						sx={{
+							mb: 0.5,
 							display: "block",
 							fontWeight: 500,
 							textTransform: "uppercase",
@@ -108,13 +108,9 @@ export const AppFormSelect = <T extends FieldValues>({
 								{placeholder}
 							</Typography>
 						</MenuItem>
-						
+
 						{options.map((option) => (
-							<MenuItem 
-								key={option.value} 
-								value={option.value}
-								disabled={option.disabled}
-							>
+							<MenuItem key={option.value} value={option.value} disabled={option.disabled}>
 								{option.label}
 							</MenuItem>
 						))}
@@ -125,8 +121,8 @@ export const AppFormSelect = <T extends FieldValues>({
 					<Typography
 						variant="caption"
 						color={fieldState.error ? "error.main" : "text.secondary"}
-						sx={{ 
-							mt: 0.5, 
+						sx={{
+							mt: 0.5,
 							display: "block",
 							fontSize: "0.75rem",
 						}}

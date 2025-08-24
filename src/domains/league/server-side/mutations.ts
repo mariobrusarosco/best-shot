@@ -7,7 +7,7 @@ export const createLeague = async (createLeagueInput: CreateLeagueInput) => {
 	return response.data;
 };
 
-export const inviteToLeague = async (invitationInput: any) => {
+export const inviteToLeague = async (invitationInput: { leagueId: string; guestId: string }) => {
 	const response = await api.post("leagues/invitation", invitationInput);
 
 	return response.data;

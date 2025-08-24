@@ -7,8 +7,9 @@ import {
 	TournamentSchema,
 } from "@/domains/tournament/schemas";
 
-export const getTournament = async ({ queryKey }: { queryKey: any }) => {
-	const [_key, { id, round }] = queryKey;
+export const getTournament = async ({ queryKey }: { queryKey: unknown }) => {
+	const queryKeyArray = queryKey as [string, { id: string; round?: number }];
+	const [_key, { id, round }] = queryKeyArray;
 
 	const response = await API.get(`tournaments/${id}`, TournamentSchema, {
 		params: {
@@ -32,16 +33,18 @@ export const getTournaments = async () => {
 	return response.data;
 };
 
-export const getTournamentMatches = async ({ queryKey }: { queryKey: any }) => {
-	const [_key, { tournamentId, round }] = queryKey;
+export const getTournamentMatches = async ({ queryKey }: { queryKey: unknown }) => {
+	const queryKeyArray = queryKey as [string, { tournamentId: string; round: number }];
+	const [_key, { tournamentId, round }] = queryKeyArray;
 
 	const response = await api.get(`tournaments/${tournamentId}/matches/${round}`);
 
 	return response.data as IMatch[];
 };
 
-export const getTournamentPerformance = async ({ queryKey }: { queryKey: any }) => {
-	const [_key, { tournamentId }] = queryKey;
+export const getTournamentPerformance = async ({ queryKey }: { queryKey: unknown }) => {
+	const queryKeyArray = queryKey as [string, { tournamentId: string }];
+	const [_key, { tournamentId }] = queryKeyArray;
 
 	const response = await api.get(`tournaments/${tournamentId}/performance`, {
 		baseURL: import.meta.env.VITE_BEST_SHOT_API_V2,
@@ -50,16 +53,18 @@ export const getTournamentPerformance = async ({ queryKey }: { queryKey: any }) 
 	return response.data as ITournamentPerformance;
 };
 
-export const getTournamentPerformanceDetails = async ({ queryKey }: { queryKey: any }) => {
-	const [_key, { tournamentId }] = queryKey;
+export const getTournamentPerformanceDetails = async ({ queryKey }: { queryKey: unknown }) => {
+	const queryKeyArray = queryKey as [string, { tournamentId: string }];
+	const [_key, { tournamentId }] = queryKeyArray;
 
 	const response = await api.get(`tournaments/${tournamentId}/performance/details`);
 
 	return response.data as ITournamentPerformanceWithDetails;
 };
 
-export const getTournamentStandings = async ({ queryKey }: { queryKey: any }) => {
-	const [_key, { id }] = queryKey;
+export const getTournamentStandings = async ({ queryKey }: { queryKey: unknown }) => {
+	const queryKeyArray = queryKey as [string, { id: string }];
+	const [_key, { id }] = queryKeyArray;
 
 	const response = await api.get(`tournaments/${id}/standings`);
 

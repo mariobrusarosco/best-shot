@@ -1,5 +1,5 @@
-import { Box, Typography, FormControlLabel, Checkbox } from "@mui/material";
-import { Controller, type Control, type FieldPath, type FieldValues } from "react-hook-form";
+import { Box, Checkbox, FormControlLabel, Typography } from "@mui/material";
+import { type Control, Controller, type FieldPath, type FieldValues } from "react-hook-form";
 
 interface AppFormCheckboxProps<T extends FieldValues> {
 	name: FieldPath<T>;
@@ -66,8 +66,8 @@ export const AppFormCheckbox = <T extends FieldValues>({
 					<Typography
 						variant="caption"
 						color={fieldState.error ? "error.main" : "text.secondary"}
-						sx={{ 
-							mt: 0.5, 
+						sx={{
+							mt: 0.5,
 							ml: 4,
 							display: "block",
 							fontSize: "0.75rem",

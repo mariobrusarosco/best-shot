@@ -22,7 +22,7 @@ export {
  * @param attributes - Additional user attributes for targeting
  * @returns A user object for LaunchDarkly
  */
-export const createLDUser = (userId?: string, attributes?: Record<string, any>) => {
+export const createLDUser = (userId?: string, attributes?: Record<string, unknown>) => {
 	const isAnonymous = !userId;
 
 	// Create a random anonymous ID if no user ID is provided
@@ -43,7 +43,7 @@ export const useIdentifyUser = () => {
 	const client = useLDClient();
 
 	return useCallback(
-		(userId?: string, attributes?: Record<string, any>) => {
+		(userId?: string, attributes?: Record<string, unknown>) => {
 			if (!client) return;
 
 			const user = createLDUser(userId, attributes);

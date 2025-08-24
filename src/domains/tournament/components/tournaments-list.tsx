@@ -21,10 +21,13 @@ const TournamentsList = ({ tournaments }: Props) => {
 };
 
 const TournamentsListLoading = () => {
+	// Generate stable keys for skeleton items
+	const skeletonKeys = Array.from({ length: 10 }, (_, i) => `skeleton-item-${i}`);
+
 	return (
 		<GridOfCards data-ui="tournaments-list" as="ul">
-			{Array.from({ length: 10 }).map((_, index) => (
-				<TournamentCardSkeleton key={`skeleton-${index}`} />
+			{skeletonKeys.map((key) => (
+				<TournamentCardSkeleton key={key} />
 			))}
 		</GridOfCards>
 	);

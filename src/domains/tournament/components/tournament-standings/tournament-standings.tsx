@@ -392,7 +392,7 @@ const parseStandinsByFormat = (standings: ITournamentStandings) => {
 	if (!standings?.teams?.length) return null;
 
 	if (standings.format === "multiple-groups") {
-		return Object.groupBy(standings.teams, (item) => item.groupName!);
+		return Object.groupBy(standings.teams, (item) => item.groupName || "default");
 	}
 
 	return { "unique-group": standings.teams };

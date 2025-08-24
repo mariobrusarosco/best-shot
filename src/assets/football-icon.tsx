@@ -5,12 +5,12 @@ interface Props {
 	className?: string;
 }
 
-export const FootballIcon = ({ 
-	fill = "currentColor", 
-	width = 152, 
-	height = 144, 
+export const FootballIcon = ({
+	fill = "currentColor",
+	width = 152,
+	height = 144,
 	className,
-	...rest 
+	...rest
 }: Props) => {
 	return (
 		<svg

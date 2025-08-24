@@ -84,7 +84,7 @@ export const uiActions = {
 				position,
 			},
 		}));
-		
+
 		// Only persist to localStorage when explicitly requested (e.g., on drag end)
 		if (shouldPersist) {
 			persistState();
@@ -99,7 +99,7 @@ export const uiActions = {
 				isDragging,
 			},
 		}));
-		
+
 		// Don't persist dragging state - it's temporary UI state
 	},
 
@@ -111,7 +111,7 @@ export const uiActions = {
 				isVisible,
 			},
 		}));
-		
+
 		// Persist visibility changes immediately
 		persistState();
 	},
@@ -125,7 +125,7 @@ export const uiActions = {
 				isCollapsed: !state.sidebar.isCollapsed,
 			},
 		}));
-		
+
 		// Persist sidebar state immediately
 		persistState();
 	},
@@ -139,7 +139,7 @@ export const uiActions = {
 				mode,
 			},
 		}));
-		
+
 		// Persist theme changes immediately
 		persistState();
 	},

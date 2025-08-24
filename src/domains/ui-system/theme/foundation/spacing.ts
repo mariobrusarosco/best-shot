@@ -1,6 +1,6 @@
 /**
  * Design System Foundation: Spacing
- * 
+ *
  * Consistent spacing system following 8px base unit with semantic naming.
  * Includes padding, margin, and gap utilities.
  */
@@ -11,51 +11,51 @@ export const BASE_SPACING_UNIT = 8;
 // Spacing Scale (based on 8px unit)
 export const SPACING_SCALE = {
 	0: 0,
-	0.5: BASE_SPACING_UNIT * 0.5,  // 4px
-	1: BASE_SPACING_UNIT * 1,      // 8px
-	1.5: BASE_SPACING_UNIT * 1.5,  // 12px
-	2: BASE_SPACING_UNIT * 2,      // 16px
-	2.5: BASE_SPACING_UNIT * 2.5,  // 20px
-	3: BASE_SPACING_UNIT * 3,      // 24px
-	3.5: BASE_SPACING_UNIT * 3.5,  // 28px
-	4: BASE_SPACING_UNIT * 4,      // 32px
-	5: BASE_SPACING_UNIT * 5,      // 40px
-	6: BASE_SPACING_UNIT * 6,      // 48px
-	7: BASE_SPACING_UNIT * 7,      // 56px
-	8: BASE_SPACING_UNIT * 8,      // 64px
-	10: BASE_SPACING_UNIT * 10,    // 80px
-	12: BASE_SPACING_UNIT * 12,    // 96px
-	16: BASE_SPACING_UNIT * 16,    // 128px
-	20: BASE_SPACING_UNIT * 20,    // 160px
-	24: BASE_SPACING_UNIT * 24,    // 192px
+	0.5: BASE_SPACING_UNIT * 0.5, // 4px
+	1: BASE_SPACING_UNIT * 1, // 8px
+	1.5: BASE_SPACING_UNIT * 1.5, // 12px
+	2: BASE_SPACING_UNIT * 2, // 16px
+	2.5: BASE_SPACING_UNIT * 2.5, // 20px
+	3: BASE_SPACING_UNIT * 3, // 24px
+	3.5: BASE_SPACING_UNIT * 3.5, // 28px
+	4: BASE_SPACING_UNIT * 4, // 32px
+	5: BASE_SPACING_UNIT * 5, // 40px
+	6: BASE_SPACING_UNIT * 6, // 48px
+	7: BASE_SPACING_UNIT * 7, // 56px
+	8: BASE_SPACING_UNIT * 8, // 64px
+	10: BASE_SPACING_UNIT * 10, // 80px
+	12: BASE_SPACING_UNIT * 12, // 96px
+	16: BASE_SPACING_UNIT * 16, // 128px
+	20: BASE_SPACING_UNIT * 20, // 160px
+	24: BASE_SPACING_UNIT * 24, // 192px
 } as const;
 
 // Semantic Spacing (for common use cases)
 export const SEMANTIC_SPACING = {
 	none: SPACING_SCALE[0],
-	tiny: SPACING_SCALE[0.5],      // 4px
-	small: SPACING_SCALE[1],       // 8px
-	medium: SPACING_SCALE[2],      // 16px
-	large: SPACING_SCALE[3],       // 24px
-	xlarge: SPACING_SCALE[4],      // 32px
-	xxlarge: SPACING_SCALE[6],     // 48px
-	huge: SPACING_SCALE[8],        // 64px
+	tiny: SPACING_SCALE[0.5], // 4px
+	small: SPACING_SCALE[1], // 8px
+	medium: SPACING_SCALE[2], // 16px
+	large: SPACING_SCALE[3], // 24px
+	xlarge: SPACING_SCALE[4], // 32px
+	xxlarge: SPACING_SCALE[6], // 48px
+	huge: SPACING_SCALE[8], // 64px
 } as const;
 
 // Enhanced PADDING (keeping existing + adding new)
 export const PADDING = {
 	none: "0",
-	tiny: "4px",                   // existing
-	"extra-small": "12px",         // existing  
-	small: "8px",                  // existing
-	medium: "12px",                // existing
-	large: "16px",                 // existing
-	"extra-large": "20px",         // existing
-	huge: "24px",                  // existing
-	
+	tiny: "4px", // existing
+	"extra-small": "12px", // existing
+	small: "8px", // existing
+	medium: "12px", // existing
+	large: "16px", // existing
+	"extra-large": "20px", // existing
+	huge: "24px", // existing
+
 	// New semantic padding
 	xs: "4px",
-	sm: "8px", 
+	sm: "8px",
 	md: "16px",
 	lg: "24px",
 	xl: "32px",
@@ -73,10 +73,10 @@ export const MARGIN = {
 	xlarge: "32px",
 	xxlarge: "48px",
 	huge: "64px",
-	
+
 	// Semantic margin
 	xs: "4px",
-	sm: "8px", 
+	sm: "8px",
 	md: "16px",
 	lg: "24px",
 	xl: "32px",
@@ -92,7 +92,7 @@ export const GAP = {
 	medium: "16px",
 	large: "24px",
 	xlarge: "32px",
-	
+
 	// Numeric scale for easier usage
 	1: "8px",
 	2: "16px",
@@ -106,11 +106,11 @@ export const GAP = {
 export const BORDER_RADIUS = {
 	none: "0",
 	small: "4px",
-	medium: "8px",        // existing small
+	medium: "8px", // existing small
 	large: "12px",
 	xlarge: "16px",
-	full: "50%",          // existing
-	rounded: "9999px",    // For pill-shaped elements
+	full: "50%", // existing
+	rounded: "9999px", // For pill-shaped elements
 } as const;
 
 // Shadows (following Material Design elevation)

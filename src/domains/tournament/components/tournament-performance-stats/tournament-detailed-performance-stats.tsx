@@ -62,7 +62,7 @@ const TournamentDetailedPerformanceStats = () => {
 										waiting for macth outcome
 									</Typography>
 									<Typography textTransform="uppercase" variant="h4" color="neutral.100">
-										<Counter initialValue={detailedPerformance.data.details["waiting_for_game"]} />
+										<Counter initialValue={detailedPerformance.data.details.waiting_for_game} />
 									</Typography>
 								</Stack>
 							</PerfCard>

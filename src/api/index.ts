@@ -38,7 +38,7 @@ export async function apiGet<T>(
 	return validateApiResponse(response.data, schema, url);
 }
 
-export async function apiPost<T, D = any>(
+export async function apiPost<T, D = unknown>(
 	url: string,
 	data: D,
 	schema: ZodSchema<T>,
@@ -48,7 +48,7 @@ export async function apiPost<T, D = any>(
 	return validateApiResponse(response.data, schema, url);
 }
 
-export async function apiPut<T, D = any>(
+export async function apiPut<T, D = unknown>(
 	url: string,
 	data: D,
 	schema: ZodSchema<T>,
@@ -58,7 +58,7 @@ export async function apiPut<T, D = any>(
 	return validateApiResponse(response.data, schema, url);
 }
 
-export async function apiPatch<T, D = any>(
+export async function apiPatch<T, D = unknown>(
 	url: string,
 	data: D,
 	schema: ZodSchema<T>,

@@ -1,5 +1,5 @@
 import { useStore } from "@tanstack/react-store";
-import { uiStore, uiActions } from "@/stores/ui-store";
+import { uiActions, uiStore } from "@/stores/ui-store";
 
 /**
  * Hook to access the UI store state and actions

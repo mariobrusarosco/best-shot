@@ -6,9 +6,9 @@ export type IAuthHook = {
 	isAuthenticated: boolean;
 	isLoadingAuth: boolean;
 	authId: string | undefined;
-	login: () => Promise<any>;
-	logout: () => Promise<any>;
-	signup: () => Promise<any>;
+	login: () => Promise<unknown>;
+	logout: () => Promise<unknown>;
+	signup: () => Promise<unknown>;
 };
 
 export type IAuthAdapter = Record<

@@ -43,7 +43,7 @@ const MainLeague = ({
 						{tournaments?.bestPerformance === null ? null : (
 							<CardRouteButton
 								to="tournaments/$tournamentId/matches"
-								params={{ tournamentId: tournaments?.bestPerformance?.id }}
+								params={{ tournamentId: tournaments?.bestPerformance?.id ?? "" }}
 							/>
 						)}
 					</Stack>
@@ -86,7 +86,7 @@ const MainLeague = ({
 						{tournaments?.worstPerformance === null ? null : (
 							<CardRouteButton
 								to="tournaments/$tournamentId/matches"
-								params={{ tournamentId: tournaments?.worstPerformance?.id }}
+								params={{ tournamentId: tournaments?.worstPerformance?.id ?? "" }}
 							/>
 						)}
 					</Stack>

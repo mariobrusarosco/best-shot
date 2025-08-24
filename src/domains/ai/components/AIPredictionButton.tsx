@@ -1,5 +1,4 @@
-import { Typography } from "@mui/material";
-import { styled } from "@mui/material";
+import { styled, Typography } from "@mui/material";
 import { memo, useState } from "react";
 import { useAIPrediction } from "@/domains/ai/hooks/use-ai-prediction";
 import { AppButton } from "@/domains/ui-system/components/app-button/app-button";
@@ -13,20 +12,20 @@ interface AIPredictionButtonProps {
 
 /**
  * AI Prediction Button Component
- * 
+ *
  * Follows our Static Styled Components pattern for reusable, theme-integrated components.
  * Fetches AI predictions for matches and applies them to guess inputs.
- * 
+ *
  * Features:
  * - Consistent design system color usage
  * - Loading states with visual feedback
  * - Error handling with user feedback
  * - Accessibility support (ARIA labels)
  * - Smooth hover animations
- * 
+ *
  * @example
  * ```tsx
- * <AIPredictionButton 
+ * <AIPredictionButton
  *   matchId={match.id}
  *   onPredictionReceived={(home, away) => setScores(home, away)}
  *   disabled={!canPredict}
@@ -118,15 +117,15 @@ const PredictButton = styled(AppButton)(({ theme }) => ({
 	"&:hover": {
 		backgroundColor: theme.palette.primary.main,
 		opacity: 0.8,
-		transform: 'translateY(-1px)',
-		transition: theme.transitions.create(['opacity', 'transform']),
+		transform: "translateY(-1px)",
+		transition: theme.transitions.create(["opacity", "transform"]),
 	},
 
 	"&:disabled": {
 		opacity: 0.5,
 		pointerEvents: "none",
 		backgroundColor: theme.palette.black[400],
-		transform: 'none',
+		transform: "none",
 	},
 }));
 

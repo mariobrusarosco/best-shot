@@ -29,7 +29,10 @@ const Matchday = ({ matchday }: { matchday: IMatchday }) => {
 					<EmptyState />
 				) : (
 					allMatches.map((match, i) => (
-						<MatchdayCard key={`match-${match.tournamentId}-${match.roundSlug}-${i}`} data-ui="matchday-card">
+						<MatchdayCard
+							key={`match-${match.tournamentId}-${match.roundSlug}-${i}`}
+							data-ui="matchday-card"
+						>
 							<Link
 								to="/tournaments/$tournamentId/matches"
 								params={{ tournamentId: match.tournamentId }}
@@ -48,7 +51,13 @@ const Matchday = ({ matchday }: { matchday: IMatchday }) => {
 										p: 2,
 									}}
 								>
-									<Stack direction="row" alignItems="flex-start" justifyContent="space-between" gap={2} data-ui="card-header">
+									<Stack
+										direction="row"
+										alignItems="flex-start"
+										justifyContent="space-between"
+										gap={2}
+										data-ui="card-header"
+									>
 										<Stack>
 											<Typography
 												fontWeight={500}
@@ -94,6 +103,9 @@ const EmptyState = () => (
 );
 
 const MatchdaySkeleton = () => {
+	// Generate stable keys for skeleton items
+	const skeletonKeys = Array.from({ length: 8 }, (_, i) => `skeleton-item-${i}`);
+
 	return (
 		<Stack color="neutral.100" gap={3} data-ui="matchday-skeleton">
 			<Stack direction="row" justifyContent="space-between">
@@ -101,8 +113,8 @@ const MatchdaySkeleton = () => {
 			</Stack>
 
 			<MatchdayGrid>
-				{Array.from({ length: 8 }).map((_, i) => (
-					<MatchdayCard key={`skeleton-${i}`} data-ui="matchday-card-skeleton">
+				{skeletonKeys.map((key) => (
+					<MatchdayCard key={key} data-ui="matchday-card-skeleton">
 						<DashCard.Skeleton sx={{ width: "100px", height: "71px" }} />
 					</MatchdayCard>
 				))}

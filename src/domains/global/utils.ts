@@ -8,7 +8,7 @@ export const toNumberOrNull = (val: string | null | undefined) => {
 	return Number(val);
 };
 
-export const updateSearchParams = (prev: Record<string, any>, key: string, value: any) => ({
+export const updateSearchParams = (prev: Record<string, unknown>, key: string, value: unknown) => ({
 	...prev,
 	[key]: value,
 });

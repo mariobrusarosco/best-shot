@@ -48,13 +48,24 @@ jobs:
         run: aws cloudfront create-invalidation --distribution-id ${AWS_CLOUDFRONT_ID}  --paths "/*"
 
   build-and-deploy-staging:
-    if: github.ref == 'refs/heads/v5'
+    if: github.ref == 'refs/heads/staging'
     environment: staging
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout code from repository
+        uses: actions/checkout@v4
+
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "dir=$(yarn cache dir)" >> $GITHUB_OUTPUT
+
+      - uses: actions/cache@v3
+        id: yarn-cache
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+
       - name: Install dependencies
-        # TODO: Cache the dependencies
         run: yarn
 
       - name: Build
@@ -79,9 +90,20 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout code from repository
+        uses: actions/checkout@v4
+
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "dir=$(yarn cache dir)" >> $GITHUB_OUTPUT
+
+      - uses: actions/cache@v3
+        id: yarn-cache
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+
       - name: Install dependencies
-        # TODO: Cache the dependencies
         run: yarn
 
       - name: Build

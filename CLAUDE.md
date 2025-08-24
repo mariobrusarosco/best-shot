@@ -8,7 +8,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ### Core Development
 - `yarn dev` - Start development server in local-dev mode
-- `yarn dev-demo` - Start development server in demo mode  
+- `yarn dev-demo` - Start development server in demo mode
+- `yarn dev-staging` - Start development server in staging mode
 - `yarn dev-prod` - Start development server in production mode
 - `yarn start` - Start both frontend and backend servers concurrently
 - `yarn build` - TypeScript compilation and production build

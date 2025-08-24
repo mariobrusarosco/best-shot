@@ -24,7 +24,7 @@ The primary deployment workflow handles three environments:
 - **Deployment**: AWS S3 + CloudFront invalidation
 
 #### 2. Staging Environment
-- **Trigger**: Push to `v5` branch
+- **Trigger**: Push to `staging` branch
 - **Environment**: `staging`
 - **Build Mode**: `yarn build --mode staging`
 - **Deployment**: AWS S3 + CloudFront invalidation
@@ -157,7 +157,7 @@ const authDomain = import.meta.env.VITE_AUTH_DOMAIN;
 ## Deployment Process
 
 ### Automatic Deployment
-1. Developer pushes code to target branch (`main` for demo/production, `v5` for staging)
+1. Developer pushes code to target branch (`main` for demo/production, `staging` for staging)
 2. GitHub Actions workflow triggers
 3. Dependencies are installed with yarn cache optimization
 4. Application builds for target environment
@@ -180,14 +180,14 @@ yarn preview
 ## Branch Strategy
 
 - **`main`**: Deploys to both demo and production environments
-- **`v5`**: Deploys to staging environment
+- **`staging`**: Deploys to staging environment
 - **Feature branches**: Run tests only (no deployment)
 
 ## Development Workflow
 
 1. **Feature Development**: Work on feature branches
 2. **Testing**: Push triggers Playwright tests automatically
-3. **Staging**: Merge to `v5` branch for staging deployment
+3. **Staging**: Merge to `staging` branch for staging deployment
 4. **Production**: Merge to `main` branch for production deployment
 
 ## Monitoring and Debugging

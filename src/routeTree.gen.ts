@@ -13,13 +13,13 @@ import { createFileRoute } from "@tanstack/react-router";
 // Import Routes
 
 import { Route as rootRoute } from "./routes/__root";
-import { Route as AuthImport } from "./routes/_auth";
-import { Route as AuthAdminImport } from "./routes/_auth.admin";
-import { Route as AuthDashboardImport } from "./routes/_auth.dashboard";
-import { Route as AuthMyAccountImport } from "./routes/_auth.my-account";
-import { Route as AuthTournamentsTournamentIdLayoutImport } from "./routes/_auth.tournaments/$tournamentId/_layout";
-import { Route as IndexRouteImport } from "./routes/index.route";
 import { Route as UiSystemImport } from "./routes/ui-system";
+import { Route as AuthImport } from "./routes/_auth";
+import { Route as IndexRouteImport } from "./routes/index.route";
+import { Route as AuthMyAccountImport } from "./routes/_auth.my-account";
+import { Route as AuthDashboardImport } from "./routes/_auth.dashboard";
+import { Route as AuthAdminImport } from "./routes/_auth.admin";
+import { Route as AuthTournamentsTournamentIdLayoutImport } from "./routes/_auth.tournaments/$tournamentId/_layout";
 
 // Create Virtual Routes
 

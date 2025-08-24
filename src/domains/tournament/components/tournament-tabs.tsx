@@ -1,11 +1,10 @@
+import { Tab, Tabs, TabsList } from "@mui/base";
+import { Box, styled, Typography } from "@mui/material";
+import { useLocation } from "@tanstack/react-router";
 import { CustomLink } from "@/domains/ui-system/components/link/link";
 import { shimmerEffect } from "@/domains/ui-system/components/skeleton/skeleton";
-import { Surface } from "@/domains/ui-system/components/surface/surface";
 import { UIHelper } from "@/theming/theme";
-import { Tab, Tabs, TabsList } from "@mui/base";
-import { styled, Typography } from "@mui/material";
-import { useLocation } from "@tanstack/react-router";
-import { ITournament } from "../typing";
+import type { ITournament } from "../schemas";
 
 const TournamentTabs = ({ tournament }: { tournament?: ITournament }) => {
 	const location = useLocation();
@@ -14,8 +13,8 @@ const TournamentTabs = ({ tournament }: { tournament?: ITournament }) => {
 	if (!tournament) return null;
 
 	return (
-		<Tabs defaultValue={lastPath}>
-			<TabsList slots={{ root: Wrapper }}>
+		<Tabs defaultValue={lastPath} slots={{ root: Wrapper }}>
+			<TabsList slots={{ root: List }}>
 				<Tab
 					value={"matches"}
 					slots={{
@@ -48,29 +47,16 @@ const TournamentTabs = ({ tournament }: { tournament?: ITournament }) => {
 						),
 					}}
 				/>
-
-				{/* <Tab
-					value={"simulator"}
-					slots={{
-						root: (props) => (
-							<CustomTab
-								to="/tournaments/$tournamentId/simulator"
-								params={{ tournamentId: tournament.id }}
-								{...props}
-							>
-								<Typography variant="tag" textTransform="uppercase">
-									simulator
-								</Typography>
-							</CustomTab>
-						),
-					}}
-				/> */}
 			</TabsList>
 		</Tabs>
 	);
 };
 
-const Wrapper = styled(Surface)(({ theme }) =>
+const Wrapper = styled(Box)(() => ({
+	alignContent: "flex-end",
+}));
+
+const List = styled(Box)(({ theme }) =>
 	theme?.unstable_sx({
 		display: "flex",
 		justifyContent: "space-between",
@@ -80,10 +66,12 @@ const Wrapper = styled(Surface)(({ theme }) =>
 		gap: 0.5,
 
 		[UIHelper.startsOn("tablet")]: {
-			// maxWidth: "400px",
-			marginLeft: "auto",
+			maxWidth: "400px",
+			flexDirection: "column",
+			// marginTop: "auto",
+			justifyItems: "flex-start",
 		},
-	}),
+	})
 );
 
 const CustomTab = styled(CustomLink)(({ theme }) =>
@@ -99,18 +87,19 @@ const CustomTab = styled(CustomLink)(({ theme }) =>
 			backgroundColor: "teal.500",
 		},
 
-		[UIHelper.startsOn("tablet")]: {
+		[UIHelper.startsOn("desktop")]: {
 			minWidth: "200px",
 		},
-	}),
+	})
 );
 
 export const TabsSkeleton = styled(Wrapper)(({ theme }) =>
 	theme.unstable_sx({
+		position: "relative",
 		height: "41px",
 		border: "none",
 		...shimmerEffect(),
-	}),
+	})
 );
 export default {
 	Component: TournamentTabs,

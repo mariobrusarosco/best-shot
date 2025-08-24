@@ -1,5 +1,5 @@
 import { api } from "../../../api";
-import { CreateLeagueInput } from "../typing";
+import type { CreateLeagueInput } from "../typing";
 
 export const createLeague = async (createLeagueInput: CreateLeagueInput) => {
 	const response = await api.post("leagues", createLeagueInput);
@@ -21,7 +21,7 @@ export const updateLeaguePerformance = async (leagueId: string) => {
 
 export const updateLeagueTournaments = async (
 	leagueId: string,
-	updateInput: { tournamentId: string; leagueId: string; status: string }[],
+	updateInput: { tournamentId: string; leagueId: string; status: string }[]
 ) => {
 	const response = await api.patch(`leagues/${leagueId}/tournaments`, {
 		updateInput,

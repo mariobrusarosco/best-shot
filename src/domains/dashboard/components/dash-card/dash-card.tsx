@@ -1,7 +1,7 @@
+import { styled } from "@mui/system";
 import { shimmerEffect } from "@/domains/ui-system/components/skeleton/skeleton";
 import { Surface } from "@/domains/ui-system/components/surface/surface";
 import { UIHelper } from "@/theming/theme";
-import { styled } from "@mui/system";
 
 const Card = styled(Surface)(({ theme }) =>
 	theme.unstable_sx({
@@ -17,16 +17,14 @@ const Card = styled(Surface)(({ theme }) =>
 		[UIHelper.startsOn("tablet")]: {
 			p: 3,
 			maxHeight: "160px",
-			minHeight: "160px",
 		},
-	}),
+	})
 );
 
-export const CardSkeleton = styled(Card)(({ theme }) =>
-	theme.unstable_sx({
-		...shimmerEffect(),
-	}),
-);
+export const CardSkeleton = styled(Card)(() => ({
+	position: "relative",
+	...shimmerEffect(),
+}));
 
 export const DashCard = {
 	Component: Card,

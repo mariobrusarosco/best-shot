@@ -1,11 +1,12 @@
-import { BestShotIcon } from "@/assets/best-shot-icon";
-import { theme, UIHelper } from "@/theming/theme";
 import { styled, Typography } from "@mui/material";
 import { Stack } from "@mui/system";
+import { BestShotIcon } from "@/assets/best-shot-icon";
+import { theme, UIHelper } from "@/theming/theme";
+
+const DEFAULT_ERROR_MESSAGE = "Something unexpected has happened.";
 
 const AppError = ({ error }: { error: Error }) => {
 	console.error("[BEST SHOT] - App General Error", error);
-
 	return (
 		<Wrapper data-iu="general-error-page">
 			<BestShotIcon fill={theme.palette.neutral[100]} />
@@ -15,7 +16,7 @@ const AppError = ({ error }: { error: Error }) => {
 					Ops!
 				</Typography>
 				<Typography variant="paragraph" color={theme.palette.teal[500]}>
-					Something unexpected has happened.
+					{error.message || DEFAULT_ERROR_MESSAGE}
 				</Typography>
 			</Stack>
 		</Wrapper>
@@ -24,6 +25,7 @@ const AppError = ({ error }: { error: Error }) => {
 
 const Wrapper = styled(Stack)(({ theme }) => ({
 	height: "100dvh",
+	width: "100%",
 	backgroundColor: theme.palette.black[800],
 	display: "grid",
 	placeContent: "center",

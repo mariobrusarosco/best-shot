@@ -1,11 +1,8 @@
+import { styled, Typography, useMediaQuery } from "@mui/material";
 import { shimmerEffect } from "@/domains/ui-system/components/skeleton/skeleton";
-import {
-	Surface,
-	SurfaceProps,
-} from "@/domains/ui-system/components/surface/surface";
+import { Surface, type SurfaceProps } from "@/domains/ui-system/components/surface/surface";
 import { GoBackButton } from "@/domains/ui-system/go-back-button/go-back-button";
 import { UIHelper } from "@/theming/theme";
-import { styled, Typography, useMediaQuery } from "@mui/material";
 
 interface Props extends SurfaceProps {
 	children?: React.ReactNode;
@@ -17,24 +14,20 @@ interface Props extends SurfaceProps {
 
 const { startsOn } = UIHelper;
 
-export const ScreenHeading = (props: Props) => {
-	const { children, title, subtitle, backTo } = props;
+export const ScreenHeading = (props: Props & WrapperProps) => {
+	const { children, title, subtitle, backTo, ...wrapperProps } = props;
 	const isDesktopScreen = useMediaQuery(startsOn("desktop"));
 
 	const titleVariant = isDesktopScreen ? "h1" : "h4";
-	const subtitleVariant = isDesktopScreen ? "paragraph" : "label";
+	const subtitleVariant = isDesktopScreen ? "h6" : "paragraph";
 
 	return (
-		<Wrapper data-ui="screen-heading">
+		<Wrapper data-ui="screen-heading" {...wrapperProps}>
 			{backTo ? <GoBackButton backTo={backTo} /> : null}
 
 			{title ? (
 				<TextBox data-ui="text-box">
-					<Typography
-						data-ui="title"
-						variant={titleVariant}
-						textTransform="lowercase"
-					>
+					<Typography data-ui="title" variant={titleVariant} textTransform="lowercase">
 						{title}
 					</Typography>
 
@@ -56,42 +49,60 @@ export const ScreenHeading = (props: Props) => {
 	);
 };
 
-export const Wrapper = styled(Surface)(({ theme }) => ({
+interface WrapperProps extends SurfaceProps {
+	dynamicHeight?: string | number;
+}
+
+export const Wrapper = styled(Surface)<WrapperProps>(({ theme }) => ({
 	display: "flex",
 	justifyContent: "space-between",
 	alignItems: "center",
-	gap: theme.spacing(2),
 	backgroundColor: theme.palette.black[800],
-	borderBottomLeftRadius: theme.spacing(3),
-	borderBottomRightRadius: theme.spacing(3),
+	borderRadius: theme.spacing(1.5),
+	gap: theme.spacing(2),
+	position: "relative",
+	height: "auto",
 
 	[UIHelper.whileIs("mobile")]: {
-		height: "var(--screeh-heading-height-mobile)",
 		paddingBottom: theme.spacing(4),
 		paddingTop: theme.spacing(4),
 		paddingLeft: theme.spacing(2),
 		paddingRight: theme.spacing(2),
+		margin: theme.spacing(1.5),
+		minHeight: "150px",
 	},
 	[UIHelper.startsOn("tablet")]: {
-		height: "var(--screeh-heading-height-tablet)",
 		padding: theme.spacing(4),
+		minHeight: "200px",
 	},
-	[UIHelper.startsOn("desktop")]: {},
+	[UIHelper.startsOn("desktop")]: {
+		minHeight: "200px",
+	},
 }));
 
-const TextBox = styled(Surface)(({ theme }) =>
-	theme?.unstable_sx({
-		display: "flex",
-		flexDirection: "column",
-		gap: {
-			all: 0,
-			tablet: 0,
-		},
-	}),
-);
+const TextBox = styled(Surface)(() => ({
+	display: "flex",
+	flexDirection: "column",
 
-export const ScreenHeadingSkeleton = styled(Wrapper)(({ theme }) =>
-	theme?.unstable_sx({
-		...shimmerEffect(),
-	}),
-);
+	[UIHelper.startsOn("tablet")]: {
+		flex: 1,
+	},
+}));
+
+export const ScreenHeadingSkeleton = styled(Wrapper)(({ theme, dynamicHeight }) => ({
+	backgroundColor: theme.palette.black[800],
+	borderBottomLeftRadius: theme.spacing(3),
+	borderBottomRightRadius: theme.spacing(3),
+	position: "relative",
+	minHeight: dynamicHeight ?? "150px",
+
+	...shimmerEffect(),
+
+	[UIHelper.startsOn("tablet")]: {
+		minHeight: dynamicHeight ?? "200px",
+	},
+
+	[UIHelper.startsOn("desktop")]: {
+		minHeight: dynamicHeight ?? "200px",
+	},
+}));

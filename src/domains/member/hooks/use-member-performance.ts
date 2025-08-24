@@ -1,9 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
-import { getMemberPerformance } from "../server-side/fetchers";
+import { getMemberPerformance } from "@/domains/member/api/fetchers";
+import { memberPerformanceKey } from "@/domains/member/api/key";
 
 export const useMemberPerformance = () => {
 	const query = useQuery({
-		queryKey: ["member", "performance"],
+		queryKey: memberPerformanceKey(),
 		queryFn: getMemberPerformance,
 		enabled: true,
 	});

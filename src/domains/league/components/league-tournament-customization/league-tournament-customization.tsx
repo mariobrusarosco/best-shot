@@ -1,16 +1,12 @@
-import { ITournament } from "@/domains/tournament/typing";
+import { Box, Divider, Stack, styled, Tooltip, Typography } from "@mui/material";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useState } from "react";
+import type { ITournament } from "@/domains/tournament/schemas";
 import { AppButton } from "@/domains/ui-system/components/button/button";
 import { AppIcon } from "@/domains/ui-system/components/icon/icon";
 import { Surface } from "@/domains/ui-system/components/surface/surface";
-import Divider from "@mui/material/Divider/Divider";
-import Tooltip from "@mui/material/Tooltip";
-import Typography from "@mui/material/Typography/Typography";
-import { Box, Stack, styled } from "@mui/system";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-
-import { useState } from "react";
 import { updateLeagueTournaments } from "../../server-side/mutations";
-import { ILeague } from "../../typing";
+import type { ILeague } from "../../typing";
 
 export const LeagueTournamentCustomization = ({
 	currentTournaments,
@@ -25,7 +21,7 @@ export const LeagueTournamentCustomization = ({
 }) => {
 	const [tracked, setTracked] = useState(currentTournaments);
 	const [untracked, setUntracked] = useState(
-		allTournaments.filter((t) => !tracked.find((ct) => ct.id === t.id)),
+		allTournaments.filter((t) => !tracked.find((ct) => ct.id === t.id))
 	);
 	const queryClient = useQueryClient();
 
@@ -80,12 +76,7 @@ export const LeagueTournamentCustomization = ({
 					pt={2}
 				>
 					<Box display="flex" gap={1}>
-						<Typography
-							textTransform="uppercase"
-							variant="label"
-							color="teal.500"
-							fontWeight={600}
-						>
+						<Typography textTransform="uppercase" variant="label" color="teal.500" fontWeight={600}>
 							tracked
 						</Typography>
 
@@ -109,12 +100,7 @@ export const LeagueTournamentCustomization = ({
 						</Tooltip>
 					</Box>
 
-					<Box
-						gap={0.5}
-						display="flex"
-						alignItems="center"
-						justifyContent="space-between"
-					>
+					<Box gap={0.5} display="flex" alignItems="center" justifyContent="space-between">
 						<Typography
 							variant="tag"
 							color="neutral.100"
@@ -141,13 +127,14 @@ export const LeagueTournamentCustomization = ({
 						</Typography>
 					)}
 
-					{tracked?.map((tournament) => (
-						<TournamentLeagueCard
-							tournament={tournament}
-							onRemove={() => removeTournament(tournament)}
-							status="tracked"
-						/>
-					))}
+											{tracked?.map((tournament) => (
+							<TournamentLeagueCard
+								key={`tracked-${tournament.id}`}
+								tournament={tournament}
+								onRemove={() => removeTournament(tournament)}
+								status="tracked"
+							/>
+						))}
 				</ListGrid>
 			</Stack>
 
@@ -155,12 +142,7 @@ export const LeagueTournamentCustomization = ({
 
 			<Stack gap={1} mt={2}>
 				<Box display="flex" gap={1}>
-					<Typography
-						textTransform="uppercase"
-						variant="label"
-						color="red.400"
-						fontWeight={600}
-					>
+					<Typography textTransform="uppercase" variant="label" color="red.400" fontWeight={600}>
 						untracked
 					</Typography>
 
@@ -192,6 +174,7 @@ export const LeagueTournamentCustomization = ({
 					) : (
 						untracked?.map((tournament) => (
 							<TournamentLeagueCard
+								key={`untracked-${tournament.id}`}
 								tournament={tournament}
 								onAdd={() => addTournament(tournament)}
 								status="untracked"
@@ -225,7 +208,7 @@ export const TournamentLeagueCard = ({
 				</Typography>
 
 				<LogoBox>
-					<img src={tournament.logo} />
+					<img src={tournament.logo} alt={`${tournament.label} logo`} />
 				</LogoBox>
 			</CardHeading>
 
@@ -249,7 +232,7 @@ const ListGrid = styled(Box)(({ theme }) =>
 		display: "flex",
 		gap: 1,
 		flexWrap: "wrap",
-	}),
+	})
 );
 
 const Card = styled(Surface)(({ theme }) =>
@@ -264,7 +247,7 @@ const Card = styled(Surface)(({ theme }) =>
 		px: 1,
 		borderRadius: 2,
 		gap: 1,
-	}),
+	})
 );
 
 const CardHeading = styled(Box)(({ theme }) =>
@@ -276,7 +259,7 @@ const CardHeading = styled(Box)(({ theme }) =>
 		backgroundColor: "black.800",
 		borderRadius: 3,
 		flex: 1,
-	}),
+	})
 );
 
 const LogoBox = styled(Box)(({ theme }) =>
@@ -285,7 +268,7 @@ const LogoBox = styled(Box)(({ theme }) =>
 		height: 14,
 		display: "grid",
 		placeContent: "center",
-	}),
+	})
 );
 
 const IconBox = styled(Box)(({ theme }) =>
@@ -294,7 +277,7 @@ const IconBox = styled(Box)(({ theme }) =>
 		padding: 0.5,
 		display: "grid",
 		placeContent: "center",
-	}),
+	})
 );
 
 const SaveButton = styled(AppButton)(({ theme }) =>
@@ -307,5 +290,5 @@ const SaveButton = styled(AppButton)(({ theme }) =>
 		"[aria-disabled='true']&": {
 			opacity: 0.6,
 		},
-	}),
+	})
 );

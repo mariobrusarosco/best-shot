@@ -3,5 +3,4 @@ import relativeTime from "dayjs/plugin/relativeTime";
 
 dayjs.extend(relativeTime);
 
-export const defineMatchTimebox = (matchDate: string) =>
-	dayjs(matchDate).fromNow(true);
+export const defineMatchTimebox = (matchDate: string) => dayjs(matchDate).fromNow(true);

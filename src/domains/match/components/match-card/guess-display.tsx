@@ -1,7 +1,8 @@
-import { GUESS_STATUS, IGuess } from "@/domains/guess/typing";
-import { AppPill } from "@/domains/ui-system/components/pill/pill";
 import { Box, Typography } from "@mui/material";
 import { styled } from "@mui/system";
+import type { GUESS_STATUS, IGuess } from "@/domains/guess/typing";
+import { AppPill } from "@/domains/ui-system/components/pill/pill";
+import { theme } from "@/theming/theme";
 
 interface Props {
 	data: IGuess["away"] | IGuess["away"];
@@ -9,22 +10,17 @@ interface Props {
 }
 
 export const GuessDisplay = ({ data, cardExpanded }: Props) => {
-	if (cardExpanded) return null;
+	if (cardExpanded || data.status === "expired") return null;
 
 	const value = data.value;
-	const { color } = getStylesByStatus(data?.status || null);
+	const { color, bgColor } = getStylesByStatus(data?.status || null);
 
 	return (
-		<Wrapper color={color} data-ui="guess-display">
-			<Typography textTransform="uppercase" variant="tag" color={color}>
+		<Wrapper data-ui="guess-display">
+			<Typography textTransform="uppercase" variant="tag" fontWeight={500}>
 				guess
 			</Typography>
-			<AppPill.Component
-				minWidth={30}
-				height={20}
-				padding={0}
-				sx={{ backgroundColor: "black.500" }}
-			>
+			<AppPill.Component minWidth={30} height={20} padding={0} color={color} bgcolor={bgColor}>
 				<Typography variant="tag">{value ?? "-"}</Typography>
 			</AppPill.Component>
 		</Wrapper>
@@ -43,23 +39,10 @@ export const Wrapper = styled(Box)(({ theme }) => ({
 const getStylesByStatus = (status: GUESS_STATUS) => {
 	if (status === "expired") {
 		return {
-			color: "red.400",
+			color: theme.palette.neutral[100],
 			bgColor: "transparent",
 		};
 	}
-
-	if (status === "incorrect") {
-		return {
-			color: "red.400",
-			bgColor: "red.400",
-		};
-	}
-
-	if (status === "correct")
-		return {
-			color: "green.200",
-			bgColor: "green.200",
-		};
 
 	return {
 		color: "neutral.100",

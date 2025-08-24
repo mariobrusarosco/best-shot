@@ -9,6 +9,7 @@ export type IMatchResponse = {
 		shortName: string;
 		badge: string;
 		name: string;
+		penaltiesScore: string | null;
 	};
 	away: {
 		id: string;
@@ -16,6 +17,7 @@ export type IMatchResponse = {
 		shortName: string;
 		badge: string;
 		name: string;
+		penaltiesScore: string | null;
 	};
 	status: "ended" | "open";
 };
@@ -32,6 +34,7 @@ export type IMatch = {
 		shortName: IMatchResponse["home"]["shortName"];
 		badge: IMatchResponse["home"]["badge"];
 		name: IMatchResponse["home"]["name"];
+		penaltiesScore: IMatchResponse["home"]["penaltiesScore"];
 	};
 	away: {
 		score: number | null;
@@ -39,6 +42,7 @@ export type IMatch = {
 		shortName: IMatchResponse["home"]["shortName"];
 		badge: IMatchResponse["home"]["badge"];
 		name: IMatchResponse["home"]["name"];
+		penaltiesScore: IMatchResponse["away"]["penaltiesScore"];
 	};
 	timebox: string;
 };

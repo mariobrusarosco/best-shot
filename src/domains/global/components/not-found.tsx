@@ -1,13 +1,13 @@
-import { BestShotIcon } from "@/assets/best-shot-icon";
-import { theme } from "@/theming/theme";
 import { styled, Typography } from "@mui/material";
 import { Stack } from "@mui/system";
 import { Link } from "@tanstack/react-router";
+import { BestShotIcon } from "@/assets/best-shot-icon";
+import { theme } from "@/theming/theme";
 
 export const AppNotFound = () => {
 	return (
-		<Wrapper data-iu="general-error-page">
-			<BestShotIcon width="350px" fill={theme.palette.black[500]} />
+		<Wrapper data-iu="not-found-page">
+			<BestShotIcon width={350} fill={theme.palette.black[500]} />
 
 			<Stack textAlign="center" gap={2}>
 				<Typography variant="h1" color={theme.palette.neutral[100]}>

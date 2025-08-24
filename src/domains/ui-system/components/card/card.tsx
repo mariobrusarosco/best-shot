@@ -5,7 +5,7 @@ const CardHeader = styled(Box)(({ theme }) =>
 	theme.unstable_sx({
 		display: "flex",
 		justifyContent: "space-between",
-	}),
+	})
 );
 
 const CardContainer = styled(Surface)(({ theme }) =>
@@ -22,7 +22,7 @@ const CardContainer = styled(Surface)(({ theme }) =>
 			all: 2,
 			tablet: 3,
 		},
-	}),
+	})
 );
 
 const Skeleton = () => {

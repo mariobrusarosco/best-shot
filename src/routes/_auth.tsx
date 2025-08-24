@@ -1,37 +1,33 @@
-import { useAppAuth } from "@/domains/authentication/hooks/use-app-auth";
+import { createFileRoute, Navigate, Outlet, useLocation } from "@tanstack/react-router";
+import { Authentication } from "@/domains/authentication";
 import { AppHeader } from "@/domains/global/components/app-header";
 import { AppLoader } from "@/domains/global/components/app-loader";
-import { Menu } from "@/domains/global/components/menu";
+import { Menu } from "@/domains/global/components/menu/menu";
 import { AppNotFound } from "@/domains/global/components/not-found";
-import { UIHelper } from "@/theming/theme";
-import { Box } from "@mui/material";
-import { styled } from "@mui/system";
-import { createFileRoute, Outlet } from "@tanstack/react-router";
+import { AuthenticatedLayout } from "@/domains/ui-system/layout/authenticated";
+
+const useAppAuth = Authentication.useAppAuth;
 
 const AuthLayout = () => {
-	const { auth } = useAppAuth();
+	const auth = useAppAuth();
+	const location = useLocation();
 
 	if (auth.isLoadingAuth) {
 		return <AppLoader />;
 	}
+
+	if (!auth.isAuthenticated) {
+		return <Navigate to="/login" _fromLocation={location} />;
+	}
+
 	return (
-		<Layout data-ui="authenticated-layout">
+		<AuthenticatedLayout data-ui="authenticated-layout">
 			<AppHeader />
 			<Menu />
 			<Outlet />
-		</Layout>
+		</AuthenticatedLayout>
 	);
 };
-
-const Layout = styled(Box)(({ theme }) => ({
-	[UIHelper.whileIs("mobile")]: {
-		paddingTop: theme.spacing(8),
-	},
-	[UIHelper.startsOn("tablet")]: {
-		display: "flex",
-		gap: theme.spacing(2),
-	},
-}));
 
 export const Route = createFileRoute("/_auth")({
 	component: AuthLayout,

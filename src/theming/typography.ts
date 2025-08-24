@@ -46,9 +46,25 @@ export const TYPOGRAPHY = {
 			fontSize: 10,
 			fontFamily: "Montserrat",
 		},
-		subtitle1: undefined,
-		subtitle2: undefined,
-		body1: undefined,
-		body2: undefined,
+		subtitle1: {
+			fontSize: 16,
+			fontWeight: 500,
+			fontFamily: "Montserrat",
+		},
+		subtitle2: {
+			fontSize: 14,
+			fontWeight: 500,
+			fontFamily: "Montserrat",
+		},
+		body1: {
+			fontSize: 16,
+			fontWeight: 400,
+			fontFamily: "Montserrat",
+		},
+		body2: {
+			fontSize: 14,
+			fontWeight: 400,
+			fontFamily: "Montserrat",
+		},
 	},
 };

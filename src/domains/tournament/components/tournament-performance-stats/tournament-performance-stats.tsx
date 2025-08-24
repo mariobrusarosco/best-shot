@@ -1,23 +1,23 @@
+import { Box, Stack, styled, Typography } from "@mui/material";
 import { AppButton } from "@/domains/ui-system/components/button/button";
+import { Counter } from "@/domains/ui-system/components/counter/counter";
 import { GridOfCards } from "@/domains/ui-system/components/grid-of-cards/grid-of-cards";
 import {
 	shimmerEffect,
 	TypographySkeleton,
 } from "@/domains/ui-system/components/skeleton/skeleton";
 import { Surface } from "@/domains/ui-system/components/surface/surface";
-import Typography from "@mui/material/Typography/Typography";
-import { Box, Stack, styled } from "@mui/system";
-import { useTournamentPerformance } from "../../hooks/use-tournament-performance";
-import { ITournamentPerformance } from "../../typing";
+import type { useTournamentPerformance } from "../../hooks/use-tournament-performance";
+import type { ITournamentPerformance } from "../../schemas";
 
 const TournamentPerformanceStats = ({
-	data,
+	basicPerformance,
 	mutation,
 }: {
-	data: ITournamentPerformance;
+	basicPerformance: ITournamentPerformance;
 	mutation: ReturnType<typeof useTournamentPerformance>["mutation"];
 }) => {
-	if (!data) return null;
+	if (!basicPerformance) return null;
 
 	return (
 		<Stack gap={4} pt={5}>
@@ -34,19 +34,11 @@ const TournamentPerformanceStats = ({
 						gap: 1,
 					}}
 				>
-					<Typography
-						textTransform="uppercase"
-						variant="caption"
-						color="teal.500"
-					>
+					<Typography textTransform="uppercase" variant="caption" color="teal.500">
 						last updated at:
 					</Typography>
-					<Typography
-						textTransform="uppercase"
-						variant="caption"
-						color="neutral.100"
-					>
-						{data?.lastUpdated && new Date(data.lastUpdated).toUTCString()}
+					<Typography textTransform="uppercase" variant="caption" color="neutral.100">
+						{basicPerformance.lastUpdated && new Date(basicPerformance.lastUpdated).toUTCString()}
 					</Typography>
 					<AppButton
 						sx={{
@@ -55,8 +47,8 @@ const TournamentPerformanceStats = ({
 							borderRadius: 2,
 							backgroundColor: "teal.500",
 						}}
-						// disabled={setup.isPending}
-						onClick={async () => {
+						disabled={mutation.isPending}
+						onClick={() => {
 							mutation.mutate();
 						}}
 					>
@@ -68,118 +60,15 @@ const TournamentPerformanceStats = ({
 			</Box>
 
 			<PerfCard>
-				<Stack
-					direction="row"
-					gap={1.5}
-					alignItems="start"
-					justifyContent="space-between"
-				>
-					<Typography
-						textTransform="uppercase"
-						variant="topic"
-						color="teal.500"
-					>
+				<Stack direction="row" gap={1.5} alignItems="start" justifyContent="space-between">
+					<Typography textTransform="uppercase" variant="topic" color="teal.500">
 						points
 					</Typography>
-					<Typography
-						textTransform="uppercase"
-						variant="h1"
-						color="neutral.100"
-					>
-						{data?.points}
+					<Typography textTransform="uppercase" variant="h1" color="neutral.100">
+						<Counter initialValue={Number(basicPerformance?.points) ?? 0} />
 					</Typography>
 				</Stack>
 			</PerfCard>
-
-			<Stack>
-				<GridOfCards>
-					<PerfCard>
-						<Stack direction="row" gap={1.5} alignItems="center">
-							<Typography
-								textTransform="uppercase"
-								variant="caption"
-								color="teal.500"
-							>
-								correct guesses
-							</Typography>
-							<Typography
-								textTransform="uppercase"
-								variant="h4"
-								color="neutral.100"
-							>
-								{data.details["correct"] ?? 0}
-							</Typography>
-						</Stack>
-					</PerfCard>
-					<PerfCard>
-						<Stack direction="row" gap={1.5} alignItems="center">
-							<Typography
-								textTransform="uppercase"
-								variant="caption"
-								color="teal.500"
-							>
-								incorrect guesses
-							</Typography>
-							<Typography
-								textTransform="uppercase"
-								variant="h4"
-								color="neutral.100"
-							>
-								{data.details["incorrect"] ?? 0}
-							</Typography>
-						</Stack>
-					</PerfCard>
-					<PerfCard>
-						<Stack direction="row" gap={1.5} alignItems="center">
-							<Typography
-								textTransform="uppercase"
-								variant="caption"
-								color="teal.500"
-							>
-								waiting for macth outcome
-							</Typography>
-							<Typography
-								textTransform="uppercase"
-								variant="h4"
-								color="neutral.100"
-							>
-								{data.details["waiting_for_game"] ?? 0}
-							</Typography>
-						</Stack>
-					</PerfCard>
-					<PerfCard>
-						<Stack direction="row" gap={1.5} alignItems="center">
-							<Typography
-								textTransform="uppercase"
-								variant="caption"
-								color="teal.500"
-							>
-								you still can guess
-							</Typography>
-							<Typography
-								textTransform="uppercase"
-								variant="h4"
-								color="neutral.100"
-							>
-								{data.details["not-started"] ?? 0}
-							</Typography>
-						</Stack>
-					</PerfCard>
-				</GridOfCards>
-			</Stack>
-
-			<Stack>
-				{/* <GuessSection groupName={"all"} groupOfGuesses={data.details} /> */}
-
-				{/* {Object.values(GUESS_STATUSES).map((status) => {
-					return (
-						<GuessSection
-							groupName={status}
-							groupOfGuesses={guessesByStatus[status]}
-						/>
-					);
-				})} */}
-			</Stack>
 		</Stack>
 	);
 };
@@ -194,13 +83,14 @@ const PerfCard = styled(Surface)(({ theme }) =>
 		flexDirection: "column",
 		justifyContent: "center",
 		gap: 1,
-	}),
+	})
 );
 
 const PerfCardSkeleton = styled(PerfCard)(({ theme }) =>
 	theme.unstable_sx({
+		position: "relative",
 		...shimmerEffect(),
-	}),
+	})
 );
 
 export const Skeleton = () => {

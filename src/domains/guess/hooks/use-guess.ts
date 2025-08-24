@@ -10,10 +10,15 @@ export const useGuess = () => {
 	const round = search.round;
 
 	const guesses = useQuery({
-		queryKey: ["guess", { tournamentId, round }],
+		queryKey: guessKey(tournamentId, round),
 		queryFn: getMemberGuesses,
 		enabled: !!tournamentId,
 	});
 
 	return guesses;
 };
+
+export const guessKey = (tournamentId: string, round: string | undefined = undefined) => [
+	"guess",
+	{ tournamentId, round },
+];

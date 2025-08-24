@@ -1,29 +1,25 @@
-import { useAppAuth } from "@/domains/authentication/hooks/use-app-auth";
-import { APP_MODE } from "@/domains/global/utils";
-import { Box } from "@mui/system";
+import type { QueryClient } from "@tanstack/react-query";
 import { createRootRouteWithContext, Outlet } from "@tanstack/react-router";
-import { TanStackRouterDevtools } from "@tanstack/router-devtools";
+import { AppDevTools } from "@/configuration/app-dev-tools";
+import { AppNotFound } from "@/domains/global/components/not-found";
+import { FloatingActionButton } from "@/domains/ui-system/components/floating-action-button";
 
-export interface RouterContext extends ReturnType<typeof useAppAuth> {}
+export interface RouterContext {
+	queryClient: QueryClient;
+	auth: any;
+}
 
-const AppContainer = () => {
+const RootComponent = () => {
 	return (
-		<Box
-			data-ui="app-container"
-			component="main"
-			sx={{
-				bgcolor: "black.700",
-				minHeight: "100dvh",
-			}}
-		>
+		<>
 			<Outlet />
-			{APP_MODE === "local-dev" && (
-				<TanStackRouterDevtools position="bottom-right" initialIsOpen={false} />
-			)}
-		</Box>
+			<FloatingActionButton />
+			<AppDevTools />
+		</>
 	);
 };
 
-export const Route = createRootRouteWithContext()({
-	component: AppContainer,
+export const Route = createRootRouteWithContext<RouterContext>()({
+	component: RootComponent,
+	notFoundComponent: AppNotFound,
 });

@@ -1,17 +1,13 @@
-import { BestShotIcon } from "@/assets/best-shot-icon";
-import { theme, UIHelper } from "@/theming/theme";
 import { styled, Typography } from "@mui/material";
 import { Stack } from "@mui/system";
+import { BestShotIcon } from "@/assets/best-shot-icon";
+import { theme, UIHelper } from "@/theming/theme";
 
 export const AppHeader = () => {
 	return (
 		<Header as="header">
-			<BestShotIcon width={50} fill={theme.palette.teal[500]} />
-			<Typography
-				variant="paragraph"
-				color={theme.palette.neutral[100]}
-				fontWeight={400}
-			>
+			<BestShotIcon width={50} fill={theme.palette.neutral[100]} />
+			<Typography variant="paragraph" color={theme.palette.neutral[100]} fontWeight={400}>
 				best shot
 			</Typography>
 		</Header>
@@ -27,8 +23,12 @@ const Header = styled(Stack)(({ theme }) => ({
 	gap: theme.spacing(1),
 	padding: theme.spacing(2, 2),
 	backgroundColor: theme.palette.black[800],
+	borderBottomLeftRadius: theme.spacing(3),
+	borderBottomRightRadius: theme.spacing(3),
+	height: "var(--app-header-height-mobile)",
 
 	[UIHelper.whileIs("mobile")]: {
+		zIndex: theme.zIndex.appBar,
 		display: "flex",
 	},
 	[UIHelper.startsOn("tablet")]: {

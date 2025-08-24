@@ -15,8 +15,6 @@ export const TournamentSimulator = () => {
 	);
 };
 
-export const Route = createLazyFileRoute(
-	"/_auth/tournaments/$tournamentId/_layout/simulator",
-)({
+export const Route = createLazyFileRoute("/_auth/tournaments/$tournamentId/_layout/simulator")({
 	component: TournamentSimulator,
 });

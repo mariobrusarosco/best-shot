@@ -1,11 +1,11 @@
-import { useMemberPerformance } from "@/domains/member/hooks/use-member-performance";
+import { Box, Stack, styled, Typography } from "@mui/material";
+import { Link } from "@tanstack/react-router";
+import type { useMemberPerformance } from "@/domains/member/hooks/use-member-performance";
 import { AppButton } from "@/domains/ui-system/components/button/button";
 import { GridOfCards } from "@/domains/ui-system/components/grid-of-cards/grid-of-cards";
 import { AppIcon } from "@/domains/ui-system/components/icon/icon";
 import { AppPill } from "@/domains/ui-system/components/pill/pill";
 import { shimmerEffect } from "@/domains/ui-system/components/skeleton/skeleton";
-import { Box, Stack, styled, Typography } from "@mui/material";
-import { Link } from "@tanstack/react-router";
 
 import { DashCard } from "../dash-card/dash-card";
 import { DashGrid } from "../dash-grid";
@@ -19,18 +19,12 @@ const MainLeague = ({
 }) => {
 	if (loading) return;
 
-	const best = performance.data?.leagues.best;
-	const worst = performance.data?.leagues.worst;
+	const tournaments = performance.data?.tournaments;
 
 	return (
 		<Stack color="neutral.100" gap={3}>
 			<Stack direction="row" justifyContent="space-between">
-				<AppPill.Component
-					bgcolor="teal.500"
-					color="neutral.100"
-					height={20}
-					width="120px"
-				>
+				<AppPill.Component bgcolor="teal.500" color="neutral.100" height={20} width="120px">
 					<Typography textTransform="uppercase" variant="tag">
 						leagues
 					</Typography>
@@ -41,34 +35,21 @@ const MainLeague = ({
 
 			<DashGrid>
 				<DashCard.Component>
-					<Stack
-						direction="row"
-						justifyContent="space-between"
-						alignItems="center"
-						mb={2}
-					>
-						<Typography
-							fontWeight={500}
-							textTransform="uppercase"
-							variant="tag"
-						>
+					<Stack direction="row" justifyContent="space-between" alignItems="center" mb={2}>
+						<Typography fontWeight={500} textTransform="uppercase" variant="tag">
 							Best Ranked
 						</Typography>
 
-						{best === null ? null : (
+						{tournaments?.bestPerformance === null ? null : (
 							<CardRouteButton
 								to="tournaments/$tournamentId/matches"
-								params={{ tournamentId: best?.leagueId }}
+								params={{ tournamentId: tournaments?.bestPerformance?.id }}
 							/>
 						)}
 					</Stack>
 
-					<Stack
-						direction="row"
-						justifyContent="space-between"
-						alignItems="end"
-					>
-						{best ? (
+					<Stack direction="row" justifyContent="space-between" alignItems="end">
+						{tournaments?.bestPerformance ? (
 							<>
 								<Stack gap={1}>
 									<Stack
@@ -78,23 +59,15 @@ const MainLeague = ({
 										}}
 									/>
 									<Typography variant="paragraph" color="neutral.100">
-										{best?.name}
+										{tournaments?.bestPerformance?.label}
 									</Typography>
 								</Stack>
 
 								<Stack gap={1} alignItems="end">
-									<Typography
-										textTransform="uppercase"
-										variant="h4"
-										color="neutral.100"
-									>
-										{best?.points}
+									<Typography textTransform="uppercase" variant="h4" color="neutral.100">
+										{tournaments?.bestPerformance?.points}
 									</Typography>
-									<Typography
-										textTransform="uppercase"
-										variant="label"
-										color="teal.500"
-									>
+									<Typography textTransform="uppercase" variant="label" color="teal.500">
 										points
 									</Typography>
 								</Stack>
@@ -106,33 +79,20 @@ const MainLeague = ({
 				</DashCard.Component>
 
 				<DashCard.Component>
-					<Stack
-						direction="row"
-						justifyContent="space-between"
-						alignItems="center"
-						mb={2}
-					>
-						<Typography
-							fontWeight={500}
-							textTransform="uppercase"
-							variant="tag"
-						>
+					<Stack direction="row" justifyContent="space-between" alignItems="center" mb={2}>
+						<Typography fontWeight={500} textTransform="uppercase" variant="tag">
 							worst Ranked
 						</Typography>
-						{worst === null ? null : (
+						{tournaments?.worstPerformance === null ? null : (
 							<CardRouteButton
 								to="tournaments/$tournamentId/matches"
-								params={{ tournamentId: worst?.leagueId }}
+								params={{ tournamentId: tournaments?.worstPerformance?.id }}
 							/>
 						)}
 					</Stack>
 
-					<Stack
-						direction="row"
-						justifyContent="space-between"
-						alignItems="end"
-					>
-						{worst ? (
+					<Stack direction="row" justifyContent="space-between" alignItems="end">
+						{tournaments?.worstPerformance ? (
 							<>
 								<Stack gap={1}>
 									<Stack
@@ -142,23 +102,15 @@ const MainLeague = ({
 										}}
 									/>
 									<Typography variant="paragraph" color="neutral.100">
-										{worst?.name}
+										{tournaments?.worstPerformance?.label}
 									</Typography>
 								</Stack>
 
 								<Stack gap={1} alignItems="end">
-									<Typography
-										textTransform="uppercase"
-										variant="h4"
-										color="neutral.100"
-									>
-										{worst?.points}
+									<Typography textTransform="uppercase" variant="h4" color="neutral.100">
+										{tournaments?.worstPerformance?.points}
 									</Typography>
-									<Typography
-										textTransform="uppercase"
-										variant="label"
-										color="teal.500"
-									>
+									<Typography textTransform="uppercase" variant="label" color="teal.500">
 										points
 									</Typography>
 								</Stack>
@@ -174,7 +126,7 @@ const MainLeague = ({
 };
 
 // TODO This can be a <AppRouteButton />
-const CardRouteButton = ({ to, params = {} }: { to: string; params?: {} }) => {
+const CardRouteButton = ({ to, params = {} }: { to: string; params?: Record<string, string> }) => {
 	return (
 		<AppButton
 			sx={{
@@ -197,11 +149,12 @@ const EmptyState = () => (
 
 const CardRouteButtonSkeleton = styled(Box)(({ theme }) =>
 	theme?.unstable_sx({
+		position: "relative",
 		...shimmerEffect(),
 		backgroundColor: "black.800",
 		minWidth: "30px",
 		borderRadius: 2,
-	}),
+	})
 );
 // TODO This can be a <AppRouteButton />
 

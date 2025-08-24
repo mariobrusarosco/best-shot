@@ -1,4 +1,3 @@
-import { sentryVitePlugin } from "@sentry/vite-plugin";
 import { TanStackRouterVite } from "@tanstack/router-plugin/vite";
 import react from "@vitejs/plugin-react";
 import path from "path";
@@ -25,11 +24,11 @@ export default defineConfig({
 		// 	emitFile: true,
 		// 	filename: "stats.html",
 		// }),
-		sentryVitePlugin({
-			org: "mario-79",
-			project: "best-shot-demo",
-			authToken: process.env.SENTRY_AUTH_TOKEN,
-		}),
+		// sentryVitePlugin({
+		// 	org: "mario-79",
+		// 	project: "best-shot-demo",
+		// 	authToken: process.env.SENTRY_AUTH_TOKEN,
+		// }),
 	],
 
 	resolve: {

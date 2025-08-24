@@ -1,8 +1,8 @@
+import { Link, type LinkProps } from "@tanstack/react-router";
+import { forwardRef } from "react";
 import { AppButton } from "@/domains/ui-system/components/button/button";
 import { AppCard } from "@/domains/ui-system/components/card/card";
 import { AppIcon } from "@/domains/ui-system/components/icon/icon";
-import { Link, LinkProps } from "@tanstack/react-router";
-import { forwardRef } from "react";
 
 interface Props extends LinkProps {
 	children: React.ReactNode;
@@ -34,7 +34,7 @@ export const AppLinkCard = forwardRef<HTMLAnchorElement, Props>(
 				</AppCard.Container>
 			</Link>
 		);
-	},
+	}
 );
 
 AppLinkCard.displayName = "AppLinkCard";

@@ -4,12 +4,12 @@ export const GlobalCSS = () => (
 	<GlobalStyles
 		styles={{
 			body: {
-				// overflowX: "hidden",
+				overflowX: "hidden",
 			},
 			":root": {
-				"--app-header-height-mobile": "64px",
-				"--screeh-heading-height-mobile": "150px",
-				"--screeh-heading-height-tablet": "250px",
+				"--app-header-height-mobile": "80px",
+				"--screeh-heading-height-mobile": "144px",
+				"--screeh-heading-height-tablet": "219px",
 				"--tournament-heading-height-tablet": "70px",
 			},
 			"#root": {
@@ -32,7 +32,7 @@ export const GlobalCSS = () => (
 				color: "unset",
 			},
 			img: {
-				width: "100%",
+				maxWidth: "100%",
 				height: "auto",
 			},
 

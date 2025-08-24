@@ -1,9 +1,9 @@
-import { AppCard } from "@/domains/ui-system/components/card/card";
-import { AppLinkCard } from "@/domains/ui-system/components/link-card/link-card";
-import { SurfaceProps } from "@/domains/ui-system/components/surface/surface";
 import Typography from "@mui/material/Typography";
 import { Box } from "@mui/system";
-import { ITournament } from "../typing";
+import { AppCard } from "@/domains/ui-system/components/app-card/AppCard";
+import { AppLinkCard } from "@/domains/ui-system/components/link-card/link-card";
+import type { SurfaceProps } from "@/domains/ui-system/components/surface/surface";
+import type { ITournament } from "../schemas";
 import { TournamentLogo } from "./tournament-logo";
 
 interface Props extends SurfaceProps {
@@ -26,7 +26,6 @@ export const TournamentCard = ({ tournament }: Props) => {
 			<AppLinkCard
 				to="/tournaments/$tournamentId/matches"
 				params={{ tournamentId: id }}
-				// search={{ round: 1 }}
 				adornment={<TournamentLogo src={tournament.logo} />}
 				replace={false}
 				resetScroll={false}
@@ -61,7 +60,7 @@ export const TournamentCardSkeleton = () => {
 				},
 			}}
 		>
-			<AppCard.Skeleton />
+			<AppCard loading />
 		</Box>
 	);
 };

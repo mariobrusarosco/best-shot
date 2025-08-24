@@ -1,10 +1,9 @@
-import { IGuess } from "@/domains/guess/typing";
+import { Box, Stack, styled, Typography } from "@mui/material";
+import { useState } from "react";
+import type { IGuess } from "@/domains/guess/typing";
 import { AppButton } from "@/domains/ui-system/components/button/button";
 import { AppIcon } from "@/domains/ui-system/components/icon/icon";
 import { Surface } from "@/domains/ui-system/components/surface/surface";
-import Typography from "@mui/material/Typography/Typography";
-import { Box, Stack, styled } from "@mui/system";
-import { useState } from "react";
 
 export const GuessSection = ({
 	groupOfGuesses,
@@ -41,7 +40,7 @@ export const GuessSection = ({
 				<Stack maxHeight="400px" overflow="auto">
 					<GridOfGuesses>
 						{groupOfGuesses.map((guess, index) => (
-							<GuessCard>
+							<GuessCard key={`guess-${index}`}>
 								<Stack direction="row" gap={2}>
 									<Typography
 										variant="caption"
@@ -91,7 +90,7 @@ export const ToggleButton = styled(AppButton)(
 		background-color: ${theme.palette.teal[500]};
 		width: 20px;
 		height: 20px;
-	`,
+	`
 );
 
 const GuessCard = styled(Surface)(({ theme }) =>
@@ -104,7 +103,7 @@ const GuessCard = styled(Surface)(({ theme }) =>
 		flexDirection: "column",
 		justifyContent: "center",
 		gap: 1,
-	}),
+	})
 );
 
 export const GridOfGuesses = styled(Box)(({ theme }) =>
@@ -115,5 +114,5 @@ export const GridOfGuesses = styled(Box)(({ theme }) =>
 		pr: 1,
 		gridTemplateColumns: "1fr",
 		gridAutoRows: "auto",
-	}),
+	})
 );

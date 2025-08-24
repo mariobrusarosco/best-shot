@@ -14,30 +14,30 @@ const BREAKPOINTS = {
 
 export const COLORS = {
 	teal: {
-		500: "#6A9B96",
+		500: "#6A9B96" as const,
 	},
 	green: {
-		200: "#8AC79F",
+		200: "#8AC79F" as const,
 	},
 	red: {
-		400: "#FF6D6D",
+		400: "#FF6D6D" as const,
 	},
 	black: {
-		300: "#939393",
-		400: "#484848",
-		500: "#373737",
-		700: "#131514",
-		800: "#232424",
+		300: "#939393" as const,
+		400: "#484848" as const,
+		500: "#373737" as const,
+		700: "#131514" as const,
+		800: "#232424" as const,
 	},
 	neutral: {
-		0: "#FFFFFF",
-		100: "#FDFCFC",
-		500: "#A3ABA8",
+		0: "#FFFFFF" as const,
+		100: "#FDFCFC" as const,
+		500: "#A3ABA8" as const,
 	},
 	pink: {
-		700: "#BB2253",
+		700: "#BB2253" as const,
 	},
-};
+} as const;
 
 export const BORDER_RADIUS = {
 	small: "8px",
@@ -47,7 +47,7 @@ export const BORDER_RADIUS = {
 export const PADDING = {
 	none: "0",
 	tiny: "4px",
-	["extra-small"]: "12px",
+	"extra-small": "12px",
 	small: "8px",
 	medium: "12px",
 	large: "16px",
@@ -60,7 +60,7 @@ const theme = createTheme({
 		fontFamily: ["Poppins", "Montserrat", "sans-serif"].join(","),
 		...TYPOGRAPHY.variants,
 	},
-	palette: COLORS,
+	palette: COLORS as any,
 	components: {
 		MuiTypography: {
 			// defaultProps: {

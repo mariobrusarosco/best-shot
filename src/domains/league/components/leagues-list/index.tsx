@@ -1,16 +1,16 @@
-import { ILeague } from "@/domains/league/typing";
+import { Box, styled, Typography } from "@mui/material";
+import type { ILeague } from "@/domains/league/typing";
 import { AppIcon } from "@/domains/ui-system/components/icon/icon";
 import { AppLinkCard } from "@/domains/ui-system/components/link-card/link-card";
+import { shimmerEffect } from "@/domains/ui-system/components/skeleton/skeleton";
 import { OverflowAuto } from "@/domains/ui-system/utils";
 import { UIHelper } from "@/theming/theme";
-import Typography from "@mui/material/Typography/Typography";
-import { Box, styled } from "@mui/system";
 
-export const LeaguesList = ({ leagues }: { leagues: ILeague[] }) => {
+const LeaguesList = ({ leagues }: { leagues: ILeague[] }) => {
 	return (
-		<GridOfCards component="ul" data-ui="leagues-list">
+		<GridOfCards data-ui="leagues-list">
 			{leagues?.map((league: ILeague) => (
-				<li>
+				<li key={league.id}>
 					<AppLinkCard
 						to="/leagues/$leagueId"
 						params={{ leagueId: league.id }}
@@ -33,10 +33,13 @@ export const LeaguesList = ({ leagues }: { leagues: ILeague[] }) => {
 	);
 };
 
-const GridOfCards = styled(Box)(({ theme }) =>
+const GridOfCards = styled("ul")(({ theme }) =>
 	theme.unstable_sx({
 		borderRadius: theme.spacing(1),
 		display: "grid",
+		margin: 0,
+		padding: 0,
+		listStyle: "none",
 		...OverflowAuto(),
 
 		[UIHelper.whileIs("mobile")]: {
@@ -47,15 +50,35 @@ const GridOfCards = styled(Box)(({ theme }) =>
 			gridAutoColumns: "47%",
 			gridAutoRows: "110px",
 			gridAutoFlow: "column",
-			// gridTemplateRows: "auto auto",
-			// gridTemplateColumns: "47% 47%",
 		},
 
 		[UIHelper.startsOn("tablet")]: {
-			flex: 1,
 			gap: theme.spacing(3),
 			gridTemplateColumns: "repeat(auto-fill, minmax(150px, 160px))",
-			gridTemplateRows: "repeat(auto-fill, 130px)",
+			gridTemplateRows: "repeat(auto-fit, 130px)",
 		},
-	}),
+	})
 );
+
+const LeaguesListSkeleton = () => {
+	return (
+		<GridOfCards data-ui="leagues-list-skeleton">
+			{Array.from({ length: 6 }).map((_, index) => (
+				<li key={index}>
+					<Skeleton />
+				</li>
+			))}
+		</GridOfCards>
+	);
+};
+
+const Skeleton = styled(Box)(() => ({
+	position: "relative",
+	height: "110px",
+	...shimmerEffect(),
+}));
+
+export default {
+	Component: LeaguesList,
+	Skeleton: LeaguesListSkeleton,
+};

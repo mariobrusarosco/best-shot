@@ -1,14 +1,14 @@
+import { Stack, Typography } from "@mui/material";
+import { getRouteApi } from "@tanstack/react-router";
+import { BestShotIcon } from "@/assets/best-shot-icon";
 import { AppButton } from "@/domains/ui-system/components/button/button";
-import { Stack } from "@mui/material";
-import Typography from "@mui/material/Typography/Typography";
+import { theme } from "@/theming/theme";
 import { useTournamentSetup } from "../../hooks/use-tournament-setup";
-import { ITournament } from "../../typing";
 
-export const TournamentSetup = ({
-	tournament,
-}: {
-	tournament: ITournament;
-}) => {
+const route = getRouteApi("/_auth/tournaments/$tournamentId");
+
+export const TournamentSetup = () => {
+	const tournamentId = route.useParams().tournamentId || "";
 	const setup = useTournamentSetup();
 
 	return (
@@ -19,26 +19,12 @@ export const TournamentSetup = ({
 				</Typography>
 			</Stack>
 			<Typography variant="topic" color="neutral.100">
-				We need to setup this tournament for you!
-			</Typography>
-
-			<Typography variant="topic" color="neutral.100">
-				After that you'll be able to guess{" "}
-				<Typography
-					textTransform="uppercase"
-					variant="label"
-					color="teal.500"
-					fontWeight={700}
-				>
+				We need to setup this tournament for you, so you'll be able to guess{" "}
+				<Typography textTransform="uppercase" variant="label" color="teal.500" fontWeight={700}>
 					scores
 				</Typography>{" "}
 				and then check your{" "}
-				<Typography
-					textTransform="uppercase"
-					variant="label"
-					color="teal.500"
-					fontWeight={700}
-				>
+				<Typography textTransform="uppercase" variant="label" color="teal.500" fontWeight={700}>
 					performance
 				</Typography>
 			</Typography>
@@ -52,17 +38,18 @@ export const TournamentSetup = ({
 				disabled={setup.isPending}
 				onClick={async () => {
 					await setup.mutateAsync({
-						tournamentId: tournament.id || "",
+						tournamentId,
 					});
+					console.log("Mutate is over");
 				}}
 			>
-				<Typography
-					textTransform="uppercase"
-					variant="label"
-					color="neutral.100"
-				>
-					{setup.isPending ? "...working on it..." : "finish the setup"}
-				</Typography>
+				{setup.isPending ? (
+					<BestShotIcon isAnimated fill={theme.palette.neutral[100]} width={30} />
+				) : (
+					<Typography textTransform="uppercase" variant="label" color="neutral.100">
+						finish setup
+					</Typography>
+				)}
 			</AppButton>
 		</Stack>
 	);

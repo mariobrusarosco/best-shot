@@ -1,18 +1,15 @@
-import TournamentRoundsBar from "@/domains/tournament/components/tournament-rounds-bar";
-import { UIHelper } from "@/theming/theme";
 import { Box, styled } from "@mui/system";
-import { ITournament } from "../typing";
+import { useGuess } from "@/domains/guess/hooks/use-guess";
+import { UIHelper } from "@/theming/theme";
 
-interface Props {
-	tournament: ITournament;
-}
+export const TournamentHeading = () => {
+	const guesses = useGuess();
 
-export const TournamentHeading = ({ tournament }: Props) => {
-	return (
-		<Wrapper data-ui="tournament-heading">
-			<TournamentRoundsBar.Component tournament={tournament} />
-		</Wrapper>
-	);
+	if (guesses.isSuccess && guesses.data?.length === 0) {
+		return null;
+	}
+
+	return <Wrapper data-ui="tournament-heading">{/* <TournamentRoundsBar.Component /> */}</Wrapper>;
 };
 
 const Wrapper = styled(Box)(({ theme }) => ({
@@ -31,7 +28,7 @@ export const TournamentLogo = styled("img")(() => ({}));
 export const Skeleton = () => {
 	return (
 		<Wrapper data-ui="tournament-heading-skeleton">
-			<TournamentRoundsBar.Skeleton />
+			{/* <TournamentRoundsBar.Skeleton /> */}
 		</Wrapper>
 	);
 };

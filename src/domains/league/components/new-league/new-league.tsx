@@ -1,16 +1,34 @@
-import { AppButton } from "@/domains/ui-system/components/button/button";
-import { AppInput } from "@/domains/ui-system/components/input/input";
+import { Box, styled, Typography } from "@mui/material";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { AppButton } from "@/domains/ui-system/components/app-button/app-button";
+import { AppFormInput } from "@/domains/ui-system/components/form";
+import { shimmerEffect } from "@/domains/ui-system/components/skeleton/skeleton";
 import { Surface } from "@/domains/ui-system/components/surface/surface";
-import { TypographyProps } from "@mui/material";
-import Typography from "@mui/material/Typography/Typography";
-import { Box, styled } from "@mui/system";
 import { useLeagues } from "../../hooks/use-leagues";
+import { createLeagueSchema, type CreateLeagueFormData } from "../../schemas";
 
-export const NewLeague = () => {
-	const { inputs, handleNewLeague } = useLeagues();
+const NewLeague = () => {
+	const { createLeagueMutation } = useLeagues();
+	
+	const { control, handleSubmit, reset, formState } = useForm<CreateLeagueFormData>({
+		resolver: zodResolver(createLeagueSchema),
+		defaultValues: {
+			label: "",
+			description: "",
+		},
+	});
+
+	const onSubmit = (data: CreateLeagueFormData) => {
+		createLeagueMutation.mutate(data, {
+			onSuccess: () => {
+				reset();
+			},
+		});
+	};
 
 	return (
-		<Box>
+		<Wrapper>
 			<Typography
 				sx={{
 					mb: 1,
@@ -22,73 +40,95 @@ export const NewLeague = () => {
 				create a new league
 			</Typography>
 
-			<Card
-				sx={{
-					mt: 2,
-					py: 2,
-					gap: 1,
-					backgroundColor: "black.800",
-				}}
-				className="league-creation"
+			<Box
+				component="form"
+				onSubmit={handleSubmit(onSubmit)}
 			>
-				<Label htmlFor="league-label">Name</Label>
-
-				<AppInput
-					type="text"
-					id="league-label"
-					name="league-label"
-					value={inputs.labelInput}
-					onChange={inputs.handleLabelChange}
+				<Card
+					sx={{
+						mt: 2,
+						py: 2,
+						gap: 1,
+						backgroundColor: "black.800",
+					}}
+					className="league-creation"
+				>
+				<AppFormInput
+					name="label"
+					control={control}
+					label="League Name"
+					placeholder="Enter league name..."
+					required
 				/>
 
-				<SubmitButton type="submit" onClick={handleNewLeague}>
-					create
+				<AppFormInput
+					name="description"
+					control={control}
+					label="Description"
+					placeholder="Enter league description (optional)..."
+					multiline
+					rows={3}
+				/>
+
+				<SubmitButton 
+					type="submit" 
+					disabled={createLeagueMutation.isPending || !formState.isValid}
+				>
+					{createLeagueMutation.isPending ? "Creating..." : "Create League"}
 				</SubmitButton>
-			</Card>
-		</Box>
+				</Card>
+			</Box>
+		</Wrapper>
 	);
 };
 
+const Wrapper = styled(Box)(({ theme }) => ({
+	display: "flex",
+	flexDirection: "column",
+	gap: theme.spacing(2),
+}));
+
 const SubmitButton = styled(AppButton)(({ theme }) => ({
-	my: 2,
+	marginY: theme.spacing(2),
 	width: 150,
 	marginTop: theme.spacing(2),
 	padding: theme.spacing(1.5),
-	borderRadius: 2,
-	backgroundColor: theme.palette.teal[500],
+	borderRadius: theme.spacing(0.5),
+	backgroundColor: theme.palette.primary.main,
 	color: theme.palette.neutral[100],
 
 	"&:hover": {
-		backgroundColor: theme.palette.black[500],
+		backgroundColor: theme.palette.primary.dark,
 	},
 }));
 
-const Card = styled(Surface)(({ theme }) =>
-	theme.unstable_sx({
-		backgroundColor: "black.800",
-		px: 2,
-		py: 2,
-		borderRadius: 2,
-		display: "flex",
-		flexDirection: "column",
-		justifyContent: "center",
-		gap: 1,
-	}),
-);
+const Card = styled(Surface)(({ theme }) => ({
+	backgroundColor: theme.palette.black[800],
+	paddingX: theme.spacing(2),
+	paddingY: theme.spacing(2),
+	borderRadius: theme.spacing(0.5),
+	display: "flex",
+	flexDirection: "column",
+	justifyContent: "center",
+	gap: theme.spacing(1),
+}));
 
-interface MyCustomTypographyProps extends TypographyProps {
-	htmlFor?: string;
-}
 
-const Label = styled((props: MyCustomTypographyProps) => (
-	<Typography
-		variant="label"
-		component={props.component || "label"}
-		{...props}
-	/>
-))(({ theme }) =>
-	theme.unstable_sx({
-		textTransform: "uppercase",
-		color: "neutral.100",
-	}),
-);
+const NewLeagueSkeleton = () => {
+	return (
+		<Wrapper>
+			<Skeleton height={22} />
+			<Skeleton height={154} />
+		</Wrapper>
+	);
+};
+
+const Skeleton = styled(Box)(() => ({
+	position: "relative",
+	...shimmerEffect(),
+}));
+
+export default {
+	Component: NewLeague,
+	Skeleton: NewLeagueSkeleton,
+};

@@ -1,24 +1,20 @@
-import { IMatch } from "@/domains/match/typing";
-import { useQueryClient } from "@tanstack/react-query";
 import { getRouteApi } from "@tanstack/react-router";
 import { useState } from "react";
-import { IGuess } from "../typing";
-import { useGuessMutation } from "./use-guess-mutation";
+import type { IMatch } from "@/domains/match/typing";
+import type { IGuess } from "../typing";
+import type { useGuessMutation } from "./use-guess-mutation";
 
 const route = getRouteApi("/_auth/tournaments/$tournamentId");
 
-export const useGuessInputs = (guess: IGuess, match: IMatch) => {
-	const queryClient = useQueryClient();
-	const search = route.useSearch() as { round: number };
+export const useGuessInputs = (
+	guess: IGuess,
+	match: IMatch,
+	guessMutation: ReturnType<typeof useGuessMutation>
+) => {
 	const tournamentId = route.useParams().tournamentId;
 
-	const [homeGuess, setHomeGuess] = useState<null | number>(
-		guess.home.value ?? null,
-	);
-	const [awayGuess, setAwayGuess] = useState<null | number>(
-		guess.away.value ?? null,
-	);
-	const { isPending, mutateAsync } = useGuessMutation();
+	const [homeGuess, setHomeGuess] = useState<null | number>(guess.home.value ?? null);
+	const [awayGuess, setAwayGuess] = useState<null | number>(guess.away.value ?? null);
 
 	const handleHomeGuess = (value: number | null) => {
 		setHomeGuess(value);
@@ -32,22 +28,13 @@ export const useGuessInputs = (guess: IGuess, match: IMatch) => {
 			throw new Error("Invalid guess");
 		}
 
-		return mutateAsync(
-			{
-				id: guess?.id || "",
-				matchId: match.id,
-				tournamentId,
-				home: { score: homeGuess },
-				away: { score: awayGuess },
-			},
-			{
-				onSettled: () => {
-					queryClient.invalidateQueries({
-						queryKey: ["guess", { tournamentId, round: search?.round }],
-					});
-				},
-			},
-		);
+		return guessMutation.mutateAsync({
+			id: guess?.id || "",
+			matchId: match.id,
+			tournamentId,
+			home: { score: homeGuess },
+			away: { score: awayGuess },
+		});
 	};
 
 	const hasEmptyInput = homeGuess === null || awayGuess === null;
@@ -58,6 +45,7 @@ export const useGuessInputs = (guess: IGuess, match: IMatch) => {
 		handleSave,
 		homeGuess,
 		awayGuess,
-		allowNewGuess: !isPending && !hasEmptyInput,
+		allowNewGuess: !guessMutation.isPending && !hasEmptyInput,
+		isPending: guessMutation.isPending,
 	};
 };

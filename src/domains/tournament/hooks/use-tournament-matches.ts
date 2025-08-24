@@ -1,13 +1,13 @@
-import { getTournamentMatches } from "@/domains/tournament/server-state/fetchers";
 import { useQuery } from "@tanstack/react-query";
 import { getRouteApi } from "@tanstack/react-router";
+import { getTournamentMatches } from "@/domains/tournament/server-state/fetchers";
 
 const route = getRouteApi("/_auth/tournaments/$tournamentId");
 
 export const useTournamentMatches = () => {
 	const tournamentId = route.useParams().tournamentId;
 	const search = route.useSearch() as { round: string };
-	const round = search.round;
+	const round = search.round || "1";
 
 	const query = useQuery({
 		queryKey: ["matches", { tournamentId, round }],

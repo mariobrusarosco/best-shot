@@ -1,12 +1,12 @@
-import { GUESS_STATUS } from "@/domains/guess/typing";
-import { AppButton } from "@/domains/ui-system/components/button/button";
-import { AppIcon } from "@/domains/ui-system/components/icon/icon";
 import {
 	Unstable_NumberInput as BaseNumberInput,
-	NumberInputProps,
+	type NumberInputProps,
 } from "@mui/base/Unstable_NumberInput";
 import { Box, styled } from "@mui/system";
 import { forwardRef, useRef } from "react";
+import type { GUESS_STATUS } from "@/domains/guess/typing";
+import { AppButton } from "@/domains/ui-system/components/button/button";
+import { AppIcon } from "@/domains/ui-system/components/icon/icon";
 
 export const NumberInput = forwardRef(
 	(props: NumberInputProps, ref: React.ForwardedRef<HTMLDivElement>) => {
@@ -24,19 +24,19 @@ export const NumberInput = forwardRef(
 					input: { className: "input" },
 					incrementButton: {
 						autoFocus: false,
-						children: <AppIcon name="Plus" size="extra-small" />,
+						children: <AppIcon name="Plus" size="tiny" />,
 						"aria-label": "increment-button",
 						className: "increment",
 					},
 					decrementButton: {
-						children: <AppIcon name="Minus" size="extra-small" />,
+						children: <AppIcon name="Minus" size="tiny" />,
 						"aria-label": "decrement-button",
 						className: "decrement",
 					},
 				}}
 			/>
 		);
-	},
+	}
 );
 
 interface Props {
@@ -46,21 +46,12 @@ interface Props {
 	handleInputChange: (val: number | null) => void;
 }
 
-const ALLOW_INPUT_WHEN_GUESS_STATUS = new Set([
-	"waiting_for_game",
-	"not-started",
-]);
+const ALLOW_INPUT_WHEN_GUESS_STATUS = new Set(["waiting_for_game", "not-started"]);
 
-export const ScoreInput = ({
-	value,
-	handleInputChange,
-	guessStatus,
-	cardExpanded,
-}: Props) => {
+export const ScoreInput = ({ value, handleInputChange, guessStatus, cardExpanded }: Props) => {
 	const ref = useRef<HTMLInputElement>(null);
 
-	const showInputs =
-		ALLOW_INPUT_WHEN_GUESS_STATUS.has(guessStatus) && cardExpanded;
+	const showInputs = ALLOW_INPUT_WHEN_GUESS_STATUS.has(guessStatus) && cardExpanded;
 
 	if (!showInputs) return;
 
@@ -94,6 +85,7 @@ const toSafeNumber = (str: string) => {
 export const InputBoxStyled = styled(Box)(({ theme }) =>
 	theme?.unstable_sx({
 		display: "flex",
+		width: "32px",
 		justifyContent: "space-between",
 		alignItems: "stretch",
 		gridArea: "teams",
@@ -106,7 +98,7 @@ export const InputBoxStyled = styled(Box)(({ theme }) =>
 		"[data-open='true'] &": {
 			order: 2,
 		},
-	}),
+	})
 );
 
 export const InputStyled = styled("input")(({ theme }) => ({
@@ -118,8 +110,8 @@ export const InputStyled = styled("input")(({ theme }) => ({
 	textAlign: "center",
 	caretColor: "transparent",
 	backgroundColor: theme.palette.black[500],
-	borderRadius: theme.spacing(1.5),
-	height: "25px",
+	borderRadius: theme.spacing(0.5),
+	height: "30px",
 	alignSelf: "center",
 }));
 
@@ -132,7 +124,6 @@ const InputButtonStyled = styled(AppButton)(({ theme }) => ({
 	height: "100%",
 
 	"&[disabled]": {
-		color: "red",
 		filter: "grayscale(1)",
 	},
 }));

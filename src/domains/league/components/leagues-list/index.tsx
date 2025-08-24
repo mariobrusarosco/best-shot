@@ -61,10 +61,13 @@ const GridOfCards = styled("ul")(({ theme }) =>
 );
 
 const LeaguesListSkeleton = () => {
+	// Generate stable keys for skeleton items
+	const skeletonKeys = Array.from({ length: 6 }, (_, i) => `skeleton-item-${i}`);
+
 	return (
 		<GridOfCards data-ui="leagues-list-skeleton">
-			{Array.from({ length: 6 }).map((_, index) => (
-				<li key={index}>
+			{skeletonKeys.map((key) => (
+				<li key={key}>
 					<Skeleton />
 				</li>
 			))}

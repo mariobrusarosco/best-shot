@@ -42,9 +42,10 @@ export const useLeague = () => {
 				setGuestIdInput("");
 			},
 			// TODO Type App's error object
-			onError: (error: any) => {
-				console.log(error?.response?.data);
-				alert(error?.response?.data);
+			onError: (error: unknown) => {
+				const errorData = error as { response?: { data?: unknown } };
+				console.log(errorData?.response?.data);
+				alert(errorData?.response?.data);
 			},
 		});
 	};

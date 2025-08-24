@@ -1,7 +1,7 @@
 import { Box, Grid, styled } from "@mui/material";
-import { AppTypography } from "@/domains/ui-system/components";
 import { IconActivity, IconAlertTriangle, IconCheck, IconClock } from "@tabler/icons-react";
 import { AppLoader } from "@/domains/global/components/app-loader";
+import { AppTypography } from "@/domains/ui-system/components";
 import { Surface } from "@/domains/ui-system/components/surface/surface";
 import { useScraperStatistics } from "../../hooks/use-scraper-statistics";
 

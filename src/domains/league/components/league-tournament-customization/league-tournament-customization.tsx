@@ -127,14 +127,14 @@ export const LeagueTournamentCustomization = ({
 						</Typography>
 					)}
 
-											{tracked?.map((tournament) => (
-							<TournamentLeagueCard
-								key={`tracked-${tournament.id}`}
-								tournament={tournament}
-								onRemove={() => removeTournament(tournament)}
-								status="tracked"
-							/>
-						))}
+					{tracked?.map((tournament) => (
+						<TournamentLeagueCard
+							key={`tracked-${tournament.id}`}
+							tournament={tournament}
+							onRemove={() => removeTournament(tournament)}
+							status="tracked"
+						/>
+					))}
 				</ListGrid>
 			</Stack>
 

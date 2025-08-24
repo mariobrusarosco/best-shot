@@ -72,7 +72,7 @@ export const Provider = ({ children }: { children: React.ReactNode }) => {
 	return <ByPassAuthContext.Provider value={state}>{children}</ByPassAuthContext.Provider>;
 };
 
-export const authenticatedLocalMember = async (publicId: any) => {
+export const authenticatedLocalMember = async (publicId: unknown) => {
 	const response = await api.post(
 		"auth",
 		{ publicId },

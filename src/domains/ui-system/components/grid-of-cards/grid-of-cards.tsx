@@ -1,6 +1,6 @@
 /**
  * GridOfCards - Card Layout Grid Component
- * 
+ *
  * Follows Static Styled Components pattern for reusable, consistent card grids.
  * Replaces unstable_sx usage with stable styled component pattern.
  */
@@ -15,13 +15,13 @@ export const GridOfCards = styled(Box)(({ theme }) => ({
 	gap: theme.spacing(2),
 	gridTemplateColumns: "repeat(2, minmax(100px, 1fr))",
 	gridAutoRows: "115px",
-	
+
 	// Responsive behavior using stable breakpoint system
 	[theme.breakpoints.up("tablet")]: {
 		gap: theme.spacing(3),
 		gridTemplateColumns: "repeat(2, minmax(100px, 320px))",
 	},
-	
+
 	// Enhanced responsive behavior for larger screens
 	[theme.breakpoints.up("desktop")]: {
 		gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",

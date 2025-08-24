@@ -1,8 +1,8 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Box, Dialog, DialogActions, DialogContent, DialogTitle } from "@mui/material";
-import { AppTypography } from "@/domains/ui-system/components";
 import { useForm } from "react-hook-form";
 import type { z } from "zod";
+import { AppTypography } from "@/domains/ui-system/components";
 import { AppButton } from "@/domains/ui-system/components/app-button/app-button";
 import { AppFormInput } from "@/domains/ui-system/components/form/form-input";
 import { AppFormSelect } from "@/domains/ui-system/components/form/form-select";
@@ -39,12 +39,7 @@ const timezones = [
 export const RescheduleJobModal = ({ jobId, onClose }: RescheduleJobModalProps) => {
 	const rescheduleJob = useRescheduleScraperJob();
 
-	const {
-		control,
-		handleSubmit,
-		watch,
-		setValue,
-	} = useForm<RescheduleJobInput>({
+	const { control, handleSubmit, watch, setValue } = useForm<RescheduleJobInput>({
 		resolver: zodResolver(RescheduleJobSchema),
 		defaultValues: {
 			jobId,
@@ -117,12 +112,7 @@ export const RescheduleJobModal = ({ jobId, onClose }: RescheduleJobModalProps) 
 					</Box>
 
 					<Box sx={{ mt: 3 }}>
-						<AppFormSelect
-							name="timezone"
-							control={control}
-							label="Timezone"
-							options={timezones}
-						/>
+						<AppFormSelect name="timezone" control={control} label="Timezone" options={timezones} />
 					</Box>
 
 					{cronExpression && (

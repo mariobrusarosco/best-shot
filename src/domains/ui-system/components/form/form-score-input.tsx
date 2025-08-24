@@ -1,5 +1,5 @@
-import { Box, Typography, TextField } from "@mui/material";
-import { Controller, type Control, type FieldPath, type FieldValues } from "react-hook-form";
+import { Box, TextField, Typography } from "@mui/material";
+import { type Control, Controller, type FieldPath, type FieldValues } from "react-hook-form";
 
 interface Team {
 	id: string;
@@ -63,7 +63,7 @@ export const AppFormScoreInput = <T extends FieldValues>({
 							}}
 						/>
 					)}
-					
+
 					<Typography
 						variant="caption"
 						sx={{
@@ -107,7 +107,8 @@ export const AppFormScoreInput = <T extends FieldValues>({
 										},
 										"& .MuiInputBase-input": {
 											padding: size === "small" ? 1 : size === "medium" ? 1.5 : 2,
-											fontSize: size === "small" ? "1rem" : size === "medium" ? "1.25rem" : "1.5rem",
+											fontSize:
+												size === "small" ? "1rem" : size === "medium" ? "1.25rem" : "1.5rem",
 											fontWeight: "bold",
 											color: "text.primary",
 											textAlign: "center",
@@ -154,7 +155,7 @@ export const AppFormScoreInput = <T extends FieldValues>({
 							}}
 						/>
 					)}
-					
+
 					<Typography
 						variant="caption"
 						sx={{
@@ -198,7 +199,8 @@ export const AppFormScoreInput = <T extends FieldValues>({
 										},
 										"& .MuiInputBase-input": {
 											padding: size === "small" ? 1 : size === "medium" ? 1.5 : 2,
-											fontSize: size === "small" ? "1rem" : size === "medium" ? "1.25rem" : "1.5rem",
+											fontSize:
+												size === "small" ? "1rem" : size === "medium" ? "1.25rem" : "1.5rem",
 											fontWeight: "bold",
 											color: "text.primary",
 											textAlign: "center",
@@ -236,8 +238,8 @@ export const AppFormScoreInput = <T extends FieldValues>({
 										<Typography
 											variant="caption"
 											color="error.main"
-											sx={{ 
-												mt: 1, 
+											sx={{
+												mt: 1,
 												display: "block",
 												textAlign: "center",
 												fontSize: "0.75rem",

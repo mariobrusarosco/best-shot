@@ -60,7 +60,7 @@ const theme = createTheme({
 		fontFamily: ["Poppins", "Montserrat", "sans-serif"].join(","),
 		...TYPOGRAPHY.variants,
 	},
-	palette: COLORS as any,
+	palette: COLORS as Record<string, unknown>,
 	components: {
 		MuiTypography: {
 			// defaultProps: {

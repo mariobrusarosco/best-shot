@@ -1,1 +1,1 @@
-export { AppTypography } from './app-typography';
+export { AppTypography } from "./app-typography";

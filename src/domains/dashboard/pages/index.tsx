@@ -1,15 +1,15 @@
-import { Typography, Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { styled } from "@mui/system";
-import { useState } from "react";
 import dayjs, { type Dayjs } from "dayjs";
+import { useState } from "react";
 import Matchday from "@/domains/dashboard/components/matchday";
 import { useDashboard } from "@/domains/dashboard/hooks/use-dashboard";
 import { ScreenHeading, ScreenHeadingSkeleton } from "@/domains/global/components/screen-heading";
 import { useMember } from "@/domains/member/hooks/use-member";
 import { useMemberPerformance } from "@/domains/member/hooks/use-member-performance";
+import { AppDatePicker } from "@/domains/ui-system/components/date-picker";
 import { AuthenticatedScreenLayout } from "@/domains/ui-system/layout/authenticated";
 import { ScreenMainContent } from "@/domains/ui-system/layout/screen-main-content";
-import { AppDatePicker } from "@/domains/ui-system/components/date-picker";
 import { UIHelper } from "@/theming/theme";
 import TournamentsPerf from "../components/tournaments-perf";
 
@@ -17,7 +17,7 @@ const DashboardPage = () => {
 	const member = useMember();
 	const performance = useMemberPerformance();
 	const dashboard = useDashboard();
-	
+
 	// State for date picker instances
 	const [startDate, setStartDate] = useState<Dayjs | null>(dayjs());
 	const [endDate, setEndDate] = useState<Dayjs | null>(null);

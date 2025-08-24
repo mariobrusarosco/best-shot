@@ -1,6 +1,6 @@
 /**
  * Design System Foundation: Colors
- * 
+ *
  * Semantic color palette following the Best Shot design system.
  * Based on research from our styling guide and current implementation.
  */
@@ -44,16 +44,16 @@ export const NEUTRAL_COLORS = {
 		800: "#232424", // Card backgrounds (existing)
 	},
 	neutral: {
-		0: "#FFFFFF",    // Pure white (existing)
-		100: "#FDFCFC",  // Light text/backgrounds (existing)
-		200: "#F5F5F5",  // Very light gray
-		300: "#E0E0E0",  // Light gray
-		400: "#BDBDBD",  // Medium-light gray
-		500: "#A3ABA8",  // Medium gray (existing)
-		600: "#757575",  // Medium-dark gray
-		700: "#424242",  // Dark gray
-		800: "#212121",  // Very dark gray
-		900: "#121212",  // Near black
+		0: "#FFFFFF", // Pure white (existing)
+		100: "#FDFCFC", // Light text/backgrounds (existing)
+		200: "#F5F5F5", // Very light gray
+		300: "#E0E0E0", // Light gray
+		400: "#BDBDBD", // Medium-light gray
+		500: "#A3ABA8", // Medium gray (existing)
+		600: "#757575", // Medium-dark gray
+		700: "#424242", // Dark gray
+		800: "#212121", // Very dark gray
+		900: "#121212", // Near black
 	},
 } as const;
 

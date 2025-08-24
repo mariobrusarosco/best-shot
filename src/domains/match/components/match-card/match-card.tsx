@@ -1,7 +1,7 @@
 import { Divider, Stack, styled, Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import { motion } from "motion/react";
 import dayjs from "dayjs";
+import { motion } from "motion/react";
 import { useState } from "react";
 
 import { BestShotIcon } from "@/assets/best-shot-icon";

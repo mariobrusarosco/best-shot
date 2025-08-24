@@ -1,15 +1,17 @@
 import { api } from "../../api";
 import type { IGuess } from "../guess/typing";
 
-export const getMembers = async ({ queryKey }: { queryKey: any }) => {
-	const [_key, { memberId }] = queryKey;
+export const getMembers = async ({ queryKey }: { queryKey: unknown }) => {
+	const queryKeyArray = queryKey as [string, { memberId: string }];
+	const [_key, { memberId }] = queryKeyArray;
 	const response = await api.post("whoami", { memberId });
 
 	return response.data;
 };
 
-export const getMemberGuesses = async ({ queryKey }: { queryKey: any }) => {
-	const [_key, { tournamentId, round }] = queryKey;
+export const getMemberGuesses = async ({ queryKey }: { queryKey: unknown }) => {
+	const queryKeyArray = queryKey as [string, { tournamentId: string; round?: number }];
+	const [_key, { tournamentId, round }] = queryKeyArray;
 
 	const response = await api.get(`/tournaments/${tournamentId}/guess`, {
 		params: {

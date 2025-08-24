@@ -1,4 +1,4 @@
-import { Typography, styled } from "@mui/material";
+import { styled, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { Link } from "@tanstack/react-router";
 import { BestShotIcon } from "@/assets/best-shot-icon";
@@ -12,12 +12,7 @@ export const Menu = () => {
 		<Wrapper as="menu">
 			<MenuLogo to="/">
 				<BestShotIcon fill="currentColor" />
-				<Typography
-					textAlign="center"
-					color="neutral.100"
-					variant="label"
-					data-id="menu-logo"
-				>
+				<Typography textAlign="center" color="neutral.100" variant="label" data-id="menu-logo">
 					best shot
 				</Typography>
 			</MenuLogo>
@@ -79,10 +74,10 @@ const MenuLogo = styled(Link)(({ theme }) => ({
 	display: "none",
 	color: theme.palette.neutral[100], // Provide color for currentColor fill
 
-	'& svg': {
+	"& svg": {
 		width: "40px",
 	},
-	
+
 	[UIHelper.startsOn("tablet")]: {
 		display: "grid",
 		placeItems: "center",
@@ -107,7 +102,7 @@ const LinkList = styled(Box)(({ theme }) => ({
 		bottom: 0,
 		zIndex: theme.zIndex.appBar,
 	},
-	
+
 	[UIHelper.startsOn("tablet")]: {
 		width: "auto",
 		justifyContent: "flex-start",
@@ -125,8 +120,8 @@ const MenuLink = styled(Link)(({ theme }) => ({
 	gap: theme.spacing(2),
 	textDecoration: "none",
 
-	'&:hover': {
-		transform: 'scale(1.05)',
-		transition: theme.transitions.create(['transform']),
+	"&:hover": {
+		transform: "scale(1.05)",
+		transition: theme.transitions.create(["transform"]),
 	},
 }));

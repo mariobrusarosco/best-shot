@@ -46,12 +46,15 @@ const TournamentRoundOfGames = () => {
 };
 
 const TournamentRoundOfGamesSkeleton = () => {
+	// Generate stable keys for skeleton items
+	const skeletonKeys = Array.from({ length: 10 }, (_, i) => `skeleton-item-${i}`);
+
 	return (
 		<Stack gap={1} className="round-games-skeleton">
-			{Array.from({ length: 10 }).map((_, index) => {
+			{skeletonKeys.map((key) => {
 				return (
-					<li key={index} className="round-item match-card">
-						<MatchCard.Skeleton key={index} />
+					<li key={key} className="round-item match-card">
+						<MatchCard.Skeleton key={`skeleton-${key}`} />
 					</li>
 				);
 			})}

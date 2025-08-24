@@ -27,7 +27,7 @@ export const useGuessMutation = () => {
 			return { previousGuesses };
 		},
 		onError: (_, __, context) => {
-			const contextData = context as { previousGuesses: any };
+			const contextData = context as { previousGuesses: IGuess[] };
 
 			queryClient.setQueryData(["todos"], contextData.previousGuesses);
 		},

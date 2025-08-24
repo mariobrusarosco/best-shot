@@ -1,7 +1,13 @@
 import { Box, Chip, IconButton, styled } from "@mui/material";
-import { AppTypography } from "@/domains/ui-system/components";
-import { IconClock, IconPlayerPause, IconPlayerPlay, IconSettings, IconTrendingUp } from "@tabler/icons-react";
+import {
+	IconClock,
+	IconPlayerPause,
+	IconPlayerPlay,
+	IconSettings,
+	IconTrendingUp,
+} from "@tabler/icons-react";
 import { useState } from "react";
+import { AppTypography } from "@/domains/ui-system/components";
 import { AppButton } from "@/domains/ui-system/components/app-button/app-button";
 import { Surface } from "@/domains/ui-system/components/surface/surface";
 import type { IScraperJob } from "../../typing";

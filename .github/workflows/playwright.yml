@@ -1,27 +1,66 @@
-name: Playwright Tests
+name: E2E Tests (Scheduled)
 on:
-  push:
-    branches: [ main, master ]
-  pull_request:
-    branches: [ main, master ]
+  schedule:
+    # Run daily at 2:00 AM UTC
+    - cron: '0 2 * * *'
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Environment to test against'
+        required: true
+        default: 'staging'
+        type: choice
+        options:
+          - staging
+          - production
 jobs:
-  test:
+  e2e-tests:
     timeout-minutes: 60
     runs-on: ubuntu-latest
+    env:
+      TEST_ENVIRONMENT: ${{ github.event.inputs.environment || 'staging' }}
     steps:
-    - uses: actions/checkout@v4
-    - uses: actions/setup-node@v4
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
       with:
         node-version: lts/*
+        
+    - name: Get yarn cache directory path
+      id: yarn-cache-dir-path
+      run: echo "dir=$(yarn cache dir)" >> $GITHUB_OUTPUT
+      
+    - name: Cache dependencies
+      uses: actions/cache@v3
+      with:
+        path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+        key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+        
     - name: Install dependencies
       run: npm install -g yarn && yarn
+      
     - name: Install Playwright Browsers
       run: yarn playwright install --with-deps
-    - name: Run Playwright tests
+      
+    - name: Run E2E tests against ${{ env.TEST_ENVIRONMENT }}
       run: yarn playwright test
-    - uses: actions/upload-artifact@v4
+      env:
+        PLAYWRIGHT_BASE_URL: ${{ env.TEST_ENVIRONMENT == 'production' && 'https://bestshot.app' || 'https://staging-bestshot.mariobrusarosco.com' }}
+        
+    - name: Upload test results
+      uses: actions/upload-artifact@v4
       if: ${{ !cancelled() }}
       with:
-        name: playwright-report
+        name: playwright-report-${{ env.TEST_ENVIRONMENT }}-${{ github.run_number }}
         path: playwright-report/
         retention-days: 30
+        
+    - name: Upload test videos
+      uses: actions/upload-artifact@v4
+      if: failure()
+      with:
+        name: playwright-videos-${{ env.TEST_ENVIRONMENT }}-${{ github.run_number }}
+        path: test-results/
+        retention-days: 7

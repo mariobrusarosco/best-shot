@@ -121,3 +121,25 @@ export const CreateScraperJobSchema = z.object({
 		apiVersion: z.string().optional(),
 	}),
 });
+
+// Create Tournament Schema
+export const CreateTournamentSchema = z.object({
+	tournamentPublicId: z.string().min(1, "Tournament public ID is required"),
+	baseUrl: z.string().url("Please enter a valid base URL"),
+	label: z
+		.string()
+		.min(3, "Tournament name must be at least 3 characters")
+		.max(50, "Tournament name cannot exceed 50 characters"),
+	slug: z
+		.string()
+		.min(1, "Tournament slug is required")
+		.max(50, "Tournament slug cannot exceed 50 characters"),
+	provider: z.string().min(1, "Please select a data provider"),
+	season: z
+		.string()
+		.min(4, "Season must be at least 4 characters")
+		.max(20, "Season cannot exceed 20 characters"),
+	mode: z.string().min(1, "Please select a tournament mode"),
+	logoUrl: z.string().url("Please enter a valid logo URL"),
+	standingsMode: z.string().min(1, "Please select a standings mode"),
+});

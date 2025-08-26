@@ -13,13 +13,12 @@ import { createFileRoute } from "@tanstack/react-router";
 // Import Routes
 
 import { Route as rootRoute } from "./routes/__root";
-import { Route as UiSystemImport } from "./routes/ui-system";
 import { Route as AuthImport } from "./routes/_auth";
-import { Route as IndexRouteImport } from "./routes/index.route";
-import { Route as AuthMyAccountImport } from "./routes/_auth.my-account";
 import { Route as AuthDashboardImport } from "./routes/_auth.dashboard";
-import { Route as AuthAdminImport } from "./routes/_auth.admin";
+import { Route as AuthMyAccountImport } from "./routes/_auth.my-account";
 import { Route as AuthTournamentsTournamentIdLayoutImport } from "./routes/_auth.tournaments/$tournamentId/_layout";
+import { Route as IndexRouteImport } from "./routes/index.route";
+import { Route as UiSystemImport } from "./routes/ui-system";
 
 // Create Virtual Routes
 
@@ -29,7 +28,6 @@ const AuthTournamentsTournamentIdImport = createFileRoute("/_auth/tournaments/$t
 const AuthTournamentsIndexLazyImport = createFileRoute("/_auth/tournaments/")();
 const AuthLeaguesIndexLazyImport = createFileRoute("/_auth/leagues/")();
 const AuthAdminIndexLazyImport = createFileRoute("/_auth/admin/")();
-const AuthAdminScrapersLazyImport = createFileRoute("/_auth/admin/scrapers")();
 const AuthLeaguesLeagueIdIndexLazyImport = createFileRoute("/_auth/leagues/$leagueId/")();
 const AuthTournamentsTournamentIdLayoutStandingsLazyImport = createFileRoute(
 	"/_auth/tournaments/$tournamentId/_layout/standings"
@@ -87,12 +85,6 @@ const AuthDashboardRoute = AuthDashboardImport.update({
 	getParentRoute: () => AuthRoute,
 } as any);
 
-const AuthAdminRoute = AuthAdminImport.update({
-	id: "/admin",
-	path: "/admin",
-	getParentRoute: () => AuthRoute,
-} as any);
-
 const AuthTournamentsTournamentIdRoute = AuthTournamentsTournamentIdImport.update({
 	id: "/tournaments/$tournamentId",
 	path: "/tournaments/$tournamentId",
@@ -112,16 +104,10 @@ const AuthLeaguesIndexLazyRoute = AuthLeaguesIndexLazyImport.update({
 } as any).lazy(() => import("./routes/_auth.leagues/index.lazy").then((d) => d.Route));
 
 const AuthAdminIndexLazyRoute = AuthAdminIndexLazyImport.update({
-	id: "/",
-	path: "/",
-	getParentRoute: () => AuthAdminRoute,
+	id: "/admin/",
+	path: "/admin/",
+	getParentRoute: () => AuthRoute,
 } as any).lazy(() => import("./routes/_auth.admin/index.lazy").then((d) => d.Route));
-
-const AuthAdminScrapersLazyRoute = AuthAdminScrapersLazyImport.update({
-	id: "/scrapers",
-	path: "/scrapers",
-	getParentRoute: () => AuthAdminRoute,
-} as any).lazy(() => import("./routes/_auth.admin/scrapers.lazy").then((d) => d.Route));
 
 const AuthLeaguesLeagueIdIndexLazyRoute = AuthLeaguesLeagueIdIndexLazyImport.update({
 	id: "/leagues/$leagueId/",
@@ -209,13 +195,6 @@ declare module "@tanstack/react-router" {
 			preLoaderRoute: typeof SignupLazyImport;
 			parentRoute: typeof rootRoute;
 		};
-		"/_auth/admin": {
-			id: "/_auth/admin";
-			path: "/admin";
-			fullPath: "/admin";
-			preLoaderRoute: typeof AuthAdminImport;
-			parentRoute: typeof AuthImport;
-		};
 		"/_auth/dashboard": {
 			id: "/_auth/dashboard";
 			path: "/dashboard";
@@ -230,19 +209,12 @@ declare module "@tanstack/react-router" {
 			preLoaderRoute: typeof AuthMyAccountImport;
 			parentRoute: typeof AuthImport;
 		};
-		"/_auth/admin/scrapers": {
-			id: "/_auth/admin/scrapers";
-			path: "/scrapers";
-			fullPath: "/admin/scrapers";
-			preLoaderRoute: typeof AuthAdminScrapersLazyImport;
-			parentRoute: typeof AuthAdminImport;
-		};
 		"/_auth/admin/": {
 			id: "/_auth/admin/";
-			path: "/";
-			fullPath: "/admin/";
+			path: "/admin";
+			fullPath: "/admin";
 			preLoaderRoute: typeof AuthAdminIndexLazyImport;
-			parentRoute: typeof AuthAdminImport;
+			parentRoute: typeof AuthImport;
 		};
 		"/_auth/leagues/": {
 			id: "/_auth/leagues/";
@@ -312,18 +284,6 @@ declare module "@tanstack/react-router" {
 
 // Create and export the route tree
 
-interface AuthAdminRouteChildren {
-	AuthAdminScrapersLazyRoute: typeof AuthAdminScrapersLazyRoute;
-	AuthAdminIndexLazyRoute: typeof AuthAdminIndexLazyRoute;
-}
-
-const AuthAdminRouteChildren: AuthAdminRouteChildren = {
-	AuthAdminScrapersLazyRoute: AuthAdminScrapersLazyRoute,
-	AuthAdminIndexLazyRoute: AuthAdminIndexLazyRoute,
-};
-
-const AuthAdminRouteWithChildren = AuthAdminRoute._addFileChildren(AuthAdminRouteChildren);
-
 interface AuthTournamentsTournamentIdLayoutRouteChildren {
 	AuthTournamentsTournamentIdLayoutMatchesLazyRoute: typeof AuthTournamentsTournamentIdLayoutMatchesLazyRoute;
 	AuthTournamentsTournamentIdLayoutPerformanceLazyRoute: typeof AuthTournamentsTournamentIdLayoutPerformanceLazyRoute;
@@ -360,9 +320,9 @@ const AuthTournamentsTournamentIdRouteWithChildren =
 	AuthTournamentsTournamentIdRoute._addFileChildren(AuthTournamentsTournamentIdRouteChildren);
 
 interface AuthRouteChildren {
-	AuthAdminRoute: typeof AuthAdminRouteWithChildren;
 	AuthDashboardRoute: typeof AuthDashboardRoute;
 	AuthMyAccountRoute: typeof AuthMyAccountRoute;
+	AuthAdminIndexLazyRoute: typeof AuthAdminIndexLazyRoute;
 	AuthLeaguesIndexLazyRoute: typeof AuthLeaguesIndexLazyRoute;
 	AuthTournamentsIndexLazyRoute: typeof AuthTournamentsIndexLazyRoute;
 	AuthTournamentsTournamentIdRoute: typeof AuthTournamentsTournamentIdRouteWithChildren;
@@ -370,9 +330,9 @@ interface AuthRouteChildren {
 }
 
 const AuthRouteChildren: AuthRouteChildren = {
-	AuthAdminRoute: AuthAdminRouteWithChildren,
 	AuthDashboardRoute: AuthDashboardRoute,
 	AuthMyAccountRoute: AuthMyAccountRoute,
+	AuthAdminIndexLazyRoute: AuthAdminIndexLazyRoute,
 	AuthLeaguesIndexLazyRoute: AuthLeaguesIndexLazyRoute,
 	AuthTournamentsIndexLazyRoute: AuthTournamentsIndexLazyRoute,
 	AuthTournamentsTournamentIdRoute: AuthTournamentsTournamentIdRouteWithChildren,
@@ -387,11 +347,9 @@ export interface FileRoutesByFullPath {
 	"/ui-system": typeof UiSystemRoute;
 	"/login": typeof LoginLazyRoute;
 	"/signup": typeof SignupLazyRoute;
-	"/admin": typeof AuthAdminRouteWithChildren;
 	"/dashboard": typeof AuthDashboardRoute;
 	"/my-account": typeof AuthMyAccountRoute;
-	"/admin/scrapers": typeof AuthAdminScrapersLazyRoute;
-	"/admin/": typeof AuthAdminIndexLazyRoute;
+	"/admin": typeof AuthAdminIndexLazyRoute;
 	"/leagues": typeof AuthLeaguesIndexLazyRoute;
 	"/tournaments": typeof AuthTournamentsIndexLazyRoute;
 	"/tournaments/$tournamentId": typeof AuthTournamentsTournamentIdLayoutRouteWithChildren;
@@ -410,7 +368,6 @@ export interface FileRoutesByTo {
 	"/signup": typeof SignupLazyRoute;
 	"/dashboard": typeof AuthDashboardRoute;
 	"/my-account": typeof AuthMyAccountRoute;
-	"/admin/scrapers": typeof AuthAdminScrapersLazyRoute;
 	"/admin": typeof AuthAdminIndexLazyRoute;
 	"/leagues": typeof AuthLeaguesIndexLazyRoute;
 	"/tournaments": typeof AuthTournamentsIndexLazyRoute;
@@ -429,10 +386,8 @@ export interface FileRoutesById {
 	"/ui-system": typeof UiSystemRoute;
 	"/login": typeof LoginLazyRoute;
 	"/signup": typeof SignupLazyRoute;
-	"/_auth/admin": typeof AuthAdminRouteWithChildren;
 	"/_auth/dashboard": typeof AuthDashboardRoute;
 	"/_auth/my-account": typeof AuthMyAccountRoute;
-	"/_auth/admin/scrapers": typeof AuthAdminScrapersLazyRoute;
 	"/_auth/admin/": typeof AuthAdminIndexLazyRoute;
 	"/_auth/leagues/": typeof AuthLeaguesIndexLazyRoute;
 	"/_auth/tournaments/": typeof AuthTournamentsIndexLazyRoute;
@@ -453,11 +408,9 @@ export interface FileRouteTypes {
 		| "/ui-system"
 		| "/login"
 		| "/signup"
-		| "/admin"
 		| "/dashboard"
 		| "/my-account"
-		| "/admin/scrapers"
-		| "/admin/"
+		| "/admin"
 		| "/leagues"
 		| "/tournaments"
 		| "/tournaments/$tournamentId"
@@ -475,7 +428,6 @@ export interface FileRouteTypes {
 		| "/signup"
 		| "/dashboard"
 		| "/my-account"
-		| "/admin/scrapers"
 		| "/admin"
 		| "/leagues"
 		| "/tournaments"
@@ -492,10 +444,8 @@ export interface FileRouteTypes {
 		| "/ui-system"
 		| "/login"
 		| "/signup"
-		| "/_auth/admin"
 		| "/_auth/dashboard"
 		| "/_auth/my-account"
-		| "/_auth/admin/scrapers"
 		| "/_auth/admin/"
 		| "/_auth/leagues/"
 		| "/_auth/tournaments/"
@@ -548,9 +498,9 @@ export const routeTree = rootRoute
     "/_auth": {
       "filePath": "_auth.tsx",
       "children": [
-        "/_auth/admin",
         "/_auth/dashboard",
         "/_auth/my-account",
+        "/_auth/admin/",
         "/_auth/leagues/",
         "/_auth/tournaments/",
         "/_auth/tournaments/$tournamentId",
@@ -566,14 +516,6 @@ export const routeTree = rootRoute
     "/signup": {
       "filePath": "signup.lazy.tsx"
     },
-    "/_auth/admin": {
-      "filePath": "_auth.admin.tsx",
-      "parent": "/_auth",
-      "children": [
-        "/_auth/admin/scrapers",
-        "/_auth/admin/"
-      ]
-    },
     "/_auth/dashboard": {
       "filePath": "_auth.dashboard.tsx",
       "parent": "/_auth"
@@ -582,13 +524,9 @@ export const routeTree = rootRoute
       "filePath": "_auth.my-account.tsx",
       "parent": "/_auth"
     },
-    "/_auth/admin/scrapers": {
-      "filePath": "_auth.admin/scrapers.lazy.tsx",
-      "parent": "/_auth/admin"
-    },
     "/_auth/admin/": {
       "filePath": "_auth.admin/index.lazy.tsx",
-      "parent": "/_auth/admin"
+      "parent": "/_auth"
     },
     "/_auth/leagues/": {
       "filePath": "_auth.leagues/index.lazy.tsx",

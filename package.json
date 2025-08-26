@@ -1,10 +1,10 @@
 {
 	"name": "best-shot",
 	"private": true,
-	"version": "0.55.0",
+	"version": "0.56.0",
 	"scripts": {
 		"start": "concurrently \"vite --mode local-dev\" \"cd ../api-best-shot && yarn dev\"",
-		"dev": "vite --mode local-dev",
+		"dev": "vite --mode local-dev 2>&1 | tee dev.log",
 		"dev-demo": "vite --mode demo",
 		"dev-staging": "vite --mode staging",
 		"dev-prod": "vite --mode production",

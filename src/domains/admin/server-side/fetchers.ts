@@ -65,10 +65,23 @@ export const fetchAvailableTournaments = async () => {
 	return response.data;
 };
 
-export const fetchExecutionJobs = async (): Promise<IExecutionJob[]> => {
-	const response = await api.get("/admin/execution-jobs", {
+export const fetchExecutionJobs = async (params?: {
+	limit?: number;
+	offset?: number;
+}): Promise<{
+	data: IExecutionJob[];
+	pagination: { limit: number; offset: number; total: number };
+}> => {
+	const searchParams = new URLSearchParams();
+	if (params?.limit) searchParams.set("limit", params.limit.toString());
+	if (params?.offset) searchParams.set("offset", params.offset.toString());
+
+	const response = await api.get(`/admin/execution-jobs?${searchParams}`, {
 		baseURL: import.meta.env.VITE_BEST_SHOT_API_V2,
 	});
 	const parsed = ExecutionJobsResponseSchema.parse(response.data);
-	return parsed.data;
+	return {
+		data: parsed.data,
+		pagination: parsed.pagination,
+	};
 };

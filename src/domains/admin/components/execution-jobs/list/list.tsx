@@ -7,6 +7,7 @@ import {
 	TableContainer,
 	TableHead,
 	TableRow,
+	TablePagination,
 	styled,
 } from "@mui/material";
 import { format } from "date-fns";
@@ -17,6 +18,13 @@ import type { IExecutionJob } from "@/domains/admin/typing";
 interface ExecutionJobsListProps {
 	jobs: IExecutionJob[];
 	isLoading?: boolean;
+	pagination?: {
+		limit: number;
+		offset: number;
+		total: number;
+	};
+	onPageChange?: (page: number) => void;
+	onRowsPerPageChange?: (rowsPerPage: number) => void;
 }
 
 const StyledTableContainer = styled(TableContainer)(({ theme }) => ({
@@ -99,41 +107,45 @@ const OperationCell = styled(Box)(({ theme }) => ({
 	gap: theme.spacing(1.5),
 }));
 
-const IconContainer = styled(Box)(({ theme }) => ({
-	display: "flex",
-	alignItems: "center",
-	justifyContent: "center",
-	width: 32,
-	height: 32,
-	borderRadius: theme.shape.borderRadius,
-	backgroundColor: theme.palette.teal[500],
-	color: theme.palette.neutral[100],
-}));
-
 const TournamentCell = styled(Box)(({ theme }) => ({
 	display: "flex",
 	alignItems: "center",
 	gap: theme.spacing(1),
 }));
 
-const getOperationIcon = (operationType: string) => {
-	switch (operationType) {
-		case "tournament_create":
-			return "Plus";
-		case "tournament_update":
-			return "Settings";
-		case "standings_sync":
-			return "Trophy";
-		case "teams_sync":
-			return "Users";
-		case "matches_sync":
-			return "ClockFilled";
-		case "rounds_sync":
-			return "LayoutDashboard";
-		default:
-			return "Info";
-	}
-};
+const StyledTablePagination = styled(TablePagination)(({ theme }) => ({
+	backgroundColor: theme.palette.black[800],
+	borderTop: `1px solid ${theme.palette.neutral[700]}`,
+	color: theme.palette.neutral[200],
+	"& .MuiTablePagination-toolbar": {
+		paddingLeft: theme.spacing(2),
+		paddingRight: theme.spacing(2),
+	},
+	"& .MuiTablePagination-selectLabel, & .MuiTablePagination-displayedRows": {
+		color: theme.palette.neutral[300],
+		fontSize: "0.875rem",
+	},
+	"& .MuiSelect-select": {
+		color: theme.palette.neutral[200],
+		backgroundColor: theme.palette.black[700],
+		"&:focus": {
+			backgroundColor: theme.palette.black[700],
+		},
+	},
+	"& .MuiTablePagination-actions": {
+		color: theme.palette.neutral[300],
+		"& .MuiIconButton-root": {
+			color: theme.palette.neutral[300],
+			"&:hover": {
+				backgroundColor: theme.palette.black[700],
+				color: theme.palette.teal[400],
+			},
+			"&.Mui-disabled": {
+				color: theme.palette.neutral[600],
+			},
+		},
+	},
+}));
 
 const formatDuration = (ms: number | null) => {
 	if (!ms) return "—";
@@ -150,7 +162,13 @@ const formatOperationType = (operationType: string) => {
 	return operationType.replace(/_/g, " ").replace(/\b\w/g, (l) => l.toUpperCase());
 };
 
-const ExecutionJobsList = ({ jobs, isLoading }: ExecutionJobsListProps) => {
+const ExecutionJobsList = ({
+	jobs,
+	isLoading,
+	pagination,
+	onPageChange,
+	onRowsPerPageChange,
+}: ExecutionJobsListProps) => {
 	if (isLoading) {
 		return (
 			<Box sx={{ display: "flex", justifyContent: "center", py: 8 }}>
@@ -203,9 +221,6 @@ const ExecutionJobsList = ({ jobs, isLoading }: ExecutionJobsListProps) => {
 								<StyledTableRow key={job.id}>
 									<TableCell>
 										<OperationCell>
-											<IconContainer>
-												<AppIcon name={getOperationIcon(job.operationType)} size="small" />
-											</IconContainer>
 											<Box>
 												<AppTypography variant="body2" color="neutral.100" fontWeight="medium">
 													{formatOperationType(job.operationType)}
@@ -302,6 +317,21 @@ const ExecutionJobsList = ({ jobs, isLoading }: ExecutionJobsListProps) => {
 								</StyledTableRow>
 							);
 						})}
+						{pagination && (
+							<StyledTablePagination
+								count={pagination.total}
+								page={Math.floor(pagination.offset / pagination.limit)}
+								onPageChange={(_, page) => onPageChange?.(page)}
+								rowsPerPage={pagination.limit}
+								onRowsPerPageChange={(event) => {
+									const newRowsPerPage = parseInt(event.target.value, 10);
+									onRowsPerPageChange?.(newRowsPerPage);
+								}}
+								rowsPerPageOptions={[10, 25, 50, 100]}
+								showFirstButton
+								showLastButton
+							/>
+						)}
 					</TableBody>
 				</Table>
 			</StyledTableContainer>

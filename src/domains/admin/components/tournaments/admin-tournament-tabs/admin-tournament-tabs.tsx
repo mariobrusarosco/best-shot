@@ -13,6 +13,18 @@ const AdminTournamentTabs = () => {
 		<Tabs defaultValue={lastPath} slots={{ root: Wrapper }}>
 			<TabsList slots={{ root: List }}>
 				<Tab
+					value={"home"}
+					slots={{
+						root: (props) => (
+							<CustomTab to="/admin" {...props}>
+								<Typography variant="tag" textTransform="uppercase">
+									Home
+								</Typography>
+							</CustomTab>
+						),
+					}}
+				/>
+				<Tab
 					value={"execution-jobs"}
 					slots={{
 						root: (props) => (
@@ -43,7 +55,7 @@ const AdminTournamentTabs = () => {
 
 const Wrapper = styled(Box)(() => ({
 	alignContent: "flex-end",
-	minWidth: "300px",
+	minWidth: "400px",
 }));
 
 const List = styled(Box)(({ theme }) =>

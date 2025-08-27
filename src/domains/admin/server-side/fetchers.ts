@@ -4,8 +4,9 @@ import {
 	ScraperJobSchema,
 	ScraperStatisticsSchema,
 	TournamentMetadataSchema,
+	ExecutionJobsResponseSchema,
 } from "../schemas";
-import type { IScraperJob, ITournamentMetadata } from "../typing";
+import type { IScraperJob, ITournamentMetadata, IExecutionJob } from "../typing";
 
 // Fetch all scraper jobs
 export const fetchScraperJobs = async (): Promise<IScraperJob[]> => {
@@ -57,10 +58,17 @@ export const fetchTournamentMetadata = async (
 	return TournamentMetadataSchema.array().parse(response.data);
 };
 
-// Fetch available tournaments for scraper setup
 export const fetchAvailableTournaments = async () => {
 	const response = await api.get("/admin/tournaments/available", {
 		baseURL: import.meta.env.VITE_BEST_SHOT_API_V2,
 	});
 	return response.data;
+};
+
+export const fetchExecutionJobs = async (): Promise<IExecutionJob[]> => {
+	const response = await api.get("/admin/execution-jobs", {
+		baseURL: import.meta.env.VITE_BEST_SHOT_API_V2,
+	});
+	const parsed = ExecutionJobsResponseSchema.parse(response.data);
+	return parsed.data;
 };

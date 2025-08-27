@@ -44,6 +44,7 @@
 		"@tanstack/react-store": "^0.7.3",
 		"@tanstack/store": "^0.7.2",
 		"axios": "^1.7.2",
+		"date-fns": "^4.1.0",
 		"dayjs": "^1.11.13",
 		"drizzle-zod": "^0.7.0",
 		"launchdarkly-react-client-sdk": "^3.6.1",

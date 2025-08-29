@@ -1,9 +1,9 @@
+import { Box, styled } from "@mui/material";
 import { useState } from "react";
 import { AppError } from "@/domains/global/components/error";
+import { AppTypography } from "@/domains/ui-system/components";
 import ExecutionJobsList from "../components/execution-jobs/list/list";
 import { useAdminExecutionJobs } from "../hooks/use-admin-execution-jobs";
-import { Box, styled } from "@mui/material";
-import { AppTypography } from "@/domains/ui-system/components";
 
 const ExecutionJobsPage = () => {
 	const [page, setPage] = useState(0);

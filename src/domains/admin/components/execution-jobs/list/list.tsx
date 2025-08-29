@@ -1,19 +1,19 @@
 import {
 	Box,
 	Chip,
+	styled,
 	Table,
 	TableBody,
 	TableCell,
 	TableContainer,
 	TableHead,
-	TableRow,
 	TablePagination,
-	styled,
+	TableRow,
 } from "@mui/material";
 import { format } from "date-fns";
+import type { IExecutionJob } from "@/domains/admin/typing";
 import { AppIcon, AppTypography } from "@/domains/ui-system/components";
 import { AppButton } from "@/domains/ui-system/components/app-button/app-button";
-import type { IExecutionJob } from "@/domains/admin/typing";
 
 interface ExecutionJobsListProps {
 	jobs: IExecutionJob[];
@@ -52,7 +52,7 @@ const StyledTableHead = styled(TableHead)(({ theme }) => ({
 
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
 	"&:hover": {
-		backgroundColor: theme.palette.black[700] + "50",
+		backgroundColor: `${theme.palette.black[700]}50`,
 	},
 	"& .MuiTableCell-root": {
 		borderBottom: `1px solid ${theme.palette.neutral[800]}`,
@@ -66,19 +66,19 @@ const StatusChip = styled(Chip)<{ status: string }>(({ theme, status }) => {
 		switch (status) {
 			case "completed":
 				return {
-					backgroundColor: theme.palette.teal[500] + "20",
+					backgroundColor: `${theme.palette.teal[500]}20`,
 					color: theme.palette.teal[400],
 					borderColor: theme.palette.teal[500],
 				};
 			case "running":
 				return {
-					backgroundColor: theme.palette.warning.main + "20",
+					backgroundColor: `${theme.palette.warning.main}20`,
 					color: theme.palette.warning.light,
 					borderColor: theme.palette.warning.main,
 				};
 			case "failed":
 				return {
-					backgroundColor: theme.palette.error.main + "20",
+					backgroundColor: `${theme.palette.error.main}20`,
 					color: theme.palette.error.light,
 					borderColor: theme.palette.error.main,
 				};
@@ -298,7 +298,9 @@ const ExecutionJobsList = ({
 												variant="text"
 												size="small"
 												startIcon={<AppIcon name="Info" size="small" />}
-												onClick={() => window.open(job.reportFileUrl!, "_blank")}
+												onClick={() =>
+													job.reportFileUrl && window.open(job.reportFileUrl, "_blank")
+												}
 												sx={{
 													color: "teal.400",
 													fontSize: "0.75rem",

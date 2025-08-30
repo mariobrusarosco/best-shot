@@ -45,7 +45,7 @@ const variantMapping: Record<AppTypographyVariant, TypographyProps["variant"] | 
 };
 
 // Custom styles for our variants
-const customStyles: Record<AppTypographyVariant, any> = {
+const customStyles: Record<AppTypographyVariant, React.CSSProperties> = {
 	body1: {
 		fontSize: "1rem", // 16px
 		fontWeight: 400,

@@ -139,9 +139,8 @@ export const CreateTournamentSchema = z.object({
 		.string()
 		.min(4, "Season must be at least 4 characters")
 		.max(20, "Season cannot exceed 20 characters"),
-	mode: z.string().min(1, "Please select a tournament mode"),
-	logoUrl: z.string().url("Please enter a valid logo URL"),
-	standingsMode: z.string().min(1, "Please select a standings mode"),
+	mode: z.enum(["regular-season-only", "regular-season-and-knockout", "knockout-only"]),
+	standingsMode: z.enum(["unique-group", "multi-group"]),
 });
 
 export const ExecutionJobSchema = z.object({

@@ -3,10 +3,11 @@ import { createRootRouteWithContext, Outlet } from "@tanstack/react-router";
 import { AppDevTools } from "@/configuration/app-dev-tools";
 import { AppNotFound } from "@/domains/global/components/not-found";
 import { FloatingActionButton } from "@/domains/ui-system/components/floating-action-button";
+import type { IAuthHook } from "@/domains/authentication/adapters/typing";
 
 export interface RouterContext {
 	queryClient: QueryClient;
-	auth: any;
+	auth: IAuthHook;
 }
 
 const RootComponent = () => {

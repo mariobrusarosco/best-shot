@@ -23,16 +23,13 @@ const providerOptions = [
 
 const modeOptions = [
 	{ value: "regular-season-and-knockout", label: "Regular Season + Knockout" },
-	{ value: "regular-season", label: "Regular Season Only" },
-	{ value: "knockout", label: "Knockout Only" },
-	{ value: "group-stage", label: "Group Stage" },
+	{ value: "regular-season-only", label: "Regular Season Only" },
+	{ value: "knockout-only", label: "Knockout Only" },
 ];
 
 const standingsModeOptions = [
+	{ value: "unique-group", label: "Unique Group" },
 	{ value: "multi-group", label: "Multi-Group" },
-	{ value: "single-table", label: "Single Table" },
-	{ value: "conference", label: "Conference" },
-	{ value: "knockout-only", label: "Knockout Only" },
 ];
 
 const StyledDialog = styled(Dialog)(({ theme }) => ({
@@ -163,6 +160,20 @@ const FormContainer = styled(Box)(({ theme }) => ({
 	"& .MuiPaper-root": {
 		backgroundColor: theme.palette.black[800],
 		border: `1px solid ${theme.palette.neutral[600]}`,
+		"& .MuiMenuItem-root": {
+			color: theme.palette.neutral[100],
+			backgroundColor: "transparent",
+			"&:hover": {
+				backgroundColor: theme.palette.black[700],
+			},
+			"&.Mui-selected": {
+				backgroundColor: theme.palette.teal[500],
+				color: theme.palette.neutral[100],
+				"&:hover": {
+					backgroundColor: theme.palette.teal[600],
+				},
+			},
+		},
 	},
 }));
 
@@ -179,8 +190,7 @@ export const CreateTournamentModal = ({ onClose }: CreateTournamentModalProps) =
 			provider: "sofa",
 			season: new Date().getFullYear().toString(),
 			mode: "regular-season-and-knockout",
-			logoUrl: "",
-			standingsMode: "multi-group",
+			standingsMode: "unique-group",
 		},
 	});
 
@@ -334,15 +344,6 @@ export const CreateTournamentModal = ({ onClose }: CreateTournamentModalProps) =
 								control={control}
 								label="Standings Mode"
 								options={standingsModeOptions}
-								required
-							/>
-
-							<AppFormInput
-								name="logoUrl"
-								control={control}
-								label="Logo URL"
-								placeholder="e.g., https://img.sofascore.com/api/v1/unique-tournament/384/image"
-								helperText="URL to the tournament logo image"
 								required
 							/>
 						</SectionContainer>

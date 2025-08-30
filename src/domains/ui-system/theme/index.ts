@@ -43,7 +43,7 @@ const theme = createTheme({
 	spacing: MUI_SPACING_CONFIG,
 
 	// Breakpoint system
-	breakpoints: MUI_BREAKPOINTS_CONFIG as any,
+	breakpoints: MUI_BREAKPOINTS_CONFIG,
 
 	// Shape system
 	shape: {

@@ -7,25 +7,14 @@ import {
 	TableHead,
 	TableRow,
 	styled,
-	CircularProgress,
-	IconButton,
-	Tooltip,
 } from "@mui/material";
-import { AppIcon, AppTypography } from "@/domains/ui-system/components";
+import { useNavigate } from "@tanstack/react-router";
+import { AppTypography } from "@/domains/ui-system/components";
 import type { ITournament } from "@/domains/tournament/schemas";
 
 interface TournamentsTableProps {
 	tournaments: ITournament[];
 	isLoading?: boolean;
-	// Mutation objects with isPending states
-	createStandingsMutation: { mutate: (tournamentId: string) => void; isPending: boolean };
-	updateStandingsMutation: { mutate: (tournamentId: string) => void; isPending: boolean };
-	createRoundsMutation: { mutate: (tournamentId: string) => void; isPending: boolean };
-	updateRoundsMutation: { mutate: (tournamentId: string) => void; isPending: boolean };
-	createTeamsMutation: { mutate: (tournamentId: string) => void; isPending: boolean };
-	updateTeamsMutation: { mutate: (tournamentId: string) => void; isPending: boolean };
-	createMatchesMutation: { mutate: (tournamentId: string) => void; isPending: boolean };
-	updateMatchesMutation: { mutate: (tournamentId: string) => void; isPending: boolean };
 }
 
 const StyledTableContainer = styled(TableContainer)(({ theme }) => ({
@@ -52,8 +41,10 @@ const StyledTableHead = styled(TableHead)(({ theme }) => ({
 }));
 
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
+	cursor: "pointer",
+	transition: "background-color 0.2s ease",
 	"&:hover": {
-		backgroundColor: `${theme.palette.black[700]}50`,
+		backgroundColor: theme.palette.black[700],
 	},
 	"& .MuiTableCell-root": {
 		borderBottom: `1px solid ${theme.palette.neutral[800]}`,
@@ -62,39 +53,60 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 	},
 }));
 
-const ActionButton = styled(IconButton)(({ theme }) => ({
-	width: "32px",
-	height: "32px",
-	backgroundColor: theme.palette.black[700],
-	border: `1px solid ${theme.palette.neutral[700]}`,
-	color: theme.palette.neutral[300],
-	"&:hover": {
-		backgroundColor: theme.palette.teal[500],
-		color: theme.palette.neutral[100],
-		borderColor: theme.palette.teal[500],
-	},
-}));
+const TournamentInfo = ({ tournament }: { tournament: ITournament }) => (
+	<Box>
+		<AppTypography variant="body2" color="neutral.100" fontWeight="medium">
+			{tournament.label}
+		</AppTypography>
+		<AppTypography variant="caption" color="neutral.400">
+			{tournament.provider} • {tournament.mode}
+		</AppTypography>
+	</Box>
+);
 
-const ActionsCell = styled(Box)({
-	display: "flex",
-	alignItems: "center",
-	gap: 4,
-	justifyContent: "center",
-	flexWrap: "wrap",
-});
+const TournamentRow = ({ tournament }: { tournament: ITournament }) => {
+	const navigate = useNavigate();
 
-const TournamentsTable = ({
-	tournaments,
-	isLoading,
-	createStandingsMutation,
-	updateStandingsMutation,
-	createRoundsMutation,
-	updateRoundsMutation,
-	createTeamsMutation,
-	updateTeamsMutation,
-	createMatchesMutation,
-	updateMatchesMutation,
-}: TournamentsTableProps) => {
+	const handleRowClick = () => {
+		navigate({ to: `/admin/tournament/${tournament.id}` });
+	};
+
+	return (
+		<StyledTableRow onClick={handleRowClick}>
+			<TableCell>
+				<TournamentInfo tournament={tournament} />
+			</TableCell>
+
+			<TableCell>
+				<AppTypography variant="body2" color="neutral.200">
+					{tournament.season || "N/A"}
+				</AppTypography>
+			</TableCell>
+
+			<TableCell>
+				<AppTypography
+					variant="body2"
+					color="neutral.200"
+					sx={{ textTransform: "capitalize" }}
+				>
+					{tournament.provider}
+				</AppTypography>
+			</TableCell>
+
+			<TableCell>
+				<AppTypography
+					variant="body2"
+					color="neutral.200"
+					sx={{ textTransform: "capitalize" }}
+				>
+					{tournament?.mode?.replace(/-/g, " ")}
+				</AppTypography>
+			</TableCell>
+		</StyledTableRow>
+	);
+};
+
+const TournamentsTable = ({ tournaments, isLoading }: TournamentsTableProps) => {
 	if (isLoading) {
 		return (
 			<Box sx={{ display: "flex", justifyContent: "center", py: 8 }}>
@@ -133,165 +145,14 @@ const TournamentsTable = ({
 						<TableCell>Season</TableCell>
 						<TableCell>Provider</TableCell>
 						<TableCell>Mode</TableCell>
-						<TableCell align="center">Actions</TableCell>
 					</TableRow>
 				</StyledTableHead>
 				<TableBody>
 					{tournaments.map((tournament) => (
-						<StyledTableRow key={tournament.id}>
-							<TableCell>
-								<Box>
-									<AppTypography variant="body2" color="neutral.100" fontWeight="medium">
-										{tournament.label}
-									</AppTypography>
-									<AppTypography variant="caption" color="neutral.400">
-										{tournament.provider} • {tournament.mode}
-									</AppTypography>
-								</Box>
-							</TableCell>
-
-							<TableCell>
-								<AppTypography variant="body2" color="neutral.200">
-									{tournament.season || "N/A"}
-								</AppTypography>
-							</TableCell>
-
-							<TableCell>
-								<AppTypography
-									variant="body2"
-									color="neutral.200"
-									sx={{ textTransform: "capitalize" }}
-								>
-									{tournament.provider}
-								</AppTypography>
-							</TableCell>
-
-							<TableCell>
-								<AppTypography
-									variant="body2"
-									color="neutral.200"
-									sx={{ textTransform: "capitalize" }}
-								>
-									{tournament?.mode?.replace(/-/g, " ")}
-								</AppTypography>
-							</TableCell>
-
-							<TableCell>
-								<ActionsCell>
-									{/* Standings Actions */}
-									<Tooltip title="Create Standings" arrow>
-										<ActionButton
-											onClick={() => createStandingsMutation.mutate(tournament.id)}
-											disabled={createStandingsMutation.isPending}
-										>
-											{createStandingsMutation.isPending &&
-											createStandingsMutation.variables === tournament.id ? (
-												<CircularProgress size={16} sx={{ color: "teal.500" }} />
-											) : (
-												<AppIcon name="Plus" size="small" />
-											)}
-										</ActionButton>
-									</Tooltip>
-									<Tooltip title="Update Standings" arrow>
-										<ActionButton
-											onClick={() => updateStandingsMutation.mutate(tournament.id)}
-											disabled={updateStandingsMutation.isPending}
-										>
-											{updateStandingsMutation.isPending &&
-											updateStandingsMutation.variables === tournament.id ? (
-												<CircularProgress size={16} sx={{ color: "teal.500" }} />
-											) : (
-												<AppIcon name="Trophy" size="small" />
-											)}
-										</ActionButton>
-									</Tooltip>
-
-									{/* Rounds Actions */}
-									<Tooltip title="Create Rounds" arrow>
-										<ActionButton
-											onClick={() => createRoundsMutation.mutate(tournament.id)}
-											disabled={createRoundsMutation.isPending}
-										>
-											{createRoundsMutation.isPending &&
-											createRoundsMutation.variables === tournament.id ? (
-												<CircularProgress size={16} sx={{ color: "teal.500" }} />
-											) : (
-												<AppIcon name="Plus" size="small" />
-											)}
-										</ActionButton>
-									</Tooltip>
-									<Tooltip title="Update Rounds" arrow>
-										<ActionButton
-											onClick={() => updateRoundsMutation.mutate(tournament.id)}
-											disabled={updateRoundsMutation.isPending}
-										>
-											{updateRoundsMutation.isPending &&
-											updateRoundsMutation.variables === tournament.id ? (
-												<CircularProgress size={16} sx={{ color: "teal.500" }} />
-											) : (
-												<AppIcon name="ClockFilled" size="small" />
-											)}
-										</ActionButton>
-									</Tooltip>
-
-									{/* Teams Actions */}
-									<Tooltip title="Create Teams" arrow>
-										<ActionButton
-											onClick={() => createTeamsMutation.mutate(tournament.id)}
-											disabled={createTeamsMutation.isPending}
-										>
-											{createTeamsMutation.isPending &&
-											createTeamsMutation.variables === tournament.id ? (
-												<CircularProgress size={16} sx={{ color: "teal.500" }} />
-											) : (
-												<AppIcon name="Plus" size="small" />
-											)}
-										</ActionButton>
-									</Tooltip>
-									<Tooltip title="Update Teams" arrow>
-										<ActionButton
-											onClick={() => updateTeamsMutation.mutate(tournament.id)}
-											disabled={updateTeamsMutation.isPending}
-										>
-											{updateTeamsMutation.isPending &&
-											updateTeamsMutation.variables === tournament.id ? (
-												<CircularProgress size={16} sx={{ color: "teal.500" }} />
-											) : (
-												<AppIcon name="Users" size="small" />
-											)}
-										</ActionButton>
-									</Tooltip>
-
-									{/* Matches Actions */}
-									<Tooltip title="Create Matches" arrow>
-										<ActionButton
-											onClick={() => createMatchesMutation.mutate(tournament.id)}
-											disabled={createMatchesMutation.isPending}
-										>
-											{createMatchesMutation.isPending &&
-											createMatchesMutation.variables === tournament.id ? (
-												<CircularProgress size={16} sx={{ color: "teal.500" }} />
-											) : (
-												<AppIcon name="Plus" size="small" />
-											)}
-										</ActionButton>
-									</Tooltip>
-									<Tooltip title="Update Matches" arrow>
-										<ActionButton
-											onClick={() => updateMatchesMutation.mutate(tournament.id)}
-											disabled={updateMatchesMutation.isPending}
-										>
-											{updateMatchesMutation.isPending &&
-											updateMatchesMutation.variables === tournament.id ? (
-												<CircularProgress size={16} sx={{ color: "teal.500" }} />
-											) : (
-												<AppIcon name="LayoutDashboard" size="small" />
-											)}
-										</ActionButton>
-									</Tooltip>
-								</ActionsCell>
-							</TableCell>
-						</StyledTableRow>
+						<TournamentRow
+							key={tournament.id}
+							tournament={tournament}
+						/>
 					))}
 				</TableBody>
 			</Table>

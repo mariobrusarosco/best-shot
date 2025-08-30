@@ -1,3 +1,5 @@
+import type { Theme } from "@mui/material/styles";
+
 /**
  * Design System Foundation: Breakpoints
  *
@@ -73,7 +75,7 @@ export const MUI_BREAKPOINTS_CONFIG = {
 	// Unit for breakpoint values
 	unit: "px",
 	// Custom breakpoint names (properly typed for MUI)
-	keys: ["all", "mobile", "tablet", "laptop", "desktop"],
+	keys: ["all", "mobile", "tablet", "laptop", "desktop"] as ["all", "mobile", "tablet", "laptop", "desktop"],
 };
 
 // Responsive Design Tokens
@@ -112,7 +114,7 @@ export const RESPONSIVE_TOKENS = {
 } as const;
 
 // Legacy UIHelper (enhanced version)
-export const createUIHelper = (theme: any) => ({
+export const createUIHelper = (theme: Theme) => ({
 	whileIs: theme.breakpoints.down,
 	startsOn: theme.breakpoints.up,
 	between: theme.breakpoints.between,

@@ -1,7 +1,5 @@
 import { useState } from "react";
 import { Box, styled } from "@mui/material";
-import { useMutation } from "@tanstack/react-query";
-import { api } from "@/api";
 import { AppButton } from "@/domains/ui-system/components/app-button/app-button";
 import { AppIcon } from "@/domains/ui-system/components/icon/icon";
 import { AppTypography } from "@/domains/ui-system/components";
@@ -30,103 +28,6 @@ const StyledContainer = styled(Box)(({ theme }) => ({
 const MainAdminPage = () => {
 	const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
 	const { data: tournaments, isPending: isLoading, error } = useTournaments();
-
-	// Create mutations for all actions
-	const createStandingsMutation = useMutation({
-		mutationFn: async (tournamentId: string) => {
-			console.log("Create standings for tournament:", tournamentId);
-			const response = await api.post(
-				"/admin/standings",
-				{ tournamentId },
-				{ baseURL: import.meta.env.VITE_BEST_SHOT_API_V2 }
-			);
-			return response.data;
-		},
-	});
-
-	const updateStandingsMutation = useMutation({
-		mutationFn: async (tournamentId: string) => {
-			console.log("Update standings for tournament:", tournamentId);
-			const response = await api.patch(
-				"/admin/standings",
-				{ tournamentId },
-				{ baseURL: import.meta.env.VITE_BEST_SHOT_API_V2 }
-			);
-			return response.data;
-		},
-	});
-
-	const createRoundsMutation = useMutation({
-		mutationFn: async (tournamentId: string) => {
-			console.log("Create rounds for tournament:", tournamentId);
-			const response = await api.post(
-				"/admin/rounds",
-				{ tournamentId },
-				{ baseURL: import.meta.env.VITE_BEST_SHOT_API_V2 }
-			);
-			return response.data;
-		},
-	});
-
-	const updateRoundsMutation = useMutation({
-		mutationFn: async (tournamentId: string) => {
-			console.log("Update rounds for tournament:", tournamentId);
-			const response = await api.patch(
-				"/admin/rounds",
-				{ tournamentId },
-				{ baseURL: import.meta.env.VITE_BEST_SHOT_API_V2 }
-			);
-			return response.data;
-		},
-	});
-
-	const createTeamsMutation = useMutation({
-		mutationFn: async (tournamentId: string) => {
-			console.log("Create teams for tournament:", tournamentId);
-			const response = await api.post(
-				"/admin/teams",
-				{ tournamentId },
-				{ baseURL: import.meta.env.VITE_BEST_SHOT_API_V2 }
-			);
-			return response.data;
-		},
-	});
-
-	const updateTeamsMutation = useMutation({
-		mutationFn: async (tournamentId: string) => {
-			console.log("Update teams for tournament:", tournamentId);
-			const response = await api.patch(
-				"/admin/teams",
-				{ tournamentId },
-				{ baseURL: import.meta.env.VITE_BEST_SHOT_API_V2 }
-			);
-			return response.data;
-		},
-	});
-
-	const createMatchesMutation = useMutation({
-		mutationFn: async (tournamentId: string) => {
-			console.log("Create matches for tournament:", tournamentId);
-			const response = await api.post(
-				"/admin/matches",
-				{ tournamentId },
-				{ baseURL: import.meta.env.VITE_BEST_SHOT_API_V2 }
-			);
-			return response.data;
-		},
-	});
-
-	const updateMatchesMutation = useMutation({
-		mutationFn: async (tournamentId: string) => {
-			console.log("Update matches for tournament:", tournamentId);
-			const response = await api.patch(
-				"/admin/matches",
-				{ tournamentId },
-				{ baseURL: import.meta.env.VITE_BEST_SHOT_API_V2 }
-			);
-			return response.data;
-		},
-	});
 
 	if (error) {
 		return (
@@ -167,14 +68,6 @@ const MainAdminPage = () => {
 			<TournamentsTable
 				tournaments={tournaments || []}
 				isLoading={isLoading}
-				createStandingsMutation={createStandingsMutation}
-				updateStandingsMutation={updateStandingsMutation}
-				createRoundsMutation={createRoundsMutation}
-				updateRoundsMutation={updateRoundsMutation}
-				createTeamsMutation={createTeamsMutation}
-				updateTeamsMutation={updateTeamsMutation}
-				createMatchesMutation={createMatchesMutation}
-				updateMatchesMutation={updateMatchesMutation}
 			/>
 
 			{isCreateModalOpen && <CreateTournamentModal onClose={() => setIsCreateModalOpen(false)} />}

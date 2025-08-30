@@ -94,7 +94,7 @@ export const buttonOverrides: Components<Theme>["MuiButton"] = {
 	variants: [
 		// Custom variant: Tournament Card Action
 		{
-			props: { variant: "tournament" as any },
+			props: { variant: "tournament" as "tournament" },
 			style: ({ theme }) => ({
 				backgroundColor: theme.palette.primary.main,
 				color: theme.palette.primary.contrastText,
@@ -110,7 +110,7 @@ export const buttonOverrides: Components<Theme>["MuiButton"] = {
 
 		// Custom variant: AI Prediction Button
 		{
-			props: { variant: "aiPrediction" as any },
+			props: { variant: "aiPrediction" as "aiPrediction" },
 			style: ({ theme }) => ({
 				backgroundColor: theme.palette.primary.main,
 				color: theme.palette.common.white,

@@ -5,28 +5,45 @@
  * the Best Shot design system architecture.
  */
 
-export type { AppBoxProps } from "./app-box/AppBox";
-export { AppBox } from "./app-box/AppBox";
-export type { AppButtonProps } from "./app-button/app-button";
+// Export centralized types
+export type {
+	AppButtonProps,
+	AppCardProps,
+	AppTextFieldProps,
+	AppSelectProps,
+	AppCheckboxProps,
+	AppTypographyProps,
+	AppBoxProps,
+	AppFormInputProps,
+	AppFormSelectProps,
+	AppFormCheckboxProps,
+	BaseComponentProps,
+	LoadingProps,
+	ErrorProps,
+	SuccessProps,
+	HelperTextProps,
+	ButtonVariant,
+	CardVariant,
+	TextFieldVariant,
+	SelectVariant,
+	CheckboxVariant,
+	TypographyVariant,
+} from "@/types/ui-system";
+
 // Enhanced Base Components
 // Legacy component aliases (TRANSITIONAL - Remove after migration)
 export { AppButton, AppButton as Button } from "./app-button/app-button";
-export type { AppCardProps } from "./app-card/AppCard";
 export { AppCard, AppCard as Card } from "./app-card/AppCard";
-export type { AppCheckboxProps } from "./app-checkbox/AppCheckbox";
 export { AppCheckbox } from "./app-checkbox/AppCheckbox";
 export type { AppContainerProps } from "./app-container/AppContainer";
 export { AppContainer } from "./app-container/AppContainer";
-export type { AppSelectProps } from "./app-select/AppSelect";
 export { AppSelect } from "./app-select/AppSelect";
-export type { AppTextFieldProps } from "./app-text-field/app-text-field";
 export { AppTextField } from "./app-text-field/app-text-field";
 
 // Existing Components (for backward compatibility)
 export { AppIcon } from "./icon/icon";
 export { Surface as AppSurface } from "./surface/surface";
 export { AppTypography } from "./typography";
-export type { AppTypographyProps } from "./typography/app-typography";
 
 // TODO: Remove these aliases after migrating all imports to AppButton/AppCard
 

@@ -6,7 +6,7 @@
  */
 
 import type { Components, Theme } from "@mui/material/styles";
-import "../../../../types/mui-overrides";
+import "@/types/mui-overrides.d";
 
 export const cardOverrides: Components<Theme>["MuiCard"] = {
 	styleOverrides: {
@@ -46,7 +46,7 @@ export const cardOverrides: Components<Theme>["MuiCard"] = {
 	variants: [
 		// Tournament Card variant
 		{
-			props: { variant: "tournament" as "tournament" },
+			props: { variant: "tournament" },
 			style: ({ theme }) => ({
 				backgroundColor: theme.palette.black?.[800] || theme.palette.grey[800],
 				border: `1px solid ${theme.palette.neutral[700]}`,
@@ -64,7 +64,7 @@ export const cardOverrides: Components<Theme>["MuiCard"] = {
 
 		// Match Card variant
 		{
-			props: { variant: "match" as "match" },
+			props: { variant: "match" },
 			style: ({ theme }) => ({
 				minHeight: "200px",
 				backgroundColor: theme.palette.black[800],
@@ -83,7 +83,7 @@ export const cardOverrides: Components<Theme>["MuiCard"] = {
 
 		// League Card variant
 		{
-			props: { variant: "league" as "league" },
+			props: { variant: "league" },
 			style: ({ theme }) => ({
 				padding: theme.spacing(2.5),
 				backgroundColor: theme.palette.black[800],
@@ -101,7 +101,7 @@ export const cardOverrides: Components<Theme>["MuiCard"] = {
 
 		// AI Insight Card variant
 		{
-			props: { variant: "aiInsight" as "aiInsight" },
+			props: { variant: "aiInsight" },
 			style: ({ theme }) => ({
 				background: `linear-gradient(135deg, ${theme.palette.primary.main}10, ${theme.palette.primary.main}05)`,
 				border: `1px solid ${theme.palette.primary.main}20`,
@@ -129,7 +129,7 @@ export const cardOverrides: Components<Theme>["MuiCard"] = {
 
 		// Elevated card for important content
 		{
-			props: { variant: "elevated" as "elevated" },
+			props: { variant: "elevated" },
 			style: ({ theme }) => ({
 				boxShadow: theme.shadows[8],
 				backgroundColor: theme.palette.black[800],
@@ -147,7 +147,7 @@ export const cardOverrides: Components<Theme>["MuiCard"] = {
 
 		// Flat card for subtle content
 		{
-			props: { variant: "flat" as "flat" },
+			props: { variant: "flat" },
 			style: ({ theme }) => ({
 				boxShadow: "none",
 				backgroundColor: theme.palette.black[800],

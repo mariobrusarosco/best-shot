@@ -1,7 +1,6 @@
 import { createLazyFileRoute } from "@tanstack/react-router";
 import { Box, CircularProgress, IconButton, Tooltip, styled } from "@mui/material";
 import { AppIcon, AppTypography } from "@/domains/ui-system/components";
-import { AppButton } from "@/domains/ui-system/components/app-button/app-button";
 import {
 	useAdminCreateStandings,
 	useAdminUpdateStandings,
@@ -29,7 +28,7 @@ const ActionButton = styled(IconButton)(({ theme }) => ({
 		borderColor: theme.palette.teal[500],
 	},
 	"&:disabled": {
-		backgroundColor: theme.palette.black[600],
+		backgroundColor: theme.palette.black[700],
 		color: theme.palette.neutral[500],
 		cursor: "not-allowed",
 	},

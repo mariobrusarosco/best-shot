@@ -1,22 +1,11 @@
 import { Box, TextField, Typography } from "@mui/material";
-import { type Control, Controller, type FieldPath, type FieldValues, type FieldError, type ControllerRenderProps } from "react-hook-form";
+import { Controller, type FieldPath, type FieldValues, type FieldError, type ControllerRenderProps } from "react-hook-form";
 import { AppInput } from "@/domains/ui-system/components/input/input";
-
-interface AppFormInputProps<T extends FieldValues> {
-	name: FieldPath<T>;
-	control: Control<T>;
-	label?: string;
-	placeholder?: string;
-	type?: "text" | "email" | "password" | "number" | "tel" | "url";
-	disabled?: boolean;
-	required?: boolean;
-	multiline?: boolean;
-	rows?: number;
-	helperText?: string;
-}
+import type { AppFormInputProps } from "@/types/ui-system";
+import "@/types/mui-overrides.d";
 
 // Helper components to reduce complexity
-const FormLabel = ({ label, required, hasError }: { label: string; required: boolean; hasError: boolean }) => (
+const FormLabel = ({ label, required, hasError }: { label: React.ReactNode; required: boolean; hasError: boolean }) => (
 	<Typography
 		variant="caption"
 		sx={{
@@ -97,7 +86,7 @@ const SingleLineInput = <T extends FieldValues>({ field, type, placeholder, disa
 	/>
 );
 
-const FormHelperText = ({ fieldState, helperText }: { fieldState: { error?: FieldError }; helperText?: string }) => {
+const FormHelperText = ({ fieldState, helperText }: { fieldState: { error?: FieldError }; helperText?: React.ReactNode }) => {
 	if (!fieldState.error?.message && !helperText) return null;
 	
 	return (

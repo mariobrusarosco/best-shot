@@ -6,7 +6,7 @@
  */
 
 import type { Components, Theme } from "@mui/material/styles";
-import "../../../../types/mui-overrides";
+import "@/types/mui-overrides.d";
 
 export const buttonOverrides: Components<Theme>["MuiButton"] = {
 	styleOverrides: {
@@ -94,7 +94,7 @@ export const buttonOverrides: Components<Theme>["MuiButton"] = {
 	variants: [
 		// Custom variant: Tournament Card Action
 		{
-			props: { variant: "tournament" as "tournament" },
+			props: { variant: "tournament" },
 			style: ({ theme }) => ({
 				backgroundColor: theme.palette.primary.main,
 				color: theme.palette.primary.contrastText,
@@ -110,7 +110,7 @@ export const buttonOverrides: Components<Theme>["MuiButton"] = {
 
 		// Custom variant: AI Prediction Button
 		{
-			props: { variant: "aiPrediction" as "aiPrediction" },
+			props: { variant: "aiPrediction" },
 			style: ({ theme }) => ({
 				backgroundColor: theme.palette.primary.main,
 				color: theme.palette.common.white,

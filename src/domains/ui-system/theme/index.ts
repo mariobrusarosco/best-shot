@@ -13,7 +13,6 @@
  */
 
 import { createTheme } from "@mui/material/styles";
-import "../../../types/mui-overrides";
 
 // Component overrides
 import { buttonOverrides } from "./components/button";

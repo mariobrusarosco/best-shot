@@ -5,30 +5,12 @@
  * This component serves as the foundation for all text input variants across domains.
  */
 
-import { TextField as MuiTextField, type TextFieldProps as MuiTextFieldProps } from "@mui/material";
+import { TextField as MuiTextField } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import type { Theme } from "@mui/material/styles";
 import { forwardRef } from "react";
-
-// Extended text field props for our design system
-export interface AppTextFieldProps extends Omit<MuiTextFieldProps, "variant"> {
-	/**
-	 * Whether the field should show a loading state
-	 */
-	loading?: boolean;
-	/**
-	 * Enhanced error state with better visual feedback
-	 */
-	hasError?: boolean;
-	/**
-	 * Success state for validation feedback
-	 */
-	hasSuccess?: boolean;
-	/**
-	 * Variant override - defaults to outlined
-	 */
-	variant?: "outlined" | "filled" | "standard";
-}
+import type { AppTextFieldProps } from "@/types/ui-system";
+import "@/types/mui-overrides.d";
 
 // Helper functions to reduce complexity
 const getBorderColor = (theme: Theme, hasError: boolean, hasSuccess: boolean) => {

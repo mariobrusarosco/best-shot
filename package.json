@@ -1,7 +1,7 @@
 {
 	"name": "best-shot",
 	"private": true,
-	"version": "0.57.0",
+	"version": "0.58.0",
 	"scripts": {
 		"start": "concurrently \"vite --mode local-dev\" \"cd ../api-best-shot && yarn dev\"",
 		"dev": "vite --mode local-dev 2>&1 | tee dev.log",
@@ -19,7 +19,7 @@
 		"format:fix": "biome format --write",
 		"check": "biome check && tsc --noEmit",
 		"check:fix": "biome check --write && tsc --noEmit",
-		"typecheck:src": "tsc --noEmit src/**/*.{ts,tsx}",
+		"typecheck": "tsc --noEmit src/**/*.{ts,tsx}",
 		"ci:check": "biome ci",
 		"prepare": "husky"
 	},

@@ -1,11 +1,11 @@
-import { useState } from "react";
 import { Box, styled } from "@mui/material";
+import { useState } from "react";
+import { CreateTournamentModal } from "@/domains/admin/components/tournaments/create-tournament-modal/create-tournament-modal";
+import AdminTournamentsTable from "@/domains/admin/components/tournaments/admin-tournaments-table/admin-tournaments-table";
+import { useAdminTournaments } from "@/domains/admin/hooks/use-admin-tournaments";
+import { AppTypography } from "@/domains/ui-system/components";
 import { AppButton } from "@/domains/ui-system/components/app-button/app-button";
 import { AppIcon } from "@/domains/ui-system/components/icon/icon";
-import { AppTypography } from "@/domains/ui-system/components";
-import { CreateTournamentModal } from "@/domains/admin/components/tournaments/create-tournament-modal/create-tournament-modal";
-import TournamentsTable from "@/domains/admin/components/tournaments/tournaments-table/tournaments-table";
-import { useTournaments } from "@/domains/tournament/hooks/use-tournaments";
 
 const Header = styled(Box)(({ theme }) => ({
 	display: "flex",
@@ -27,7 +27,17 @@ const StyledContainer = styled(Box)(({ theme }) => ({
 
 const MainAdminPage = () => {
 	const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
-	const { data: tournaments, isPending: isLoading, error } = useTournaments();
+	const { data: tournaments, isLoading, error } = useAdminTournaments();
+
+	console.log({tournaments});
+	
+	if (isLoading) {
+		return (
+			<StyledContainer>
+				<AppTypography color="neutral.400">Loading tournaments...</AppTypography>
+			</StyledContainer>
+		);
+	}
 
 	if (error) {
 		return (
@@ -65,10 +75,7 @@ const MainAdminPage = () => {
 				</AppButton>
 			</Header>
 
-			<TournamentsTable
-				tournaments={tournaments || []}
-				isLoading={isLoading}
-			/>
+			<AdminTournamentsTable tournaments={tournaments || []} isLoading={isLoading} />
 
 			{isCreateModalOpen && <CreateTournamentModal onClose={() => setIsCreateModalOpen(false)} />}
 		</StyledContainer>

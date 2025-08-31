@@ -6,7 +6,6 @@ import { AppTypography } from "@/domains/ui-system/components";
 import { AppButton } from "@/domains/ui-system/components/app-button/app-button";
 import { AppFormInput } from "@/domains/ui-system/components/form/form-input";
 import { AppFormSelect } from "@/domains/ui-system/components/form/form-select";
-import { useRescheduleScraperJob } from "../../hooks/use-reschedule-scraper-job";
 import { RescheduleJobSchema } from "../../schemas";
 
 interface RescheduleJobModalProps {
@@ -37,7 +36,6 @@ const timezones = [
 ];
 
 export const RescheduleJobModal = ({ jobId, onClose }: RescheduleJobModalProps) => {
-	const rescheduleJob = useRescheduleScraperJob();
 
 	const { control, handleSubmit, watch, setValue } = useForm<RescheduleJobInput>({
 		resolver: zodResolver(RescheduleJobSchema),
@@ -52,7 +50,7 @@ export const RescheduleJobModal = ({ jobId, onClose }: RescheduleJobModalProps) 
 
 	const onSubmit = async (data: RescheduleJobInput) => {
 		try {
-			await rescheduleJob.mutateAsync(data);
+			// await rescheduleJob.mutateAsync(data);
 			onClose();
 		} catch (error) {
 			console.error("Failed to reschedule job:", error);
@@ -142,7 +140,7 @@ export const RescheduleJobModal = ({ jobId, onClose }: RescheduleJobModalProps) 
 				<AppButton
 					variant="contained"
 					onClick={handleSubmit(onSubmit)}
-					loading={rescheduleJob.isPending}
+					// loading={rescheduleJob.isPending}
 				>
 					Reschedule Job
 				</AppButton>

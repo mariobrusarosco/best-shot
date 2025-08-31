@@ -6,8 +6,8 @@
  */
 
 import { TextField as MuiTextField } from "@mui/material";
-import { styled } from "@mui/material/styles";
 import type { Theme } from "@mui/material/styles";
+import { styled } from "@mui/material/styles";
 import { forwardRef } from "react";
 import type { AppTextFieldProps } from "@/types/ui-system";
 import "@/types/mui-overrides.d";
@@ -25,7 +25,12 @@ const getOutlineColor = (theme: Theme, hasError: boolean, hasSuccess: boolean) =
 	return `${theme.palette.primary.main}20`;
 };
 
-const getInputRootStyles = (theme: Theme, loading: boolean, hasError: boolean, hasSuccess: boolean) => ({
+const getInputRootStyles = (
+	theme: Theme,
+	loading: boolean,
+	hasError: boolean,
+	hasSuccess: boolean
+) => ({
 	borderRadius: theme.spacing(1), // 8px
 
 	// Loading state
@@ -105,7 +110,12 @@ const StyledTextField = styled(MuiTextField)<AppTextFieldProps>(
 	({ theme, loading, hasError, hasSuccess }) => ({
 		// Design system base styles (handled by theme overrides)
 
-		"& .MuiOutlinedInput-root": getInputRootStyles(theme, loading || false, hasError || false, hasSuccess || false),
+		"& .MuiOutlinedInput-root": getInputRootStyles(
+			theme,
+			loading || false,
+			hasError || false,
+			hasSuccess || false
+		),
 
 		// Label styling
 		"& .MuiInputLabel-root": getLabelStyles(theme, hasError || false, hasSuccess || false),

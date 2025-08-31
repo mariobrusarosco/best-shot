@@ -25,12 +25,12 @@ const AdminTournamentTabs = () => {
 					}}
 				/>
 				<Tab
-					value={"execution-jobs"}
+					value={"reports"}
 					slots={{
 						root: (props) => (
-							<CustomTab to="/admin/execution-jobs" {...props}>
+							<CustomTab to="/admin/reports" {...props}>
 								<Typography variant="tag" textTransform="uppercase">
-									execution jobs
+									reports
 								</Typography>
 							</CustomTab>
 						),

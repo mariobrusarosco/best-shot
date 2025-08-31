@@ -6,14 +6,14 @@
  * all UI components in the design system.
  */
 
-import type { 
+import type {
+	BoxProps as MuiBoxProps,
 	ButtonProps as MuiButtonProps,
 	CardProps as MuiCardProps,
-	TextFieldProps as MuiTextFieldProps,
-	SelectProps as MuiSelectProps,
 	CheckboxProps as MuiCheckboxProps,
+	SelectProps as MuiSelectProps,
+	TextFieldProps as MuiTextFieldProps,
 	TypographyProps as MuiTypographyProps,
-	BoxProps as MuiBoxProps
 } from "@mui/material";
 
 // ===== BASE COMPONENT PROPS =====
@@ -86,7 +86,14 @@ export type ButtonVariant = MuiButtonProps["variant"] | "tournament" | "aiPredic
 /**
  * Card variant types
  */
-export type CardVariant = MuiCardProps["variant"] | "tournament" | "match" | "league" | "aiInsight" | "elevated" | "flat";
+export type CardVariant =
+	| MuiCardProps["variant"]
+	| "tournament"
+	| "match"
+	| "league"
+	| "aiInsight"
+	| "elevated"
+	| "flat";
 
 /**
  * TextField variant types
@@ -96,7 +103,12 @@ export type TextFieldVariant = MuiTextFieldProps["variant"];
 /**
  * Select variant types
  */
-export type SelectVariant = MuiSelectProps["variant"] | "default" | "tournament" | "league" | "compact";
+export type SelectVariant =
+	| MuiSelectProps["variant"]
+	| "default"
+	| "tournament"
+	| "league"
+	| "compact";
 
 /**
  * Checkbox variant types (MUI Checkbox doesn't have variants, so we define our own)
@@ -106,16 +118,21 @@ export type CheckboxVariant = "default" | "tournament" | "league" | "compact";
 /**
  * Typography variant types
  */
-export type TypographyVariant = MuiTypographyProps["variant"] | "topic" | "tag" | "paragraph" | "label";
+export type TypographyVariant =
+	| MuiTypographyProps["variant"]
+	| "topic"
+	| "tag"
+	| "paragraph"
+	| "label";
 
 // ===== COMPONENT-SPECIFIC PROPS =====
 
 /**
  * AppButton component props
  */
-export interface AppButtonProps extends 
-	Omit<MuiButtonProps, "variant" | "loading">,
-	BaseComponentProps {
+export interface AppButtonProps
+	extends Omit<MuiButtonProps, "variant" | "loading">,
+		BaseComponentProps {
 	/**
 	 * Button variant
 	 */
@@ -137,10 +154,10 @@ export interface AppButtonProps extends
 /**
  * AppCard component props
  */
-export interface AppCardProps extends 
-	Omit<MuiCardProps, "variant">,
-	BaseComponentProps,
-	LoadingProps {
+export interface AppCardProps
+	extends Omit<MuiCardProps, "variant">,
+		BaseComponentProps,
+		LoadingProps {
 	/**
 	 * Card variant
 	 */
@@ -158,12 +175,12 @@ export interface AppCardProps extends
 /**
  * AppTextField component props
  */
-export interface AppTextFieldProps extends 
-	Omit<MuiTextFieldProps, "variant" | "helperText">,
-	BaseComponentProps,
-	LoadingProps,
-	ErrorProps,
-	SuccessProps {
+export interface AppTextFieldProps
+	extends Omit<MuiTextFieldProps, "variant" | "helperText">,
+		BaseComponentProps,
+		LoadingProps,
+		ErrorProps,
+		SuccessProps {
 	/**
 	 * TextField variant
 	 */
@@ -185,13 +202,13 @@ export interface AppTextFieldProps extends
 /**
  * AppSelect component props
  */
-export interface AppSelectProps extends 
-	Omit<MuiSelectProps, "variant">,
-	BaseComponentProps,
-	LoadingProps,
-	ErrorProps,
-	SuccessProps,
-	HelperTextProps {
+export interface AppSelectProps
+	extends Omit<MuiSelectProps, "variant">,
+		BaseComponentProps,
+		LoadingProps,
+		ErrorProps,
+		SuccessProps,
+		HelperTextProps {
 	/**
 	 * Select variant
 	 */
@@ -205,13 +222,13 @@ export interface AppSelectProps extends
 /**
  * AppCheckbox component props
  */
-export interface AppCheckboxProps extends 
-	MuiCheckboxProps,
-	BaseComponentProps,
-	LoadingProps,
-	ErrorProps,
-	SuccessProps,
-	HelperTextProps {
+export interface AppCheckboxProps
+	extends MuiCheckboxProps,
+		BaseComponentProps,
+		LoadingProps,
+		ErrorProps,
+		SuccessProps,
+		HelperTextProps {
 	/**
 	 * Checkbox variant
 	 */
@@ -225,9 +242,7 @@ export interface AppCheckboxProps extends
 /**
  * AppTypography component props
  */
-export interface AppTypographyProps extends 
-	MuiTypographyProps,
-	BaseComponentProps {
+export interface AppTypographyProps extends MuiTypographyProps, BaseComponentProps {
 	/**
 	 * Typography variant
 	 */
@@ -237,9 +252,7 @@ export interface AppTypographyProps extends
 /**
  * AppBox component props
  */
-export interface AppBoxProps extends 
-	MuiBoxProps,
-	BaseComponentProps {
+export interface AppBoxProps extends MuiBoxProps, BaseComponentProps {
 	// AppBox inherits all MUI Box props
 }
 
@@ -274,9 +287,9 @@ export interface BaseFormProps<T extends Record<string, any>> {
 /**
  * AppFormInput component props
  */
-export interface AppFormInputProps<T extends Record<string, any>> extends 
-	BaseFormProps<T>,
-	Omit<AppTextFieldProps, "name" | "control"> {
+export interface AppFormInputProps<T extends Record<string, any>>
+	extends BaseFormProps<T>,
+		Omit<AppTextFieldProps, "name" | "control"> {
 	/**
 	 * Input type
 	 */
@@ -298,9 +311,9 @@ export interface AppFormInputProps<T extends Record<string, any>> extends
 /**
  * AppFormSelect component props
  */
-export interface AppFormSelectProps<T extends Record<string, any>> extends 
-	BaseFormProps<T>,
-	Omit<AppSelectProps, "name" | "control"> {
+export interface AppFormSelectProps<T extends Record<string, any>>
+	extends BaseFormProps<T>,
+		Omit<AppSelectProps, "name" | "control"> {
 	/**
 	 * Options for the select
 	 */
@@ -310,9 +323,9 @@ export interface AppFormSelectProps<T extends Record<string, any>> extends
 /**
  * AppFormCheckbox component props
  */
-export interface AppFormCheckboxProps<T extends Record<string, any>> extends 
-	BaseFormProps<T>,
-	Omit<AppCheckboxProps, "name" | "control" | "label"> {
+export interface AppFormCheckboxProps<T extends Record<string, any>>
+	extends BaseFormProps<T>,
+		Omit<AppCheckboxProps, "name" | "control" | "label"> {
 	// Inherits all checkbox props except name, control, and label which are handled by BaseFormProps
 }
 
@@ -343,7 +356,7 @@ export type ComponentChildren = React.ReactNode;
 /**
  * Design system color tokens
  */
-export type DesignSystemColor = 
+export type DesignSystemColor =
 	| "primary"
 	| "secondary"
 	| "error"

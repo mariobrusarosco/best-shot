@@ -1,11 +1,25 @@
 import { Box, TextField, Typography } from "@mui/material";
-import { Controller, type FieldPath, type FieldValues, type FieldError, type ControllerRenderProps } from "react-hook-form";
+import {
+	Controller,
+	type ControllerRenderProps,
+	type FieldError,
+	type FieldPath,
+	type FieldValues,
+} from "react-hook-form";
 import { AppInput } from "@/domains/ui-system/components/input/input";
 import type { AppFormInputProps } from "@/types/ui-system";
 import "@/types/mui-overrides.d";
 
 // Helper components to reduce complexity
-const FormLabel = ({ label, required, hasError }: { label: React.ReactNode; required: boolean; hasError: boolean }) => (
+const FormLabel = ({
+	label,
+	required,
+	hasError,
+}: {
+	label: React.ReactNode;
+	required: boolean;
+	hasError: boolean;
+}) => (
 	<Typography
 		variant="caption"
 		sx={{
@@ -22,12 +36,18 @@ const FormLabel = ({ label, required, hasError }: { label: React.ReactNode; requ
 	</Typography>
 );
 
-const MultilineInput = <T extends FieldValues>({ field, fieldState, placeholder, disabled, rows }: { 
-	field: ControllerRenderProps<T, FieldPath<T>>; 
-	fieldState: { error?: FieldError }; 
-	placeholder?: string; 
-	disabled?: boolean; 
-	rows?: number; 
+const MultilineInput = <T extends FieldValues>({
+	field,
+	fieldState,
+	placeholder,
+	disabled,
+	rows,
+}: {
+	field: ControllerRenderProps<T, FieldPath<T>>;
+	fieldState: { error?: FieldError };
+	placeholder?: string;
+	disabled?: boolean;
+	rows?: number;
 }) => (
 	<TextField
 		{...field}
@@ -70,12 +90,18 @@ const MultilineInput = <T extends FieldValues>({ field, fieldState, placeholder,
 	/>
 );
 
-const SingleLineInput = <T extends FieldValues>({ field, type, placeholder, disabled, fieldState }: { 
-	field: ControllerRenderProps<T, FieldPath<T>>; 
-	type?: string; 
-	placeholder?: string; 
-	disabled?: boolean; 
-	fieldState: { error?: FieldError }; 
+const SingleLineInput = <T extends FieldValues>({
+	field,
+	type,
+	placeholder,
+	disabled,
+	fieldState,
+}: {
+	field: ControllerRenderProps<T, FieldPath<T>>;
+	type?: string;
+	placeholder?: string;
+	disabled?: boolean;
+	fieldState: { error?: FieldError };
 }) => (
 	<AppInput
 		{...field}
@@ -86,9 +112,15 @@ const SingleLineInput = <T extends FieldValues>({ field, type, placeholder, disa
 	/>
 );
 
-const FormHelperText = ({ fieldState, helperText }: { fieldState: { error?: FieldError }; helperText?: React.ReactNode }) => {
+const FormHelperText = ({
+	fieldState,
+	helperText,
+}: {
+	fieldState: { error?: FieldError };
+	helperText?: React.ReactNode;
+}) => {
 	if (!fieldState.error?.message && !helperText) return null;
-	
+
 	return (
 		<Typography
 			variant="caption"
@@ -104,19 +136,43 @@ const FormHelperText = ({ fieldState, helperText }: { fieldState: { error?: Fiel
 	);
 };
 
-const FormFieldContent = <T extends FieldValues>({ field, fieldState, multiline, type, placeholder, disabled, rows }: { 
-	field: ControllerRenderProps<T, FieldPath<T>>; 
-	fieldState: { error?: FieldError }; 
-	multiline?: boolean; 
-	type?: string; 
-	placeholder?: string; 
-	disabled?: boolean; 
-	rows?: number; 
+const FormFieldContent = <T extends FieldValues>({
+	field,
+	fieldState,
+	multiline,
+	type,
+	placeholder,
+	disabled,
+	rows,
+}: {
+	field: ControllerRenderProps<T, FieldPath<T>>;
+	fieldState: { error?: FieldError };
+	multiline?: boolean;
+	type?: string;
+	placeholder?: string;
+	disabled?: boolean;
+	rows?: number;
 }) => {
 	if (multiline) {
-		return <MultilineInput field={field} fieldState={fieldState} placeholder={placeholder} disabled={disabled} rows={rows} />;
+		return (
+			<MultilineInput
+				field={field}
+				fieldState={fieldState}
+				placeholder={placeholder}
+				disabled={disabled}
+				rows={rows}
+			/>
+		);
 	}
-	return <SingleLineInput field={field} type={type} placeholder={placeholder} disabled={disabled} fieldState={fieldState} />;
+	return (
+		<SingleLineInput
+			field={field}
+			type={type}
+			placeholder={placeholder}
+			disabled={disabled}
+			fieldState={fieldState}
+		/>
+	);
 };
 
 export const AppFormInput = <T extends FieldValues>({
@@ -136,9 +192,7 @@ export const AppFormInput = <T extends FieldValues>({
 		control={control}
 		render={({ field, fieldState }) => (
 			<Box sx={{ mb: 2 }}>
-				{label && (
-					<FormLabel label={label} required={required} hasError={!!fieldState.error} />
-				)}
+				{label && <FormLabel label={label} required={required} hasError={!!fieldState.error} />}
 
 				<FormFieldContent
 					field={field}

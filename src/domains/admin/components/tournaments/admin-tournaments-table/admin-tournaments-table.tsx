@@ -3,63 +3,31 @@ import {
 	Table,
 	TableBody,
 	TableCell,
-	TableContainer,
-	TableHead,
 	TableRow,
-	styled,
 } from "@mui/material";
 import { useNavigate } from "@tanstack/react-router";
-import { AppTypography } from "@/domains/ui-system/components";
 import type { ITournament } from "@/domains/tournament/schemas";
+import { AppTypography } from "@/domains/ui-system/components";
+import { StyledTableRow } from "@/domains/admin/components/tournaments/admin-tournaments-table/styles";
+import { StyledTableContainer } from "@/domains/admin/components/tournaments/admin-tournaments-table/styles";
+import { StyledTableHead } from "@/domains/admin/components/tournaments/admin-tournaments-table/styles";
 
 interface TournamentsTableProps {
 	tournaments: ITournament[];
 	isLoading?: boolean;
 }
 
-const StyledTableContainer = styled(TableContainer)(({ theme }) => ({
-	backgroundColor: theme.palette.black[800],
-	border: `1px solid ${theme.palette.neutral[700]}`,
-	borderRadius: theme.shape.borderRadius,
-	"& .MuiTable-root": {
-		minWidth: 800,
-	},
-}));
-
-const StyledTableHead = styled(TableHead)(({ theme }) => ({
-	backgroundColor: theme.palette.black[700],
-	"& .MuiTableCell-head": {
-		backgroundColor: theme.palette.black[700],
-		color: theme.palette.neutral[200],
-		fontWeight: 600,
-		textTransform: "uppercase",
-		fontSize: "0.75rem",
-		letterSpacing: "0.5px",
-		borderBottom: `1px solid ${theme.palette.neutral[700]}`,
-		padding: theme.spacing(1.5, 2),
-	},
-}));
-
-const StyledTableRow = styled(TableRow)(({ theme }) => ({
-	cursor: "pointer",
-	transition: "background-color 0.2s ease",
-	"&:hover": {
-		backgroundColor: theme.palette.black[700],
-	},
-	"& .MuiTableCell-root": {
-		borderBottom: `1px solid ${theme.palette.neutral[800]}`,
-		color: theme.palette.neutral[200],
-		padding: theme.spacing(1.5, 2),
-	},
-}));
 
 const TournamentInfo = ({ tournament }: { tournament: ITournament }) => (
-	<Box>
+	<Box display="flex" gap={1} alignItems="end">
+		<Box>	
+			{tournament.logo && <img src={tournament.logo} alt={tournament.label} width={20} height={20} />	}
+		</Box>
 		<AppTypography variant="body2" color="neutral.100" fontWeight="medium">
 			{tournament.label}
 		</AppTypography>
-		<AppTypography variant="caption" color="neutral.400">
-			{tournament.provider} • {tournament.mode}
+		<AppTypography variant="tag" color="neutral.400">
+			{tournament.standingsMode}
 		</AppTypography>
 	</Box>
 );
@@ -84,21 +52,13 @@ const TournamentRow = ({ tournament }: { tournament: ITournament }) => {
 			</TableCell>
 
 			<TableCell>
-				<AppTypography
-					variant="body2"
-					color="neutral.200"
-					sx={{ textTransform: "capitalize" }}
-				>
+				<AppTypography variant="body2" color="neutral.200" sx={{ textTransform: "capitalize" }}>
 					{tournament.provider}
 				</AppTypography>
 			</TableCell>
 
 			<TableCell>
-				<AppTypography
-					variant="body2"
-					color="neutral.200"
-					sx={{ textTransform: "capitalize" }}
-				>
+				<AppTypography variant="body2" color="neutral.200" sx={{ textTransform: "capitalize" }}>
 					{tournament?.mode?.replace(/-/g, " ")}
 				</AppTypography>
 			</TableCell>
@@ -106,7 +66,7 @@ const TournamentRow = ({ tournament }: { tournament: ITournament }) => {
 	);
 };
 
-const TournamentsTable = ({ tournaments, isLoading }: TournamentsTableProps) => {
+const AdminTournamentsTable = ({ tournaments, isLoading }: TournamentsTableProps) => {
 	if (isLoading) {
 		return (
 			<Box sx={{ display: "flex", justifyContent: "center", py: 8 }}>
@@ -144,15 +104,12 @@ const TournamentsTable = ({ tournaments, isLoading }: TournamentsTableProps) => 
 						<TableCell>Tournament</TableCell>
 						<TableCell>Season</TableCell>
 						<TableCell>Provider</TableCell>
-						<TableCell>Mode</TableCell>
+						<TableCell>Actions</TableCell>
 					</TableRow>
 				</StyledTableHead>
 				<TableBody>
 					{tournaments.map((tournament) => (
-						<TournamentRow
-							key={tournament.id}
-							tournament={tournament}
-						/>
+						<TournamentRow key={tournament.id} tournament={tournament} />
 					))}
 				</TableBody>
 			</Table>
@@ -160,4 +117,4 @@ const TournamentsTable = ({ tournaments, isLoading }: TournamentsTableProps) => 
 	);
 };
 
-export default TournamentsTable;
+export default AdminTournamentsTable;

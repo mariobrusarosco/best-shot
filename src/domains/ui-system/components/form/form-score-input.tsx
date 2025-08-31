@@ -1,5 +1,12 @@
 import { Box, TextField, Typography } from "@mui/material";
-import { type Control, Controller, type FieldPath, type FieldValues, type FieldError, type ControllerRenderProps } from "react-hook-form";
+import {
+	type Control,
+	Controller,
+	type ControllerRenderProps,
+	type FieldError,
+	type FieldPath,
+	type FieldValues,
+} from "react-hook-form";
 
 interface Team {
 	id: string;
@@ -24,11 +31,19 @@ interface SizeStyles {
 }
 
 // Extracted components to reduce complexity
-const TeamLogo = ({ logo, name, size }: { logo?: string; name: string; size: "small" | "medium" | "large" }) => {
+const TeamLogo = ({
+	logo,
+	name,
+	size,
+}: {
+	logo?: string;
+	name: string;
+	size: "small" | "medium" | "large";
+}) => {
 	if (!logo) return null;
-	
+
 	const logoSize = size === "small" ? 24 : size === "medium" ? 32 : 40;
-	
+
 	return (
 		<Box
 			component="img"
@@ -58,18 +73,18 @@ const TeamName = ({ name, styles }: { name: string; styles: SizeStyles }) => (
 );
 
 // Extracted TextField styling to reduce complexity
-const ScoreTextField = <T extends FieldValues>({ 
-	field, 
-	fieldState, 
-	disabled, 
-	styles, 
-	size 
-}: { 
-	field: ControllerRenderProps<T, FieldPath<T>>; 
-	fieldState: { error?: FieldError }; 
-	disabled: boolean; 
-	styles: SizeStyles; 
-	size: "small" | "medium" | "large"; 
+const ScoreTextField = <T extends FieldValues>({
+	field,
+	fieldState,
+	disabled,
+	styles,
+	size,
+}: {
+	field: ControllerRenderProps<T, FieldPath<T>>;
+	fieldState: { error?: FieldError };
+	disabled: boolean;
+	styles: SizeStyles;
+	size: "small" | "medium" | "large";
 }) => (
 	<TextField
 		{...field}
@@ -98,8 +113,7 @@ const ScoreTextField = <T extends FieldValues>({
 				},
 				"& .MuiInputBase-input": {
 					padding: size === "small" ? 1 : size === "medium" ? 1.5 : 2,
-					fontSize:
-						size === "small" ? "1rem" : size === "medium" ? "1.25rem" : "1.5rem",
+					fontSize: size === "small" ? "1rem" : size === "medium" ? "1.25rem" : "1.5rem",
 					fontWeight: "bold",
 					color: "text.primary",
 					textAlign: "center",
@@ -116,53 +130,59 @@ const ScoreTextField = <T extends FieldValues>({
 	/>
 );
 
-const ScoreInput = <T extends FieldValues>({ 
-	name, 
-	control, 
-	disabled, 
-	styles, 
-	size 
-}: { 
-	name: FieldPath<T>; 
-	control: Control<T>; 
-	disabled: boolean; 
-	styles: SizeStyles; 
-	size: "small" | "medium" | "large"; 
+const ScoreInput = <T extends FieldValues>({
+	name,
+	control,
+	disabled,
+	styles,
+	size,
+}: {
+	name: FieldPath<T>;
+	control: Control<T>;
+	disabled: boolean;
+	styles: SizeStyles;
+	size: "small" | "medium" | "large";
 }) => (
 	<Controller
 		name={name}
 		control={control}
 		render={({ field, fieldState }) => (
-			<ScoreTextField 
-				field={field} 
-				fieldState={fieldState} 
-				disabled={disabled} 
-				styles={styles} 
-				size={size} 
+			<ScoreTextField
+				field={field}
+				fieldState={fieldState}
+				disabled={disabled}
+				styles={styles}
+				size={size}
 			/>
 		)}
 	/>
 );
 
-const TeamSection = <T extends FieldValues>({ 
-	team, 
-	scoreName, 
-	control, 
-	disabled, 
-	styles, 
-	size 
-}: { 
-	team: Team; 
-	scoreName: FieldPath<T>; 
-	control: Control<T>; 
-	disabled: boolean; 
-	styles: SizeStyles; 
-	size: "small" | "medium" | "large"; 
+const TeamSection = <T extends FieldValues>({
+	team,
+	scoreName,
+	control,
+	disabled,
+	styles,
+	size,
+}: {
+	team: Team;
+	scoreName: FieldPath<T>;
+	control: Control<T>;
+	disabled: boolean;
+	styles: SizeStyles;
+	size: "small" | "medium" | "large";
 }) => (
 	<Box sx={{ flex: 1, textAlign: "center" }}>
 		<TeamLogo logo={team.logo} name={team.name} size={size} />
 		<TeamName name={team.name} styles={styles} />
-		<ScoreInput name={scoreName} control={control} disabled={disabled} styles={styles} size={size} />
+		<ScoreInput
+			name={scoreName}
+			control={control}
+			disabled={disabled}
+			styles={styles}
+			size={size}
+		/>
 	</Box>
 );
 
@@ -181,10 +201,14 @@ const VSSeparator = ({ styles }: { styles: SizeStyles }) => (
 	</Box>
 );
 
-const ErrorDisplay = <T extends FieldValues>({ homeScoreName, awayScoreName, control }: { 
-	homeScoreName: FieldPath<T>; 
-	awayScoreName: FieldPath<T>; 
-	control: Control<T>; 
+const ErrorDisplay = <T extends FieldValues>({
+	homeScoreName,
+	awayScoreName,
+	control,
+}: {
+	homeScoreName: FieldPath<T>;
+	awayScoreName: FieldPath<T>;
+	control: Control<T>;
 }) => {
 	return (
 		<Controller
@@ -253,22 +277,22 @@ export const AppFormScoreInput = <T extends FieldValues>({
 	return (
 		<Box sx={{ mb: 2 }}>
 			<Box sx={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
-				<TeamSection 
-					team={homeTeam} 
-					scoreName={homeScoreName} 
-					control={control} 
-					disabled={disabled} 
-					styles={styles} 
-					size={size} 
+				<TeamSection
+					team={homeTeam}
+					scoreName={homeScoreName}
+					control={control}
+					disabled={disabled}
+					styles={styles}
+					size={size}
 				/>
 				<VSSeparator styles={styles} />
-				<TeamSection 
-					team={awayTeam} 
-					scoreName={awayScoreName} 
-					control={control} 
-					disabled={disabled} 
-					styles={styles} 
-					size={size} 
+				<TeamSection
+					team={awayTeam}
+					scoreName={awayScoreName}
+					control={control}
+					disabled={disabled}
+					styles={styles}
+					size={size}
 				/>
 			</Box>
 			<ErrorDisplay homeScoreName={homeScoreName} awayScoreName={awayScoreName} control={control} />

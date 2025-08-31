@@ -121,3 +121,64 @@ export const CreateScraperJobSchema = z.object({
 		apiVersion: z.string().optional(),
 	}),
 });
+
+// Create Tournament Schema
+export const CreateTournamentSchema = z.object({
+	tournamentPublicId: z.string().min(1, "Tournament public ID is required"),
+	baseUrl: z.string().url("Please enter a valid base URL"),
+	label: z
+		.string()
+		.min(3, "Tournament name must be at least 3 characters")
+		.max(50, "Tournament name cannot exceed 50 characters"),
+	slug: z
+		.string()
+		.min(1, "Tournament slug is required")
+		.max(50, "Tournament slug cannot exceed 50 characters"),
+	provider: z.string().min(1, "Please select a data provider"),
+	season: z
+		.string()
+		.min(4, "Season must be at least 4 characters")
+		.max(20, "Season cannot exceed 20 characters"),
+	mode: z.enum(["regular-season-only", "regular-season-and-knockout", "knockout-only"]),
+	standingsMode: z.enum(["unique-group", "multi-group"]),
+});
+
+export const ExecutionJobSchema = z.object({
+	id: z.string().uuid(),
+	requestId: z.string().uuid(),
+	operationType: z.string(),
+	status: z.enum(["pending", "running", "completed", "failed"]),
+	startedAt: z.string().nullable(),
+	completedAt: z.string().nullable(),
+	duration: z.number().nullable(),
+	reportFileUrl: z.string().url().nullable(),
+	reportFileKey: z.string().nullable(),
+	summary: z
+		.object({
+			tournamentId: z.string().uuid(),
+			tournamentLabel: z.string(),
+			provider: z.string(),
+			operationsCount: z.number(),
+			successfulOperations: z.number(),
+			failedOperations: z.number(),
+		})
+		.nullable(),
+	tournament: z
+		.object({
+			id: z.string().uuid(),
+			label: z.string(),
+			logo: z.string().url(),
+		})
+		.nullable(),
+});
+
+// Execution Jobs API Response Schema
+export const ExecutionJobsResponseSchema = z.object({
+	success: z.boolean(),
+	data: ExecutionJobSchema.array(),
+	pagination: z.object({
+		limit: z.number(),
+		offset: z.number(),
+		total: z.number(),
+	}),
+});

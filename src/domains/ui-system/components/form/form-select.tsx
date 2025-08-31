@@ -1,5 +1,5 @@
 import { Box, FormControl, MenuItem, Select, Typography } from "@mui/material";
-import { type Control, Controller, type FieldPath, type FieldValues } from "react-hook-form";
+import { type Control, Controller, type FieldPath, type FieldValues, type FieldError, type ControllerRenderProps } from "react-hook-form";
 
 interface SelectOption {
 	value: string | number;
@@ -18,6 +18,125 @@ interface AppFormSelectProps<T extends FieldValues> {
 	helperText?: string;
 }
 
+// Extracted components to reduce complexity
+const FormLabel = ({ label, required, hasError }: { label: string; required: boolean; hasError: boolean }) => (
+	<Typography
+		variant="caption"
+		sx={{
+			mb: 0.5,
+			display: "block",
+			fontWeight: 500,
+			textTransform: "uppercase",
+			fontSize: "0.75rem",
+			letterSpacing: "0.5px",
+		}}
+		color={hasError ? "error.main" : "neutral.200"}
+	>
+		{label} {required && "*"}
+	</Typography>
+);
+
+const SelectField = <T extends FieldValues>({ 
+	field, 
+	fieldState, 
+	disabled, 
+	placeholder, 
+	options 
+}: { 
+	field: ControllerRenderProps<T, FieldPath<T>>; 
+	fieldState: { error?: FieldError }; 
+	disabled: boolean; 
+	placeholder: string; 
+	options: SelectOption[]; 
+}) => (
+	<FormControl fullWidth error={!!fieldState.error}>
+		<Select
+			{...field}
+			disabled={disabled}
+			displayEmpty
+			sx={{
+				backgroundColor: "black.800",
+				"& .MuiOutlinedInput-notchedOutline": {
+					borderColor: fieldState.error ? "error.main" : "black.400",
+				},
+				"&:hover .MuiOutlinedInput-notchedOutline": {
+					borderColor: fieldState.error ? "error.main" : "black.300",
+				},
+				"&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+					borderColor: fieldState.error ? "error.main" : "primary.main",
+					boxShadow: `0 0 0 2px ${fieldState.error ? "rgba(244, 67, 54, 0.1)" : "rgba(25, 118, 210, 0.1)"}`,
+				},
+				"& .MuiSelect-select": {
+					color: field.value ? "neutral.100" : "neutral.400",
+					fontSize: "0.875rem",
+				},
+				"&.Mui-disabled": {
+					backgroundColor: "black.600",
+					"& .MuiSelect-select": {
+						color: "neutral.500",
+					},
+				},
+			}}
+			MenuProps={{
+				PaperProps: {
+					sx: {
+						backgroundColor: "black.800",
+						border: "1px solid",
+						borderColor: "neutral.600",
+						"& .MuiMenuItem-root": {
+							color: "neutral.100",
+							backgroundColor: "transparent",
+							"&:hover": {
+								backgroundColor: "black.700",
+							},
+							"&.Mui-selected": {
+								backgroundColor: "teal.500",
+								color: "neutral.100",
+								"&:hover": {
+									backgroundColor: "teal.600",
+								},
+							},
+							"&.Mui-disabled": {
+								color: "neutral.500",
+							},
+						},
+					},
+				},
+			}}
+		>
+			<MenuItem value="" disabled>
+				<Typography color="neutral.400" sx={{ fontStyle: "italic" }}>
+					{placeholder}
+				</Typography>
+			</MenuItem>
+
+			{options.map((option) => (
+				<MenuItem key={option.value} value={option.value} disabled={option.disabled}>
+					{option.label}
+				</MenuItem>
+			))}
+		</Select>
+	</FormControl>
+);
+
+const HelperText = ({ fieldState, helperText }: { fieldState: { error?: FieldError }; helperText?: string }) => {
+	if (!fieldState.error?.message && !helperText) return null;
+	
+	return (
+		<Typography
+			variant="caption"
+			color={fieldState.error ? "error.main" : "neutral.400"}
+			sx={{
+				mt: 0.5,
+				display: "block",
+				fontSize: "0.75rem",
+			}}
+		>
+			{fieldState.error?.message || helperText}
+		</Typography>
+	);
+};
+
 export const AppFormSelect = <T extends FieldValues>({
 	name,
 	control,
@@ -34,102 +153,18 @@ export const AppFormSelect = <T extends FieldValues>({
 		render={({ field, fieldState }) => (
 			<Box sx={{ mb: 2 }}>
 				{label && (
-					<Typography
-						variant="caption"
-						sx={{
-							mb: 0.5,
-							display: "block",
-							fontWeight: 500,
-							textTransform: "uppercase",
-							fontSize: "0.75rem",
-							letterSpacing: "0.5px",
-						}}
-						color={fieldState.error ? "error.main" : "text.primary"}
-					>
-						{label} {required && "*"}
-					</Typography>
+					<FormLabel label={label} required={required} hasError={!!fieldState.error} />
 				)}
 
-				<FormControl fullWidth error={!!fieldState.error}>
-					<Select
-						{...field}
-						disabled={disabled}
-						displayEmpty
-						sx={{
-							backgroundColor: "black.800",
-							"& .MuiOutlinedInput-notchedOutline": {
-								borderColor: fieldState.error ? "error.main" : "black.400",
-							},
-							"&:hover .MuiOutlinedInput-notchedOutline": {
-								borderColor: fieldState.error ? "error.main" : "black.300",
-							},
-							"&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-								borderColor: fieldState.error ? "error.main" : "primary.main",
-								boxShadow: `0 0 0 2px ${fieldState.error ? "rgba(244, 67, 54, 0.1)" : "rgba(25, 118, 210, 0.1)"}`,
-							},
-							"& .MuiSelect-select": {
-								color: field.value ? "text.primary" : "text.secondary",
-								fontSize: "0.875rem",
-							},
-							"&.Mui-disabled": {
-								backgroundColor: "black.600",
-								"& .MuiSelect-select": {
-									color: "text.disabled",
-								},
-							},
-						}}
-						MenuProps={{
-							PaperProps: {
-								sx: {
-									backgroundColor: "black.700",
-									border: "1px solid",
-									borderColor: "black.400",
-									"& .MuiMenuItem-root": {
-										color: "text.primary",
-										"&:hover": {
-											backgroundColor: "black.600",
-										},
-										"&.Mui-selected": {
-											backgroundColor: "primary.dark",
-											"&:hover": {
-												backgroundColor: "primary.main",
-											},
-										},
-										"&.Mui-disabled": {
-											color: "text.disabled",
-										},
-									},
-								},
-							},
-						}}
-					>
-						<MenuItem value="" disabled>
-							<Typography color="text.secondary" sx={{ fontStyle: "italic" }}>
-								{placeholder}
-							</Typography>
-						</MenuItem>
+				<SelectField 
+					field={field} 
+					fieldState={fieldState} 
+					disabled={disabled} 
+					placeholder={placeholder} 
+					options={options} 
+				/>
 
-						{options.map((option) => (
-							<MenuItem key={option.value} value={option.value} disabled={option.disabled}>
-								{option.label}
-							</MenuItem>
-						))}
-					</Select>
-				</FormControl>
-
-				{(fieldState.error?.message || helperText) && (
-					<Typography
-						variant="caption"
-						color={fieldState.error ? "error.main" : "text.secondary"}
-						sx={{
-							mt: 0.5,
-							display: "block",
-							fontSize: "0.75rem",
-						}}
-					>
-						{fieldState.error?.message || helperText}
-					</Typography>
-				)}
+				<HelperText fieldState={fieldState} helperText={helperText} />
 			</Box>
 		)}
 	/>

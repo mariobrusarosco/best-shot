@@ -49,6 +49,14 @@ export const Menu = () => {
 						</Typography>
 					) : null}
 				</MenuLink>
+				<MenuLink to="/admin">
+					<MenuButton iconName="Settings" />
+					{isOpen ? (
+						<Typography color="black.400" variant="topic" textTransform="uppercase">
+							admin
+						</Typography>
+					) : null}
+				</MenuLink>
 			</LinkList>
 		</Wrapper>
 	);

@@ -6,7 +6,7 @@
  */
 
 import type { Components, Theme } from "@mui/material/styles";
-import "../../../../types/mui-overrides";
+import "@/types/mui-overrides.d";
 
 export const cardOverrides: Components<Theme>["MuiCard"] = {
 	styleOverrides: {
@@ -46,87 +46,118 @@ export const cardOverrides: Components<Theme>["MuiCard"] = {
 	variants: [
 		// Tournament Card variant
 		{
-			props: { variant: "tournament" as any },
+			props: { variant: "tournament" },
 			style: ({ theme }) => ({
 				backgroundColor: theme.palette.black?.[800] || theme.palette.grey[800],
-				color: theme.palette.common.white,
-				border: "none",
+				border: `1px solid ${theme.palette.neutral[700]}`,
+				borderRadius: theme.shape.borderRadius,
+				padding: theme.spacing(2),
+				transition: "all 0.2s ease-in-out",
 
 				"&:hover": {
-					backgroundColor: theme.palette.black?.[700] || theme.palette.grey[700],
-					transform: "translateY(-4px)",
+					transform: "translateY(-2px)",
+					boxShadow: theme.shadows[8],
+					borderColor: theme.palette.primary.main,
 				},
 			}),
 		},
 
 		// Match Card variant
 		{
-			props: { variant: "match" as any },
+			props: { variant: "match" },
 			style: ({ theme }) => ({
 				minHeight: "200px",
-				padding: theme.spacing(3),
-				display: "flex",
-				flexDirection: "column",
-				justifyContent: "space-between",
+				backgroundColor: theme.palette.black[800],
+				border: `1px solid ${theme.palette.neutral[700]}`,
+				borderRadius: theme.shape.borderRadius,
+				padding: theme.spacing(2),
+				transition: "all 0.2s ease-in-out",
 
 				"&:hover": {
-					transform: "translateY(-3px)",
-					boxShadow: theme.shadows[6],
+					transform: "translateY(-1px)",
+					boxShadow: theme.shadows[4],
+					borderColor: theme.palette.primary.main,
 				},
 			}),
 		},
 
 		// League Card variant
 		{
-			props: { variant: "league" as any },
+			props: { variant: "league" },
 			style: ({ theme }) => ({
 				padding: theme.spacing(2.5),
-				borderRadius: theme.spacing(2), // 16px for more modern look
+				backgroundColor: theme.palette.black[800],
+				border: `1px solid ${theme.palette.neutral[700]}`,
+				borderRadius: theme.shape.borderRadius,
+				transition: "all 0.2s ease-in-out",
 
 				"&:hover": {
+					transform: "translateY(-2px)",
+					boxShadow: theme.shadows[6],
 					borderColor: theme.palette.primary.main,
-					boxShadow: `0 0 0 2px ${theme.palette.primary.main}20`, // 20% opacity
 				},
 			}),
 		},
 
 		// AI Insight Card variant
 		{
-			props: { variant: "aiInsight" as any },
+			props: { variant: "aiInsight" },
 			style: ({ theme }) => ({
 				background: `linear-gradient(135deg, ${theme.palette.primary.main}10, ${theme.palette.primary.main}05)`,
-				borderColor: theme.palette.primary.main,
+				border: `1px solid ${theme.palette.primary.main}20`,
+				borderRadius: theme.shape.borderRadius,
+				padding: theme.spacing(2),
+				position: "relative",
+				overflow: "hidden",
+
+				"&::before": {
+					content: '""',
+					position: "absolute",
+					top: 0,
+					left: 0,
+					right: 0,
+					height: "2px",
+					background: `linear-gradient(90deg, ${theme.palette.primary.main}, ${theme.palette.secondary.main})`,
+				},
 
 				"&:hover": {
-					background: `linear-gradient(135deg, ${theme.palette.primary.main}20, ${theme.palette.primary.main}10)`,
+					transform: "translateY(-1px)",
+					boxShadow: theme.shadows[4],
 				},
 			}),
 		},
 
 		// Elevated card for important content
 		{
-			props: { variant: "elevated" as any },
+			props: { variant: "elevated" },
 			style: ({ theme }) => ({
 				boxShadow: theme.shadows[8],
-				border: "none",
+				backgroundColor: theme.palette.black[800],
+				border: `1px solid ${theme.palette.neutral[700]}`,
+				borderRadius: theme.shape.borderRadius,
+				padding: theme.spacing(2),
+				transition: "all 0.2s ease-in-out",
 
 				"&:hover": {
+					transform: "translateY(-2px)",
 					boxShadow: theme.shadows[12],
-					transform: "translateY(-6px)",
 				},
 			}),
 		},
 
 		// Flat card for subtle content
 		{
-			props: { variant: "flat" as any },
+			props: { variant: "flat" },
 			style: ({ theme }) => ({
 				boxShadow: "none",
-				backgroundColor: theme.palette.background.default,
+				backgroundColor: theme.palette.black[800],
+				border: `1px solid ${theme.palette.neutral[800]}`,
+				borderRadius: theme.shape.borderRadius,
+				padding: theme.spacing(2),
+				transition: "all 0.2s ease-in-out",
 
 				"&:hover": {
-					backgroundColor: theme.palette.action.hover,
-					transform: "none",
+					borderColor: theme.palette.neutral[700],
 				},
 			}),
 		},

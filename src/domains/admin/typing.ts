@@ -1,8 +1,9 @@
 import type { z } from "zod";
-import type { ScraperJobSchema, TournamentMetadataSchema } from "./schemas";
+import type { ScraperJobSchema, TournamentMetadataSchema, ExecutionJobSchema } from "./schemas";
 
 export type IScraperJob = z.infer<typeof ScraperJobSchema>;
 export type ITournamentMetadata = z.infer<typeof TournamentMetadataSchema>;
+export type IExecutionJob = z.infer<typeof ExecutionJobSchema>;
 
 export interface IScraperJobExecution {
 	id: string;

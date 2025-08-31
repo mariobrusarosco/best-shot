@@ -33,8 +33,17 @@ const UiSystemScreen = () => {
 						flexDirection: "column",
 					}}
 				>
-					{Array.from({ length: 8 }).map((_, i) => (
-						<li key={`demo-button-${i}`}>
+					{[
+						{ id: "demo-button-1", number: 1 },
+						{ id: "demo-button-2", number: 2 },
+						{ id: "demo-button-3", number: 3 },
+						{ id: "demo-button-4", number: 4 },
+						{ id: "demo-button-5", number: 5 },
+						{ id: "demo-button-6", number: 6 },
+						{ id: "demo-button-7", number: 7 },
+						{ id: "demo-button-8", number: 8 },
+					].map((item) => (
+						<li key={item.id}>
 							<AppButton
 								sx={{
 									backgroundColor: COLORS.teal[500],
@@ -44,7 +53,7 @@ const UiSystemScreen = () => {
 									borderRadius: BORDER_RADIUS.small,
 								}}
 							>
-								{i}
+								{item.number}
 							</AppButton>
 						</li>
 					))}

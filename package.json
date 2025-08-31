@@ -1,10 +1,10 @@
 {
 	"name": "best-shot",
 	"private": true,
-	"version": "0.55.0",
+	"version": "0.57.0",
 	"scripts": {
 		"start": "concurrently \"vite --mode local-dev\" \"cd ../api-best-shot && yarn dev\"",
-		"dev": "vite --mode local-dev",
+		"dev": "vite --mode local-dev 2>&1 | tee dev.log",
 		"dev-demo": "vite --mode demo",
 		"dev-staging": "vite --mode staging",
 		"dev-prod": "vite --mode production",
@@ -19,7 +19,6 @@
 		"format:fix": "biome format --write",
 		"check": "biome check && tsc --noEmit",
 		"check:fix": "biome check --write && tsc --noEmit",
-		"typecheck": "tsc --noEmit",
 		"typecheck:src": "tsc --noEmit src/**/*.{ts,tsx}",
 		"ci:check": "biome ci",
 		"prepare": "husky"
@@ -44,6 +43,7 @@
 		"@tanstack/react-store": "^0.7.3",
 		"@tanstack/store": "^0.7.2",
 		"axios": "^1.7.2",
+		"date-fns": "^4.1.0",
 		"dayjs": "^1.11.13",
 		"drizzle-zod": "^0.7.0",
 		"launchdarkly-react-client-sdk": "^3.6.1",

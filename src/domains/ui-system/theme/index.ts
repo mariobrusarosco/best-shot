@@ -13,7 +13,6 @@
  */
 
 import { createTheme } from "@mui/material/styles";
-import "../../../types/mui-overrides";
 
 // Component overrides
 import { buttonOverrides } from "./components/button";
@@ -43,7 +42,7 @@ const theme = createTheme({
 	spacing: MUI_SPACING_CONFIG,
 
 	// Breakpoint system
-	breakpoints: MUI_BREAKPOINTS_CONFIG as any,
+	breakpoints: MUI_BREAKPOINTS_CONFIG,
 
 	// Shape system
 	shape: {

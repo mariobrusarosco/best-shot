@@ -5,25 +5,11 @@
  * This component serves as the foundation for all button variants across domains.
  */
 
-import { Button as MuiButton, type ButtonProps as MuiButtonProps } from "@mui/material";
+import { Button as MuiButton } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { forwardRef } from "react";
-
-// Extended button props for our design system
-export interface AppButtonProps extends MuiButtonProps {
-	/**
-	 * Custom loading state
-	 */
-	loading?: boolean;
-	/**
-	 * Icon to show before the button text
-	 */
-	startIcon?: React.ReactNode;
-	/**
-	 * Icon to show after the button text
-	 */
-	endIcon?: React.ReactNode;
-}
+import type { AppButtonProps } from "@/types/ui-system";
+import "@/types/mui-overrides.d";
 
 // Enhanced styled button with design system improvements
 const StyledButton = styled(MuiButton)<AppButtonProps>(({ theme, loading }) => ({
@@ -70,7 +56,7 @@ export const AppButton = forwardRef<HTMLButtonElement, AppButtonProps>(
 		return (
 			<StyledButton
 				ref={ref}
-				disabled={disabled || loading}
+				disabled={Boolean(disabled || loading)}
 				loading={loading}
 				startIcon={loading ? undefined : startIcon}
 				endIcon={loading ? undefined : endIcon}

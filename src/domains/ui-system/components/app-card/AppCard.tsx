@@ -14,30 +14,12 @@
  * Follows Static Styled Components pattern for optimal performance.
  */
 
-import { Card as MuiCard, type CardProps as MuiCardProps } from "@mui/material";
+import { Card as MuiCard } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { motion } from "motion/react";
 import { forwardRef } from "react";
-
-// Extended card props for our design system
-export interface AppCardProps extends Omit<MuiCardProps, "variant"> {
-	/**
-	 * Card variant for different use cases
-	 */
-	variant?: "tournament" | "league" | "match" | "aiInsight" | "elevated" | "flat";
-	/**
-	 * Interactive state - adds hover effects and cursor pointer
-	 */
-	interactive?: boolean;
-	/**
-	 * Loading state - shows skeleton-like appearance
-	 */
-	loading?: boolean;
-	/**
-	 * Enable motion animations
-	 */
-	withMotion?: boolean;
-}
+import type { AppCardProps } from "@/types/ui-system";
+import "@/types/mui-overrides.d";
 
 // ===== STYLED COMPONENTS (Following Static Styled Components Pattern) =====
 

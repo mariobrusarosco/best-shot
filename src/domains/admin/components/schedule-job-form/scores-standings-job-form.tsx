@@ -93,10 +93,10 @@ export const ScoresAndStandingsJobForm = ({
 					<AppFormInput
 						name="matchStartTime"
 						label="Match Start Time"
-						type="datetime-local"
+						type="text"
 						control={control}
 						disabled={isPending}
-						placeholder="Enter match start time (ISO format)"
+						placeholder="2025-09-01T15:00:00Z"
 					/>
 
 					<AppFormInput

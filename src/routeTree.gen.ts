@@ -8,602 +8,638 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute } from '@tanstack/react-router'
 
 // Import Routes
 
-import { Route as rootRoute } from "./routes/__root";
-import { Route as AuthImport } from "./routes/_auth";
-import { Route as AuthAdminLayoutImport } from "./routes/_auth.admin/_layout";
-import { Route as AuthAdminLayoutReportsImport } from "./routes/_auth.admin/_layout.reports";
-import { Route as AuthAdminLayoutSchedulerJobsImport } from "./routes/_auth.admin/_layout.scheduler-jobs";
-import { Route as AuthDashboardImport } from "./routes/_auth.dashboard";
-import { Route as AuthMyAccountImport } from "./routes/_auth.my-account";
-import { Route as AuthTournamentsTournamentIdLayoutImport } from "./routes/_auth.tournaments/$tournamentId/_layout";
-import { Route as IndexRouteImport } from "./routes/index.route";
-import { Route as UiSystemImport } from "./routes/ui-system";
+import { Route as rootRoute } from './routes/__root'
+import { Route as UiSystemImport } from './routes/ui-system'
+import { Route as AuthImport } from './routes/_auth'
+import { Route as IndexRouteImport } from './routes/index.route'
+import { Route as AuthMyAccountImport } from './routes/_auth.my-account'
+import { Route as AuthDashboardImport } from './routes/_auth.dashboard'
+import { Route as AuthAdminLayoutImport } from './routes/_auth.admin/_layout'
+import { Route as AuthTournamentsTournamentIdLayoutImport } from './routes/_auth.tournaments/$tournamentId/_layout'
+import { Route as AuthAdminLayoutSchedulerJobsImport } from './routes/_auth.admin/_layout.scheduler-jobs'
+import { Route as AuthAdminLayoutReportsImport } from './routes/_auth.admin/_layout.reports'
 
 // Create Virtual Routes
 
-const SignupLazyImport = createFileRoute("/signup")();
-const LoginLazyImport = createFileRoute("/login")();
-const AuthAdminImport = createFileRoute("/_auth/admin")();
-const AuthTournamentsTournamentIdImport = createFileRoute("/_auth/tournaments/$tournamentId")();
-const AuthTournamentsIndexLazyImport = createFileRoute("/_auth/tournaments/")();
-const AuthLeaguesIndexLazyImport = createFileRoute("/_auth/leagues/")();
-const AuthLeaguesLeagueIdIndexLazyImport = createFileRoute("/_auth/leagues/$leagueId/")();
-const AuthAdminLayoutIndexLazyImport = createFileRoute("/_auth/admin/_layout/")();
+const SignupLazyImport = createFileRoute('/signup')()
+const LoginLazyImport = createFileRoute('/login')()
+const AuthAdminImport = createFileRoute('/_auth/admin')()
+const AuthTournamentsTournamentIdImport = createFileRoute(
+  '/_auth/tournaments/$tournamentId',
+)()
+const AuthTournamentsIndexLazyImport = createFileRoute('/_auth/tournaments/')()
+const AuthLeaguesIndexLazyImport = createFileRoute('/_auth/leagues/')()
+const AuthLeaguesLeagueIdIndexLazyImport = createFileRoute(
+  '/_auth/leagues/$leagueId/',
+)()
+const AuthAdminLayoutIndexLazyImport = createFileRoute(
+  '/_auth/admin/_layout/',
+)()
 const AuthTournamentsTournamentIdLayoutStandingsLazyImport = createFileRoute(
-	"/_auth/tournaments/$tournamentId/_layout/standings"
-)();
+  '/_auth/tournaments/$tournamentId/_layout/standings',
+)()
 const AuthTournamentsTournamentIdLayoutSimulatorLazyImport = createFileRoute(
-	"/_auth/tournaments/$tournamentId/_layout/simulator"
-)();
+  '/_auth/tournaments/$tournamentId/_layout/simulator',
+)()
 const AuthTournamentsTournamentIdLayoutPerformanceLazyImport = createFileRoute(
-	"/_auth/tournaments/$tournamentId/_layout/performance"
-)();
+  '/_auth/tournaments/$tournamentId/_layout/performance',
+)()
 const AuthTournamentsTournamentIdLayoutMatchesLazyImport = createFileRoute(
-	"/_auth/tournaments/$tournamentId/_layout/matches"
-)();
+  '/_auth/tournaments/$tournamentId/_layout/matches',
+)()
 const AuthAdminLayoutTournamentTournamentIdLazyImport = createFileRoute(
-	"/_auth/admin/_layout/tournament/$tournamentId"
-)();
+  '/_auth/admin/_layout/tournament/$tournamentId',
+)()
 
 // Create/Update Routes
 
 const SignupLazyRoute = SignupLazyImport.update({
-	id: "/signup",
-	path: "/signup",
-	getParentRoute: () => rootRoute,
-} as any).lazy(() => import("./routes/signup.lazy").then((d) => d.Route));
+  id: '/signup',
+  path: '/signup',
+  getParentRoute: () => rootRoute,
+} as any).lazy(() => import('./routes/signup.lazy').then((d) => d.Route))
 
 const LoginLazyRoute = LoginLazyImport.update({
-	id: "/login",
-	path: "/login",
-	getParentRoute: () => rootRoute,
-} as any).lazy(() => import("./routes/login.lazy").then((d) => d.Route));
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRoute,
+} as any).lazy(() => import('./routes/login.lazy').then((d) => d.Route))
 
 const UiSystemRoute = UiSystemImport.update({
-	id: "/ui-system",
-	path: "/ui-system",
-	getParentRoute: () => rootRoute,
-} as any);
+  id: '/ui-system',
+  path: '/ui-system',
+  getParentRoute: () => rootRoute,
+} as any)
 
 const AuthRoute = AuthImport.update({
-	id: "/_auth",
-	getParentRoute: () => rootRoute,
-} as any);
+  id: '/_auth',
+  getParentRoute: () => rootRoute,
+} as any)
 
 const IndexRouteRoute = IndexRouteImport.update({
-	id: "/",
-	path: "/",
-	getParentRoute: () => rootRoute,
-} as any);
+  id: '/',
+  path: '/',
+  getParentRoute: () => rootRoute,
+} as any)
 
 const AuthAdminRoute = AuthAdminImport.update({
-	id: "/admin",
-	path: "/admin",
-	getParentRoute: () => AuthRoute,
-} as any);
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => AuthRoute,
+} as any)
 
 const AuthMyAccountRoute = AuthMyAccountImport.update({
-	id: "/my-account",
-	path: "/my-account",
-	getParentRoute: () => AuthRoute,
-} as any);
+  id: '/my-account',
+  path: '/my-account',
+  getParentRoute: () => AuthRoute,
+} as any)
 
 const AuthDashboardRoute = AuthDashboardImport.update({
-	id: "/dashboard",
-	path: "/dashboard",
-	getParentRoute: () => AuthRoute,
-} as any);
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => AuthRoute,
+} as any)
 
-const AuthTournamentsTournamentIdRoute = AuthTournamentsTournamentIdImport.update({
-	id: "/tournaments/$tournamentId",
-	path: "/tournaments/$tournamentId",
-	getParentRoute: () => AuthRoute,
-} as any);
+const AuthTournamentsTournamentIdRoute =
+  AuthTournamentsTournamentIdImport.update({
+    id: '/tournaments/$tournamentId',
+    path: '/tournaments/$tournamentId',
+    getParentRoute: () => AuthRoute,
+  } as any)
 
 const AuthTournamentsIndexLazyRoute = AuthTournamentsIndexLazyImport.update({
-	id: "/tournaments/",
-	path: "/tournaments/",
-	getParentRoute: () => AuthRoute,
-} as any).lazy(() => import("./routes/_auth.tournaments/index.lazy").then((d) => d.Route));
+  id: '/tournaments/',
+  path: '/tournaments/',
+  getParentRoute: () => AuthRoute,
+} as any).lazy(() =>
+  import('./routes/_auth.tournaments/index.lazy').then((d) => d.Route),
+)
 
 const AuthLeaguesIndexLazyRoute = AuthLeaguesIndexLazyImport.update({
-	id: "/leagues/",
-	path: "/leagues/",
-	getParentRoute: () => AuthRoute,
-} as any).lazy(() => import("./routes/_auth.leagues/index.lazy").then((d) => d.Route));
+  id: '/leagues/',
+  path: '/leagues/',
+  getParentRoute: () => AuthRoute,
+} as any).lazy(() =>
+  import('./routes/_auth.leagues/index.lazy').then((d) => d.Route),
+)
 
 const AuthAdminLayoutRoute = AuthAdminLayoutImport.update({
-	id: "/_layout",
-	getParentRoute: () => AuthAdminRoute,
-} as any);
+  id: '/_layout',
+  getParentRoute: () => AuthAdminRoute,
+} as any)
 
-const AuthLeaguesLeagueIdIndexLazyRoute = AuthLeaguesLeagueIdIndexLazyImport.update({
-	id: "/leagues/$leagueId/",
-	path: "/leagues/$leagueId/",
-	getParentRoute: () => AuthRoute,
-} as any).lazy(() => import("./routes/_auth.leagues/$leagueId/index.lazy").then((d) => d.Route));
+const AuthLeaguesLeagueIdIndexLazyRoute =
+  AuthLeaguesLeagueIdIndexLazyImport.update({
+    id: '/leagues/$leagueId/',
+    path: '/leagues/$leagueId/',
+    getParentRoute: () => AuthRoute,
+  } as any).lazy(() =>
+    import('./routes/_auth.leagues/$leagueId/index.lazy').then((d) => d.Route),
+  )
 
 const AuthAdminLayoutIndexLazyRoute = AuthAdminLayoutIndexLazyImport.update({
-	id: "/",
-	path: "/",
-	getParentRoute: () => AuthAdminLayoutRoute,
-} as any).lazy(() => import("./routes/_auth.admin/_layout.index.lazy").then((d) => d.Route));
+  id: '/',
+  path: '/',
+  getParentRoute: () => AuthAdminLayoutRoute,
+} as any).lazy(() =>
+  import('./routes/_auth.admin/_layout.index.lazy').then((d) => d.Route),
+)
 
-const AuthTournamentsTournamentIdLayoutRoute = AuthTournamentsTournamentIdLayoutImport.update({
-	id: "/_layout",
-	getParentRoute: () => AuthTournamentsTournamentIdRoute,
-} as any);
+const AuthTournamentsTournamentIdLayoutRoute =
+  AuthTournamentsTournamentIdLayoutImport.update({
+    id: '/_layout',
+    getParentRoute: () => AuthTournamentsTournamentIdRoute,
+  } as any)
 
-const AuthAdminLayoutSchedulerJobsRoute = AuthAdminLayoutSchedulerJobsImport.update({
-	id: "/scheduler-jobs",
-	path: "/scheduler-jobs",
-	getParentRoute: () => AuthAdminLayoutRoute,
-} as any);
+const AuthAdminLayoutSchedulerJobsRoute =
+  AuthAdminLayoutSchedulerJobsImport.update({
+    id: '/scheduler-jobs',
+    path: '/scheduler-jobs',
+    getParentRoute: () => AuthAdminLayoutRoute,
+  } as any)
 
 const AuthAdminLayoutReportsRoute = AuthAdminLayoutReportsImport.update({
-	id: "/reports",
-	path: "/reports",
-	getParentRoute: () => AuthAdminLayoutRoute,
-} as any);
+  id: '/reports',
+  path: '/reports',
+  getParentRoute: () => AuthAdminLayoutRoute,
+} as any)
 
 const AuthTournamentsTournamentIdLayoutStandingsLazyRoute =
-	AuthTournamentsTournamentIdLayoutStandingsLazyImport.update({
-		id: "/standings",
-		path: "/standings",
-		getParentRoute: () => AuthTournamentsTournamentIdLayoutRoute,
-	} as any).lazy(() =>
-		import("./routes/_auth.tournaments/$tournamentId/_layout.standings.lazy").then((d) => d.Route)
-	);
+  AuthTournamentsTournamentIdLayoutStandingsLazyImport.update({
+    id: '/standings',
+    path: '/standings',
+    getParentRoute: () => AuthTournamentsTournamentIdLayoutRoute,
+  } as any).lazy(() =>
+    import(
+      './routes/_auth.tournaments/$tournamentId/_layout.standings.lazy'
+    ).then((d) => d.Route),
+  )
 
 const AuthTournamentsTournamentIdLayoutSimulatorLazyRoute =
-	AuthTournamentsTournamentIdLayoutSimulatorLazyImport.update({
-		id: "/simulator",
-		path: "/simulator",
-		getParentRoute: () => AuthTournamentsTournamentIdLayoutRoute,
-	} as any).lazy(() =>
-		import("./routes/_auth.tournaments/$tournamentId/_layout.simulator.lazy").then((d) => d.Route)
-	);
+  AuthTournamentsTournamentIdLayoutSimulatorLazyImport.update({
+    id: '/simulator',
+    path: '/simulator',
+    getParentRoute: () => AuthTournamentsTournamentIdLayoutRoute,
+  } as any).lazy(() =>
+    import(
+      './routes/_auth.tournaments/$tournamentId/_layout.simulator.lazy'
+    ).then((d) => d.Route),
+  )
 
 const AuthTournamentsTournamentIdLayoutPerformanceLazyRoute =
-	AuthTournamentsTournamentIdLayoutPerformanceLazyImport.update({
-		id: "/performance",
-		path: "/performance",
-		getParentRoute: () => AuthTournamentsTournamentIdLayoutRoute,
-	} as any).lazy(() =>
-		import("./routes/_auth.tournaments/$tournamentId/_layout.performance.lazy").then((d) => d.Route)
-	);
+  AuthTournamentsTournamentIdLayoutPerformanceLazyImport.update({
+    id: '/performance',
+    path: '/performance',
+    getParentRoute: () => AuthTournamentsTournamentIdLayoutRoute,
+  } as any).lazy(() =>
+    import(
+      './routes/_auth.tournaments/$tournamentId/_layout.performance.lazy'
+    ).then((d) => d.Route),
+  )
 
 const AuthTournamentsTournamentIdLayoutMatchesLazyRoute =
-	AuthTournamentsTournamentIdLayoutMatchesLazyImport.update({
-		id: "/matches",
-		path: "/matches",
-		getParentRoute: () => AuthTournamentsTournamentIdLayoutRoute,
-	} as any).lazy(() =>
-		import("./routes/_auth.tournaments/$tournamentId/_layout.matches.lazy").then((d) => d.Route)
-	);
+  AuthTournamentsTournamentIdLayoutMatchesLazyImport.update({
+    id: '/matches',
+    path: '/matches',
+    getParentRoute: () => AuthTournamentsTournamentIdLayoutRoute,
+  } as any).lazy(() =>
+    import(
+      './routes/_auth.tournaments/$tournamentId/_layout.matches.lazy'
+    ).then((d) => d.Route),
+  )
 
 const AuthAdminLayoutTournamentTournamentIdLazyRoute =
-	AuthAdminLayoutTournamentTournamentIdLazyImport.update({
-		id: "/tournament/$tournamentId",
-		path: "/tournament/$tournamentId",
-		getParentRoute: () => AuthAdminLayoutRoute,
-	} as any).lazy(() =>
-		import("./routes/_auth.admin/_layout.tournament.$tournamentId.lazy").then((d) => d.Route)
-	);
+  AuthAdminLayoutTournamentTournamentIdLazyImport.update({
+    id: '/tournament/$tournamentId',
+    path: '/tournament/$tournamentId',
+    getParentRoute: () => AuthAdminLayoutRoute,
+  } as any).lazy(() =>
+    import('./routes/_auth.admin/_layout.tournament.$tournamentId.lazy').then(
+      (d) => d.Route,
+    ),
+  )
 
 // Populate the FileRoutesByPath interface
 
-declare module "@tanstack/react-router" {
-	interface FileRoutesByPath {
-		"/": {
-			id: "/";
-			path: "/";
-			fullPath: "/";
-			preLoaderRoute: typeof IndexRouteImport;
-			parentRoute: typeof rootRoute;
-		};
-		"/_auth": {
-			id: "/_auth";
-			path: "";
-			fullPath: "";
-			preLoaderRoute: typeof AuthImport;
-			parentRoute: typeof rootRoute;
-		};
-		"/ui-system": {
-			id: "/ui-system";
-			path: "/ui-system";
-			fullPath: "/ui-system";
-			preLoaderRoute: typeof UiSystemImport;
-			parentRoute: typeof rootRoute;
-		};
-		"/login": {
-			id: "/login";
-			path: "/login";
-			fullPath: "/login";
-			preLoaderRoute: typeof LoginLazyImport;
-			parentRoute: typeof rootRoute;
-		};
-		"/signup": {
-			id: "/signup";
-			path: "/signup";
-			fullPath: "/signup";
-			preLoaderRoute: typeof SignupLazyImport;
-			parentRoute: typeof rootRoute;
-		};
-		"/_auth/dashboard": {
-			id: "/_auth/dashboard";
-			path: "/dashboard";
-			fullPath: "/dashboard";
-			preLoaderRoute: typeof AuthDashboardImport;
-			parentRoute: typeof AuthImport;
-		};
-		"/_auth/my-account": {
-			id: "/_auth/my-account";
-			path: "/my-account";
-			fullPath: "/my-account";
-			preLoaderRoute: typeof AuthMyAccountImport;
-			parentRoute: typeof AuthImport;
-		};
-		"/_auth/admin": {
-			id: "/_auth/admin";
-			path: "/admin";
-			fullPath: "/admin";
-			preLoaderRoute: typeof AuthAdminImport;
-			parentRoute: typeof AuthImport;
-		};
-		"/_auth/admin/_layout": {
-			id: "/_auth/admin/_layout";
-			path: "/admin";
-			fullPath: "/admin";
-			preLoaderRoute: typeof AuthAdminLayoutImport;
-			parentRoute: typeof AuthAdminRoute;
-		};
-		"/_auth/leagues/": {
-			id: "/_auth/leagues/";
-			path: "/leagues";
-			fullPath: "/leagues";
-			preLoaderRoute: typeof AuthLeaguesIndexLazyImport;
-			parentRoute: typeof AuthImport;
-		};
-		"/_auth/tournaments/": {
-			id: "/_auth/tournaments/";
-			path: "/tournaments";
-			fullPath: "/tournaments";
-			preLoaderRoute: typeof AuthTournamentsIndexLazyImport;
-			parentRoute: typeof AuthImport;
-		};
-		"/_auth/admin/_layout/reports": {
-			id: "/_auth/admin/_layout/reports";
-			path: "/reports";
-			fullPath: "/admin/reports";
-			preLoaderRoute: typeof AuthAdminLayoutReportsImport;
-			parentRoute: typeof AuthAdminLayoutImport;
-		};
-		"/_auth/admin/_layout/scheduler-jobs": {
-			id: "/_auth/admin/_layout/scheduler-jobs";
-			path: "/scheduler-jobs";
-			fullPath: "/admin/scheduler-jobs";
-			preLoaderRoute: typeof AuthAdminLayoutSchedulerJobsImport;
-			parentRoute: typeof AuthAdminLayoutImport;
-		};
-		"/_auth/tournaments/$tournamentId": {
-			id: "/_auth/tournaments/$tournamentId";
-			path: "/tournaments/$tournamentId";
-			fullPath: "/tournaments/$tournamentId";
-			preLoaderRoute: typeof AuthTournamentsTournamentIdImport;
-			parentRoute: typeof AuthImport;
-		};
-		"/_auth/tournaments/$tournamentId/_layout": {
-			id: "/_auth/tournaments/$tournamentId/_layout";
-			path: "/tournaments/$tournamentId";
-			fullPath: "/tournaments/$tournamentId";
-			preLoaderRoute: typeof AuthTournamentsTournamentIdLayoutImport;
-			parentRoute: typeof AuthTournamentsTournamentIdRoute;
-		};
-		"/_auth/admin/_layout/": {
-			id: "/_auth/admin/_layout/";
-			path: "/";
-			fullPath: "/admin/";
-			preLoaderRoute: typeof AuthAdminLayoutIndexLazyImport;
-			parentRoute: typeof AuthAdminLayoutImport;
-		};
-		"/_auth/leagues/$leagueId/": {
-			id: "/_auth/leagues/$leagueId/";
-			path: "/leagues/$leagueId";
-			fullPath: "/leagues/$leagueId";
-			preLoaderRoute: typeof AuthLeaguesLeagueIdIndexLazyImport;
-			parentRoute: typeof AuthImport;
-		};
-		"/_auth/admin/_layout/tournament/$tournamentId": {
-			id: "/_auth/admin/_layout/tournament/$tournamentId";
-			path: "/tournament/$tournamentId";
-			fullPath: "/admin/tournament/$tournamentId";
-			preLoaderRoute: typeof AuthAdminLayoutTournamentTournamentIdLazyImport;
-			parentRoute: typeof AuthAdminLayoutImport;
-		};
-		"/_auth/tournaments/$tournamentId/_layout/matches": {
-			id: "/_auth/tournaments/$tournamentId/_layout/matches";
-			path: "/matches";
-			fullPath: "/tournaments/$tournamentId/matches";
-			preLoaderRoute: typeof AuthTournamentsTournamentIdLayoutMatchesLazyImport;
-			parentRoute: typeof AuthTournamentsTournamentIdLayoutImport;
-		};
-		"/_auth/tournaments/$tournamentId/_layout/performance": {
-			id: "/_auth/tournaments/$tournamentId/_layout/performance";
-			path: "/performance";
-			fullPath: "/tournaments/$tournamentId/performance";
-			preLoaderRoute: typeof AuthTournamentsTournamentIdLayoutPerformanceLazyImport;
-			parentRoute: typeof AuthTournamentsTournamentIdLayoutImport;
-		};
-		"/_auth/tournaments/$tournamentId/_layout/simulator": {
-			id: "/_auth/tournaments/$tournamentId/_layout/simulator";
-			path: "/simulator";
-			fullPath: "/tournaments/$tournamentId/simulator";
-			preLoaderRoute: typeof AuthTournamentsTournamentIdLayoutSimulatorLazyImport;
-			parentRoute: typeof AuthTournamentsTournamentIdLayoutImport;
-		};
-		"/_auth/tournaments/$tournamentId/_layout/standings": {
-			id: "/_auth/tournaments/$tournamentId/_layout/standings";
-			path: "/standings";
-			fullPath: "/tournaments/$tournamentId/standings";
-			preLoaderRoute: typeof AuthTournamentsTournamentIdLayoutStandingsLazyImport;
-			parentRoute: typeof AuthTournamentsTournamentIdLayoutImport;
-		};
-	}
+declare module '@tanstack/react-router' {
+  interface FileRoutesByPath {
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRoute
+    }
+    '/_auth': {
+      id: '/_auth'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof AuthImport
+      parentRoute: typeof rootRoute
+    }
+    '/ui-system': {
+      id: '/ui-system'
+      path: '/ui-system'
+      fullPath: '/ui-system'
+      preLoaderRoute: typeof UiSystemImport
+      parentRoute: typeof rootRoute
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginLazyImport
+      parentRoute: typeof rootRoute
+    }
+    '/signup': {
+      id: '/signup'
+      path: '/signup'
+      fullPath: '/signup'
+      preLoaderRoute: typeof SignupLazyImport
+      parentRoute: typeof rootRoute
+    }
+    '/_auth/dashboard': {
+      id: '/_auth/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof AuthDashboardImport
+      parentRoute: typeof AuthImport
+    }
+    '/_auth/my-account': {
+      id: '/_auth/my-account'
+      path: '/my-account'
+      fullPath: '/my-account'
+      preLoaderRoute: typeof AuthMyAccountImport
+      parentRoute: typeof AuthImport
+    }
+    '/_auth/admin': {
+      id: '/_auth/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AuthAdminImport
+      parentRoute: typeof AuthImport
+    }
+    '/_auth/admin/_layout': {
+      id: '/_auth/admin/_layout'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AuthAdminLayoutImport
+      parentRoute: typeof AuthAdminRoute
+    }
+    '/_auth/leagues/': {
+      id: '/_auth/leagues/'
+      path: '/leagues'
+      fullPath: '/leagues'
+      preLoaderRoute: typeof AuthLeaguesIndexLazyImport
+      parentRoute: typeof AuthImport
+    }
+    '/_auth/tournaments/': {
+      id: '/_auth/tournaments/'
+      path: '/tournaments'
+      fullPath: '/tournaments'
+      preLoaderRoute: typeof AuthTournamentsIndexLazyImport
+      parentRoute: typeof AuthImport
+    }
+    '/_auth/admin/_layout/reports': {
+      id: '/_auth/admin/_layout/reports'
+      path: '/reports'
+      fullPath: '/admin/reports'
+      preLoaderRoute: typeof AuthAdminLayoutReportsImport
+      parentRoute: typeof AuthAdminLayoutImport
+    }
+    '/_auth/admin/_layout/scheduler-jobs': {
+      id: '/_auth/admin/_layout/scheduler-jobs'
+      path: '/scheduler-jobs'
+      fullPath: '/admin/scheduler-jobs'
+      preLoaderRoute: typeof AuthAdminLayoutSchedulerJobsImport
+      parentRoute: typeof AuthAdminLayoutImport
+    }
+    '/_auth/tournaments/$tournamentId': {
+      id: '/_auth/tournaments/$tournamentId'
+      path: '/tournaments/$tournamentId'
+      fullPath: '/tournaments/$tournamentId'
+      preLoaderRoute: typeof AuthTournamentsTournamentIdImport
+      parentRoute: typeof AuthImport
+    }
+    '/_auth/tournaments/$tournamentId/_layout': {
+      id: '/_auth/tournaments/$tournamentId/_layout'
+      path: '/tournaments/$tournamentId'
+      fullPath: '/tournaments/$tournamentId'
+      preLoaderRoute: typeof AuthTournamentsTournamentIdLayoutImport
+      parentRoute: typeof AuthTournamentsTournamentIdRoute
+    }
+    '/_auth/admin/_layout/': {
+      id: '/_auth/admin/_layout/'
+      path: '/'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AuthAdminLayoutIndexLazyImport
+      parentRoute: typeof AuthAdminLayoutImport
+    }
+    '/_auth/leagues/$leagueId/': {
+      id: '/_auth/leagues/$leagueId/'
+      path: '/leagues/$leagueId'
+      fullPath: '/leagues/$leagueId'
+      preLoaderRoute: typeof AuthLeaguesLeagueIdIndexLazyImport
+      parentRoute: typeof AuthImport
+    }
+    '/_auth/admin/_layout/tournament/$tournamentId': {
+      id: '/_auth/admin/_layout/tournament/$tournamentId'
+      path: '/tournament/$tournamentId'
+      fullPath: '/admin/tournament/$tournamentId'
+      preLoaderRoute: typeof AuthAdminLayoutTournamentTournamentIdLazyImport
+      parentRoute: typeof AuthAdminLayoutImport
+    }
+    '/_auth/tournaments/$tournamentId/_layout/matches': {
+      id: '/_auth/tournaments/$tournamentId/_layout/matches'
+      path: '/matches'
+      fullPath: '/tournaments/$tournamentId/matches'
+      preLoaderRoute: typeof AuthTournamentsTournamentIdLayoutMatchesLazyImport
+      parentRoute: typeof AuthTournamentsTournamentIdLayoutImport
+    }
+    '/_auth/tournaments/$tournamentId/_layout/performance': {
+      id: '/_auth/tournaments/$tournamentId/_layout/performance'
+      path: '/performance'
+      fullPath: '/tournaments/$tournamentId/performance'
+      preLoaderRoute: typeof AuthTournamentsTournamentIdLayoutPerformanceLazyImport
+      parentRoute: typeof AuthTournamentsTournamentIdLayoutImport
+    }
+    '/_auth/tournaments/$tournamentId/_layout/simulator': {
+      id: '/_auth/tournaments/$tournamentId/_layout/simulator'
+      path: '/simulator'
+      fullPath: '/tournaments/$tournamentId/simulator'
+      preLoaderRoute: typeof AuthTournamentsTournamentIdLayoutSimulatorLazyImport
+      parentRoute: typeof AuthTournamentsTournamentIdLayoutImport
+    }
+    '/_auth/tournaments/$tournamentId/_layout/standings': {
+      id: '/_auth/tournaments/$tournamentId/_layout/standings'
+      path: '/standings'
+      fullPath: '/tournaments/$tournamentId/standings'
+      preLoaderRoute: typeof AuthTournamentsTournamentIdLayoutStandingsLazyImport
+      parentRoute: typeof AuthTournamentsTournamentIdLayoutImport
+    }
+  }
 }
 
 // Create and export the route tree
 
 interface AuthAdminLayoutRouteChildren {
-	AuthAdminLayoutReportsRoute: typeof AuthAdminLayoutReportsRoute;
-	AuthAdminLayoutSchedulerJobsRoute: typeof AuthAdminLayoutSchedulerJobsRoute;
-	AuthAdminLayoutIndexLazyRoute: typeof AuthAdminLayoutIndexLazyRoute;
-	AuthAdminLayoutTournamentTournamentIdLazyRoute: typeof AuthAdminLayoutTournamentTournamentIdLazyRoute;
+  AuthAdminLayoutReportsRoute: typeof AuthAdminLayoutReportsRoute
+  AuthAdminLayoutSchedulerJobsRoute: typeof AuthAdminLayoutSchedulerJobsRoute
+  AuthAdminLayoutIndexLazyRoute: typeof AuthAdminLayoutIndexLazyRoute
+  AuthAdminLayoutTournamentTournamentIdLazyRoute: typeof AuthAdminLayoutTournamentTournamentIdLazyRoute
 }
 
 const AuthAdminLayoutRouteChildren: AuthAdminLayoutRouteChildren = {
-	AuthAdminLayoutReportsRoute: AuthAdminLayoutReportsRoute,
-	AuthAdminLayoutSchedulerJobsRoute: AuthAdminLayoutSchedulerJobsRoute,
-	AuthAdminLayoutIndexLazyRoute: AuthAdminLayoutIndexLazyRoute,
-	AuthAdminLayoutTournamentTournamentIdLazyRoute: AuthAdminLayoutTournamentTournamentIdLazyRoute,
-};
+  AuthAdminLayoutReportsRoute: AuthAdminLayoutReportsRoute,
+  AuthAdminLayoutSchedulerJobsRoute: AuthAdminLayoutSchedulerJobsRoute,
+  AuthAdminLayoutIndexLazyRoute: AuthAdminLayoutIndexLazyRoute,
+  AuthAdminLayoutTournamentTournamentIdLazyRoute:
+    AuthAdminLayoutTournamentTournamentIdLazyRoute,
+}
 
 const AuthAdminLayoutRouteWithChildren = AuthAdminLayoutRoute._addFileChildren(
-	AuthAdminLayoutRouteChildren
-);
+  AuthAdminLayoutRouteChildren,
+)
 
 interface AuthAdminRouteChildren {
-	AuthAdminLayoutRoute: typeof AuthAdminLayoutRouteWithChildren;
+  AuthAdminLayoutRoute: typeof AuthAdminLayoutRouteWithChildren
 }
 
 const AuthAdminRouteChildren: AuthAdminRouteChildren = {
-	AuthAdminLayoutRoute: AuthAdminLayoutRouteWithChildren,
-};
+  AuthAdminLayoutRoute: AuthAdminLayoutRouteWithChildren,
+}
 
-const AuthAdminRouteWithChildren = AuthAdminRoute._addFileChildren(AuthAdminRouteChildren);
+const AuthAdminRouteWithChildren = AuthAdminRoute._addFileChildren(
+  AuthAdminRouteChildren,
+)
 
 interface AuthTournamentsTournamentIdLayoutRouteChildren {
-	AuthTournamentsTournamentIdLayoutMatchesLazyRoute: typeof AuthTournamentsTournamentIdLayoutMatchesLazyRoute;
-	AuthTournamentsTournamentIdLayoutPerformanceLazyRoute: typeof AuthTournamentsTournamentIdLayoutPerformanceLazyRoute;
-	AuthTournamentsTournamentIdLayoutSimulatorLazyRoute: typeof AuthTournamentsTournamentIdLayoutSimulatorLazyRoute;
-	AuthTournamentsTournamentIdLayoutStandingsLazyRoute: typeof AuthTournamentsTournamentIdLayoutStandingsLazyRoute;
+  AuthTournamentsTournamentIdLayoutMatchesLazyRoute: typeof AuthTournamentsTournamentIdLayoutMatchesLazyRoute
+  AuthTournamentsTournamentIdLayoutPerformanceLazyRoute: typeof AuthTournamentsTournamentIdLayoutPerformanceLazyRoute
+  AuthTournamentsTournamentIdLayoutSimulatorLazyRoute: typeof AuthTournamentsTournamentIdLayoutSimulatorLazyRoute
+  AuthTournamentsTournamentIdLayoutStandingsLazyRoute: typeof AuthTournamentsTournamentIdLayoutStandingsLazyRoute
 }
 
 const AuthTournamentsTournamentIdLayoutRouteChildren: AuthTournamentsTournamentIdLayoutRouteChildren =
-	{
-		AuthTournamentsTournamentIdLayoutMatchesLazyRoute:
-			AuthTournamentsTournamentIdLayoutMatchesLazyRoute,
-		AuthTournamentsTournamentIdLayoutPerformanceLazyRoute:
-			AuthTournamentsTournamentIdLayoutPerformanceLazyRoute,
-		AuthTournamentsTournamentIdLayoutSimulatorLazyRoute:
-			AuthTournamentsTournamentIdLayoutSimulatorLazyRoute,
-		AuthTournamentsTournamentIdLayoutStandingsLazyRoute:
-			AuthTournamentsTournamentIdLayoutStandingsLazyRoute,
-	};
+  {
+    AuthTournamentsTournamentIdLayoutMatchesLazyRoute:
+      AuthTournamentsTournamentIdLayoutMatchesLazyRoute,
+    AuthTournamentsTournamentIdLayoutPerformanceLazyRoute:
+      AuthTournamentsTournamentIdLayoutPerformanceLazyRoute,
+    AuthTournamentsTournamentIdLayoutSimulatorLazyRoute:
+      AuthTournamentsTournamentIdLayoutSimulatorLazyRoute,
+    AuthTournamentsTournamentIdLayoutStandingsLazyRoute:
+      AuthTournamentsTournamentIdLayoutStandingsLazyRoute,
+  }
 
 const AuthTournamentsTournamentIdLayoutRouteWithChildren =
-	AuthTournamentsTournamentIdLayoutRoute._addFileChildren(
-		AuthTournamentsTournamentIdLayoutRouteChildren
-	);
+  AuthTournamentsTournamentIdLayoutRoute._addFileChildren(
+    AuthTournamentsTournamentIdLayoutRouteChildren,
+  )
 
 interface AuthTournamentsTournamentIdRouteChildren {
-	AuthTournamentsTournamentIdLayoutRoute: typeof AuthTournamentsTournamentIdLayoutRouteWithChildren;
+  AuthTournamentsTournamentIdLayoutRoute: typeof AuthTournamentsTournamentIdLayoutRouteWithChildren
 }
 
-const AuthTournamentsTournamentIdRouteChildren: AuthTournamentsTournamentIdRouteChildren = {
-	AuthTournamentsTournamentIdLayoutRoute: AuthTournamentsTournamentIdLayoutRouteWithChildren,
-};
+const AuthTournamentsTournamentIdRouteChildren: AuthTournamentsTournamentIdRouteChildren =
+  {
+    AuthTournamentsTournamentIdLayoutRoute:
+      AuthTournamentsTournamentIdLayoutRouteWithChildren,
+  }
 
 const AuthTournamentsTournamentIdRouteWithChildren =
-	AuthTournamentsTournamentIdRoute._addFileChildren(AuthTournamentsTournamentIdRouteChildren);
+  AuthTournamentsTournamentIdRoute._addFileChildren(
+    AuthTournamentsTournamentIdRouteChildren,
+  )
 
 interface AuthRouteChildren {
-	AuthDashboardRoute: typeof AuthDashboardRoute;
-	AuthMyAccountRoute: typeof AuthMyAccountRoute;
-	AuthAdminRoute: typeof AuthAdminRouteWithChildren;
-	AuthLeaguesIndexLazyRoute: typeof AuthLeaguesIndexLazyRoute;
-	AuthTournamentsIndexLazyRoute: typeof AuthTournamentsIndexLazyRoute;
-	AuthTournamentsTournamentIdRoute: typeof AuthTournamentsTournamentIdRouteWithChildren;
-	AuthLeaguesLeagueIdIndexLazyRoute: typeof AuthLeaguesLeagueIdIndexLazyRoute;
+  AuthDashboardRoute: typeof AuthDashboardRoute
+  AuthMyAccountRoute: typeof AuthMyAccountRoute
+  AuthAdminRoute: typeof AuthAdminRouteWithChildren
+  AuthLeaguesIndexLazyRoute: typeof AuthLeaguesIndexLazyRoute
+  AuthTournamentsIndexLazyRoute: typeof AuthTournamentsIndexLazyRoute
+  AuthTournamentsTournamentIdRoute: typeof AuthTournamentsTournamentIdRouteWithChildren
+  AuthLeaguesLeagueIdIndexLazyRoute: typeof AuthLeaguesLeagueIdIndexLazyRoute
 }
 
 const AuthRouteChildren: AuthRouteChildren = {
-	AuthDashboardRoute: AuthDashboardRoute,
-	AuthMyAccountRoute: AuthMyAccountRoute,
-	AuthAdminRoute: AuthAdminRouteWithChildren,
-	AuthLeaguesIndexLazyRoute: AuthLeaguesIndexLazyRoute,
-	AuthTournamentsIndexLazyRoute: AuthTournamentsIndexLazyRoute,
-	AuthTournamentsTournamentIdRoute: AuthTournamentsTournamentIdRouteWithChildren,
-	AuthLeaguesLeagueIdIndexLazyRoute: AuthLeaguesLeagueIdIndexLazyRoute,
-};
+  AuthDashboardRoute: AuthDashboardRoute,
+  AuthMyAccountRoute: AuthMyAccountRoute,
+  AuthAdminRoute: AuthAdminRouteWithChildren,
+  AuthLeaguesIndexLazyRoute: AuthLeaguesIndexLazyRoute,
+  AuthTournamentsIndexLazyRoute: AuthTournamentsIndexLazyRoute,
+  AuthTournamentsTournamentIdRoute:
+    AuthTournamentsTournamentIdRouteWithChildren,
+  AuthLeaguesLeagueIdIndexLazyRoute: AuthLeaguesLeagueIdIndexLazyRoute,
+}
 
-const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren);
+const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren)
 
 export interface FileRoutesByFullPath {
-	"/": typeof IndexRouteRoute;
-	"": typeof AuthRouteWithChildren;
-	"/ui-system": typeof UiSystemRoute;
-	"/login": typeof LoginLazyRoute;
-	"/signup": typeof SignupLazyRoute;
-	"/dashboard": typeof AuthDashboardRoute;
-	"/my-account": typeof AuthMyAccountRoute;
-	"/admin": typeof AuthAdminLayoutRouteWithChildren;
-	"/leagues": typeof AuthLeaguesIndexLazyRoute;
-	"/tournaments": typeof AuthTournamentsIndexLazyRoute;
-	"/admin/reports": typeof AuthAdminLayoutReportsRoute;
-	"/admin/scheduler-jobs": typeof AuthAdminLayoutSchedulerJobsRoute;
-	"/tournaments/$tournamentId": typeof AuthTournamentsTournamentIdLayoutRouteWithChildren;
-	"/admin/": typeof AuthAdminLayoutIndexLazyRoute;
-	"/leagues/$leagueId": typeof AuthLeaguesLeagueIdIndexLazyRoute;
-	"/admin/tournament/$tournamentId": typeof AuthAdminLayoutTournamentTournamentIdLazyRoute;
-	"/tournaments/$tournamentId/matches": typeof AuthTournamentsTournamentIdLayoutMatchesLazyRoute;
-	"/tournaments/$tournamentId/performance": typeof AuthTournamentsTournamentIdLayoutPerformanceLazyRoute;
-	"/tournaments/$tournamentId/simulator": typeof AuthTournamentsTournamentIdLayoutSimulatorLazyRoute;
-	"/tournaments/$tournamentId/standings": typeof AuthTournamentsTournamentIdLayoutStandingsLazyRoute;
+  '/': typeof IndexRouteRoute
+  '': typeof AuthRouteWithChildren
+  '/ui-system': typeof UiSystemRoute
+  '/login': typeof LoginLazyRoute
+  '/signup': typeof SignupLazyRoute
+  '/dashboard': typeof AuthDashboardRoute
+  '/my-account': typeof AuthMyAccountRoute
+  '/admin': typeof AuthAdminLayoutRouteWithChildren
+  '/leagues': typeof AuthLeaguesIndexLazyRoute
+  '/tournaments': typeof AuthTournamentsIndexLazyRoute
+  '/admin/reports': typeof AuthAdminLayoutReportsRoute
+  '/admin/scheduler-jobs': typeof AuthAdminLayoutSchedulerJobsRoute
+  '/tournaments/$tournamentId': typeof AuthTournamentsTournamentIdLayoutRouteWithChildren
+  '/admin/': typeof AuthAdminLayoutIndexLazyRoute
+  '/leagues/$leagueId': typeof AuthLeaguesLeagueIdIndexLazyRoute
+  '/admin/tournament/$tournamentId': typeof AuthAdminLayoutTournamentTournamentIdLazyRoute
+  '/tournaments/$tournamentId/matches': typeof AuthTournamentsTournamentIdLayoutMatchesLazyRoute
+  '/tournaments/$tournamentId/performance': typeof AuthTournamentsTournamentIdLayoutPerformanceLazyRoute
+  '/tournaments/$tournamentId/simulator': typeof AuthTournamentsTournamentIdLayoutSimulatorLazyRoute
+  '/tournaments/$tournamentId/standings': typeof AuthTournamentsTournamentIdLayoutStandingsLazyRoute
 }
 
 export interface FileRoutesByTo {
-	"/": typeof IndexRouteRoute;
-	"": typeof AuthRouteWithChildren;
-	"/ui-system": typeof UiSystemRoute;
-	"/login": typeof LoginLazyRoute;
-	"/signup": typeof SignupLazyRoute;
-	"/dashboard": typeof AuthDashboardRoute;
-	"/my-account": typeof AuthMyAccountRoute;
-	"/admin": typeof AuthAdminLayoutIndexLazyRoute;
-	"/leagues": typeof AuthLeaguesIndexLazyRoute;
-	"/tournaments": typeof AuthTournamentsIndexLazyRoute;
-	"/admin/reports": typeof AuthAdminLayoutReportsRoute;
-	"/admin/scheduler-jobs": typeof AuthAdminLayoutSchedulerJobsRoute;
-	"/tournaments/$tournamentId": typeof AuthTournamentsTournamentIdLayoutRouteWithChildren;
-	"/leagues/$leagueId": typeof AuthLeaguesLeagueIdIndexLazyRoute;
-	"/admin/tournament/$tournamentId": typeof AuthAdminLayoutTournamentTournamentIdLazyRoute;
-	"/tournaments/$tournamentId/matches": typeof AuthTournamentsTournamentIdLayoutMatchesLazyRoute;
-	"/tournaments/$tournamentId/performance": typeof AuthTournamentsTournamentIdLayoutPerformanceLazyRoute;
-	"/tournaments/$tournamentId/simulator": typeof AuthTournamentsTournamentIdLayoutSimulatorLazyRoute;
-	"/tournaments/$tournamentId/standings": typeof AuthTournamentsTournamentIdLayoutStandingsLazyRoute;
+  '/': typeof IndexRouteRoute
+  '': typeof AuthRouteWithChildren
+  '/ui-system': typeof UiSystemRoute
+  '/login': typeof LoginLazyRoute
+  '/signup': typeof SignupLazyRoute
+  '/dashboard': typeof AuthDashboardRoute
+  '/my-account': typeof AuthMyAccountRoute
+  '/admin': typeof AuthAdminLayoutIndexLazyRoute
+  '/leagues': typeof AuthLeaguesIndexLazyRoute
+  '/tournaments': typeof AuthTournamentsIndexLazyRoute
+  '/admin/reports': typeof AuthAdminLayoutReportsRoute
+  '/admin/scheduler-jobs': typeof AuthAdminLayoutSchedulerJobsRoute
+  '/tournaments/$tournamentId': typeof AuthTournamentsTournamentIdLayoutRouteWithChildren
+  '/leagues/$leagueId': typeof AuthLeaguesLeagueIdIndexLazyRoute
+  '/admin/tournament/$tournamentId': typeof AuthAdminLayoutTournamentTournamentIdLazyRoute
+  '/tournaments/$tournamentId/matches': typeof AuthTournamentsTournamentIdLayoutMatchesLazyRoute
+  '/tournaments/$tournamentId/performance': typeof AuthTournamentsTournamentIdLayoutPerformanceLazyRoute
+  '/tournaments/$tournamentId/simulator': typeof AuthTournamentsTournamentIdLayoutSimulatorLazyRoute
+  '/tournaments/$tournamentId/standings': typeof AuthTournamentsTournamentIdLayoutStandingsLazyRoute
 }
 
 export interface FileRoutesById {
-	__root__: typeof rootRoute;
-	"/": typeof IndexRouteRoute;
-	"/_auth": typeof AuthRouteWithChildren;
-	"/ui-system": typeof UiSystemRoute;
-	"/login": typeof LoginLazyRoute;
-	"/signup": typeof SignupLazyRoute;
-	"/_auth/dashboard": typeof AuthDashboardRoute;
-	"/_auth/my-account": typeof AuthMyAccountRoute;
-	"/_auth/admin": typeof AuthAdminRouteWithChildren;
-	"/_auth/admin/_layout": typeof AuthAdminLayoutRouteWithChildren;
-	"/_auth/leagues/": typeof AuthLeaguesIndexLazyRoute;
-	"/_auth/tournaments/": typeof AuthTournamentsIndexLazyRoute;
-	"/_auth/admin/_layout/reports": typeof AuthAdminLayoutReportsRoute;
-	"/_auth/admin/_layout/scheduler-jobs": typeof AuthAdminLayoutSchedulerJobsRoute;
-	"/_auth/tournaments/$tournamentId": typeof AuthTournamentsTournamentIdRouteWithChildren;
-	"/_auth/tournaments/$tournamentId/_layout": typeof AuthTournamentsTournamentIdLayoutRouteWithChildren;
-	"/_auth/admin/_layout/": typeof AuthAdminLayoutIndexLazyRoute;
-	"/_auth/leagues/$leagueId/": typeof AuthLeaguesLeagueIdIndexLazyRoute;
-	"/_auth/admin/_layout/tournament/$tournamentId": typeof AuthAdminLayoutTournamentTournamentIdLazyRoute;
-	"/_auth/tournaments/$tournamentId/_layout/matches": typeof AuthTournamentsTournamentIdLayoutMatchesLazyRoute;
-	"/_auth/tournaments/$tournamentId/_layout/performance": typeof AuthTournamentsTournamentIdLayoutPerformanceLazyRoute;
-	"/_auth/tournaments/$tournamentId/_layout/simulator": typeof AuthTournamentsTournamentIdLayoutSimulatorLazyRoute;
-	"/_auth/tournaments/$tournamentId/_layout/standings": typeof AuthTournamentsTournamentIdLayoutStandingsLazyRoute;
+  __root__: typeof rootRoute
+  '/': typeof IndexRouteRoute
+  '/_auth': typeof AuthRouteWithChildren
+  '/ui-system': typeof UiSystemRoute
+  '/login': typeof LoginLazyRoute
+  '/signup': typeof SignupLazyRoute
+  '/_auth/dashboard': typeof AuthDashboardRoute
+  '/_auth/my-account': typeof AuthMyAccountRoute
+  '/_auth/admin': typeof AuthAdminRouteWithChildren
+  '/_auth/admin/_layout': typeof AuthAdminLayoutRouteWithChildren
+  '/_auth/leagues/': typeof AuthLeaguesIndexLazyRoute
+  '/_auth/tournaments/': typeof AuthTournamentsIndexLazyRoute
+  '/_auth/admin/_layout/reports': typeof AuthAdminLayoutReportsRoute
+  '/_auth/admin/_layout/scheduler-jobs': typeof AuthAdminLayoutSchedulerJobsRoute
+  '/_auth/tournaments/$tournamentId': typeof AuthTournamentsTournamentIdRouteWithChildren
+  '/_auth/tournaments/$tournamentId/_layout': typeof AuthTournamentsTournamentIdLayoutRouteWithChildren
+  '/_auth/admin/_layout/': typeof AuthAdminLayoutIndexLazyRoute
+  '/_auth/leagues/$leagueId/': typeof AuthLeaguesLeagueIdIndexLazyRoute
+  '/_auth/admin/_layout/tournament/$tournamentId': typeof AuthAdminLayoutTournamentTournamentIdLazyRoute
+  '/_auth/tournaments/$tournamentId/_layout/matches': typeof AuthTournamentsTournamentIdLayoutMatchesLazyRoute
+  '/_auth/tournaments/$tournamentId/_layout/performance': typeof AuthTournamentsTournamentIdLayoutPerformanceLazyRoute
+  '/_auth/tournaments/$tournamentId/_layout/simulator': typeof AuthTournamentsTournamentIdLayoutSimulatorLazyRoute
+  '/_auth/tournaments/$tournamentId/_layout/standings': typeof AuthTournamentsTournamentIdLayoutStandingsLazyRoute
 }
 
 export interface FileRouteTypes {
-	fileRoutesByFullPath: FileRoutesByFullPath;
-	fullPaths:
-		| "/"
-		| ""
-		| "/ui-system"
-		| "/login"
-		| "/signup"
-		| "/dashboard"
-		| "/my-account"
-		| "/admin"
-		| "/leagues"
-		| "/tournaments"
-		| "/admin/reports"
-		| "/admin/scheduler-jobs"
-		| "/tournaments/$tournamentId"
-		| "/admin/"
-		| "/leagues/$leagueId"
-		| "/admin/tournament/$tournamentId"
-		| "/tournaments/$tournamentId/matches"
-		| "/tournaments/$tournamentId/performance"
-		| "/tournaments/$tournamentId/simulator"
-		| "/tournaments/$tournamentId/standings";
-	fileRoutesByTo: FileRoutesByTo;
-	to:
-		| "/"
-		| ""
-		| "/ui-system"
-		| "/login"
-		| "/signup"
-		| "/dashboard"
-		| "/my-account"
-		| "/admin"
-		| "/leagues"
-		| "/tournaments"
-		| "/admin/reports"
-		| "/admin/scheduler-jobs"
-		| "/tournaments/$tournamentId"
-		| "/leagues/$leagueId"
-		| "/admin/tournament/$tournamentId"
-		| "/tournaments/$tournamentId/matches"
-		| "/tournaments/$tournamentId/performance"
-		| "/tournaments/$tournamentId/simulator"
-		| "/tournaments/$tournamentId/standings";
-	id:
-		| "__root__"
-		| "/"
-		| "/_auth"
-		| "/ui-system"
-		| "/login"
-		| "/signup"
-		| "/_auth/dashboard"
-		| "/_auth/my-account"
-		| "/_auth/admin"
-		| "/_auth/admin/_layout"
-		| "/_auth/leagues/"
-		| "/_auth/tournaments/"
-		| "/_auth/admin/_layout/reports"
-		| "/_auth/admin/_layout/scheduler-jobs"
-		| "/_auth/tournaments/$tournamentId"
-		| "/_auth/tournaments/$tournamentId/_layout"
-		| "/_auth/admin/_layout/"
-		| "/_auth/leagues/$leagueId/"
-		| "/_auth/admin/_layout/tournament/$tournamentId"
-		| "/_auth/tournaments/$tournamentId/_layout/matches"
-		| "/_auth/tournaments/$tournamentId/_layout/performance"
-		| "/_auth/tournaments/$tournamentId/_layout/simulator"
-		| "/_auth/tournaments/$tournamentId/_layout/standings";
-	fileRoutesById: FileRoutesById;
+  fileRoutesByFullPath: FileRoutesByFullPath
+  fullPaths:
+    | '/'
+    | ''
+    | '/ui-system'
+    | '/login'
+    | '/signup'
+    | '/dashboard'
+    | '/my-account'
+    | '/admin'
+    | '/leagues'
+    | '/tournaments'
+    | '/admin/reports'
+    | '/admin/scheduler-jobs'
+    | '/tournaments/$tournamentId'
+    | '/admin/'
+    | '/leagues/$leagueId'
+    | '/admin/tournament/$tournamentId'
+    | '/tournaments/$tournamentId/matches'
+    | '/tournaments/$tournamentId/performance'
+    | '/tournaments/$tournamentId/simulator'
+    | '/tournaments/$tournamentId/standings'
+  fileRoutesByTo: FileRoutesByTo
+  to:
+    | '/'
+    | ''
+    | '/ui-system'
+    | '/login'
+    | '/signup'
+    | '/dashboard'
+    | '/my-account'
+    | '/admin'
+    | '/leagues'
+    | '/tournaments'
+    | '/admin/reports'
+    | '/admin/scheduler-jobs'
+    | '/tournaments/$tournamentId'
+    | '/leagues/$leagueId'
+    | '/admin/tournament/$tournamentId'
+    | '/tournaments/$tournamentId/matches'
+    | '/tournaments/$tournamentId/performance'
+    | '/tournaments/$tournamentId/simulator'
+    | '/tournaments/$tournamentId/standings'
+  id:
+    | '__root__'
+    | '/'
+    | '/_auth'
+    | '/ui-system'
+    | '/login'
+    | '/signup'
+    | '/_auth/dashboard'
+    | '/_auth/my-account'
+    | '/_auth/admin'
+    | '/_auth/admin/_layout'
+    | '/_auth/leagues/'
+    | '/_auth/tournaments/'
+    | '/_auth/admin/_layout/reports'
+    | '/_auth/admin/_layout/scheduler-jobs'
+    | '/_auth/tournaments/$tournamentId'
+    | '/_auth/tournaments/$tournamentId/_layout'
+    | '/_auth/admin/_layout/'
+    | '/_auth/leagues/$leagueId/'
+    | '/_auth/admin/_layout/tournament/$tournamentId'
+    | '/_auth/tournaments/$tournamentId/_layout/matches'
+    | '/_auth/tournaments/$tournamentId/_layout/performance'
+    | '/_auth/tournaments/$tournamentId/_layout/simulator'
+    | '/_auth/tournaments/$tournamentId/_layout/standings'
+  fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
-	IndexRouteRoute: typeof IndexRouteRoute;
-	AuthRoute: typeof AuthRouteWithChildren;
-	UiSystemRoute: typeof UiSystemRoute;
-	LoginLazyRoute: typeof LoginLazyRoute;
-	SignupLazyRoute: typeof SignupLazyRoute;
+  IndexRouteRoute: typeof IndexRouteRoute
+  AuthRoute: typeof AuthRouteWithChildren
+  UiSystemRoute: typeof UiSystemRoute
+  LoginLazyRoute: typeof LoginLazyRoute
+  SignupLazyRoute: typeof SignupLazyRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
-	IndexRouteRoute: IndexRouteRoute,
-	AuthRoute: AuthRouteWithChildren,
-	UiSystemRoute: UiSystemRoute,
-	LoginLazyRoute: LoginLazyRoute,
-	SignupLazyRoute: SignupLazyRoute,
-};
+  IndexRouteRoute: IndexRouteRoute,
+  AuthRoute: AuthRouteWithChildren,
+  UiSystemRoute: UiSystemRoute,
+  LoginLazyRoute: LoginLazyRoute,
+  SignupLazyRoute: SignupLazyRoute,
+}
 
 export const routeTree = rootRoute
-	._addFileChildren(rootRouteChildren)
-	._addFileTypes<FileRouteTypes>();
+  ._addFileChildren(rootRouteChildren)
+  ._addFileTypes<FileRouteTypes>()
 
 /* ROUTE_MANIFEST_START
 {

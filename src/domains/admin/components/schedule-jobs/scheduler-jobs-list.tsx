@@ -29,16 +29,16 @@ interface SchedulerJobsListProps {
 
 const getStatusColor = (status: string): "success" | "info" | "error" | "warning" | "default" => {
 	switch (status) {
-		case "active":
+		case "schedule_confirmed":
 			return "success";
-		case "running":
-			return "info";
-		case "failed":
+		case "schedule_failed":
 			return "error";
-		case "paused":
+		case "not_triggered":
 			return "warning";
+		case "triggered":
+			return "info";
 		case "completed":
-			return "default";
+			return "success";
 		default:
 			return "default";
 	}
@@ -113,19 +113,19 @@ const SchedulerJobsList = ({
 					{jobs.map((job) => (
 						<StyledTableRow key={job.id}>
 							<TableCell>
-								<AppTypography variant="body2" color="neutral.200">
-									{job.name}
+								<AppTypography variant="caption" color="neutral.200">
+									{job.scheduleId}
 								</AppTypography>
 							</TableCell>
 							<TableCell>
-								<AppTypography variant="body2" color="neutral.400">
-									{job.type}
+								<AppTypography variant="caption" color="neutral.400">
+									{job.jobType}
 								</AppTypography>
 							</TableCell>
 							<TableCell>
 								<Chip
-									label={job.status}
-									color={getStatusColor(job.status)}
+									label={job.scheduleStatus}
+									color={getStatusColor(job.scheduleStatus)}
 									size="small"
 									sx={{
 										textTransform: "capitalize",
@@ -134,31 +134,31 @@ const SchedulerJobsList = ({
 								/>
 							</TableCell>
 							<TableCell>
-								<AppTypography variant="body2" color="neutral.400" fontFamily="monospace">
-									{job.schedule.cron}
+								<AppTypography variant="caption" color="neutral.400" fontFamily="monospace">
+									{job.cronExpression}
 								</AppTypography>
 								<AppTypography variant="caption" color="neutral.500" display="block">
-									{job.schedule.timezone}
+									{job.environment}
 								</AppTypography>
 							</TableCell>
 							<TableCell>
-								{job.schedule.lastRun ? (
-									<AppTypography variant="body2" color="neutral.400">
-										{formatDistanceToNow(parseISO(job.schedule.lastRun), { addSuffix: true })}
+								{job.executedAt ? (
+									<AppTypography variant="caption" color="neutral.400">
+										{formatDistanceToNow(parseISO(job.executedAt), { addSuffix: true })}
 									</AppTypography>
 								) : (
-									<AppTypography variant="body2" color="neutral.500">
+									<AppTypography variant="caption" color="neutral.500">
 										Never
 									</AppTypography>
 								)}
 							</TableCell>
 							<TableCell>
-								{job.schedule.nextRun ? (
-									<AppTypography variant="body2" color="neutral.400">
-										{formatDistanceToNow(parseISO(job.schedule.nextRun), { addSuffix: true })}
+								{job.scheduledAt ? (
+									<AppTypography variant="caption" color="neutral.400">
+										{formatDistanceToNow(parseISO(job.scheduledAt), { addSuffix: true })}
 									</AppTypography>
 								) : (
-									<AppTypography variant="body2" color="neutral.500">
+									<AppTypography variant="caption" color="neutral.500">
 										Not scheduled
 									</AppTypography>
 								)}

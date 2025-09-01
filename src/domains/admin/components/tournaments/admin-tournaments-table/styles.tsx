@@ -9,7 +9,6 @@ import {
 	TableRow,
 } from "@mui/material";
 
-
 export const StyledTableContainer = styled(TableContainer)(({ theme }) => ({
 	backgroundColor: theme.palette.black[800],
 	border: `1px solid ${theme.palette.neutral[700]}`,

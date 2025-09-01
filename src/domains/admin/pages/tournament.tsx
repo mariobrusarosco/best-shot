@@ -1,7 +1,8 @@
-import { AppTypography } from "@/domains/ui-system/components";
+import { ScheduleJobForm } from "@/domains/admin/components/schedule-job-form/schedule-job-form";
+import { AdminTournamentHeading } from "@/domains/admin/components/tournaments/admin-tournament-heading/admin-tournament-heading";
 import { useAdminTournaments } from "@/domains/admin/hooks/use-admin-tournaments";
 import type { ITournament } from "@/domains/tournament/schemas";
-import { AdminTournamentHeading } from "@/domains/admin/components/tournaments/admin-tournament-heading/admin-tournament-heading";
+import { AppTypography } from "@/domains/ui-system/components";
 
 export const AdminTournamentPage = ({ tournamentId }: { tournamentId: string }) => {
 	const tournaments = useAdminTournaments();
@@ -15,9 +16,10 @@ export const AdminTournamentPage = ({ tournamentId }: { tournamentId: string }) 
 	}
 
 	console.log({ tournament });
-	return (    
+	return (
 		<>
 			<AdminTournamentHeading tournament={tournament} />
+			<ScheduleJobForm preselectedTournament={tournament} />
 		</>
 	);
 };

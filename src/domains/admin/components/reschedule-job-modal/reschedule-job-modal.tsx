@@ -36,7 +36,6 @@ const timezones = [
 ];
 
 export const RescheduleJobModal = ({ jobId, onClose }: RescheduleJobModalProps) => {
-
 	const { control, handleSubmit, watch, setValue } = useForm<RescheduleJobInput>({
 		resolver: zodResolver(RescheduleJobSchema),
 		defaultValues: {

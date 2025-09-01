@@ -1,7 +1,7 @@
-import { TournamentLogo } from "@/domains/tournament/components/tournament-heading";
-import { AppTypography } from "@/domains/ui-system/components";
 import { Box } from "@mui/material";
-import { ITournament } from "@/domains/tournament/schemas";
+import { TournamentLogo } from "@/domains/tournament/components/tournament-heading";
+import type { ITournament } from "@/domains/tournament/schemas";
+import { AppTypography } from "@/domains/ui-system/components";
 
 export const AdminTournamentHeading = ({ tournament }: { tournament: ITournament }) => {
 	return (

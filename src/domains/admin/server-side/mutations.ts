@@ -4,7 +4,11 @@ import type { ITournament } from "@/domains/tournament/schemas";
 import {
 	CreateScraperJobSchema,
 	CreateTournamentSchema,
+	DailyUpdateJobSchema,
+	KnockoutRoundsJobSchema,
 	RescheduleJobSchema,
+	ScheduleJobSchema,
+	ScoresAndStandingsJobSchema,
 	ScraperJobSchema,
 	UpdateScraperStatusSchema,
 } from "../schemas";
@@ -82,4 +86,51 @@ export const createAdminTournament = async (
 		baseURL: import.meta.env.VITE_BEST_SHOT_API_V2,
 	});
 	return response.data as ITournament;
+};
+
+export const scheduleJob = async (data: z.infer<typeof ScheduleJobSchema>): Promise<void> => {
+	const validatedData = ScheduleJobSchema.parse(data);
+	await api.post("/admin/schedule", validatedData, {
+		baseURL: import.meta.env.VITE_BEST_SHOT_API_V2,
+	});
+};
+
+// New Scheduler Jobs API mutations
+export const createDailyUpdateJob = async (
+	data: z.infer<typeof DailyUpdateJobSchema>
+): Promise<void> => {
+	const validatedData = DailyUpdateJobSchema.parse(data);
+	const payload = {
+		...validatedData,
+		environment: validatedData.environment || process.env.NODE_ENV,
+	};
+	await api.post("/admin/scheduler/jobs", payload, {
+		baseURL: import.meta.env.VITE_BEST_SHOT_API_V2,
+	});
+};
+
+export const createScoresAndStandingsJob = async (
+	data: z.infer<typeof ScoresAndStandingsJobSchema>
+): Promise<void> => {
+	const validatedData = ScoresAndStandingsJobSchema.parse(data);
+	const payload = {
+		...validatedData,
+		environment: validatedData.environment || process.env.NODE_ENV,
+	};
+	await api.post("/admin/scheduler/jobs", payload, {
+		baseURL: import.meta.env.VITE_BEST_SHOT_API_V2,
+	});
+};
+
+export const createKnockoutRoundsJob = async (
+	data: z.infer<typeof KnockoutRoundsJobSchema>
+): Promise<void> => {
+	const validatedData = KnockoutRoundsJobSchema.parse(data);
+	const payload = {
+		...validatedData,
+		environment: validatedData.environment || process.env.NODE_ENV,
+	};
+	await api.post("/admin/scheduler/jobs", payload, {
+		baseURL: import.meta.env.VITE_BEST_SHOT_API_V2,
+	});
 };

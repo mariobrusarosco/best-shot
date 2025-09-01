@@ -2,12 +2,9 @@ import { Box, styled, Tab, Tabs } from "@mui/material";
 import { useState } from "react";
 import { AppError } from "@/domains/global/components/error";
 import { AppTypography } from "@/domains/ui-system/components";
+import { ScheduleJobForm } from "../components/schedule-job-form/schedule-job-form";
 import SchedulerJobsList from "../components/schedule-jobs/scheduler-jobs-list";
-import {
-	useActiveSchedulerJobs,
-	useAdminSchedulerJobs,
-	useFailedSchedulerJobs,
-} from "../hooks/use-admin-scheduler-jobs";
+import { useAdminSchedulerJobs } from "../hooks/use-admin-scheduler-jobs";
 
 type TabValue = "all" | "active" | "failed";
 
@@ -16,22 +13,13 @@ const SchedulerJobsPage = () => {
 	const [rowsPerPage, setRowsPerPage] = useState(10);
 	const [activeTab, setActiveTab] = useState<TabValue>("all");
 
-	// Use different hooks based on active tab
-	const allJobsQuery = useAdminSchedulerJobs({
+	// Use single hook with status filtering
+	const status = activeTab === "all" ? undefined : activeTab;
+	const jobsQuery = useAdminSchedulerJobs({
 		page,
 		limit: rowsPerPage,
+		status,
 	});
-
-	const activeJobsQuery = useActiveSchedulerJobs();
-	const failedJobsQuery = useFailedSchedulerJobs();
-
-	// Select the appropriate query based on active tab
-	const currentQuery =
-		activeTab === "active"
-			? activeJobsQuery
-			: activeTab === "failed"
-				? failedJobsQuery
-				: allJobsQuery;
 
 	const handlePageChange = (newPage: number) => {
 		setPage(newPage);
@@ -47,32 +35,13 @@ const SchedulerJobsPage = () => {
 		setPage(0); // Reset pagination when switching tabs
 	};
 
-	// Get data based on the active tab
-	const getData = () => {
-		if (activeTab === "active") {
-			return {
-				jobs: activeJobsQuery.data || [],
-				pagination: undefined, // Active and failed endpoints don't return pagination
-			};
-		}
-		if (activeTab === "failed") {
-			return {
-				jobs: failedJobsQuery.data || [],
-				pagination: undefined,
-			};
-		}
-		return {
-			jobs: allJobsQuery.data?.data || [],
-			pagination: allJobsQuery.data?.pagination,
-		};
-	};
+	const jobs = jobsQuery.data?.data || [];
+	const pagination = jobsQuery.data?.pagination;
 
-	const { jobs, pagination } = getData();
-
-	if (currentQuery.error) {
+	if (jobsQuery.error) {
 		return (
 			<Box>
-				<AppError error={currentQuery.error} />
+				<AppError error={jobsQuery.error} />
 			</Box>
 		);
 	}
@@ -88,7 +57,7 @@ const SchedulerJobsPage = () => {
 						<AppTypography variant="body2" color="neutral.400" sx={{ mt: 0.5 }}>
 							{pagination.total} total jobs • Page {page + 1} of{" "}
 							{Math.ceil(pagination.total / rowsPerPage)}
-							{allJobsQuery.isPlaceholderData && " • Loading..."}
+							{jobsQuery.isPlaceholderData && " • Loading..."}
 						</AppTypography>
 					)}
 					{!pagination && jobs.length > 0 && (
@@ -98,6 +67,8 @@ const SchedulerJobsPage = () => {
 					)}
 				</Box>
 			</Header>
+
+			<ScheduleJobForm />
 
 			<FilterTabs>
 				<Tabs
@@ -128,10 +99,10 @@ const SchedulerJobsPage = () => {
 
 			<SchedulerJobsList
 				jobs={jobs}
-				isLoading={currentQuery.isLoading && !allJobsQuery.isPlaceholderData}
+				isLoading={jobsQuery.isLoading && !jobsQuery.isPlaceholderData}
 				pagination={pagination}
-				onPageChange={activeTab === "all" ? handlePageChange : undefined}
-				onRowsPerPageChange={activeTab === "all" ? handleRowsPerPageChange : undefined}
+				onPageChange={handlePageChange}
+				onRowsPerPageChange={handleRowsPerPageChange}
 			/>
 		</Container>
 	);

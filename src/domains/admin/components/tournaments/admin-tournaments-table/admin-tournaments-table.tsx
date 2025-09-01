@@ -1,27 +1,24 @@
-import {
-	Box,
-	Table,
-	TableBody,
-	TableCell,
-	TableRow,
-} from "@mui/material";
+import { Box, Table, TableBody, TableCell, TableRow } from "@mui/material";
 import { useNavigate } from "@tanstack/react-router";
+import {
+	StyledTableContainer,
+	StyledTableHead,
+	StyledTableRow,
+} from "@/domains/admin/components/tournaments/admin-tournaments-table/styles";
 import type { ITournament } from "@/domains/tournament/schemas";
 import { AppTypography } from "@/domains/ui-system/components";
-import { StyledTableRow } from "@/domains/admin/components/tournaments/admin-tournaments-table/styles";
-import { StyledTableContainer } from "@/domains/admin/components/tournaments/admin-tournaments-table/styles";
-import { StyledTableHead } from "@/domains/admin/components/tournaments/admin-tournaments-table/styles";
 
 interface TournamentsTableProps {
 	tournaments: ITournament[];
 	isLoading?: boolean;
 }
 
-
 const TournamentInfo = ({ tournament }: { tournament: ITournament }) => (
 	<Box display="flex" gap={1} alignItems="end">
-		<Box>	
-			{tournament.logo && <img src={tournament.logo} alt={tournament.label} width={20} height={20} />	}
+		<Box>
+			{tournament.logo && (
+				<img src={tournament.logo} alt={tournament.label} width={20} height={20} />
+			)}
 		</Box>
 		<AppTypography variant="body2" color="neutral.100" fontWeight="medium">
 			{tournament.label}

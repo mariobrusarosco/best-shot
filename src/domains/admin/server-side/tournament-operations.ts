@@ -36,57 +36,89 @@ export const deleteTournament = async (id: string) => {
 
 // Tournament management operations
 export const createStandings = async (tournamentId: string) => {
-	const response = await api.post(`/admin/tournaments/${tournamentId}/standings`, {}, {
-		baseURL: import.meta.env.VITE_BEST_SHOT_API_V2,
-	});
+	const response = await api.post(
+		`/admin/tournaments/${tournamentId}/standings`,
+		{},
+		{
+			baseURL: import.meta.env.VITE_BEST_SHOT_API_V2,
+		}
+	);
 	return response.data;
 };
 
 export const updateStandings = async (tournamentId: string) => {
-	const response = await api.patch(`/admin/tournaments/${tournamentId}/standings`, {}, {
-		baseURL: import.meta.env.VITE_BEST_SHOT_API_V2,
-	});
+	const response = await api.patch(
+		`/admin/tournaments/${tournamentId}/standings`,
+		{},
+		{
+			baseURL: import.meta.env.VITE_BEST_SHOT_API_V2,
+		}
+	);
 	return response.data;
 };
 
 export const createRounds = async (tournamentId: string) => {
-	const response = await api.post(`/admin/tournaments/${tournamentId}/rounds`, {}, {
-		baseURL: import.meta.env.VITE_BEST_SHOT_API_V2,
-	});
+	const response = await api.post(
+		`/admin/tournaments/${tournamentId}/rounds`,
+		{},
+		{
+			baseURL: import.meta.env.VITE_BEST_SHOT_API_V2,
+		}
+	);
 	return response.data;
 };
 
 export const updateRounds = async (tournamentId: string) => {
-	const response = await api.patch(`/admin/tournaments/${tournamentId}/rounds`, {}, {
-		baseURL: import.meta.env.VITE_BEST_SHOT_API_V2,
-	});
+	const response = await api.patch(
+		`/admin/tournaments/${tournamentId}/rounds`,
+		{},
+		{
+			baseURL: import.meta.env.VITE_BEST_SHOT_API_V2,
+		}
+	);
 	return response.data;
 };
 
 export const createTeams = async (tournamentId: string) => {
-	const response = await api.post(`/admin/tournaments/${tournamentId}/teams`, {}, {
-		baseURL: import.meta.env.VITE_BEST_SHOT_API_V2,
-	});
+	const response = await api.post(
+		`/admin/tournaments/${tournamentId}/teams`,
+		{},
+		{
+			baseURL: import.meta.env.VITE_BEST_SHOT_API_V2,
+		}
+	);
 	return response.data;
 };
 
 export const updateTeams = async (tournamentId: string) => {
-	const response = await api.patch(`/admin/tournaments/${tournamentId}/teams`, {}, {
-		baseURL: import.meta.env.VITE_BEST_SHOT_API_V2,
-	});
+	const response = await api.patch(
+		`/admin/tournaments/${tournamentId}/teams`,
+		{},
+		{
+			baseURL: import.meta.env.VITE_BEST_SHOT_API_V2,
+		}
+	);
 	return response.data;
 };
 
 export const createMatches = async (tournamentId: string) => {
-	const response = await api.post(`/admin/tournaments/${tournamentId}/matches`, {}, {
-		baseURL: import.meta.env.VITE_BEST_SHOT_API_V2,
-	});
+	const response = await api.post(
+		`/admin/tournaments/${tournamentId}/matches`,
+		{},
+		{
+			baseURL: import.meta.env.VITE_BEST_SHOT_API_V2,
+		}
+	);
 	return response.data;
 };
 
 export const updateMatches = async (tournamentId: string) => {
-	const response = await api.patch(`/admin/tournaments/${tournamentId}/matches`, {}, {
-		baseURL: import.meta.env.VITE_BEST_SHOT_API_V2,
-	});
+	const response = await api.patch(
+		`/admin/tournaments/${tournamentId}/matches`,
+		{},
+		{
+			baseURL: import.meta.env.VITE_BEST_SHOT_API_V2,
+		}
+	);
 	return response.data;
 };

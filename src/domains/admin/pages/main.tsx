@@ -1,7 +1,7 @@
 import { Box, styled } from "@mui/material";
 import { useState } from "react";
-import { CreateTournamentModal } from "@/domains/admin/components/tournaments/create-tournament-modal/create-tournament-modal";
 import AdminTournamentsTable from "@/domains/admin/components/tournaments/admin-tournaments-table/admin-tournaments-table";
+import { CreateTournamentModal } from "@/domains/admin/components/tournaments/create-tournament-modal/create-tournament-modal";
 import { useAdminTournaments } from "@/domains/admin/hooks/use-admin-tournaments";
 import { AppTypography } from "@/domains/ui-system/components";
 import { AppButton } from "@/domains/ui-system/components/app-button/app-button";
@@ -29,8 +29,8 @@ const MainAdminPage = () => {
 	const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
 	const { data: tournaments, isLoading, error } = useAdminTournaments();
 
-	console.log({tournaments});
-	
+	console.log({ tournaments });
+
 	if (isLoading) {
 		return (
 			<StyledContainer>

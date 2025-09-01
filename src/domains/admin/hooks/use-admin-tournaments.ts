@@ -6,4 +6,4 @@ export const useAdminTournaments = () => {
 		queryKey: ["admin-tournaments"],
 		queryFn: () => fetchAdminTournaments(),
 	});
-};      
+};

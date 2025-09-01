@@ -1,70 +1,47 @@
 import { api } from "@/api";
-import {
-  SchedulerJobsResponseSchema,
-} from "../schemas";
-import type {
-  ISchedulerJob,  
-} from "../typing";
-
+import { SchedulerJobsResponseSchema } from "../schemas";
+import type { ISchedulerJob } from "../typing";
 
 // Fetch tournament metadata
 export const fetchAdminTournaments = async () => {
-  const response = await api.get("/admin/tournaments", {
-    baseURL: import.meta.env.VITE_BEST_SHOT_API_V2,
-  });
+	const response = await api.get("/admin/tournaments", {
+		baseURL: import.meta.env.VITE_BEST_SHOT_API_V2,
+	});
 
-  if(response.data?.data?.length === 0) {
-    return [];
-  }
+	if (response.data?.data?.length === 0) {
+		return [];
+	}
 
-  return response.data.data;
+	return response.data.data;
 };
 
 export const fetchAvailableTournaments = async () => {
-  const response = await api.get("/admin/tournaments/available", {
-    baseURL: import.meta.env.VITE_BEST_SHOT_API_V2,
-  });
-  return response.data;
+	const response = await api.get("/admin/tournaments/available", {
+		baseURL: import.meta.env.VITE_BEST_SHOT_API_V2,
+	});
+	return response.data;
 };
 
 // Fetch all scheduler jobs with optional filters
 export const fetchSchedulerJobs = async (params?: {
-  limit?: number;
-  offset?: number;
-  status?: string;
+	limit?: number;
+	offset?: number;
+	status?: string;
 }): Promise<{
-  data: ISchedulerJob[];
-  pagination?: { limit: number; offset: number; total: number };
+	data: ISchedulerJob[];
+	pagination?: { limit: number; offset: number; total: number };
 }> => {
-  const searchParams = new URLSearchParams();
-  if (params?.limit) searchParams.set("limit", params.limit.toString());
-  if (params?.offset) searchParams.set("offset", params.offset.toString());
-  if (params?.status) searchParams.set("status", params.status);
+	const searchParams = new URLSearchParams();
+	if (params?.limit) searchParams.set("limit", params.limit.toString());
+	if (params?.offset) searchParams.set("offset", params.offset.toString());
+	if (params?.status) searchParams.set("status", params.status);
 
-  const response = await api.get(`/admin/scheduler/jobs?${searchParams}`, {
-    baseURL: import.meta.env.VITE_BEST_SHOT_API_V2,
-  });
-  const parsed = SchedulerJobsResponseSchema.parse(response.data);
-  return {
-    data: parsed.data,
-    pagination: parsed.pagination,
-  };
-};
-
-// Fetch active scheduler jobs
-export const fetchActiveSchedulerJobs = async (): Promise<ISchedulerJob[]> => {
-  const response = await api.get("/admin/scheduler/jobs/active", {
-    baseURL: import.meta.env.VITE_BEST_SHOT_API_V2,
-  });
-  const parsed = SchedulerJobsResponseSchema.parse(response.data);
-  return parsed.data;
-};
-
-// Fetch failed scheduler jobs
-export const fetchFailedSchedulerJobs = async (): Promise<ISchedulerJob[]> => {
-  const response = await api.get("/admin/scheduler/jobs/failed", {
-    baseURL: import.meta.env.VITE_BEST_SHOT_API_V2,
-  });
-  const parsed = SchedulerJobsResponseSchema.parse(response.data);
-  return parsed.data;
+	const response = await api.get(`/admin/scheduler/jobs?${searchParams}`, {
+		baseURL: import.meta.env.VITE_BEST_SHOT_API_V2,
+	});
+	const parsed = SchedulerJobsResponseSchema.parse(response.data);
+	return {
+		data: parsed.jobs,
+		pagination: undefined,
+	};
 };

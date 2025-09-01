@@ -1,9 +1,4 @@
-import {
-	styled,
-	TableContainer,
-	TableHead,
-	TableRow,
-} from "@mui/material";
+import { styled, TableContainer, TableHead, TableRow } from "@mui/material";
 
 export const StyledTableContainer = styled(TableContainer)(({ theme }) => ({
 	backgroundColor: theme.palette.black[800],

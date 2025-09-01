@@ -47,7 +47,7 @@ export const RescheduleJobModal = ({ jobId, onClose }: RescheduleJobModalProps) 
 
 	const cronExpression = watch("cronExpression");
 
-	const onSubmit = async (data: RescheduleJobInput) => {
+	const onSubmit = (_data: RescheduleJobInput) => {
 		try {
 			// await rescheduleJob.mutateAsync(data);
 			onClose();

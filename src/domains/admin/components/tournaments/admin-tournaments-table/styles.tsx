@@ -1,9 +1,5 @@
 import {
-	Box,
 	styled,
-	Table,
-	TableBody,
-	TableCell,
 	TableContainer,
 	TableHead,
 	TableRow,

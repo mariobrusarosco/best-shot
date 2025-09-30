@@ -1,12 +1,13 @@
 import { Tab, Tabs, TabsList } from "@mui/base";
 import { Box, styled, Typography } from "@mui/material";
-import { useLocation } from "@tanstack/react-router";
+import { useLocation, useParams } from "@tanstack/react-router";
 import { CustomLink } from "@/domains/ui-system/components/link/link";
 import { shimmerEffect } from "@/domains/ui-system/components/skeleton/skeleton";
 import { UIHelper } from "@/theming/theme";
 
 const AdminTournamentTabs = () => {
 	const location = useLocation();
+	const { tournamentId } = useParams({ from: "/_auth/admin/tournament/$tournamentId" });
 	const lastPath = location.pathname?.split("/").at(-1);
 
 	return (
@@ -16,7 +17,7 @@ const AdminTournamentTabs = () => {
 					value={"home"}
 					slots={{
 						root: (props) => (
-							<CustomTab to="/admin" {...props}>
+							<CustomTab to={`/admin/tournament/${tournamentId}`} {...props}>
 								<Typography variant="tag" textTransform="uppercase">
 									Home
 								</Typography>
@@ -28,7 +29,7 @@ const AdminTournamentTabs = () => {
 					value={"execution-jobs"}
 					slots={{
 						root: (props) => (
-							<CustomTab to="/admin/execution-jobs" {...props}>
+							<CustomTab to={`/admin/tournament/${tournamentId}/execution-jobs`} {...props}>
 								<Typography variant="tag" textTransform="uppercase">
 									execution jobs
 								</Typography>
@@ -37,12 +38,12 @@ const AdminTournamentTabs = () => {
 					}}
 				/>
 				<Tab
-					value={"scheduler-jobs"}
+					value={"scheduled-jobs"}
 					slots={{
 						root: (props) => (
-							<CustomTab to="/admin/scheduler-jobs" {...props}>
+							<CustomTab to={`/admin/tournament/${tournamentId}/scheduled-jobs`} {...props}>
 								<Typography variant="tag" textTransform="uppercase">
-									scheduler jobs
+									scheduled jobs
 								</Typography>
 							</CustomTab>
 						),

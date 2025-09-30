@@ -4,7 +4,7 @@ import react from "@vitejs/plugin-react";
 import { defineConfig } from "vite";
 import checker from "vite-plugin-checker";
 
-export default defineConfig({
+export default defineConfig(({ mode }) => ({
 	server: {
 		host: true,
 		cors: {
@@ -48,5 +48,16 @@ export default defineConfig({
 
 	build: {
 		sourcemap: true,
+		minify: mode === "production" ? "esbuild" : false,
 	},
-});
+
+	esbuild: {
+		// Keep names for better debugging in development
+		keepNames: mode !== "production",
+	},
+
+	define: {
+		// Ensure we have proper source maps in development
+		__DEV__: mode !== "production",
+	},
+}));

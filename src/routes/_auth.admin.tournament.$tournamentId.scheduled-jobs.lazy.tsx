@@ -13,7 +13,7 @@ function ScheduledJobsPage() {
 			<Typography variant="h4" gutterBottom>
 				Scheduled Jobs - Tournament {tournamentId}
 			</Typography>
-			<Typography variant="body1">
+			<Typography variant="paragraph">
 				This page will show scheduled jobs for the selected tournament.
 			</Typography>
 		</Box>

@@ -13,7 +13,7 @@ function ExecutionJobsPage() {
 			<Typography variant="h4" gutterBottom>
 				Execution Jobs - Tournament {tournamentId}
 			</Typography>
-			<Typography variant="body1">
+			<Typography variant="paragraph">
 				This page will show execution jobs for the selected tournament.
 			</Typography>
 		</Box>

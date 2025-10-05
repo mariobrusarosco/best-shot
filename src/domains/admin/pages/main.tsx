@@ -6,17 +6,8 @@ import { useTournaments } from "@/domains/tournament/hooks/use-tournaments";
 import { AppTypography } from "@/domains/ui-system/components";
 import { AppButton } from "@/domains/ui-system/components/app-button/app-button";
 import { AppIcon } from "@/domains/ui-system/components/icon/icon";
-
-const Header = styled(Box)(({ theme }) => ({
-	display: "flex",
-	justifyContent: "space-between",
-	alignItems: "center",
-	marginBottom: theme.spacing(3),
-	padding: theme.spacing(2),
-	backgroundColor: theme.palette.black[800],
-	borderRadius: theme.shape.borderRadius,
-	border: `1px solid ${theme.palette.neutral[700]}`,
-}));
+import { ScreenHeading } from "@/domains/global/components/screen-heading";
+import { AuthenticatedScreenLayout } from "@/domains/ui-system/layout/authenticated";
 
 const StyledContainer = styled(Box)(({ theme }) => ({
 	padding: theme.spacing(2),
@@ -42,17 +33,9 @@ const MainAdminPage = () => {
 	}
 
 	return (
-		<StyledContainer>
-			<Header>
-				<Box>
-					<AppTypography variant="h5" textTransform="lowercase" color="neutral.100">
-						Tournaments
-					</AppTypography>
-					<AppTypography variant="body2" color="neutral.400" sx={{ mt: 0.5 }}>
-						Manage tournament standings, rounds, teams, and matches
-					</AppTypography>
-				</Box>
-				<AppButton
+		<AuthenticatedScreenLayout data-ui="admin-page" overflow="hidden">
+			<ScreenHeading title="admin">
+			<AppButton
 					variant="contained"
 					startIcon={<AppIcon name="Plus" size="small" />}
 					onClick={() => setIsCreateModalOpen(true)}
@@ -63,12 +46,12 @@ const MainAdminPage = () => {
 				>
 					Create Tournament
 				</AppButton>
-			</Header>
+				</ScreenHeading>
 
 			<TournamentsTable tournaments={tournaments || []} isLoading={isLoading} />
 
 			{isCreateModalOpen && <CreateTournamentModal onClose={() => setIsCreateModalOpen(false)} />}
-		</StyledContainer>
+		</AuthenticatedScreenLayout>
 	);
 };
 

@@ -1,7 +1,7 @@
 import { Box, Typography } from "@mui/material";
 import { createLazyFileRoute } from "@tanstack/react-router";
 
-export const Route = createLazyFileRoute("/_auth/admin/tournament/$tournamentId/scheduled-jobs")({
+export const Route = createLazyFileRoute("/_auth/admin/tournament/$tournamentId/_layout/scheduled-jobs")({
 	component: ScheduledJobsPage,
 });
 

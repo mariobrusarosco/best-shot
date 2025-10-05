@@ -10,4 +10,3 @@ export interface AppButtonProps extends Omit<MuiButtonProps, "variant"> {
 	startIcon?: React.ReactNode;
 	endIcon?: React.ReactNode;
 }
-

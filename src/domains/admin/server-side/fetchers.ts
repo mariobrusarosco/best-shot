@@ -1,12 +1,20 @@
 import { api } from "@/api";
 import {
+	AdminTournamentResponseSchema,
+	ExecutionJobsResponseSchema,
 	ScraperExecutionSchema,
 	ScraperJobSchema,
 	ScraperStatisticsSchema,
+	TournamentExecutionJobsResponseSchema,
 	TournamentMetadataSchema,
-	ExecutionJobsResponseSchema,
 } from "../schemas";
-import type { IScraperJob, ITournamentMetadata, IExecutionJob } from "../typing";
+import type {
+	IAdminTournament,
+	IExecutionJob,
+	IScraperJob,
+	ITournamentExecutionJobsResponse,
+	ITournamentMetadata,
+} from "../typing";
 
 // Fetch all scraper jobs
 export const fetchScraperJobs = async (): Promise<IScraperJob[]> => {
@@ -84,4 +92,24 @@ export const fetchExecutionJobs = async (params?: {
 		data: parsed.data,
 		pagination: parsed.pagination,
 	};
+};
+
+// Fetch admin tournament data
+export const fetchAdminTournament = async (tournamentId: string): Promise<IAdminTournament> => {
+	const response = await api.get(`/admin/tournaments/${tournamentId}`, {
+		baseURL: import.meta.env.VITE_BEST_SHOT_API_V2,
+	});
+	const parsedResponse = AdminTournamentResponseSchema.parse(response.data);
+	return parsedResponse.data;
+};
+
+// Fetch tournament execution jobs
+export const fetchTournamentExecutionJobs = async (
+	tournamentId: string
+): Promise<ITournamentExecutionJobsResponse["data"]> => {
+	const response = await api.get(`/admin/tournaments/${tournamentId}/execution-jobs`, {
+		baseURL: import.meta.env.VITE_BEST_SHOT_API_V2,
+	});
+	const parsedResponse = TournamentExecutionJobsResponseSchema.parse(response.data);
+	return parsedResponse.data;
 };

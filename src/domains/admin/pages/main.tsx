@@ -1,11 +1,11 @@
-import { useState } from "react";
 import { Box, styled } from "@mui/material";
-import { AppButton } from "@/domains/ui-system/components/app-button/app-button";
-import { AppIcon } from "@/domains/ui-system/components/icon/icon";
-import { AppTypography } from "@/domains/ui-system/components";
+import { useState } from "react";
 import { CreateTournamentModal } from "@/domains/admin/components/tournaments/create-tournament-modal/create-tournament-modal";
 import TournamentsTable from "@/domains/admin/components/tournaments/tournaments-table/tournaments-table";
 import { useTournaments } from "@/domains/tournament/hooks/use-tournaments";
+import { AppTypography } from "@/domains/ui-system/components";
+import { AppButton } from "@/domains/ui-system/components/app-button/app-button";
+import { AppIcon } from "@/domains/ui-system/components/icon/icon";
 
 const Header = styled(Box)(({ theme }) => ({
 	display: "flex",
@@ -65,10 +65,7 @@ const MainAdminPage = () => {
 				</AppButton>
 			</Header>
 
-			<TournamentsTable
-				tournaments={tournaments || []}
-				isLoading={isLoading}
-			/>
+			<TournamentsTable tournaments={tournaments || []} isLoading={isLoading} />
 
 			{isCreateModalOpen && <CreateTournamentModal onClose={() => setIsCreateModalOpen(false)} />}
 		</StyledContainer>

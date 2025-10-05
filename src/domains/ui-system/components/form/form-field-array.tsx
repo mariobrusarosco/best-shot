@@ -12,7 +12,11 @@ import { AppButton } from "@/domains/ui-system/components/button/button";
 interface AppFormFieldArrayProps<T extends FieldValues> {
 	name: ArrayPath<T>;
 	control: Control<T>;
-	renderField: (index: number, field: FieldArray<T, ArrayPath<T>>, remove: (index: number) => void) => React.ReactNode;
+	renderField: (
+		index: number,
+		field: FieldArray<T, ArrayPath<T>>,
+		remove: (index: number) => void
+	) => React.ReactNode;
 	label?: string;
 	addButtonText?: string;
 	minItems?: number;

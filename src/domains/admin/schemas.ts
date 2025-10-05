@@ -182,3 +182,52 @@ export const ExecutionJobsResponseSchema = z.object({
 		total: z.number(),
 	}),
 });
+
+// Admin Tournament Schema
+export const AdminTournamentSchema = z.object({
+	id: z.string().uuid(),
+	label: z.string(),
+	logo: z.string().url(),
+	baseUrl: z.string().url(),
+	provider: z.string(),
+	mode: z.string(),
+	standingsMode: z.string(),
+});
+
+// Admin Tournament API Response Schema
+export const AdminTournamentResponseSchema = z.object({
+	success: z.boolean(),
+	data: AdminTournamentSchema,
+	message: z.string(),
+});
+
+// Tournament Execution Job Schema
+export const TournamentExecutionJobSchema = z.object({
+	id: z.string().uuid(),
+	operationType: z.string(),
+	status: z.string(),
+	summary: z.object({
+		totalOperations: z.number(),
+		successfulOperations: z.number(),
+		failedOperations: z.number(),
+	}),
+	reportUrl: z.string().nullable(),
+	createdAt: z.string(),
+	endTime: z.string().nullable(),
+	duration: z.number().nullable(),
+});
+
+// Tournament Execution Jobs API Response Schema
+export const TournamentExecutionJobsResponseSchema = z.object({
+	success: z.boolean(),
+	data: z.object({
+		tournament: z.object({
+			id: z.string().uuid(),
+			label: z.string(),
+		}),
+		executionJobs: TournamentExecutionJobSchema.array(),
+		total: z.number(),
+		limit: z.number(),
+	}),
+	message: z.string(),
+});

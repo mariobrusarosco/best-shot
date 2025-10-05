@@ -117,8 +117,7 @@ const Rounds = styled(Box)(({ theme }) => ({
 
 	[UIHelper.startsOn("desktop")]: {
 		paddingRight: theme.spacing(2),
-		minWidth: "450px",
-		maxWidth: "450px",
+		minWidth: "600px",
 	},
 
 	...OverflowOnHover(),

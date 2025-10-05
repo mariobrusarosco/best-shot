@@ -1,5 +1,12 @@
 import { Box, FormControl, MenuItem, Select, Typography } from "@mui/material";
-import { type Control, Controller, type FieldPath, type FieldValues, type FieldError, type ControllerRenderProps } from "react-hook-form";
+import {
+	type Control,
+	Controller,
+	type ControllerRenderProps,
+	type FieldError,
+	type FieldPath,
+	type FieldValues,
+} from "react-hook-form";
 
 interface SelectOption {
 	value: string | number;
@@ -19,7 +26,15 @@ interface AppFormSelectProps<T extends FieldValues> {
 }
 
 // Extracted components to reduce complexity
-const FormLabel = ({ label, required, hasError }: { label: string; required: boolean; hasError: boolean }) => (
+const FormLabel = ({
+	label,
+	required,
+	hasError,
+}: {
+	label: string;
+	required: boolean;
+	hasError: boolean;
+}) => (
 	<Typography
 		variant="caption"
 		sx={{
@@ -36,18 +51,18 @@ const FormLabel = ({ label, required, hasError }: { label: string; required: boo
 	</Typography>
 );
 
-const SelectField = <T extends FieldValues>({ 
-	field, 
-	fieldState, 
-	disabled, 
-	placeholder, 
-	options 
-}: { 
-	field: ControllerRenderProps<T, FieldPath<T>>; 
-	fieldState: { error?: FieldError }; 
-	disabled: boolean; 
-	placeholder: string; 
-	options: SelectOption[]; 
+const SelectField = <T extends FieldValues>({
+	field,
+	fieldState,
+	disabled,
+	placeholder,
+	options,
+}: {
+	field: ControllerRenderProps<T, FieldPath<T>>;
+	fieldState: { error?: FieldError };
+	disabled: boolean;
+	placeholder: string;
+	options: SelectOption[];
 }) => (
 	<FormControl fullWidth error={!!fieldState.error}>
 		<Select
@@ -119,9 +134,15 @@ const SelectField = <T extends FieldValues>({
 	</FormControl>
 );
 
-const HelperText = ({ fieldState, helperText }: { fieldState: { error?: FieldError }; helperText?: string }) => {
+const HelperText = ({
+	fieldState,
+	helperText,
+}: {
+	fieldState: { error?: FieldError };
+	helperText?: string;
+}) => {
 	if (!fieldState.error?.message && !helperText) return null;
-	
+
 	return (
 		<Typography
 			variant="caption"
@@ -152,16 +173,14 @@ export const AppFormSelect = <T extends FieldValues>({
 		control={control}
 		render={({ field, fieldState }) => (
 			<Box sx={{ mb: 2 }}>
-				{label && (
-					<FormLabel label={label} required={required} hasError={!!fieldState.error} />
-				)}
+				{label && <FormLabel label={label} required={required} hasError={!!fieldState.error} />}
 
-				<SelectField 
-					field={field} 
-					fieldState={fieldState} 
-					disabled={disabled} 
-					placeholder={placeholder} 
-					options={options} 
+				<SelectField
+					field={field}
+					fieldState={fieldState}
+					disabled={disabled}
+					placeholder={placeholder}
+					options={options}
 				/>
 
 				<HelperText fieldState={fieldState} helperText={helperText} />

@@ -63,14 +63,14 @@ const MatchCard = ({ guess, match, guessMutation }: Props) => {
 	return (
 		<Card
 			data-card-open={false}
-			data-ui="card"
+			data-ui="match-card"
 			data-match-status={match.status}
 			data-guess-status={guess.status}
 			data-id={guess.id}
 		>
 			<CardAnimation lastSavedGuess={guessMutation.data?.id === guess.id} />
-			<Header>
-				<Stack gap={1} alignItems="start">
+			<Header data-ui="match-card-header">
+				<Stack gap={1} display="flex" flexDirection="row" alignItems="center" width="100%">
 					<Stack direction="row" gap={1} alignItems="center">
 						<Typography textTransform="uppercase" variant="tag" color="teal.500" fontWeight={500}>
 							date
@@ -195,6 +195,7 @@ const Card = styled(motion(Surface))(({ theme }) => ({
 
 // Header section with match details
 const Header = styled(Stack)(({ theme }) => ({
+	width: "100%",
 	flexDirection: "row",
 	justifyContent: "space-between",
 	alignItems: "center",
@@ -206,10 +207,10 @@ const Header = styled(Stack)(({ theme }) => ({
 const Teams = styled(Box)(({ theme }) => ({
 	display: "flex",
 	justifyContent: "space-between",
-	gap: theme.spacing(0.5),
+	gap: theme.spacing(4),
 
 	"[data-card-open='true'] &": {
-		gap: theme.spacing(4),
+		gap: theme.spacing(6),
 	},
 }));
 
@@ -223,6 +224,10 @@ const Team = styled(motion.div)(({ theme }) => ({
 	"[data-card-open='true'] &": {
 		flexDirection: "column",
 		alignItems: "stretch",
+		gap: theme.spacing(2),
+	},
+
+	"[data-venue='away'] &": {
 		gap: theme.spacing(2),
 	},
 }));

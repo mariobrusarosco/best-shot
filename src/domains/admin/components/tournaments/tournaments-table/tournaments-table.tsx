@@ -1,16 +1,16 @@
 import {
 	Box,
+	styled,
 	Table,
 	TableBody,
 	TableCell,
 	TableContainer,
 	TableHead,
 	TableRow,
-	styled,
 } from "@mui/material";
 import { useNavigate } from "@tanstack/react-router";
-import { AppTypography } from "@/domains/ui-system/components";
 import type { ITournament } from "@/domains/tournament/schemas";
+import { AppTypography } from "@/domains/ui-system/components";
 
 interface TournamentsTableProps {
 	tournaments: ITournament[];
@@ -84,21 +84,13 @@ const TournamentRow = ({ tournament }: { tournament: ITournament }) => {
 			</TableCell>
 
 			<TableCell>
-				<AppTypography
-					variant="body2"
-					color="neutral.200"
-					sx={{ textTransform: "capitalize" }}
-				>
+				<AppTypography variant="body2" color="neutral.200" sx={{ textTransform: "capitalize" }}>
 					{tournament.provider}
 				</AppTypography>
 			</TableCell>
 
 			<TableCell>
-				<AppTypography
-					variant="body2"
-					color="neutral.200"
-					sx={{ textTransform: "capitalize" }}
-				>
+				<AppTypography variant="body2" color="neutral.200" sx={{ textTransform: "capitalize" }}>
 					{tournament?.mode?.replace(/-/g, " ")}
 				</AppTypography>
 			</TableCell>
@@ -149,10 +141,7 @@ const TournamentsTable = ({ tournaments, isLoading }: TournamentsTableProps) => 
 				</StyledTableHead>
 				<TableBody>
 					{tournaments.map((tournament) => (
-						<TournamentRow
-							key={tournament.id}
-							tournament={tournament}
-						/>
+						<TournamentRow key={tournament.id} tournament={tournament} />
 					))}
 				</TableBody>
 			</Table>

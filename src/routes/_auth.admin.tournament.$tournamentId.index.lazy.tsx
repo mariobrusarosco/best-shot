@@ -1,16 +1,17 @@
+import { Box, CircularProgress, IconButton, styled, Tooltip } from "@mui/material";
 import { createLazyFileRoute } from "@tanstack/react-router";
-import { Box, CircularProgress, IconButton, Tooltip, styled } from "@mui/material";
-import { AppIcon, AppTypography } from "@/domains/ui-system/components";
 import {
-	useAdminCreateStandings,
-	useAdminUpdateStandings,
-	useAdminCreateRounds,
-	useAdminUpdateRounds,
-	useAdminCreateTeams,
-	useAdminUpdateTeams,
 	useAdminCreateMatches,
+	useAdminCreateRounds,
+	useAdminCreateStandings,
+	useAdminCreateTeams,
+	useAdminTournament,
 	useAdminUpdateMatches,
+	useAdminUpdateRounds,
+	useAdminUpdateStandings,
+	useAdminUpdateTeams,
 } from "@/domains/admin/hooks";
+import { AppIcon, AppTypography } from "@/domains/ui-system/components";
 
 export const Route = createLazyFileRoute("/_auth/admin/tournament/$tournamentId/")({
 	component: TournamentDetailPage,
@@ -86,6 +87,9 @@ const ActionButtonWithLoading = ({
 function TournamentDetailPage() {
 	const { tournamentId } = Route.useParams();
 
+	// Tournament data hooks
+	const { data: tournamentData, isLoading, error } = useAdminTournament(tournamentId);
+
 	// Tournament action hooks
 	const createStandings = useAdminCreateStandings();
 	const updateStandings = useAdminUpdateStandings();
@@ -122,12 +126,74 @@ function TournamentDetailPage() {
 				</Box>
 				<Box>
 					<AppTypography variant="h4" color="neutral.100" fontWeight="bold">
-						Tournament Management
+						{isLoading
+							? "Loading Tournament..."
+							: error
+								? "Tournament Management"
+								: tournamentData?.label || "Tournament Management"}
 					</AppTypography>
 					<AppTypography variant="body2" color="neutral.400" sx={{ mt: 0.5 }}>
-						Manage all aspects of tournament: {tournamentId}
+						{isLoading
+							? "Loading tournament data..."
+							: error
+								? `Error loading tournament: ${tournamentId}`
+								: "Manage all aspects of this tournament"}
 					</AppTypography>
 				</Box>
+			</Box>
+
+			{/* Tournament Information Section */}
+			<Box
+				sx={{
+					backgroundColor: "black.800",
+					border: "1px solid",
+					borderColor: "neutral.700",
+					borderRadius: 2,
+					p: 3,
+					mb: 4,
+				}}
+			>
+				<Box sx={{ display: "flex", alignItems: "center", gap: 2, mb: 2 }}>
+					<AppIcon name="Info" size="small" color="teal.500" />
+					<AppTypography variant="h6" color="neutral.100" fontWeight="medium">
+						Tournament Information
+					</AppTypography>
+				</Box>
+
+				<AppTypography variant="body2" color="neutral.300" sx={{ mb: 2 }}>
+					Tournament ID:{" "}
+					<Box component="span" sx={{ color: "teal.500", fontFamily: "monospace" }}>
+						{tournamentId}
+					</Box>
+				</AppTypography>
+
+				{tournamentData && (
+					<>
+						<AppTypography variant="body2" color="neutral.300" sx={{ mb: 1 }}>
+							Tournament Name:{" "}
+							<Box component="span" sx={{ color: "teal.300" }}>
+								{tournamentData.label}
+							</Box>
+						</AppTypography>
+						<AppTypography variant="body2" color="neutral.300" sx={{ mb: 1 }}>
+							Provider:{" "}
+							<Box component="span" sx={{ color: "teal.300" }}>
+								{tournamentData.provider}
+							</Box>
+						</AppTypography>
+						<AppTypography variant="body2" color="neutral.300" sx={{ mb: 2 }}>
+							Mode:{" "}
+							<Box component="span" sx={{ color: "teal.300" }}>
+								{tournamentData.mode}
+							</Box>
+						</AppTypography>
+					</>
+				)}
+
+				<AppTypography variant="body2" color="neutral.400">
+					Use the action buttons below to manage different aspects of this tournament. Each action
+					will fetch or update data from the configured data provider.
+				</AppTypography>
 			</Box>
 
 			{/* Action Sections */}
@@ -256,36 +322,6 @@ function TournamentDetailPage() {
 					</ActionGrid>
 				</ActionGroup>
 			</ActionSection>
-
-			{/* Info Section */}
-			<Box
-				sx={{
-					backgroundColor: "black.800",
-					border: "1px solid",
-					borderColor: "neutral.700",
-					borderRadius: 2,
-					p: 3,
-				}}
-			>
-				<Box sx={{ display: "flex", alignItems: "center", gap: 2, mb: 2 }}>
-					<AppIcon name="Info" size="small" color="teal.500" />
-					<AppTypography variant="h6" color="neutral.100" fontWeight="medium">
-						Tournament Information
-					</AppTypography>
-				</Box>
-
-				<AppTypography variant="body2" color="neutral.300" sx={{ mb: 2 }}>
-					Tournament ID:{" "}
-					<Box component="span" sx={{ color: "teal.500", fontFamily: "monospace" }}>
-						{tournamentId}
-					</Box>
-				</AppTypography>
-
-				<AppTypography variant="body2" color="neutral.400">
-					Use the action buttons above to manage different aspects of this tournament. Each action
-					will fetch or update data from the configured data provider.
-				</AppTypography>
-			</Box>
 		</Box>
 	);
 }

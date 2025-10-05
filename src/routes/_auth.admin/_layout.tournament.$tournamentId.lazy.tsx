@@ -1,16 +1,16 @@
+import { Box, CircularProgress, IconButton, styled, Tooltip } from "@mui/material";
 import { createLazyFileRoute } from "@tanstack/react-router";
-import { Box, CircularProgress, IconButton, Tooltip, styled } from "@mui/material";
-import { AppIcon, AppTypography } from "@/domains/ui-system/components";
 import {
-	useAdminCreateStandings,
-	useAdminUpdateStandings,
-	useAdminCreateRounds,
-	useAdminUpdateRounds,
-	useAdminCreateTeams,
-	useAdminUpdateTeams,
 	useAdminCreateMatches,
+	useAdminCreateRounds,
+	useAdminCreateStandings,
+	useAdminCreateTeams,
 	useAdminUpdateMatches,
+	useAdminUpdateRounds,
+	useAdminUpdateStandings,
+	useAdminUpdateTeams,
 } from "@/domains/admin/hooks";
+import { AppIcon, AppTypography } from "@/domains/ui-system/components";
 
 export const Route = createLazyFileRoute("/_auth/admin/_layout/tournament/$tournamentId")({
 	component: TournamentDetailPage,
@@ -273,13 +273,17 @@ function TournamentDetailPage() {
 						Tournament Information
 					</AppTypography>
 				</Box>
-				
+
 				<AppTypography variant="body2" color="neutral.300" sx={{ mb: 2 }}>
-					Tournament ID: <Box component="span" sx={{ color: "teal.500", fontFamily: "monospace" }}>{tournamentId}</Box>
+					Tournament ID:{" "}
+					<Box component="span" sx={{ color: "teal.500", fontFamily: "monospace" }}>
+						{tournamentId}
+					</Box>
 				</AppTypography>
 
 				<AppTypography variant="body2" color="neutral.400">
-					Use the action buttons above to manage different aspects of this tournament. Each action will fetch or update data from the configured data provider.
+					Use the action buttons above to manage different aspects of this tournament. Each action
+					will fetch or update data from the configured data provider.
 				</AppTypography>
 			</Box>
 		</Box>

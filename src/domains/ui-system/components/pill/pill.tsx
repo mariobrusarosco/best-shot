@@ -16,15 +16,10 @@ const Pill = styled(Box)(({ theme }) => ({
 	alignItems: "center",
 	borderRadius: theme.spacing(2.5),
 
-	// Enhanced styling for better consistency
-	padding: theme.spacing(0.5, 1.5),
+	padding: theme.spacing(0.5),
 	fontSize: "0.75rem",
 	fontWeight: 500,
 	minHeight: theme.spacing(3),
-
-	// Default styling
-	backgroundColor: theme.palette.primary.main,
-	color: theme.palette.primary.contrastText,
 
 	// Responsive text size
 	[theme.breakpoints.down("tablet")]: {

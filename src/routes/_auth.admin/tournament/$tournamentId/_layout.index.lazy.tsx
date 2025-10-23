@@ -1,6 +1,7 @@
 import { Box, CircularProgress, IconButton, styled, Tooltip, Typography } from "@mui/material";
 import { createLazyFileRoute } from "@tanstack/react-router";
 import {
+	useAdminUpdateKnockoutRounds,
 	useAdminCreateMatches,
 	useAdminCreateRounds,
 	useAdminCreateStandings,
@@ -46,7 +47,6 @@ const ActionsCard = styled(Box)(({ theme }) => ({
 	width: "180px",
 }));
 
-
 interface ActionButtonWithLoadingProps {
 	title: string;
 	onClick: () => void;
@@ -89,6 +89,7 @@ function TournamentDetailPage() {
 	const updateTeams = useAdminUpdateTeams();
 	const createMatches = useAdminCreateMatches();
 	const updateMatches = useAdminUpdateMatches();
+	const updateKnockoutRounds = useAdminUpdateKnockoutRounds();
 
 	if (isLoading) {
 		return <ScreenHeadingSkeleton />;
@@ -170,12 +171,25 @@ function TournamentDetailPage() {
 			</Box>
 
 			<Box display="flex" gap={2}>
-				<ActionsCard>
+				<ActionsCard
+					sx={{
+						cursor: tournamentData?.mode === "knockout-only" ? "not-allowed" : "auto",
+						opacity: tournamentData?.mode === "knockout-only" ? 0.7 : 1,
+					}}
+				>
 					<Typography variant="h6" color="neutral.100" fontWeight="medium">
 						Standings
 					</Typography>
 
-					<Box sx={{ display: "flex", alignItems: "center", gap: 1, justifyContent: "space-between" }}>
+					{tournamentData?.mode === "knockout-only" && (
+						<AppTypography variant="label" color="neutral.100">
+							Knockout tournaments do not have standings
+						</AppTypography>
+					)}
+
+					<Box
+						sx={{ display: "flex", alignItems: "center", gap: 1, justifyContent: "space-between" }}
+					>
 						<AppTypography variant="body2" color="neutral.300">
 							Create
 						</AppTypography>
@@ -191,7 +205,9 @@ function TournamentDetailPage() {
 						</AppPill.Component>
 					</Box>
 
-					<Box sx={{ display: "flex", alignItems: "center", gap: 1, justifyContent: "space-between" }}>
+					<Box
+						sx={{ display: "flex", alignItems: "center", gap: 1, justifyContent: "space-between" }}
+					>
 						<AppTypography variant="body2" color="neutral.300">
 							Update
 						</AppTypography>
@@ -208,14 +224,14 @@ function TournamentDetailPage() {
 					</Box>
 				</ActionsCard>
 
-				<ActionsCard
-					
-				>
+				<ActionsCard>
 					<Typography variant="h6" color="neutral.100" fontWeight="medium">
 						Rounds
 					</Typography>
 
-					<Box sx={{ display: "flex", alignItems: "center", gap: 1, justifyContent: "space-between" }}>
+					<Box
+						sx={{ display: "flex", alignItems: "center", gap: 1, justifyContent: "space-between" }}
+					>
 						<AppTypography variant="body2" color="neutral.300">
 							Create
 						</AppTypography>
@@ -231,31 +247,33 @@ function TournamentDetailPage() {
 						</AppPill.Component>
 					</Box>
 
-					<Box sx={{ display: "flex", alignItems: "center", gap: 1, justifyContent: "space-between" }}>
+					<Box
+						sx={{ display: "flex", alignItems: "center", gap: 1, justifyContent: "space-between" }}
+					>
 						<AppTypography variant="body2" color="neutral.300">
 							Update
 						</AppTypography>
 						<AppPill.Component bgcolor={"teal.500"}>
-						<ActionButtonWithLoading
-							title="Update Rounds"
-							onClick={() => updateRounds.mutate(tournamentId)}
-							isPending={updateRounds.isPending}
-							tournamentId={tournamentId}
-							variables={updateRounds.variables}
-							icon="ClockFilled"
+							<ActionButtonWithLoading
+								title="Update Rounds"
+								onClick={() => updateRounds.mutate(tournamentId)}
+								isPending={updateRounds.isPending}
+								tournamentId={tournamentId}
+								variables={updateRounds.variables}
+								icon="ClockFilled"
 							/>
 						</AppPill.Component>
 					</Box>
 				</ActionsCard>
 
-				<ActionsCard
-					
-				>
+				<ActionsCard>
 					<Typography variant="h6" color="neutral.100" fontWeight="medium">
 						Teams
 					</Typography>
 
-					<Box sx={{ display: "flex", alignItems: "center", gap: 1, justifyContent: "space-between" }}>
+					<Box
+						sx={{ display: "flex", alignItems: "center", gap: 1, justifyContent: "space-between" }}
+					>
 						<AppTypography variant="body2" color="neutral.300">
 							Create
 						</AppTypography>
@@ -271,30 +289,33 @@ function TournamentDetailPage() {
 						</AppPill.Component>
 					</Box>
 
-					<Box sx={{ display: "flex", alignItems: "center", gap: 1, justifyContent: "space-between" }}>
+					<Box
+						sx={{ display: "flex", alignItems: "center", gap: 1, justifyContent: "space-between" }}
+					>
 						<AppTypography variant="body2" color="neutral.300">
 							Update
 						</AppTypography>
 						<AppPill.Component bgcolor={"teal.500"}>
-						<ActionButtonWithLoading
+							<ActionButtonWithLoading
 								title="Update Teams"
-							onClick={() => updateTeams.mutate(tournamentId)}
-							isPending={updateTeams.isPending}
-							tournamentId={tournamentId}
-							variables={updateTeams.variables}
-							icon="ClockFilled"
+								onClick={() => updateTeams.mutate(tournamentId)}
+								isPending={updateTeams.isPending}
+								tournamentId={tournamentId}
+								variables={updateTeams.variables}
+								icon="ClockFilled"
 							/>
 						</AppPill.Component>
 					</Box>
 				</ActionsCard>
 
-				<ActionsCard
-				>
+				<ActionsCard>
 					<Typography variant="h6" color="neutral.100" fontWeight="medium">
 						Matches
 					</Typography>
 
-					<Box sx={{ display: "flex", alignItems: "center", gap: 1, justifyContent: "space-between" }}>
+					<Box
+						sx={{ display: "flex", alignItems: "center", gap: 1, justifyContent: "space-between" }}
+					>
 						<AppTypography variant="body2" color="neutral.300">
 							Create
 						</AppTypography>
@@ -310,21 +331,48 @@ function TournamentDetailPage() {
 						</AppPill.Component>
 					</Box>
 
-					<Box sx={{ display: "flex", alignItems: "center", gap: 1, justifyContent: "space-between" }}>
+					<Box
+						sx={{ display: "flex", alignItems: "center", gap: 1, justifyContent: "space-between" }}
+					>
 						<AppTypography variant="body2" color="neutral.300">
 							Update
 						</AppTypography>
 						<AppPill.Component bgcolor={"teal.500"}>
-						<ActionButtonWithLoading
+							<ActionButtonWithLoading
 								title="Update Matches"
-							onClick={() => updateMatches.mutate(tournamentId)}
-							isPending={updateMatches.isPending}
-							tournamentId={tournamentId}
-							variables={updateMatches.variables}
-							icon="ClockFilled"
+								onClick={() => updateMatches.mutate(tournamentId)}
+								isPending={updateMatches.isPending}
+								tournamentId={tournamentId}
+								variables={updateMatches.variables}
+								icon="ClockFilled"
 							/>
 						</AppPill.Component>
 					</Box>
+				</ActionsCard>
+
+				<ActionsCard>
+					<Typography variant="h6" color="neutral.100" fontWeight="medium">
+						Knockout Rounds
+					</Typography>
+
+					<Box
+						sx={{ display: "flex", alignItems: "center", gap: 1, justifyContent: "space-between" }}
+					>
+						<AppTypography variant="body2" color="neutral.300">
+							Update
+						</AppTypography>
+					</Box>
+
+					<AppPill.Component bgcolor={"teal.500"}>
+						<ActionButtonWithLoading
+							title="Update Knockout Rounds"
+							onClick={() => updateKnockoutRounds.mutate(tournamentId)}
+							isPending={updateKnockoutRounds.isPending}
+							tournamentId={tournamentId}
+							variables={updateKnockoutRounds.variables}
+							icon="ClockFilled"
+						/>
+					</AppPill.Component>
 				</ActionsCard>
 			</Box>
 		</Box>

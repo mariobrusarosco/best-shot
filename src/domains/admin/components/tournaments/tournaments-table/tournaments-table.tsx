@@ -9,11 +9,11 @@ import {
 	TableRow,
 } from "@mui/material";
 import { useNavigate } from "@tanstack/react-router";
-import type { ITournament } from "@/domains/tournament/schemas";
 import { AppTypography } from "@/domains/ui-system/components";
+import type { IAdminTournament } from "@/domains/admin/typing";
 
 interface TournamentsTableProps {
-	tournaments: ITournament[];
+	tournaments: IAdminTournament[];
 	isLoading?: boolean;
 }
 
@@ -54,7 +54,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 	},
 }));
 
-const TournamentInfo = ({ tournament }: { tournament: ITournament }) => (
+const TournamentInfo = ({ tournament }: { tournament: IAdminTournament }) => (
 	<Box>
 		<AppTypography variant="body2" color="neutral.100" fontWeight="medium">
 			{tournament.label}
@@ -65,7 +65,7 @@ const TournamentInfo = ({ tournament }: { tournament: ITournament }) => (
 	</Box>
 );
 
-const TournamentRow = ({ tournament }: { tournament: ITournament }) => {
+const TournamentRow = ({ tournament }: { tournament: IAdminTournament }) => {
 	const navigate = useNavigate();
 
 	const handleRowClick = () => {

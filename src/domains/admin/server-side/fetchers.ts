@@ -1,5 +1,6 @@
 import { api } from "@/api";
 import {
+	AdmingTournamentsResponseSchema,
 	AdminTournamentResponseSchema,
 	ExecutionJobsResponseSchema,
 	ScraperExecutionSchema,
@@ -100,6 +101,14 @@ export const fetchAdminTournament = async (tournamentId: string): Promise<IAdmin
 		baseURL: import.meta.env.VITE_BEST_SHOT_API_V2,
 	});
 	const parsedResponse = AdminTournamentResponseSchema.parse(response.data);
+	return parsedResponse.data;
+};
+
+export const fetchAdminTournaments = async (): Promise<IAdminTournament[]> => {
+	const response = await api.get("/admin/tournaments", {
+		baseURL: import.meta.env.VITE_BEST_SHOT_API_V2,
+	});
+	const parsedResponse = AdmingTournamentsResponseSchema.parse(response.data);
 	return parsedResponse.data;
 };
 

@@ -2,12 +2,12 @@ import { Box, styled } from "@mui/material";
 import { useState } from "react";
 import { CreateTournamentModal } from "@/domains/admin/components/tournaments/create-tournament-modal/create-tournament-modal";
 import TournamentsTable from "@/domains/admin/components/tournaments/tournaments-table/tournaments-table";
-import { useTournaments } from "@/domains/tournament/hooks/use-tournaments";
 import { AppTypography } from "@/domains/ui-system/components";
 import { AppButton } from "@/domains/ui-system/components/app-button/app-button";
 import { AppIcon } from "@/domains/ui-system/components/icon/icon";
-import { ScreenHeading } from "@/domains/global/components/screen-heading";
+import { ScreenHeading, ScreenHeadingSkeleton } from "@/domains/global/components/screen-heading";
 import { AuthenticatedScreenLayout } from "@/domains/ui-system/layout/authenticated";
+import { useAdminTournaments } from "../hooks/use-admin-tournaments";
 
 const StyledContainer = styled(Box)(({ theme }) => ({
 	padding: theme.spacing(2),
@@ -18,7 +18,9 @@ const StyledContainer = styled(Box)(({ theme }) => ({
 
 const MainAdminPage = () => {
 	const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
-	const { data: tournaments, isPending: isLoading, error } = useTournaments();
+	const { data: tournaments, isPending: isLoading, error } = useAdminTournaments();
+
+	// console.log({ data, error });
 
 	if (error) {
 		return (
@@ -32,10 +34,14 @@ const MainAdminPage = () => {
 		);
 	}
 
+	if (isLoading) {
+		return <ScreenHeadingSkeleton />;
+	}
+
 	return (
 		<AuthenticatedScreenLayout data-ui="admin-page" overflow="hidden">
 			<ScreenHeading title="admin">
-			<AppButton
+				<AppButton
 					variant="contained"
 					startIcon={<AppIcon name="Plus" size="small" />}
 					onClick={() => setIsCreateModalOpen(true)}
@@ -46,7 +52,7 @@ const MainAdminPage = () => {
 				>
 					Create Tournament
 				</AppButton>
-				</ScreenHeading>
+			</ScreenHeading>
 
 			<TournamentsTable tournaments={tournaments || []} isLoading={isLoading} />
 

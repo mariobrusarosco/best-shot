@@ -1,20 +1,20 @@
 import { Box, CircularProgress, IconButton, styled, Tooltip, Typography } from "@mui/material";
 import { createLazyFileRoute } from "@tanstack/react-router";
 import {
-	useAdminUpdateKnockoutRounds,
 	useAdminCreateMatches,
 	useAdminCreateRounds,
 	useAdminCreateStandings,
 	useAdminCreateTeams,
 	useAdminTournament,
+	useAdminUpdateKnockoutRounds,
 	useAdminUpdateMatches,
 	useAdminUpdateRounds,
 	useAdminUpdateStandings,
 	useAdminUpdateTeams,
 } from "@/domains/admin/hooks";
+import { ScreenHeadingSkeleton } from "@/domains/global/components/screen-heading";
 import { AppIcon, AppTypography } from "@/domains/ui-system/components";
 import { AppPill } from "@/domains/ui-system/components/pill/pill";
-import { ScreenHeadingSkeleton } from "@/domains/global/components/screen-heading";
 
 export const Route = createLazyFileRoute("/_auth/admin/tournament/$tournamentId/_layout/")({
 	component: TournamentDetailPage,

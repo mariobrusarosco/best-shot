@@ -8,13 +8,14 @@ import {
 	TableContainer,
 	TableHead,
 	TableRow,
-	Typography,
 } from "@mui/material";
 import { createLazyFileRoute } from "@tanstack/react-router";
 import { useAdminTournamentExecutionJobs } from "@/domains/admin/hooks";
 import { AppIcon, AppTypography } from "@/domains/ui-system/components";
 
-export const Route = createLazyFileRoute("/_auth/admin/tournament/$tournamentId/_layout/execution-jobs")({
+export const Route = createLazyFileRoute(
+	"/_auth/admin/tournament/$tournamentId/_layout/execution-jobs"
+)({
 	component: ExecutionJobsPage,
 });
 

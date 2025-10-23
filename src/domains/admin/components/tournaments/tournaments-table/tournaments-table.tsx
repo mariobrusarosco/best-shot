@@ -9,8 +9,8 @@ import {
 	TableRow,
 } from "@mui/material";
 import { useNavigate } from "@tanstack/react-router";
-import { AppTypography } from "@/domains/ui-system/components";
 import type { IAdminTournament } from "@/domains/admin/typing";
+import { AppTypography } from "@/domains/ui-system/components";
 
 interface TournamentsTableProps {
 	tournaments: IAdminTournament[];

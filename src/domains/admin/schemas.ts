@@ -192,7 +192,7 @@ export const AdminTournamentSchema = z.object({
 	provider: z.string(),
 	mode: z.string(),
 	standingsMode: z.string(),
-	season: z.string()
+	season: z.string(),
 });
 
 export const AdmingTournamentsResponseSchema = z.object({

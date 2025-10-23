@@ -6,6 +6,7 @@ export { useAdminCreateTournament } from "./use-admin-create-tournament";
 export { useAdminExecutionJobs } from "./use-admin-execution-jobs";
 export { useAdminTournament } from "./use-admin-tournament";
 export { useAdminTournamentExecutionJobs } from "./use-admin-tournament-execution-jobs";
+export { useAdminUpdateKnockoutRounds } from "./use-admin-update-knockout-rounds";
 export { useAdminUpdateMatches } from "./use-admin-update-matches";
 export { useAdminUpdateRounds } from "./use-admin-update-rounds";
 export { useAdminUpdateStandings } from "./use-admin-update-standings";

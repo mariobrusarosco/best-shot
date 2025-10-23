@@ -2,10 +2,10 @@ import { Box, styled } from "@mui/material";
 import { useState } from "react";
 import { CreateTournamentModal } from "@/domains/admin/components/tournaments/create-tournament-modal/create-tournament-modal";
 import TournamentsTable from "@/domains/admin/components/tournaments/tournaments-table/tournaments-table";
+import { ScreenHeading, ScreenHeadingSkeleton } from "@/domains/global/components/screen-heading";
 import { AppTypography } from "@/domains/ui-system/components";
 import { AppButton } from "@/domains/ui-system/components/app-button/app-button";
 import { AppIcon } from "@/domains/ui-system/components/icon/icon";
-import { ScreenHeading, ScreenHeadingSkeleton } from "@/domains/global/components/screen-heading";
 import { AuthenticatedScreenLayout } from "@/domains/ui-system/layout/authenticated";
 import { useAdminTournaments } from "../hooks/use-admin-tournaments";
 

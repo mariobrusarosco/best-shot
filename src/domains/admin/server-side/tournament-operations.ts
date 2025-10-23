@@ -122,3 +122,14 @@ export const updateMatches = async (tournamentId: string) => {
 	);
 	return response.data;
 };
+
+export const updateKnockoutRounds = async (tournamentId: string) => {
+	const response = await api.patch(
+		`/admin/tournaments/${tournamentId}/knockout-rounds`,
+		{},
+		{
+			baseURL: import.meta.env.VITE_BEST_SHOT_API_V2,
+		}
+	);
+	return response.data;
+};

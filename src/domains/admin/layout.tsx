@@ -1,9 +1,8 @@
-import { Outlet } from "@tanstack/react-router";
+import { getRouteApi, Outlet } from "@tanstack/react-router";
+import AdminTournamentTabs from "@/domains/admin/components/tournaments/admin-tournament-tabs/admin-tournament-tabs";
 import { ScreenHeading, ScreenHeadingSkeleton } from "@/domains/global/components/screen-heading";
 import { AuthenticatedScreenLayout } from "@/domains/ui-system/layout/authenticated";
-import AdminTournamentTabs from "@/domains/admin/components/tournaments/admin-tournament-tabs/admin-tournament-tabs";
 import { useAdminTournament } from "./hooks";
-import { getRouteApi } from "@tanstack/react-router";
 
 const route = getRouteApi("/_auth/admin/tournament/$tournamentId");
 

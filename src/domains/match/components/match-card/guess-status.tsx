@@ -14,13 +14,7 @@ export const GuessStatus = ({ guess }: { guess: IGuess }) => {
 
 	if (guess.status === "expired")
 		return (
-			<AppPill.Component
-				data-ui="guess-status-expired"
-				border="1px solid"
-				bgcolor="red.400"
-				width={60}
-				height={15}
-			>
+			<AppPill.Component data-ui="guess-status-expired" bgcolor="red.400" width={60} height={15}>
 				<Typography variant="tag">expired</Typography>
 			</AppPill.Component>
 		);

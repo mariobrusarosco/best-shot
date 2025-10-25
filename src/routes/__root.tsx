@@ -2,6 +2,7 @@ import type { QueryClient } from "@tanstack/react-query";
 import { createRootRouteWithContext, Outlet } from "@tanstack/react-router";
 import { AppDevTools } from "@/configuration/app-dev-tools";
 import type { IAuthHook } from "@/domains/authentication/adapters/typing";
+import { BetaDisclaimer } from "@/domains/global/components/beta-disclaimer";
 import { AppNotFound } from "@/domains/global/components/not-found";
 
 export interface RouterContext {
@@ -12,6 +13,7 @@ export interface RouterContext {
 const RootComponent = () => {
 	return (
 		<>
+			<BetaDisclaimer />
 			<Outlet />
 			<AppDevTools />
 		</>

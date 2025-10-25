@@ -1,7 +1,7 @@
 import { Divider, Stack, styled, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import dayjs from "dayjs";
-import { motion } from "motion/react";
+import { hover, motion } from "motion/react";
 import { useState } from "react";
 
 import { BestShotIcon } from "@/assets/best-shot-icon";
@@ -44,7 +44,7 @@ interface Props {
 }
 
 const MatchCard = ({ guess, match, guessMutation }: Props) => {
-	const [isOpen, setIsOpen] = useState(true);
+	const [isOpen, setIsOpen] = useState(false);
 	const guessInputs = useGuessInputs(guess, match, guessMutation);
 
 	// Match
@@ -62,7 +62,7 @@ const MatchCard = ({ guess, match, guessMutation }: Props) => {
 
 	return (
 		<Card
-			data-card-open={false}
+			data-card-open={isOpen}
 			data-ui="match-card"
 			data-match-status={match.status}
 			data-guess-status={guess.status}
@@ -98,7 +98,7 @@ const MatchCard = ({ guess, match, guessMutation }: Props) => {
 									textTransform="uppercase"
 									color={theme.palette.neutral[100]}
 								>
-									{timebox} to guess
+									{timebox} left
 								</Typography>
 							</Stack>
 						) : null}
@@ -112,11 +112,11 @@ const MatchCard = ({ guess, match, guessMutation }: Props) => {
 
 				{showCTAButton ? (
 					<CTA>
-						<AIPredictionButton
+						{/* <AIPredictionButton
 							matchId={match.id}
 							onPredictionReceived={handleAIPrediction}
 							disabled={!guessInputs.allowNewGuess || guessInputs.isPending}
-						/>
+						/> */}
 
 						{showSaveButton ? (
 							<Button
@@ -143,9 +143,11 @@ const MatchCard = ({ guess, match, guessMutation }: Props) => {
 
 			<Teams data-ui="teams">
 				<Team data-venue="home" data-ui="team">
-					<GuessDisplay cardExpanded={isOpen} data={guess.home} />
 					<TeamDisplay cardExpanded={isOpen} team={match.home} />
-					<ScoreDisplay matchVenueData={match.home} />
+					<Box display="flex" gap={1}>
+						<ScoreDisplay matchVenueData={match.home} />
+						<GuessDisplay cardExpanded={isOpen} data={guess.home} />
+					</Box>
 					<ScoreInput
 						guessStatus={guess.status}
 						cardExpanded={isOpen}
@@ -155,9 +157,11 @@ const MatchCard = ({ guess, match, guessMutation }: Props) => {
 				</Team>
 
 				<Team data-venue="away" data-ui="team">
-					<ScoreDisplay matchVenueData={match.away} />
 					<TeamDisplay cardExpanded={isOpen} team={match.away} />
-					<GuessDisplay cardExpanded={isOpen} data={guess.away} />
+					<Box display="flex" gap={1}>
+						<GuessDisplay cardExpanded={isOpen} data={guess.away} />
+						<ScoreDisplay matchVenueData={match.away} />
+					</Box>
 					<ScoreInput
 						guessStatus={guess.status}
 						cardExpanded={isOpen}
@@ -220,16 +224,15 @@ const Team = styled(motion.div)(({ theme }) => ({
 	justifyContent: "space-between",
 	flex: 1,
 	maxWidth: "50%",
+	flexDirection: "column",
+	gap: theme.spacing(2),
 
-	"[data-card-open='true'] &": {
-		flexDirection: "column",
-		alignItems: "stretch",
-		gap: theme.spacing(2),
-	},
-
-	"[data-venue='away'] &": {
-		gap: theme.spacing(2),
-	},
+	"[data-venue='away'] &": {},
+	// "[data-card-open='true'] &": {
+	// 	flexDirection: "column",
+	// 	alignItems: "stretch",
+	// 	gap: theme.spacing(2),
+	// },
 }));
 
 // Call-to-action container
@@ -251,6 +254,10 @@ const Button = styled(AppButton)(({ theme }) => ({
 	"&[disabled]": {
 		filter: "grayscale(1)",
 		opacity: "0.5",
+	},
+
+	"&:hover": {
+		backgroundColor: theme.palette.teal[600],
 	},
 }));
 

@@ -9,6 +9,9 @@ export const ScoreDisplay = ({
 }) => {
 	return (
 		<Wrapper data-ui="score-display">
+			<Typography textTransform="uppercase" variant="tag" fontWeight={500}>
+				score
+			</Typography>
 			<AppPill.Component bgcolor={"black.500"} minWidth={30} height={20}>
 				<Typography variant="tag">{matchVenueData.score ?? "-"}</Typography>
 			</AppPill.Component>

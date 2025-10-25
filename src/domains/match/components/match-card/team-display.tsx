@@ -5,32 +5,24 @@ import { AppPill } from "@/domains/ui-system/components/pill/pill";
 import { UIHelper } from "@/theming/theme";
 import type { IMatch } from "../../typing";
 
-export const TeamDisplay = ({
-	team,
-	cardExpanded,
-}: {
-	team: IMatch["home"] | IMatch["away"];
-	cardExpanded: boolean;
-}) => {
+export const TeamDisplay = ({ team }: { team: IMatch["home"] | IMatch["away"] }) => {
 	const standings = useTournamentStandings();
 	const teamStandingsData = getTeamStandingsInfo(team.id, standings.data);
 
 	return (
 		<Display data-ui="team-display">
-			{cardExpanded ? (
-				<Position>
-					<Typography textTransform="uppercase" variant="caption" color="teal.500">
-						pos
+			<Position>
+				<Typography textTransform="uppercase" variant="caption" color="teal.500">
+					pos
+				</Typography>
+				<AppPill.Component bgcolor={"black.500"} minWidth={30} height={20}>
+					<Typography variant="label" color="neutral.100">
+						{teamStandingsData?.order}
 					</Typography>
-					<AppPill.Component bgcolor={"black.500"} minWidth={30} height={20}>
-						<Typography variant="label" color="neutral.100">
-							{teamStandingsData?.order}
-						</Typography>
-					</AppPill.Component>
-				</Position>
-			) : null}
+				</AppPill.Component>
+			</Position>
 
-			<LogoAndName data-ui="logo-and-label">
+			<LogoAndName data-ui="logo-and-name">
 				<TeamLogo src={team.badge} />
 
 				<Typography
@@ -61,22 +53,12 @@ export const TeamDisplay = ({
 export const Display = styled(Box)(({ theme }) => ({
 	display: "flex",
 	gap: theme.spacing(1),
-	flex: 1,
-	justifyContent: "center",
-	"[data-card-open='true'] &": {
-		flexDirection: "column",
-		justifyContent: "flex-start",
-	},
 }));
 
 export const LogoAndName = styled(Box)(({ theme }) => ({
-	display: "inline-flex",
-	flexDirection: "column",
-	alignItems: "center",
-	flex: 1,
-	justifyContent: "space-between",
-	textAlign: "center",
-	padding: theme.spacing(0, 1),
+	display: "grid",
+	justifyItems: "center",
+	gap: theme.spacing(1),
 
 	"[data-card-open='true'] &": {
 		flexDirection: "row",

@@ -133,3 +133,14 @@ export const updateKnockoutRounds = async (tournamentId: string) => {
 	);
 	return response.data;
 };
+
+export const updateRoundMatches = async (tournamentId: string, roundId: string) => {
+	const response = await api.patch(
+		`/admin/tournaments/${tournamentId}/rounds/${roundId}/matches`,
+		{},
+		{
+			baseURL: import.meta.env.VITE_BEST_SHOT_API_V2,
+		}
+	);
+	return response.data;
+};

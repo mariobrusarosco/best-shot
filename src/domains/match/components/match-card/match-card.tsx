@@ -1,11 +1,10 @@
 import { Divider, Stack, styled, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import dayjs from "dayjs";
-import { hover, motion } from "motion/react";
+import { motion } from "motion/react";
 import { useState } from "react";
 
 import { BestShotIcon } from "@/assets/best-shot-icon";
-import AIPredictionButton from "@/domains/ai/components/AIPredictionButton";
 import { useGuessInputs } from "@/domains/guess/hooks/use-guess-inputs";
 import type { useGuessMutation } from "@/domains/guess/hooks/use-guess-mutation";
 import { type GUESS_STATUS, GUESS_STATUSES, type IGuess } from "@/domains/guess/typing";
@@ -54,11 +53,6 @@ const MatchCard = ({ guess, match, guessMutation }: Props) => {
 	const showCTAButton =
 		SHOW_CTA_BUTTON_WHEN_GUESS_STATUS.has(guess.status) && !guess.hasLostTimewindowToGuess;
 	const showSaveButton = SHOW_SAVE_BUTTON_WHEN_GUESS_STATUS.has(guess.status) && isOpen;
-
-	const handleAIPrediction = (homeScore: number, awayScore: number) => {
-		guessInputs.handleHomeGuess(homeScore);
-		guessInputs.handleAwayGuess(awayScore);
-	};
 
 	return (
 		<Card
@@ -112,12 +106,6 @@ const MatchCard = ({ guess, match, guessMutation }: Props) => {
 
 				{showCTAButton ? (
 					<CTA>
-						{/* <AIPredictionButton
-							matchId={match.id}
-							onPredictionReceived={handleAIPrediction}
-							disabled={!guessInputs.allowNewGuess || guessInputs.isPending}
-						/> */}
-
 						{showSaveButton ? (
 							<Button
 								onClick={async () => {
@@ -143,7 +131,7 @@ const MatchCard = ({ guess, match, guessMutation }: Props) => {
 
 			<Teams data-ui="teams">
 				<Team data-venue="home" data-ui="team">
-					<TeamDisplay cardExpanded={isOpen} team={match.home} />
+					<TeamDisplay team={match.home} />
 					<Box display="flex" gap={1}>
 						<ScoreDisplay matchVenueData={match.home} />
 						<GuessDisplay cardExpanded={isOpen} data={guess.home} />
@@ -157,7 +145,7 @@ const MatchCard = ({ guess, match, guessMutation }: Props) => {
 				</Team>
 
 				<Team data-venue="away" data-ui="team">
-					<TeamDisplay cardExpanded={isOpen} team={match.away} />
+					<TeamDisplay team={match.away} />
 					<Box display="flex" gap={1}>
 						<GuessDisplay cardExpanded={isOpen} data={guess.away} />
 						<ScoreDisplay matchVenueData={match.away} />

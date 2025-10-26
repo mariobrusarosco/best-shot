@@ -16,3 +16,4 @@ export { useScraperJobs } from "./use-scraper-jobs";
 export { useScraperStatistics } from "./use-scraper-statistics";
 export { useTriggerScraperJob } from "./use-trigger-scraper-job";
 export { useUpdateScraperStatus } from "./use-update-scraper-status";
+export { useAdminUpdateRoundMatches } from "./use-admin-update-round-matches";

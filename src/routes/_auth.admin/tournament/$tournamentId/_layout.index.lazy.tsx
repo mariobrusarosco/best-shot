@@ -8,6 +8,7 @@ import {
 	useAdminTournament,
 	useAdminUpdateKnockoutRounds,
 	useAdminUpdateMatches,
+	useAdminUpdateRoundMatches,
 	useAdminUpdateRounds,
 	useAdminUpdateStandings,
 	useAdminUpdateTeams,
@@ -15,6 +16,8 @@ import {
 import { ScreenHeadingSkeleton } from "@/domains/global/components/screen-heading";
 import { AppIcon, AppTypography } from "@/domains/ui-system/components";
 import { AppPill } from "@/domains/ui-system/components/pill/pill";
+import { AppInput } from "@/domains/ui-system/components/input/input";
+import { useState } from "react";
 
 export const Route = createLazyFileRoute("/_auth/admin/tournament/$tournamentId/_layout/")({
 	component: TournamentDetailPage,
@@ -78,6 +81,10 @@ const ActionButtonWithLoading = ({
 function TournamentDetailPage() {
 	const { tournamentId } = Route.useParams();
 
+	const [roundIdInput, setRoundIdInput] = useState<string | null>(null);
+	const handleRoundIdInput = (event: React.ChangeEvent<HTMLInputElement>) => {
+		setRoundIdInput(event.target.value);
+	};
 	const { data: tournamentData, isLoading, error } = useAdminTournament(tournamentId);
 
 	// Tournament action hooks
@@ -90,6 +97,7 @@ function TournamentDetailPage() {
 	const createMatches = useAdminCreateMatches();
 	const updateMatches = useAdminUpdateMatches();
 	const updateKnockoutRounds = useAdminUpdateKnockoutRounds();
+	const updateRoundMatches = useAdminUpdateRoundMatches();
 
 	if (isLoading) {
 		return <ScreenHeadingSkeleton />;
@@ -335,7 +343,7 @@ function TournamentDetailPage() {
 						sx={{ display: "flex", alignItems: "center", gap: 1, justifyContent: "space-between" }}
 					>
 						<AppTypography variant="body2" color="neutral.300">
-							Update
+							Update all
 						</AppTypography>
 						<AppPill.Component bgcolor={"teal.500"}>
 							<ActionButtonWithLoading
@@ -344,6 +352,34 @@ function TournamentDetailPage() {
 								isPending={updateMatches.isPending}
 								tournamentId={tournamentId}
 								variables={updateMatches.variables}
+								icon="ClockFilled"
+							/>
+						</AppPill.Component>
+					</Box>
+
+					<Box
+						sx={{ display: "flex", alignItems: "center", gap: 1, justifyContent: "space-between" }}
+					>
+						<AppTypography variant="body2" color="neutral.300">
+							Update
+						</AppTypography>
+
+						<AppInput
+							type="text"
+							id="round-id"
+							name="round-id"
+							value={roundIdInput}
+							onChange={handleRoundIdInput}
+						/>
+						<AppPill.Component bgcolor={"teal.500"}>
+							<ActionButtonWithLoading
+								title="Update Round Matches"
+								onClick={() =>
+									updateRoundMatches.mutate({ tournamentId, roundId: roundIdInput || "" })
+								}
+								isPending={updateRoundMatches.isPending}
+								tournamentId={tournamentId}
+								variables={updateRoundMatches.variables || ""}
 								icon="ClockFilled"
 							/>
 						</AppPill.Component>

@@ -379,7 +379,6 @@ function TournamentDetailPage() {
 								}
 								isPending={updateRoundMatches.isPending}
 								tournamentId={tournamentId}
-								variables={updateRoundMatches.variables || ""}
 								icon="ClockFilled"
 							/>
 						</AppPill.Component>

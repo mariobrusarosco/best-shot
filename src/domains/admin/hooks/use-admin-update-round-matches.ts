@@ -3,10 +3,10 @@ import { updateRoundMatches } from "@/domains/admin/server-side/tournament-opera
 
 export const useAdminUpdateRoundMatches = () => {
 	return useMutation({
-		mutationFn: ({ tournamentId, roundId }: { tournamentId: string, roundId: string }) => updateRoundMatches(tournamentId, roundId),
-		onSuccess: (data: any) => {
-            debugger
-			alert(`Update matches for round ${data.roundSlug} completed`);
+		mutationFn: ({ tournamentId, roundId }: { tournamentId: string; roundId: string }) =>
+			updateRoundMatches(tournamentId, roundId),
+		onSuccess: () => {
+			alert(`Update matches for round completed`);
 		},
 	});
 };

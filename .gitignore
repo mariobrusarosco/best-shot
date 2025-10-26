@@ -27,6 +27,13 @@ coverage
 *.sw?
 
 .env
+.env.local
+.env.demo
+.env.staging
+.env.production
+
+# Allow example env files to be committed
+!.env*.example
 
 # Sentry Config File
 .env.sentry-build-plugin

@@ -1,6 +1,5 @@
 import { APP_MODE } from "../global/utils";
 import Auth0 from "./adapters/auth-0";
-import ByPass from "./adapters/bypass";
 import type { IAuthAdapter } from "./adapters/typing";
 
 const AuthenticationAdapter: IAuthAdapter = {
@@ -9,8 +8,8 @@ const AuthenticationAdapter: IAuthAdapter = {
 		useAppAuth: Auth0.hook,
 	},
 	demo: {
-		AuthProvider: ByPass.Provider,
-		useAppAuth: ByPass.hook,
+		AuthProvider: Auth0.Provider,
+		useAppAuth: Auth0.hook,
 	},
 	staging: { AuthProvider: Auth0.Provider, useAppAuth: Auth0.hook },
 	production: { AuthProvider: Auth0.Provider, useAppAuth: Auth0.hook },

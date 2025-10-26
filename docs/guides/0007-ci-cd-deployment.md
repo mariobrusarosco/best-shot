@@ -18,18 +18,21 @@ This guide explains the CI/CD pipeline and deployment strategy for the Best Shot
 The primary deployment workflow handles three environments:
 
 #### 1. Demo Environment
+
 - **Trigger**: Push to `main` branch
 - **Environment**: `demo`
 - **Build Mode**: `yarn build --mode demo`
 - **Deployment**: AWS S3 + CloudFront invalidation
 
 #### 2. Staging Environment
+
 - **Trigger**: Push to `staging` branch
 - **Environment**: `staging`
 - **Build Mode**: `yarn build --mode staging`
 - **Deployment**: AWS S3 + CloudFront invalidation
 
 #### 3. Production Environment
+
 - **Trigger**: Push to `main` branch
 - **Environment**: `production`
 - **Build Mode**: `yarn build --mode production`
@@ -46,12 +49,12 @@ The primary deployment workflow handles three environments:
 
 ### E2E Testing Workflow (.github/workflows/playwright.yml)
 
-- **Trigger**: 
+- **Trigger**:
   - Scheduled daily at 2:00 AM UTC via cron
   - Manual dispatch with environment selection (staging/production)
 - **Purpose**: Runs Playwright end-to-end tests against live environments
 - **Environments**: Configurable (staging by default, production optional)
-- **Artifacts**: 
+- **Artifacts**:
   - Test reports stored for 30 days
   - Test videos on failure stored for 7 days
 - **Features**:
@@ -62,14 +65,17 @@ The primary deployment workflow handles three environments:
 ## AWS Infrastructure
 
 ### Components
+
 - **S3 Bucket**: Static website hosting (not a server-based deployment)
 - **CloudFront**: CDN for global content delivery
 - **Route 53**: DNS management (mentioned in README)
 
 ### Important Note: Static Site Deployment
+
 This is a **static site deployment** - the application is built into static files and served from S3/CloudFront. Environment variables are **build-time only** and get compiled into the JavaScript bundles during the GitHub Actions build process. They are not runtime environment variables on a server.
 
 ### Required Secrets
+
 The following GitHub repository secrets must be configured:
 
 ```
@@ -81,6 +87,7 @@ SLACK_DEPLOYMENTS_WEBHOOK      # Slack webhook URL for deployment notifications
 ```
 
 **To configure these secrets:**
+
 1. Go to your GitHub repository
 2. Navigate to **Settings** → **Secrets and variables** → **Actions**
 3. Click **New repository secret**
@@ -97,69 +104,85 @@ The project uses Vite's environment variable system with separate `.env` files f
 ```
 .env                    # Local development (default)
 .env.demo              # Demo environment
-.env.staging           # Staging environment  
+.env.staging           # Staging environment
 .env.production        # Production environment
 ```
 
 ### Required Environment Variables
 
 #### Core API Configuration
+
 - `VITE_BEST_SHOT_API`: Backend API v1 endpoint
 - `VITE_BEST_SHOT_API_V2`: Backend API v2 endpoint
 
 #### Authentication (Auth0)
+
 - `VITE_AUTH_DOMAIN`: Auth0 domain
 - `VITE_AUTH_CLIENT_ID`: Auth0 application client ID
 
 #### Feature Flags & Analytics
+
 - `VITE_LAUNCHDARKLY_CLIENT_KEY`: LaunchDarkly client SDK key
 - `VITE_DEMO_VERSION`: Boolean flag for demo mode features
 - `VITE_MOCKED_MEMBER_PUBLIC_ID`: User ID for testing/demo purposes
 
 #### Development Tools
+
 - `SENTRY_AUTH_TOKEN`: Sentry authentication token (build-time only)
 
 ### Environment-Specific Configuration
 
 #### Local Development (.env)
+
 ```bash
-VITE_AUTH_DOMAIN="bestshot.us.auth0.com"
-VITE_AUTH_CLIENT_ID="Y8ALFfSOz3hwsCeaEbh3SqUioRaGD4H0"
+VITE_AUTH_DOMAIN="<your-auth0-domain>"
+VITE_AUTH_CLIENT_ID="<your-auth0-client-id>"
 VITE_BEST_SHOT_API="http://localhost:9090/api/v1"
 VITE_BEST_SHOT_API_V2="http://localhost:9090/api/v2"
-VITE_MOCKED_MEMBER_PUBLIC_ID="26e783db-24e8-4ccb-9e7d-a5c049ddd350"
-VITE_LAUNCHDARKLY_CLIENT_KEY="67e04c5971b8d4097753d9fd"
+VITE_MOCKED_MEMBER_PUBLIC_ID="<local-test-user-id>"
+VITE_LAUNCHDARKLY_CLIENT_KEY="<your-launchdarkly-client-key>"
 ```
+
+**Note:** See `.env.example` for a template with placeholder values.
 
 #### Demo Environment (.env.demo)
+
 ```bash
-VITE_AUTH_DOMAIN="bestshot.us.auth0.com"
-VITE_AUTH_CLIENT_ID="Y8ALFfSOz3hwsCeaEbh3SqUioRaGD4H0"
+VITE_AUTH_DOMAIN="<your-auth0-domain>"
+VITE_AUTH_CLIENT_ID="<your-auth0-client-id>"
 VITE_BEST_SHOT_API="https://api-best-shot-demo.mariobrusarosco.com/api/v1"
 VITE_BEST_SHOT_API_V2="https://api-best-shot-demo.mariobrusarosco.com/api/v2"
-VITE_MOCKED_MEMBER_PUBLIC_ID="10876016-1697-47e5-82fa-56840eb7ac42"
+VITE_MOCKED_MEMBER_PUBLIC_ID="<demo-test-user-id>"
 VITE_DEMO_VERSION=true
-VITE_LAUNCHDARKLY_CLIENT_KEY="sdk-client-123456789012345678901234567890-demo"
+VITE_LAUNCHDARKLY_CLIENT_KEY="<your-launchdarkly-demo-key>"
 ```
+
+**Note:** See `.env.demo.example` for a template with placeholder values.
 
 #### Staging Environment (.env.staging)
+
 ```bash
-VITE_AUTH_DOMAIN="bestshot.us.auth0.com"
-VITE_AUTH_CLIENT_ID="Y8ALFfSOz3hwsCeaEbh3SqUioRaGD4H0"
+VITE_AUTH_DOMAIN="<your-auth0-domain>"
+VITE_AUTH_CLIENT_ID="<your-auth0-client-id>"
 VITE_BEST_SHOT_API="https://api-best-shot-staging.mariobrusarosco.com/api/v1"
 VITE_BEST_SHOT_API_V2="https://api-best-shot-staging.mariobrusarosco.com/api/v2"
-VITE_MOCKED_MEMBER_PUBLIC_ID="14e1b53a-9f54-4fe8-b639-af357cf9d52f"
-VITE_LAUNCHDARKLY_CLIENT_KEY="sdk-client-123456789012345678901234567890-staging"
+VITE_MOCKED_MEMBER_PUBLIC_ID="<staging-test-user-id>"
+VITE_LAUNCHDARKLY_CLIENT_KEY="<your-launchdarkly-staging-key>"
 ```
 
+**Note:** See `.env.staging.example` for a template with placeholder values.
+
 #### Production Environment (.env.production)
+
 ```bash
-VITE_AUTH_DOMAIN="bestshot.us.auth0.com"
-VITE_AUTH_CLIENT_ID="Y8ALFfSOz3hwsCeaEbh3SqUioRaGD4H0"
+VITE_AUTH_DOMAIN="<your-auth0-domain>"
+VITE_AUTH_CLIENT_ID="<your-auth0-client-id>"
 VITE_BEST_SHOT_API="https://api.bestshot.app/api/v1"
 VITE_BEST_SHOT_API_V2="https://api.bestshot.app/api/v2"
-VITE_LAUNCHDARKLY_CLIENT_KEY="sdk-client-123456789012345678901234567890-production"
+VITE_LAUNCHDARKLY_CLIENT_KEY="<your-launchdarkly-production-key>"
 ```
+
+**Note:** See `.env.production.example` for a template with placeholder values.
 
 ### Environment Access in Code
 
@@ -185,6 +208,7 @@ const authDomain = import.meta.env.VITE_AUTH_DOMAIN;
 ## Deployment Process
 
 ### Automatic Deployment
+
 1. Developer pushes code to target branch (`main` for demo/production, `staging` for staging)
 2. GitHub Actions workflow triggers
 3. Dependencies are installed with yarn cache optimization
@@ -193,6 +217,7 @@ const authDomain = import.meta.env.VITE_AUTH_DOMAIN;
 6. CloudFront cache invalidation ensures fresh content
 
 ### Manual Deployment Commands
+
 For local testing of deployment process:
 
 ```bash
@@ -239,17 +264,20 @@ E2E tests are **decoupled from the CI/CD pipeline** and run on a separate schedu
 The project implements a **fail-fast** approach to prevent TypeScript errors and code quality issues from reaching production:
 
 ### Pre-Deployment Validation
+
 - **All deployment workflows** run `yarn check` before building
 - **`yarn check`** combines Biome linting + TypeScript type checking
 - **Deployment fails** if any validation errors are found
 
 ### Pull Request Validation
+
 - **PR Validation workflow** runs on all PRs to `main` and `staging`
 - **Tests builds** for all environments (demo, staging, production)
 - **Prevents merging** if code doesn't build successfully
 - **Catches issues early** before they reach deployment branches
 
 ### Local Pre-Commit Hooks
+
 - **Husky + lint-staged**: Automatically runs quality checks before commits
 - **Cross-platform compatibility**: Simple shell scripts work across Windows/Mac/Linux
 - **Staged file processing**: Only checks files being committed (faster execution)
@@ -257,6 +285,7 @@ The project implements a **fail-fast** approach to prevent TypeScript errors and
 - **Test exclusion**: Configured to skip `.test` and `.spec` files via biome.json
 
 ### Benefits
+
 - **No broken builds in production**: TypeScript errors caught before deployment
 - **Code quality enforcement**: Biome linting prevents style/quality issues
 - **Multi-environment testing**: Ensures code works across all build modes
@@ -266,6 +295,7 @@ The project implements a **fail-fast** approach to prevent TypeScript errors and
 ## Developer Setup
 
 ### First-Time Setup
+
 When cloning the repository, developers need to install dependencies to enable pre-commit hooks:
 
 ```bash
@@ -277,13 +307,16 @@ ls .husky/
 ```
 
 ### Working with Pre-Commit Hooks
+
 Pre-commit hooks run automatically on `git commit` and will:
+
 1. Run `yarn check:fix` on staged TypeScript/JavaScript files
 2. Run `yarn format:fix` on staged JSON/Markdown files
 3. Prevent commit if TypeScript errors are found
 4. Auto-fix formatting issues when possible
 
 ### Bypassing Hooks (When Necessary)
+
 ```bash
 # Skip pre-commit hooks for emergency commits
 git commit --no-verify -m "emergency fix"
@@ -293,6 +326,7 @@ HUSKY=0 git commit -m "bulk update"
 ```
 
 ### Troubleshooting
+
 - **Hooks not running**: Ensure you ran `yarn install` after cloning
 - **Permission issues**: Run `chmod +x .husky/pre-commit` if needed
 - **CI failing but local passing**: Make sure to run `yarn check` locally before pushing
@@ -302,14 +336,17 @@ For detailed information about code quality tools and configuration, see [Guide 
 ## Monitoring and Debugging
 
 ### Build Artifacts
+
 - Source maps are enabled in production builds
 - Playwright test reports are stored as GitHub artifacts
 
 ### Cache Strategy
+
 - Yarn dependencies are cached between builds
 - CloudFront CDN provides global caching
 
 ### Performance Optimizations
+
 - Tree shaking enabled via esbuild
 - Bundle analysis available via rollup-plugin-visualizer (commented out)
 - Sentry integration available (commented out)
@@ -326,11 +363,13 @@ For detailed information about code quality tools and configuration, see [Guide 
 ### Common Issues
 
 1. **Deployment Failures**
+
    - Check AWS credentials in GitHub secrets
    - Verify S3 bucket permissions
    - Confirm CloudFront distribution ID
 
 2. **Build Failures**
+
    - Run `yarn check` locally to catch TypeScript/linting issues
    - Check for missing dependencies in package.json
 
@@ -355,6 +394,7 @@ yarn preview
 ## Future Improvements
 
 Based on TODOs in the workflow:
+
 - Implement dependency caching for staging/production jobs
 - Consider adding automated testing before production deployment
 - Add deployment notifications/monitoring

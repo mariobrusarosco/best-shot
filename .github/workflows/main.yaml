@@ -8,7 +8,7 @@ on:
 env:
   AWS_BUCKET_ID: ${{secrets.AWS_BUCKET_ID}}
   AWS_CLOUDFRONT_ID: ${{secrets.AWS_CLOUDFRONT_ID}}
-  SLACK_WEBHOOK_URL: ${{secrets.SLACK_WEBHOOK_URL}}
+  SLACK_DEPLOYMENTS_WEBHOOK: ${{secrets.SLACK_DEPLOYMENTS_WEBHOOK}}
 
 jobs:
   build-and-deploy-demo:
@@ -53,10 +53,10 @@ jobs:
       - name: Invalidate Cloudfront
         run: aws cloudfront create-invalidation --distribution-id ${AWS_CLOUDFRONT_ID}  --paths "/*"
 
-      - name: Send Slack notification
+      - name: Send Slack notification (Success)
         if: success()
         run: |
-          curl -X POST ${{ env.SLACK_WEBHOOK_URL }} \
+          curl -X POST ${{ env.SLACK_DEPLOYMENTS_WEBHOOK }} \
           -H 'Content-Type: application/json' \
           -d '{
             "text": "✅ *DEMO Deployment Successful*",
@@ -112,6 +112,55 @@ jobs:
             ]
           }'
 
+      - name: Send Slack notification (Failure)
+        if: failure()
+        run: |
+          curl -X POST ${{ env.SLACK_DEPLOYMENTS_WEBHOOK }} \
+          -H 'Content-Type: application/json' \
+          -d '{
+            "text": "❌ *DEMO Deployment Failed*",
+            "blocks": [
+              {
+                "type": "header",
+                "text": {
+                  "type": "plain_text",
+                  "text": "❌ DEMO Deployment Failed"
+                }
+              },
+              {
+                "type": "section",
+                "fields": [
+                  {
+                    "type": "mrkdwn",
+                    "text": "*Environment:*\nDemo"
+                  },
+                  {
+                    "type": "mrkdwn",
+                    "text": "*Branch:*\n`${{ github.ref_name }}`"
+                  },
+                  {
+                    "type": "mrkdwn",
+                    "text": "*Author:*\n${{ github.actor }}"
+                  }
+                ]
+              },
+              {
+                "type": "actions",
+                "elements": [
+                  {
+                    "type": "button",
+                    "text": {
+                      "type": "plain_text",
+                      "text": "View Failed Workflow"
+                    },
+                    "url": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}",
+                    "style": "danger"
+                  }
+                ]
+              }
+            ]
+          }'
+
   build-and-deploy-staging:
     if: github.ref == 'refs/heads/staging'
     environment: staging
@@ -154,10 +203,10 @@ jobs:
       - name: Invalidate Cloudfront
         run: aws cloudfront create-invalidation --distribution-id ${AWS_CLOUDFRONT_ID}  --paths "/*"
 
-      - name: Send Slack notification
+      - name: Send Slack notification (Success)
         if: success()
         run: |
-          curl -X POST ${{ env.SLACK_WEBHOOK_URL }} \
+          curl -X POST ${{ env.SLACK_DEPLOYMENTS_WEBHOOK }} \
           -H 'Content-Type: application/json' \
           -d '{
             "text": "✅ *STAGING Deployment Successful*",
@@ -213,6 +262,55 @@ jobs:
             ]
           }'
 
+      - name: Send Slack notification (Failure)
+        if: failure()
+        run: |
+          curl -X POST ${{ env.SLACK_DEPLOYMENTS_WEBHOOK }} \
+          -H 'Content-Type: application/json' \
+          -d '{
+            "text": "❌ *STAGING Deployment Failed*",
+            "blocks": [
+              {
+                "type": "header",
+                "text": {
+                  "type": "plain_text",
+                  "text": "❌ STAGING Deployment Failed"
+                }
+              },
+              {
+                "type": "section",
+                "fields": [
+                  {
+                    "type": "mrkdwn",
+                    "text": "*Environment:*\nStaging"
+                  },
+                  {
+                    "type": "mrkdwn",
+                    "text": "*Branch:*\n`${{ github.ref_name }}`"
+                  },
+                  {
+                    "type": "mrkdwn",
+                    "text": "*Author:*\n${{ github.actor }}"
+                  }
+                ]
+              },
+              {
+                "type": "actions",
+                "elements": [
+                  {
+                    "type": "button",
+                    "text": {
+                      "type": "plain_text",
+                      "text": "View Failed Workflow"
+                    },
+                    "url": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}",
+                    "style": "danger"
+                  }
+                ]
+              }
+            ]
+          }'
+
   build-and-deploy-production:
     if: github.ref == 'refs/heads/main'
     environment: production
@@ -256,10 +354,10 @@ jobs:
       - name: Invalidate Cloudfront
         run: aws cloudfront create-invalidation --distribution-id ${AWS_CLOUDFRONT_ID} --paths "/*"
 
-      - name: Send Slack notification
+      - name: Send Slack notification (Success)
         if: success()
         run: |
-          curl -X POST ${{ env.SLACK_WEBHOOK_URL }} \
+          curl -X POST ${{ env.SLACK_DEPLOYMENTS_WEBHOOK }} \
           -H 'Content-Type: application/json' \
           -d '{
             "text": "✅ *PRODUCTION Deployment Successful*",
@@ -309,6 +407,55 @@ jobs:
                       "text": "View Workflow Run"
                     },
                     "url": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+                  }
+                ]
+              }
+            ]
+          }'
+
+      - name: Send Slack notification (Failure)
+        if: failure()
+        run: |
+          curl -X POST ${{ env.SLACK_DEPLOYMENTS_WEBHOOK }} \
+          -H 'Content-Type: application/json' \
+          -d '{
+            "text": "❌ *PRODUCTION Deployment Failed*",
+            "blocks": [
+              {
+                "type": "header",
+                "text": {
+                  "type": "plain_text",
+                  "text": "❌ PRODUCTION Deployment Failed"
+                }
+              },
+              {
+                "type": "section",
+                "fields": [
+                  {
+                    "type": "mrkdwn",
+                    "text": "*Environment:*\nProduction"
+                  },
+                  {
+                    "type": "mrkdwn",
+                    "text": "*Branch:*\n`${{ github.ref_name }}`"
+                  },
+                  {
+                    "type": "mrkdwn",
+                    "text": "*Author:*\n${{ github.actor }}"
+                  }
+                ]
+              },
+              {
+                "type": "actions",
+                "elements": [
+                  {
+                    "type": "button",
+                    "text": {
+                      "type": "plain_text",
+                      "text": "View Failed Workflow"
+                    },
+                    "url": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}",
+                    "style": "danger"
                   }
                 ]
               }

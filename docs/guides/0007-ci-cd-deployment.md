@@ -73,11 +73,20 @@ This is a **static site deployment** - the application is built into static file
 The following GitHub repository secrets must be configured:
 
 ```
-AWS_ACCESS_KEY_ID        # AWS access key
-AWS_SECRET_ACCESS_KEY    # AWS secret key
-AWS_BUCKET_ID           # S3 bucket name
-AWS_CLOUDFRONT_ID       # CloudFront distribution ID
+AWS_ACCESS_KEY_ID              # AWS access key
+AWS_SECRET_ACCESS_KEY          # AWS secret key
+AWS_BUCKET_ID                  # S3 bucket name
+AWS_CLOUDFRONT_ID              # CloudFront distribution ID
+SLACK_DEPLOYMENTS_WEBHOOK      # Slack webhook URL for deployment notifications
 ```
+
+**To configure these secrets:**
+1. Go to your GitHub repository
+2. Navigate to **Settings** → **Secrets and variables** → **Actions**
+3. Click **New repository secret**
+4. Add each secret with its corresponding value
+
+**Note:** The `SLACK_DEPLOYMENTS_WEBHOOK` is required for deployment notifications. See the [Slack Deployment Notifications Guide](./slack-deployment-notifications.md) for setup instructions.
 
 ## Environment Variables and Configuration
 

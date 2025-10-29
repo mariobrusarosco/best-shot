@@ -1804,4 +1804,938 @@ function processLargeDataset(data: Tournament[]) {
 
 ---
 
+## Session 6: Data Sanitization
+
+> **Goal**: Automatically strip sensitive data (passwords, tokens, credit cards) from error reports to protect user privacy and comply with security policies.
+
+### Why Data Sanitization Matters
+
+Without sanitization, Sentry might accidentally capture:
+
+🔐 **Security risks**
+- Passwords sent in POST requests
+- API keys and auth tokens
+- Session cookies
+- Credit card numbers
+
+⚖️ **Compliance issues**
+- GDPR violations (EU)
+- CCPA violations (California)
+- PCI DSS violations (credit cards)
+- HIPAA violations (healthcare data)
+
+😱 **Real-world nightmare scenarios**
+- User passwords visible in error logs
+- Auth tokens leaked to support team
+- Credit card data captured in form submissions
+- Social security numbers in breadcrumbs
+
+**The Solution**: Use Sentry's `beforeSend` hook to sanitize data before it leaves your app.
+
+### How Data Sanitization Works
+
+Sentry's `beforeSend` hook runs **before** sending each error event:
+
+```typescript
+beforeSend: (event) => {
+  // Inspect and modify event here
+  // Return null to drop the event entirely
+  // Return modified event to send it
+  return event;
+}
+```
+
+For each error, you can:
+- ✅ **Strip sensitive fields** (password, token, etc.)
+- ✅ **Modify request/response data**
+- ✅ **Filter breadcrumbs** (user actions)
+- ✅ **Drop entire events** (return null)
+- ✅ **Add custom logic** (environment-specific filtering)
+
+### Step 6.1: Define Sensitive Field Patterns
+
+Create patterns to identify sensitive fields by name:
+
+**File**: `src/configuration/monitoring/index.tsx`
+
+```typescript
+/**
+ * Sensitive field patterns to scrub from error reports
+ * Prevents accidentally sending passwords, tokens, credit cards, etc. to Sentry
+ */
+const SENSITIVE_FIELD_PATTERNS = [
+	/password/i,
+	/passwd/i,
+	/pwd/i,
+	/secret/i,
+	/token/i,
+	/api[-_]?key/i,
+	/auth/i,
+	/credit[-_]?card/i,
+	/card[-_]?number/i,
+	/cvv/i,
+	/ssn/i,
+	/social[-_]?security/i,
+	/private[-_]?key/i,
+	/access[-_]?token/i,
+	/refresh[-_]?token/i,
+	/bearer/i,
+];
+```
+
+**How It Works:**
+
+- Uses regex patterns (case-insensitive with `/i` flag)
+- Matches field names like `password`, `apiKey`, `access_token`, etc.
+- Covers common naming conventions (`api-key`, `api_key`, `apiKey`)
+
+**Common patterns to add:**
+
+For your app specifically, add:
+- Field names from your forms (e.g., `/otp/i` for one-time passwords)
+- Custom auth fields (e.g., `/jwt/i`)
+- Sensitive user data (e.g., `/phone/i`, `/email/i` if needed)
+
+### Step 6.2: Create Sanitization Function
+
+Recursively sanitize objects by replacing sensitive values:
+
+```typescript
+/**
+ * Recursively sanitize an object by removing sensitive fields
+ */
+function sanitizeObject(obj: any, depth = 0): any {
+	// Prevent infinite recursion
+	if (depth > 10) return "[Max Depth Reached]";
+	if (obj === null || obj === undefined) return obj;
+	if (typeof obj !== "object") return obj;
+
+	// Handle arrays
+	if (Array.isArray(obj)) {
+		return obj.map((item) => sanitizeObject(item, depth + 1));
+	}
+
+	// Handle objects
+	const sanitized: any = {};
+	for (const [key, value] of Object.entries(obj)) {
+		// Check if key matches sensitive pattern
+		const isSensitive = SENSITIVE_FIELD_PATTERNS.some((pattern) => pattern.test(key));
+
+		if (isSensitive) {
+			sanitized[key] = "[Filtered]";
+		} else if (typeof value === "object" && value !== null) {
+			sanitized[key] = sanitizeObject(value, depth + 1);
+		} else {
+			sanitized[key] = value;
+		}
+	}
+
+	return sanitized;
+}
+```
+
+**What This Does:**
+
+- **Recursive**: Handles nested objects and arrays
+- **Depth limit**: Prevents infinite loops (max depth = 10)
+- **Pattern matching**: Checks each key against sensitive patterns
+- **Preserves structure**: Keeps non-sensitive data intact
+- **Safe replacement**: Replaces sensitive values with `"[Filtered]"`
+
+### Step 6.3: Implement beforeSend Hook
+
+Sanitize all parts of the error event:
+
+```typescript
+import type { ErrorEvent, EventHint } from "@sentry/react";
+
+/**
+ * beforeSend hook to sanitize sensitive data before sending to Sentry
+ */
+function beforeSend(event: ErrorEvent, hint: EventHint): ErrorEvent | null {
+	// Sanitize request data
+	if (event.request) {
+		// Sanitize query parameters
+		if (event.request.query_string) {
+			event.request.query_string = sanitizeObject(event.request.query_string);
+		}
+
+		// Sanitize POST data
+		if (event.request.data) {
+			event.request.data = sanitizeObject(event.request.data);
+		}
+
+		// Sanitize cookies
+		if (event.request.cookies) {
+			event.request.cookies = sanitizeObject(event.request.cookies);
+		}
+
+		// Sanitize headers
+		if (event.request.headers) {
+			event.request.headers = sanitizeObject(event.request.headers);
+		}
+	}
+
+	// Sanitize breadcrumbs (user actions, console logs, etc.)
+	if (event.breadcrumbs) {
+		event.breadcrumbs = event.breadcrumbs.map((breadcrumb) => ({
+			...breadcrumb,
+			data: breadcrumb.data ? sanitizeObject(breadcrumb.data) : breadcrumb.data,
+		}));
+	}
+
+	// Sanitize extra context
+	if (event.extra) {
+		event.extra = sanitizeObject(event.extra);
+	}
+
+	// Sanitize contexts
+	if (event.contexts) {
+		event.contexts = sanitizeObject(event.contexts);
+	}
+
+	return event;
+}
+```
+
+**What Gets Sanitized:**
+
+1. **Request data**: URL params, POST body, headers, cookies
+2. **Breadcrumbs**: User actions (clicks, form inputs, navigations)
+3. **Extra context**: Custom data you add with `Sentry.setContext()`
+4. **Contexts**: Device info, OS, browser
+
+### Step 6.4: Add beforeSend to Sentry Init
+
+```typescript
+Sentry.init({
+	dsn: import.meta.env.VITE_SENTRY_DSN,
+	environment: config.environment,
+	release,
+
+	integrations: [
+		Sentry.browserTracingIntegration(),
+		Sentry.replayIntegration(),
+	],
+
+	tracesSampleRate: config.tracesSampleRate,
+	tracePropagationTargets,
+	replaysSessionSampleRate: config.replaysSessionSampleRate,
+	replaysOnErrorSampleRate: config.replaysOnErrorSampleRate,
+
+	// Data Sanitization - strip sensitive data before sending to Sentry
+	beforeSend,
+});
+```
+
+### Step 6.5: Test Sanitization
+
+Create a test to verify sensitive data is filtered:
+
+```typescript
+// Temporary test - remove after verifying
+function testSanitization() {
+	try {
+		// Throw error with sensitive data
+		const sensitiveData = {
+			username: "john@example.com",
+			password: "super-secret-123", // Should be filtered
+			apiKey: "sk_live_abc123",     // Should be filtered
+			publicData: "This is fine",    // Should NOT be filtered
+		};
+
+		Sentry.captureException(new Error("Test sanitization"), {
+			extra: sensitiveData,
+		});
+
+		console.log("Sanitization test triggered - check Sentry dashboard");
+	} catch (e) {
+		console.error("Sanitization test failed", e);
+	}
+}
+
+// Call once to test
+testSanitization();
+```
+
+**In Sentry dashboard:**
+
+You should see:
+```json
+{
+  "username": "john@example.com",
+  "password": "[Filtered]",
+  "apiKey": "[Filtered]",
+  "publicData": "This is fine"
+}
+```
+
+✅ **Success!** - Sensitive fields are replaced with `[Filtered]`
+
+### Step 6.6: Advanced Filtering
+
+**Drop events entirely:**
+
+```typescript
+function beforeSend(event: ErrorEvent, hint: EventHint): ErrorEvent | null {
+	// Don't send errors from browser extensions
+	if (event.exception?.values?.[0]?.stacktrace?.frames?.some(
+		frame => frame.filename?.includes('chrome-extension://')
+	)) {
+		return null; // Drop event
+	}
+
+	// Sanitize and send
+	// ... sanitization code ...
+
+	return event;
+}
+```
+
+**Environment-specific filtering:**
+
+```typescript
+function beforeSend(event: ErrorEvent, hint: EventHint): ErrorEvent | null {
+	// In staging, send everything (no filtering)
+	if (import.meta.env.MODE === "staging") {
+		return event;
+	}
+
+	// In production, strict sanitization
+	// ... sanitization code ...
+
+	return event;
+}
+```
+
+**Custom sanitization rules:**
+
+```typescript
+// Add to SENSITIVE_FIELD_PATTERNS
+const SENSITIVE_FIELD_PATTERNS = [
+	// ... existing patterns ...
+
+	// App-specific patterns
+	/otp/i,              // One-time passwords
+	/verification[-_]?code/i,
+	/reset[-_]?token/i,
+	/phone/i,            // If phone numbers are sensitive in your app
+	/address/i,          // If addresses are sensitive
+];
+```
+
+### Understanding What's Captured
+
+**Breadcrumbs** = User activity trail:
+- Button clicks: `{category: "ui.click", message: "Submit button"}`
+- Form inputs: `{category: "ui.input", message: "Email field"}`
+- Navigation: `{category: "navigation", message: "/tournaments"}`
+- Console logs: `{category: "console", message: "User logged in"}`
+- API calls: `{category: "fetch", message: "GET /api/tournaments"}`
+
+**Request data** = HTTP request details:
+- URL: `https://app.bestshot.com/tournaments`
+- Query params: `?filter=active&sort=date`
+- Headers: `Authorization: Bearer xxx, Content-Type: application/json`
+- Cookies: `session_id=abc123, auth_token=xyz789`
+- Body: `{email: "user@example.com", password: "secret"}`
+
+All of these are sanitized automatically with our `beforeSend` hook!
+
+### Best Practices
+
+**✅ DO:**
+- Sanitize aggressively - it's better to filter too much than too little
+- Add app-specific patterns to `SENSITIVE_FIELD_PATTERNS`
+- Test sanitization in staging before deploying
+- Review Sentry events periodically for leaked data
+
+**❌ DON'T:**
+- Send passwords, tokens, or credit cards (even if "encrypted")
+- Assume Sentry's default scrubbing is enough
+- Log sensitive data in console.log() (breadcrumbs capture this!)
+- Use sensitive data in error messages
+
+**Warning Signs:**
+
+If you see these in Sentry, you have a leak:
+- `password: "actual-password"` instead of `password: "[Filtered]"`
+- Auth tokens in request headers
+- Credit card numbers in POST data
+- SSN in form fields
+
+### Compliance Checklist
+
+**GDPR (EU)**
+- ✅ Sanitize PII (personally identifiable information)
+- ✅ Add data processing agreement with Sentry
+- ✅ Enable IP address anonymization in Sentry settings
+
+**CCPA (California)**
+- ✅ Same as GDPR requirements
+- ✅ Provide opt-out mechanism if needed
+
+**PCI DSS (Credit Cards)**
+- ✅ Never send credit card numbers, CVV, or full PAN
+- ✅ Filter payment-related fields
+- ✅ Use tokenization for payment data
+
+**HIPAA (Healthcare)**
+- ✅ Don't use Sentry for HIPAA-covered data
+- ✅ Use Business Associate Agreement (BAA) if available
+
+---
+
+## What You've Accomplished
+
+✅ Created comprehensive sensitive field patterns
+✅ Implemented recursive sanitization for nested objects
+✅ Added beforeSend hook to filter data before sending
+✅ Sanitized requests, breadcrumbs, and extra context
+✅ Learned how to test and verify sanitization
+✅ Understand compliance requirements (GDPR, CCPA, PCI, HIPAA)
+✅ Know how to customize filtering for your app
+
+**Next Steps**: In Session 7, we'll add custom tags to enrich error context and improve filtering capabilities.
+
+---
+
+## Session 7: Custom Tags and Context
+
+> **Goal**: Add custom tags and context to error reports for better filtering, grouping, and debugging. Tags help you answer questions like "Show me all errors from admins in the tournament feature."
+
+### Why Custom Tags Matter
+
+Without tags, all your errors look the same in Sentry. With tags, you can:
+
+🔍 **Filter errors intelligently**
+- "Show me all errors from `user.role:admin`"
+- "Show me all errors in `feature:tournament-creation`"
+- "Show me all errors in `tournament.status:in-progress`"
+
+📊 **Group and analyze**
+- Which features have the most errors?
+- Which user roles experience the most bugs?
+- Which tournaments are causing problems?
+
+🎯 **Debug faster**
+- See exactly what the user was doing
+- Know which feature they were using
+- Understand the context immediately
+
+**Tags vs Context:**
+- **Tags**: Indexed strings for filtering (e.g., `feature: "tournament"`)
+- **Context**: Rich objects for detailed info (e.g., `tournament: { id, name, status }`)
+
+### Step 7.1: Add Tag Methods to Monitoring
+
+We'll add three methods to our `Monitoring` object:
+
+**File**: `src/configuration/monitoring/index.tsx`
+
+```typescript
+export const Monitoring = {
+	init: () => { /* ... existing code ... */ },
+	setUser: (user: UserIdentity | null) => { /* ... existing code ... */ },
+
+	/**
+	 * Set a custom tag for filtering and grouping errors
+	 * Tags are key-value pairs that help you organize and search errors in Sentry
+	 *
+	 * @param key - Tag name (e.g., "feature", "user.role")
+	 * @param value - Tag value (e.g., "tournament", "admin")
+	 *
+	 * @example
+	 * Monitoring.setTag("feature", "tournament-creation");
+	 * Monitoring.setTag("user.role", "admin");
+	 */
+	setTag: (key: string, value: string) => {
+		const currentEnv = import.meta.env.MODE;
+
+		if (!SENTRY_ENABLED_ENVIRONMENTS.includes(currentEnv as any)) {
+			return;
+		}
+
+		Sentry.setTag(key, value);
+	},
+
+	/**
+	 * Set multiple custom tags at once
+	 *
+	 * @param tags - Object with key-value pairs for tags
+	 *
+	 * @example
+	 * Monitoring.setTags({
+	 *   feature: "match-scoring",
+	 *   "user.role": "player",
+	 *   "tournament.id": "123"
+	 * });
+	 */
+	setTags: (tags: Record<string, string>) => {
+		const currentEnv = import.meta.env.MODE;
+
+		if (!SENTRY_ENABLED_ENVIRONMENTS.includes(currentEnv as any)) {
+			return;
+		}
+
+		Sentry.setTags(tags);
+	},
+
+	/**
+	 * Set additional context for errors
+	 * Unlike tags (which are indexed strings), contexts can contain complex objects
+	 *
+	 * @param name - Context name (e.g., "tournament", "match")
+	 * @param context - Object with relevant data
+	 *
+	 * @example
+	 * Monitoring.setContext("tournament", {
+	 *   id: "123",
+	 *   name: "Summer Championship",
+	 *   status: "in-progress"
+	 * });
+	 */
+	setContext: (name: string, context: Record<string, unknown> | null) => {
+		const currentEnv = import.meta.env.MODE;
+
+		if (!SENTRY_ENABLED_ENVIRONMENTS.includes(currentEnv as any)) {
+			return;
+		}
+
+		Sentry.setContext(name, context);
+	},
+};
+```
+
+**What This Adds:**
+
+1. **`setTag(key, value)`**: Set a single tag
+2. **`setTags(object)`**: Set multiple tags at once
+3. **`setContext(name, object)`**: Set rich context data
+
+All three methods:
+- Check if Sentry is enabled in the current environment
+- Only call Sentry if monitoring is active
+- Follow the same pattern as `setUser()`
+
+### Step 7.2: Add User Role Tag to User Identifier
+
+Update the user identifier to automatically tag user role:
+
+**File**: `src/configuration/monitoring/components/SentryUserIdentifier.tsx`
+
+```typescript
+useEffect(() => {
+	if (isAuthenticated && member.isSuccess && member.data) {
+		// User is logged in and member data is loaded
+		Monitoring.setUser({
+			id: member.data.id,
+			email: member.data.email,
+			username: member.data.nickName,
+			role: member.data.role,
+		});
+
+		// Set user role as a custom tag for filtering in Sentry dashboard
+		// This allows you to query: "Show me all errors from admin users"
+		Monitoring.setTag("user.role", member.data.role);
+	} else if (!isAuthenticated) {
+		// User logged out - clear Sentry user data
+		Monitoring.setUser(null);
+	}
+}, [isAuthenticated, member.isSuccess, member.data]);
+```
+
+**What This Does:**
+- Automatically tags every error with the user's role
+- Enables filtering: "Show me all errors from admin users"
+- No manual tagging needed - it's automatic!
+
+### Step 7.3: Add Convenience Methods to Monitoring
+
+Add helper methods directly to the `Monitoring` object for easier feature tagging:
+
+**File**: `src/configuration/monitoring/index.tsx`
+
+```typescript
+export const Monitoring = {
+	init: () => { /* ... */ },
+	setUser: (user: UserIdentity | null) => { /* ... */ },
+	setTag: (key: string, value: string) => { /* ... */ },
+	setTags: (tags: Record<string, string>) => { /* ... */ },
+	setContext: (name: string, context: Record<string, unknown> | null) => { /* ... */ },
+
+	/**
+	 * Set Sentry feature tag and optional context
+	 * Convenience method for setting feature context
+	 *
+	 * @param featureName - Name of the feature (e.g., "tournament-creation", "match-scoring")
+	 * @param context - Optional additional context data
+	 *
+	 * @example
+	 * Monitoring.setSentryContext("tournament-detail", {
+	 *   tournamentId: tournament.id,
+	 *   tournamentName: tournament.name,
+	 *   status: tournament.status
+	 * });
+	 */
+	setSentryContext: (
+		featureName: string,
+		context?: Record<string, string | number | boolean>,
+	) => {
+		const currentEnv = import.meta.env.MODE;
+
+		if (!SENTRY_ENABLED_ENVIRONMENTS.includes(currentEnv as any)) {
+			return;
+		}
+
+		// Set feature tag for filtering errors by feature
+		Sentry.setTag("feature", featureName);
+
+		// Set detailed context if provided
+		if (context) {
+			Sentry.setContext(featureName, context);
+		}
+	},
+
+	/**
+	 * Clear feature-specific context
+	 *
+	 * @param featureName - Name of the feature context to clear
+	 *
+	 * @example
+	 * Monitoring.clearSentryContext("tournament-detail");
+	 */
+	clearSentryContext: (featureName: string) => {
+		const currentEnv = import.meta.env.MODE;
+
+		if (!SENTRY_ENABLED_ENVIRONMENTS.includes(currentEnv as any)) {
+			return;
+		}
+
+		Sentry.setContext(featureName, null);
+	},
+};
+```
+
+**What These Methods Do:**
+
+1. **`Monitoring.setSentryContext()`**: Sets feature tag and optional context
+2. **`Monitoring.clearSentryContext()`**: Clears feature-specific context
+3. **Single import**: Everything in one place - `import { Monitoring } from "@/configuration/monitoring"`
+
+### Step 7.4: Use Custom Tags in Your App
+
+Here are practical examples for your Best Shot app:
+
+**Example 1: Tournament Detail Page**
+
+```typescript
+import { Monitoring } from "@/configuration/monitoring";
+
+function TournamentDetailPage() {
+	const { tournamentId } = useParams();
+	const tournament = useTournament(tournamentId);
+
+	// Set context when tournament data loads
+	useEffect(() => {
+		if (tournament.data) {
+			Monitoring.setSentryContext("tournament-detail", {
+				tournamentId: tournament.data.id,
+				tournamentName: tournament.data.name,
+				status: tournament.data.status,
+				participantCount: tournament.data.participants?.length,
+			});
+		}
+	}, [tournament.data]);
+
+	return <div>{/* ... */}</div>;
+}
+```
+
+**In Sentry, you'll see:**
+- Tag: `feature: "tournament-detail"`
+- Context:
+  ```json
+  {
+    "tournament-detail": {
+      "tournamentId": "123",
+      "tournamentName": "Summer Championship",
+      "status": "in-progress",
+      "participantCount": 24
+    }
+  }
+  ```
+
+**Example 2: Match Scoring**
+
+```typescript
+import { Monitoring } from "@/configuration/monitoring";
+
+function MatchScoringCard({ match }) {
+	const handleSubmitScore = async (score) => {
+		// Set context right before the operation
+		Monitoring.setSentryContext("match-scoring", {
+			matchId: match.id,
+			roundNumber: match.round,
+			team1: match.team1.name,
+			team2: match.team2.name,
+		});
+
+		try {
+			// Any error here will be tagged with match context
+			await submitMatchScore(match.id, score);
+		} catch (error) {
+			// Sentry already has all the context!
+			throw error;
+		}
+	};
+
+	return <div>{/* ... */}</div>;
+}
+```
+
+**Example 3: League Creation**
+
+```typescript
+import { Monitoring } from "@/configuration/monitoring";
+
+function CreateLeagueForm() {
+	const handleSubmit = async (data) => {
+		// Set feature context
+		Monitoring.setSentryContext("league-creation");
+
+		// Add additional tags for this specific operation
+		Monitoring.setTags({
+			"form.step": "submission",
+			"league.type": data.type,
+		});
+
+		try {
+			await createLeague(data);
+		} catch (error) {
+			// Error will have all tags + context
+			throw error;
+		}
+	};
+
+	return <form>{/* ... */}</form>;
+}
+```
+
+**Example 4: Manual Tagging for Critical Operations**
+
+```typescript
+import { Monitoring } from "@/configuration/monitoring";
+
+async function deleteAllMatches(tournamentId: string) {
+	// Tag critical operations
+	Monitoring.setTags({
+		operation: "bulk-delete",
+		"operation.critical": "true",
+		"tournament.id": tournamentId,
+	});
+
+	try {
+		await api.deleteMatches(tournamentId);
+	} catch (error) {
+		// Sentry will show this is a critical operation that failed
+		throw error;
+	}
+}
+```
+
+### Step 7.5: Useful Tag Conventions
+
+Here are recommended tags for your Best Shot app:
+
+**User Tags (automatic)**
+```typescript
+"user.role": "admin" | "player" | "organizer"
+```
+
+**Feature Tags**
+```typescript
+"feature":
+  | "tournament-creation"
+  | "tournament-detail"
+  | "tournament-edit"
+  | "match-scoring"
+  | "match-detail"
+  | "league-creation"
+  | "league-management"
+  | "dashboard"
+  | "member-profile"
+  | "guess-submission"
+```
+
+**Operation Tags**
+```typescript
+"operation": "create" | "read" | "update" | "delete"
+"operation.critical": "true" | "false"
+```
+
+**State Tags**
+```typescript
+"tournament.status": "draft" | "in-progress" | "completed"
+"match.status": "pending" | "in-progress" | "completed"
+```
+
+**Performance Tags**
+```typescript
+"performance.slow": "true"  // For operations > 2 seconds
+"cache.hit": "true" | "false"
+```
+
+### Step 7.6: Query Errors in Sentry Dashboard
+
+Once you have tags, you can filter errors in Sentry:
+
+**Filter by user role:**
+```
+user.role:admin
+```
+
+**Filter by feature:**
+```
+feature:tournament-creation
+```
+
+**Combine filters:**
+```
+feature:match-scoring AND user.role:player
+```
+
+**Find critical operations:**
+```
+operation.critical:true
+```
+
+**Tournament-specific errors:**
+```
+tournament.status:in-progress AND feature:tournament-detail
+```
+
+**Performance issues:**
+```
+performance.slow:true
+```
+
+### Step 7.7: Best Practices
+
+**✅ DO:**
+- Use consistent tag naming (e.g., `feature`, `user.role`, `tournament.status`)
+- Tag critical operations (`operation.critical: "true"`)
+- Use `Monitoring.setSentryContext()` for feature tagging
+- Keep tag values simple strings (avoid objects)
+- Add context for complex data (use `Monitoring.setContext()` for objects)
+
+**❌ DON'T:**
+- Over-tag (too many tags = too much noise)
+- Use tags for unique values (user IDs, timestamps)
+- Put sensitive data in tags (they're indexed and searchable)
+- Create tags dynamically with random names
+
+**Tag Limits:**
+- Sentry indexes the first **200 unique tag values**
+- After 200, additional values aren't indexed
+- Use context for high-cardinality data (user IDs, etc.)
+
+### Understanding Tags vs Context
+
+**Tags** (indexed, filterable):
+```typescript
+Monitoring.setTag("feature", "tournament-detail");
+Monitoring.setTag("user.role", "admin");
+// Can filter: feature:tournament-detail
+```
+
+**Context** (rich data, not filterable):
+```typescript
+Monitoring.setContext("tournament", {
+	id: "123",
+	name: "Summer Championship",
+	participants: 24,
+	startDate: "2025-01-15",
+	settings: { /* complex object */ }
+});
+// Shows in error details, but can't filter by it
+```
+
+**Rule of thumb:**
+- **Tags**: For filtering and grouping (feature, role, status)
+- **Context**: For debugging details (IDs, names, complex objects)
+
+### Step 7.8: Example Error Report
+
+With tags and context, your Sentry error reports look like:
+
+```
+Error: Failed to submit match score
+
+Tags:
+  feature: match-scoring
+  user.role: player
+  match.status: in-progress
+  operation: update
+
+Context:
+  match-scoring: {
+    matchId: "456",
+    roundNumber: 2,
+    team1: "Red Dragons",
+    team2: "Blue Sharks"
+  }
+
+User:
+  id: 789
+  email: player@example.com
+  username: john_doe
+  role: player
+
+Breadcrumbs:
+  [Navigation] /tournaments/123/matches/456
+  [UI Click] "Submit Score" button
+  [Fetch] POST /api/matches/456/score
+  [Error] Network request failed
+```
+
+**Now you can answer:**
+- Who: player@example.com (role: player)
+- What: Failed to submit match score
+- Where: match-scoring feature
+- When: Round 2, in-progress match
+- Context: Red Dragons vs Blue Sharks
+
+### Troubleshooting
+
+**Tags not showing in Sentry?**
+- Check `SENTRY_ENABLED_ENVIRONMENTS` includes your current mode
+- Verify `Monitoring.init()` is called before setting tags
+- Check browser console for Sentry errors
+
+**Too many tag values?**
+- Sentry indexes first 200 unique values per tag
+- Use context for high-cardinality data (user IDs, etc.)
+- Review tag usage: `yarn grep -r "setTag" src/`
+
+**Context not appearing?**
+- Context shows in error details, not in filters
+- Verify you're calling `setContext` before the error
+- Check context isn't being cleared too early
+
+---
+
+## What You've Accomplished
+
+✅ Added `setTag`, `setTags`, and `setContext` methods to Monitoring
+✅ Automatically tag user roles in SentryUserIdentifier
+✅ Added `Monitoring.setSentryContext()` and `Monitoring.clearSentryContext()` convenience methods
+✅ Learned when to use tags vs context
+✅ Established tag conventions for your app
+✅ Understand how to filter errors in Sentry dashboard
+
+**Next Steps**: In Session 8, we'll add custom performance monitoring to track slow operations and optimize your app.
+
+---
+
 *Tutorial continues in next session...*

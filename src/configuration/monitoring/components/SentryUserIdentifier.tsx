@@ -30,6 +30,10 @@ export function SentryUserIdentifier() {
 				username: member.data.nickName,
 				role: member.data.role,
 			});
+
+			// Set user role as a custom tag for filtering in Sentry dashboard
+			// This allows you to query: "Show me all errors from admin users"
+			Monitoring.setTag("user.role", member.data.role);
 		} else if (!isAuthenticated) {
 			// User logged out - clear Sentry user data
 			Monitoring.setUser(null);

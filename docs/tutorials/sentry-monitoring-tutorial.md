@@ -1462,4 +1462,346 @@ In your deployment pipeline (GitHub Actions, GitLab CI, etc.), make sure to:
 
 ---
 
+## Session 5: Configure API Tracing
+
+> **Goal**: Monitor backend API performance and connect frontend errors to backend traces with distributed tracing.
+
+### Why API Tracing Matters
+
+Without API tracing, you see errors but don't know **which API calls** caused them. With API tracing, you get:
+
+⚡ **Track slow API calls**
+- "The `/tournaments` endpoint takes 3.2 seconds on average"
+- Identify bottlenecks in your backend
+- See which endpoints are slowing down your app
+
+🔗 **Distributed tracing**
+- Frontend error → See the exact backend trace that caused it
+- Click on API call → See backend logs, database queries, errors
+- Full request journey from browser to server and back
+
+📊 **API performance metrics**
+- Response times by endpoint
+- Success/failure rates
+- Geographic performance differences
+
+🐛 **Better debugging**
+- "Error happened during `POST /matches` which called `/teams` which timed out"
+- See full request/response headers and body (sanitized)
+- Correlate frontend and backend errors
+
+### How API Tracing Works
+
+Sentry's `browserTracingIntegration()` automatically instruments:
+
+- ✅ **Axios** requests (what you're using!)
+- ✅ **fetch()** API calls
+- ✅ **XMLHttpRequest** (XHR)
+
+For each request, Sentry tracks:
+- URL, method, status code
+- Duration (time to complete)
+- Request/response headers
+- Success or failure
+
+**Distributed Tracing**: When configured, Sentry adds a `sentry-trace` header to outgoing requests. If your backend also has Sentry, it reads this header and connects the frontend trace to the backend trace!
+
+### Step 5.1: Configure Trace Propagation Targets
+
+By default, Sentry adds tracing headers to **all** requests, which can cause issues with third-party APIs that reject unknown headers. We need to tell Sentry which domains to trace.
+
+**File**: `src/configuration/monitoring/index.tsx`
+
+```typescript
+// Configure which URLs should have distributed tracing enabled
+// This connects frontend errors to backend traces in Sentry
+const apiBaseUrl = import.meta.env.VITE_BEST_SHOT_API || "";
+const apiV2BaseUrl = import.meta.env.VITE_BEST_SHOT_API_V2 || "";
+
+// Extract hostnames for trace propagation
+const tracePropagationTargets = [
+	"localhost", // Local development
+	/^\//,      // Same-origin requests (relative URLs)
+];
+
+// Add production API domains if configured
+if (apiBaseUrl) {
+	try {
+		const url = new URL(apiBaseUrl);
+		if (!url.hostname.includes("localhost")) {
+			tracePropagationTargets.push(url.hostname);
+		}
+	} catch {
+		// Invalid URL, skip
+	}
+}
+
+if (apiV2BaseUrl && apiV2BaseUrl !== apiBaseUrl) {
+	try {
+		const url = new URL(apiV2BaseUrl);
+		if (!url.hostname.includes("localhost")) {
+			tracePropagationTargets.push(url.hostname);
+		}
+	} catch {
+		// Invalid URL, skip
+	}
+}
+
+Sentry.init({
+	dsn: import.meta.env.VITE_SENTRY_DSN,
+	environment: config.environment,
+	release,
+
+	integrations: [
+		Sentry.browserTracingIntegration(),
+		Sentry.replayIntegration(),
+	],
+
+	tracesSampleRate: config.tracesSampleRate,
+
+	// Distributed Tracing - connects frontend and backend traces
+	tracePropagationTargets,
+
+	replaysSessionSampleRate: config.replaysSessionSampleRate,
+	replaysOnErrorSampleRate: config.replaysOnErrorSampleRate,
+});
+```
+
+**What This Does:**
+
+- **Automatically extracts domains** from your API environment variables
+- **Adds localhost** for local development
+- **Adds relative URL pattern** (`/^\//`) for same-origin requests
+- **Adds production domains** dynamically (e.g., `api.bestshot.com`)
+- **Skips invalid URLs** gracefully with try/catch
+
+**Why This Matters:**
+
+Without `tracePropagationTargets`, Sentry adds headers to **all** requests, including:
+- ❌ Third-party APIs (Auth0, Stripe, etc.) that might reject unknown headers
+- ❌ CDNs and analytics scripts
+- ❌ External resources
+
+With `tracePropagationTargets`, Sentry only traces:
+- ✅ Your backend API calls
+- ✅ Same-origin requests
+- ✅ Specified domains you control
+
+### Step 5.2: Update Console Logging
+
+Add API tracing info to initialization log:
+
+```typescript
+console.log(
+	`[Sentry] Initialized for ${config.environment} environment`,
+	`\n  - Release: ${release || "not set"}`,
+	`\n  - Traces: ${config.tracesSampleRate * 100}%`,
+	`\n  - Replays: ${config.replaysSessionSampleRate * 100}%`,
+	`\n  - Error Replays: ${config.replaysOnErrorSampleRate * 100}%`,
+	`\n  - API Tracing: ${tracePropagationTargets.map(t => t.toString()).join(", ")}`,
+);
+```
+
+**Example output:**
+```
+[Sentry] Initialized for production environment
+  - Release: best-shot@341ce12
+  - Traces: 10%
+  - Replays: 5%
+  - Error Replays: 100%
+  - API Tracing: localhost, /^\//, api.bestshot.com
+```
+
+### Step 5.3: Verify Automatic Tracing
+
+Sentry automatically traces all Axios requests made through your `api` instance:
+
+**File**: `src/api/index.ts` (No changes needed!)
+
+```typescript
+import axios from "axios";
+
+export const api = axios.create({
+	baseURL: import.meta.env.VITE_BEST_SHOT_API,
+	headers: {
+		"Access-Control-Allow-Origin": "*",
+		"Content-Type": "application/json",
+	},
+	withCredentials: true,
+});
+
+// ✅ All requests through this instance are automatically traced!
+// api.get("/tournaments") → Sentry tracks duration, status, etc.
+```
+
+**How It Works:**
+
+1. You make a request: `api.get("/tournaments")`
+2. Sentry intercepts it (via `browserTracingIntegration()`)
+3. Sentry adds `sentry-trace` header to request
+4. Sentry starts a performance span
+5. Request completes
+6. Sentry records duration, status, URL
+7. Data sent to Sentry dashboard
+
+**No code changes needed** - it just works!
+
+### Step 5.4: View API Performance in Sentry
+
+1. **Go to Sentry → Performance**
+2. You'll see a list of transactions (page loads, route changes)
+3. **Click on any transaction**
+4. Scroll to **"Spans"** section
+5. You'll see API calls listed:
+   ```
+   GET /api/v2/tournaments   245ms
+   GET /api/v2/member        123ms
+   POST /api/v1/guesses      89ms
+   ```
+
+6. **Click on an API span** to see:
+   - Full URL and method
+   - Request/response headers
+   - Duration breakdown
+   - Status code
+   - Link to backend trace (if backend has Sentry)
+
+### Step 5.5: Filter Slow API Calls
+
+**In Sentry Performance dashboard:**
+
+1. Click **"View All"** on transactions
+2. Use filters:
+   - `http.method:GET` - Only GET requests
+   - `transaction:/api/v2/tournaments` - Specific endpoint
+   - `transaction.duration:>1000` - Slower than 1 second
+
+3. Sort by **"P95 Duration"** to find consistently slow endpoints
+
+**Common queries:**
+- Slow API calls: `transaction.duration:>2000`
+- Failed requests: `http.status_code:5xx`
+- Specific endpoint: `transaction:/api/v2/tournaments`
+
+### Step 5.6: Backend Integration (Optional)
+
+If your backend also uses Sentry (Node.js, Python, etc.), distributed tracing connects frontend and backend:
+
+**Frontend** makes request:
+```typescript
+api.get("/tournaments")
+// Adds header: sentry-trace: 1234-5678-abcd
+```
+
+**Backend** receives request (with Sentry SDK installed):
+```javascript
+// Backend automatically reads sentry-trace header
+// Creates child span linked to frontend span
+app.get("/tournaments", async (req, res) => {
+	// Sentry traces this handler
+	const tournaments = await db.query(...);
+	res.json(tournaments);
+});
+```
+
+**In Sentry dashboard:**
+- Click on frontend API span
+- See **"Backend Trace"** link
+- Click it → Jump to backend logs, database queries, errors
+- Full request journey from browser → server → database → back!
+
+**Setting this up:**
+1. Install Sentry in your backend (Node.js, Python, Go, etc.)
+2. Initialize with same `dsn`
+3. That's it! Sentry automatically connects traces via `sentry-trace` header
+
+### Step 5.7: Manual Instrumentation (Advanced)
+
+For operations that aren't HTTP requests, you can manually create spans:
+
+```typescript
+import * as Sentry from "@sentry/react";
+
+// Trace a slow operation
+function processLargeDataset(data: Tournament[]) {
+	return Sentry.startSpan(
+		{
+			name: "Process Tournament Data",
+			op: "function",
+		},
+		() => {
+			// Your slow operation here
+			const processed = data.map(tournament => {
+				// Complex processing...
+				return transform(tournament);
+			});
+
+			return processed;
+		}
+	);
+}
+```
+
+**When to use manual spans:**
+- Complex calculations
+- Large data transformations
+- Heavy rendering operations
+- WebSocket message processing
+
+**In Sentry:**
+- You'll see "Process Tournament Data" as a span
+- Can see how long it took
+- Can identify performance bottlenecks in your code
+
+### Understanding the Performance Data
+
+**P50 (Median)**: 50% of requests faster than this
+- Good for understanding typical performance
+- Example: P50 = 200ms means half of requests finish in under 200ms
+
+**P95**: 95% of requests faster than this
+- Good for understanding worst-case performance
+- Example: P95 = 1000ms means 95% finish in under 1s, but 5% take longer
+
+**P99**: 99% of requests faster than this
+- Extreme outliers
+- Important for user experience (nobody likes the occasional 10s load)
+
+**Throughput**: Requests per minute
+- How many times this endpoint is called
+- High throughput + slow duration = major bottleneck!
+
+### Troubleshooting
+
+**"I don't see any API calls in Sentry"**
+- Check `tracesSampleRate` isn't 0
+- Verify requests match `tracePropagationTargets`
+- Check console for Sentry initialization errors
+- Make sure you're making requests through Axios/fetch
+
+**"Third-party API rejecting my requests"**
+- This means `tracePropagationTargets` is too broad
+- Don't use `["*"]` - it adds headers to ALL requests
+- Only include your own API domains
+
+**"Can't connect frontend to backend traces"**
+- Make sure backend has Sentry SDK installed
+- Both frontend and backend must use same Sentry organization
+- Check backend is reading `sentry-trace` header
+
+---
+
+## What You've Accomplished
+
+✅ Configured distributed tracing for your API calls
+✅ Set up `tracePropagationTargets` dynamically from env vars
+✅ Enabled automatic Axios request monitoring
+✅ Learned how to view API performance in Sentry
+✅ Understand how to connect frontend and backend traces
+✅ Know how to create manual spans for custom operations
+
+**Next Steps**: In Session 6, we'll add data sanitization to automatically strip sensitive information from error reports.
+
+---
+
 *Tutorial continues in next session...*

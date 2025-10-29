@@ -68,6 +68,40 @@ export const Monitoring = {
 		// The Sentry Vite plugin automatically injects SENTRY_RELEASE during build
 		const release = import.meta.env.VITE_SENTRY_RELEASE || import.meta.env.SENTRY_RELEASE;
 
+		// Configure which URLs should have distributed tracing enabled
+		// This connects frontend errors to backend traces in Sentry
+		const apiBaseUrl = import.meta.env.VITE_BEST_SHOT_API || "";
+		const apiV2BaseUrl = import.meta.env.VITE_BEST_SHOT_API_V2 || "";
+
+		// Extract hostnames for trace propagation
+		const tracePropagationTargets = [
+			"localhost", // Local development
+			/^\//,      // Same-origin requests (relative URLs)
+		];
+
+		// Add production API domains if configured
+		if (apiBaseUrl) {
+			try {
+				const url = new URL(apiBaseUrl);
+				if (!url.hostname.includes("localhost")) {
+					tracePropagationTargets.push(url.hostname);
+				}
+			} catch {
+				// Invalid URL, skip
+			}
+		}
+
+		if (apiV2BaseUrl && apiV2BaseUrl !== apiBaseUrl) {
+			try {
+				const url = new URL(apiV2BaseUrl);
+				if (!url.hostname.includes("localhost")) {
+					tracePropagationTargets.push(url.hostname);
+				}
+			} catch {
+				// Invalid URL, skip
+			}
+		}
+
 		Sentry.init({
 			dsn: import.meta.env.VITE_SENTRY_DSN,
 			environment: config.environment,
@@ -82,6 +116,9 @@ export const Monitoring = {
 			// Performance Monitoring (environment-specific)
 			tracesSampleRate: config.tracesSampleRate,
 
+			// Distributed Tracing - connects frontend and backend traces
+			tracePropagationTargets,
+
 			// Session Replay (environment-specific)
 			replaysSessionSampleRate: config.replaysSessionSampleRate,
 			replaysOnErrorSampleRate: config.replaysOnErrorSampleRate,
@@ -93,6 +130,7 @@ export const Monitoring = {
 			`\n  - Traces: ${config.tracesSampleRate * 100}%`,
 			`\n  - Replays: ${config.replaysSessionSampleRate * 100}%`,
 			`\n  - Error Replays: ${config.replaysOnErrorSampleRate * 100}%`,
+			`\n  - API Tracing: ${tracePropagationTargets.map(t => t.toString()).join(", ")}`,
 		);
 	},
 

@@ -702,4 +702,321 @@ Then set `VITE_DEBUG_MODE=true` in your `.env.production` file when needed.
 
 ---
 
+## Session 3: User Identification
+
+> **Goal**: Link all errors and sessions to specific users so you can see who's experiencing problems and reach out proactively.
+
+### Why User Identification Matters
+
+Without user identification, Sentry shows you errors but you don't know **who** is affected. With user identification, you get superpowers:
+
+🎯 **See which users are experiencing errors**
+- "User sarah@example.com got 3 errors in the last hour"
+- Filter errors by specific users
+- Track error patterns per user
+
+📧 **Proactive support**
+- Reach out to affected users before they complain
+- "Hey Sarah, we noticed you had issues with checkout - we just fixed it!"
+
+🔍 **Better debugging**
+- Reproduce issues with specific user accounts
+- Understand user-specific conditions (permissions, data, etc.)
+
+📊 **Track user impact**
+- "This bug affected 150 users" vs "This bug only affected 2 admins"
+- Prioritize fixes based on user impact
+
+### How User Identification Works
+
+When a user logs in, we call `Sentry.setUser()` with their info:
+
+```typescript
+Sentry.setUser({
+  id: "user-123",
+  email: "sarah@example.com",
+  username: "sarah_dev",
+  role: "admin"
+});
+```
+
+From that point forward, **all errors and sessions** from that browser are tagged with this user info. You can add custom fields beyond the defaults (id, email, username).
+
+### Step 3.1: Add setUser Method to Monitoring Module
+
+Update your monitoring module to support user identification:
+
+**File**: `src/configuration/monitoring/index.tsx`
+
+```typescript
+interface UserIdentity {
+	id: string;
+	email?: string;
+	username?: string;
+	role?: string;
+}
+
+export const Monitoring = {
+	init: () => {
+		// ... existing init code ...
+	},
+
+	/**
+	 * Identify the current user in Sentry
+	 * This links all errors and sessions to the specific user
+	 */
+	setUser: (user: UserIdentity | null) => {
+		const currentEnv = import.meta.env.MODE;
+
+		// Only set user in enabled environments
+		if (!ENVS_TO_ENABLE.includes(currentEnv)) {
+			return;
+		}
+
+		if (user) {
+			Sentry.setUser({
+				id: user.id,
+				email: user.email,
+				username: user.username,
+				role: user.role,
+			});
+			console.log(`[Sentry] User identified: ${user.username || user.email || user.id}`);
+		} else {
+			Sentry.setUser(null);
+			console.log("[Sentry] User cleared (logged out)");
+		}
+	},
+};
+```
+
+**What This Does:**
+
+- **`setUser(user)`**: Identifies a logged-in user to Sentry
+- **`setUser(null)`**: Clears user data (call on logout)
+- **Environment check**: Only works in enabled environments (not local-dev)
+- **Logging**: Shows when users are identified for debugging
+
+### Step 3.2: Create SentryUserIdentifier Component
+
+This component automatically watches for auth changes and identifies users:
+
+**File**: `src/configuration/monitoring/components/SentryUserIdentifier.tsx`
+
+```typescript
+import { useEffect } from "react";
+import { useMember } from "@/domains/member/hooks/use-member";
+import { Authentication } from "@/domains/authentication";
+import { Monitoring } from "../index";
+
+const { useAppAuth } = Authentication;
+
+/**
+ * SentryUserIdentifier Component
+ *
+ * Automatically identifies users to Sentry when they log in
+ * and clears user data when they log out.
+ *
+ * This links all errors and sessions to specific users, enabling:
+ * - See which users are experiencing errors
+ * - Contact affected users proactively
+ * - Filter errors by user
+ * - Track user-specific error patterns
+ */
+export function SentryUserIdentifier() {
+	const { isAuthenticated } = useAppAuth();
+	const member = useMember({ fetchOnMount: isAuthenticated });
+
+	useEffect(() => {
+		if (isAuthenticated && member.isSuccess && member.data) {
+			// User is logged in and member data is loaded
+			Monitoring.setUser({
+				id: member.data.id,
+				email: member.data.email,
+				username: member.data.nickName,
+				role: member.data.role,
+			});
+		} else if (!isAuthenticated) {
+			// User logged out - clear Sentry user data
+			Monitoring.setUser(null);
+		}
+	}, [isAuthenticated, member.isSuccess, member.data]);
+
+	// This component doesn't render anything
+	return null;
+}
+```
+
+**How It Works:**
+
+1. **Watches authentication state**: Uses your existing `useAppAuth()` hook
+2. **Fetches member data**: Uses your existing `useMember()` hook
+3. **Identifies user on login**: When authenticated AND member data loads, calls `Monitoring.setUser()`
+4. **Clears user on logout**: When `isAuthenticated` becomes false, clears Sentry user
+5. **Zero UI**: Returns `null` - it's a background process
+
+### Step 3.3: Add Component to Your App
+
+Add the `SentryUserIdentifier` component to your app tree:
+
+**File**: `src/App.tsx`
+
+```typescript
+import * as Sentry from "@sentry/react";
+import CssBaseline from "@mui/material/CssBaseline";
+import { ThemeProvider } from "@mui/material/styles";
+import { AppQueryProvider } from "@/configuration/app-query";
+import { SentryUserIdentifier } from "@/configuration/monitoring/components/SentryUserIdentifier";
+import { AppError } from "@/domains/global/components/error";
+import { theme } from "@/domains/ui-system/theme";
+import LaunchDarklyUserIdentifier from "@/utils/LaunchDarklyUserIdentifier";
+import { AppRouter } from "./app-router";
+import { AppConfiguration } from "./configuration";
+import { Authentication } from "./domains/authentication";
+import { GlobalCSS } from "./theming/global-styles";
+import "./theming/load-configuration";
+
+const { AuthProvider } = Authentication;
+
+AppConfiguration.init();
+
+function App() {
+	return (
+		<Sentry.ErrorBoundary fallback={AppError} showDialog>
+			<AppQueryProvider>
+				<AuthProvider>
+					<ThemeProvider theme={theme}>
+						<CssBaseline />
+						<GlobalCSS />
+						<AppRouter />
+						<LaunchDarklyUserIdentifier />
+						<SentryUserIdentifier />
+					</ThemeProvider>
+				</AuthProvider>
+			</AppQueryProvider>
+		</Sentry.ErrorBoundary>
+	);
+}
+
+export default App;
+```
+
+**Placement Matters:**
+
+- Must be **inside `<AuthProvider>`** to access auth state
+- Must be **inside `<AppQueryProvider>`** to use TanStack Query hooks
+- Placed alongside `LaunchDarklyUserIdentifier` for consistency
+
+### Step 3.4: Test User Identification
+
+1. **Log in to your app** (staging or demo environment)
+2. **Check the browser console**, you should see:
+   ```
+   [Sentry] User identified: sarah_dev
+   ```
+
+3. **Trigger a test error** (use the test button from Session 1)
+4. **Go to Sentry dashboard** → Click on the error
+5. **Look for the "User" section** - you should see:
+   ```
+   ID: user-123
+   Email: sarah@example.com
+   Username: sarah_dev
+   Role: admin
+   ```
+
+6. **Log out of your app**
+7. **Check console again**, you should see:
+   ```
+   [Sentry] User cleared (logged out)
+   ```
+
+### Step 3.5: Filter Errors by User in Sentry
+
+Now you can filter errors by specific users in the Sentry dashboard:
+
+1. Go to Issues page
+2. Click "Search" or "Add a search term"
+3. Type: `user.email:sarah@example.com`
+4. See only errors from that specific user
+
+**Useful search queries:**
+- `user.role:admin` - Errors from admins only
+- `user.id:user-123` - Errors from specific user ID
+- `user.username:*` - Any error from logged-in users
+- `!has:user.id` - Errors from anonymous (not logged in) users
+
+### Privacy Considerations
+
+**⚠️ Important**: Be careful what user data you send to Sentry!
+
+**Safe to send:**
+- User ID (anonymized if needed: hash the ID)
+- Username
+- Role/permissions
+- Account tier (free/pro/enterprise)
+
+**DO NOT send:**
+- Passwords (obviously!)
+- Credit card numbers
+- Social security numbers
+- Private messages
+- Health information
+
+**PII (Personally Identifiable Information):**
+- Email addresses are usually OK (Sentry is SOC 2 compliant)
+- Full names are usually OK
+- If you're in EU/GDPR zones, check your data processing agreement
+
+We'll cover data sanitization in Session 6 to automatically strip sensitive data.
+
+### Adding Custom User Fields
+
+You can add custom fields beyond id/email/username:
+
+```typescript
+Monitoring.setUser({
+	id: member.data.id,
+	email: member.data.email,
+	username: member.data.nickName,
+	role: member.data.role,
+	// Custom fields:
+	accountTier: "pro", // Free vs Pro vs Enterprise
+	signupDate: member.data.createdAt,
+	totalLogins: member.data.loginCount,
+});
+```
+
+Then search by custom fields:
+- `user.accountTier:pro`
+- `user.signupDate:<2024-01-01`
+
+### When to Clear User Data
+
+Always clear user data on logout to prevent misattribution:
+
+```typescript
+// In your logout handler
+const handleLogout = async () => {
+	await logout();
+	Monitoring.setUser(null); // Clear Sentry user
+};
+```
+
+Our `SentryUserIdentifier` component handles this automatically.
+
+---
+
+## What You've Accomplished
+
+✅ Added user identification to your monitoring setup
+✅ Created automatic user tracking that syncs with auth state
+✅ Linked all errors and sessions to specific users
+✅ Enabled filtering and searching by user in Sentry dashboard
+✅ Added privacy-conscious user data collection
+✅ Automatic cleanup on logout
+
+**Next Steps**: In Session 4, we'll add release tracking to link errors to specific deployments and git commits.
+
+---
+
 *Tutorial continues in next session...*

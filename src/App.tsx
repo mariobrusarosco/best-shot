@@ -2,6 +2,7 @@ import * as Sentry from "@sentry/react";
 import CssBaseline from "@mui/material/CssBaseline";
 import { ThemeProvider } from "@mui/material/styles";
 import { AppQueryProvider } from "@/configuration/app-query";
+import { SentryUserIdentifier } from "@/configuration/monitoring/components/SentryUserIdentifier";
 import { AppError } from "@/domains/global/components/error";
 import { theme } from "@/domains/ui-system/theme";
 import LaunchDarklyUserIdentifier from "@/utils/LaunchDarklyUserIdentifier";
@@ -25,6 +26,7 @@ function App() {
 						<GlobalCSS />
 						<AppRouter />
 						<LaunchDarklyUserIdentifier />
+						<SentryUserIdentifier />
 					</ThemeProvider>
 				</AuthProvider>
 			</AppQueryProvider>

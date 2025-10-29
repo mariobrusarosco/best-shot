@@ -46,6 +46,13 @@ const getEnvironmentConfig = (environment: string) => {
 	}
 };
 
+interface UserIdentity {
+	id: string;
+	email?: string;
+	username?: string;
+	role?: string;
+}
+
 export const Monitoring = {
 	init: () => {
 		const currentEnv = import.meta.env.MODE;
@@ -82,5 +89,31 @@ export const Monitoring = {
 			`\n  - Replays: ${config.replaysSessionSampleRate * 100}%`,
 			`\n  - Error Replays: ${config.replaysOnErrorSampleRate * 100}%`,
 		);
+	},
+
+	/**
+	 * Identify the current user in Sentry
+	 * This links all errors and sessions to the specific user
+	 */
+	setUser: (user: UserIdentity | null) => {
+		const currentEnv = import.meta.env.MODE;
+
+		// Only set user in enabled environments
+		if (!ENVS_TO_ENABLE.includes(currentEnv)) {
+			return;
+		}
+
+		if (user) {
+			Sentry.setUser({
+				id: user.id,
+				email: user.email,
+				username: user.username,
+				role: user.role,
+			});
+			console.log(`[Sentry] User identified: ${user.username || user.email || user.id}`);
+		} else {
+			Sentry.setUser(null);
+			console.log("[Sentry] User cleared (logged out)");
+		}
 	},
 };

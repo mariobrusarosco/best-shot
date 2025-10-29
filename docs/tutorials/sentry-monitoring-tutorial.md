@@ -1019,4 +1019,447 @@ Our `SentryUserIdentifier` component handles this automatically.
 
 ---
 
+## Session 4: Release Tracking
+
+> **Goal**: Link errors to specific deployments and git commits so you can track which release introduced a bug.
+
+### Why Release Tracking Matters
+
+Without release tracking, you see errors but don't know **when** they were introduced. With releases, you get:
+
+📅 **Track when bugs appear**
+- "This error started appearing after release v2.3.1"
+- See error trends by release
+- Identify problematic deployments immediately
+
+🔗 **Link to git commits**
+- Click error → See exact code changes that caused it
+- Jump directly to GitHub/GitLab commit
+- View diff to understand what changed
+
+📊 **Measure release health**
+- "Release v2.3.0 has 50% more errors than v2.2.9"
+- Set up alerts: "More than 100 errors in first hour of release"
+- Decide whether to rollback
+
+🎯 **Faster debugging**
+- "Bug appeared in commit abc123"
+- Narrow down to specific PR/feature
+- Contact the developer who made the change
+
+### How Release Tracking Works
+
+When you build your app for production, the Sentry Vite plugin:
+
+1. **Generates a unique release ID** (usually from git commit hash)
+2. **Uploads source maps** to Sentry (for readable stack traces)
+3. **Associates git commits** with the release
+4. **Injects release ID** into your bundle
+
+Then, when errors occur, they're tagged with: `release: "best-shot@341ce12"`
+
+### Step 4.1: Get Your Sentry Auth Token
+
+To upload source maps, you need a Sentry auth token:
+
+1. Go to Sentry → **Settings** → **Auth Tokens**
+2. Click **"Create New Token"**
+3. Name: `CI/CD Build Token`
+4. Scopes: Select **"project:releases"** and **"org:read"**
+5. Copy the token (you'll only see it once!)
+6. Add to your `.env` files:
+
+```bash
+# .env.production
+SENTRY_AUTH_TOKEN="sntrys_abc123def456..."
+```
+
+**⚠️ Security Note**: Never commit this token to git! Add `.env.production` to `.gitignore`.
+
+### Step 4.2: Update Environment Variables
+
+Add Sentry config to your `.env.example`:
+
+**File**: `.env.example`
+
+```bash
+# Sentry Monitoring
+VITE_SENTRY_DSN="<your-sentry-dsn>"
+SENTRY_AUTH_TOKEN="<your-sentry-auth-token>"
+
+# Optional: Override default org/project
+SENTRY_ORG="mario-79"
+SENTRY_PROJECT="best-shot-demo"
+```
+
+Then create corresponding `.env.production` with real values.
+
+### Step 4.3: Centralize Sentry Environment Configuration
+
+**Important Architecture Decision**: Before we configure the Vite plugin, let's centralize the list of environments where Sentry is enabled. This prevents bugs from having duplicate constants that get out of sync.
+
+**File**: `src/configuration/monitoring/constants.ts` (NEW FILE)
+
+```typescript
+/**
+ * Centralized Sentry monitoring constants
+ * Used by both runtime monitoring code and build-time Vite plugin
+ */
+
+/**
+ * Environments where Sentry monitoring is enabled
+ * - local-dev: Disabled (too noisy, no real errors)
+ * - demo: Enabled (test with real-ish data)
+ * - staging: Enabled (pre-production testing)
+ * - production: Enabled (live monitoring)
+ */
+export const SENTRY_ENABLED_ENVIRONMENTS = ["demo", "staging", "production"] as const;
+
+export type SentryEnvironment = (typeof SENTRY_ENABLED_ENVIRONMENTS)[number];
+```
+
+**Why Centralize?**
+- ✅ **Single source of truth** - Change in one place, applies everywhere
+- ✅ **Type safety** - TypeScript ensures consistency
+- ✅ **No duplicate constants** - Avoids bugs from configs getting out of sync
+- ✅ **Easy to maintain** - Want to remove staging? Change it once!
+
+### Step 4.4: Update Monitoring Config to Import Constants
+
+**File**: `src/configuration/monitoring/index.tsx`
+
+```typescript
+import * as Sentry from "@sentry/react";
+import { SENTRY_ENABLED_ENVIRONMENTS } from "./constants";
+
+// Remove: const ENVS_TO_ENABLE = ["demo", "staging", "production"];
+
+export const Monitoring = {
+	init: () => {
+		const currentEnv = import.meta.env.MODE;
+
+		// Only enable Sentry in non-local environments
+		if (!SENTRY_ENABLED_ENVIRONMENTS.includes(currentEnv as any)) {
+			console.log(`[Sentry] Disabled in ${currentEnv} mode`);
+			return;
+		}
+
+		// ... rest of init code
+	},
+
+	setUser: (user: UserIdentity | null) => {
+		const currentEnv = import.meta.env.MODE;
+
+		// Only set user in enabled environments
+		if (!SENTRY_ENABLED_ENVIRONMENTS.includes(currentEnv as any)) {
+			return;
+		}
+
+		// ... rest of setUser code
+	},
+};
+```
+
+### Step 4.5: Enable Sentry Vite Plugin for All Environments
+
+**Important**: If you enable Sentry in multiple environments (demo, staging, production), you should upload source maps for ALL of them. Otherwise, stack traces will be minified and hard to debug.
+
+Update your Vite config to import and use the centralized constant:
+
+**File**: `vite.config.ts`
+
+```typescript
+import path from "node:path";
+import { sentryVitePlugin } from "@sentry/vite-plugin";
+import { TanStackRouterVite } from "@tanstack/router-plugin/vite";
+import react from "@vitejs/plugin-react";
+import { defineConfig } from "vite";
+import checker from "vite-plugin-checker";
+import { SENTRY_ENABLED_ENVIRONMENTS } from "./src/configuration/monitoring/constants";
+
+export default defineConfig(({ mode }) => ({
+	server: {
+		host: true,
+		cors: {
+			origin: "*",
+		},
+	},
+
+	plugins: [
+		TanStackRouterVite(),
+		react(),
+		checker({
+			typescript: true,
+		}),
+		// Enable Sentry for demo, staging, and production builds
+		SENTRY_ENABLED_ENVIRONMENTS.includes(mode as any) &&
+			sentryVitePlugin({
+				org: process.env.SENTRY_ORG || "mario-79",
+				project: process.env.SENTRY_PROJECT || "best-shot-demo",
+				authToken: process.env.SENTRY_AUTH_TOKEN,
+				telemetry: false,
+				sourcemaps: {
+					assets: "./dist/**",
+				},
+			}),
+	].filter(Boolean), // Remove falsy values (when mode not in SENTRY_ENABLED_ENVIRONMENTS)
+
+	resolve: {
+		alias: {
+			"@": path.resolve(__dirname, "./src"),
+			settings: path.resolve(__dirname, "./settings"),
+		},
+	},
+
+	build: {
+		sourcemap: true, // Required for Sentry source maps
+		minify: SENTRY_ENABLED_ENVIRONMENTS.includes(mode as any) ? "esbuild" : false,
+	},
+
+	// ... rest of config
+}));
+```
+
+**What This Does:**
+
+- **Imports centralized constant**: Same list used in runtime monitoring and build config
+- **Runs for demo, staging, AND production**: `SENTRY_ENABLED_ENVIRONMENTS.includes(mode as any)`
+- **Uploads source maps**: For all enabled environments
+- **Creates releases**: Separate releases for demo/staging/production
+- **Associates commits**: Links releases to git repository
+- **Readable stack traces**: In all environments, not just production
+
+**Why Upload for All Environments?**
+
+If you only upload source maps for production:
+- ❌ Staging errors show **minified stack traces** (hard to debug)
+- ❌ Can't filter by `release:` in demo/staging
+- ❌ Can't test release tracking before production
+
+With source maps for all environments:
+- ✅ **Readable stack traces everywhere**
+- ✅ Test release tracking in staging first
+- ✅ Debug staging errors easily
+- ✅ Minimal cost (source map uploads are free)
+
+**The Centralization Pattern**
+
+Notice we import the same constant in both places:
+
+```typescript
+// Runtime monitoring
+import { SENTRY_ENABLED_ENVIRONMENTS } from "./constants";
+
+// Build-time Vite plugin
+import { SENTRY_ENABLED_ENVIRONMENTS } from "./src/configuration/monitoring/constants";
+```
+
+This ensures they **never get out of sync**. Want to add/remove an environment? Change it once in `constants.ts` and it applies everywhere!
+
+**Alternative: Production Only**
+
+If you only want monitoring in production, update **one file**:
+
+```typescript
+// src/configuration/monitoring/constants.ts
+export const SENTRY_ENABLED_ENVIRONMENTS = ["production"] as const;
+```
+
+Both runtime monitoring and Vite plugin will automatically update!
+
+### Step 4.6: Add Release to Sentry Init
+
+Update your monitoring module to use release information:
+
+**File**: `src/configuration/monitoring/index.tsx`
+
+```typescript
+export const Monitoring = {
+	init: () => {
+		const currentEnv = import.meta.env.MODE;
+
+		if (!ENVS_TO_ENABLE.includes(currentEnv)) {
+			console.log(`[Sentry] Disabled in ${currentEnv} mode`);
+			return;
+		}
+
+		const config = getEnvironmentConfig(currentEnv);
+
+		// Get release information from environment variables or build process
+		// The Sentry Vite plugin automatically injects SENTRY_RELEASE during build
+		const release = import.meta.env.VITE_SENTRY_RELEASE || import.meta.env.SENTRY_RELEASE;
+
+		Sentry.init({
+			dsn: import.meta.env.VITE_SENTRY_DSN,
+			environment: config.environment,
+			release, // Links errors to specific deployments/commits
+
+			// Core integrations
+			integrations: [
+				Sentry.browserTracingIntegration(),
+				Sentry.replayIntegration(),
+			],
+
+			// Performance Monitoring (environment-specific)
+			tracesSampleRate: config.tracesSampleRate,
+
+			// Session Replay (environment-specific)
+			replaysSessionSampleRate: config.replaysSessionSampleRate,
+			replaysOnErrorSampleRate: config.replaysOnErrorSampleRate,
+		});
+
+		console.log(
+			`[Sentry] Initialized for ${config.environment} environment`,
+			`\n  - Release: ${release || "not set"}`,
+			`\n  - Traces: ${config.tracesSampleRate * 100}%`,
+			`\n  - Replays: ${config.replaysSessionSampleRate * 100}%`,
+			`\n  - Error Replays: ${config.replaysOnErrorSampleRate * 100}%`,
+		);
+	},
+
+	// ... setUser method ...
+};
+```
+
+**Key Changes:**
+
+- Added `release` field to `Sentry.init()`
+- Release ID comes from Vite plugin injection
+- Added release to console log output
+
+### Step 4.7: Build and Test
+
+1. **Build for production**:
+   ```bash
+   yarn build
+   ```
+
+2. **Watch the build output**, you should see:
+   ```
+   ✓ Sentry Vite Plugin
+   ✓ Generated release: best-shot@341ce12
+   ✓ Uploaded 15 source maps
+   ✓ Associated 3 commits with release
+   ```
+
+3. **Check console** after deploying:
+   ```
+   [Sentry] Initialized for production environment
+     - Release: best-shot@341ce12
+     - Traces: 10%
+     - Replays: 5%
+     - Error Replays: 100%
+   ```
+
+### Step 4.8: View Releases in Sentry Dashboard
+
+1. Go to Sentry → **Releases**
+2. You should see your new release: `best-shot@341ce12`
+3. Click on it to see:
+   - **Commits**: All git commits in this release
+   - **New Issues**: Errors that first appeared in this release
+   - **Regressions**: Errors that were fixed but came back
+   - **Health**: Error rate, session crashes, etc.
+
+### Step 4.9: Link to Git Repository
+
+To enable "Open in GitHub" links from Sentry:
+
+1. Go to Sentry → **Settings** → **Integrations**
+2. Find **GitHub** (or GitLab/Bitbucket)
+3. Click **Install** and authorize
+4. Select your repository: `mario/best-shot`
+5. Now when you click commits in releases, they open in GitHub!
+
+### Step 4.10: Search by Release
+
+You can now filter errors by release in Sentry:
+
+**Useful search queries:**
+- `release:best-shot@341ce12` - Errors from specific release
+- `release:best-shot@*` - All releases for this app
+- `first_release:best-shot@341ce12` - Errors that **first appeared** in this release
+- `last_seen:+7d release:best-shot@341ce12` - Recent errors in this release
+
+### Custom Release Names
+
+By default, releases are named: `<package-name>@<git-commit-hash>`
+
+You can customize this in `vite.config.ts`:
+
+```typescript
+sentryVitePlugin({
+	org: process.env.SENTRY_ORG,
+	project: process.env.SENTRY_PROJECT,
+	authToken: process.env.SENTRY_AUTH_TOKEN,
+	telemetry: false,
+	release: {
+		name: `best-shot@${process.env.npm_package_version}`, // Use package.json version
+		// Or use semantic versioning:
+		// name: "v2.3.1"
+	},
+	sourcemaps: {
+		assets: "./dist/**",
+	},
+}),
+```
+
+**Common naming patterns:**
+- `app@commit-hash` - Default, good for frequent deploys
+- `app@v2.3.1` - Semantic versioning, good for scheduled releases
+- `app@2024-01-15-prod` - Date-based, good for daily deploys
+
+### CI/CD Integration
+
+In your deployment pipeline (GitHub Actions, GitLab CI, etc.), make sure to:
+
+1. **Set environment variable**:
+   ```yaml
+   env:
+     SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+   ```
+
+2. **Build command stays the same**:
+   ```bash
+   yarn build
+   ```
+
+3. **Sentry plugin automatically**:
+   - Detects git commit from CI environment
+   - Uploads source maps
+   - Creates release
+   - No extra commands needed!
+
+### Troubleshooting
+
+**"Source maps not uploaded"**
+- Check `SENTRY_AUTH_TOKEN` is set
+- Verify `build.sourcemap: true` in vite.config.ts
+- Check Sentry token has `project:releases` scope
+
+**"Release not showing in dashboard"**
+- Make sure you're building with `mode === "production"`
+- Check console for Sentry plugin output
+- Verify DSN is correct
+
+**"Commits not associated with release"**
+- Make sure `.git` folder exists in build environment
+- CI/CD must have git history (use `fetch-depth: 0` in GitHub Actions)
+- Check GitHub integration is installed
+
+---
+
+## What You've Accomplished
+
+✅ Configured Sentry Vite plugin for source map uploads
+✅ Added release tracking to link errors to deployments
+✅ Enabled git commit association with releases
+✅ Set up release filtering in Sentry dashboard
+✅ Integrated with git repository for "Open in GitHub" links
+✅ Prepared for CI/CD deployment tracking
+
+**Next Steps**: In Session 5, we'll configure API tracing to monitor the performance of your backend API calls.
+
+---
+
 *Tutorial continues in next session...*

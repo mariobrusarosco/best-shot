@@ -1,8 +1,10 @@
 import path from "node:path";
+import { sentryVitePlugin } from "@sentry/vite-plugin";
 import { TanStackRouterVite } from "@tanstack/router-plugin/vite";
 import react from "@vitejs/plugin-react";
 import { defineConfig } from "vite";
 import checker from "vite-plugin-checker";
+import { SENTRY_ENABLED_ENVIRONMENTS } from "./src/configuration/monitoring/constants";
 
 export default defineConfig(({ mode }) => ({
 	server: {
@@ -24,12 +26,18 @@ export default defineConfig(({ mode }) => ({
 		// 	emitFile: true,
 		// 	filename: "stats.html",
 		// }),
-		// sentryVitePlugin({
-		// 	org: "mario-79",
-		// 	project: "best-shot-demo",
-		// 	authToken: process.env.SENTRY_AUTH_TOKEN,
-		// }),
-	],
+		// Enable Sentry for demo, staging, and production builds
+		SENTRY_ENABLED_ENVIRONMENTS.includes(mode as any) &&
+			sentryVitePlugin({
+				org: process.env.SENTRY_ORG || "mario-79",
+				project: process.env.SENTRY_PROJECT || "best-shot-demo",
+				authToken: process.env.SENTRY_AUTH_TOKEN,
+				telemetry: false,
+				sourcemaps: {
+					assets: "./dist/**",
+				},
+			}),
+	].filter(Boolean),
 
 	resolve: {
 		alias: {
@@ -48,7 +56,7 @@ export default defineConfig(({ mode }) => ({
 
 	build: {
 		sourcemap: true,
-		minify: mode === "production" ? "esbuild" : false,
+		minify: SENTRY_ENABLED_ENVIRONMENTS.includes(mode as any) ? "esbuild" : false,
 	},
 
 	esbuild: {

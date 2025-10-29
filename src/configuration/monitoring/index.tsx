@@ -1,6 +1,5 @@
 import * as Sentry from "@sentry/react";
-
-const ENVS_TO_ENABLE = ["demo", "staging", "production"];
+import { SENTRY_ENABLED_ENVIRONMENTS } from "./constants";
 
 /**
  * Environment-specific Sentry configuration
@@ -58,16 +57,21 @@ export const Monitoring = {
 		const currentEnv = import.meta.env.MODE;
 
 		// Only enable Sentry in non-local environments
-		if (!ENVS_TO_ENABLE.includes(currentEnv)) {
+		if (!SENTRY_ENABLED_ENVIRONMENTS.includes(currentEnv as any)) {
 			console.log(`[Sentry] Disabled in ${currentEnv} mode`);
 			return;
 		}
 
 		const config = getEnvironmentConfig(currentEnv);
 
+		// Get release information from environment variables or build process
+		// The Sentry Vite plugin automatically injects SENTRY_RELEASE during build
+		const release = import.meta.env.VITE_SENTRY_RELEASE || import.meta.env.SENTRY_RELEASE;
+
 		Sentry.init({
 			dsn: import.meta.env.VITE_SENTRY_DSN,
 			environment: config.environment,
+			release, // Links errors to specific deployments/commits
 
 			// Core integrations
 			integrations: [
@@ -85,6 +89,7 @@ export const Monitoring = {
 
 		console.log(
 			`[Sentry] Initialized for ${config.environment} environment`,
+			`\n  - Release: ${release || "not set"}`,
 			`\n  - Traces: ${config.tracesSampleRate * 100}%`,
 			`\n  - Replays: ${config.replaysSessionSampleRate * 100}%`,
 			`\n  - Error Replays: ${config.replaysOnErrorSampleRate * 100}%`,
@@ -99,7 +104,7 @@ export const Monitoring = {
 		const currentEnv = import.meta.env.MODE;
 
 		// Only set user in enabled environments
-		if (!ENVS_TO_ENABLE.includes(currentEnv)) {
+		if (!SENTRY_ENABLED_ENVIRONMENTS.includes(currentEnv as any)) {
 			return;
 		}
 

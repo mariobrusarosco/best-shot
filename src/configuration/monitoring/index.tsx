@@ -2,16 +2,65 @@ import * as Sentry from "@sentry/react";
 
 const ENVS_TO_ENABLE = ["demo", "staging", "production"];
 
+/**
+ * Environment-specific Sentry configuration
+ * Optimizes sample rates and features based on environment
+ */
+const getEnvironmentConfig = (environment: string) => {
+	switch (environment) {
+		case "production":
+			return {
+				// Production: Lower sample rates to reduce costs
+				tracesSampleRate: 0.1, // 10% of transactions
+				replaysSessionSampleRate: 0.05, // 5% of sessions
+				replaysOnErrorSampleRate: 1.0, // 100% of error sessions
+				environment: "production",
+			};
+
+		case "staging":
+			return {
+				// Staging: Higher sample rates for thorough testing
+				tracesSampleRate: 0.5, // 50% of transactions
+				replaysSessionSampleRate: 0.2, // 20% of sessions
+				replaysOnErrorSampleRate: 1.0, // 100% of error sessions
+				environment: "staging",
+			};
+
+		case "demo":
+			return {
+				// Demo: Moderate sample rates
+				tracesSampleRate: 0.3, // 30% of transactions
+				replaysSessionSampleRate: 0.1, // 10% of sessions
+				replaysOnErrorSampleRate: 1.0, // 100% of error sessions
+				environment: "demo",
+			};
+
+		default:
+			return {
+				// Default fallback
+				tracesSampleRate: 0.1,
+				replaysSessionSampleRate: 0.05,
+				replaysOnErrorSampleRate: 1.0,
+				environment: "unknown",
+			};
+	}
+};
+
 export const Monitoring = {
 	init: () => {
+		const currentEnv = import.meta.env.MODE;
+
 		// Only enable Sentry in non-local environments
-		if (!ENVS_TO_ENABLE.includes(import.meta.env.MODE)) {
-			console.log("Sentry disabled in local-dev mode");
+		if (!ENVS_TO_ENABLE.includes(currentEnv)) {
+			console.log(`[Sentry] Disabled in ${currentEnv} mode`);
 			return;
 		}
 
+		const config = getEnvironmentConfig(currentEnv);
+
 		Sentry.init({
 			dsn: import.meta.env.VITE_SENTRY_DSN,
+			environment: config.environment,
 
 			// Core integrations
 			integrations: [
@@ -19,14 +68,19 @@ export const Monitoring = {
 				Sentry.replayIntegration(),
 			],
 
-			// Performance Monitoring
-			tracesSampleRate: 1.0, // 100% - we'll optimize this later
+			// Performance Monitoring (environment-specific)
+			tracesSampleRate: config.tracesSampleRate,
 
-			// Session Replay
-			replaysSessionSampleRate: 0.1, // 10% of sessions
-			replaysOnErrorSampleRate: 1.0, // 100% of sessions with errors
+			// Session Replay (environment-specific)
+			replaysSessionSampleRate: config.replaysSessionSampleRate,
+			replaysOnErrorSampleRate: config.replaysOnErrorSampleRate,
 		});
 
-		console.log("Sentry initialized successfully");
+		console.log(
+			`[Sentry] Initialized for ${config.environment} environment`,
+			`\n  - Traces: ${config.tracesSampleRate * 100}%`,
+			`\n  - Replays: ${config.replaysSessionSampleRate * 100}%`,
+			`\n  - Error Replays: ${config.replaysOnErrorSampleRate * 100}%`,
+		);
 	},
 };

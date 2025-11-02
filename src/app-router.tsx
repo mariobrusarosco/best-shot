@@ -19,7 +19,7 @@ const router = createRouter({
 	routeTree,
 	context: {
 		queryClient,
-		auth: { isAuthenticated: false, isLoadingAuth: false },
+		auth: { isAuthenticated: false, isLoadingAuth: true },
 	} as RouterContext,
 	defaultErrorComponent: AppError,
 	defaultNotFoundComponent: AppNotFound,

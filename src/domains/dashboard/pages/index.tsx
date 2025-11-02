@@ -1,4 +1,4 @@
-import { Box, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import { styled } from "@mui/system";
 import Matchday from "@/domains/dashboard/components/matchday";
 import { useDashboard } from "@/domains/dashboard/hooks/use-dashboard";
@@ -61,23 +61,6 @@ export const Dashboard = styled(ScreenMainContent)(({ theme }) => ({
 
 	[UIHelper.startsOn("tablet")]: {
 		gap: theme.spacing(4),
-	},
-}));
-
-const DatePickerSection = styled(Box)(({ theme }) => ({
-	padding: theme.spacing(2),
-	backgroundColor: theme.palette.background.paper,
-	borderRadius: theme.shape.borderRadius,
-	border: `1px solid ${theme.palette.divider}`,
-}));
-
-const DatePickerGrid = styled(Box)(({ theme }) => ({
-	display: "grid",
-	gridTemplateColumns: "1fr",
-	gap: theme.spacing(2),
-
-	[UIHelper.startsOn("tablet")]: {
-		gridTemplateColumns: "repeat(3, 1fr)",
 	},
 }));
 

@@ -13,7 +13,7 @@ import { createFileRoute } from '@tanstack/react-router'
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as UiSystemRouteImport } from './routes/ui-system'
 import { Route as AuthRouteImport } from './routes/_auth'
-import { Route as IndexRouteRouteImport } from './routes/index.route'
+import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthMyAccountRouteImport } from './routes/_auth.my-account'
 import { Route as AuthDashboardRouteImport } from './routes/_auth.dashboard'
 import { Route as AuthTournamentsTournamentIdLayoutRouteImport } from './routes/_auth.tournaments/$tournamentId/_layout'
@@ -74,9 +74,9 @@ const AuthRoute = AuthRouteImport.update({
   id: '/_auth',
   getParentRoute: () => rootRouteImport,
 } as any)
-const IndexRouteRoute = IndexRouteRouteImport.update({
+const IndexRoute = IndexRouteImport.update({
   id: '/',
-  path: '',
+  path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthMyAccountRoute = AuthMyAccountRouteImport.update({
@@ -213,6 +213,7 @@ const AuthAdminTournamentTournamentIdLayoutExecutionJobsLazyRoute =
   )
 
 export interface FileRoutesByFullPath {
+  '/': typeof IndexRoute
   '/ui-system': typeof UiSystemRoute
   '/login': typeof LoginLazyRoute
   '/signup': typeof SignupLazyRoute
@@ -233,6 +234,7 @@ export interface FileRoutesByFullPath {
   '/admin/tournament/$tournamentId/': typeof AuthAdminTournamentTournamentIdLayoutIndexLazyRoute
 }
 export interface FileRoutesByTo {
+  '/': typeof IndexRoute
   '/ui-system': typeof UiSystemRoute
   '/login': typeof LoginLazyRoute
   '/signup': typeof SignupLazyRoute
@@ -253,7 +255,7 @@ export interface FileRoutesByTo {
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/': typeof IndexRouteRoute
+  '/': typeof IndexRoute
   '/_auth': typeof AuthRouteWithChildren
   '/ui-system': typeof UiSystemRoute
   '/login': typeof LoginLazyRoute
@@ -279,6 +281,7 @@ export interface FileRoutesById {
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
+    | '/'
     | '/ui-system'
     | '/login'
     | '/signup'
@@ -299,6 +302,7 @@ export interface FileRouteTypes {
     | '/admin/tournament/$tournamentId/'
   fileRoutesByTo: FileRoutesByTo
   to:
+    | '/'
     | '/ui-system'
     | '/login'
     | '/signup'
@@ -343,7 +347,7 @@ export interface FileRouteTypes {
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  IndexRouteRoute: typeof IndexRouteRoute
+  IndexRoute: typeof IndexRoute
   AuthRoute: typeof AuthRouteWithChildren
   UiSystemRoute: typeof UiSystemRoute
   LoginLazyRoute: typeof LoginLazyRoute
@@ -382,9 +386,9 @@ declare module '@tanstack/react-router' {
     }
     '/': {
       id: '/'
-      path: ''
-      fullPath: ''
-      preLoaderRoute: typeof IndexRouteRouteImport
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_auth/my-account': {
@@ -611,7 +615,7 @@ const AuthRouteChildren: AuthRouteChildren = {
 const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
-  IndexRouteRoute: IndexRouteRoute,
+  IndexRoute: IndexRoute,
   AuthRoute: AuthRouteWithChildren,
   UiSystemRoute: UiSystemRoute,
   LoginLazyRoute: LoginLazyRoute,

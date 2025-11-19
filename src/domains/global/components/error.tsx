@@ -5,8 +5,31 @@ import { theme, UIHelper } from "@/theming/theme";
 
 const DEFAULT_ERROR_MESSAGE = "Something unexpected has happened.";
 
-const AppError = ({ error }: { error: Error }) => {
+/**
+ * AppError component that works with both TanStack Router and Sentry ErrorBoundary
+ *
+ * TanStack Router passes: { error: Error, info?: { componentStack }, reset: () => void }
+ * Sentry ErrorBoundary passes: { error: unknown, componentStack: string, eventId: string, resetError: () => void }
+ */
+interface AppErrorProps {
+	// Common props
+	error: unknown;
+
+	// TanStack Router props
+	info?: { componentStack: string };
+	reset?: () => void;
+
+	// Sentry ErrorBoundary props
+	componentStack?: string;
+	eventId?: string;
+	resetError?: () => void;
+}
+
+const AppError = ({ error }: AppErrorProps) => {
+	const errorMessage = error instanceof Error ? error.message : DEFAULT_ERROR_MESSAGE;
+
 	console.error("[BEST SHOT] - App General Error", error);
+
 	return (
 		<Wrapper data-iu="general-error-page">
 			<BestShotIcon fill={theme.palette.neutral[100]} />
@@ -16,7 +39,7 @@ const AppError = ({ error }: { error: Error }) => {
 					Ops!
 				</Typography>
 				<Typography variant="paragraph" color={theme.palette.teal[500]}>
-					{error.message || DEFAULT_ERROR_MESSAGE}
+					{errorMessage || DEFAULT_ERROR_MESSAGE}
 				</Typography>
 			</Stack>
 		</Wrapper>

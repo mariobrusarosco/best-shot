@@ -23,7 +23,7 @@ const DisclaimerContainer = styled(Box)(({ theme }) => ({
 export const BetaDisclaimer = () => {
 	return (
 		<DisclaimerContainer>
-			<Typography variant="paragraph" fontWeight={500}>
+			<Typography variant="label" fontWeight={500}>
 				This project is in Beta. Designs are not final
 			</Typography>
 		</DisclaimerContainer>

@@ -1,6 +1,9 @@
 import * as Sentry from "@sentry/react";
 import type { ErrorEvent, EventHint } from "@sentry/react";
-import { SENTRY_ENABLED_ENVIRONMENTS } from "./constants";
+import { SENTRY_ENABLED_ENVIRONMENTS, type SentryEnvironment } from "./constants";
+
+// biome-ignore lint/suspicious/noExplicitAny: Sentry types require explicit any for some fields
+type SentryAny = any;
 
 /**
  * Sensitive field patterns to scrub from error reports
@@ -28,7 +31,7 @@ const SENSITIVE_FIELD_PATTERNS = [
 /**
  * Recursively sanitize an object by removing sensitive fields
  */
-function sanitizeObject(obj: any, depth = 0): any {
+function sanitizeObject(obj: unknown, depth = 0): unknown {
 	// Prevent infinite recursion
 	if (depth > 10) return "[Max Depth Reached]";
 	if (obj === null || obj === undefined) return obj;
@@ -40,10 +43,12 @@ function sanitizeObject(obj: any, depth = 0): any {
 	}
 
 	// Handle objects
-	const sanitized: any = {};
-	for (const [key, value] of Object.entries(obj)) {
+	const sanitized: Record<string, unknown> = {};
+	for (const [key, value] of Object.entries(obj as Record<string, unknown>)) {
 		// Check if key matches sensitive pattern
-		const isSensitive = SENSITIVE_FIELD_PATTERNS.some((pattern) => pattern.test(key));
+		const isSensitive = SENSITIVE_FIELD_PATTERNS.some((pattern) =>
+			pattern.test(key),
+		);
 
 		if (isSensitive) {
 			sanitized[key] = "[Filtered]";
@@ -60,12 +65,15 @@ function sanitizeObject(obj: any, depth = 0): any {
 /**
  * beforeSend hook to sanitize sensitive data before sending to Sentry
  */
-function beforeSend(event: ErrorEvent, hint: EventHint): ErrorEvent | null {
+// TODO [ANALYTICS]: Verify the efficency of this sanitization
+function beforeSend(event: ErrorEvent, _hint: EventHint): ErrorEvent | null {
 	// Sanitize request data
 	if (event.request) {
 		// Sanitize query parameters
 		if (event.request.query_string) {
-			event.request.query_string = sanitizeObject(event.request.query_string);
+			event.request.query_string = sanitizeObject(
+				event.request.query_string,
+			) as Record<string, SentryAny>;
 		}
 
 		// Sanitize POST data
@@ -75,12 +83,18 @@ function beforeSend(event: ErrorEvent, hint: EventHint): ErrorEvent | null {
 
 		// Sanitize cookies
 		if (event.request.cookies) {
-			event.request.cookies = sanitizeObject(event.request.cookies);
+			event.request.cookies = sanitizeObject(event.request.cookies) as Record<
+				string,
+				string
+			>;
 		}
 
 		// Sanitize headers
 		if (event.request.headers) {
-			event.request.headers = sanitizeObject(event.request.headers);
+			event.request.headers = sanitizeObject(event.request.headers) as Record<
+				string,
+				string
+			>;
 		}
 	}
 
@@ -88,18 +102,23 @@ function beforeSend(event: ErrorEvent, hint: EventHint): ErrorEvent | null {
 	if (event.breadcrumbs) {
 		event.breadcrumbs = event.breadcrumbs.map((breadcrumb) => ({
 			...breadcrumb,
-			data: breadcrumb.data ? sanitizeObject(breadcrumb.data) : breadcrumb.data,
+			data: breadcrumb.data
+				? (sanitizeObject(breadcrumb.data) as Record<string, SentryAny>)
+				: breadcrumb.data,
 		}));
 	}
 
 	// Sanitize extra context
 	if (event.extra) {
-		event.extra = sanitizeObject(event.extra);
+		event.extra = sanitizeObject(event.extra) as Record<string, unknown>;
 	}
 
 	// Sanitize contexts
 	if (event.contexts) {
-		event.contexts = sanitizeObject(event.contexts);
+		event.contexts = sanitizeObject(event.contexts) as Record<
+			string,
+			Record<string, unknown>
+		>;
 	}
 
 	return event;
@@ -149,6 +168,56 @@ const getEnvironmentConfig = (environment: string) => {
 	}
 };
 
+/**
+ * Extract logic for determining trace propagation targets
+ * Connects frontend errors to backend traces
+ */
+function getTracePropagationTargets(): (string | RegExp)[] {
+	// Configure which URLs should have distributed tracing enabled
+	// This connects frontend errors to backend traces in Sentry
+	// TODO [ANALYTICS]: Improve learning about: Connection Front End to Back End with tracePropagationTargets
+	const apiBaseUrl = import.meta.env.VITE_BEST_SHOT_API || "";
+	const apiV2BaseUrl = import.meta.env.VITE_BEST_SHOT_API_V2 || "";
+
+	// Extract hostnames for trace propagation
+	const targets: (string | RegExp)[] = [
+		"localhost", // Local development
+		/^\//, // Same-origin requests (relative URLs)
+	];
+
+	// Add production API domains if configured
+	if (apiBaseUrl) {
+		try {
+			const url = new URL(apiBaseUrl);
+			if (!url.hostname.includes("localhost")) {
+				targets.push(url.hostname);
+			}
+		} catch {
+			// Invalid URL, skip
+		}
+	}
+
+	if (apiV2BaseUrl && apiV2BaseUrl !== apiBaseUrl) {
+		try {
+			const url = new URL(apiV2BaseUrl);
+			if (!url.hostname.includes("localhost")) {
+				targets.push(url.hostname);
+			}
+		} catch {
+			// Invalid URL, skip
+		}
+	}
+
+	return targets;
+}
+
+/**
+ * Check if monitoring should be enabled for the current environment
+ */
+function isMonitoringEnabled(env: string): boolean {
+	return SENTRY_ENABLED_ENVIRONMENTS.includes(env as SentryEnvironment);
+}
+
 interface UserIdentity {
 	id: string;
 	email?: string;
@@ -161,7 +230,7 @@ export const Monitoring = {
 		const currentEnv = import.meta.env.MODE;
 
 		// Only enable Sentry in non-local environments
-		if (!SENTRY_ENABLED_ENVIRONMENTS.includes(currentEnv as any)) {
+		if (!isMonitoringEnabled(currentEnv)) {
 			console.log(`[Sentry] Disabled in ${currentEnv} mode`);
 			return;
 		}
@@ -170,41 +239,10 @@ export const Monitoring = {
 
 		// Get release information from environment variables or build process
 		// The Sentry Vite plugin automatically injects SENTRY_RELEASE during build
-		const release = import.meta.env.VITE_SENTRY_RELEASE || import.meta.env.SENTRY_RELEASE;
+		const release =
+			import.meta.env.VITE_SENTRY_RELEASE || import.meta.env.SENTRY_RELEASE;
 
-		// Configure which URLs should have distributed tracing enabled
-		// This connects frontend errors to backend traces in Sentry
-		const apiBaseUrl = import.meta.env.VITE_BEST_SHOT_API || "";
-		const apiV2BaseUrl = import.meta.env.VITE_BEST_SHOT_API_V2 || "";
-
-		// Extract hostnames for trace propagation
-		const tracePropagationTargets = [
-			"localhost", // Local development
-			/^\//,      // Same-origin requests (relative URLs)
-		];
-
-		// Add production API domains if configured
-		if (apiBaseUrl) {
-			try {
-				const url = new URL(apiBaseUrl);
-				if (!url.hostname.includes("localhost")) {
-					tracePropagationTargets.push(url.hostname);
-				}
-			} catch {
-				// Invalid URL, skip
-			}
-		}
-
-		if (apiV2BaseUrl && apiV2BaseUrl !== apiBaseUrl) {
-			try {
-				const url = new URL(apiV2BaseUrl);
-				if (!url.hostname.includes("localhost")) {
-					tracePropagationTargets.push(url.hostname);
-				}
-			} catch {
-				// Invalid URL, skip
-			}
-		}
+		const tracePropagationTargets = getTracePropagationTargets();
 
 		Sentry.init({
 			dsn: import.meta.env.VITE_SENTRY_DSN,
@@ -219,14 +257,11 @@ export const Monitoring = {
 
 			// Performance Monitoring (environment-specific)
 			tracesSampleRate: config.tracesSampleRate,
-
 			// Distributed Tracing - connects frontend and backend traces
 			tracePropagationTargets,
-
 			// Session Replay (environment-specific)
 			replaysSessionSampleRate: config.replaysSessionSampleRate,
 			replaysOnErrorSampleRate: config.replaysOnErrorSampleRate,
-
 			// Data Sanitization - strip sensitive data before sending to Sentry
 			beforeSend,
 		});
@@ -237,7 +272,9 @@ export const Monitoring = {
 			`\n  - Traces: ${config.tracesSampleRate * 100}%`,
 			`\n  - Replays: ${config.replaysSessionSampleRate * 100}%`,
 			`\n  - Error Replays: ${config.replaysOnErrorSampleRate * 100}%`,
-			`\n  - API Tracing: ${tracePropagationTargets.map(t => t.toString()).join(", ")}`,
+			`\n  - API Tracing: ${tracePropagationTargets
+				.map((t) => t.toString())
+				.join(", ")}`,
 		);
 	},
 
@@ -249,7 +286,7 @@ export const Monitoring = {
 		const currentEnv = import.meta.env.MODE;
 
 		// Only set user in enabled environments
-		if (!SENTRY_ENABLED_ENVIRONMENTS.includes(currentEnv as any)) {
+		if (!isMonitoringEnabled(currentEnv)) {
 			return;
 		}
 
@@ -260,7 +297,9 @@ export const Monitoring = {
 				username: user.username,
 				role: user.role,
 			});
-			console.log(`[Sentry] User identified: ${user.username || user.email || user.id}`);
+			console.log(
+				`[Sentry] User identified: ${user.username || user.email || user.id}`,
+			);
 		} else {
 			Sentry.setUser(null);
 			console.log("[Sentry] User cleared (logged out)");
@@ -281,7 +320,7 @@ export const Monitoring = {
 	setTag: (key: string, value: string) => {
 		const currentEnv = import.meta.env.MODE;
 
-		if (!SENTRY_ENABLED_ENVIRONMENTS.includes(currentEnv as any)) {
+		if (!isMonitoringEnabled(currentEnv)) {
 			return;
 		}
 
@@ -303,7 +342,7 @@ export const Monitoring = {
 	setTags: (tags: Record<string, string>) => {
 		const currentEnv = import.meta.env.MODE;
 
-		if (!SENTRY_ENABLED_ENVIRONMENTS.includes(currentEnv as any)) {
+		if (!isMonitoringEnabled(currentEnv)) {
 			return;
 		}
 
@@ -327,7 +366,7 @@ export const Monitoring = {
 	setContext: (name: string, context: Record<string, unknown> | null) => {
 		const currentEnv = import.meta.env.MODE;
 
-		if (!SENTRY_ENABLED_ENVIRONMENTS.includes(currentEnv as any)) {
+		if (!isMonitoringEnabled(currentEnv)) {
 			return;
 		}
 
@@ -354,7 +393,7 @@ export const Monitoring = {
 	) => {
 		const currentEnv = import.meta.env.MODE;
 
-		if (!SENTRY_ENABLED_ENVIRONMENTS.includes(currentEnv as any)) {
+		if (!isMonitoringEnabled(currentEnv)) {
 			return;
 		}
 
@@ -378,7 +417,7 @@ export const Monitoring = {
 	clearSentryContext: (featureName: string) => {
 		const currentEnv = import.meta.env.MODE;
 
-		if (!SENTRY_ENABLED_ENVIRONMENTS.includes(currentEnv as any)) {
+		if (!isMonitoringEnabled(currentEnv)) {
 			return;
 		}
 

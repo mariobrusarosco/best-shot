@@ -2,6 +2,7 @@ import { Box, styled } from "@mui/material";
 import { useState } from "react";
 import { CreateTournamentModal } from "@/domains/admin/components/tournaments/create-tournament-modal/create-tournament-modal";
 import TournamentsTable from "@/domains/admin/components/tournaments/tournaments-table/tournaments-table";
+import { ResetUserActivityButton } from "@/domains/admin/components/reset-user-activity/reset-user-activity";
 import { ScreenHeading, ScreenHeadingSkeleton } from "@/domains/global/components/screen-heading";
 import { AppTypography } from "@/domains/ui-system/components";
 import { AppButton } from "@/domains/ui-system/components/app-button/app-button";
@@ -41,17 +42,20 @@ const MainAdminPage = () => {
 	return (
 		<AuthenticatedScreenLayout data-ui="admin-page" overflow="hidden">
 			<ScreenHeading title="admin">
-				<AppButton
-					variant="contained"
-					startIcon={<AppIcon name="Plus" size="small" />}
-					onClick={() => setIsCreateModalOpen(true)}
-					sx={{
-						backgroundColor: "teal.500",
-						"&:hover": { backgroundColor: "teal.600" },
-					}}
-				>
-					Create Tournament
-				</AppButton>
+				<Box sx={{ display: "flex", gap: 2 }}>
+					<ResetUserActivityButton />
+					<AppButton
+						variant="contained"
+						startIcon={<AppIcon name="Plus" size="small" />}
+						onClick={() => setIsCreateModalOpen(true)}
+						sx={{
+							backgroundColor: "teal.500",
+							"&:hover": { backgroundColor: "teal.600" },
+						}}
+					>
+						Create Tournament
+					</AppButton>
+				</Box>
 			</ScreenHeading>
 
 			<TournamentsTable tournaments={tournaments || []} isLoading={isLoading} />

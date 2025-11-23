@@ -83,3 +83,18 @@ export const createAdminTournament = async (
 	});
 	return response.data as ITournament;
 };
+
+// Reset user activity
+export const resetUserActivity = async (): Promise<{
+	success: boolean;
+	message: string;
+}> => {
+	const response = await api.post(
+		"/admin/reset-user-activity",
+		{},
+		{
+			baseURL: import.meta.env.VITE_BEST_SHOT_API_V2,
+		}
+	);
+	return response.data;
+};

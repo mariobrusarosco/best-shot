@@ -45,3 +45,4 @@ coverage
 /playwright/.cache/
 .aider*
 .env
+.playwright-mcp

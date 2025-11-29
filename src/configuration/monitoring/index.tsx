@@ -1,127 +1,115 @@
 import * as Sentry from "@sentry/react";
-import type { ErrorEvent, EventHint } from "@sentry/react";
-import { SENTRY_ENABLED_ENVIRONMENTS, type SentryEnvironment } from "./constants";
-
-// biome-ignore lint/suspicious/noExplicitAny: Sentry types require explicit any for some fields
-type SentryAny = any;
+import {
+  SENTRY_ENABLED_ENVIRONMENTS,
+  type SentryEnvironment,
+} from "./constants";
+import type { ErrorEvent } from "@sentry/react";
 
 /**
  * Sensitive field patterns to scrub from error reports
  * Prevents accidentally sending passwords, tokens, credit cards, etc. to Sentry
  */
 const SENSITIVE_FIELD_PATTERNS = [
-	/password/i,
-	/passwd/i,
-	/pwd/i,
-	/secret/i,
-	/token/i,
-	/api[-_]?key/i,
-	/auth/i,
-	/credit[-_]?card/i,
-	/card[-_]?number/i,
-	/cvv/i,
-	/ssn/i,
-	/social[-_]?security/i,
-	/private[-_]?key/i,
-	/access[-_]?token/i,
-	/refresh[-_]?token/i,
-	/bearer/i,
+  /password/i,
+  /passwd/i,
+  /pwd/i,
+  /secret/i,
+  /token/i,
+  /api[-_]?key/i,
+  /auth/i,
+  /credit[-_]?card/i,
+  /card[-_]?number/i,
+  /cvv/i,
+  /ssn/i,
+  /social[-_]?security/i,
+  /private[-_]?key/i,
+  /access[-_]?token/i,
+  /refresh[-_]?token/i,
+  /bearer/i,
 ];
 
 /**
  * Recursively sanitize an object by removing sensitive fields
  */
-function sanitizeObject(obj: unknown, depth = 0): unknown {
-	// Prevent infinite recursion
-	if (depth > 10) return "[Max Depth Reached]";
-	if (obj === null || obj === undefined) return obj;
-	if (typeof obj !== "object") return obj;
+// biome-ignore lint/suspicious/noExplicitAny: Sentry types require any for flexible data structures
+function sanitizeObject(obj: any, depth = 0): any {
+  // Prevent infinite recursion
+  if (depth > 10) return "[Max Depth Reached]";
+  if (obj === null || obj === undefined) return obj;
+  if (typeof obj !== "object") return obj;
 
-	// Handle arrays
-	if (Array.isArray(obj)) {
-		return obj.map((item) => sanitizeObject(item, depth + 1));
-	}
+  // Handle arrays
+  if (Array.isArray(obj)) {
+    return obj.map((item) => sanitizeObject(item, depth + 1));
+  }
 
-	// Handle objects
-	const sanitized: Record<string, unknown> = {};
-	for (const [key, value] of Object.entries(obj as Record<string, unknown>)) {
-		// Check if key matches sensitive pattern
-		const isSensitive = SENSITIVE_FIELD_PATTERNS.some((pattern) =>
-			pattern.test(key),
-		);
+  // Handle objects
+  // biome-ignore lint/suspicious/noExplicitAny: Sentry types require any for flexible data structures
+  const sanitized: Record<string, any> = {};
+  for (const [key, value] of Object.entries(obj)) {
+    // Check if key matches sensitive pattern
+    const isSensitive = SENSITIVE_FIELD_PATTERNS.some((pattern) =>
+      pattern.test(key)
+    );
 
-		if (isSensitive) {
-			sanitized[key] = "[Filtered]";
-		} else if (typeof value === "object" && value !== null) {
-			sanitized[key] = sanitizeObject(value, depth + 1);
-		} else {
-			sanitized[key] = value;
-		}
-	}
+    if (isSensitive) {
+      sanitized[key] = "[Filtered]";
+    } else if (typeof value === "object" && value !== null) {
+      sanitized[key] = sanitizeObject(value, depth + 1);
+    } else {
+      sanitized[key] = value;
+    }
+  }
 
-	return sanitized;
+  return sanitized;
 }
 
 /**
  * beforeSend hook to sanitize sensitive data before sending to Sentry
  */
-// TODO [ANALYTICS]: Verify the efficency of this sanitization
-function beforeSend(event: ErrorEvent, _hint: EventHint): ErrorEvent | null {
-	// Sanitize request data
-	if (event.request) {
-		// Sanitize query parameters
-		if (event.request.query_string) {
-			event.request.query_string = sanitizeObject(
-				event.request.query_string,
-			) as Record<string, SentryAny>;
-		}
+function beforeSend(event: ErrorEvent): ErrorEvent | null {
+  // Sanitize request data
+  if (event.request) {
+    // Sanitize query parameters
+    if (event.request.query_string) {
+      event.request.query_string = sanitizeObject(event.request.query_string);
+    }
 
-		// Sanitize POST data
-		if (event.request.data) {
-			event.request.data = sanitizeObject(event.request.data);
-		}
+    // Sanitize POST data
+    if (event.request.data) {
+      event.request.data = sanitizeObject(event.request.data);
+    }
 
-		// Sanitize cookies
-		if (event.request.cookies) {
-			event.request.cookies = sanitizeObject(event.request.cookies) as Record<
-				string,
-				string
-			>;
-		}
+    // Sanitize cookies
+    if (event.request.cookies) {
+      event.request.cookies = sanitizeObject(event.request.cookies);
+    }
 
-		// Sanitize headers
-		if (event.request.headers) {
-			event.request.headers = sanitizeObject(event.request.headers) as Record<
-				string,
-				string
-			>;
-		}
-	}
+    // Sanitize headers
+    if (event.request.headers) {
+      event.request.headers = sanitizeObject(event.request.headers);
+    }
+  }
 
-	// Sanitize breadcrumbs (user actions, console logs, etc.)
-	if (event.breadcrumbs) {
-		event.breadcrumbs = event.breadcrumbs.map((breadcrumb) => ({
-			...breadcrumb,
-			data: breadcrumb.data
-				? (sanitizeObject(breadcrumb.data) as Record<string, SentryAny>)
-				: breadcrumb.data,
-		}));
-	}
+  // Sanitize breadcrumbs (user actions, console logs, etc.)
+  if (event.breadcrumbs) {
+    event.breadcrumbs = event.breadcrumbs.map((breadcrumb) => ({
+      ...breadcrumb,
+      data: breadcrumb.data ? sanitizeObject(breadcrumb.data) : breadcrumb.data,
+    }));
+  }
 
-	// Sanitize extra context
-	if (event.extra) {
-		event.extra = sanitizeObject(event.extra) as Record<string, unknown>;
-	}
+  // Sanitize extra context
+  if (event.extra) {
+    event.extra = sanitizeObject(event.extra);
+  }
 
-	// Sanitize contexts
-	if (event.contexts) {
-		event.contexts = sanitizeObject(event.contexts) as Record<
-			string,
-			Record<string, unknown>
-		>;
-	}
+  // Sanitize contexts
+  if (event.contexts) {
+    event.contexts = sanitizeObject(event.contexts);
+  }
 
-	return event;
+  return event;
 }
 
 /**
@@ -129,298 +117,319 @@ function beforeSend(event: ErrorEvent, _hint: EventHint): ErrorEvent | null {
  * Optimizes sample rates and features based on environment
  */
 const getEnvironmentConfig = (environment: string) => {
-	switch (environment) {
-		case "production":
-			return {
-				// Production: Lower sample rates to reduce costs
-				tracesSampleRate: 0.1, // 10% of transactions
-				replaysSessionSampleRate: 0.05, // 5% of sessions
-				replaysOnErrorSampleRate: 1.0, // 100% of error sessions
-				environment: "production",
-			};
+  switch (environment) {
+    case "production":
+      return {
+        // Production: Lower sample rates to reduce costs
+        tracesSampleRate: 0.1, // 10% of transactions
+        replaysSessionSampleRate: 0.05, // 5% of sessions
+        replaysOnErrorSampleRate: 1.0, // 100% of error sessions
+        environment: "production",
+      };
 
-		case "staging":
-			return {
-				// Staging: Higher sample rates for thorough testing
-				tracesSampleRate: 0.5, // 50% of transactions
-				replaysSessionSampleRate: 0.2, // 20% of sessions
-				replaysOnErrorSampleRate: 1.0, // 100% of error sessions
-				environment: "staging",
-			};
+    case "staging":
+      return {
+        // Staging: Higher sample rates for thorough testing
+        tracesSampleRate: 0.5, // 50% of transactions
+        replaysSessionSampleRate: 0.2, // 20% of sessions
+        replaysOnErrorSampleRate: 1.0, // 100% of error sessions
+        environment: "staging",
+      };
 
-		case "demo":
-			return {
-				// Demo: Moderate sample rates
-				tracesSampleRate: 0.3, // 30% of transactions
-				replaysSessionSampleRate: 0.1, // 10% of sessions
-				replaysOnErrorSampleRate: 1.0, // 100% of error sessions
-				environment: "demo",
-			};
+    case "demo":
+      return {
+        // Demo: Moderate sample rates
+        tracesSampleRate: 0.3, // 30% of transactions
+        replaysSessionSampleRate: 0.1, // 10% of sessions
+        replaysOnErrorSampleRate: 1.0, // 100% of error sessions
+        environment: "demo",
+      };
 
-		default:
-			return {
-				// Default fallback
-				tracesSampleRate: 0.1,
-				replaysSessionSampleRate: 0.05,
-				replaysOnErrorSampleRate: 1.0,
-				environment: "unknown",
-			};
-	}
+    default:
+      return {
+        // Default fallback
+        tracesSampleRate: 0.1,
+        replaysSessionSampleRate: 0.05,
+        replaysOnErrorSampleRate: 1.0,
+        environment: "unknown",
+      };
+  }
 };
 
 /**
- * Extract logic for determining trace propagation targets
- * Connects frontend errors to backend traces
+ * Build trace propagation targets from API URLs
+ * Extracts hostnames for distributed tracing
  */
-function getTracePropagationTargets(): (string | RegExp)[] {
-	// Configure which URLs should have distributed tracing enabled
-	// This connects frontend errors to backend traces in Sentry
-	// TODO [ANALYTICS]: Improve learning about: Connection Front End to Back End with tracePropagationTargets
-	const apiBaseUrl = import.meta.env.VITE_BEST_SHOT_API || "";
-	const apiV2BaseUrl = import.meta.env.VITE_BEST_SHOT_API_V2 || "";
+function buildTracePropagationTargets(): (string | RegExp)[] {
+  const apiBaseUrl = import.meta.env.VITE_BEST_SHOT_API || "";
+  const apiV2BaseUrl = import.meta.env.VITE_BEST_SHOT_API_V2 || "";
 
-	// Extract hostnames for trace propagation
-	const targets: (string | RegExp)[] = [
-		"localhost", // Local development
-		/^\//, // Same-origin requests (relative URLs)
-	];
+  const targets: (string | RegExp)[] = [
+    "localhost", // Local development
+    /^\//, // Same-origin requests (relative URLs)
+  ];
 
-	// Add production API domains if configured
-	if (apiBaseUrl) {
-		try {
-			const url = new URL(apiBaseUrl);
-			if (!url.hostname.includes("localhost")) {
-				targets.push(url.hostname);
-			}
-		} catch {
-			// Invalid URL, skip
-		}
-	}
+  // Add production API domains if configured
+  if (apiBaseUrl) {
+    try {
+      const url = new URL(apiBaseUrl);
+      if (!url.hostname.includes("localhost")) {
+        targets.push(url.hostname);
+      }
+    } catch {
+      // Invalid URL, skip
+    }
+  }
 
-	if (apiV2BaseUrl && apiV2BaseUrl !== apiBaseUrl) {
-		try {
-			const url = new URL(apiV2BaseUrl);
-			if (!url.hostname.includes("localhost")) {
-				targets.push(url.hostname);
-			}
-		} catch {
-			// Invalid URL, skip
-		}
-	}
+  if (apiV2BaseUrl && apiV2BaseUrl !== apiBaseUrl) {
+    try {
+      const url = new URL(apiV2BaseUrl);
+      if (!url.hostname.includes("localhost")) {
+        targets.push(url.hostname);
+      }
+    } catch {
+      // Invalid URL, skip
+    }
+  }
 
-	return targets;
+  return targets;
 }
 
 /**
- * Check if monitoring should be enabled for the current environment
+ * Check if current environment has Sentry enabled
  */
-function isMonitoringEnabled(env: string): boolean {
-	return SENTRY_ENABLED_ENVIRONMENTS.includes(env as SentryEnvironment);
+function isSentryEnabled(env: string): env is SentryEnvironment {
+  return SENTRY_ENABLED_ENVIRONMENTS.includes(env as SentryEnvironment);
 }
 
 interface UserIdentity {
-	id: string;
-	email?: string;
-	username?: string;
-	role?: string;
+  id: string;
+  email?: string;
+  username?: string;
+  role?: string;
 }
 
 export const Monitoring = {
-	init: () => {
-		const currentEnv = import.meta.env.MODE;
+  init: () => {
+    const currentEnv = import.meta.env.MODE;
 
-		// Only enable Sentry in non-local environments
-		if (!isMonitoringEnabled(currentEnv)) {
-			console.log(`[Sentry] Disabled in ${currentEnv} mode`);
-			return;
-		}
+    // Only enable Sentry in non-local environments
+    if (!isSentryEnabled(currentEnv)) {
+      console.log(`[Sentry] Disabled in ${currentEnv} mode`);
+      return;
+    }
 
-		const config = getEnvironmentConfig(currentEnv);
+    const config = getEnvironmentConfig(currentEnv);
+    const release =
+      import.meta.env.VITE_SENTRY_RELEASE || import.meta.env.SENTRY_RELEASE;
+    const tracePropagationTargets = buildTracePropagationTargets();
 
-		// Get release information from environment variables or build process
-		// The Sentry Vite plugin automatically injects SENTRY_RELEASE during build
-		const release =
-			import.meta.env.VITE_SENTRY_RELEASE || import.meta.env.SENTRY_RELEASE;
+    Sentry.init({
+      dsn: import.meta.env.VITE_SENTRY_DSN,
+      environment: config.environment,
+      release, // Links errors to specific deployments/commits
 
-		const tracePropagationTargets = getTracePropagationTargets();
+      // Core integrations
+      integrations: [
+        Sentry.browserTracingIntegration(),
+        Sentry.replayIntegration(),
+      ],
 
-		Sentry.init({
-			dsn: import.meta.env.VITE_SENTRY_DSN,
-			environment: config.environment,
-			release, // Links errors to specific deployments/commits
+      // Performance Monitoring (environment-specific)
+      tracesSampleRate: config.tracesSampleRate,
 
-			// Core integrations
-			integrations: [
-				Sentry.browserTracingIntegration(),
-				Sentry.replayIntegration(),
-			],
+      // Distributed Tracing - connects frontend and backend traces
+      tracePropagationTargets,
 
-			// Performance Monitoring (environment-specific)
-			tracesSampleRate: config.tracesSampleRate,
-			// Distributed Tracing - connects frontend and backend traces
-			tracePropagationTargets,
-			// Session Replay (environment-specific)
-			replaysSessionSampleRate: config.replaysSessionSampleRate,
-			replaysOnErrorSampleRate: config.replaysOnErrorSampleRate,
-			// Data Sanitization - strip sensitive data before sending to Sentry
-			beforeSend,
-		});
+      // Session Replay (environment-specific)
+      replaysSessionSampleRate: config.replaysSessionSampleRate,
+      replaysOnErrorSampleRate: config.replaysOnErrorSampleRate,
 
-		console.log(
-			`[Sentry] Initialized for ${config.environment} environment`,
-			`\n  - Release: ${release || "not set"}`,
-			`\n  - Traces: ${config.tracesSampleRate * 100}%`,
-			`\n  - Replays: ${config.replaysSessionSampleRate * 100}%`,
-			`\n  - Error Replays: ${config.replaysOnErrorSampleRate * 100}%`,
-			`\n  - API Tracing: ${tracePropagationTargets
-				.map((t) => t.toString())
-				.join(", ")}`,
-		);
-	},
+      // Data Sanitization - strip sensitive data before sending to Sentry
+      beforeSend,
+    });
 
-	/**
-	 * Identify the current user in Sentry
-	 * This links all errors and sessions to the specific user
-	 */
-	setUser: (user: UserIdentity | null) => {
-		const currentEnv = import.meta.env.MODE;
+    console.log(
+      `[Sentry] Initialized for ${config.environment} environment`,
+      `\n  - Release: ${release || "not set"}`,
+      `\n  - Traces: ${config.tracesSampleRate * 100}%`,
+      `\n  - Replays: ${config.replaysSessionSampleRate * 100}%`,
+      `\n  - Error Replays: ${config.replaysOnErrorSampleRate * 100}%`,
+      `\n  - API Tracing: ${tracePropagationTargets.map((t) => t.toString()).join(", ")}`
+    );
+  },
 
-		// Only set user in enabled environments
-		if (!isMonitoringEnabled(currentEnv)) {
-			return;
-		}
+  /**
+   * Identify the current user in Sentry
+   * This links all errors and sessions to the specific user
+   */
+  setUser: (user: UserIdentity | null) => {
+    const currentEnv = import.meta.env.MODE;
 
-		if (user) {
-			Sentry.setUser({
-				id: user.id,
-				email: user.email,
-				username: user.username,
-				role: user.role,
-			});
-			console.log(
-				`[Sentry] User identified: ${user.username || user.email || user.id}`,
-			);
-		} else {
-			Sentry.setUser(null);
-			console.log("[Sentry] User cleared (logged out)");
-		}
-	},
+    // Only set user in enabled environments
+    if (!isSentryEnabled(currentEnv)) {
+      return;
+    }
 
-	/**
-	 * Set a custom tag for filtering and grouping errors
-	 * Tags are key-value pairs that help you organize and search errors in Sentry
-	 *
-	 * @param key - Tag name (e.g., "feature", "user.role")
-	 * @param value - Tag value (e.g., "tournament", "admin")
-	 *
-	 * @example
-	 * Monitoring.setTag("feature", "tournament-creation");
-	 * Monitoring.setTag("user.role", "admin");
-	 */
-	setTag: (key: string, value: string) => {
-		const currentEnv = import.meta.env.MODE;
+    if (user) {
+      Sentry.setUser({
+        id: user.id,
+        email: user.email,
+        username: user.username,
+      });
+    } else {
+      Sentry.setUser(null);
+    }
+  },
+  /**
+   * Set a custom tag for filtering and grouping errors
+   * Tags are key-value pairs that help you organize and search errors in Sentry
+   *
+   * @param key - Tag name (e.g., "feature", "user.role")
+   * @param value - Tag value (e.g., "tournament", "admin")
+   *
+   * @example
+   * Monitoring.setTag("feature", "tournament-creation");
+   * Monitoring.setTag("user.role", "admin");
+   */
+  setTag: (key: string, value: string) => {
+    const currentEnv = import.meta.env.MODE;
+    if (!isSentryEnabled(currentEnv)) {
+      return;
+    }
 
-		if (!isMonitoringEnabled(currentEnv)) {
-			return;
-		}
+    Sentry.setTag(key, value);
+  },
+  /**
+   * Set multiple custom tags at once
+   *
+   * @param tags - Object with key-value pairs for tags
+   *
+   * @example
+   * Monitoring.setTags({
+   *   feature: "match-scoring",
+   *   "user.role": "player",
+   *   "tournament.id": "123"
+   * });
+   */
+  setTags: (tags: Record<string, string>) => {
+    const currentEnv = import.meta.env.MODE;
+    if (!isSentryEnabled(currentEnv)) {
+      return;
+    }
+    Sentry.setTags(tags);
+  },
+  /**
+   * Set additional context for errors
+   * Unlike tags (which are indexed strings), contexts can contain complex objects
+   *
+   * @param name - Context name (e.g., "tournament", "match")
+   * @param context - Object with relevant data
+   *
+   * @example
+   * Monitoring.setContext("tournament", {
+   *   id: "123",
+   *   name: "Summer Championship",
+   *   status: "in-progress"
+   * });
+   */
+  setContext: (name: string, context: Record<string, unknown> | null) => {
+    const currentEnv = import.meta.env.MODE;
 
-		Sentry.setTag(key, value);
-	},
+    if (!isSentryEnabled(currentEnv)) {
+      return;
+    }
 
-	/**
-	 * Set multiple custom tags at once
-	 *
-	 * @param tags - Object with key-value pairs for tags
-	 *
-	 * @example
-	 * Monitoring.setTags({
-	 *   feature: "match-scoring",
-	 *   "user.role": "player",
-	 *   "tournament.id": "123"
-	 * });
-	 */
-	setTags: (tags: Record<string, string>) => {
-		const currentEnv = import.meta.env.MODE;
+    Sentry.setContext(name, context);
+  },
 
-		if (!isMonitoringEnabled(currentEnv)) {
-			return;
-		}
+  /**
+   * Set Sentry feature tag and optional context
+   * Convenience method for setting feature context
+   *
+   * @param featureName - Name of the feature (e.g., "tournament-creation", "match-scoring")
+   * @param context - Optional additional context data
+   *
+   * @example
+   * Monitoring.setSentryContext("tournament-detail", {
+   *   tournamentId: tournament.id,
+   *   tournamentName: tournament.name,
+   *   status: tournament.status
+   * });
+   */
+  setSentryContext: (
+    featureName: string,
+    context?: Record<string, string | number | boolean>
+  ) => {
+    const currentEnv = import.meta.env.MODE;
 
-		Sentry.setTags(tags);
-	},
+    if (!isSentryEnabled(currentEnv)) {
+      return;
+    }
 
-	/**
-	 * Set additional context for errors
-	 * Unlike tags (which are indexed strings), contexts can contain complex objects
-	 *
-	 * @param name - Context name (e.g., "tournament", "match")
-	 * @param context - Object with relevant data
-	 *
-	 * @example
-	 * Monitoring.setContext("tournament", {
-	 *   id: "123",
-	 *   name: "Summer Championship",
-	 *   status: "in-progress"
-	 * });
-	 */
-	setContext: (name: string, context: Record<string, unknown> | null) => {
-		const currentEnv = import.meta.env.MODE;
+    // Set feature tag for filtering errors by feature
+    Sentry.setTag("feature", featureName);
 
-		if (!isMonitoringEnabled(currentEnv)) {
-			return;
-		}
+    // Set detailed context if provided
+    if (context) {
+      Sentry.setContext(featureName, context);
+    }
+  },
 
-		Sentry.setContext(name, context);
-	},
+  /**
+   * Clear feature-specific context
+   *
+   * @param featureName - Name of the feature context to clear
+   *
+   * @example
+   * Monitoring.clearSentryContext("tournament-detail");
+   */
+  clearSentryContext: (featureName: string) => {
+    const currentEnv = import.meta.env.MODE;
 
-	/**
-	 * Set Sentry feature tag and optional context
-	 * Convenience method for setting feature context
-	 *
-	 * @param featureName - Name of the feature (e.g., "tournament-creation", "match-scoring")
-	 * @param context - Optional additional context data
-	 *
-	 * @example
-	 * Monitoring.setSentryContext("tournament-detail", {
-	 *   tournamentId: tournament.id,
-	 *   tournamentName: tournament.name,
-	 *   status: tournament.status
-	 * });
-	 */
-	setSentryContext: (
-		featureName: string,
-		context?: Record<string, string | number | boolean>,
-	) => {
-		const currentEnv = import.meta.env.MODE;
+    if (!isSentryEnabled(currentEnv)) {
+      return;
+    }
 
-		if (!isMonitoringEnabled(currentEnv)) {
-			return;
-		}
+    Sentry.setContext(featureName, null);
+  },
 
-		// Set feature tag for filtering errors by feature
-		Sentry.setTag("feature", featureName);
+  /**
+   * Manually capture an exception with optional context
+   * Use this when you want to report an error without throwing it
+   *
+   * @param error - Error to capture
+   * @param context - Optional additional context
+   *
+   * @example
+   * try {
+   *   await riskyOperation();
+   * } catch (error) {
+   *   Monitoring.captureException(error, {
+   *     extra: { tournamentId: "123", operation: "delete" },
+   *     tags: { "operation.critical": "true" }
+   *   });
+   *   // Handle error gracefully without crashing
+   * }
+   */
+  captureException: (
+    error: Error,
+    context?: {
+      tags?: Record<string, string>;
+      extra?: Record<string, unknown>;
+      level?: "fatal" | "error" | "warning" | "log" | "info" | "debug";
+    }
+  ) => {
+    const currentEnv = import.meta.env.MODE;
 
-		// Set detailed context if provided
-		if (context) {
-			Sentry.setContext(featureName, context);
-		}
-	},
+    if (!isSentryEnabled(currentEnv)) {
+      return;
+    }
 
-	/**
-	 * Clear feature-specific context
-	 *
-	 * @param featureName - Name of the feature context to clear
-	 *
-	 * @example
-	 * Monitoring.clearSentryContext("tournament-detail");
-	 */
-	clearSentryContext: (featureName: string) => {
-		const currentEnv = import.meta.env.MODE;
-
-		if (!isMonitoringEnabled(currentEnv)) {
-			return;
-		}
-
-		Sentry.setContext(featureName, null);
-	},
+    Sentry.captureException(error, {
+      tags: context?.tags,
+      extra: context?.extra,
+      level: context?.level || "error",
+    });
+  },
 };

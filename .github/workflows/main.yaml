@@ -40,6 +40,20 @@ jobs:
       - name: Build
         run: yarn build --mode demo
 
+      - name: Verify no source maps in dist
+        run: |
+          if ls dist/*.map 1> /dev/null 2>&1; then
+            echo "❌ ERROR: Source maps found in dist/"
+            echo "Files:"
+            ls -la dist/*.map
+            echo ""
+            echo "DEPLOYMENT BLOCKED!"
+            echo "Source maps must NOT be deployed to production."
+            echo "This indicates the Sentry plugin failed to delete them."
+            exit 1
+          fi
+          echo "✅ No source maps found - safe to deploy"
+
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -48,7 +62,22 @@ jobs:
           aws-region: us-east-1
 
       - name: Deploy static site
-        run: aws s3 sync ./dist s3://${AWS_BUCKET_ID}
+        run: |
+          aws s3 sync ./dist s3://${AWS_BUCKET_ID} \
+            --exclude "*" \
+            --include "*.js" \
+            --include "*.css" \
+            --include "*.html" \
+            --include "*.png" \
+            --include "*.jpg" \
+            --include "*.jpeg" \
+            --include "*.svg" \
+            --include "*.woff" \
+            --include "*.woff2" \
+            --include "*.ttf" \
+            --include "*.ico" \
+            --include "*.webp" \
+            --delete
 
       - name: Invalidate Cloudfront
         run: aws cloudfront create-invalidation --distribution-id ${AWS_CLOUDFRONT_ID}  --paths "/*"
@@ -190,6 +219,20 @@ jobs:
       - name: Build
         run: yarn build --mode staging
 
+      - name: Verify no source maps in dist
+        run: |
+          if ls dist/*.map 1> /dev/null 2>&1; then
+            echo "❌ ERROR: Source maps found in dist/"
+            echo "Files:"
+            ls -la dist/*.map
+            echo ""
+            echo "DEPLOYMENT BLOCKED!"
+            echo "Source maps must NOT be deployed to production."
+            echo "This indicates the Sentry plugin failed to delete them."
+            exit 1
+          fi
+          echo "✅ No source maps found - safe to deploy"
+
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -198,7 +241,22 @@ jobs:
           aws-region: us-east-1
 
       - name: Deploy static site
-        run: aws s3 sync ./dist s3://${AWS_BUCKET_ID}
+        run: |
+          aws s3 sync ./dist s3://${AWS_BUCKET_ID} \
+            --exclude "*" \
+            --include "*.js" \
+            --include "*.css" \
+            --include "*.html" \
+            --include "*.png" \
+            --include "*.jpg" \
+            --include "*.jpeg" \
+            --include "*.svg" \
+            --include "*.woff" \
+            --include "*.woff2" \
+            --include "*.ttf" \
+            --include "*.ico" \
+            --include "*.webp" \
+            --delete
 
       - name: Invalidate Cloudfront
         run: aws cloudfront create-invalidation --distribution-id ${AWS_CLOUDFRONT_ID}  --paths "/*"
@@ -341,6 +399,20 @@ jobs:
       - name: Build
         run: yarn build --mode production
 
+      - name: Verify no source maps in dist
+        run: |
+          if ls dist/*.map 1> /dev/null 2>&1; then
+            echo "❌ ERROR: Source maps found in dist/"
+            echo "Files:"
+            ls -la dist/*.map
+            echo ""
+            echo "DEPLOYMENT BLOCKED!"
+            echo "Source maps must NOT be deployed to production."
+            echo "This indicates the Sentry plugin failed to delete them."
+            exit 1
+          fi
+          echo "✅ No source maps found - safe to deploy"
+
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -349,7 +421,22 @@ jobs:
           aws-region: us-east-1
 
       - name: Deploy static site
-        run: aws s3 sync ./dist s3://${AWS_BUCKET_ID}
+        run: |
+          aws s3 sync ./dist s3://${AWS_BUCKET_ID} \
+            --exclude "*" \
+            --include "*.js" \
+            --include "*.css" \
+            --include "*.html" \
+            --include "*.png" \
+            --include "*.jpg" \
+            --include "*.jpeg" \
+            --include "*.svg" \
+            --include "*.woff" \
+            --include "*.woff2" \
+            --include "*.ttf" \
+            --include "*.ico" \
+            --include "*.webp" \
+            --delete
 
       - name: Invalidate Cloudfront
         run: aws cloudfront create-invalidation --distribution-id ${AWS_CLOUDFRONT_ID} --paths "/*"

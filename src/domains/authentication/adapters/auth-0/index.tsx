@@ -5,84 +5,91 @@ import { useDatabaseAuth } from "../../hooks/use-database-auth";
 import type { IAuthHook } from "../typing";
 
 const Provider = ({ children }: { children: React.ReactNode }) => {
-	return (
-		<Auth0Provider
-			domain={import.meta.env.VITE_AUTH_DOMAIN}
-			clientId={import.meta.env.VITE_AUTH_CLIENT_ID}
-			authorizationParams={{
-				redirect_uri: window.location.origin,
-			}}
-			useRefreshTokens={true}
-			cacheLocation="localstorage"
-		>
-			{children}
-		</Auth0Provider>
-	);
+  return (
+    <Auth0Provider
+      domain={import.meta.env.VITE_AUTH_DOMAIN}
+      clientId={import.meta.env.VITE_AUTH_CLIENT_ID}
+      authorizationParams={{
+        redirect_uri: window.location.origin,
+      }}
+      useRefreshTokens={true}
+      cacheLocation="localstorage"
+    >
+      {children}
+    </Auth0Provider>
+  );
 };
 
 const hook = () => {
-	const { isAuthenticated, isLoading, user, loginWithPopup, logout, getIdTokenClaims } =
-		useAuthBase();
-	const databaseAuth = useDatabaseAuth();
-	const member = useMember({ fetchOnMount: isAuthenticated });
+  const {
+    isAuthenticated,
+    isLoading,
+    user,
+    loginWithPopup,
+    logout,
+    getIdTokenClaims,
+  } = useAuthBase();
+  const databaseAuth = useDatabaseAuth();
+  const member = useMember({ fetchOnMount: isAuthenticated });
 
-	const appLogin = async () => {
-		try {
-			await loginWithPopup({
-				authorizationParams: {
-					screen_hint: "login",
-				},
-			});
-			const user = await getIdTokenClaims();
-			if (!user) throw new Error("User not found");
+  const appLogin = async () => {
+    try {
+      await loginWithPopup({
+        authorizationParams: {
+          screen_hint: "login",
+        },
+      });
+      const user = await getIdTokenClaims();
+      if (!user) throw new Error("User not found");
 
-			console.log("login OK", { isLoading, user });
+      return await databaseAuth.login.mutateAsync(user.sub);
+    } catch (error) {
+      alert(error);
 
-			return await databaseAuth.login.mutateAsync(user.sub);
-		} catch (error) {
-			alert(error);
+      return Promise.reject(error);
+    }
+  };
 
-			return Promise.reject(error);
-		}
-	};
+  const appSignup = async () => {
+    try {
+      await loginWithPopup({
+        authorizationParams: { screen_hint: "signup" },
+      });
+      const user = await getIdTokenClaims();
+      console.log("User from token", user);
 
-	const appSignup = async () => {
-		try {
-			await loginWithPopup({
-				authorizationParams: { screen_hint: "signup" },
-			});
-			const user = await getIdTokenClaims();
-			console.log("User from token", user);
+      // Await the mutation to handle success/error properly
+      const result = await databaseAuth.sign.mutateAsync(user);
 
-			const mutation = databaseAuth.sign.mutate(user);
-			console.log("Mutation", mutation);
+      // Show success message
+      alert("Account created successfully!");
 
-			return mutation;
-		} catch (error) {
-			alert(error);
-			return Promise.reject(error);
-		}
-	};
+      return result;
+    } catch (error) {
+      alert(error instanceof Error ? error.message : String(error));
+      return Promise.reject(error);
+    }
+  };
 
-	const appLogout = async () => {
-		try {
-			await logout({ logoutParams: { returnTo: window.location.origin } });
-			await api.delete("auth");
-		} catch (error) {
-			alert(error);
+  const appLogout = async () => {
+    try {
+      await logout({ logoutParams: { returnTo: window.location.origin } });
+      await api.delete("auth");
+    } catch (error) {
+      alert(error);
 
-			return Promise.reject(error);
-		}
-	};
+      return Promise.reject(error);
+    }
+  };
 
-	return {
-		isAuthenticated: isAuthenticated && member.isSuccess,
-		isLoadingAuth: isLoading || member.isLoading,
-		authId: user?.sub,
-		signup: appSignup,
-		login: appLogin,
-		logout: appLogout,
-	} satisfies IAuthHook;
+  return {
+    isAuthenticated: isAuthenticated && member.isSuccess,
+    isLoadingAuth: isLoading || member.isLoading,
+    authId: user?.sub,
+    signup: appSignup,
+    login: appLogin,
+    logout: appLogout,
+  } satisfies IAuthHook;
 };
 
 export default { hook, Provider };

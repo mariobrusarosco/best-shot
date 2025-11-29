@@ -2,20 +2,33 @@ import { useMutation } from "@tanstack/react-query";
 import type { AxiosError } from "axios";
 import { api } from "@/api";
 import { ErrorHandling } from "@/domains/error-handling";
+import { auth0TokenSchema, createMemberFromAuth0Schema } from "../schemas";
 
 export const useDatabaseAuth = () => {
 	const sign = useMutation<string, AxiosError, unknown>({
 		mutationFn: async (user: unknown) => {
-			const userData = user as Record<string, unknown>;
+			// Validate and transform Auth0 token using Zod
+			const tokenValidation = auth0TokenSchema.safeParse(user);
+
+			if (!tokenValidation.success) {
+				const errors = tokenValidation.error.format();
+				const errorMessage = `Invalid Auth0 token data. Missing or invalid required fields`
+			
+				
+				ErrorHandling.logError({
+					source: "DATABASE_AUTH_SIGN_VALIDATION",
+					message: errorMessage,
+					details: errors,
+				});
+				
+				throw new Error(errorMessage);
+			}
+
+			// Transform Auth0 token to member creation format
+			const memberData = createMemberFromAuth0Schema.parse(user);
 			const response = await api.post(
 				"auth/create",
-				{
-					publicId: userData?.sub as string,
-					email: userData?.email as string,
-					firstName: userData?.given_name as string,
-					lastName: userData?.family_name as string,
-					nickName: (userData?.nickname as string) ?? (userData?.given_name as string),
-				},
+				memberData,
 				{
 					baseURL: import.meta.env.VITE_BEST_SHOT_API_V2,
 				}
@@ -23,14 +36,14 @@ export const useDatabaseAuth = () => {
 
 			return response.data as string;
 		},
-		// onError: (error: AxiosError) => {
-		// 	ErrorHandling.logError({
-		// 		source: 'DATABASE_AUTH',
-		// 		message: error.message,
-		// 		code: error.code,
-		// 		details: error.response?.data,
-		// 	});
-		// },
+		onError: (error: AxiosError) => {
+			ErrorHandling.logError({
+				source: 'DATABASE_AUTH_SIGN',
+				message: error.message,
+				code: error.code,
+				details: error.response?.data,
+			});
+		},
 	});
 
 	const login = useMutation<string, AxiosError, unknown>({

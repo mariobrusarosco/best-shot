@@ -2738,4 +2738,593 @@ Breadcrumbs:
 
 ---
 
-*Tutorial continues in next session...*
+## Session 8: Custom Performance Monitoring
+
+> **Goal**: Add custom performance tracking to measure slow operations, identify bottlenecks, and optimize your app. Track API calls, complex calculations, and critical operations.
+
+### Why Performance Monitoring Matters
+
+Sentry automatically tracks page loads and navigation, but **custom operations** need manual tracking:
+
+⏱️ **Performance problems you can catch:**
+- Slow API calls (> 2 seconds)
+- Complex calculations (standings, scores)
+- Bulk operations (deleting all matches)
+- Database queries
+- File uploads
+
+📊 **What you get:**
+- Precise timing for each operation
+- Identify bottlenecks in your code
+- Compare performance across environments
+- Track improvements over time
+- Alert on performance regressions
+
+🎯 **Business impact:**
+- Faster tournament loading = happier users
+- Identify slow operations before users complain
+- Optimize the right things (data-driven)
+
+### Step 8.1: Add Performance Methods to Monitoring
+
+We'll add three methods to track performance:
+
+**File**: `src/configuration/monitoring/index.tsx`
+
+```typescript
+export const Monitoring = {
+	init: () => { /* ... */ },
+	setUser: (user: UserIdentity | null) => { /* ... */ },
+	setTag: (key: string, value: string) => { /* ... */ },
+	setTags: (tags: Record<string, string>) => { /* ... */ },
+	setContext: (name: string, context: Record<string, unknown> | null) => { /* ... */ },
+	setSentryContext: (featureName: string, context?: Record<string, string | number | boolean>) => { /* ... */ },
+	clearSentryContext: (featureName: string) => { /* ... */ },
+
+	/**
+	 * Start a custom performance span
+	 * Use this to measure specific operations or code blocks
+	 *
+	 * @param name - Name of the operation (e.g., "calculate-standings", "load-tournament")
+	 * @param attributes - Optional attributes to add to the span
+	 * @returns Span object with finish() method, or null if Sentry is disabled
+	 *
+	 * @example
+	 * const span = Monitoring.startSpan("calculate-standings", {
+	 *   tournamentId: "123",
+	 *   participantCount: 24
+	 * });
+	 * // ... perform operation ...
+	 * span?.finish();
+	 */
+	startSpan: (name: string, attributes?: Record<string, string | number | boolean>) => {
+		const currentEnv = import.meta.env.MODE;
+
+		if (!SENTRY_ENABLED_ENVIRONMENTS.includes(currentEnv as any)) {
+			return null;
+		}
+
+		const span = Sentry.startInactiveSpan({
+			name,
+			op: "custom",
+			attributes,
+		});
+
+		return span;
+	},
+
+	/**
+	 * Track an async operation with automatic performance measurement
+	 * Automatically creates a span, executes the operation, and finishes the span
+	 * Tags slow operations (> 2 seconds) automatically
+	 *
+	 * @param name - Name of the operation
+	 * @param operation - Async function to execute and measure
+	 * @param options - Optional configuration
+	 * @returns Result of the operation
+	 *
+	 * @example
+	 * const tournament = await Monitoring.trackOperation(
+	 *   "load-tournament",
+	 *   async () => await fetchTournament(id),
+	 *   { slowThreshold: 2000 }
+	 * );
+	 */
+	trackOperation: async <T>(
+		name: string,
+		operation: () => Promise<T>,
+		options?: {
+			slowThreshold?: number;
+			attributes?: Record<string, string | number | boolean>;
+		},
+	): Promise<T> => {
+		const currentEnv = import.meta.env.MODE;
+
+		// If Sentry is disabled, just execute the operation
+		if (!SENTRY_ENABLED_ENVIRONMENTS.includes(currentEnv as any)) {
+			return await operation();
+		}
+
+		const slowThreshold = options?.slowThreshold ?? 2000; // Default: 2 seconds
+		const startTime = performance.now();
+
+		return await Sentry.startSpan(
+			{
+				name,
+				op: "custom",
+				attributes: options?.attributes,
+			},
+			async () => {
+				try {
+					const result = await operation();
+					const duration = performance.now() - startTime;
+
+					// Tag slow operations
+					if (duration > slowThreshold) {
+						Sentry.setTag("performance.slow", "true");
+						console.warn(
+							`[Sentry] Slow operation detected: ${name} took ${Math.round(duration)}ms`,
+						);
+					}
+
+					return result;
+				} catch (error) {
+					// Error will be captured by Sentry automatically
+					throw error;
+				}
+			},
+		);
+	},
+
+	/**
+	 * Manually capture an exception with optional context
+	 * Use this when you want to report an error without throwing it
+	 *
+	 * @param error - Error to capture
+	 * @param context - Optional additional context
+	 *
+	 * @example
+	 * try {
+	 *   await riskyOperation();
+	 * } catch (error) {
+	 *   Monitoring.captureException(error, {
+	 *     extra: { tournamentId: "123", operation: "delete" },
+	 *     tags: { "operation.critical": "true" }
+	 *   });
+	 *   // Handle error gracefully without crashing
+	 * }
+	 */
+	captureException: (
+		error: Error,
+		context?: {
+			tags?: Record<string, string>;
+			extra?: Record<string, unknown>;
+			level?: "fatal" | "error" | "warning" | "log" | "info" | "debug";
+		},
+	) => {
+		const currentEnv = import.meta.env.MODE;
+
+		if (!SENTRY_ENABLED_ENVIRONMENTS.includes(currentEnv as any)) {
+			return;
+		}
+
+		Sentry.captureException(error, {
+			tags: context?.tags,
+			extra: context?.extra,
+			level: context?.level || "error",
+		});
+	},
+};
+```
+
+**What These Methods Do:**
+
+1. **`Monitoring.startSpan()`**: Start/stop manual performance tracking
+2. **`Monitoring.trackOperation()`**: Auto-track async operations (easiest!)
+3. **`Monitoring.captureException()`**: Report errors without throwing
+
+### Step 8.2: Track API Calls
+
+Wrap slow API calls with `trackOperation()`:
+
+**Example 1: Load Tournament**
+
+```typescript
+import { Monitoring } from "@/configuration/monitoring";
+
+export async function useTournament(tournamentId: string) {
+	const { data, isLoading } = useQuery({
+		queryKey: ["tournament", tournamentId],
+		queryFn: async () => {
+			// Track this API call
+			return await Monitoring.trackOperation(
+				"api.load-tournament",
+				async () => {
+					const response = await fetch(`/api/tournaments/${tournamentId}`);
+					return response.json();
+				},
+				{
+					slowThreshold: 2000, // Warn if > 2 seconds
+					attributes: { tournamentId },
+				},
+			);
+		},
+	});
+
+	return { data, isLoading };
+}
+```
+
+**What This Does:**
+- Measures API call duration
+- Tags slow operations (> 2 seconds) with `performance.slow: true`
+- Logs warning in console for slow calls
+- Shows in Sentry Performance dashboard
+
+**Example 2: Bulk Delete Matches**
+
+```typescript
+import { Monitoring } from "@/configuration/monitoring";
+
+async function deleteAllMatches(tournamentId: string) {
+	return await Monitoring.trackOperation(
+		"bulk.delete-matches",
+		async () => {
+			const response = await fetch(`/api/tournaments/${tournamentId}/matches`, {
+				method: "DELETE",
+			});
+			return response.json();
+		},
+		{
+			slowThreshold: 5000, // Bulk operations can take longer
+			attributes: {
+				tournamentId,
+				operation: "bulk-delete",
+			},
+		},
+	);
+}
+```
+
+### Step 8.3: Track Complex Calculations
+
+Use `startSpan()` for synchronous operations:
+
+**Example: Calculate Tournament Standings**
+
+```typescript
+import { Monitoring } from "@/configuration/monitoring";
+
+function calculateStandings(tournament: Tournament) {
+	const span = Monitoring.startSpan("calculate-standings", {
+		tournamentId: tournament.id,
+		participantCount: tournament.participants.length,
+		matchCount: tournament.matches.length,
+	});
+
+	try {
+		// Complex calculation
+		const standings = tournament.matches.reduce((acc, match) => {
+			// ... complex logic ...
+			return acc;
+		}, []);
+
+		// Sort by score
+		standings.sort((a, b) => b.score - a.score);
+
+		return standings;
+	} finally {
+		// Always finish the span
+		span?.finish();
+	}
+}
+```
+
+**Best Practice: Always use try/finally**
+- Ensures span is finished even if error occurs
+- Without `finish()`, span stays open forever
+
+### Step 8.4: Track Critical Operations
+
+Add extra context for critical operations:
+
+**Example: Submit Match Score**
+
+```typescript
+import { Monitoring } from "@/configuration/monitoring";
+
+async function submitMatchScore(matchId: string, score: Score) {
+	// Set context before operation
+	Monitoring.setSentryContext("match-scoring", {
+		matchId,
+		team1Score: score.team1,
+		team2Score: score.team2,
+	});
+
+	try {
+		return await Monitoring.trackOperation(
+			"api.submit-match-score",
+			async () => {
+				const response = await fetch(`/api/matches/${matchId}/score`, {
+					method: "POST",
+					body: JSON.stringify(score),
+				});
+				return response.json();
+			},
+			{
+				slowThreshold: 3000,
+				attributes: { matchId },
+			},
+		);
+	} catch (error) {
+		// Capture error with critical tag
+		Monitoring.captureException(error as Error, {
+			tags: {
+				"operation.critical": "true",
+				feature: "match-scoring",
+			},
+			extra: {
+				matchId,
+				score,
+			},
+			level: "error",
+		});
+		throw error;
+	}
+}
+```
+
+**What This Does:**
+- Tracks performance of score submission
+- Tags critical operations
+- Captures errors with full context
+- Still throws error for normal error handling
+
+### Step 8.5: Performance Budgets
+
+Define thresholds for different operations:
+
+```typescript
+// Performance budgets (in milliseconds)
+const PERFORMANCE_BUDGETS = {
+	"api.load-tournament": 2000,      // 2 seconds
+	"api.load-matches": 1500,         // 1.5 seconds
+	"api.submit-score": 3000,         // 3 seconds
+	"calculate-standings": 1000,      // 1 second
+	"bulk.delete-matches": 5000,      // 5 seconds
+	"file.upload": 10000,             // 10 seconds
+} as const;
+
+// Use in trackOperation
+await Monitoring.trackOperation(
+	"api.load-tournament",
+	fetchTournament,
+	{ slowThreshold: PERFORMANCE_BUDGETS["api.load-tournament"] }
+);
+```
+
+**Benefits:**
+- Consistent thresholds across app
+- Easy to adjust per operation type
+- Documents expected performance
+
+### Step 8.6: View Performance in Sentry
+
+Once you have performance tracking:
+
+**Sentry Performance Dashboard:**
+1. Go to **Performance** tab
+2. See list of all tracked operations
+3. Sort by **p95** (95th percentile) to find slowest operations
+4. Click operation to see detailed breakdown
+
+**Filter slow operations:**
+```
+performance.slow:true
+```
+
+**Example Performance View:**
+```
+Operation                    p50    p95    Max     Count
+---------------------------------------------------------
+api.load-tournament         450ms  1.2s   3.5s    1,234
+api.submit-match-score      280ms  800ms  2.1s    5,678
+calculate-standings         120ms  450ms  1.8s    892
+bulk.delete-matches         2.1s   4.5s   8.2s    45
+```
+
+**Insights:**
+- `api.load-tournament`: p95 = 1.2s (good!)
+- `bulk.delete-matches`: Max = 8.2s (needs optimization!)
+
+### Step 8.7: Real-World Examples
+
+**Example 1: Optimize Tournament Loading**
+
+```typescript
+// BEFORE: No tracking
+async function loadTournamentData(id: string) {
+	const tournament = await fetchTournament(id);
+	const matches = await fetchMatches(id);
+	const participants = await fetchParticipants(id);
+	return { tournament, matches, participants };
+}
+
+// AFTER: With tracking
+async function loadTournamentData(id: string) {
+	return await Monitoring.trackOperation(
+		"page.load-tournament-data",
+		async () => {
+			// Track each API call separately
+			const [tournament, matches, participants] = await Promise.all([
+				Monitoring.trackOperation("api.fetch-tournament", () => fetchTournament(id)),
+				Monitoring.trackOperation("api.fetch-matches", () => fetchMatches(id)),
+				Monitoring.trackOperation("api.fetch-participants", () => fetchParticipants(id)),
+			]);
+			return { tournament, matches, participants };
+		},
+		{ slowThreshold: 3000 },
+	);
+}
+
+// Result in Sentry:
+// ├─ page.load-tournament-data (2.8s)
+// │  ├─ api.fetch-tournament (450ms)
+// │  ├─ api.fetch-matches (2.1s) ← BOTTLENECK!
+// │  └─ api.fetch-participants (320ms)
+```
+
+**Insight:** Fetching matches is the bottleneck (2.1s). Optimize this API endpoint!
+
+**Example 2: Track Form Submission Steps**
+
+```typescript
+async function createTournament(data: TournamentData) {
+	const mainSpan = Monitoring.startSpan("form.create-tournament", {
+		participantCount: data.participants.length,
+	});
+
+	try {
+		// Step 1: Validate
+		const validateSpan = Monitoring.startSpan("form.validate-data");
+		const validated = validateTournamentData(data);
+		validateSpan?.finish();
+
+		// Step 2: Create tournament
+		const tournament = await Monitoring.trackOperation(
+			"api.create-tournament",
+			() => api.createTournament(validated),
+		);
+
+		// Step 3: Create matches
+		const matches = await Monitoring.trackOperation(
+			"api.create-matches",
+			() => api.createMatches(tournament.id, data.participants),
+			{ slowThreshold: 5000 },
+		);
+
+		return { tournament, matches };
+	} finally {
+		mainSpan?.finish();
+	}
+}
+
+// Result in Sentry:
+// ├─ form.create-tournament (6.2s)
+// │  ├─ form.validate-data (45ms)
+// │  ├─ api.create-tournament (890ms)
+// │  └─ api.create-matches (5.1s) ← SLOW!
+```
+
+### Step 8.8: Best Practices
+
+**✅ DO:**
+- Track operations > 500ms
+- Use descriptive names: `api.load-tournament` not `loadData`
+- Set appropriate slow thresholds per operation type
+- Track critical user-facing operations
+- Use `try/finally` with `startSpan()`
+- Add attributes for context (IDs, counts, etc.)
+
+**❌ DON'T:**
+- Track every function (too much noise)
+- Track operations < 100ms (not meaningful)
+- Forget to call `span.finish()`
+- Set same threshold for all operations
+- Track in tight loops (performance overhead)
+
+**Performance Overhead:**
+- Sentry sampling: 10% in production (from Session 2)
+- Each tracked operation: ~1-2ms overhead
+- Negligible for operations > 500ms
+
+### Step 8.9: Troubleshooting
+
+**Spans not appearing in Sentry?**
+- Check `tracesSampleRate` in config (Session 2)
+- Verify Sentry is enabled in current environment
+- Check browser console for Sentry errors
+- Ensure you're calling `span.finish()`
+
+**Performance.slow tag not set?**
+- Check operation duration in console
+- Verify slowThreshold is set correctly
+- Remember: Tag is set AFTER operation completes
+
+**Too many performance events?**
+- Reduce `tracesSampleRate` in production
+- Only track operations > 500ms
+- Use specific operation names (not generic)
+
+---
+
+## What You've Accomplished
+
+✅ Added `Monitoring.startSpan()` for manual performance tracking
+✅ Added `Monitoring.trackOperation()` for automatic async tracking
+✅ Added `Monitoring.captureException()` for manual error reporting
+✅ Learned how to track API calls and complex calculations
+✅ Set up performance budgets for different operations
+✅ Understand how to view performance data in Sentry dashboard
+✅ Know best practices for performance monitoring
+
+---
+
+## Tutorial Complete! 🎉
+
+**You've successfully implemented a complete Sentry monitoring setup:**
+
+### Sessions Completed:
+1. ✅ **Error Boundaries** - Catch and display errors gracefully
+2. ✅ **Environment Configuration** - Different settings per environment
+3. ✅ **User Identification** - Link errors to specific users
+4. ✅ **Release Tracking** - Connect errors to git commits
+5. ✅ **API Tracing** - Distributed tracing for frontend/backend
+6. ✅ **Data Sanitization** - Protect sensitive user data
+7. ✅ **Custom Tags** - Filter and organize errors
+8. ✅ **Performance Monitoring** - Track slow operations
+
+### Your Monitoring Stack:
+```typescript
+import { Monitoring } from "@/configuration/monitoring";
+
+// Initialization (App.tsx)
+<Sentry.ErrorBoundary fallback={AppError} showDialog>
+	<SentryUserIdentifier />
+	{/* ... your app ... */}
+</Sentry.ErrorBoundary>
+
+// User identification (automatic)
+Monitoring.setUser({ id, email, username, role });
+
+// Tags and context
+Monitoring.setTag("feature", "tournament-detail");
+Monitoring.setSentryContext("tournament", { id, name, status });
+
+// Performance tracking
+await Monitoring.trackOperation("api.load-tournament", fetchTournament);
+
+// Error handling
+Monitoring.captureException(error, {
+	tags: { "operation.critical": "true" },
+	extra: { tournamentId }
+});
+```
+
+### Next Steps:
+1. **Deploy to staging** - Test Sentry with real data
+2. **Review Sentry dashboard** - Check for errors and performance issues
+3. **Set up alerts** - Get notified of critical errors
+4. **Optimize slow operations** - Use performance data to improve
+5. **Share with team** - Train others on using Sentry
+
+### Resources:
+- [Sentry React Docs](https://docs.sentry.io/platforms/javascript/guides/react/)
+- [Sentry Performance Docs](https://docs.sentry.io/product/performance/)
+- [Best Shot Monitoring Code](src/configuration/monitoring/)
+
+**Happy Monitoring! 🚀**
+
+---
+
+*End of tutorial*

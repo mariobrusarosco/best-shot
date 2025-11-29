@@ -1,6 +1,6 @@
 import * as Sentry from "@sentry/react";
-import type { ErrorEvent, EventHint } from "@sentry/react";
-import { SENTRY_ENABLED_ENVIRONMENTS } from "./constants";
+import { SENTRY_ENABLED_ENVIRONMENTS, type SentryEnvironment } from "./constants";
+import type { ErrorEvent } from "@sentry/react";
 
 /**
  * Sensitive field patterns to scrub from error reports
@@ -28,6 +28,7 @@ const SENSITIVE_FIELD_PATTERNS = [
 /**
  * Recursively sanitize an object by removing sensitive fields
  */
+// biome-ignore lint/suspicious/noExplicitAny: Sentry types require any for flexible data structures
 function sanitizeObject(obj: any, depth = 0): any {
 	// Prevent infinite recursion
 	if (depth > 10) return "[Max Depth Reached]";
@@ -40,7 +41,8 @@ function sanitizeObject(obj: any, depth = 0): any {
 	}
 
 	// Handle objects
-	const sanitized: any = {};
+	// biome-ignore lint/suspicious/noExplicitAny: Sentry types require any for flexible data structures
+	const sanitized: Record<string, any> = {};
 	for (const [key, value] of Object.entries(obj)) {
 		// Check if key matches sensitive pattern
 		const isSensitive = SENSITIVE_FIELD_PATTERNS.some((pattern) => pattern.test(key));
@@ -60,7 +62,7 @@ function sanitizeObject(obj: any, depth = 0): any {
 /**
  * beforeSend hook to sanitize sensitive data before sending to Sentry
  */
-function beforeSend(event: ErrorEvent, hint: EventHint): ErrorEvent | null {
+function beforeSend(event: ErrorEvent): ErrorEvent | null {
 	// Sanitize request data
 	if (event.request) {
 		// Sanitize query parameters
@@ -149,6 +151,52 @@ const getEnvironmentConfig = (environment: string) => {
 	}
 };
 
+/**
+ * Build trace propagation targets from API URLs
+ * Extracts hostnames for distributed tracing
+ */
+function buildTracePropagationTargets(): (string | RegExp)[] {
+	const apiBaseUrl = import.meta.env.VITE_BEST_SHOT_API || "";
+	const apiV2BaseUrl = import.meta.env.VITE_BEST_SHOT_API_V2 || "";
+
+	const targets: (string | RegExp)[] = [
+		"localhost", // Local development
+		/^\//,      // Same-origin requests (relative URLs)
+	];
+
+	// Add production API domains if configured
+	if (apiBaseUrl) {
+		try {
+			const url = new URL(apiBaseUrl);
+			if (!url.hostname.includes("localhost")) {
+				targets.push(url.hostname);
+			}
+		} catch {
+			// Invalid URL, skip
+		}
+	}
+
+	if (apiV2BaseUrl && apiV2BaseUrl !== apiBaseUrl) {
+		try {
+			const url = new URL(apiV2BaseUrl);
+			if (!url.hostname.includes("localhost")) {
+				targets.push(url.hostname);
+			}
+		} catch {
+			// Invalid URL, skip
+		}
+	}
+
+	return targets;
+}
+
+/**
+ * Check if current environment has Sentry enabled
+ */
+function isSentryEnabled(env: string): env is SentryEnvironment {
+	return SENTRY_ENABLED_ENVIRONMENTS.includes(env as SentryEnvironment);
+}
+
 interface UserIdentity {
 	id: string;
 	email?: string;
@@ -161,50 +209,14 @@ export const Monitoring = {
 		const currentEnv = import.meta.env.MODE;
 
 		// Only enable Sentry in non-local environments
-		if (!SENTRY_ENABLED_ENVIRONMENTS.includes(currentEnv as any)) {
+		if (!isSentryEnabled(currentEnv)) {
 			console.log(`[Sentry] Disabled in ${currentEnv} mode`);
 			return;
 		}
 
 		const config = getEnvironmentConfig(currentEnv);
-
-		// Get release information from environment variables or build process
-		// The Sentry Vite plugin automatically injects SENTRY_RELEASE during build
 		const release = import.meta.env.VITE_SENTRY_RELEASE || import.meta.env.SENTRY_RELEASE;
-
-		// Configure which URLs should have distributed tracing enabled
-		// This connects frontend errors to backend traces in Sentry
-		const apiBaseUrl = import.meta.env.VITE_BEST_SHOT_API || "";
-		const apiV2BaseUrl = import.meta.env.VITE_BEST_SHOT_API_V2 || "";
-
-		// Extract hostnames for trace propagation
-		const tracePropagationTargets = [
-			"localhost", // Local development
-			/^\//,      // Same-origin requests (relative URLs)
-		];
-
-		// Add production API domains if configured
-		if (apiBaseUrl) {
-			try {
-				const url = new URL(apiBaseUrl);
-				if (!url.hostname.includes("localhost")) {
-					tracePropagationTargets.push(url.hostname);
-				}
-			} catch {
-				// Invalid URL, skip
-			}
-		}
-
-		if (apiV2BaseUrl && apiV2BaseUrl !== apiBaseUrl) {
-			try {
-				const url = new URL(apiV2BaseUrl);
-				if (!url.hostname.includes("localhost")) {
-					tracePropagationTargets.push(url.hostname);
-				}
-			} catch {
-				// Invalid URL, skip
-			}
-		}
+		const tracePropagationTargets = buildTracePropagationTargets();
 
 		Sentry.init({
 			dsn: import.meta.env.VITE_SENTRY_DSN,
@@ -249,7 +261,7 @@ export const Monitoring = {
 		const currentEnv = import.meta.env.MODE;
 
 		// Only set user in enabled environments
-		if (!SENTRY_ENABLED_ENVIRONMENTS.includes(currentEnv as any)) {
+		if (!isSentryEnabled(currentEnv)) {
 			return;
 		}
 
@@ -258,15 +270,11 @@ export const Monitoring = {
 				id: user.id,
 				email: user.email,
 				username: user.username,
-				role: user.role,
 			});
-			console.log(`[Sentry] User identified: ${user.username || user.email || user.id}`);
 		} else {
 			Sentry.setUser(null);
-			console.log("[Sentry] User cleared (logged out)");
 		}
 	},
-
 	/**
 	 * Set a custom tag for filtering and grouping errors
 	 * Tags are key-value pairs that help you organize and search errors in Sentry
@@ -280,14 +288,12 @@ export const Monitoring = {
 	 */
 	setTag: (key: string, value: string) => {
 		const currentEnv = import.meta.env.MODE;
-
-		if (!SENTRY_ENABLED_ENVIRONMENTS.includes(currentEnv as any)) {
+		if (!isSentryEnabled(currentEnv)) {
 			return;
 		}
 
 		Sentry.setTag(key, value);
 	},
-
 	/**
 	 * Set multiple custom tags at once
 	 *
@@ -302,14 +308,11 @@ export const Monitoring = {
 	 */
 	setTags: (tags: Record<string, string>) => {
 		const currentEnv = import.meta.env.MODE;
-
-		if (!SENTRY_ENABLED_ENVIRONMENTS.includes(currentEnv as any)) {
+		if (!isSentryEnabled(currentEnv)) {
 			return;
 		}
-
 		Sentry.setTags(tags);
 	},
-
 	/**
 	 * Set additional context for errors
 	 * Unlike tags (which are indexed strings), contexts can contain complex objects
@@ -327,7 +330,7 @@ export const Monitoring = {
 	setContext: (name: string, context: Record<string, unknown> | null) => {
 		const currentEnv = import.meta.env.MODE;
 
-		if (!SENTRY_ENABLED_ENVIRONMENTS.includes(currentEnv as any)) {
+		if (!isSentryEnabled(currentEnv)) {
 			return;
 		}
 
@@ -354,7 +357,7 @@ export const Monitoring = {
 	) => {
 		const currentEnv = import.meta.env.MODE;
 
-		if (!SENTRY_ENABLED_ENVIRONMENTS.includes(currentEnv as any)) {
+		if (!isSentryEnabled(currentEnv)) {
 			return;
 		}
 
@@ -378,10 +381,49 @@ export const Monitoring = {
 	clearSentryContext: (featureName: string) => {
 		const currentEnv = import.meta.env.MODE;
 
-		if (!SENTRY_ENABLED_ENVIRONMENTS.includes(currentEnv as any)) {
+		if (!isSentryEnabled(currentEnv)) {
 			return;
 		}
 
 		Sentry.setContext(featureName, null);
+	},
+
+	/**
+	 * Manually capture an exception with optional context
+	 * Use this when you want to report an error without throwing it
+	 *
+	 * @param error - Error to capture
+	 * @param context - Optional additional context
+	 *
+	 * @example
+	 * try {
+	 *   await riskyOperation();
+	 * } catch (error) {
+	 *   Monitoring.captureException(error, {
+	 *     extra: { tournamentId: "123", operation: "delete" },
+	 *     tags: { "operation.critical": "true" }
+	 *   });
+	 *   // Handle error gracefully without crashing
+	 * }
+	 */
+	captureException: (
+		error: Error,
+		context?: {
+			tags?: Record<string, string>;
+			extra?: Record<string, unknown>;
+			level?: "fatal" | "error" | "warning" | "log" | "info" | "debug";
+		},
+	) => {
+		const currentEnv = import.meta.env.MODE;
+
+		if (!isSentryEnabled(currentEnv)) {
+			return;
+		}
+
+		Sentry.captureException(error, {
+			tags: context?.tags,
+			extra: context?.extra,
+			level: context?.level || "error",
+		});
 	},
 };

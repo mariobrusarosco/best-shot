@@ -4,7 +4,7 @@ import { TanStackRouterVite } from "@tanstack/router-plugin/vite";
 import react from "@vitejs/plugin-react";
 import { defineConfig } from "vite";
 import checker from "vite-plugin-checker";
-import { SENTRY_ENABLED_ENVIRONMENTS } from "./src/configuration/monitoring/constants";
+import { SENTRY_ENABLED_ENVIRONMENTS, type SentryEnvironment } from "./src/configuration/monitoring/constants";
 
 export default defineConfig(({ mode }) => ({
 	server: {
@@ -27,7 +27,7 @@ export default defineConfig(({ mode }) => ({
 		// 	filename: "stats.html",
 		// }),
 		// Enable Sentry for demo, staging, and production builds
-		SENTRY_ENABLED_ENVIRONMENTS.includes(mode as any) &&
+		SENTRY_ENABLED_ENVIRONMENTS.includes(mode as SentryEnvironment) &&
 			sentryVitePlugin({
 				org: process.env.SENTRY_ORG || "mario-79",
 				project: process.env.SENTRY_PROJECT || "best-shot-demo",
@@ -35,6 +35,8 @@ export default defineConfig(({ mode }) => ({
 				telemetry: false,
 				sourcemaps: {
 					assets: "./dist/**",
+					// CRITICAL: Delete source maps after upload to prevent them from being deployed
+					filesToDeleteAfterUpload: ["./dist/**/*.map"],
 				},
 			}),
 	].filter(Boolean),
@@ -56,7 +58,7 @@ export default defineConfig(({ mode }) => ({
 
 	build: {
 		sourcemap: true,
-		minify: SENTRY_ENABLED_ENVIRONMENTS.includes(mode as any) ? "esbuild" : false,
+		minify: SENTRY_ENABLED_ENVIRONMENTS.includes(mode as SentryEnvironment) ? "esbuild" : false,
 	},
 
 	esbuild: {

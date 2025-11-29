@@ -42,17 +42,18 @@ jobs:
 
       - name: Verify no source maps in dist
         run: |
-          if ls dist/*.map 1> /dev/null 2>&1; then
+          MAP_FILES=$(find dist -name "*.map" -type f)
+          if [ -n "$MAP_FILES" ]; then
             echo "❌ ERROR: Source maps found in dist/"
             echo "Files:"
-            ls -la dist/*.map
+            find dist -name "*.map" -type f -exec ls -lh {} \;
             echo ""
             echo "DEPLOYMENT BLOCKED!"
             echo "Source maps must NOT be deployed to production."
             echo "This indicates the Sentry plugin failed to delete them."
             exit 1
           fi
-          echo "✅ No source maps found - safe to deploy"
+          echo "✅ No source maps found in dist/ - safe to deploy"
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -221,17 +222,18 @@ jobs:
 
       - name: Verify no source maps in dist
         run: |
-          if ls dist/*.map 1> /dev/null 2>&1; then
+          MAP_FILES=$(find dist -name "*.map" -type f)
+          if [ -n "$MAP_FILES" ]; then
             echo "❌ ERROR: Source maps found in dist/"
             echo "Files:"
-            ls -la dist/*.map
+            find dist -name "*.map" -type f -exec ls -lh {} \;
             echo ""
             echo "DEPLOYMENT BLOCKED!"
             echo "Source maps must NOT be deployed to production."
             echo "This indicates the Sentry plugin failed to delete them."
             exit 1
           fi
-          echo "✅ No source maps found - safe to deploy"
+          echo "✅ No source maps found in dist/ - safe to deploy"
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -401,17 +403,18 @@ jobs:
 
       - name: Verify no source maps in dist
         run: |
-          if ls dist/*.map 1> /dev/null 2>&1; then
+          MAP_FILES=$(find dist -name "*.map" -type f)
+          if [ -n "$MAP_FILES" ]; then
             echo "❌ ERROR: Source maps found in dist/"
             echo "Files:"
-            ls -la dist/*.map
+            find dist -name "*.map" -type f -exec ls -lh {} \;
             echo ""
             echo "DEPLOYMENT BLOCKED!"
             echo "Source maps must NOT be deployed to production."
             echo "This indicates the Sentry plugin failed to delete them."
             exit 1
           fi
-          echo "✅ No source maps found - safe to deploy"
+          echo "✅ No source maps found in dist/ - safe to deploy"
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1

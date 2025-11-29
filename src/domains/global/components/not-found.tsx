@@ -14,7 +14,7 @@ export const AppNotFound = () => {
 					Not found
 				</Typography>
 				<Typography variant="paragraph" color={theme.palette.teal[500]}>
-					This page doesn't exist. Please,{" "}
+					Ops! This page doesn't exist. Please,{" "}
 					<Link to="/dashboard" style={{ color: theme.palette.neutral[100] }}>
 						<strong>click here</strong>
 					</Link>{" "}

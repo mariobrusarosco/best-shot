@@ -42,7 +42,6 @@ export const Provider = ({ children }: { children: React.ReactNode }) => {
 			return Promise.reject(error);
 		}
 	};
-
 	const [state, setState] = useState<IAuthHook>({
 		isAuthenticated,
 		authId: undefined,
@@ -51,6 +50,15 @@ export const Provider = ({ children }: { children: React.ReactNode }) => {
 		login: appLogin,
 		signup: appSignup,
 	});
+	// Update state when functions change (though they are stable here)
+	// We need to keep state in sync with isAuthenticated
+	useEffect(() => {
+		setState((prev) => ({
+			...prev,
+			isAuthenticated,
+			// only update if changed to avoid loop, but here logic is simple
+		}));
+	}, [isAuthenticated]);
 
 	const { mutate } = useMutation({
 		mutationFn: authenticatedLocalMember,

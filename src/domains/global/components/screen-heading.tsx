@@ -34,6 +34,7 @@ export const ScreenHeading = (props: Props & WrapperProps) => {
 					{subtitle ? (
 						<Typography
 							data-ui="subtitle"
+							data-testid="screen-heading-subtitle"
 							variant={subtitleVariant}
 							color="teal.500"
 							minHeight="18px"

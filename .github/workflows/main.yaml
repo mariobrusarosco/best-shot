@@ -27,10 +27,12 @@ jobs:
         id: yarn-cache
         with:
           path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}-v2
+          restore-keys: |
+            ${{ runner.os }}-yarn-
 
       - name: Install dependencies
-        run: yarn
+        run: yarn install --frozen-lockfile
         env:
           HUSKY: 0
 
@@ -207,10 +209,12 @@ jobs:
         id: yarn-cache
         with:
           path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}-v2
+          restore-keys: |
+            ${{ runner.os }}-yarn-
 
       - name: Install dependencies
-        run: yarn
+        run: yarn install --frozen-lockfile
         env:
           HUSKY: 0
 
@@ -388,10 +392,12 @@ jobs:
         id: yarn-cache
         with:
           path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}-v2
+          restore-keys: |
+            ${{ runner.os }}-yarn-
 
       - name: Install dependencies
-        run: yarn
+        run: yarn install --frozen-lockfile
         env:
           HUSKY: 0
 

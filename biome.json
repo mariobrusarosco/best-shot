@@ -20,7 +20,8 @@
 			"!**/*.spec.ts",
 			"!**/*.spec.tsx",
 			"!**/*.spec.js",
-			"!**/*.spec.jsx"
+			"!**/*.spec.jsx",
+			"!**/routeTree.gen.ts"
 		],
 		"ignoreUnknown": false
 	},

@@ -11,8 +11,8 @@ export const useResetUserActivity = () => {
 			queryClient.invalidateQueries({ queryKey: ["leagues"] });
 			queryClient.invalidateQueries({ queryKey: ["guesses"] });
 			queryClient.invalidateQueries({ queryKey: ["standings"] });
-            // Also invalidate user member data potentially
-            queryClient.invalidateQueries({ queryKey: ["member"] });
+			// Also invalidate user member data potentially
+			queryClient.invalidateQueries({ queryKey: ["member"] });
 		},
 	});
 };

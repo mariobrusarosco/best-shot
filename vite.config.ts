@@ -4,7 +4,10 @@ import { TanStackRouterVite } from "@tanstack/router-plugin/vite";
 import react from "@vitejs/plugin-react";
 import { defineConfig } from "vite";
 import checker from "vite-plugin-checker";
-import { SENTRY_ENABLED_ENVIRONMENTS, type SentryEnvironment } from "./src/configuration/monitoring/constants";
+import {
+	SENTRY_ENABLED_ENVIRONMENTS,
+	type SentryEnvironment,
+} from "./src/configuration/monitoring/constants";
 
 export default defineConfig(({ mode }) => ({
 	server: {

@@ -139,7 +139,7 @@ export const AppCard = forwardRef<HTMLDivElement, AppCardProps>(
 		return (
 			<StyledCard
 				ref={ref}
-				// @ts-ignore - Custom variant handled by styled component
+				// @ts-expect-error - Custom variant handled by styled component
 				variant={variant}
 				interactive={interactive}
 				loading={loading}

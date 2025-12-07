@@ -1,5 +1,6 @@
 import { Box, CircularProgress, IconButton, styled, Tooltip, Typography } from "@mui/material";
 import { createLazyFileRoute } from "@tanstack/react-router";
+import { useState } from "react";
 import {
 	useAdminCreateMatches,
 	useAdminCreateRounds,
@@ -15,9 +16,8 @@ import {
 } from "@/domains/admin/hooks";
 import { ScreenHeadingSkeleton } from "@/domains/global/components/screen-heading";
 import { AppIcon, AppTypography } from "@/domains/ui-system/components";
-import { AppPill } from "@/domains/ui-system/components/pill/pill";
 import { AppInput } from "@/domains/ui-system/components/input/input";
-import { useState } from "react";
+import { AppPill } from "@/domains/ui-system/components/pill/pill";
 
 export const Route = createLazyFileRoute("/_auth/admin/tournament/$tournamentId/_layout/")({
 	component: TournamentDetailPage,

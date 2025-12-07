@@ -1,8 +1,8 @@
 import { Box, styled } from "@mui/material";
 import { useState } from "react";
+import { ResetUserActivityButton } from "@/domains/admin/components/reset-user-activity/reset-user-activity";
 import { CreateTournamentModal } from "@/domains/admin/components/tournaments/create-tournament-modal/create-tournament-modal";
 import TournamentsTable from "@/domains/admin/components/tournaments/tournaments-table/tournaments-table";
-import { ResetUserActivityButton } from "@/domains/admin/components/reset-user-activity/reset-user-activity";
 import { ScreenHeading, ScreenHeadingSkeleton } from "@/domains/global/components/screen-heading";
 import { AppTypography } from "@/domains/ui-system/components";
 import { AppButton } from "@/domains/ui-system/components/app-button/app-button";

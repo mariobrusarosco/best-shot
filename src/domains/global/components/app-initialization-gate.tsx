@@ -16,4 +16,3 @@ export const AppInitializationGate = ({ children }: AppInitializationGateProps) 
 
 	return <>{children}</>;
 };
-

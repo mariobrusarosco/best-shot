@@ -12,33 +12,28 @@ export const useDatabaseAuth = () => {
 
 			if (!tokenValidation.success) {
 				const errors = tokenValidation.error.format();
-				const errorMessage = `Invalid Auth0 token data. Missing or invalid required fields`
-			
-				
+				const errorMessage = `Invalid Auth0 token data. Missing or invalid required fields`;
+
 				ErrorHandling.logError({
 					source: "DATABASE_AUTH_SIGN_VALIDATION",
 					message: errorMessage,
 					details: errors,
 				});
-				
+
 				throw new Error(errorMessage);
 			}
 
 			// Transform Auth0 token to member creation format
 			const memberData = createMemberFromAuth0Schema.parse(user);
-			const response = await api.post(
-				"auth/create",
-				memberData,
-				{
-					baseURL: import.meta.env.VITE_BEST_SHOT_API_V2,
-				}
-			);
+			const response = await api.post("auth/create", memberData, {
+				baseURL: import.meta.env.VITE_BEST_SHOT_API_V2,
+			});
 
 			return response.data as string;
 		},
 		onError: (error: AxiosError) => {
 			ErrorHandling.logError({
-				source: 'DATABASE_AUTH_SIGN',
+				source: "DATABASE_AUTH_SIGN",
 				message: error.message,
 				code: error.code,
 				details: error.response?.data,

@@ -64,4 +64,3 @@ export const createMemberFromAuth0Schema = auth0TokenSchema.transform((token) =>
  * Type for member creation request (mapped from Auth0 token)
  */
 export type CreateMemberFromAuth0 = z.infer<typeof createMemberFromAuth0Schema>;
-

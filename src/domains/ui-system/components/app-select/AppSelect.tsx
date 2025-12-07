@@ -238,7 +238,7 @@ export const AppSelect = forwardRef<HTMLDivElement, AppSelectProps>(
 				<StyledSelect
 					labelId={`${props.id || "select"}-label`}
 					label={label}
-					// @ts-ignore - Custom variant handled by styled component
+					// @ts-expect-error - Custom variant handled by styled component
 					variant={variant}
 					loading={loading}
 					disabled={loading || props.disabled}

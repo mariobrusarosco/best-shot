@@ -1,6 +1,6 @@
 import { useEffect } from "react";
-import { useMember } from "@/domains/member/hooks/use-member";
 import { Authentication } from "@/domains/authentication";
+import { useMember } from "@/domains/member/hooks/use-member";
 import { Monitoring } from "../index";
 
 const { useAppAuth } = Authentication;

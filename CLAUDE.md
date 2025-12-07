@@ -118,6 +118,14 @@ The codebase follows a domain-driven structure under `src/domains/`:
 - **Validation**: Zod schemas with `@hookform/resolvers/zod` for runtime validation
 - **Patterns**: See guides 0005 (React Hook Form) and 0006 (Zod Validation) for implementation details
 
+### Refactoring Guidelines
+
+**Refactoring `theme.unstable_sx`**
+- Replace `theme.unstable_sx` usage with standard `styled` syntax accessing `theme` directly.
+- Use explicit theme properties (e.g., `theme.palette.primary.main` instead of "primary.main").
+- Use standard CSS object syntax instead of system prop syntax within the styled callback.
+- **Why**: `unstable_sx` is an internal API that may break in future updates. Standardizing on `styled()` improves type safety and maintainability.
+
 ### Validation
 Uses Zod schemas extensively for runtime validation, particularly in tournament and API layers.
 

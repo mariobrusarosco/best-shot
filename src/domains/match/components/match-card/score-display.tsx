@@ -7,6 +7,8 @@ export const ScoreDisplay = ({
 }: {
 	matchVenueData: IMatch["home"] | IMatch["away"];
 }) => {
+	if (!matchVenueData.score) return null;
+
 	return (
 		<Wrapper data-ui="score-display">
 			<Typography textTransform="uppercase" variant="tag" fontWeight={500}>

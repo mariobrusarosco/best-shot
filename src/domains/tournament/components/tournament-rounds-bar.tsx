@@ -3,8 +3,8 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/system/Box";
 import { useEffect } from "react";
 import { AppPill } from "@/domains/ui-system/components/pill/pill";
+import { UIHelper } from "@/domains/ui-system/theme";
 import { OverflowOnHover } from "@/domains/ui-system/utils";
-import { UIHelper } from "@/theming/theme";
 import { useTournament } from "../hooks/use-tournament";
 import { useTournamentRounds } from "../hooks/use-tournament-rounds";
 

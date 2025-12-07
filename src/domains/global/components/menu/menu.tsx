@@ -2,7 +2,7 @@ import { styled, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { Link } from "@tanstack/react-router";
 import { BestShotIcon } from "@/assets/best-shot-icon";
-import { UIHelper } from "@/theming/theme";
+import { UIHelper } from "@/domains/ui-system/theme";
 import { MenuButton } from "./menu-button";
 
 export const Menu = () => {

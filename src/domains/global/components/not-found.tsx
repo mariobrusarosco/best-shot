@@ -2,7 +2,7 @@ import { styled, Typography } from "@mui/material";
 import { Stack } from "@mui/system";
 import { Link } from "@tanstack/react-router";
 import { BestShotIcon } from "@/assets/best-shot-icon";
-import { theme } from "@/theming/theme";
+import { theme } from "@/domains/ui-system/theme";
 
 export const AppNotFound = () => {
 	return (

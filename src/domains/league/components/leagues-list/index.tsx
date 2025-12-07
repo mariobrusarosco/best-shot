@@ -3,8 +3,8 @@ import type { ILeague } from "@/domains/league/typing";
 import { AppIcon } from "@/domains/ui-system/components/icon/icon";
 import { AppLinkCard } from "@/domains/ui-system/components/link-card/link-card";
 import { shimmerEffect } from "@/domains/ui-system/components/skeleton/skeleton";
+import { UIHelper } from "@/domains/ui-system/theme";
 import { OverflowAuto } from "@/domains/ui-system/utils";
-import { UIHelper } from "@/theming/theme";
 
 const LeaguesList = ({ leagues }: { leagues: ILeague[] }) => {
 	return (

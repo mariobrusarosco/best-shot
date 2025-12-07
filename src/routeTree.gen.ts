@@ -31,6 +31,7 @@ const AuthTournamentsTournamentIdImport = createFileRoute(
 const AuthTournamentsIndexLazyImport = createFileRoute('/_auth/tournaments/')()
 const AuthLeaguesIndexLazyImport = createFileRoute('/_auth/leagues/')()
 const AuthAdminIndexLazyImport = createFileRoute('/_auth/admin/')()
+const AuthAdminUiSystemLazyImport = createFileRoute('/_auth/admin/ui-system')()
 const AuthAdminTournamentTournamentIdImport = createFileRoute(
   '/_auth/admin/tournament/$tournamentId',
 )()
@@ -133,6 +134,14 @@ const AuthAdminIndexLazyRoute = AuthAdminIndexLazyImport.update({
   getParentRoute: () => AuthRoute,
 } as any).lazy(() =>
   import('./routes/_auth.admin/index.lazy').then((d) => d.Route),
+)
+
+const AuthAdminUiSystemLazyRoute = AuthAdminUiSystemLazyImport.update({
+  id: '/admin/ui-system',
+  path: '/admin/ui-system',
+  getParentRoute: () => AuthRoute,
+} as any).lazy(() =>
+  import('./routes/_auth.admin/ui-system.lazy').then((d) => d.Route),
 )
 
 const AuthAdminTournamentTournamentIdRoute =
@@ -291,6 +300,13 @@ declare module '@tanstack/react-router' {
       path: '/my-account'
       fullPath: '/my-account'
       preLoaderRoute: typeof AuthMyAccountImport
+      parentRoute: typeof AuthImport
+    }
+    '/_auth/admin/ui-system': {
+      id: '/_auth/admin/ui-system'
+      path: '/admin/ui-system'
+      fullPath: '/admin/ui-system'
+      preLoaderRoute: typeof AuthAdminUiSystemLazyImport
       parentRoute: typeof AuthImport
     }
     '/_auth/admin/': {
@@ -481,6 +497,7 @@ const AuthAdminTournamentTournamentIdRouteWithChildren =
 interface AuthRouteChildren {
   AuthDashboardRoute: typeof AuthDashboardRoute
   AuthMyAccountRoute: typeof AuthMyAccountRoute
+  AuthAdminUiSystemLazyRoute: typeof AuthAdminUiSystemLazyRoute
   AuthAdminIndexLazyRoute: typeof AuthAdminIndexLazyRoute
   AuthLeaguesIndexLazyRoute: typeof AuthLeaguesIndexLazyRoute
   AuthTournamentsIndexLazyRoute: typeof AuthTournamentsIndexLazyRoute
@@ -492,6 +509,7 @@ interface AuthRouteChildren {
 const AuthRouteChildren: AuthRouteChildren = {
   AuthDashboardRoute: AuthDashboardRoute,
   AuthMyAccountRoute: AuthMyAccountRoute,
+  AuthAdminUiSystemLazyRoute: AuthAdminUiSystemLazyRoute,
   AuthAdminIndexLazyRoute: AuthAdminIndexLazyRoute,
   AuthLeaguesIndexLazyRoute: AuthLeaguesIndexLazyRoute,
   AuthTournamentsIndexLazyRoute: AuthTournamentsIndexLazyRoute,
@@ -512,6 +530,7 @@ export interface FileRoutesByFullPath {
   '/signup': typeof SignupLazyRoute
   '/dashboard': typeof AuthDashboardRoute
   '/my-account': typeof AuthMyAccountRoute
+  '/admin/ui-system': typeof AuthAdminUiSystemLazyRoute
   '/admin': typeof AuthAdminIndexLazyRoute
   '/leagues': typeof AuthLeaguesIndexLazyRoute
   '/tournaments': typeof AuthTournamentsIndexLazyRoute
@@ -535,6 +554,7 @@ export interface FileRoutesByTo {
   '/signup': typeof SignupLazyRoute
   '/dashboard': typeof AuthDashboardRoute
   '/my-account': typeof AuthMyAccountRoute
+  '/admin/ui-system': typeof AuthAdminUiSystemLazyRoute
   '/admin': typeof AuthAdminIndexLazyRoute
   '/leagues': typeof AuthLeaguesIndexLazyRoute
   '/tournaments': typeof AuthTournamentsIndexLazyRoute
@@ -558,6 +578,7 @@ export interface FileRoutesById {
   '/signup': typeof SignupLazyRoute
   '/_auth/dashboard': typeof AuthDashboardRoute
   '/_auth/my-account': typeof AuthMyAccountRoute
+  '/_auth/admin/ui-system': typeof AuthAdminUiSystemLazyRoute
   '/_auth/admin/': typeof AuthAdminIndexLazyRoute
   '/_auth/leagues/': typeof AuthLeaguesIndexLazyRoute
   '/_auth/tournaments/': typeof AuthTournamentsIndexLazyRoute
@@ -585,6 +606,7 @@ export interface FileRouteTypes {
     | '/signup'
     | '/dashboard'
     | '/my-account'
+    | '/admin/ui-system'
     | '/admin'
     | '/leagues'
     | '/tournaments'
@@ -607,6 +629,7 @@ export interface FileRouteTypes {
     | '/signup'
     | '/dashboard'
     | '/my-account'
+    | '/admin/ui-system'
     | '/admin'
     | '/leagues'
     | '/tournaments'
@@ -628,6 +651,7 @@ export interface FileRouteTypes {
     | '/signup'
     | '/_auth/dashboard'
     | '/_auth/my-account'
+    | '/_auth/admin/ui-system'
     | '/_auth/admin/'
     | '/_auth/leagues/'
     | '/_auth/tournaments/'
@@ -687,6 +711,7 @@ export const routeTree = rootRoute
       "children": [
         "/_auth/dashboard",
         "/_auth/my-account",
+        "/_auth/admin/ui-system",
         "/_auth/admin/",
         "/_auth/leagues/",
         "/_auth/tournaments/",
@@ -710,6 +735,10 @@ export const routeTree = rootRoute
     },
     "/_auth/my-account": {
       "filePath": "_auth.my-account.tsx",
+      "parent": "/_auth"
+    },
+    "/_auth/admin/ui-system": {
+      "filePath": "_auth.admin/ui-system.lazy.tsx",
       "parent": "/_auth"
     },
     "/_auth/admin/": {

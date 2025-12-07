@@ -12,7 +12,7 @@ import { AppButton } from "@/domains/ui-system/components/app-button/app-button"
 import { AppIcon } from "@/domains/ui-system/components/icon/icon";
 import { shimmerEffect } from "@/domains/ui-system/components/skeleton/skeleton";
 import { Surface } from "@/domains/ui-system/components/surface/surface";
-import { theme, UIHelper } from "@/theming/theme";
+import { theme, UIHelper } from "@/domains/ui-system/theme";
 import type { IMatch } from "../../typing";
 import { defineMatchTimebox } from "../../utils";
 import { CardAnimation } from "./animations";
@@ -132,7 +132,8 @@ const MatchCard = ({ guess, match, guessMutation }: Props) => {
 			<Teams data-ui="teams">
 				<Team data-venue="home" data-ui="team">
 					<TeamDisplay team={match.home} />
-					<Box display="flex" gap={1}>
+					<Divider sx={{ borderColor: "black.300" }} />
+					<Box display="flex" gap={1} flexDirection="column" width="80px">
 						<ScoreDisplay matchVenueData={match.home} />
 						<GuessDisplay cardExpanded={isOpen} data={guess.home} />
 					</Box>
@@ -146,9 +147,10 @@ const MatchCard = ({ guess, match, guessMutation }: Props) => {
 
 				<Team data-venue="away" data-ui="team">
 					<TeamDisplay team={match.away} />
-					<Box display="flex" gap={1}>
-						<GuessDisplay cardExpanded={isOpen} data={guess.away} />
+					<Divider sx={{ borderColor: "black.300" }} />
+					<Box display="flex" gap={1} flexDirection="column" width="80px">
 						<ScoreDisplay matchVenueData={match.away} />
+						<GuessDisplay cardExpanded={isOpen} data={guess.away} />
 					</Box>
 					<ScoreInput
 						guessStatus={guess.status}

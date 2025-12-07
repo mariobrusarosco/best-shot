@@ -8,7 +8,7 @@ import { type FABAction, FABMenu } from "@/domains/ui-system/components/fab-menu
 import { AppIcon } from "@/domains/ui-system/components/icon/icon";
 import { AuthenticatedScreenLayout } from "@/domains/ui-system/layout/authenticated";
 import { ScreenMainContent } from "@/domains/ui-system/layout/screen-main-content";
-import { UIHelper } from "@/theming/theme";
+import { UIHelper } from "@/domains/ui-system/theme";
 import { useLeagues } from "../../domains/league/hooks/use-leagues";
 
 const LeaguesPage = () => {

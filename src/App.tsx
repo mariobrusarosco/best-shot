@@ -5,12 +5,12 @@ import { AppQueryProvider } from "@/configuration/app-query";
 import { SentryUserIdentifier } from "@/configuration/monitoring/components/SentryUserIdentifier";
 import { AppError } from "@/domains/global/components/error";
 import { theme } from "@/domains/ui-system/theme";
+import "@/domains/ui-system/theme/fonts";
+import { GlobalCSS } from "@/domains/ui-system/theme/global-styles";
 import LaunchDarklyUserIdentifier from "@/utils/LaunchDarklyUserIdentifier";
 import { AppRouter } from "./app-router";
 import { AppConfiguration } from "./configuration";
 import { Authentication } from "./domains/authentication";
-import { GlobalCSS } from "./theming/global-styles";
-import "./theming/load-configuration";
 
 const { AuthProvider } = Authentication;
 

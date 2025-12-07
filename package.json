@@ -32,8 +32,8 @@
 		"@fontsource/poppins": "^5.1.0",
 		"@hookform/resolvers": "^3.3.4",
 		"@mui/base": "^5.0.0-beta.70",
-		"@mui/material": "latest",
-		"@mui/system": "latest",
+		"@mui/material": "^7.3.1",
+		"@mui/system": "^7.3.1",
 		"@mui/x-date-pickers": "^8.8.0",
 		"@sentry/react": "^10.22.0",
 		"@sentry/vite-plugin": "^2.22.7",
@@ -58,8 +58,8 @@
 		"zod": "^3.23.8"
 	},
 	"devDependencies": {
-		"@biomejs/biome": "2.1.2",
-		"@mui/mcp": "latest",
+		"@biomejs/biome": "^2.1.2",
+		"@mui/mcp": "^0.1.0",
 		"@playwright/test": "^1.51.1",
 		"@tanstack/router-cli": "^1.134.9",
 		"@tanstack/router-devtools": "^1.47.1",

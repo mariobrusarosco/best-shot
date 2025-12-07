@@ -53,21 +53,12 @@ const LoginScreen = () => {
 					{APP_MODE === "demo" ? "ENTER DEMO" : "LOGIN"}
 				</LoginBUtton>
 
-				<Stack
-					gap={2}
-					direction="row"
-					alignItems="center"
-					justifyContent="space-between"
-				>
+				<Stack gap={2} direction="row" alignItems="center" justifyContent="space-between">
 					<Typography variant="topic" color={theme.palette.neutral[100]}>
 						New to Best Shot?
 					</Typography>
 					<RegisterNow to="/signup">
-						<Typography
-							variant="label"
-							color={theme.palette.teal[500]}
-							textTransform="uppercase"
-						>
+						<Typography variant="label" color={theme.palette.teal[500]} textTransform="uppercase">
 							Register now!
 						</Typography>
 					</RegisterNow>

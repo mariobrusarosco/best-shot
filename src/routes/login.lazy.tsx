@@ -1,6 +1,7 @@
 import { Box, Stack, styled, Typography } from "@mui/material";
 import { createLazyFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { Authentication } from "@/domains/authentication";
+import { APP_MODE } from "@/domains/global/utils";
 import { AppButton } from "@/domains/ui-system/components/button/button";
 import { PublicLayout } from "@/domains/ui-system/layout/public";
 import { theme } from "@/domains/ui-system/theme";
@@ -18,6 +19,22 @@ const LoginScreen = () => {
 					Best Shot
 				</Typography>
 
+				{APP_MODE === "demo" && (
+					<Box
+						sx={{
+							bgcolor: "warning.main",
+							p: 1,
+							borderRadius: 1,
+							mb: 2,
+							textAlign: "center",
+						}}
+					>
+						<Typography variant="caption" color="warning.contrastText">
+							DEMO MODE: No credentials needed. Click Login to access as Guest.
+						</Typography>
+					</Box>
+				)}
+
 				<LoginBUtton
 					slotProps={{
 						root: {
@@ -33,15 +50,24 @@ const LoginScreen = () => {
 						},
 					}}
 				>
-					LOGIN
+					{APP_MODE === "demo" ? "ENTER DEMO" : "LOGIN"}
 				</LoginBUtton>
 
-				<Stack gap={2} direction="row" alignItems="center" justifyContent="space-between">
+				<Stack
+					gap={2}
+					direction="row"
+					alignItems="center"
+					justifyContent="space-between"
+				>
 					<Typography variant="topic" color={theme.palette.neutral[100]}>
 						New to Best Shot?
 					</Typography>
 					<RegisterNow to="/signup">
-						<Typography variant="label" color={theme.palette.teal[500]} textTransform="uppercase">
+						<Typography
+							variant="label"
+							color={theme.palette.teal[500]}
+							textTransform="uppercase"
+						>
 							Register now!
 						</Typography>
 					</RegisterNow>

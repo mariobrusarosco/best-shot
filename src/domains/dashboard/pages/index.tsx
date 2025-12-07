@@ -7,7 +7,7 @@ import { useMember } from "@/domains/member/hooks/use-member";
 import { useMemberPerformance } from "@/domains/member/hooks/use-member-performance";
 import { AuthenticatedScreenLayout } from "@/domains/ui-system/layout/authenticated";
 import { ScreenMainContent } from "@/domains/ui-system/layout/screen-main-content";
-import { UIHelper } from "@/theming/theme";
+import { UIHelper } from "@/domains/ui-system/theme";
 import TournamentsPerf from "../components/tournaments-perf";
 
 const DashboardPage = () => {

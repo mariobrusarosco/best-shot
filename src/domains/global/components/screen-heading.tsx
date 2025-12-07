@@ -2,7 +2,7 @@ import { styled, Typography, useMediaQuery } from "@mui/material";
 import { shimmerEffect } from "@/domains/ui-system/components/skeleton/skeleton";
 import { Surface, type SurfaceProps } from "@/domains/ui-system/components/surface/surface";
 import { GoBackButton } from "@/domains/ui-system/go-back-button/go-back-button";
-import { UIHelper } from "@/theming/theme";
+import { UIHelper } from "@/domains/ui-system/theme";
 
 interface Props extends SurfaceProps {
 	children?: React.ReactNode;

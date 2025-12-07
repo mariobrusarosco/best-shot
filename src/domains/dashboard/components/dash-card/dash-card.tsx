@@ -1,7 +1,7 @@
 import { styled } from "@mui/system";
 import { shimmerEffect } from "@/domains/ui-system/components/skeleton/skeleton";
 import { Surface } from "@/domains/ui-system/components/surface/surface";
-import { UIHelper } from "@/theming/theme";
+import { UIHelper } from "@/domains/ui-system/theme";
 
 const Card = styled(Surface)(({ theme }) =>
 	theme.unstable_sx({

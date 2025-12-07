@@ -3,7 +3,7 @@ import { Box, styled, Typography } from "@mui/material";
 import { useLocation } from "@tanstack/react-router";
 import { CustomLink } from "@/domains/ui-system/components/link/link";
 import { shimmerEffect } from "@/domains/ui-system/components/skeleton/skeleton";
-import { UIHelper } from "@/theming/theme";
+import { UIHelper } from "@/domains/ui-system/theme";
 import type { ITournament } from "../schemas";
 
 const TournamentTabs = ({ tournament }: { tournament?: ITournament }) => {

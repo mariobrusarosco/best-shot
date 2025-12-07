@@ -106,11 +106,11 @@ declare module "@mui/material/Typography" {
 		tag: true;
 		paragraph: true;
 		label: true;
-		h5: false;
-		subtitle1: false;
-		subtitle2: false;
-		body1: false;
-		body2: false;
+		h5: true;
+		subtitle1: true;
+		subtitle2: true;
+		body1: true;
+		body2: true;
 	}
 }
 

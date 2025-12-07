@@ -222,7 +222,7 @@ const ErrorDisplay = <T extends FieldValues>({
 						const hasError = homeFieldState.error || awayFieldState.error;
 						const errorMessage = homeFieldState.error?.message || awayFieldState.error?.message;
 
-						if (!hasError) return <></>;
+						if (!hasError) return <span style={{ display: "none" }} />;
 
 						return (
 							<Typography

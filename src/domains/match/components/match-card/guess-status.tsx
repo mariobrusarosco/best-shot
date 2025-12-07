@@ -2,7 +2,7 @@ import { Stack, Typography } from "@mui/material";
 import type { IGuess } from "@/domains/guess/typing";
 import { AppIcon } from "@/domains/ui-system/components/icon/icon";
 import { AppPill } from "@/domains/ui-system/components/pill/pill";
-import { theme } from "@/theming/theme";
+import { theme } from "@/domains/ui-system/theme";
 
 export const GuessStatus = ({ guess }: { guess: IGuess }) => {
 	if (guess.status === "paused")

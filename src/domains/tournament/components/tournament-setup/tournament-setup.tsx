@@ -2,7 +2,7 @@ import { Stack, Typography } from "@mui/material";
 import { getRouteApi } from "@tanstack/react-router";
 import { BestShotIcon } from "@/assets/best-shot-icon";
 import { AppButton } from "@/domains/ui-system/components/button/button";
-import { theme } from "@/theming/theme";
+import { theme } from "@/domains/ui-system/theme";
 import { useTournamentSetup } from "../../hooks/use-tournament-setup";
 
 const route = getRouteApi("/_auth/tournaments/$tournamentId");

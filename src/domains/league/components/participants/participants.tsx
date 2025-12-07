@@ -15,11 +15,10 @@ const LeagueTournaments = ({ participants }: { participants: IParticipant[] | un
 	if (!participants) return null;
 
 	return (
-		<Stack gap={6.5} data-ui="league-participants" flex={1}>
+		<Stack gap={2} data-ui="league-participants" flex={1}>
 			<AppPill.Component bgcolor="teal.500" color="neutral.100" width={100} height={25}>
 				<Typography variant="tag">Participants</Typography>
 			</AppPill.Component>
-
 			<ListGrid>
 				{participants.map((participant, index) => (
 					<Participant

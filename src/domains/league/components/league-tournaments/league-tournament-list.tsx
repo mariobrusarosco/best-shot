@@ -74,37 +74,33 @@ export const LeagueTournaments = ({
 	);
 };
 
-const EmptyState = styled(Box)(({ theme }) =>
-	theme.unstable_sx({
-		display: "flex",
-		flexDirection: "column",
-		backgroundColor: "black.800",
-		borderRadius: 2,
-		gap: 4,
-		px: 2,
-		py: 4,
-		mt: 4,
-		color: "neutral.100",
-	})
-);
+const EmptyState = styled(Box)(({ theme }) => ({
+	display: "flex",
+	flexDirection: "column",
+	backgroundColor: theme.palette.black[800],
+	borderRadius: theme.shape.borderRadius,
+	gap: theme.spacing(4),
+	paddingLeft: theme.spacing(2),
+	paddingRight: theme.spacing(2),
+	paddingTop: theme.spacing(4),
+	paddingBottom: theme.spacing(4),
+	marginTop: theme.spacing(4),
+	color: theme.palette.neutral[100],
+}));
 
-const EmptyStartButton = styled(AppButton)(({ theme }) =>
-	theme.unstable_sx({
-		backgroundColor: "teal.500",
-		color: "neutral.100",
-		p: 1,
-		borderRadius: 2,
-		maxWidth: "180px",
-	})
-);
+const EmptyStartButton = styled(AppButton)(({ theme }) => ({
+	backgroundColor: theme.palette.teal[500],
+	color: theme.palette.neutral[100],
+	padding: theme.spacing(1),
+	borderRadius: theme.shape.borderRadius,
+	maxWidth: "180px",
+}));
 
-const ListGrid = styled("ul")(({ theme }) =>
-	theme.unstable_sx({
-		display: "flex",
-		gap: 1,
-		flexWrap: "wrap",
-		margin: 0,
-		padding: 0,
-		listStyle: "none",
-	})
-);
+const ListGrid = styled("ul")(({ theme }) => ({
+	display: "flex",
+	gap: theme.spacing(1),
+	flexWrap: "wrap",
+	margin: 0,
+	padding: 0,
+	listStyle: "none",
+}));

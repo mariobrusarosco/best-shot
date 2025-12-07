@@ -104,3 +104,4 @@ The goal is to modernize the UI and Logic (Domains) without disrupting the exist
 - [ ] Project size is reduced.
 - [ ] Architecture is clean and vertical.
 
+

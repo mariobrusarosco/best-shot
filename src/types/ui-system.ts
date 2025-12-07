@@ -261,6 +261,7 @@ export interface AppBoxProps extends MuiBoxProps, BaseComponentProps {
 /**
  * Base form component props for react-hook-form integration
  */
+// biome-ignore lint/suspicious/noExplicitAny: Generic Record<string, any> is required for flexible form constraints
 export interface BaseFormProps<T extends Record<string, any>> {
 	/**
 	 * Field name for react-hook-form
@@ -269,7 +270,8 @@ export interface BaseFormProps<T extends Record<string, any>> {
 	/**
 	 * Form control from react-hook-form
 	 */
-	control: any; // Using any to avoid complex react-hook-form typing
+	// biome-ignore lint/suspicious/noExplicitAny: Using any to avoid complex react-hook-form typing which can be fragile
+	control: any;
 	/**
 	 * Field label
 	 */
@@ -287,6 +289,7 @@ export interface BaseFormProps<T extends Record<string, any>> {
 /**
  * AppFormInput component props
  */
+// biome-ignore lint/suspicious/noExplicitAny: Generic constraint
 export interface AppFormInputProps<T extends Record<string, any>>
 	extends BaseFormProps<T>,
 		Omit<AppTextFieldProps, "name" | "control"> {
@@ -311,6 +314,7 @@ export interface AppFormInputProps<T extends Record<string, any>>
 /**
  * AppFormSelect component props
  */
+// biome-ignore lint/suspicious/noExplicitAny: Generic constraint
 export interface AppFormSelectProps<T extends Record<string, any>>
 	extends BaseFormProps<T>,
 		Omit<AppSelectProps, "name" | "control"> {
@@ -323,6 +327,7 @@ export interface AppFormSelectProps<T extends Record<string, any>>
 /**
  * AppFormCheckbox component props
  */
+// biome-ignore lint/suspicious/noExplicitAny: Generic constraint
 export interface AppFormCheckboxProps<T extends Record<string, any>>
 	extends BaseFormProps<T>,
 		Omit<AppCheckboxProps, "name" | "control" | "label"> {

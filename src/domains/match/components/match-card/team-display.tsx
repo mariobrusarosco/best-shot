@@ -2,7 +2,7 @@ import { Box, styled, Typography } from "@mui/material";
 import { useTournamentStandings } from "@/domains/tournament/hooks/use-tournament-standings";
 import type { ITournamentStandings } from "@/domains/tournament/schemas";
 import { AppPill } from "@/domains/ui-system/components/pill/pill";
-import { UIHelper } from "@/theming/theme";
+import { UIHelper } from "@/domains/ui-system/theme";
 import type { IMatch } from "../../typing";
 
 export const TeamDisplay = ({ team }: { team: IMatch["home"] | IMatch["away"] }) => {
@@ -12,7 +12,7 @@ export const TeamDisplay = ({ team }: { team: IMatch["home"] | IMatch["away"] })
 	return (
 		<Display data-ui="team-display">
 			<Position>
-				<Typography textTransform="uppercase" variant="caption" color="teal.500">
+				<Typography textTransform="uppercase" variant="caption" color="teal.400">
 					pos
 				</Typography>
 				<AppPill.Component bgcolor={"black.500"} minWidth={30} height={20}>
@@ -26,7 +26,7 @@ export const TeamDisplay = ({ team }: { team: IMatch["home"] | IMatch["away"] })
 				<TeamLogo src={team.badge} />
 
 				<Typography
-					variant="tag"
+					variant="caption"
 					textTransform="uppercase"
 					fontWeight={500}
 					sx={{
@@ -85,6 +85,7 @@ export const TeamLogo = styled("img")(({ theme }) =>
 
 export const Position = styled(Box)(({ theme }) => ({
 	display: "flex",
+	flexDirection: "column",
 	alignItems: "center",
 	gap: theme.spacing(1),
 }));

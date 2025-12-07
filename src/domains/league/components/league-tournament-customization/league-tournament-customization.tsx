@@ -241,10 +241,7 @@ const Card = styled(Surface)(({ theme }) =>
 		justifyContent: "space-between",
 		alignItems: "center",
 		backgroundColor: "black.800",
-		minHeight: "40px",
-		width: "48%",
-		py: 1,
-		px: 1,
+		p: 2,
 		borderRadius: 2,
 		gap: 1,
 	})

@@ -5,6 +5,8 @@
  * Uses Poppins for headings (clean, modern) and Montserrat for content (readable).
  */
 
+import { MEDIA_QUERIES } from "./breakpoints";
+
 // Font Families
 export const FONT_FAMILIES = {
 	heading: '"Poppins", sans-serif',
@@ -51,27 +53,39 @@ export const TYPOGRAPHY_VARIANTS = {
 	// Headings (Poppins - clean, modern)
 	h1: {
 		fontFamily: FONT_FAMILIES.heading,
-		fontSize: FONT_SIZES["7xl"], // 60px (existing)
-		fontWeight: FONT_WEIGHTS.medium, // 500 (existing)
+		fontSize: "2rem", // Mobile size (32px)
+		fontWeight: FONT_WEIGHTS.medium,
 		lineHeight: LINE_HEIGHTS.tight,
+		[MEDIA_QUERIES.up.tablet]: {
+			fontSize: FONT_SIZES["7xl"], // Desktop size (60px)
+		},
 	},
 	h2: {
 		fontFamily: FONT_FAMILIES.heading,
-		fontSize: FONT_SIZES["6xl"], // 48px (existing)
-		fontWeight: FONT_WEIGHTS.medium, // 500 (existing)
+		fontSize: "1.75rem", // Mobile size (28px)
+		fontWeight: FONT_WEIGHTS.medium,
 		lineHeight: LINE_HEIGHTS.tight,
+		[MEDIA_QUERIES.up.tablet]: {
+			fontSize: FONT_SIZES["6xl"], // Desktop size (48px)
+		},
 	},
 	h3: {
 		fontFamily: FONT_FAMILIES.body,
-		fontSize: FONT_SIZES["5xl"], // 42px (existing)
-		fontWeight: FONT_WEIGHTS.semiBold, // 600 (existing)
+		fontSize: "1.5rem", // Mobile size (24px)
+		fontWeight: FONT_WEIGHTS.semiBold,
 		lineHeight: LINE_HEIGHTS.normal,
+		[MEDIA_QUERIES.up.tablet]: {
+			fontSize: FONT_SIZES["5xl"], // Desktop size (42px)
+		},
 	},
 	h4: {
 		fontFamily: FONT_FAMILIES.body,
-		fontSize: FONT_SIZES["4xl"], // 36px (existing)
-		fontWeight: FONT_WEIGHTS.semiBold, // 600 (existing)
+		fontSize: "1.25rem", // Mobile size (20px)
+		fontWeight: FONT_WEIGHTS.semiBold,
 		lineHeight: LINE_HEIGHTS.normal,
+		[MEDIA_QUERIES.up.tablet]: {
+			fontSize: FONT_SIZES["4xl"], // Desktop size (36px)
+		},
 	},
 	h5: {
 		fontFamily: FONT_FAMILIES.body,
@@ -81,9 +95,12 @@ export const TYPOGRAPHY_VARIANTS = {
 	},
 	h6: {
 		fontFamily: FONT_FAMILIES.body,
-		fontSize: FONT_SIZES["2xl"], // 24px (existing)
+		fontSize: "1.125rem", // Mobile size (18px)
 		fontWeight: FONT_WEIGHTS.medium,
-		lineHeight: LINE_HEIGHTS.relaxed, // 1.5 (existing)
+		lineHeight: LINE_HEIGHTS.relaxed,
+		[MEDIA_QUERIES.up.tablet]: {
+			fontSize: FONT_SIZES["2xl"], // Desktop size (24px)
+		},
 	},
 
 	// Body Text (Montserrat - readable)
@@ -103,15 +120,21 @@ export const TYPOGRAPHY_VARIANTS = {
 	// Custom Variants (from existing system)
 	paragraph: {
 		fontFamily: FONT_FAMILIES.body,
-		fontSize: FONT_SIZES.lg, // 18px (existing)
+		fontSize: FONT_SIZES.md, // Mobile size (16px)
 		fontWeight: FONT_WEIGHTS.regular,
 		lineHeight: LINE_HEIGHTS.relaxed,
+		[MEDIA_QUERIES.up.tablet]: {
+			fontSize: FONT_SIZES.lg, // Desktop size (18px)
+		},
 	},
 	topic: {
 		fontFamily: FONT_FAMILIES.body,
-		fontSize: FONT_SIZES.md, // 16px (existing)
-		fontWeight: FONT_WEIGHTS.light, // 300 (existing)
+		fontSize: FONT_SIZES.base, // Mobile size (14px)
+		fontWeight: FONT_WEIGHTS.light,
 		lineHeight: LINE_HEIGHTS.normal,
+		[MEDIA_QUERIES.up.tablet]: {
+			fontSize: FONT_SIZES.md, // Desktop size (16px)
+		},
 	},
 	label: {
 		fontFamily: FONT_FAMILIES.heading,

@@ -1,6 +1,6 @@
 import { Box, styled } from "@mui/material";
 import { DISCLAIMER_HEIGHT } from "@/domains/global/components/beta-disclaimer";
-import { UIHelper } from "@/theming/theme";
+import { UIHelper } from "@/domains/ui-system/theme";
 
 export const AuthenticatedLayout = styled(Box)(({ theme }) => ({
 	backgroundColor: theme.palette.black[700],

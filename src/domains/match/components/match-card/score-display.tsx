@@ -7,9 +7,11 @@ export const ScoreDisplay = ({
 }: {
 	matchVenueData: IMatch["home"] | IMatch["away"];
 }) => {
+	if (!matchVenueData.score) return null;
+
 	return (
 		<Wrapper data-ui="score-display">
-			<Typography textTransform="uppercase" variant="tag" fontWeight={500}>
+			<Typography textTransform="uppercase" variant="tag" fontWeight={500} color="teal.400">
 				score
 			</Typography>
 			<AppPill.Component bgcolor={"black.500"} minWidth={30} height={20}>
@@ -24,13 +26,12 @@ export const ScoreDisplay = ({
 	);
 };
 
-export const Wrapper = styled(Box)(() => ({
+export const Wrapper = styled(Box)(({ theme }) => ({
 	display: "flex",
-	flexDirection: "column",
-	justifyContent: "space-between",
 	alignItems: "center",
-	gap: 1,
-	width: "30px",
+	justifyContent: "space-between",
+	gap: theme.spacing(0.5),
+	//   width: "30px",
 
 	"[data-card-open='true'] &": {
 		display: "none",

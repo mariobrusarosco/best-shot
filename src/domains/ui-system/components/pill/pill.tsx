@@ -22,7 +22,7 @@ const Pill = styled(Box)(({ theme }) => ({
 	minHeight: theme.spacing(3),
 
 	// Responsive text size
-	[theme.breakpoints.down("tablet")]: {
+	[theme.breakpoints.down("md")]: {
 		fontSize: "0.7rem",
 		padding: theme.spacing(0.25, 1),
 	},

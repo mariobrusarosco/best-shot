@@ -17,13 +17,13 @@ export const GridOfCards = styled(Box)(({ theme }) => ({
 	gridAutoRows: "115px",
 
 	// Responsive behavior using stable breakpoint system
-	[theme.breakpoints.up("tablet")]: {
+	[theme.breakpoints.up("md")]: {
 		gap: theme.spacing(3),
 		gridTemplateColumns: "repeat(2, minmax(100px, 320px))",
 	},
 
 	// Enhanced responsive behavior for larger screens
-	[theme.breakpoints.up("desktop")]: {
+	[theme.breakpoints.up("lg")]: {
 		gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
 	},
 }));

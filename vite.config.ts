@@ -15,6 +15,9 @@ export default defineConfig(({ mode }) => ({
 		cors: {
 			origin: "*",
 		},
+		watch: {
+			ignored: ["**/.playwright-mcp/**"],
+		},
 	},
 
 	plugins: [

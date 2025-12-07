@@ -1,14 +1,13 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Box, styled, Typography } from "@mui/material";
 import { useForm } from "react-hook-form";
-import { AppButton } from "@/domains/ui-system/components/app-button/app-button";
+import { Card, SubmitButton, Wrapper } from "@/domains/league/components/new-league/styles";
 import { AppFormInput } from "@/domains/ui-system/components/form";
 import { shimmerEffect } from "@/domains/ui-system/components/skeleton/skeleton";
-import { Surface } from "@/domains/ui-system/components/surface/surface";
 import { useLeagues } from "../../hooks/use-leagues";
 import { type CreateLeagueFormData, createLeagueSchema } from "../../schemas";
 
-const NewLeague = () => {
+export const NewLeague = () => {
 	const { createLeagueMutation } = useLeagues();
 
 	const { control, handleSubmit, reset, formState } = useForm<CreateLeagueFormData>({
@@ -28,33 +27,18 @@ const NewLeague = () => {
 	};
 
 	return (
-		<Wrapper>
-			<Typography
-				sx={{
-					mb: 1,
-				}}
-				textTransform="uppercase"
-				variant="paragraph"
-				color="neutral.100"
-			>
+		<Wrapper data-ui="new-league">
+			<Typography textTransform="uppercase" variant="paragraph" color="neutral.100">
 				create a new league
 			</Typography>
 
 			<Box component="form" onSubmit={handleSubmit(onSubmit)}>
-				<Card
-					sx={{
-						mt: 2,
-						py: 2,
-						gap: 1,
-						backgroundColor: "black.800",
-					}}
-					className="league-creation"
-				>
+				<Card data-ui="league-creation">
 					<AppFormInput
 						name="label"
 						control={control}
 						label="League Name"
-						placeholder="Enter league name..."
+						placeholder="Enter league namae..."
 						required
 					/>
 
@@ -79,38 +63,7 @@ const NewLeague = () => {
 	);
 };
 
-const Wrapper = styled(Box)(({ theme }) => ({
-	display: "flex",
-	flexDirection: "column",
-	gap: theme.spacing(2),
-}));
-
-const SubmitButton = styled(AppButton)(({ theme }) => ({
-	marginY: theme.spacing(2),
-	width: 150,
-	marginTop: theme.spacing(2),
-	padding: theme.spacing(1.5),
-	borderRadius: theme.spacing(0.5),
-	backgroundColor: theme.palette.primary.main,
-	color: theme.palette.neutral[100],
-
-	"&:hover": {
-		backgroundColor: theme.palette.primary.dark,
-	},
-}));
-
-const Card = styled(Surface)(({ theme }) => ({
-	backgroundColor: theme.palette.black[800],
-	paddingX: theme.spacing(2),
-	paddingY: theme.spacing(2),
-	borderRadius: theme.spacing(0.5),
-	display: "flex",
-	flexDirection: "column",
-	justifyContent: "center",
-	gap: theme.spacing(1),
-}));
-
-const NewLeagueSkeleton = () => {
+export const NewLeagueSkeleton = () => {
 	return (
 		<Wrapper>
 			<Skeleton height={22} />
@@ -123,8 +76,3 @@ const Skeleton = styled(Box)(() => ({
 	position: "relative",
 	...shimmerEffect(),
 }));
-
-export default {
-	Component: NewLeague,
-	Skeleton: NewLeagueSkeleton,
-};

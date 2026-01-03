@@ -1,5 +1,5 @@
 export interface IGuess {
-	id: string;
+	id: string | null;
 	matchId: string;
 	home: {
 		status: GUESS_STATUS;

@@ -1,14 +1,13 @@
 import { styled } from "@mui/material";
 import { Stack } from "@mui/system";
-import { useGuess } from "@/domains/guess/hooks/use-guess";
 import { useGuessMutation } from "@/domains/guess/hooks/use-guess-mutation";
-import type { IGuess } from "@/domains/guess/typing";
+import { useReconciledGuesses } from "@/domains/guess/hooks/use-reconciled-guesses";
 import MatchCard from "@/domains/match/components/match-card/match-card";
 import { useTournamentMatches } from "../../hooks/use-tournament-matches";
 
 const TournamentRoundOfGames = () => {
-	const guessesQuery = useGuess();
 	const matchesQuery = useTournamentMatches();
+	const guessesQuery = useReconciledGuesses(matchesQuery.data || []);
 	const guessMutation = useGuessMutation();
 
 	if (guessesQuery.isError || matchesQuery.isError) {
@@ -25,10 +24,8 @@ const TournamentRoundOfGames = () => {
 
 	return (
 		<Games className="round-games">
-			{matchesQuery.data?.map((match) => {
-				const guess = guessesQuery.data?.find((guess: IGuess) => {
-					return guess.matchId === match.id;
-				}) as IGuess;
+			{matchesQuery.data?.map((match, index) => {
+				const guess = guessesQuery.data[index];
 
 				return (
 					<li key={match.id} className="round-item match-card">

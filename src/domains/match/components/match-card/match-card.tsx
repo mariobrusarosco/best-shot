@@ -62,7 +62,7 @@ const MatchCard = ({ guess, match, guessMutation }: Props) => {
 			data-guess-status={guess.status}
 			data-id={guess.id}
 		>
-			<CardAnimation lastSavedGuess={guessMutation.data?.id === guess.id} />
+			<CardAnimation lastSavedGuess={guessMutation.data?.matchId === guess.matchId} />
 			<Header data-ui="match-card-header">
 				<Stack gap={1} display="flex" flexDirection="row" alignItems="center" width="100%">
 					<Stack direction="row" gap={1} alignItems="center">

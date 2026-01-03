@@ -29,7 +29,6 @@ export const useGuessInputs = (
 		}
 
 		return guessMutation.mutateAsync({
-			id: guess?.id || "",
 			matchId: match.id,
 			tournamentId,
 			home: { score: homeGuess },

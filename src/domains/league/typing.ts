@@ -45,7 +45,6 @@ export type CreateLeagueInput = {
 };
 
 export type CreateGuessInput = {
-	id: string;
 	matchId: string;
 	tournamentId: string;
 	home: {

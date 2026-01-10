@@ -1,7 +1,6 @@
 # ------------------------------------------------------------------------------
 # ROUTE 53 ZONE LOOKUP
 # ------------------------------------------------------------------------------
-# We assume the zone "mariobrusarosco.com" already exists in the account.
 data "aws_route53_zone" "main" {
   zone_id = "Z04955823HLJB9D4I2QWR"
 }

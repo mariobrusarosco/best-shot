@@ -33,7 +33,7 @@ jobs:
           HUSKY: 0
 
       - name: Run code quality checks
-        run: yarn check
+        run: yarn validate
 
       - name: Test build
         run: |

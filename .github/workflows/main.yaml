@@ -38,7 +38,7 @@ jobs:
           HUSKY: 0
 
       - name: Run code quality checks
-        run: yarn check
+        run: yarn validate
 
       - name: Build
         run: yarn build --mode demo
@@ -221,7 +221,7 @@ jobs:
           HUSKY: 0
 
       - name: Run code quality checks
-        run: yarn check
+        run: yarn validate
 
       - name: Build
         run: yarn build --mode staging
@@ -405,7 +405,7 @@ jobs:
           HUSKY: 0
 
       - name: Run code quality checks
-        run: yarn check
+        run: yarn validate
 
       - name: Build
         run: yarn build --mode production

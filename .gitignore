@@ -49,7 +49,9 @@ coverage
 .playwright-mcp
 
 # Terraform
+**/tfplan
 **/*.tfplan
+.terraform/
 **/.terraform/*
 *.tfstate
 *.tfstate.*

@@ -1,6 +1,6 @@
 import type { IMatch } from "@/domains/match/typing";
-import { GUESS_STATUSES } from "./typing";
 import type { GUESS_STATUS, IGuess } from "./typing";
+import { GUESS_STATUSES } from "./typing";
 
 /**
  * Calculates if user has lost the time window to guess based on match date
@@ -71,10 +71,7 @@ export const buildPlaceholderGuess = (match: IMatch): IGuess => {
  * reconcileMatchesWithGuesses(matches, guesses)
  * // Returns: 10 guesses (2 real, 8 placeholders)
  */
-export const reconcileMatchesWithGuesses = (
-	matches: IMatch[],
-	guesses: IGuess[],
-): IGuess[] => {
+export const reconcileMatchesWithGuesses = (matches: IMatch[], guesses: IGuess[]): IGuess[] => {
 	return matches.map((match) => {
 		const existingGuess = guesses.find((g) => g.matchId === match.id);
 		return existingGuess ?? buildPlaceholderGuess(match);

@@ -26,6 +26,10 @@ Prevent the CI build from failing due to formatting issues, while ensuring it st
 
 The command `yarn validate` will now exit with an error ONLY if there are TypeScript errors or Biome linting errors, ignoring any formatting discrepancies.
 
-## Next Steps
+## Result Summary
 
-- After user confirmation, implement the changes in `package.json`.
+- [x] Renamed `check` to `validate` (Strict mode for CI).
+- [x] Renamed `check:fix` to `validate:fix` (Fixes formatting + linting).
+- [x] Updated GitHub Actions to use `yarn validate`.
+- [x] Improved `.gitignore` and untracked `tfplan`.
+- [x] Successfully ran `yarn validate:fix` to clean up the codebase.

@@ -1,4 +1,4 @@
-import { getUserFriendlyErrorMessage } from "../utils/error-handler";
+import { getUserFriendlyErrorMessage } from "@/domains/error-handling/utils/error-handler";
 
 /**
  * Hook for displaying error notifications to users.

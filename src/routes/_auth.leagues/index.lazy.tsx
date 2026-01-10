@@ -4,12 +4,12 @@ import { useCallback, useMemo, useState } from "react";
 import { ScreenHeading, ScreenHeadingSkeleton } from "@/domains/global/components/screen-heading";
 import { CreateLeagueDialog } from "@/domains/league/components/create-league-dialog";
 import LeaguesList from "@/domains/league/components/leagues-list";
+import { useLeagues } from "@/domains/league/hooks/use-leagues";
 import { type FABAction, FABMenu } from "@/domains/ui-system/components/fab-menu";
 import { AppIcon } from "@/domains/ui-system/components/icon/icon";
 import { AuthenticatedScreenLayout } from "@/domains/ui-system/layout/authenticated";
 import { ScreenMainContent } from "@/domains/ui-system/layout/screen-main-content";
 import { UIHelper } from "@/domains/ui-system/theme";
-import { useLeagues } from "../../domains/league/hooks/use-leagues";
 
 const LeaguesPage = () => {
 	const { leagues } = useLeagues();

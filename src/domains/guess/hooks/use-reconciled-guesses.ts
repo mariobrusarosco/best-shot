@@ -1,6 +1,6 @@
 import { useMemo } from "react";
+import { reconcileMatchesWithGuesses } from "@/domains/guess/utils";
 import type { IMatch } from "@/domains/match/typing";
-import { reconcileMatchesWithGuesses } from "../utils";
 import { useGuess } from "./use-guess";
 
 /**

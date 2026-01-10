@@ -1,8 +1,8 @@
 import { Box, styled, Typography } from "@mui/material";
+import { useLeague } from "@/domains/league/hooks/use-league";
 import { AppButton } from "@/domains/ui-system/components/button/button";
 import { AppDialog } from "@/domains/ui-system/components/dialog";
 import { AppInput } from "@/domains/ui-system/components/input/input";
-import { useLeague } from "../../hooks/use-league";
 
 interface InviteToLeagueDialogProps {
 	open: boolean;

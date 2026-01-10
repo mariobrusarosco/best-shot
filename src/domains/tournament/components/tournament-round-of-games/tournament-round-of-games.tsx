@@ -3,7 +3,7 @@ import { Stack } from "@mui/system";
 import { useGuessMutation } from "@/domains/guess/hooks/use-guess-mutation";
 import { useReconciledGuesses } from "@/domains/guess/hooks/use-reconciled-guesses";
 import MatchCard from "@/domains/match/components/match-card/match-card";
-import { useTournamentMatches } from "../../hooks/use-tournament-matches";
+import { useTournamentMatches } from "@/domains/tournament/hooks/use-tournament-matches";
 
 const TournamentRoundOfGames = () => {
 	const matchesQuery = useTournamentMatches();

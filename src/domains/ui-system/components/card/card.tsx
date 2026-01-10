@@ -1,5 +1,5 @@
 import { Box, styled } from "@mui/system";
-import { Surface } from "../surface/surface";
+import { Surface } from "@/domains/ui-system/components/surface/surface";
 
 const CardHeader = styled(Box)(({ theme }) =>
 	theme.unstable_sx({

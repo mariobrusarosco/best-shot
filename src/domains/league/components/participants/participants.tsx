@@ -1,7 +1,7 @@
 import { Box, Stack, styled, Typography } from "@mui/material";
+import type { IParticipant } from "@/domains/league/typing";
 import { AppPill } from "@/domains/ui-system/components/pill/pill";
 import { shimmerEffect } from "@/domains/ui-system/components/skeleton/skeleton";
-import type { IParticipant } from "../../typing";
 import { Participant } from "./participant";
 
 const ListGrid = styled(Box)(({ theme }) => ({

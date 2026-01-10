@@ -1,7 +1,7 @@
 import { styled, type Theme, Typography } from "@mui/material";
+import type { IParticipant } from "@/domains/league/typing";
 import { AppPill } from "@/domains/ui-system/components/pill/pill";
 import { Surface } from "@/domains/ui-system/components/surface/surface";
-import type { IParticipant } from "../../typing";
 
 export const Participant = ({ participant }: { participant: IParticipant }) => {
 	return (

@@ -1,4 +1,6 @@
 import { Box, Stack, styled, Typography } from "@mui/material";
+import type { useTournamentPerformance } from "@/domains/tournament/hooks/use-tournament-performance";
+import type { ITournamentPerformance } from "@/domains/tournament/schemas";
 import { AppButton } from "@/domains/ui-system/components/button/button";
 import { Counter } from "@/domains/ui-system/components/counter/counter";
 import { GridOfCards } from "@/domains/ui-system/components/grid-of-cards/grid-of-cards";
@@ -7,8 +9,6 @@ import {
 	TypographySkeleton,
 } from "@/domains/ui-system/components/skeleton/skeleton";
 import { Surface } from "@/domains/ui-system/components/surface/surface";
-import type { useTournamentPerformance } from "../../hooks/use-tournament-performance";
-import type { ITournamentPerformance } from "../../schemas";
 
 const TournamentPerformanceStats = ({
 	basicPerformance,

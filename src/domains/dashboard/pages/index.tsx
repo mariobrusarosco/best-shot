@@ -1,6 +1,7 @@
 import { Typography } from "@mui/material";
 import { styled } from "@mui/system";
 import Matchday from "@/domains/dashboard/components/matchday";
+import TournamentsPerf from "@/domains/dashboard/components/tournaments-perf";
 import { useDashboard } from "@/domains/dashboard/hooks/use-dashboard";
 import { ScreenHeading, ScreenHeadingSkeleton } from "@/domains/global/components/screen-heading";
 import { useMember } from "@/domains/member/hooks/use-member";
@@ -8,7 +9,6 @@ import { useMemberPerformance } from "@/domains/member/hooks/use-member-performa
 import { AuthenticatedScreenLayout } from "@/domains/ui-system/layout/authenticated";
 import { ScreenMainContent } from "@/domains/ui-system/layout/screen-main-content";
 import { UIHelper } from "@/domains/ui-system/theme";
-import TournamentsPerf from "../components/tournaments-perf";
 
 const DashboardPage = () => {
 	const member = useMember();

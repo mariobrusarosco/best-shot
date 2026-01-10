@@ -9,13 +9,13 @@ import {
 	TableRow,
 	Typography,
 } from "@mui/material";
+import { useTournament } from "@/domains/tournament/hooks/use-tournament";
+import { useTournamentStandings } from "@/domains/tournament/hooks/use-tournament-standings";
+import type { ITournamentStandings } from "@/domains/tournament/schemas";
 import { AppPill } from "@/domains/ui-system/components/pill/pill";
 import { shimmerEffect } from "@/domains/ui-system/components/skeleton/skeleton";
 import { theme, UIHelper } from "@/domains/ui-system/theme";
 import { OverflowOnHover } from "@/domains/ui-system/utils";
-import { useTournament } from "../../hooks/use-tournament";
-import { useTournamentStandings } from "../../hooks/use-tournament-standings";
-import type { ITournamentStandings } from "../../schemas";
 
 const TournamentStandings = () => {
 	const tournamentStandings = useTournamentStandings();

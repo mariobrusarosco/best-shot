@@ -2,6 +2,7 @@ import { Stack, Typography } from "@mui/material";
 import { Box, styled } from "@mui/system";
 import { Link } from "@tanstack/react-router";
 import { DashCard } from "@/domains/dashboard/components/dash-card/dash-card";
+import { DashGrid } from "@/domains/dashboard/components/dash-grid";
 import type { useMemberPerformance } from "@/domains/member/hooks/use-member-performance";
 import { TournamentLogo } from "@/domains/tournament/components/tournament-heading";
 import { AppButton } from "@/domains/ui-system/components/button/button";
@@ -9,7 +10,6 @@ import { Counter } from "@/domains/ui-system/components/counter/counter";
 import { AppIcon } from "@/domains/ui-system/components/icon/icon";
 import { AppPill } from "@/domains/ui-system/components/pill/pill";
 import { shimmerEffect } from "@/domains/ui-system/components/skeleton/skeleton";
-import { DashGrid } from "../dash-grid";
 
 const TournamentsPerf = ({
 	performance,

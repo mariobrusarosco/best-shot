@@ -1,7 +1,7 @@
 import { useEffect } from "react";
+import { useIdentifyUser } from "@/configuration/feature-flag/featureFlags";
 import { Authentication } from "@/domains/authentication";
 import { APP_MODE } from "@/domains/global/utils";
-import { useIdentifyUser } from "../configuration/feature-flag/featureFlags";
 
 const { useAppAuth } = Authentication;
 

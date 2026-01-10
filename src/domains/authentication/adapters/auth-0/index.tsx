@@ -1,8 +1,8 @@
 import { Auth0Provider, useAuth0 as useAuthBase } from "@auth0/auth0-react";
 import { api } from "@/api";
+import type { IAuthHook } from "@/domains/authentication/adapters/typing";
+import { useDatabaseAuth } from "@/domains/authentication/hooks/use-database-auth";
 import { useMember } from "@/domains/member/hooks/use-member";
-import { useDatabaseAuth } from "../../hooks/use-database-auth";
-import type { IAuthHook } from "../typing";
 
 const Provider = ({ children }: { children: React.ReactNode }) => {
 	return (

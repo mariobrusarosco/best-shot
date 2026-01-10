@@ -1,14 +1,13 @@
 import { Box, Stack, styled, Typography } from "@mui/material";
 import { Link } from "@tanstack/react-router";
+import { DashCard } from "@/domains/dashboard/components/dash-card/dash-card";
+import { DashGrid } from "@/domains/dashboard/components/dash-grid";
 import type { useMemberPerformance } from "@/domains/member/hooks/use-member-performance";
 import { AppButton } from "@/domains/ui-system/components/button/button";
 import { GridOfCards } from "@/domains/ui-system/components/grid-of-cards/grid-of-cards";
 import { AppIcon } from "@/domains/ui-system/components/icon/icon";
 import { AppPill } from "@/domains/ui-system/components/pill/pill";
 import { shimmerEffect } from "@/domains/ui-system/components/skeleton/skeleton";
-
-import { DashCard } from "../dash-card/dash-card";
-import { DashGrid } from "../dash-grid";
 
 const MainLeague = ({
 	performance,

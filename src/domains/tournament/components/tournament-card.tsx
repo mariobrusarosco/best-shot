@@ -1,9 +1,9 @@
 import Typography from "@mui/material/Typography";
 import { Box } from "@mui/system";
+import type { ITournament } from "@/domains/tournament/schemas";
 import { AppCard } from "@/domains/ui-system/components/app-card/AppCard";
 import { AppLinkCard } from "@/domains/ui-system/components/link-card/link-card";
 import type { SurfaceProps } from "@/domains/ui-system/components/surface/surface";
-import type { ITournament } from "../schemas";
 import { TournamentLogo } from "./tournament-logo";
 
 interface Props extends SurfaceProps {

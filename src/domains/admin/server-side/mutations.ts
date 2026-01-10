@@ -1,14 +1,14 @@
 import type { z } from "zod";
 import { api } from "@/api";
-import type { ITournament } from "@/domains/tournament/schemas";
 import {
 	CreateScraperJobSchema,
 	CreateTournamentSchema,
 	RescheduleJobSchema,
 	ScraperJobSchema,
 	UpdateScraperStatusSchema,
-} from "../schemas";
-import type { IScraperJob } from "../typing";
+} from "@/domains/admin/schemas";
+import type { IScraperJob } from "@/domains/admin/typing";
+import type { ITournament } from "@/domains/tournament/schemas";
 
 // Reschedule a scraper job
 export const rescheduleScraperJob = async (

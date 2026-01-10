@@ -2,11 +2,11 @@ import { styled } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/system/Box";
 import { useEffect } from "react";
+import { useTournament } from "@/domains/tournament/hooks/use-tournament";
+import { useTournamentRounds } from "@/domains/tournament/hooks/use-tournament-rounds";
 import { AppPill } from "@/domains/ui-system/components/pill/pill";
 import { UIHelper } from "@/domains/ui-system/theme";
 import { OverflowOnHover } from "@/domains/ui-system/utils";
-import { useTournament } from "../hooks/use-tournament";
-import { useTournamentRounds } from "../hooks/use-tournament-rounds";
 
 const TournamentRoundsBar = () => {
 	const { activeRound, goToRound } = useTournamentRounds();

@@ -1,8 +1,8 @@
 import { useMutation } from "@tanstack/react-query";
 import type { AxiosError } from "axios";
 import { api } from "@/api";
+import { auth0TokenSchema, createMemberFromAuth0Schema } from "@/domains/authentication/schemas";
 import { ErrorHandling } from "@/domains/error-handling";
-import { auth0TokenSchema, createMemberFromAuth0Schema } from "../schemas";
 
 export const useDatabaseAuth = () => {
 	const sign = useMutation<string, AxiosError, unknown>({

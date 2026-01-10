@@ -6,7 +6,7 @@
  */
 
 import { Box, styled } from "@mui/system";
-import { shimmerEffect } from "../skeleton/skeleton";
+import { shimmerEffect } from "@/domains/ui-system/components/skeleton/skeleton";
 
 // ===== STYLED COMPONENTS (Following Static Styled Components Pattern) =====
 

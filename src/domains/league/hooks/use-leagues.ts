@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { getLeagues } from "../server-side/fetchers";
-import { createLeague } from "../server-side/mutations";
+import { getLeagues } from "@/domains/league/server-side/fetchers";
+import { createLeague } from "@/domains/league/server-side/mutations";
 
 export const useLeagues = () => {
 	const queryClient = useQueryClient();

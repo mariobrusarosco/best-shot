@@ -1,7 +1,7 @@
 import { getRouteApi } from "@tanstack/react-router";
 import { useState } from "react";
+import type { IGuess } from "@/domains/guess/typing";
 import type { IMatch } from "@/domains/match/typing";
-import type { IGuess } from "../typing";
 import type { useGuessMutation } from "./use-guess-mutation";
 
 const route = getRouteApi("/_auth/tournaments/$tournamentId");

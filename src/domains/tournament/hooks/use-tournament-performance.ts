@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { getRouteApi } from "@tanstack/react-router";
-import { getTournamentPerformance } from "../server-state/fetchers";
-import { updateTournamentPerformance } from "../server-state/mutations";
+import { getTournamentPerformance } from "@/domains/tournament/server-state/fetchers";
+import { updateTournamentPerformance } from "@/domains/tournament/server-state/mutations";
 
 const route = getRouteApi("/_auth/tournaments/$tournamentId");
 

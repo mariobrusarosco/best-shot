@@ -6,10 +6,10 @@ import {
 	DialogTitle,
 } from "@mui/material";
 import { useState } from "react";
+import { useResetUserActivity } from "@/domains/admin/hooks/use-reset-user-activity";
 import { useErrorNotification } from "@/domains/error-handling/hooks/use-error-notification";
 import { AppTypography } from "@/domains/ui-system/components";
 import { AppButton } from "@/domains/ui-system/components/app-button/app-button";
-import { useResetUserActivity } from "../../hooks/use-reset-user-activity";
 
 interface ConfirmResetDialogProps {
 	open: boolean;

@@ -6,10 +6,10 @@ import {
 	Form,
 	SubmitButton,
 } from "@/domains/league/components/create-league-dialog/styles";
+import { useLeagues } from "@/domains/league/hooks/use-leagues";
 import { type CreateLeagueFormData, createLeagueSchema } from "@/domains/league/schemas";
 import { AppDialog } from "@/domains/ui-system/components/dialog";
 import { AppFormInput } from "@/domains/ui-system/components/form";
-import { useLeagues } from "../../hooks/use-leagues";
 
 interface CreateLeagueDialogProps {
 	open: boolean;

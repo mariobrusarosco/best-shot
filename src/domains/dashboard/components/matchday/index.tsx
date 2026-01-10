@@ -1,12 +1,11 @@
 import { Stack, Typography } from "@mui/material";
 import { Link } from "@tanstack/react-router";
-
+import { DashCard } from "@/domains/dashboard/components/dash-card/dash-card";
+import type { IMatchday } from "@/domains/dashboard/typing";
 import { AppButton } from "@/domains/ui-system/components/app-button/app-button";
 import { AppCard } from "@/domains/ui-system/components/app-card/AppCard";
 import { AppIcon } from "@/domains/ui-system/components/icon/icon";
 import { AppPill } from "@/domains/ui-system/components/pill/pill";
-import type { IMatchday } from "../../typing";
-import { DashCard } from "../dash-card/dash-card";
 import { MatchdayCard, MatchdayGrid } from "./styles";
 
 const Matchday = ({ matchday }: { matchday: IMatchday }) => {

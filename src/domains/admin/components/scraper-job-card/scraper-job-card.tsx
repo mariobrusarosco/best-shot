@@ -7,10 +7,10 @@ import {
 	IconTrendingUp,
 } from "@tabler/icons-react";
 import { useState } from "react";
+import type { IScraperJob } from "@/domains/admin/typing";
 import { AppTypography } from "@/domains/ui-system/components";
 import { AppButton } from "@/domains/ui-system/components/app-button/app-button";
 import { Surface } from "@/domains/ui-system/components/surface/surface";
-import type { IScraperJob } from "../../typing";
 
 interface ScraperJobCardProps {
 	job: IScraperJob;

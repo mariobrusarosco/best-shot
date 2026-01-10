@@ -1,5 +1,5 @@
-import { api } from "../../../api";
-import type { CreateLeagueInput } from "../typing";
+import { api } from "@/api";
+import type { CreateLeagueInput } from "@/domains/league/typing";
 
 export const createLeague = async (createLeagueInput: CreateLeagueInput) => {
 	const response = await api.post("leagues", createLeagueInput);

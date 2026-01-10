@@ -1,7 +1,7 @@
 {
 	"name": "best-shot",
 	"private": true,
-	"version": "1.4.1",
+	"version": "1.4.2",
 	"scripts": {
 		"start": "concurrently \"vite --mode local-dev\" \"cd ../api-best-shot && yarn dev\"",
 		"dev": "vite --mode local-dev 2>&1 | tee dev.log",
@@ -14,6 +14,11 @@
 		"compile": "tsc --noEmit",
 		"test": "vitest run --coverage",
 		"test:dev": "vitest",
+		"test:e2e": "playwright test",
+		"test:e2e:demo": "playwright test --config=e2e/config/demo.config.ts",
+		"test:e2e:auth0": "playwright test --config=e2e/config/auth0.config.ts",
+		"test:e2e:ui": "playwright test --ui",
+		"test:smoke": "playwright test --grep @smoke",
 		"lint": "biome lint ./src",
 		"lint:fix": "biome lint --write ./src",
 		"format": "biome format",

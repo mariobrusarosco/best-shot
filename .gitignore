@@ -47,3 +47,9 @@ coverage
 .aider*
 .env
 .playwright-mcp
+
+# Terraform
+**/*.tfplan
+**/.terraform/*
+*.tfstate
+*.tfstate.*

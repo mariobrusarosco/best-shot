@@ -2,8 +2,8 @@
 
 **Domain**: Guesses
 **Location**: `src/domains/guess/`
-**Last Updated**: 2026-01-02
-**Status**: Active
+**Last Updated**: 2026-01-03
+**Status**: Active (Backend Lazy Creation - Reconciliation Architecture)
 
 ---
 
@@ -63,15 +63,18 @@ src/domains/guess/
 ├── hooks/
 │   ├── use-guess.ts              # TanStack Query wrapper for fetching guesses
 │   ├── use-guess-mutation.ts     # TanStack Mutation for creating/updating guesses
-│   └── use-guess-inputs.ts       # Local form state management for guess inputs
+│   ├── use-guess-inputs.ts       # Local form state management for guess inputs
+│   └── use-reconciled-guesses.ts # NEW: Reconciliation hook (merges matches + guesses)
 ├── server-side/
 │   ├── fetchers.ts               # API fetch functions (GET guesses)
 │   └── mutations.ts              # API mutation functions (POST guesses)
 ├── typing.ts                     # Core TypeScript interfaces and enums
-└── utils.ts                      # Utility functions (mostly commented/unused)
+└── utils.ts                      # Reconciliation utilities (hasLostTimewindow, buildPlaceholderGuess, reconcileMatchesWithGuesses)
 ```
 
 **Note**: No `index.ts` barrel export exists - consumers import directly from specific files.
+
+**Architecture**: Uses **Backend Lazy Creation + Frontend Reconciliation** pattern (see [Reconciliation Architecture](#reconciliation-architecture)).
 
 ---
 

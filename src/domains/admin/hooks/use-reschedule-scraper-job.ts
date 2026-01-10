@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { rescheduleScraperJob } from "../server-side/mutations";
+import { rescheduleScraperJob } from "@/domains/admin/server-side/mutations";
 
 export const useRescheduleScraperJob = () => {
 	const queryClient = useQueryClient();

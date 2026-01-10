@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { getMatchPrediction } from "../api/fetchers";
+import { getMatchPrediction } from "@/domains/ai/api/fetchers";
 
 export interface AIPrediction {
 	matchId: string;

@@ -8,14 +8,14 @@ import {
 	ScraperStatisticsSchema,
 	TournamentExecutionJobsResponseSchema,
 	TournamentMetadataSchema,
-} from "../schemas";
+} from "@/domains/admin/schemas";
 import type {
 	IAdminTournament,
 	IExecutionJob,
 	IScraperJob,
 	ITournamentExecutionJobsResponse,
 	ITournamentMetadata,
-} from "../typing";
+} from "@/domains/admin/typing";
 
 // Fetch all scraper jobs
 export const fetchScraperJobs = async (): Promise<IScraperJob[]> => {

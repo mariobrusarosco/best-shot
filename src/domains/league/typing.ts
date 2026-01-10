@@ -1,4 +1,4 @@
-import type { ITournament } from "../tournament/schemas";
+import type { ITournament } from "@/domains/tournament/schemas";
 
 export type ILeague = {
 	id: string;

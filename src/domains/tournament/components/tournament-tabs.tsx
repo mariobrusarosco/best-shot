@@ -1,10 +1,10 @@
 import { Tab, Tabs, TabsList } from "@mui/base";
 import { Box, styled, Typography } from "@mui/material";
 import { useLocation } from "@tanstack/react-router";
+import type { ITournament } from "@/domains/tournament/schemas";
 import { CustomLink } from "@/domains/ui-system/components/link/link";
 import { shimmerEffect } from "@/domains/ui-system/components/skeleton/skeleton";
 import { UIHelper } from "@/domains/ui-system/theme";
-import type { ITournament } from "../schemas";
 
 const TournamentTabs = ({ tournament }: { tournament?: ITournament }) => {
 	const location = useLocation();

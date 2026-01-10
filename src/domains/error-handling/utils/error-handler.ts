@@ -1,5 +1,5 @@
 import { AxiosError } from "axios";
-import { handleAxiosError } from "../axios";
+import { handleAxiosError } from "@/domains/error-handling/axios";
 
 // Function to get a user-friendly error message
 export const getUserFriendlyErrorMessage = (error: unknown): string => {

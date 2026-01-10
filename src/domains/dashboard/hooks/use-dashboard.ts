@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { getDashboard } from "../server-side/fetchers";
+import { getDashboard } from "@/domains/dashboard/server-side/fetchers";
 
 export const useDashboard = () => {
 	const query = useQuery({

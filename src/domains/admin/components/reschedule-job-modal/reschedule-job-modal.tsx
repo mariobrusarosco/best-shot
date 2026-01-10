@@ -2,12 +2,12 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Box, Dialog, DialogActions, DialogContent, DialogTitle } from "@mui/material";
 import { useForm } from "react-hook-form";
 import type { z } from "zod";
+import { useRescheduleScraperJob } from "@/domains/admin/hooks/use-reschedule-scraper-job";
+import { RescheduleJobSchema } from "@/domains/admin/schemas";
 import { AppTypography } from "@/domains/ui-system/components";
 import { AppButton } from "@/domains/ui-system/components/app-button/app-button";
 import { AppFormInput } from "@/domains/ui-system/components/form/form-input";
 import { AppFormSelect } from "@/domains/ui-system/components/form/form-select";
-import { useRescheduleScraperJob } from "../../hooks/use-reschedule-scraper-job";
-import { RescheduleJobSchema } from "../../schemas";
 
 interface RescheduleJobModalProps {
 	jobId: string;

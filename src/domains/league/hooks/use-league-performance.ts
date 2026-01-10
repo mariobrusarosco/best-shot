@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { getRouteApi } from "@tanstack/react-router";
-import { getLeaguePerformance } from "../server-side/fetchers";
-import { updateLeaguePerformance } from "../server-side/mutations";
+import { getLeaguePerformance } from "@/domains/league/server-side/fetchers";
+import { updateLeaguePerformance } from "@/domains/league/server-side/mutations";
 
 const route = getRouteApi("/_auth/leagues/$leagueId/");
 

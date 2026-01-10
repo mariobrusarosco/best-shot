@@ -1,5 +1,5 @@
-import { api } from "../../../api";
-import type { IGuess } from "../typing";
+import { api } from "@/api";
+import type { IGuess } from "@/domains/guess/typing";
 
 export const getMembers = async ({ queryKey }: { queryKey: unknown }) => {
 	const queryKeyArray = queryKey as [string, { memberId: string }];

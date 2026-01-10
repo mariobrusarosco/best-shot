@@ -1,8 +1,8 @@
 import { useMutation } from "@tanstack/react-query";
 import { createContext, useContext, useEffect, useState } from "react";
 import { api } from "@/api";
+import type { IAuthHook } from "@/domains/authentication/adapters/typing";
 import { useMember } from "@/domains/member/hooks/use-member";
-import type { IAuthHook } from "../typing";
 
 const ByPassAuthContext = createContext<IAuthHook | undefined>(undefined);
 

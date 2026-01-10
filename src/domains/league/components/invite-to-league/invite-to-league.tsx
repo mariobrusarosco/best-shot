@@ -1,9 +1,9 @@
 import { Box, styled, Typography, type TypographyProps } from "@mui/material";
+import { useLeague } from "@/domains/league/hooks/use-league";
 import { AppButton } from "@/domains/ui-system/components/button/button";
 import { AppInput } from "@/domains/ui-system/components/input/input";
 import { AppPill } from "@/domains/ui-system/components/pill/pill";
 import { Surface } from "@/domains/ui-system/components/surface/surface";
-import { useLeague } from "../../hooks/use-league";
 
 export const InviteToLeague = () => {
 	const { inputs } = useLeague();

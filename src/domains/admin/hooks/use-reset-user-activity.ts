@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { resetUserActivity } from "../server-side/mutations";
+import { resetUserActivity } from "@/domains/admin/server-side/mutations";
 
 export const useResetUserActivity = () => {
 	const queryClient = useQueryClient();

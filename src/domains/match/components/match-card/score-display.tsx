@@ -1,6 +1,6 @@
 import { Box, styled, Typography } from "@mui/material";
+import type { IMatch } from "@/domains/match/typing";
 import { AppPill } from "@/domains/ui-system/components/pill/pill";
-import type { IMatch } from "../../typing";
 
 export const ScoreDisplay = ({
 	matchVenueData,

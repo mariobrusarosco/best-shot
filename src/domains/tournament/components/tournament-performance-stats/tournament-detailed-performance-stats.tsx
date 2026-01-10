@@ -1,5 +1,6 @@
 import { Box, Stack, styled, Typography } from "@mui/material";
 import { useState } from "react";
+import { useTournamentDetailedPerformance } from "@/domains/tournament/hooks/use-tournament-detailed-performance";
 import { AppButton } from "@/domains/ui-system/components/button/button";
 import { Counter } from "@/domains/ui-system/components/counter/counter";
 import { GridOfCards } from "@/domains/ui-system/components/grid-of-cards/grid-of-cards";
@@ -8,7 +9,6 @@ import {
 	TypographySkeleton,
 } from "@/domains/ui-system/components/skeleton/skeleton";
 import { Surface } from "@/domains/ui-system/components/surface/surface";
-import { useTournamentDetailedPerformance } from "../../hooks/use-tournament-detailed-performance";
 
 const TournamentDetailedPerformanceStats = () => {
 	const [showDetailedPerformance, setShowDetailedPerformance] = useState(false);

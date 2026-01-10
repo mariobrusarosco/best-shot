@@ -1,10 +1,10 @@
 import { Box, Stack, styled, Typography } from "@mui/material";
+import type { useLeaguePerformance } from "@/domains/league/hooks/use-league-performance";
 import { TournamentLogo } from "@/domains/tournament/components/tournament-heading";
 import { AppPill } from "@/domains/ui-system/components/pill/pill";
 import { shimmerEffect } from "@/domains/ui-system/components/skeleton/skeleton";
 import { Surface } from "@/domains/ui-system/components/surface/surface";
 import { OverflowOnHover } from "@/domains/ui-system/utils";
-import type { useLeaguePerformance } from "../../hooks/use-league-performance";
 
 const LeaguePerformanceStats = ({
 	performance,

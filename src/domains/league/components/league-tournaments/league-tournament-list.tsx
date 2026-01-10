@@ -1,14 +1,14 @@
 import { Box, styled, Typography } from "@mui/material";
 import { useState } from "react";
+import {
+	LeagueTournamentCustomization,
+	TournamentLeagueCard,
+} from "@/domains/league/components/league-tournament-customization/league-tournament-customization";
 import type { useLeague } from "@/domains/league/hooks/use-league";
 import { useTournaments } from "@/domains/tournament/hooks/use-tournaments";
 import { AppButton } from "@/domains/ui-system/components/button/button";
 import { AppIcon } from "@/domains/ui-system/components/icon/icon";
 import { AppPill } from "@/domains/ui-system/components/pill/pill";
-import {
-	LeagueTournamentCustomization,
-	TournamentLeagueCard,
-} from "../league-tournament-customization/league-tournament-customization";
 
 export const LeagueTournaments = ({
 	league,

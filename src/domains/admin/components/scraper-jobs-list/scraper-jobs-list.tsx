@@ -1,13 +1,13 @@
 import { Box, Grid } from "@mui/material";
 import { useState } from "react";
+import { RescheduleJobModal } from "@/domains/admin/components/reschedule-job-modal/reschedule-job-modal";
+import { ScraperJobCard } from "@/domains/admin/components/scraper-job-card/scraper-job-card";
+import { useScraperJobs } from "@/domains/admin/hooks/use-scraper-jobs";
+import { useTriggerScraperJob } from "@/domains/admin/hooks/use-trigger-scraper-job";
+import { useUpdateScraperStatus } from "@/domains/admin/hooks/use-update-scraper-status";
 import { AppLoader } from "@/domains/global/components/app-loader";
 import { AppTypography } from "@/domains/ui-system/components";
 import { Surface } from "@/domains/ui-system/components/surface/surface";
-import { useScraperJobs } from "../../hooks/use-scraper-jobs";
-import { useTriggerScraperJob } from "../../hooks/use-trigger-scraper-job";
-import { useUpdateScraperStatus } from "../../hooks/use-update-scraper-status";
-import { RescheduleJobModal } from "../reschedule-job-modal/reschedule-job-modal";
-import { ScraperJobCard } from "../scraper-job-card/scraper-job-card";
 
 export const ScraperJobsList = () => {
 	const [selectedJobId, setSelectedJobId] = useState<string | null>(null);

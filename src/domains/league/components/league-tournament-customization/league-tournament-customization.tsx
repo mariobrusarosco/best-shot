@@ -1,12 +1,12 @@
 import { Box, Divider, Stack, styled, Tooltip, Typography } from "@mui/material";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
+import { updateLeagueTournaments } from "@/domains/league/server-side/mutations";
+import type { ILeague } from "@/domains/league/typing";
 import type { ITournament } from "@/domains/tournament/schemas";
 import { AppButton } from "@/domains/ui-system/components/button/button";
 import { AppIcon } from "@/domains/ui-system/components/icon/icon";
 import { Surface } from "@/domains/ui-system/components/surface/surface";
-import { updateLeagueTournaments } from "../../server-side/mutations";
-import type { ILeague } from "../../typing";
 
 export const LeagueTournamentCustomization = ({
 	currentTournaments,

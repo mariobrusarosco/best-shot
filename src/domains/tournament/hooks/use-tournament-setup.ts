@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { getRouteApi } from "@tanstack/react-router";
-import { setupTournament } from "../server-state/mutations";
+import { setupTournament } from "@/domains/tournament/server-state/mutations";
 import { tournamentKey } from "./use-tournament";
 
 const route = getRouteApi("/_auth/tournaments/$tournamentId");

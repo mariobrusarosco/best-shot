@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { updateScraperStatus } from "../server-side/mutations";
+import { updateScraperStatus } from "@/domains/admin/server-side/mutations";
 
 export const useUpdateScraperStatus = () => {
 	const queryClient = useQueryClient();

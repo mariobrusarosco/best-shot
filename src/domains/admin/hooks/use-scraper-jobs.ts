@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { fetchScraperJobs } from "../server-side/fetchers";
+import { fetchScraperJobs } from "@/domains/admin/server-side/fetchers";
 
 export const useScraperJobs = () => {
 	return useQuery({

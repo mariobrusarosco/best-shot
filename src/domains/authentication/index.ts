@@ -1,4 +1,4 @@
-import { APP_MODE } from "../global/utils";
+import { APP_MODE } from "@/domains/global/utils";
 import Auth0 from "./adapters/auth-0";
 import Bypass from "./adapters/bypass";
 import type { IAuthAdapter } from "./adapters/typing";

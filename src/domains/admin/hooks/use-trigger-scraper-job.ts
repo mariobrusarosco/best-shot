@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { triggerScraperJob } from "../server-side/mutations";
+import { triggerScraperJob } from "@/domains/admin/server-side/mutations";
 
 export const useTriggerScraperJob = () => {
 	const queryClient = useQueryClient();

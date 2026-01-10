@@ -1,5 +1,5 @@
 import { api } from "@/api";
-import type { IDashboard } from "../typing";
+import type { IDashboard } from "@/domains/dashboard/typing";
 
 // TODO Type "queryKey" correctly
 export const getDashboard = async () => {

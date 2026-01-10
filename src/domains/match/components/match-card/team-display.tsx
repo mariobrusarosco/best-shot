@@ -1,9 +1,9 @@
 import { Box, styled, Typography } from "@mui/material";
+import type { IMatch } from "@/domains/match/typing";
 import { useTournamentStandings } from "@/domains/tournament/hooks/use-tournament-standings";
 import type { ITournamentStandings } from "@/domains/tournament/schemas";
 import { AppPill } from "@/domains/ui-system/components/pill/pill";
 import { UIHelper } from "@/domains/ui-system/theme";
-import type { IMatch } from "../../typing";
 
 export const TeamDisplay = ({ team }: { team: IMatch["home"] | IMatch["away"] }) => {
 	const standings = useTournamentStandings();

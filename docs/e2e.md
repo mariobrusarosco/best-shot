@@ -3,17 +3,15 @@
 ## Table of Contents
 
 - [Quick Start](#quick-start)
-- [Concepts](#concepts)
-- [Overview](#overview)
-- [Test Types](#test-types)
-- [Smoke Testing](#smoke-testing)
+- [Architecture](#architecture)
+- [Authentication Modes](#authentication-modes)
 - [Running Tests](#running-tests)
 - [Test Organization](#test-organization)
+- [Writing Tests](#writing-tests)
 - [Configuration](#configuration)
+- [Tag System](#tag-system)
 - [Best Practices](#best-practices)
-- [Reporting](#reporting)
 - [Troubleshooting](#troubleshooting)
-- [Test Flow Diagrams](#test-flow-diagrams)
 
 ## Quick Start
 
@@ -27,429 +25,396 @@ yarn install
 npx playwright install
 ```
 
-### 2. Write Your First Test
-
-Create a file `e2e/tests/my-first-test.spec.ts`:
-
-```typescript
-import { test, expect } from "@playwright/test";
-
-test("my first test @smoke", async ({ page }) => {
- await page.goto("/");
- await expect(page).toHaveTitle(/Best Shot/);
-});
-```
-
-### 3. Run Tests
+### 2. Run Tests
 
 ```bash
-# Run locally
-yarn test:smoke:local
+# Run all E2E tests (default: demo mode)
+yarn test:e2e
 
-# Run with UI mode
-yarn test:smoke:ui
+# Run with Playwright UI
+yarn test:e2e:ui
+
+# Run smoke tests only
+yarn test:smoke
 ```
 
-### 4. View Results
+### 3. View Results
 
 - Open `playwright-report/index.html` in your browser
-- Check the console output for immediate results
-- Review any screenshots/videos in `test-results/`
+- Check console output for immediate results
+- Review screenshots/videos in `test-results/` on failure
 
-## Concepts
+## Architecture
 
-### Understanding Test Tags
+### Directory Structure
 
-1. **Tag Definition**
+```
+e2e/
+├── config/
+│   ├── base.config.ts         # Shared Playwright configuration
+│   ├── demo.config.ts         # Demo mode (bypass auth)
+│   └── auth0.config.ts        # Auth0 mode (real auth)
+├── fixtures/
+│   ├── auth.fixture.ts        # Authentication fixtures
+│   └── auth0.setup.ts         # Auth0 authentication setup
+├── utils/
+│   ├── selectors.ts           # Shared element selectors
+│   └── test-data.ts           # Test data generators
+├── tests/
+│   ├── auth/                  # Authentication domain tests
+│   │   ├── login-flow.spec.ts
+│   │   └── signup-flow.spec.ts
+│   ├── dashboard/             # Dashboard domain tests
+│   │   ├── dashboard.spec.ts
+│   │   └── dashboard-loading.spec.ts
+│   ├── navigation/            # Navigation tests
+│   │   ├── menu.spec.ts
+│   │   └── home-page.spec.ts
+│   └── smoke/                 # Smoke tests
+│       └── smoke.spec.ts
+└── playwright.config.ts       # Main config (root level)
+```
 
-   ```typescript
-   // Tags are special annotations in test titles
-   test('feature works @smoke', ...);
-   test.describe('Auth Tests @smoke @critical', ...);
-   ```
+### Design Principles
 
-2. **Tag Inheritance**
+1. **Domain-Based Organization**: Tests are organized by domain (dashboard, auth, navigation)
+2. **Testing Trophy**: Focus on integration tests with E2E for critical paths
+3. **Dual Auth Modes**: Support for both demo (bypass) and Auth0 (real) authentication
+4. **Shared Utilities**: Centralized selectors and test data for consistency
 
-   ```typescript
-   test.describe('Feature @smoke', () => {
-     test('test1', ...); // Inherits @smoke
-     test('test2 @critical', ...); // Has both @smoke and @critical
-   });
-   ```
+## Authentication Modes
 
-3. **Tag Composition**
+The E2E suite supports two authentication modes:
 
-   ```mermaid
-   graph TD
-     A[Test Suite] --> B[Feature Group @smoke]
-     B --> C[Test 1]
-     B --> D[Test 2 @critical]
-     B --> E[Test 3 @perf]
-   ```
+### Demo Mode (Default)
 
-### Tag Behavior
+Bypasses Auth0 authentication for faster, simpler testing.
 
-1. **Execution Flow**
+```bash
+yarn test:e2e:demo
+```
 
-   ```mermaid
-   flowchart LR
-     A[Test Runner] -->|grep @smoke| B[Find Tagged Tests]
-     B --> C{Tag Match?}
-     C -->|Yes| D[Execute Test]
-     C -->|No| E[Skip Test]
-   ```
+**When to use:**
+- Local development
+- Quick validation
+- CI smoke tests
+- No Auth0 credentials needed
 
-2. **Environment Impact**
+### Auth0 Mode
 
-   ```typescript
-   // Tags can affect test behavior
-   test("feature @smoke", async ({ page }) => {
-    if (process.env.SMOKE_ONLY) {
-     // Run minimal version
-    } else {
-     // Run full version
-    }
-   });
-   ```
+Uses real Auth0 authentication for production-like testing.
 
-3. **CI/CD Integration**
+```bash
+# Set credentials first
+export E2E_TEST_EMAIL="your-test-user@example.com"
+export E2E_TEST_PASSWORD="your-test-password"
 
-   ```mermaid
-   flowchart TD
-     A[PR Created] --> B[Run @smoke tests]
-     B --> C{Tests Pass?}
-     C -->|Yes| D[Continue Deployment]
-     C -->|No| E[Block PR]
-   ```
+# Run tests
+yarn test:e2e:auth0
+```
 
-## Overview
+**When to use:**
+- Full integration testing
+- Pre-production validation
+- Auth flow verification
 
-This project uses Playwright for end-to-end testing. The testing strategy includes:
+### Auth Mode Flow
 
-- Smoke tests for rapid verification
-- Full E2E tests for comprehensive coverage
-- Visual regression tests (coming soon)
-
-## Test Types
-
-### Smoke Tests (`@smoke`)
-
-Quick tests that verify core functionality is working. These run:
-
-- On every PR
-- Before deployment
-- After deployment
-- During rollbacks
-
-### Critical Tests (`@critical`)
-
-Tests that must pass for the application to be considered functional:
-
-- Authentication flows
-- Core business logic
-- Data persistence
-- API integration
-
-### Performance Tests (`@perf`)
-
-Tests that measure and verify performance metrics:
-
-- Page load times
-- API response times
-- Resource loading
-- Animation performance
-
-## Smoke Testing
-
-### Concept
-
-Smoke testing, also known as "build verification testing" or "sanity testing," verifies that the most critical functionalities work before proceeding with more extensive testing. The name comes from hardware testing: "Don't do more testing if the device is smoking."
-
-### Key Principles
-
-- Quick to run (< 5 minutes)
-- Tests critical paths only
-- Runs before deeper testing
-- Must pass before deployment
-- Identifies show-stopping issues early
-
-### Test Coverage Areas
-
-1. **Core Application Health**
-
-   ```typescript
-   test.describe('Core Application Health', () => {
-     test('homepage loads successfully', ...);
-     test('critical API endpoints respond', ...);
-     test('routes are accessible', ...);
-   });
-   ```
-
-2. **Authentication**
-
-   ```typescript
-   test.describe('Authentication', () => {
-     test('login flow works', ...);
-     test('auth state initializes', ...);
-   });
-   ```
-
-3. **UI Components**
-
-   ```typescript
-   test.describe('UI Components', () => {
-     test('navigation is functional', ...);
-     test('critical elements present', ...);
-   });
-   ```
-
-4. **Asset Loading**
-
-   ```typescript
-   test.describe('Asset Loading', () => {
-     test('static assets load', ...);
-     test('images load properly', ...);
-   });
-   ```
-
-5. **Error Handling**
-
-   ```typescript
-   test.describe('Error Handling', () => {
-     test('404 page works', ...);
-     test('error boundaries work', ...);
-   });
-   ```
+```mermaid
+flowchart TD
+    A[Test Execution] --> B{Config Mode?}
+    B -->|demo.config.ts| C[Demo Mode]
+    B -->|auth0.config.ts| D[Auth0 Mode]
+    
+    C --> E[Bypass Auth]
+    E --> F[Navigate directly]
+    
+    D --> G[Auth0 Setup]
+    G --> H{State Exists?}
+    H -->|Yes| I[Restore state]
+    H -->|No| J[Login via Auth0]
+    J --> K[Save state]
+    I --> L[Execute Tests]
+    K --> L
+    F --> L
+```
 
 ## Running Tests
 
 ### Available Commands
 
-```bash
-# Run all tests
-yarn test:e2e
-
-# Run smoke tests only
-yarn test:smoke
-
-# Run smoke tests with UI
-yarn test:smoke:ui
-
-# Run smoke tests against local environment
-yarn test:smoke:local
-```
+| Command | Description |
+|---------|-------------|
+| `yarn test:e2e` | Run all E2E tests |
+| `yarn test:e2e:demo` | Run tests in demo mode |
+| `yarn test:e2e:auth0` | Run tests with Auth0 authentication |
+| `yarn test:e2e:ui` | Run tests with Playwright UI |
+| `yarn test:smoke` | Run smoke tests only (`@smoke` tag) |
 
 ### Environment Variables
 
-- `PLAYWRIGHT_TEST_BASE_URL`: Target environment URL
-- `SMOKE_ONLY`: Run only smoke tests when true
-- `CI`: Adjusts test behavior for CI environment
+| Variable | Description | Default |
+|----------|-------------|---------|
+| `PLAYWRIGHT_BASE_URL` | Target environment URL | `http://localhost:5173` |
+| `E2E_TEST_EMAIL` | Test user email (Auth0 mode) | - |
+| `E2E_TEST_PASSWORD` | Test user password (Auth0 mode) | - |
+| `CI` | CI environment flag | - |
+
+### Running Specific Tests
+
+```bash
+# Run a specific test file
+yarn test:e2e e2e/tests/dashboard/dashboard.spec.ts
+
+# Run tests matching a pattern
+yarn test:e2e --grep "should render"
+
+# Run tests with specific tag
+yarn test:e2e --grep @critical
+```
 
 ## Test Organization
 
-### Tag System
+### Domain Structure
 
-1. **Test Types**
+Tests are organized by domain to mirror the application architecture:
 
-   ```typescript
-   @smoke     // Basic functionality
-   @critical  // Must-pass features
-   @e2e       // Full end-to-end flows
-   @perf      // Performance tests
-   ```
+- **auth/**: Login, signup, and authentication flows
+- **dashboard/**: Main dashboard functionality
+- **navigation/**: Menu and routing tests
+- **smoke/**: Quick validation tests
 
-2. **Test Characteristics**
+### Adding a New Domain
 
-   ```typescript
-   @slow      // Long-running tests
-   @flaky     // Known unstable tests
-   @visual    // Visual regression tests
-   ```
+1. Create folder: `e2e/tests/{domain-name}/`
+2. Add test files: `{feature}.spec.ts`
+3. Use shared selectors from `e2e/utils/selectors.ts`
+4. Apply appropriate tags (`@smoke`, `@critical`)
 
-3. **Feature Areas**
+## Writing Tests
 
-   ```typescript
-   @auth      // Authentication tests
-   @api       // API-related tests
-   @ui        // UI-related tests
-   ```
+### Basic Test Structure
 
-### Tag Usage
+```typescript
+import { test, expect } from '@playwright/test';
+import { dashboard } from '../../utils/selectors';
 
-1. **On Describe Blocks**
+test.describe('Feature Name @critical', () => {
+  test.beforeEach(async ({ page }) => {
+    await page.goto('/dashboard');
+  });
 
-   ```typescript
-   test.describe("Feature Tests @smoke", () => {
-    // All tests inherit @smoke tag
-   });
-   ```
+  test('should do something @smoke', async ({ page }) => {
+    await expect(dashboard.screenHeading(page)).toBeVisible();
+  });
+});
+```
 
-2. **On Individual Tests**
+### Using Selectors
 
-   ```typescript
-   test("feature works @smoke @critical", async () => {});
-   ```
+```typescript
+import { dashboard, navigation } from '../../utils/selectors';
 
-3. **Tag Filtering**
+// Dashboard selectors
+await expect(dashboard.screenHeading(page)).toBeVisible();
+await expect(dashboard.matchdaySection(page)).toContainText('matchday');
 
-   ```bash
-   # Run smoke tests only
-   yarn playwright test --grep @smoke
+// Navigation selectors
+await navigation.menuLink(page, '/tournaments').click();
+```
 
-   # Run critical smoke tests
-   yarn playwright test --grep "@smoke.*@critical"
-   ```
+### Using Test Data
+
+```typescript
+import { testData, generateTestEmail } from '../../utils/test-data';
+
+// Use predefined URLs
+await page.goto(testData.urls.dashboard);
+
+// Use timeouts
+await page.waitForURL(/.*dashboard/, { timeout: testData.timeouts.auth });
+
+// Generate unique data
+const email = generateTestEmail('signup');
+```
+
+### Using Auth Fixtures
+
+```typescript
+import { test, expect } from '../../fixtures/auth.fixture';
+
+test('authenticated test', async ({ authenticatedPage, authUser }) => {
+  // Page is already authenticated
+  await expect(authenticatedPage).toHaveURL(/.*dashboard/);
+  console.log(`Logged in as: ${authUser.username}`);
+});
+```
 
 ## Configuration
 
-### Smoke Test Configuration
+### Base Configuration
+
+All configurations extend from `e2e/config/base.config.ts`:
 
 ```typescript
-// e2e/smoke.config.ts
-const config: PlaywrightTestConfig = {
- grep: /@smoke/,
- testMatch: ["**/smoke.spec.ts"],
- retries: 2,
- timeout: 30000,
- reporter: ["html", "json", "list"],
- use: {
-  trace: "retain-on-failure",
-  screenshot: "only-on-failure",
-  video: "retain-on-failure",
- },
+export const baseConfig: PlaywrightTestConfig = {
+  testDir: '../tests',
+  fullyParallel: true,
+  retries: process.env.CI ? 2 : 0,
+  workers: process.env.CI ? 1 : undefined,
+  reporter: [['html'], ['list']],
+  use: {
+    baseURL: process.env.PLAYWRIGHT_BASE_URL || 'http://localhost:5173',
+    trace: 'on-first-retry',
+    screenshot: 'only-on-failure',
+    video: 'retain-on-failure',
+  },
 };
 ```
 
-### Global Setup/Teardown
+### Demo Configuration
+
+`e2e/config/demo.config.ts` - For bypass authentication:
 
 ```typescript
-// e2e/global-setup.ts
-async function globalSetup(config: FullConfig) {
- // Environment setup
- // Test data preparation
- // Authentication setup
-}
+export default defineConfig({
+  ...baseConfig,
+  metadata: { authMode: 'demo' },
+});
+```
 
-// e2e/global-teardown.ts
-async function globalTeardown(config: FullConfig) {
- // Cleanup
- // Reset state
- // Clear test data
-}
+### Auth0 Configuration
+
+`e2e/config/auth0.config.ts` - For real authentication:
+
+```typescript
+export default defineConfig({
+  ...baseConfig,
+  projects: [
+    { name: 'auth0-setup', testMatch: /auth0\.setup\.ts/ },
+    { 
+      name: 'chromium-auth0',
+      storageState: '.auth/auth0-state.json',
+      dependencies: ['auth0-setup'],
+    },
+  ],
+});
+```
+
+## Tag System
+
+### Available Tags
+
+| Tag | Purpose | When to Use |
+|-----|---------|-------------|
+| `@smoke` | Quick validation | Core functionality checks |
+| `@critical` | Must-pass tests | Business-critical features |
+| `@slow` | Long-running tests | Performance or complex flows |
+
+### Using Tags
+
+```typescript
+// On describe blocks (all tests inherit)
+test.describe('Dashboard @critical', () => {
+  test('loads correctly @smoke', async ({ page }) => {
+    // Has both @critical and @smoke
+  });
+});
+
+// On individual tests
+test('complex flow @slow', async ({ page }) => {
+  // Only has @slow
+});
+```
+
+### Filtering by Tag
+
+```bash
+# Run smoke tests
+yarn test:e2e --grep @smoke
+
+# Run critical tests
+yarn test:e2e --grep @critical
+
+# Exclude slow tests
+yarn test:e2e --grep-invert @slow
 ```
 
 ## Best Practices
 
-### Tag Usage
+### Selectors
 
-1. Use consistent naming conventions
-2. Document tag meanings
-3. Don't overuse tags
-4. Use hierarchical organization
-5. Consider tag combinations carefully
+1. **Use data-ui attributes**: `[data-ui="screen-heading"]`
+2. **Centralize in selectors.ts**: Avoid duplicating selectors
+3. **Use role-based selectors**: `getByRole('button', { name: 'Login' })`
 
-### Test Writing
+### Test Independence
 
-1. Keep tests focused and atomic
-2. Use descriptive test names
-3. Group related tests logically
-4. Handle test data cleanup
-5. Avoid test interdependencies
+1. Each test should work in isolation
+2. Don't depend on test execution order
+3. Clean up test data when needed
 
-### CI/CD Integration
+### Assertions
 
-1. Run smoke tests first
-2. Use appropriate timeouts
-3. Implement retry strategies
-4. Preserve failure artifacts
-5. Configure proper reporting
+1. Use explicit waits: `await expect(element).toBeVisible()`
+2. Avoid arbitrary timeouts: Use `waitForLoadState` or `waitForURL`
+3. Be specific: Check exact content when possible
 
-## Reporting
+### Performance
 
-Test results are available in multiple formats:
-
-- HTML reports (`playwright-report/`)
-- JSON results (`smoke-test-results.json`)
-- Console output (during execution)
-- CI/CD pipeline logs
+1. Use `networkidle` judiciously (it can be slow)
+2. Run parallel tests when possible
+3. Share authentication state between tests
 
 ## Troubleshooting
 
-Common issues and solutions:
+### Common Issues
 
-1. **Flaky Tests**
-
-   - Increase timeouts
-   - Add retry logic
-   - Check for race conditions
-
-2. **CI Failures**
-
-   - Check environment variables
-   - Verify browser dependencies
-   - Review resource constraints
-
-3. **Performance Issues**
-   - Reduce parallel execution
-   - Optimize test setup
-   - Clean up test data
-
-## Test Flow Diagrams
-
-### 1. Test Execution Flow
-
-```mermaid
-flowchart TD
-    A[Start Test Run] --> B{Environment?}
-    B -->|Local| C[Local Setup]
-    B -->|CI| D[CI Setup]
-    C --> E[Run Tests]
-    D --> E
-    E --> F{Test Results}
-    F -->|Pass| G[Generate Reports]
-    F -->|Fail| H[Capture Artifacts]
-    H --> G
-    G --> I[End Run]
+**Tests fail with timeout**
+```bash
+# Increase timeout for specific test
+test('slow test', async ({ page }) => {
+  test.setTimeout(60000);
+  // ...
+});
 ```
 
-### 2. Smoke Test Pipeline
+**Auth0 tests fail**
+```bash
+# Ensure credentials are set
+echo $E2E_TEST_EMAIL
+echo $E2E_TEST_PASSWORD
 
-```mermaid
-flowchart LR
-    A[PR Created] --> B[Smoke Tests]
-    B --> C[Unit Tests]
-    C --> D[Build]
-    D --> E[Deploy to Test]
-    E --> F[E2E Tests]
-    F -->|Pass| G[Ready for Review]
-    F -->|Fail| H[Block PR]
+# Clear auth state and retry
+rm -rf .auth/
+yarn test:e2e:auth0
 ```
 
-### 3. Tag Resolution
+**Flaky tests**
+1. Add explicit waits for dynamic content
+2. Use `toBeVisible()` before interacting
+3. Consider network conditions
 
-```mermaid
-flowchart TD
-    A[Test File] --> B{Has @smoke?}
-    B -->|Yes| C{Has other tags?}
-    B -->|No| D[Skip in smoke run]
-    C -->|Yes| E[Check tag combinations]
-    C -->|No| F[Run in smoke test]
-    E --> G{Tags match filter?}
-    G -->|Yes| F
-    G -->|No| D
+**Element not found**
+1. Check if element exists with DevTools
+2. Verify selector in Playwright UI mode
+3. Ensure page has finished loading
+
+### Debug Mode
+
+```bash
+# Run with headed browser
+yarn test:e2e --headed
+
+# Run with Playwright Inspector
+PWDEBUG=1 yarn test:e2e
+
+# Run specific test with UI
+yarn test:e2e:ui e2e/tests/dashboard/dashboard.spec.ts
 ```
 
-### 4. Test Environment Flow
+### CI/CD
 
-```mermaid
-flowchart TD
-    A[Test Execution] --> B{Environment?}
-    B -->|Local| C[localhost:5173]
-    B -->|Test| D[test.best-shot.app]
-    B -->|Staging| E[staging.best-shot.app]
-    B -->|Production| F[best-shot.app]
-    C --> G[Run Tests]
-    D --> G
-    E --> G
-    F --> G
-```
+E2E tests run on a scheduled basis (daily at 2:00 AM UTC) against staging environment. They are decoupled from the deployment pipeline to avoid blocking deployments.
+
+See `.github/workflows/playwright.yml` for CI configuration.

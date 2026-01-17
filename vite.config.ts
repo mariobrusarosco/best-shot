@@ -36,7 +36,7 @@ export default defineConfig(({ mode }) => ({
 		SENTRY_ENABLED_ENVIRONMENTS.includes(mode as SentryEnvironment) &&
 			sentryVitePlugin({
 				org: process.env.SENTRY_ORG || "mario-79",
-				project: process.env.SENTRY_PROJECT || "best-shot-demo",
+				project: process.env.SENTRY_PROJECT || "best-shot-front",
 				authToken: process.env.SENTRY_AUTH_TOKEN,
 				telemetry: false,
 				sourcemaps: {

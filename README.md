@@ -47,6 +47,34 @@ TOOLS
 - _Unit Testing_: Coming Soon.
 - _Profiling_: Coming Soon.
 
+## Environment Variables
+
+This project uses environment modes (`local-dev`, `demo`, `staging`, `production`) to manage different configurations.
+
+**Quick Start:**
+```bash
+# Copy the example file
+cp .env.example .env
+
+# Add your credentials (Auth0, API keys, etc.)
+vim .env
+
+# Start developing
+yarn dev
+```
+
+**Key Points:**
+- All `.env` files are gitignored - never commit secrets
+- Variables with `VITE_` prefix are available in app code
+- Deployed environments use GitHub Secrets (not .env files)
+- Each mode can have different behavior (e.g., Auth0 vs Bypass authentication)
+
+📚 **Full documentation:** [Environment Variables Walkthrough](./docs/environment-variables-walkthrough.md)
+
+## Documentation
+
+When creating walkthroughs or deep-dive documentation, follow the structure and style established in [docs/environment-variables-walkthrough.md](./docs/environment-variables-walkthrough.md). This is the de facto standard for comprehensive yet concise documentation.
+
 ## Product
 
 - _Design_: [here](https://www.figma.com/file/KZ4tq3xzzz2CvWwijUZoRy/Side-Projects?type=design&node-id=919-4165&mode=design&t=NeIWW7N9vz1Wq7P7-0)

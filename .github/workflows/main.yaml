@@ -42,6 +42,22 @@ jobs:
 
       - name: Build
         run: yarn build --mode demo
+        env:
+          # Auth0 Configuration
+          VITE_AUTH_DOMAIN: ${{ secrets.VITE_AUTH_DOMAIN }}
+          VITE_AUTH_CLIENT_ID: ${{ secrets.VITE_AUTH_CLIENT_ID }}
+          # API Endpoints
+          VITE_BEST_SHOT_API: ${{ secrets.VITE_BEST_SHOT_API }}
+          VITE_BEST_SHOT_API_V2: ${{ secrets.VITE_BEST_SHOT_API_V2 }}
+          # Demo Mode Configuration
+          VITE_MOCKED_MEMBER_PUBLIC_ID: ${{ secrets.VITE_MOCKED_MEMBER_PUBLIC_ID }}
+          VITE_DEMO_VERSION: ${{ secrets.VITE_DEMO_VERSION }}
+          # Feature Flags
+          VITE_LAUNCHDARKLY_CLIENT_KEY: ${{ secrets.VITE_LAUNCHDARKLY_CLIENT_KEY }}
+          # Monitoring (Runtime)
+          VITE_SENTRY_DSN: ${{ secrets.VITE_SENTRY_DSN }}
+          # Monitoring (Build-time)
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
 
       - name: Verify no source maps in dist
         run: |
@@ -225,6 +241,21 @@ jobs:
 
       - name: Build
         run: yarn build --mode staging
+        env:
+          # Auth0 Configuration
+          VITE_AUTH_DOMAIN: ${{ secrets.VITE_AUTH_DOMAIN }}
+          VITE_AUTH_CLIENT_ID: ${{ secrets.VITE_AUTH_CLIENT_ID }}
+          # API Endpoints
+          VITE_BEST_SHOT_API: ${{ secrets.VITE_BEST_SHOT_API }}
+          VITE_BEST_SHOT_API_V2: ${{ secrets.VITE_BEST_SHOT_API_V2 }}
+          # Staging Configuration
+          VITE_MOCKED_MEMBER_PUBLIC_ID: ${{ secrets.VITE_MOCKED_MEMBER_PUBLIC_ID }}
+          # Feature Flags
+          VITE_LAUNCHDARKLY_CLIENT_KEY: ${{ secrets.VITE_LAUNCHDARKLY_CLIENT_KEY }}
+          # Monitoring (Runtime)
+          VITE_SENTRY_DSN: ${{ secrets.VITE_SENTRY_DSN }}
+          # Monitoring (Build-time)
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
 
       - name: Verify no source maps in dist
         run: |
@@ -409,6 +440,20 @@ jobs:
 
       - name: Build
         run: yarn build --mode production
+        env:
+          # Auth0 Configuration
+          VITE_AUTH_DOMAIN: ${{ secrets.VITE_AUTH_DOMAIN }}
+          VITE_AUTH_CLIENT_ID: ${{ secrets.VITE_AUTH_CLIENT_ID }}
+          # API Endpoints
+          VITE_BEST_SHOT_API: ${{ secrets.VITE_BEST_SHOT_API }}
+          VITE_BEST_SHOT_API_V2: ${{ secrets.VITE_BEST_SHOT_API_V2 }}
+          # Feature Flags
+          VITE_LAUNCHDARKLY_CLIENT_KEY: ${{ secrets.VITE_LAUNCHDARKLY_CLIENT_KEY }}
+          # Monitoring (Runtime)
+          VITE_SENTRY_DSN: ${{ secrets.VITE_SENTRY_DSN }}
+          # Monitoring (Build-time)
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+          # NOTE: VITE_MOCKED_MEMBER_PUBLIC_ID should NOT be set in production
 
       - name: Verify no source maps in dist
         run: |

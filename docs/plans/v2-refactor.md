@@ -1,5 +1,9 @@
 # V2 Refactor Plan - Clean Break Strategy
 
+## Status
+Pending
+
+
 ## 🎯 Objective
 Migrate the `best-shot` frontend application to a `v2` architecture using a **Clean Break** strategy.
 The goal is to modernize the UI and Logic (Domains) without disrupting the existing `v1` application, using URL-based versioning for coexistence.
@@ -103,5 +107,6 @@ The goal is to modernize the UI and Logic (Domains) without disrupting the exist
 - [ ] Old code is deleted.
 - [ ] Project size is reduced.
 - [ ] Architecture is clean and vertical.
+
 
 

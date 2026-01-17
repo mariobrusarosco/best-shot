@@ -222,3 +222,7 @@ Uses Zod schemas extensively for runtime validation, particularly in tournament 
 - Guide are made to help other developers understand how to use the codebase effectively.
 - Each guide is a Markdown file with a unique ID (e.g., `0001-creating-a-screen.md`).
 - Use Decision Matrix to explain when and how to use specific features or components.
+
+### Walkthroughs
+
+When creating walkthroughs or deep-dive documentation, follow the structure and style established in `docs/environment-variables-walkthrough.md`. This is the de facto standard for comprehensive yet concise documentation.

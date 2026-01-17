@@ -1,5 +1,9 @@
 # Guess Reconciliation - Backend Lazy Creation Migration
 
+## Status
+Pending
+
+
 ## 🎯 Objective
 
 Migrate the guess domain from **backend eager creation** (pre-creates all guesses) to **backend lazy creation** (creates guesses only when user submits). This requires implementing **frontend reconciliation** to merge sparse guess data with complete match lists.

@@ -10,31 +10,40 @@ The implementation strictly follows the architecture defined in `docs/e2e-walkth
 
 ### Tasks
 
-#### Task 1.1 - Scaffold E2E Directory Structure []
-- [ ] Create root `e2e/` directory.
-- [ ] Create configuration directory: `e2e/config/`.
-- [ ] Create fixtures directory: `e2e/fixtures/`.
-- [ ] Create utilities directory: `e2e/utils/`.
-- [ ] Create tests root directory: `e2e/tests/`.
-- [ ] Create domain-specific test folders: `e2e/tests/auth/`, `e2e/tests/dashboard/`, `e2e/tests/navigation/`, `e2e/tests/smoke/`.
+#### Task 1.1 - Scaffold E2E Directory Structure [x]
 
-#### Task 1.2 - Implement Configuration Layer []
-- [ ] Create `e2e/config/base.config.ts`.
-    - [ ] Define shared `testDir`, `retries`, `workers`, and `reporter` settings.
-    - [ ] Define common `use` options (trace, screenshot, video).
-- [ ] Create `e2e/config/demo.config.ts`.
-    - [ ] Import and extend `baseConfig`.
-    - [ ] Set default `baseURL` to `https://best-shot.demo.mario.productions`.
-    - [ ] Configure it to run independent of the local dev server (for this specific phase).
+- [x] Create root `e2e/` directory.
+- [x] Create configuration directory: `e2e/config/`.
+- [x] Create fixtures directory: `e2e/fixtures/`.
+- [x] Create utilities directory: `e2e/utils/`.
+- [x] Create tests root directory: `e2e/tests/`.
+- [x] Create domain-specific test folders: `e2e/tests/auth/`, `e2e/tests/dashboard/`, `e2e/tests/navigation/`, `e2e/tests/smoke/`.
 
-#### Task 1.3 - Implement Shared Utilities []
-- [ ] Create `e2e/utils/selectors.ts`.
-    - [ ] Define `dashboard` selectors (Screen heading, title, subtitle).
-    - [ ] Define `navigation` selectors (Menu, links).
-    - [ ] Define `auth` selectors (Login button, Sign up button).
-- [ ] Create `e2e/utils/test-data.ts`.
-    - [ ] Define `urls` constant (Routes for dashboard, login, etc.).
-    - [ ] Define `timeouts` constant.
+#### Task 1.2 - Implement Configuration Layer [x]
+
+- [x] Create `e2e/config/base.config.ts`.
+  - [x] Define shared `testDir`, `retries`, `workers`, and `reporter` settings.
+  - [x] Define common `use` options (trace, screenshot, video).
+- [x] Create `e2e/config/demo.config.ts`.
+  - [x] Import and extend `baseConfig`.
+  - [x] Set default `baseURL` to `https://best-shot.demo.mario.productions`.
+  - [x] Configure it to run independent of the local dev server (for this specific phase).
+- [x] Create `playwright.config.ts` (Root Config).
+  - [x] Set up as the default entry point.
+  - [x] Configure to default to the demo environment if no specific config is passed (or simple export).
+
+#### Task 1.3 - Implement Shared Utilities [x]
+
+- [x] Create `e2e/utils/selectors.ts`.
+  - [x] Define `dashboard` selectors (Screen heading, title, subtitle).
+  - [x] Define `navigation` selectors (Menu, links).
+  - [x] Define `auth` selectors (Login button, Sign up button).
+- [x] Create `e2e/utils/test-data.ts`.
+  - [x] Define `urls` constant (Routes for dashboard, login, etc.).
+  - [x] Define `timeouts` constant.
+- [x] Create `e2e/fixtures/auth.fixture.ts`.
+  - [x] Implement `authenticatedPage` fixture to handle auto-login (initially via UI interaction for Demo mode).
+  - [x] Implement `authUser` fixture stub.
 
 ## Phase 2: Smoke & Critical Path Tests (Demo Environment)
 
@@ -42,27 +51,31 @@ The implementation strictly follows the architecture defined in `docs/e2e-walkth
 
 ### Tasks
 
-#### Task 2.1 - Implement Smoke Test Suite []
-- [ ] Create `e2e/tests/smoke/smoke.spec.ts`.
-- [ ] Implement `test('should load application')`:
-    - [ ] Navigate to base URL.
-    - [ ] Verify page title contains "Best Shot".
-    - [ ] Tag test with `@smoke`.
+#### Task 2.1 - Implement Smoke Test Suite [x]
 
-#### Task 2.2 - Implement Authentication (Demo Mode) Suite []
-- [ ] Create `e2e/tests/auth/login.spec.ts`.
-- [ ] Implement `test('should login via demo mode')`:
-    - [ ] Navigate to `/login`.
-    - [ ] Click the "Demo" or "Login" button (depending on UI state).
-    - [ ] Assert redirection to `/dashboard`.
-    - [ ] Tag test with `@critical`.
+- [x] Create `e2e/tests/smoke/smoke.spec.ts`.
+- [x] Implement `test('should load application')`:
+  - [x] Navigate to base URL.
+  - [x] Verify page title contains "Best Shot".
+  - [x] Tag test with `@smoke`.
 
-#### Task 2.3 - Implement Dashboard Verification Suite []
-- [ ] Create `e2e/tests/dashboard/dashboard.spec.ts`.
-- [ ] Implement `test('should display core dashboard elements')`:
-    - [ ] Use `dashboard` selectors from utils.
-    - [ ] Verify visibility of "Hello" greeting.
-    - [ ] Verify visibility of main navigation menu.
+#### Task 2.2 - Implement Authentication (Demo Mode) Suite [x]
+
+- [x] Create `e2e/tests/auth/login.spec.ts`.
+- [x] Implement `test('should login via demo mode')`:
+  - [x] Navigate to `/login`.
+  - [x] Click the "Demo" or "Login" button (depending on UI state).
+  - [x] Assert redirection to `/dashboard`.
+  - [x] Tag test with `@critical`.
+
+#### Task 2.3 - Implement Dashboard Verification Suite [x]
+
+- [x] Create `e2e/tests/dashboard/dashboard.spec.ts`.
+- [x] Implement `test('should display core dashboard elements')`:
+  - [x] Use `authenticatedPage` fixture (skipping manual login steps in the test).
+  - [x] Use `dashboard` selectors from utils.
+  - [x] Verify visibility of "Hello" greeting.
+  - [x] Verify visibility of main navigation menu.
 
 ## Phase 3: Validation & CI Preparation
 
@@ -70,15 +83,17 @@ The implementation strictly follows the architecture defined in `docs/e2e-walkth
 
 ### Tasks
 
-#### Task 3.1 - Local Execution Verification []
-- [ ] Run `yarn test:e2e:demo` locally.
-- [ ] Verify console output format.
-- [ ] Verify HTML report generation (`playwright-report/`).
-- [ ] Verify screenshots/traces on failure (simulate a failure if needed).
+#### Task 3.1 - Local Execution Verification [x]
 
-#### Task 3.2 - CI Configuration Review []
-- [ ] Review `.github/workflows/playwright.yml`.
-- [ ] Confirm the workflow accepts the `demo` environment or can be triggered to run against the live URL.
+- [x] Run `yarn test:e2e:demo` locally.
+- [x] Verify console output format.
+- [x] Verify HTML report generation (`playwright-report/`).
+- [x] Verify screenshots/traces on failure (simulate a failure if needed).
+
+#### Task 3.2 - CI Configuration Review [x]
+
+- [x] Review `.github/workflows/playwright.yml`.
+- [x] Confirm the workflow accepts the `demo` environment or can be triggered to run against the live URL.
 
 ## Dependencies
 

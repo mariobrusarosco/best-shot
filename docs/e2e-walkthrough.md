@@ -348,18 +348,12 @@ await page.click('button:nth-child(2)');  // Position might change
 await page.click('#submit');  // ID might be removed
 
 // ✅ GOOD: Stable selectors
-// 1. Role-based (accessibility)
-await page.getByRole('button', { name: 'Login' }).click();
-
-// 2. Test ID (explicit testing hooks)
+// 1. Test ID (explicit testing hooks)
 await page.getByTestId('login-button').click();
-
-// 3. Data attributes (our convention)
+// 2. Data attributes (our convention)
 await page.locator('[data-ui="screen-heading"]').click();
-
-// 4. Centralized selectors (best!)
-import { auth } from '../../utils/selectors';
-await auth.loginButton(page).click();
+// 3. Role-based (accessibility)
+await page.getByRole('button', { name: 'Login' }).click();
 ```
 
 ### Wait Patterns
@@ -387,89 +381,6 @@ await expect(page).toHaveTitle(/Best Shot/);
 await expect(element).toBeVisible();
 await expect(element).toContainText('Hello,');
 await expect(element).toHaveAttribute('href', /\/tournaments/);
-```
-
----
-
-## Step-by-Step Examples
-
-### Example 1: Testing Dashboard Load
-
-```typescript
-// e2e/tests/dashboard/dashboard.spec.ts
-
-import { test, expect } from '@playwright/test';
-import { dashboard } from '../../utils/selectors';
-
-test('should display dashboard with greeting @smoke', async ({ page }) => {
-  // Step 1: Navigate to dashboard
-  // ─────────────────────────────
-  await page.goto('/dashboard');
-  
-  // Step 2: Wait for page to stabilize
-  // ──────────────────────────────────
-  await page.waitForLoadState('networkidle');
-  
-  // Step 3: Verify URL
-  // ───────────────────
-  await expect(page).toHaveURL(/.*dashboard/);
-  
-  // Step 4: Check main heading exists
-  // ──────────────────────────────────
-  const heading = dashboard.screenHeading(page);
-  await expect(heading).toBeVisible();
-  
-  // Step 5: Verify greeting text
-  // ─────────────────────────────
-  await expect(dashboard.title(page)).toContainText('Hello,');
-  
-  // Step 6: Verify username is displayed
-  // ─────────────────────────────────────
-  await expect(dashboard.subtitle(page)).toBeVisible();
-});
-```
-
-### Example 2: Testing Navigation Flow
-
-```typescript
-// e2e/tests/navigation/menu.spec.ts
-
-test('should navigate through menu links', async ({ page }) => {
-  // Start at home
-  await page.goto('/');
-  
-  // Click tournaments link
-  await page.locator('menu a[href="/tournaments"]').click();
-  
-  // Verify navigation
-  await expect(page).toHaveURL(/.*tournaments/);
-  
-  // Click leagues link
-  await page.locator('menu a[href="/leagues"]').click();
-  
-  // Verify navigation
-  await expect(page).toHaveURL(/.*leagues/);
-});
-```
-
-### Example 3: Testing with Network Conditions
-
-```typescript
-test('should handle slow network gracefully', async ({ page }) => {
-  // Simulate slow network
-  await page.route('**/api/**', async (route) => {
-    await new Promise(resolve => setTimeout(resolve, 2000));
-    await route.continue();
-  });
-  
-  // Navigate
-  await page.goto('/dashboard');
-  
-  // Should still load (with longer timeout)
-  await expect(
-    dashboard.screenHeading(page)
-  ).toBeVisible({ timeout: 10000 });
-});
 ```
 
 ---
@@ -838,5 +749,10 @@ yarn playwright show-report
 ---
 
 *Last updated: 2026-01-10*
+
+
+
+
+
 
 

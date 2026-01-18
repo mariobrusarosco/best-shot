@@ -19,7 +19,7 @@ jobs:
     timeout-minutes: 60
     runs-on: ubuntu-latest
     env:
-      TEST_ENVIRONMENT: ${{ github.event.inputs.environment || 'staging' }}
+      TEST_ENVIRONMENT: ${{ github.event.inputs.environment || 'demo' }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4

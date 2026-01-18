@@ -106,7 +106,32 @@ The implementation strictly follows the architecture defined in `docs/e2e-walkth
 - A passing test suite against `https://best-shot.demo.mario.productions`.
 - Reusable selectors and configuration for future expansion.
 
-## Next Steps
+## Phase 4: Feature Deep Dive (Tournaments & Leagues)
 
-- Wait for user approval of this detailed plan.
-- Begin execution of Phase 1, starting with Task 1.1.
+**Goal:** Expand test coverage to specific functional areas identified during exploration: Tournaments, Leagues, and Admin workflows.
+
+### Tasks
+
+#### Task 4.1 - Implement Tournaments Suite [x]
+
+- [x] Create `e2e/tests/tournaments/tournaments.spec.ts`.
+- [x] Implement `test('should list available tournaments')`:
+  - [x] Navigate to `/tournaments`.
+  - [x] Verify list of tournaments is visible (Screenshot captured: `tournaments_list_page`).
+  - [x] Click on a tournament (e.g., Premier League) and verify matches load.
+
+#### Task 4.2 - Implement Leagues Workflow [x]
+
+- [x] Create `e2e/tests/leagues/leagues.spec.ts`.
+- [x] Implement `test('should allow creating a league')`:
+  - [x] Navigate to `/leagues`.
+  - [x] Click FAB -> "Create League".
+  - [x] Fill out the form (Name, Description) and submit.
+  - [x] Verify the new league appears in the list.
+
+#### Task 4.3 - Admin Flows (Smoke) [x]
+
+- [x] Create `e2e/tests/admin/admin.spec.ts`.
+- [x] Implement `test('should access admin panel')`:
+  - [x] Navigate to `/admin`.
+  - [x] Verify "Create Tournament" button exists (Screenshot captured: `create_tournament_form`).

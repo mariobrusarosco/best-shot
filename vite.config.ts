@@ -25,6 +25,7 @@ export default defineConfig(({ mode }) => ({
 		react(),
 		checker({
 			typescript: true,
+			overlay: false,
 		}),
 		// visualizer({
 		// 	gzipSize: true,

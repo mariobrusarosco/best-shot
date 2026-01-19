@@ -4,8 +4,8 @@ import { tournaments, navigation, dashboard } from '../../utils/selectors';
 test.describe('Tournaments @critical', () => {
     
   const expectedTournaments = [
-    { name: 'Premier League 25/26' },
-    { name: 'FA Cup 25/26' },
+    { name: 'Premier League 25/26', type: 'regular' },
+    { name: 'FA Cup 25/26', type: 'knockout' },
   ];
 
   for (const tournament of expectedTournaments) {
@@ -24,6 +24,13 @@ test.describe('Tournaments @critical', () => {
       // 4. Verify we reached the details page
       await expect(authenticatedPage).toHaveURL(/.*tournaments\/.*/);
       await expect(dashboard.screenHeading(authenticatedPage)).toBeVisible();
+
+      // 5. Verify type-specific elements
+      if (tournament.type === 'regular') {
+        await expect(tournaments.standingsTable(authenticatedPage)).toBeVisible();
+      } else {
+        await expect(tournaments.noStandingsMessage(authenticatedPage)).toBeVisible();
+      }
     });
   }
 });

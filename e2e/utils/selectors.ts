@@ -24,6 +24,9 @@ export const auth = {
 export const tournaments = {
   // Using partial text matching for flexibility
   cardLink: (page: Page, name: string | RegExp) => page.getByRole('link', { name: name }),
+  // Standings
+  standingsTable: (page: Page) => page.getByTestId('standings-table'),
+  noStandingsMessage: (page: Page) => page.getByTestId('no-standings-message'),
 };
 
 export const leagues = {

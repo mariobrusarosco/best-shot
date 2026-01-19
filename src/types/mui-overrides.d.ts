@@ -69,6 +69,13 @@ declare module "@mui/material/Checkbox" {
 	}
 }
 
+// ===== INPUT SLOT PROPS AUGMENTATION =====
+declare module "@mui/base/Input" {
+	interface InputInputSlotPropsOverrides {
+		"data-testid"?: string;
+	}
+}
+
 // ===== THEME EXTENSIONS =====
 declare module "@mui/material/styles" {
 	// Extend breakpoints

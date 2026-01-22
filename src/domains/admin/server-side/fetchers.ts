@@ -3,18 +3,18 @@ import {
 	AdmingTournamentsResponseSchema,
 	AdminTournamentResponseSchema,
 	ExecutionJobsResponseSchema,
+	SchedulerStatsResponseSchema,
 	ScraperExecutionSchema,
 	ScraperJobSchema,
 	ScraperStatisticsSchema,
-	SchedulerStatsResponseSchema,
 	TournamentExecutionJobsResponseSchema,
 	TournamentMetadataSchema,
 } from "@/domains/admin/schemas";
 import type {
 	IAdminTournament,
 	IExecutionJob,
-	IScraperJob,
 	ISchedulerStats,
+	IScraperJob,
 	ITournamentExecutionJobsResponse,
 	ITournamentMetadata,
 } from "@/domains/admin/typing";

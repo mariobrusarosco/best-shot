@@ -8,12 +8,12 @@ import "@testing-library/jest-dom";
 import { vi } from "vitest";
 
 // Mock import.meta.env
-vi.stubGlobal('import.meta', {
-    env: {
-        MODE: 'local-dev',
-        VITE_BEST_SHOT_API: 'http://localhost:9090/api/v1',
-        VITE_BEST_SHOT_API_V2: 'http://localhost:9090/api/v2',
-    }
+vi.stubGlobal("import.meta", {
+	env: {
+		MODE: "local-dev",
+		VITE_BEST_SHOT_API: "http://localhost:9090/api/v1",
+		VITE_BEST_SHOT_API_V2: "http://localhost:9090/api/v2",
+	},
 });
 
 console.warn("------- PERFORMING THINGS BEFORE RUNINNG TESTS");

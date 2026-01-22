@@ -208,6 +208,19 @@ export const AdminTournamentResponseSchema = z.object({
 	message: z.string(),
 });
 
+// Scheduler Stats Schema
+export const SchedulerStatsSchema = z.object({
+	totalOpenMatches: z.number(),
+	matchesNeedingUpdate: z.number(),
+	matchesRecentlyChecked: z.number(),
+});
+
+// Scheduler Stats API Response Schema
+export const SchedulerStatsResponseSchema = z.object({
+	success: z.boolean(),
+	data: SchedulerStatsSchema,
+});
+
 // Tournament Execution Job Schema
 export const TournamentExecutionJobSchema = z.object({
 	id: z.string().uuid(),

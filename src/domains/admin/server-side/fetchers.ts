@@ -6,6 +6,7 @@ import {
 	ScraperExecutionSchema,
 	ScraperJobSchema,
 	ScraperStatisticsSchema,
+	SchedulerStatsResponseSchema,
 	TournamentExecutionJobsResponseSchema,
 	TournamentMetadataSchema,
 } from "@/domains/admin/schemas";
@@ -13,6 +14,7 @@ import type {
 	IAdminTournament,
 	IExecutionJob,
 	IScraperJob,
+	ISchedulerStats,
 	ITournamentExecutionJobsResponse,
 	ITournamentMetadata,
 } from "@/domains/admin/typing";
@@ -48,6 +50,15 @@ export const fetchScraperStatistics = async () => {
 		baseURL: import.meta.env.VITE_BEST_SHOT_API_V2,
 	});
 	return ScraperStatisticsSchema.parse(response.data);
+};
+
+// Fetch scheduler statistics
+export const fetchSchedulerStats = async (): Promise<ISchedulerStats> => {
+	const response = await api.get("/admin/scheduler/stats", {
+		baseURL: import.meta.env.VITE_BEST_SHOT_API_V2,
+	});
+	const parsedResponse = SchedulerStatsResponseSchema.parse(response.data);
+	return parsedResponse.data;
 };
 
 // Fetch tournament metadata

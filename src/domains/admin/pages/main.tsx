@@ -1,6 +1,7 @@
 import { Box, styled } from "@mui/material";
 import { useState } from "react";
 import { ResetUserActivityButton } from "@/domains/admin/components/reset-user-activity/reset-user-activity";
+import { SchedulerHealthCard } from "@/domains/admin/components/scheduler-health/scheduler-health-card";
 import { CreateTournamentModal } from "@/domains/admin/components/tournaments/create-tournament-modal/create-tournament-modal";
 import TournamentsTable from "@/domains/admin/components/tournaments/tournaments-table/tournaments-table";
 import { useAdminTournaments } from "@/domains/admin/hooks/use-admin-tournaments";
@@ -57,6 +58,10 @@ const MainAdminPage = () => {
 					</AppButton>
 				</Box>
 			</ScreenHeading>
+
+			<Box sx={{ mb: 4 }}>
+				<SchedulerHealthCard />
+			</Box>
 
 			<TournamentsTable tournaments={tournaments || []} isLoading={isLoading} />
 

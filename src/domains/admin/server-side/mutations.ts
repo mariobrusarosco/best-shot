@@ -74,6 +74,17 @@ export const triggerScraperJob = async (jobId: string): Promise<void> => {
 	);
 };
 
+// Manually trigger match polling
+export const triggerMatchPolling = async (): Promise<void> => {
+	await api.post(
+		"/admin/scheduler/trigger-match-polling",
+		{},
+		{
+			baseURL: import.meta.env.VITE_BEST_SHOT_API_V2,
+		}
+	);
+};
+
 export const createAdminTournament = async (
 	data: z.infer<typeof CreateTournamentSchema>
 ): Promise<ITournament> => {

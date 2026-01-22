@@ -1,15 +1,13 @@
 import { Box, Chip, styled } from "@mui/material";
 import { IconActivity, IconAlertTriangle, IconCheck, IconRefresh } from "@tabler/icons-react";
 import { useSchedulerStats } from "@/domains/admin/hooks/use-scheduler-stats";
-import { useTriggerMatchPolling } from "@/domains/admin/hooks/use-trigger-match-polling";
 import { AppError } from "@/domains/global/components/error";
 import { AppTypography } from "@/domains/ui-system/components";
 import { AppButton } from "@/domains/ui-system/components/app-button/app-button";
 import { Surface } from "@/domains/ui-system/components/surface/surface";
 
 export const SchedulerHealthCard = () => {
-	const { data: stats, isLoading, error } = useSchedulerStats();
-	const { mutate: triggerUpdate, isPending: isTriggering } = useTriggerMatchPolling();
+	const { data: stats, isLoading, error, refetch } = useSchedulerStats();
 
 	if (isLoading) {
 		return (
@@ -39,7 +37,7 @@ export const SchedulerHealthCard = () => {
 					<AppTypography variant="h6" color="neutral.100" sx={{ mb: 1 }}>
 						Scheduler Health
 					</AppTypography>
-					<AppTypography variant="body2" color="text.secondary">
+					<AppTypography variant="body2" color="neutral.100">
 						Match Polling Status
 					</AppTypography>
 				</Box>
@@ -56,7 +54,7 @@ export const SchedulerHealthCard = () => {
 				<StatItem>
 					<IconActivity size={16} color={isHealthy ? "#10b981" : "#f59e0b"} />
 					<Box>
-						<AppTypography variant="caption" color="text.secondary">
+						<AppTypography variant="h5" color="netural.100">
 							Pending Updates
 						</AppTypography>
 						<AppTypography variant="body2" color={isHealthy ? "neutral.100" : "warning.light"}>
@@ -67,7 +65,7 @@ export const SchedulerHealthCard = () => {
 
 				<StatItem>
 					<Box>
-						<AppTypography variant="caption" color="text.secondary">
+						<AppTypography variant="h5" color="netural.100">
 							Total Open Matches
 						</AppTypography>
 						<AppTypography variant="body2" color="neutral.100">
@@ -78,7 +76,7 @@ export const SchedulerHealthCard = () => {
 
 				<StatItem>
 					<Box>
-						<AppTypography variant="caption" color="text.secondary">
+						<AppTypography variant="h5" color="netural.100">
 							Recently Checked
 						</AppTypography>
 						<AppTypography variant="body2" color="neutral.100">
@@ -89,15 +87,15 @@ export const SchedulerHealthCard = () => {
 			</StatsGrid>
 
 			<ActionBar>
-				<AppTypography variant="caption" color="text.secondary">
+				<AppTypography variant="body2" color="neutral.100">
 					Checks every 10 mins
 				</AppTypography>
 				<AppButton
 					variant="contained"
 					size="small"
 					startIcon={<IconRefresh size={16} />}
-					onClick={() => triggerUpdate()}
-					loading={isTriggering}
+					onClick={() => void refetch()}
+					loading={isLoading}
 					color={isHealthy ? "primary" : "warning"}
 				>
 					Trigger Update

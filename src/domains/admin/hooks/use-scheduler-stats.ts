@@ -5,7 +5,6 @@ export const useSchedulerStats = () => {
 	return useQuery({
 		queryKey: ["admin", "scheduler", "stats"],
 		queryFn: fetchSchedulerStats,
-		refetchInterval: 30000, // Refetch every 30 seconds
-		staleTime: 10000,
+		enabled: true
 	});
 };

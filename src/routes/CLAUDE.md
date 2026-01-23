@@ -20,7 +20,7 @@ export const Route = createLazyFileRoute("/_auth/leagues/$leagueId/")({
 
 ```
 export const LeagueScreen = () => {
-  const { league, performance, mutation } = useLeague();
+  const { league } = useLeague();
   const hasInvitePermission = league?.data?.permissions.invite;
   const hasEditPermission = league?.data?.permissions.edit;
   const [isInviteDialogOpen, setIsInviteDialogOpen] = useState(false);

@@ -29,24 +29,6 @@ export const TournamentSchema = z
 
 export type ITournament = z.infer<typeof TournamentSchema>;
 
-const TournamentPerformanceSchema = z.object({
-	lastUpdated: z.string(),
-	points: z.string(),
-});
-
-export type ITournamentPerformance = z.infer<typeof TournamentPerformanceSchema>;
-
-const TournamentPerformanceWithDetailsSchema = TournamentPerformanceSchema.extend({
-	details: z.record(z.number()),
-	guessesByOutcome: z.object({
-		correct: z.number(),
-		incorrect: z.number(),
-	}),
-});
-export type ITournamentPerformanceWithDetails = z.infer<
-	typeof TournamentPerformanceWithDetailsSchema
->;
-
 const TournamentStandingsSchema = z.object({
 	lastUpdated: z.string(),
 	format: z.string(),

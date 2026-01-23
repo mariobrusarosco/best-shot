@@ -10,28 +10,7 @@ export type ILeague = {
 		invite: boolean;
 		delete: boolean;
 	};
-	performance: ILeaguePerformance;
 	participants?: IParticipant[];
-};
-
-export type ILeaguePerformance = {
-	leaderBoard: {
-		memberName: string;
-		points: string;
-		lastUpdated: string;
-	}[];
-	standings: Record<
-		string,
-		{
-			id: string;
-			logo: string;
-			members: {
-				member: string;
-				points: string;
-			}[];
-		}
-	>;
-	lastUpdated: string;
 };
 
 export type IParticipant = {

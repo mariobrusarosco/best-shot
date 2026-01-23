@@ -31,22 +31,6 @@ const TournamentTabs = ({ tournament }: { tournament?: ITournament }) => {
 						),
 					}}
 				/>
-				<Tab
-					value={"performance"}
-					slots={{
-						root: (props) => (
-							<CustomTab
-								to="/tournaments/$tournamentId/performance"
-								params={{ tournamentId: tournament.id }}
-								{...props}
-							>
-								<Typography variant="tag" textTransform="uppercase">
-									performance
-								</Typography>
-							</CustomTab>
-						),
-					}}
-				/>
 			</TabsList>
 		</Tabs>
 	);

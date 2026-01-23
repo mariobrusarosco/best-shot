@@ -1,34 +1,30 @@
 import { Typography } from "@mui/material";
 import { styled } from "@mui/system";
 import Matchday from "@/domains/dashboard/components/matchday";
-import TournamentsPerf from "@/domains/dashboard/components/tournaments-perf";
 import { useDashboard } from "@/domains/dashboard/hooks/use-dashboard";
 import { ScreenHeading, ScreenHeadingSkeleton } from "@/domains/global/components/screen-heading";
 import { useMember } from "@/domains/member/hooks/use-member";
-import { useMemberPerformance } from "@/domains/member/hooks/use-member-performance";
 import { AuthenticatedScreenLayout } from "@/domains/ui-system/layout/authenticated";
 import { ScreenMainContent } from "@/domains/ui-system/layout/screen-main-content";
 import { UIHelper } from "@/domains/ui-system/theme";
 
 const DashboardPage = () => {
 	const member = useMember();
-	const performance = useMemberPerformance();
 	const dashboard = useDashboard();
 
-	if (member.isPending || performance.isPending || dashboard.isPending) {
+	if (member.isPending || dashboard.isPending) {
 		return (
 			<AuthenticatedScreenLayout data-ui="dashboard-screen">
 				<ScreenHeadingSkeleton />
 
 				<Dashboard data-ui="dashboard-content-skeleton">
 					<Matchday.Skeleton />
-					<TournamentsPerf.Skeleton />
 				</Dashboard>
 			</AuthenticatedScreenLayout>
 		);
 	}
 
-	if (member.isError || performance.isError || dashboard.isError) {
+	if (member.isError || dashboard.isError) {
 		return (
 			<AuthenticatedScreenLayout data-ui="dashboard-screen">
 				<ScreenHeading title="Dashboard" subtitle="" />
@@ -48,7 +44,6 @@ const DashboardPage = () => {
 
 			<Dashboard data-ui="dashboard-content">
 				<Matchday.Component matchday={dashboard.data.matchday} />
-				<TournamentsPerf.Component performance={performance} />
 			</Dashboard>
 		</AuthenticatedScreenLayout>
 	);
@@ -65,4 +60,3 @@ export const Dashboard = styled(ScreenMainContent)(({ theme }) => ({
 }));
 
 export { DashboardPage };
-performance;

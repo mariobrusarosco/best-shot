@@ -1,11 +1,6 @@
 import { API, api } from "@/api";
 import type { IMatch } from "@/domains/match/typing";
-import {
-	type ITournamentPerformance,
-	type ITournamentPerformanceWithDetails,
-	type ITournamentStandings,
-	TournamentSchema,
-} from "@/domains/tournament/schemas";
+import { type ITournamentStandings, TournamentSchema } from "@/domains/tournament/schemas";
 
 export const getTournament = async ({ queryKey }: { queryKey: unknown }) => {
 	const queryKeyArray = queryKey as [string, { id: string; round?: number }];
@@ -40,26 +35,6 @@ export const getTournamentMatches = async ({ queryKey }: { queryKey: unknown }) 
 	const response = await api.get(`tournaments/${tournamentId}/matches/${round}`);
 
 	return response.data as IMatch[];
-};
-
-export const getTournamentPerformance = async ({ queryKey }: { queryKey: unknown }) => {
-	const queryKeyArray = queryKey as [string, { tournamentId: string }];
-	const [_key, { tournamentId }] = queryKeyArray;
-
-	const response = await api.get(`tournaments/${tournamentId}/performance`, {
-		baseURL: import.meta.env.VITE_BEST_SHOT_API_V2,
-	});
-
-	return response.data as ITournamentPerformance;
-};
-
-export const getTournamentPerformanceDetails = async ({ queryKey }: { queryKey: unknown }) => {
-	const queryKeyArray = queryKey as [string, { tournamentId: string }];
-	const [_key, { tournamentId }] = queryKeyArray;
-
-	const response = await api.get(`tournaments/${tournamentId}/performance/details`);
-
-	return response.data as ITournamentPerformanceWithDetails;
 };
 
 export const getTournamentStandings = async ({ queryKey }: { queryKey: unknown }) => {

@@ -3,7 +3,6 @@ import { getRouteApi } from "@tanstack/react-router";
 import { useState } from "react";
 import { getLeague } from "@/domains/league/server-side/fetchers";
 import { inviteToLeague } from "@/domains/league/server-side/mutations";
-import { useLeaguePerformance } from "./use-league-performance";
 
 const route = getRouteApi("/_auth/leagues/$leagueId/");
 
@@ -50,12 +49,8 @@ export const useLeague = () => {
 		});
 	};
 
-	const { mutation, performance } = useLeaguePerformance();
-
 	return {
 		league,
-		mutation,
-		performance,
 		setEditMode,
 		editMode,
 		inputs: {

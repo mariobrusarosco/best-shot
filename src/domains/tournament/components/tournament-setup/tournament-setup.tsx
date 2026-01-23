@@ -23,10 +23,7 @@ export const TournamentSetup = () => {
 				<Typography textTransform="uppercase" variant="label" color="teal.500" fontWeight={700}>
 					scores
 				</Typography>{" "}
-				and then check your{" "}
-				<Typography textTransform="uppercase" variant="label" color="teal.500" fontWeight={700}>
-					performance
-				</Typography>
+				and compete with your friends
 			</Typography>
 			<AppButton
 				sx={{

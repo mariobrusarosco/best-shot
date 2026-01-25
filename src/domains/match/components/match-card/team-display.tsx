@@ -4,7 +4,6 @@ import { useTournamentStandings } from "@/domains/tournament/hooks/use-tournamen
 import type { ITournamentStandings } from "@/domains/tournament/schemas";
 import { AppPill } from "@/domains/ui-system/components/pill/pill";
 import { UIHelper } from "@/domains/ui-system/theme";
-import _ from "lodash";
 
 export const TeamDisplay = ({
   team,
@@ -107,17 +106,17 @@ const getTeamStandingsInfo = (
   if (!standings) return;
 
   const isMultiGroup = standings.format === "multi-group";
-  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+  // biome-ignore lint/suspicious/noExplicitAny: dynamic team data mapping
   let teams: any[] = [];
 
   if (isMultiGroup) {
-    // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+    // biome-ignore lint/suspicious/noExplicitAny: dynamic team data mapping
     teams = (standings.teams as any[]).flatMap((group) => group.teams);
   } else {
-    // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+    // biome-ignore lint/suspicious/noExplicitAny: dynamic team data mapping
     teams = standings.teams as any[];
   }
 
-  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+  // biome-ignore lint/suspicious/noExplicitAny: dynamic team data mapping
   return teams.find((team: any) => team.teamExternalId === teamId);
 };

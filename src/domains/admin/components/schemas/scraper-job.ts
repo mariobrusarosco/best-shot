@@ -7,8 +7,7 @@ export const ScraperJobSchema = z.object({
 	tournamentId: z.string().uuid(),
 	tournamentName: z.string(),
 	schedule: z.object({
-		cron: z
-			.string(),
+		cron: z.string(),
 		timezone: z.string().default("UTC"),
 		nextRun: z.string().datetime(),
 		lastRun: z.string().datetime().optional(),
@@ -33,8 +32,7 @@ export const ScraperJobSchema = z.object({
 // Reschedule Job Input Schema
 export const RescheduleJobSchema = z.object({
 	jobId: z.string().uuid(),
-	cronExpression: z
-		.string(),
+	cronExpression: z.string(),
 	timezone: z.string().optional(),
 });
 
@@ -62,8 +60,7 @@ export const UpdateScraperStatusSchema = z.object({
 export const CreateScraperJobSchema = z.object({
 	name: z.string().min(1, "Job name is required").max(100),
 	tournamentId: z.string().uuid("Please select a tournament"),
-	cronExpression: z
-		.string(),
+	cronExpression: z.string(),
 	timezone: z.string().default("UTC"),
 	dataSource: z.object({
 		url: z.string().url("Please enter a valid URL"),

@@ -9,13 +9,13 @@ import {
   TableRow,
   Typography,
 } from "@mui/material";
+import type { z } from "zod";
 import { useTournament } from "@/domains/tournament/hooks/use-tournament";
 import { useTournamentStandings } from "@/domains/tournament/hooks/use-tournament-standings";
-import {
-  type TournamentStandingGroupSchema,
-  type TournamentStandingTeamSchema,
+import type {
+  TournamentStandingGroupSchema,
+  TournamentStandingTeamSchema,
 } from "@/domains/tournament/schemas";
-import type { z } from "zod";
 import { AppPill } from "@/domains/ui-system/components/pill/pill";
 import { shimmerEffect } from "@/domains/ui-system/components/skeleton/skeleton";
 import { theme, UIHelper } from "@/domains/ui-system/theme";

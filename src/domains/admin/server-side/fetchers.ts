@@ -87,9 +87,7 @@ export const fetchSchedulerStats = async (): Promise<ISchedulerStats> => {
 
   */
 
-export const fetchSchedulerQueueStats = async (): Promise<
-	IQueueStatsSuccess["data"]
-> => {
+export const fetchSchedulerQueueStats = async (): Promise<IQueueStatsSuccess["data"]> => {
 	const response = await api.get("/admin/scheduler/queue-stats", {
 		baseURL: import.meta.env.VITE_BEST_SHOT_API_V2,
 	});
@@ -97,7 +95,9 @@ export const fetchSchedulerQueueStats = async (): Promise<
 	const parsedResponse = QueueStatsResponseSchema.parse(response.data);
 
 	if (!parsedResponse.success) {
-		throw new Error(parsedResponse.message || parsedResponse.error || "Failed to fetch queue stats");
+		throw new Error(
+			parsedResponse.message || parsedResponse.error || "Failed to fetch queue stats"
+		);
 	}
 
 	return parsedResponse.data;

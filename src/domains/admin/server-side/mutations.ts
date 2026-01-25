@@ -76,9 +76,7 @@ export const triggerScraperJob = async (jobId: string): Promise<void> => {
 };
 
 // Manually trigger match polling
-export const triggerMatchPolling = async (): Promise<
-	ITriggerMatchPollingSuccess["data"]
-> => {
+export const triggerMatchPolling = async (): Promise<ITriggerMatchPollingSuccess["data"]> => {
 	const response = await api.post(
 		"/admin/scheduler/trigger-match-polling",
 		{},

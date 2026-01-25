@@ -58,10 +58,7 @@ export const TournamentStandingGroupSchema = z.object({
 const TournamentStandingsSchema = z.object({
 	lastUpdated: z.string(),
 	format: z.string(),
-	teams: z.union([
-		z.array(TournamentStandingTeamSchema),
-		z.array(TournamentStandingGroupSchema),
-	]),
+	teams: z.union([z.array(TournamentStandingTeamSchema), z.array(TournamentStandingGroupSchema)]),
 });
 
 export type ITournamentStandings = z.infer<typeof TournamentStandingsSchema>;

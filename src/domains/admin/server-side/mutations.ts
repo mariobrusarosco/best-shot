@@ -5,9 +5,10 @@ import {
 	CreateTournamentSchema,
 	RescheduleJobSchema,
 	ScraperJobSchema,
+	TriggerMatchPollingResponseSchema,
 	UpdateScraperStatusSchema,
 } from "@/domains/admin/schemas";
-import type { IScraperJob } from "@/domains/admin/typing";
+import type { IScraperJob, ITriggerMatchPollingSuccess } from "@/domains/admin/typing";
 import type { ITournament } from "@/domains/tournament/schemas";
 
 // Reschedule a scraper job
@@ -75,14 +76,24 @@ export const triggerScraperJob = async (jobId: string): Promise<void> => {
 };
 
 // Manually trigger match polling
-export const triggerMatchPolling = async (): Promise<void> => {
-	await api.post(
+export const triggerMatchPolling = async (): Promise<
+	ITriggerMatchPollingSuccess["data"]
+> => {
+	const response = await api.post(
 		"/admin/scheduler/trigger-match-polling",
 		{},
 		{
 			baseURL: import.meta.env.VITE_BEST_SHOT_API_V2,
 		}
 	);
+
+	const parsedResponse = TriggerMatchPollingResponseSchema.parse(response.data);
+
+	if (!parsedResponse.success) {
+		throw new Error(parsedResponse.message || parsedResponse.error || "Failed to trigger polling");
+	}
+
+	return parsedResponse.data;
 };
 
 export const createAdminTournament = async (

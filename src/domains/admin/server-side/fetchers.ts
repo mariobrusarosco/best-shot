@@ -3,6 +3,8 @@ import {
 	AdmingTournamentsResponseSchema,
 	AdminTournamentResponseSchema,
 	ExecutionJobsResponseSchema,
+	JobStatusResponseSchema,
+	QueueStatsResponseSchema,
 	SchedulerStatsResponseSchema,
 	ScraperExecutionSchema,
 	ScraperJobSchema,
@@ -13,6 +15,8 @@ import {
 import type {
 	IAdminTournament,
 	IExecutionJob,
+	IJobStatusSuccess,
+	IQueueStatsSuccess,
 	ISchedulerStats,
 	IScraperJob,
 	ITournamentExecutionJobsResponse,
@@ -58,6 +62,59 @@ export const fetchSchedulerStats = async (): Promise<ISchedulerStats> => {
 		baseURL: import.meta.env.VITE_BEST_SHOT_API_V2,
 	});
 	const parsedResponse = SchedulerStatsResponseSchema.parse(response.data);
+
+	if (!parsedResponse.success) {
+		throw new Error(parsedResponse.message || parsedResponse.error || "Failed to fetch stats");
+	}
+
+	return parsedResponse.data;
+};
+
+/*
+
+ Via Admin API
+
+  curl -X GET https://your-demo-api.railway.app/api/v2/admin/scheduler/queue-stats \
+    -H "Authorization: Bearer YOUR_TOKEN"
+
+  # Response shows:
+  {
+    "queue": {
+      "name": "update-match",
+      "pendingJobs": 15  # ← Jobs waiting to be processed
+    }
+  }
+
+  */
+
+export const fetchSchedulerQueueStats = async (): Promise<
+	IQueueStatsSuccess["data"]
+> => {
+	const response = await api.get("/admin/scheduler/queue-stats", {
+		baseURL: import.meta.env.VITE_BEST_SHOT_API_V2,
+	});
+
+	const parsedResponse = QueueStatsResponseSchema.parse(response.data);
+
+	if (!parsedResponse.success) {
+		throw new Error(parsedResponse.message || parsedResponse.error || "Failed to fetch queue stats");
+	}
+
+	return parsedResponse.data;
+};
+
+// Fetch job status
+export const fetchJobStatus = async (jobId: string): Promise<IJobStatusSuccess["data"]> => {
+	const response = await api.get(`/admin/scheduler/jobs/${jobId}`, {
+		baseURL: import.meta.env.VITE_BEST_SHOT_API_V2,
+	});
+
+	const parsedResponse = JobStatusResponseSchema.parse(response.data);
+
+	if (!parsedResponse.success) {
+		throw new Error(parsedResponse.message || parsedResponse.error || "Failed to fetch job status");
+	}
+
 	return parsedResponse.data;
 };
 

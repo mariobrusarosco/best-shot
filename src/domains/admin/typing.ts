@@ -3,12 +3,15 @@ import type {
 	AdminTournamentResponseSchema,
 	AdminTournamentSchema,
 	ExecutionJobSchema,
+	JobStatusResponseSchema,
+	QueueStatsResponseSchema,
 	SchedulerStatsResponseSchema,
 	SchedulerStatsSchema,
 	ScraperJobSchema,
 	TournamentExecutionJobSchema,
 	TournamentExecutionJobsResponseSchema,
 	TournamentMetadataSchema,
+	TriggerMatchPollingResponseSchema,
 } from "./schemas";
 
 export type IScraperJob = z.infer<typeof ScraperJobSchema>;
@@ -22,6 +25,14 @@ export type ITournamentExecutionJob = z.infer<typeof TournamentExecutionJobSchem
 export type ITournamentExecutionJobsResponse = z.infer<
 	typeof TournamentExecutionJobsResponseSchema
 >;
+export type ITriggerMatchPollingResponse = z.infer<typeof TriggerMatchPollingResponseSchema>;
+export type ITriggerMatchPollingSuccess = Extract<ITriggerMatchPollingResponse, { success: true }>;
+
+export type IQueueStatsResponse = z.infer<typeof QueueStatsResponseSchema>;
+export type IQueueStatsSuccess = Extract<IQueueStatsResponse, { success: true }>;
+
+export type IJobStatusResponse = z.infer<typeof JobStatusResponseSchema>;
+export type IJobStatusSuccess = Extract<IJobStatusResponse, { success: true }>;
 
 export interface IScraperJobExecution {
 	id: string;

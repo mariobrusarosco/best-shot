@@ -1,6 +1,6 @@
 import { Box, CircularProgress, IconButton, styled, Tooltip, Typography } from "@mui/material";
 import { createLazyFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import {
 	useAdminCreateMatches,
 	useAdminCreateRounds,
@@ -17,6 +17,7 @@ import {
 import { ScreenHeadingSkeleton } from "@/domains/global/components/screen-heading";
 import { AppIcon, AppTypography } from "@/domains/ui-system/components";
 import { AppInput } from "@/domains/ui-system/components/input/input";
+import { useNotification } from "@/domains/ui-system/components/notification/notification-context";
 import { AppPill } from "@/domains/ui-system/components/pill/pill";
 
 export const Route = createLazyFileRoute("/_auth/admin/tournament/$tournamentId/_layout/")({
@@ -86,6 +87,7 @@ function TournamentDetailPage() {
 		setRoundIdInput(event.target.value);
 	};
 	const { data: tournamentData, isLoading, error } = useAdminTournament(tournamentId);
+	const { showNotification } = useNotification();
 
 	// Tournament action hooks
 	const createStandings = useAdminCreateStandings();
@@ -98,6 +100,16 @@ function TournamentDetailPage() {
 	const updateMatches = useAdminUpdateMatches();
 	const updateKnockoutRounds = useAdminUpdateKnockoutRounds();
 	const updateRoundMatches = useAdminUpdateRoundMatches();
+
+	const mutateWithFeedback = useCallback(
+		<TVariables,>(mutation: { mutate: (variables: TVariables, options?: { onSuccess?: () => void; onError?: (error: Error) => void }) => void }, variables: TVariables, label: string) => {
+			mutation.mutate(variables, {
+				onSuccess: () => showNotification(`${label} completed successfully`, "success"),
+				onError: (err) => showNotification(`Failed to ${label.toLowerCase()}: ${err.message}`, "error"),
+			});
+		},
+		[showNotification]
+	);
 
 	if (isLoading) {
 		return <ScreenHeadingSkeleton />;
@@ -179,6 +191,48 @@ function TournamentDetailPage() {
 			</Box>
 
 			<Box display="flex" gap={2}>
+				<ActionsCard>
+					<Typography variant="h6" color="neutral.100" fontWeight="medium">
+						Teams
+					</Typography>
+
+					<Box
+						sx={{ display: "flex", alignItems: "center", gap: 1, justifyContent: "space-between" }}
+					>
+						<AppTypography variant="body2" color="neutral.300">
+							Create
+						</AppTypography>
+						<AppPill.Component bgcolor={"teal.500"}>
+							<ActionButtonWithLoading
+								title="Create Teams"
+								onClick={() => mutateWithFeedback(createTeams, tournamentId, "Create Teams")}
+								isPending={createTeams.isPending}
+								tournamentId={tournamentId}
+								variables={createTeams.variables}
+								icon="Plus"
+							/>
+						</AppPill.Component>
+					</Box>
+
+					<Box
+						sx={{ display: "flex", alignItems: "center", gap: 1, justifyContent: "space-between" }}
+					>
+						<AppTypography variant="body2" color="neutral.300">
+							Update
+						</AppTypography>
+						<AppPill.Component bgcolor={"teal.500"}>
+							<ActionButtonWithLoading
+								title="Update Teams"
+								onClick={() => mutateWithFeedback(updateTeams, tournamentId, "Update Teams")}
+								isPending={updateTeams.isPending}
+								tournamentId={tournamentId}
+								variables={updateTeams.variables}
+								icon="ClockFilled"
+							/>
+						</AppPill.Component>
+					</Box>
+				</ActionsCard>
+
 				<ActionsCard
 					sx={{
 						cursor: tournamentData?.mode === "knockout-only" ? "not-allowed" : "auto",
@@ -204,7 +258,7 @@ function TournamentDetailPage() {
 						<AppPill.Component bgcolor={"teal.500"}>
 							<ActionButtonWithLoading
 								title="Create Standings"
-								onClick={() => createStandings.mutate(tournamentId)}
+								onClick={() => mutateWithFeedback(createStandings, tournamentId, "Create Standings")}
 								isPending={createStandings.isPending}
 								tournamentId={tournamentId}
 								variables={createStandings.variables}
@@ -222,7 +276,7 @@ function TournamentDetailPage() {
 						<AppPill.Component bgcolor={"teal.500"}>
 							<ActionButtonWithLoading
 								title="Update Standings"
-								onClick={() => updateStandings.mutate(tournamentId)}
+								onClick={() => mutateWithFeedback(updateStandings, tournamentId, "Update Standings")}
 								isPending={updateStandings.isPending}
 								tournamentId={tournamentId}
 								variables={updateStandings.variables}
@@ -246,7 +300,7 @@ function TournamentDetailPage() {
 						<AppPill.Component bgcolor={"teal.500"}>
 							<ActionButtonWithLoading
 								title="Create Rounds"
-								onClick={() => createRounds.mutate(tournamentId)}
+								onClick={() => mutateWithFeedback(createRounds, tournamentId, "Create Rounds")}
 								isPending={createRounds.isPending}
 								tournamentId={tournamentId}
 								variables={createRounds.variables}
@@ -264,52 +318,10 @@ function TournamentDetailPage() {
 						<AppPill.Component bgcolor={"teal.500"}>
 							<ActionButtonWithLoading
 								title="Update Rounds"
-								onClick={() => updateRounds.mutate(tournamentId)}
+								onClick={() => mutateWithFeedback(updateRounds, tournamentId, "Update Rounds")}
 								isPending={updateRounds.isPending}
 								tournamentId={tournamentId}
 								variables={updateRounds.variables}
-								icon="ClockFilled"
-							/>
-						</AppPill.Component>
-					</Box>
-				</ActionsCard>
-
-				<ActionsCard>
-					<Typography variant="h6" color="neutral.100" fontWeight="medium">
-						Teams
-					</Typography>
-
-					<Box
-						sx={{ display: "flex", alignItems: "center", gap: 1, justifyContent: "space-between" }}
-					>
-						<AppTypography variant="body2" color="neutral.300">
-							Create
-						</AppTypography>
-						<AppPill.Component bgcolor={"teal.500"}>
-							<ActionButtonWithLoading
-								title="Create Teams"
-								onClick={() => createTeams.mutate(tournamentId)}
-								isPending={createTeams.isPending}
-								tournamentId={tournamentId}
-								variables={createTeams.variables}
-								icon="Plus"
-							/>
-						</AppPill.Component>
-					</Box>
-
-					<Box
-						sx={{ display: "flex", alignItems: "center", gap: 1, justifyContent: "space-between" }}
-					>
-						<AppTypography variant="body2" color="neutral.300">
-							Update
-						</AppTypography>
-						<AppPill.Component bgcolor={"teal.500"}>
-							<ActionButtonWithLoading
-								title="Update Teams"
-								onClick={() => updateTeams.mutate(tournamentId)}
-								isPending={updateTeams.isPending}
-								tournamentId={tournamentId}
-								variables={updateTeams.variables}
 								icon="ClockFilled"
 							/>
 						</AppPill.Component>
@@ -330,7 +342,7 @@ function TournamentDetailPage() {
 						<AppPill.Component bgcolor={"teal.500"}>
 							<ActionButtonWithLoading
 								title="Create Matches"
-								onClick={() => createMatches.mutate(tournamentId)}
+								onClick={() => mutateWithFeedback(createMatches, tournamentId, "Create Matches")}
 								isPending={createMatches.isPending}
 								tournamentId={tournamentId}
 								variables={createMatches.variables}
@@ -348,7 +360,7 @@ function TournamentDetailPage() {
 						<AppPill.Component bgcolor={"teal.500"}>
 							<ActionButtonWithLoading
 								title="Update Matches"
-								onClick={() => updateMatches.mutate(tournamentId)}
+								onClick={() => mutateWithFeedback(updateMatches, tournamentId, "Update Matches")}
 								isPending={updateMatches.isPending}
 								tournamentId={tournamentId}
 								variables={updateMatches.variables}
@@ -375,7 +387,7 @@ function TournamentDetailPage() {
 							<ActionButtonWithLoading
 								title="Update Round Matches"
 								onClick={() =>
-									updateRoundMatches.mutate({ tournamentId, roundId: roundIdInput || "" })
+									mutateWithFeedback(updateRoundMatches, { tournamentId, roundId: roundIdInput || "" }, "Update Round Matches")
 								}
 								isPending={updateRoundMatches.isPending}
 								tournamentId={tournamentId}
@@ -401,7 +413,7 @@ function TournamentDetailPage() {
 					<AppPill.Component bgcolor={"teal.500"}>
 						<ActionButtonWithLoading
 							title="Update Knockout Rounds"
-							onClick={() => updateKnockoutRounds.mutate(tournamentId)}
+							onClick={() => mutateWithFeedback(updateKnockoutRounds, tournamentId, "Update Knockout Rounds")}
 							isPending={updateKnockoutRounds.isPending}
 							tournamentId={tournamentId}
 							variables={updateKnockoutRounds.variables}

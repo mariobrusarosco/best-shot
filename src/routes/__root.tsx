@@ -4,6 +4,7 @@ import { AppDevTools } from "@/configuration/app-dev-tools";
 import type { IAuthHook } from "@/domains/authentication/adapters/typing";
 import { BetaDisclaimer } from "@/domains/global/components/beta-disclaimer";
 import { AppNotFound } from "@/domains/global/components/not-found";
+import { NotificationProvider } from "@/domains/ui-system/components/notification/notification-context";
 
 export interface RouterContext {
 	queryClient: QueryClient;
@@ -12,11 +13,11 @@ export interface RouterContext {
 
 const RootComponent = () => {
 	return (
-		<>
+		<NotificationProvider>
 			<BetaDisclaimer />
 			<Outlet />
 			<AppDevTools />
-		</>
+		</NotificationProvider>
 	);
 };
 

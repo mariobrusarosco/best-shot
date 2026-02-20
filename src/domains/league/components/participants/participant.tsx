@@ -36,17 +36,17 @@ const RoleColors: Record<
 		borderColor: string;
 	}
 > = {
-	DEFAULT: {
+	"default": {
 		bgColor: "transparent",
 		borderColor: "teal.500",
 		color: "neutral.100",
 	},
-	GUEST: {
+	"guest": {
 		bgColor: "transparent",
 		borderColor: "teal.500",
 		color: "teal.500",
 	},
-	ADMIN: {
+	"admin": {
 		bgColor: "teal.500",
 		color: "neutral.100",
 		borderColor: "transparent",

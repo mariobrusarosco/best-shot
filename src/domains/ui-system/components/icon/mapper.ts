@@ -16,7 +16,7 @@ import IconUsers from "@tabler/icons-react/dist/esm/icons/IconUsers.mjs";
 import IconX from "@tabler/icons-react/dist/esm/icons/IconX.mjs";
 
 // TODO Dinamically import Icons without the need of mapping them!
-export const ICONS = {
+export const ICONS: Record<string, React.ElementType> = {
 	Calendar: IconCalendar,
 	ChevronDown: IconChevronDown,
 	ChevronLeft: IconChevronLeft,

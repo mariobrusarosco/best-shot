@@ -65,8 +65,8 @@ const IconContainer = styled(Box)(({ theme }) => ({
 	display: "flex",
 	alignItems: "center",
 	justifyContent: "center",
-	width: 48,
-	height: 48,
+	width: 32,
+	height: 32,
 	borderRadius: theme.shape.borderRadius,
 	backgroundColor: theme.palette.teal[500],
 	color: theme.palette.neutral[100],
@@ -184,7 +184,7 @@ export const CreateTournamentModal = ({ onClose }: CreateTournamentModalProps) =
 		resolver: zodResolver(CreateTournamentSchema),
 		defaultValues: {
 			tournamentPublicId: "",
-			baseUrl: "",
+			seasonId: "",
 			label: "",
 			slug: "",
 			provider: "sofa",
@@ -234,15 +234,15 @@ export const CreateTournamentModal = ({ onClose }: CreateTournamentModalProps) =
 			}}
 		>
 			<StyledDialogTitle>
-				<Box sx={{ display: "flex", alignItems: "center", gap: 2, mb: 1 }}>
+				<Box sx={{ display: "flex", alignItems: "center", gap: 2, mb: 3 }}>
 					<IconContainer>
-						<AppIcon name="Plus" size="medium" />
+						<AppIcon name="Plus" size="tiny" />
 					</IconContainer>
 					<Box>
-						<AppTypography variant="h5" color="neutral.100" fontWeight="bold">
+						<AppTypography variant="h6" color="neutral.100" fontWeight="bold">
 							Create New Tournament
 						</AppTypography>
-						<AppTypography variant="body2" color="text.secondary" sx={{ mt: 0.5 }}>
+						<AppTypography variant="body2" color="neutral.100" sx={{ mt: 0.5 }}>
 							Add a new tournament to the admin dashboard for data provider management
 						</AppTypography>
 					</Box>
@@ -251,12 +251,13 @@ export const CreateTournamentModal = ({ onClose }: CreateTournamentModalProps) =
 
 			<StyledDialogContent>
 				<FormContainer>
-					<Box component="form" onSubmit={handleSubmit(onSubmit)}>
-						{/* Basic Information */}
+					<Box component="form" onSubmit={handleSubmit(onSubmit)} display="flex" gap={2}>
 						<SectionContainer>
 							<SectionHeader>
-								<AppIcon name="Users" size="small" color="teal.500" />
-								<AppTypography variant="h6" color="neutral.100" fontWeight="medium">
+								<IconContainer>
+									<AppIcon name="Users" size="tiny" fill="neutral.100" />
+								</IconContainer>
+								<AppTypography variant="body1" color="neutral.100" fontWeight="medium">
 									Basic Information
 								</AppTypography>
 							</SectionHeader>
@@ -286,7 +287,6 @@ export const CreateTournamentModal = ({ onClose }: CreateTournamentModalProps) =
 							/>
 						</SectionContainer>
 
-						{/* Data Provider Configuration */}
 						<SectionContainer>
 							<SectionHeader>
 								<AppIcon name="LayoutDashboard" size="small" color="teal.500" />
@@ -313,16 +313,15 @@ export const CreateTournamentModal = ({ onClose }: CreateTournamentModalProps) =
 							/>
 
 							<AppFormInput
-								name="baseUrl"
+								name="seasonId"
 								control={control}
-								label="Base URL"
-								placeholder="e.g., https://www.sofascore.com/api/v1/unique-tournament/384/season/70083"
-								helperText="The API endpoint for this tournament"
+								label="Season ID"
+								placeholder="e.g., 52376"
+								helperText="The unique identifier for the season from the data provider"
 								required
 							/>
 						</SectionContainer>
 
-						{/* Tournament Configuration */}
 						<SectionContainer>
 							<SectionHeader>
 								<AppIcon name="Trophy" size="small" color="teal.500" />
@@ -347,32 +346,33 @@ export const CreateTournamentModal = ({ onClose }: CreateTournamentModalProps) =
 								required
 							/>
 						</SectionContainer>
-
-						{/* Preview */}
-						{label && (
-							<SectionContainer sx={{ backgroundColor: "black.700" }}>
-								<SectionHeader>
-									<AppIcon name="ClockFilled" size="small" color="teal.500" />
-									<AppTypography variant="h6" color="neutral.100" fontWeight="medium">
-										Tournament Preview
-									</AppTypography>
-								</SectionHeader>
-								<Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
-									<AppTypography variant="h6" color="neutral.100" fontWeight="bold">
-										{label} ({watch("season")})
-									</AppTypography>
-									<AppTypography variant="body2" color="text.secondary">
-										Provider: <span style={{ color: "#26a69a" }}>{watch("provider")}</span> | Mode:{" "}
-										<span style={{ color: "#26a69a" }}>{watch("mode")}</span>
-									</AppTypography>
-									<AppTypography variant="body2" color="text.secondary">
-										Standings: <span style={{ color: "#26a69a" }}>{watch("standingsMode")}</span>
-									</AppTypography>
-								</Box>
-							</SectionContainer>
-						)}
 					</Box>
 				</FormContainer>
+				{/* Preview */}
+				{label && (
+					<SectionContainer sx={{ backgroundColor: "black.800" }}>
+						<SectionHeader>
+							<IconContainer>
+								<AppIcon name="ClockFilled" size="tiny" fill="neutral.100" stroke="neutral.100" />
+							</IconContainer>
+							<AppTypography variant="body1" color="neutral.100" fontWeight="medium">
+								Tournament Preview
+							</AppTypography>
+						</SectionHeader>
+						<Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
+							<AppTypography variant="h6" color="neutral.100" fontWeight="bold">
+								{label} ({watch("season")})
+							</AppTypography>
+							<AppTypography variant="body2" color="text.secondary">
+								Provider: <span style={{ color: "#26a69a" }}>{watch("provider")}</span> | Mode:{" "}
+								<span style={{ color: "#26a69a" }}>{watch("mode")}</span>
+							</AppTypography>
+							<AppTypography variant="body2" color="text.secondary">
+								Standings: <span style={{ color: "#26a69a" }}>{watch("standingsMode")}</span>
+							</AppTypography>
+						</Box>
+					</SectionContainer>
+				)}
 			</StyledDialogContent>
 
 			<DialogActions

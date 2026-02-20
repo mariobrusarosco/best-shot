@@ -3,6 +3,7 @@ import { Box, Dialog, DialogActions, DialogContent, DialogTitle, styled } from "
 import { useForm } from "react-hook-form";
 import type { z } from "zod";
 import { useAdminCreateTournament } from "@/domains/admin/hooks/use-admin-create-tournament";
+import { useNotification } from "@/domains/ui-system/components/notification/notification-context";
 import { CreateTournamentSchema } from "@/domains/admin/schemas";
 import { AppIcon, AppTypography } from "@/domains/ui-system/components";
 import { AppButton } from "@/domains/ui-system/components/app-button/app-button";
@@ -179,6 +180,7 @@ const FormContainer = styled(Box)(({ theme }) => ({
 
 export const CreateTournamentModal = ({ onClose }: CreateTournamentModalProps) => {
 	const createTournament = useAdminCreateTournament();
+	const { showNotification } = useNotification();
 
 	const { control, handleSubmit, watch } = useForm<CreateTournamentInput>({
 		resolver: zodResolver(CreateTournamentSchema),
@@ -213,9 +215,11 @@ export const CreateTournamentModal = ({ onClose }: CreateTournamentModalProps) =
 			};
 
 			await createTournament.mutateAsync(finalData);
+			showNotification(`Tournament "${finalData.label}" created successfully`, "success");
 			onClose();
 		} catch (error) {
-			console.error("Failed to create tournament:", error);
+			const message = error instanceof Error ? error.message : "Unknown error";
+			showNotification(`Failed to create tournament: ${message}`, "error");
 		}
 	};
 

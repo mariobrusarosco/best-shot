@@ -98,7 +98,17 @@ export const createAdminTournament = async (
 	data: z.infer<typeof CreateTournamentSchema>
 ): Promise<ITournament> => {
 	const validatedData = CreateTournamentSchema.parse(data);
-	const response = await api.post("/admin/tournaments", validatedData, {
+
+	// Construct base URL for SofaScore
+	// Pattern: https://api.sofascore.com/api/v1/unique-tournament/{uniqueTournamentId}/season/{seasonId}
+	const baseUrl = `https://api.sofascore.com/api/v1/unique-tournament/${validatedData.tournamentPublicId}/season/${validatedData.seasonId}`;
+
+	const payload = {
+		...validatedData,
+		baseUrl,
+	};
+
+	const response = await api.post("/admin/tournaments", payload, {
 		baseURL: import.meta.env.VITE_BEST_SHOT_API_V2,
 	});
 	return response.data as ITournament;

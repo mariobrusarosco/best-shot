@@ -12,6 +12,7 @@ export const TeamDisplay = ({
 }) => {
   const standings = useTournamentStandings();
   const teamStandingsData = getTeamStandingsInfo(team.id, standings.data);
+  console.log("team.id", team.id, "standings.data", standings.data, "teamStandingsData", teamStandingsData);
 
   return (
     <Display data-ui="team-display">
@@ -106,17 +107,13 @@ const getTeamStandingsInfo = (
   if (!standings) return;
 
   const isMultiGroup = standings.format === "multi-group";
-  // biome-ignore lint/suspicious/noExplicitAny: dynamic team data mapping
   let teams: any[] = [];
 
   if (isMultiGroup) {
-    // biome-ignore lint/suspicious/noExplicitAny: dynamic team data mapping
     teams = (standings.teams as any[]).flatMap((group) => group.teams);
-  } else {
-    // biome-ignore lint/suspicious/noExplicitAny: dynamic team data mapping
+  }else {
     teams = standings.teams as any[];
   }
-
   // biome-ignore lint/suspicious/noExplicitAny: dynamic team data mapping
-  return teams.find((team: any) => team.teamExternalId === teamId);
+  return teams.find((team: any) => team.id === teamId);
 };

@@ -31,9 +31,7 @@ export const CreateTournamentSchema = z.object({
 		.string()
 		.min(3, "Tournament name must be at least 3 characters")
 		.max(50, "Tournament name cannot exceed 50 characters"),
-	slug: z
-		.string()
-		.max(50, "Tournament slug cannot exceed 50 characters"),
+	slug: z.string().max(50, "Tournament slug cannot exceed 50 characters"),
 	provider: z.string().min(1, "Please select a data provider"),
 	season: z
 		.string()

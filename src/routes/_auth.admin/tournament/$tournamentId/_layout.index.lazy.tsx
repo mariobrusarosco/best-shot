@@ -102,10 +102,20 @@ function TournamentDetailPage() {
 	const updateRoundMatches = useAdminUpdateRoundMatches();
 
 	const mutateWithFeedback = useCallback(
-		<TVariables,>(mutation: { mutate: (variables: TVariables, options?: { onSuccess?: () => void; onError?: (error: Error) => void }) => void }, variables: TVariables, label: string) => {
+		<TVariables,>(
+			mutation: {
+				mutate: (
+					variables: TVariables,
+					options?: { onSuccess?: () => void; onError?: (error: Error) => void }
+				) => void;
+			},
+			variables: TVariables,
+			label: string
+		) => {
 			mutation.mutate(variables, {
 				onSuccess: () => showNotification(`${label} completed successfully`, "success"),
-				onError: (err) => showNotification(`Failed to ${label.toLowerCase()}: ${err.message}`, "error"),
+				onError: (err) =>
+					showNotification(`Failed to ${label.toLowerCase()}: ${err.message}`, "error"),
 			});
 		},
 		[showNotification]
@@ -258,7 +268,9 @@ function TournamentDetailPage() {
 						<AppPill.Component bgcolor={"teal.500"}>
 							<ActionButtonWithLoading
 								title="Create Standings"
-								onClick={() => mutateWithFeedback(createStandings, tournamentId, "Create Standings")}
+								onClick={() =>
+									mutateWithFeedback(createStandings, tournamentId, "Create Standings")
+								}
 								isPending={createStandings.isPending}
 								tournamentId={tournamentId}
 								variables={createStandings.variables}
@@ -276,7 +288,9 @@ function TournamentDetailPage() {
 						<AppPill.Component bgcolor={"teal.500"}>
 							<ActionButtonWithLoading
 								title="Update Standings"
-								onClick={() => mutateWithFeedback(updateStandings, tournamentId, "Update Standings")}
+								onClick={() =>
+									mutateWithFeedback(updateStandings, tournamentId, "Update Standings")
+								}
 								isPending={updateStandings.isPending}
 								tournamentId={tournamentId}
 								variables={updateStandings.variables}
@@ -387,7 +401,11 @@ function TournamentDetailPage() {
 							<ActionButtonWithLoading
 								title="Update Round Matches"
 								onClick={() =>
-									mutateWithFeedback(updateRoundMatches, { tournamentId, roundId: roundIdInput || "" }, "Update Round Matches")
+									mutateWithFeedback(
+										updateRoundMatches,
+										{ tournamentId, roundId: roundIdInput || "" },
+										"Update Round Matches"
+									)
 								}
 								isPending={updateRoundMatches.isPending}
 								tournamentId={tournamentId}
@@ -413,7 +431,9 @@ function TournamentDetailPage() {
 					<AppPill.Component bgcolor={"teal.500"}>
 						<ActionButtonWithLoading
 							title="Update Knockout Rounds"
-							onClick={() => mutateWithFeedback(updateKnockoutRounds, tournamentId, "Update Knockout Rounds")}
+							onClick={() =>
+								mutateWithFeedback(updateKnockoutRounds, tournamentId, "Update Knockout Rounds")
+							}
 							isPending={updateKnockoutRounds.isPending}
 							tournamentId={tournamentId}
 							variables={updateKnockoutRounds.variables}

@@ -139,9 +139,10 @@ const mapToCronJob = (definition: ICronJobDefinition): IAdminCronJob => {
 		versions: definition.version,
 		status: definition.status,
 		schedule: definition.scheduleType,
-		cronOrRunAt: definition.scheduleType === "recurring"
-			? definition.cronExpression || ""
-			: definition.runAt || "",
+		cronOrRunAt:
+			definition.scheduleType === "recurring"
+				? definition.cronExpression || ""
+				: definition.runAt || "",
 		target: definition.target,
 		raw: definition,
 	};
@@ -152,9 +153,9 @@ const mapToCronRun = (run: ICronRun): IAdminCronRun => {
 	const finishedDate = run.finishedAt ? new Date(run.finishedAt) : null;
 	const hasValidDuration = Boolean(
 		startedDate &&
-		finishedDate &&
-		!Number.isNaN(startedDate.getTime()) &&
-		!Number.isNaN(finishedDate.getTime())
+			finishedDate &&
+			!Number.isNaN(startedDate.getTime()) &&
+			!Number.isNaN(finishedDate.getTime())
 	);
 
 	return {
@@ -167,7 +168,9 @@ const mapToCronRun = (run: ICronRun): IAdminCronRun => {
 		scheduledAt: run.scheduledAt,
 		startedAt: run.startedAt,
 		finishedAt: run.finishedAt,
-		durationMs: hasValidDuration ? Math.max(0, finishedDate!.getTime() - startedDate!.getTime()) : null,
+		durationMs: hasValidDuration
+			? Math.max(0, finishedDate!.getTime() - startedDate!.getTime())
+			: null,
 		trigger: run.triggerType,
 		raw: run,
 	};
@@ -191,9 +194,12 @@ const fetchCronJobs = async (): Promise<IAdminCronJob[]> => {
 };
 
 const fetchCronJob = async (jobId: string): Promise<IAdminCronJob> => {
-	const response = await api.get<ICronApiResponse<ICronJobDefinition>>(`/admin/cron/jobs/${jobId}`, {
-		baseURL,
-	});
+	const response = await api.get<ICronApiResponse<ICronJobDefinition>>(
+		`/admin/cron/jobs/${jobId}`,
+		{
+			baseURL,
+		}
+	);
 
 	if (!response.data.success || !response.data.data) {
 		throw new Error(getErrorMessage(response.data, "Failed to fetch cron job"));
@@ -203,15 +209,7 @@ const fetchCronJob = async (jobId: string): Promise<IAdminCronJob> => {
 };
 
 const fetchCronRuns = async (filters: IAdminCronRunsFilters = {}): Promise<IAdminCronRun[]> => {
-	const {
-		jobDefinitionId,
-		jobKey,
-		status,
-		triggerType,
-		target,
-		limit = 50,
-		offset = 0,
-	} = filters;
+	const { jobDefinitionId, jobKey, status, triggerType, target, limit = 50, offset = 0 } = filters;
 
 	const params: Record<string, string | number> = {
 		limit,

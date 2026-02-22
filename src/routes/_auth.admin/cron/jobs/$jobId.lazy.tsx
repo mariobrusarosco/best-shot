@@ -9,5 +9,7 @@ function CronJobDetailRouteComponent() {
 	const { jobId } = Route.useParams();
 	const navigate = useNavigate();
 
-	return <CronJobDetailPage jobId={jobId} onBackToList={() => navigate({ to: "/admin/cron/jobs" })} />;
+	return (
+		<CronJobDetailPage jobId={jobId} onBackToList={() => navigate({ to: "/admin/cron/jobs" })} />
+	);
 }

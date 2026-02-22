@@ -23,7 +23,6 @@ const MainAdminPage = () => {
 	const navigate = useNavigate();
 	const { data: tournaments, isPending: isLoading, error } = useAdminTournaments();
 
-
 	if (error) {
 		return (
 			<StyledContainer>
@@ -60,7 +59,9 @@ const MainAdminPage = () => {
 			</ScreenHeading>
 
 			<Box sx={{ my: 4 }} bgcolor="black.800" px={4} py={4}>
-				<Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 2 }}>
+				<Box
+					sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 2 }}
+				>
 					<AppTypography variant="h4" color="neutral.100">
 						Cron Jobs
 					</AppTypography>
@@ -103,7 +104,6 @@ const MainAdminPage = () => {
 				</AppTypography>
 			</Box>
 
-
 			<Box sx={{ my: 4 }} bgcolor="black.800" px={4} py={4}>
 				<AppTypography variant="h4" color="neutral.100">
 					Tournaments
@@ -111,7 +111,6 @@ const MainAdminPage = () => {
 
 				<TournamentsTable tournaments={tournaments || []} isLoading={isLoading} />
 			</Box>
-
 
 			{isCreateModalOpen && <CreateTournamentModal onClose={() => setIsCreateModalOpen(false)} />}
 		</AuthenticatedScreenLayout>

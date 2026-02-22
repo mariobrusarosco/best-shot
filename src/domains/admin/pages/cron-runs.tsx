@@ -13,10 +13,7 @@ import {
 } from "@mui/material";
 import { useNavigate } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
-import {
-	type CronRunStatus,
-	useAdminCronRuns,
-} from "@/domains/admin/hooks/use-admin-cron";
+import { type CronRunStatus, useAdminCronRuns } from "@/domains/admin/hooks/use-admin-cron";
 import { AppError } from "@/domains/global/components/error";
 import { ScreenHeading, ScreenHeadingSkeleton } from "@/domains/global/components/screen-heading";
 import { AppTypography } from "@/domains/ui-system/components";

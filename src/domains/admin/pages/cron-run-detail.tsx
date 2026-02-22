@@ -96,7 +96,12 @@ const CronRunDetailPage = ({ runId, onBackToRuns }: CronRunDetailPageProps) => {
 						</DetailItem>
 						<DetailItem>
 							<LabelText>Status</LabelText>
-							<Chip size="small" label={run.status} color={getStatusColor(run.status)} variant="outlined" />
+							<Chip
+								size="small"
+								label={run.status}
+								color={getStatusColor(run.status)}
+								variant="outlined"
+							/>
 						</DetailItem>
 						<DetailItem>
 							<LabelText>Trigger</LabelText>

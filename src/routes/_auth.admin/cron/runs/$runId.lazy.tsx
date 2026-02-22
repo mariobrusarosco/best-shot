@@ -9,5 +9,7 @@ function CronRunDetailRouteComponent() {
 	const { runId } = Route.useParams();
 	const navigate = useNavigate();
 
-	return <CronRunDetailPage runId={runId} onBackToRuns={() => navigate({ to: "/admin/cron/runs" })} />;
+	return (
+		<CronRunDetailPage runId={runId} onBackToRuns={() => navigate({ to: "/admin/cron/runs" })} />
+	);
 }

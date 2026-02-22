@@ -76,14 +76,14 @@ const validateForm = (values: ICronJobFormValues): FormErrors => {
 		}
 	}
 
-	if (!values.payloadJson.trim()) {
-		errors.payloadJson = "Payload is required";
-	} else {
+	if (values.payloadJson.trim()) {
 		try {
 			JSON.parse(values.payloadJson);
 		} catch {
 			errors.payloadJson = "Payload must be valid JSON";
 		}
+	} else {
+		errors.payloadJson = "Payload is required";
 	}
 
 	return errors;
@@ -158,8 +158,18 @@ export const CronJobFormModal = ({
 								setValue("scheduleType", event.target.value as ICronJobFormValues["scheduleType"])
 							}
 						>
-							<FormControlLabel value="recurring" control={<Radio size="small" />} label="recurring" sx={{ color: "neutral.100" }} />
-							<FormControlLabel value="one_time" control={<Radio size="small" />} label="one_time" sx={{ color: "neutral.100" }} />
+							<FormControlLabel
+								value="recurring"
+								control={<Radio size="small" />}
+								label="recurring"
+								sx={{ color: "neutral.100" }}
+							/>
+							<FormControlLabel
+								value="one_time"
+								control={<Radio size="small" />}
+								label="one_time"
+								sx={{ color: "neutral.100" }}
+							/>
 						</RadioGroup>
 					</FormRow>
 
@@ -292,4 +302,3 @@ const FormField = styled(TextField)(({ theme }) => ({
 		color: theme.palette.neutral[100],
 	},
 }));
-

@@ -52,7 +52,9 @@ const SCHEDULE_OPTIONS: Array<{ value: "all" | CronSchedule; label: string }> = 
 	{ value: "all", label: "all" },
 ];
 
-const getStatusColor = (status: CronStatus): "success" | "warning" | "error" | "info" | "default" => {
+const getStatusColor = (
+	status: CronStatus
+): "success" | "warning" | "error" | "info" | "default" => {
 	switch (status) {
 		case "active":
 			return "success";
@@ -422,11 +424,7 @@ const CronJobsPage = () => {
 											>
 												{job.status === "active" ? "Pause" : "Resume"}
 											</AppButton>
-											<AppButton
-												variant="text"
-												size="small"
-												onClick={() => handleNewVersion(job)}
-											>
+											<AppButton variant="text" size="small" onClick={() => handleNewVersion(job)}>
 												New version
 											</AppButton>
 										</ActionsContainer>

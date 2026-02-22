@@ -104,7 +104,8 @@ const buildNewVersionPayload = (values: ICronJobFormValues): ICreateCronJobVersi
 		target: values.target.trim(),
 		payload: payloadJson,
 		scheduleType: values.scheduleType,
-		cronExpression: values.scheduleType === "recurring" ? values.cronExpression.trim() || null : null,
+		cronExpression:
+			values.scheduleType === "recurring" ? values.cronExpression.trim() || null : null,
 		runAt:
 			values.scheduleType === "one_time" && values.runAt
 				? new Date(values.runAt).toISOString()
@@ -252,6 +253,10 @@ const CronJobDetailPage = ({ jobId, onBackToList }: CronJobDetailPageProps) => {
 			showNotification,
 		});
 
+	const handleCreateNewVersion = () => {
+		setIsVersionFormOpen(true);
+	};
+
 	const handleSaveNewVersion = async (values: ICronJobFormValues) => {
 		setIsSavingVersionForm(true);
 		await saveNewVersion({
@@ -325,7 +330,7 @@ const CronJobDetailPage = ({ jobId, onBackToList }: CronJobDetailPageProps) => {
 						onClick={() => void handleToggleStatus()}
 						disabled={job.status === "retired" || toggleCronJobStatus.isPending}
 					>
-						{job.status === "retired" ? "Retired" : job.status === "active" ? "Pause" : "Resume"}
+						{getToggleLabel(job.status)}
 					</AppButton>
 					<AppButton variant="outlined" onClick={handleCreateNewVersion}>
 						Create new version
@@ -400,15 +405,7 @@ const CronJobDetailPage = ({ jobId, onBackToList }: CronJobDetailPageProps) => {
 			<CronJobFormModal
 				open={isVersionFormOpen}
 				mode="new-version"
-				initialValues={{
-					jobKey: job.jobKey,
-					scheduleType: job.schedule,
-					cronExpression: job.schedule === "recurring" ? job.raw.cronExpression || "" : "",
-					runAt: job.schedule === "one_time" ? toDateTimeLocalValue(job.raw.runAt || "") : "",
-					timezone: job.raw.timezone || "UTC",
-					target: job.target,
-					payloadJson: JSON.stringify(job.raw.payload || { mode: "full" }),
-				}}
+				initialValues={getVersionFormInitialValues(job)}
 				isSaving={isSavingVersionForm}
 				onCancel={() => setIsVersionFormOpen(false)}
 				onSave={handleSaveNewVersion}

@@ -32,9 +32,9 @@ const AppIcon = forwardRef<SVGSVGElement, Props>((props, ref) => {
 			component="span"
 			sx={{
 				display: "contents",
-				color: color,
-				fill: fill,
-				stroke: stroke,
+				color,
+				fill,
+				stroke: stroke === undefined ? undefined : String(stroke),
 			}}
 		>
 			<IconComponent ref={ref} width={measures} height={measures} {...rest} />

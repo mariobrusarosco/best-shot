@@ -90,14 +90,7 @@ export const Position = styled(Box)(({ theme }) => ({
 	gap: theme.spacing(1),
 }));
 
-type TeamStandingInfo = {
-	id: string;
-	order: string;
-};
-
-type GroupStandingInfo = {
-	teams: TeamStandingInfo[];
-};
+type GroupStandingInfo = Extract<ITournamentStandings["teams"][number], { teams: unknown }>;
 
 const hasGroupStructure = (teams: ITournamentStandings["teams"]): teams is GroupStandingInfo[] => {
 	return teams.length > 0 && "teams" in teams[0];

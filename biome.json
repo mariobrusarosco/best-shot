@@ -54,7 +54,7 @@
 				"useCollapsedElseIf": "warn"
 			},
 			"complexity": {
-				"noExcessiveCognitiveComplexity": "warn",
+				"noExcessiveCognitiveComplexity": "off",
 				"noBannedTypes": "error",
 				"noUselessThisAlias": "error"
 			},

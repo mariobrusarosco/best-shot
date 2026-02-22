@@ -1,20 +1,5 @@
 import { z } from "zod";
 
-// Scraper Execution History Schema
-export const ScraperExecutionSchema = z.object({
-	id: z.string().uuid(),
-	jobId: z.string().uuid(),
-	startTime: z.string().datetime(),
-	endTime: z.string().datetime().optional(),
-	duration: z.number().min(0).optional(), // in seconds
-	status: z.enum(["running", "success", "failed"]),
-	recordsProcessed: z.number().min(0).optional(),
-	recordsCreated: z.number().min(0).optional(),
-	recordsUpdated: z.number().min(0).optional(),
-	errorMessage: z.string().optional(),
-	errorDetails: z.any().optional(),
-});
-
 export const ExecutionJobSchema = z.object({
 	id: z.string().uuid(),
 	requestId: z.string().uuid(),

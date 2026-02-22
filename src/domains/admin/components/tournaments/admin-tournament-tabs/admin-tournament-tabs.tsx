@@ -37,18 +37,6 @@ const AdminTournamentTabs = () => {
 						),
 					}}
 				/>
-				<Tab
-					value={"scheduled-jobs"}
-					slots={{
-						root: (props) => (
-							<CustomTab to={`/admin/tournament/${tournamentId}/scheduled-jobs`} {...props}>
-								<Typography variant="tag" textTransform="uppercase">
-									scheduled jobs
-								</Typography>
-							</CustomTab>
-						),
-					}}
-				/>
 			</TabsList>
 		</Tabs>
 	);

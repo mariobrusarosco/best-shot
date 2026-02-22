@@ -3,52 +3,15 @@ import {
 	AdmingTournamentsResponseSchema,
 	AdminTournamentResponseSchema,
 	ExecutionJobsResponseSchema,
-	ScraperExecutionSchema,
-	ScraperJobSchema,
-	ScraperStatisticsSchema,
 	TournamentExecutionJobsResponseSchema,
 	TournamentMetadataSchema,
 } from "@/domains/admin/schemas";
 import type {
 	IAdminTournament,
 	IExecutionJob,
-	IScraperJob,
 	ITournamentExecutionJobsResponse,
 	ITournamentMetadata,
 } from "@/domains/admin/typing";
-
-// Fetch all scraper jobs
-export const fetchScraperJobs = async (): Promise<IScraperJob[]> => {
-	const response = await api.get("/admin/scrapers", {
-		baseURL: import.meta.env.VITE_BEST_SHOT_API_V2,
-	});
-	return ScraperJobSchema.array().parse(response.data);
-};
-
-// Fetch single scraper job details
-export const fetchScraperJob = async (jobId: string): Promise<IScraperJob> => {
-	const response = await api.get(`/admin/scrapers/${jobId}`, {
-		baseURL: import.meta.env.VITE_BEST_SHOT_API_V2,
-	});
-	return ScraperJobSchema.parse(response.data);
-};
-
-// Fetch scraper execution history
-export const fetchScraperExecutionHistory = async (jobId?: string) => {
-	const url = jobId ? `/admin/scrapers/${jobId}/executions` : "/admin/scrapers/executions";
-	const response = await api.get(url, {
-		baseURL: import.meta.env.VITE_BEST_SHOT_API_V2,
-	});
-	return ScraperExecutionSchema.array().parse(response.data);
-};
-
-// Fetch scraper statistics
-export const fetchScraperStatistics = async () => {
-	const response = await api.get("/admin/scrapers/statistics", {
-		baseURL: import.meta.env.VITE_BEST_SHOT_API_V2,
-	});
-	return ScraperStatisticsSchema.parse(response.data);
-};
 
 // Fetch tournament metadata
 export const fetchTournamentMetadata = async (

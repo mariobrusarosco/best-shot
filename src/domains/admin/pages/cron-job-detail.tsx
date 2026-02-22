@@ -288,7 +288,12 @@ const CronJobDetailPage = ({ jobId, onBackToList }: CronJobDetailPageProps) => {
 									{runs.map((run) => (
 										<BodyRow
 											key={run.runId}
-											onClick={() => navigate({ to: `/admin/cron/runs/${run.runId}` })}
+											onClick={() =>
+												navigate({
+													to: "/admin/cron/runs/$runId",
+													params: { runId: run.runId },
+												})
+											}
 											sx={{ cursor: "pointer" }}
 										>
 											<BodyCell sx={{ fontFamily: "monospace" }}>{shortId(run.runId)}</BodyCell>

@@ -2,7 +2,6 @@ import { Box, styled } from "@mui/material";
 import { useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { ResetUserActivityButton } from "@/domains/admin/components/reset-user-activity/reset-user-activity";
-// import { SchedulerHealthCard } from "@/domains/admin/components/scheduler-health/scheduler-health-card";
 import { CreateTournamentModal } from "@/domains/admin/components/tournaments/create-tournament-modal/create-tournament-modal";
 import TournamentsTable from "@/domains/admin/components/tournaments/tournaments-table/tournaments-table";
 import { useAdminTournaments } from "@/domains/admin/hooks/use-admin-tournaments";
@@ -24,7 +23,6 @@ const MainAdminPage = () => {
 	const navigate = useNavigate();
 	const { data: tournaments, isPending: isLoading, error } = useAdminTournaments();
 
-	// console.log({ data, error });
 
 	if (error) {
 		return (

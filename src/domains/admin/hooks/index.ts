@@ -25,7 +25,6 @@ export { useAdminUpdateStandings } from "./use-admin-update-standings";
 export { useAdminUpdateTeams } from "./use-admin-update-teams";
 export { useRescheduleScraperJob } from "./use-reschedule-scraper-job";
 export { useResetUserActivity } from "./use-reset-user-activity";
-export { useSchedulerStats } from "./use-scheduler-stats";
 export { useScraperJobs } from "./use-scraper-jobs";
 export { useScraperStatistics } from "./use-scraper-statistics";
 export { useTriggerMatchPolling } from "./use-trigger-match-polling";

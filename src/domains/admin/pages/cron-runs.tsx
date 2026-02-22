@@ -202,7 +202,12 @@ const CronRunsPage = () => {
 							{runs.map((run) => (
 								<BodyRow
 									key={run.runId}
-									onClick={() => navigate({ to: `/admin/cron/runs/${run.runId}` })}
+									onClick={() =>
+										navigate({
+											to: "/admin/cron/runs/$runId",
+											params: { runId: run.runId },
+										})
+									}
 								>
 									<BodyCell sx={{ fontFamily: "monospace" }}>{formatRunId(run.runId)}</BodyCell>
 									<BodyCell>{run.jobKey}</BodyCell>

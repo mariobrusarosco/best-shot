@@ -11,7 +11,7 @@ import {
 	TableRow,
 	TextField,
 } from "@mui/material";
-import { useNavigate } from "@tanstack/react-router";
+import { Link } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
 import {
 	CronJobFormModal,
@@ -105,7 +105,6 @@ const CronJobsPage = () => {
 	const runCronJob = useAdminRunCronJob();
 	const toggleCronJobStatus = useAdminToggleCronJobStatus();
 	const { showNotification } = useNotification();
-	const navigate = useNavigate();
 
 	const [statusFilter, setStatusFilter] = useState<"all" | CronStatus>("active");
 	const [scheduleFilter, setScheduleFilter] = useState<"all" | CronSchedule>("recurring");
@@ -398,13 +397,15 @@ const CronJobsPage = () => {
 									<BodyCell>{job.target}</BodyCell>
 									<BodyCell>
 										<ActionsContainer>
-											<AppButton
-												variant="text"
-												size="small"
-												onClick={() => navigate({ to: `/admin/cron/jobs/${job.id}` })}
+											<Link
+												to="/admin/cron/jobs/$jobId"
+												params={{ jobId: job.id }}
+												style={{ textDecoration: "none" }}
 											>
-												View
-											</AppButton>
+												<AppButton variant="text" size="small" component="span">
+													View
+												</AppButton>
+											</Link>
 											<AppButton
 												variant="text"
 												size="small"

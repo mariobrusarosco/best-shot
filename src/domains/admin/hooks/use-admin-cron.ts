@@ -151,12 +151,13 @@ const mapToCronJob = (definition: ICronJobDefinition): IAdminCronJob => {
 const mapToCronRun = (run: ICronRun): IAdminCronRun => {
 	const startedDate = run.startedAt ? new Date(run.startedAt) : null;
 	const finishedDate = run.finishedAt ? new Date(run.finishedAt) : null;
-	const hasValidDuration = Boolean(
+	const durationMs =
 		startedDate &&
-			finishedDate &&
-			!Number.isNaN(startedDate.getTime()) &&
-			!Number.isNaN(finishedDate.getTime())
-	);
+		finishedDate &&
+		!Number.isNaN(startedDate.getTime()) &&
+		!Number.isNaN(finishedDate.getTime())
+			? Math.max(0, finishedDate.getTime() - startedDate.getTime())
+			: null;
 
 	return {
 		runId: run.id,
@@ -168,9 +169,7 @@ const mapToCronRun = (run: ICronRun): IAdminCronRun => {
 		scheduledAt: run.scheduledAt,
 		startedAt: run.startedAt,
 		finishedAt: run.finishedAt,
-		durationMs: hasValidDuration
-			? Math.max(0, finishedDate!.getTime() - startedDate!.getTime())
-			: null,
+		durationMs,
 		trigger: run.triggerType,
 		raw: run,
 	};

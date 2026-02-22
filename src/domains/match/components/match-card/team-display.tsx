@@ -8,14 +8,6 @@ import { UIHelper } from "@/domains/ui-system/theme";
 export const TeamDisplay = ({ team }: { team: IMatch["home"] | IMatch["away"] }) => {
 	const standings = useTournamentStandings();
 	const teamStandingsData = getTeamStandingsInfo(team.id, standings.data);
-	console.log(
-		"team.id",
-		team.id,
-		"standings.data",
-		standings.data,
-		"teamStandingsData",
-		teamStandingsData
-	);
 
 	return (
 		<Display data-ui="team-display">
@@ -98,18 +90,26 @@ export const Position = styled(Box)(({ theme }) => ({
 	gap: theme.spacing(1),
 }));
 
+type TeamStandingInfo = {
+	id: string;
+	order: string;
+};
+
+type GroupStandingInfo = {
+	teams: TeamStandingInfo[];
+};
+
+const hasGroupStructure = (teams: ITournamentStandings["teams"]): teams is GroupStandingInfo[] => {
+	return teams.length > 0 && "teams" in teams[0];
+};
+
 // TODO Move this to a util, and avoid repeating the word 'standings'
 const getTeamStandingsInfo = (teamId: string, standings: ITournamentStandings | undefined) => {
-	if (!standings) return;
+	if (!standings) return undefined;
 
-	const isMultiGroup = standings.format === "multi-group";
-	let teams: any[] = [];
+	const teams = hasGroupStructure(standings.teams)
+		? standings.teams.flatMap((group) => group.teams)
+		: standings.teams;
 
-	if (isMultiGroup) {
-		teams = (standings.teams as any[]).flatMap((group) => group.teams);
-	} else {
-		teams = standings.teams as any[];
-	}
-	// biome-ignore lint/suspicious/noExplicitAny: dynamic team data mapping
-	return teams.find((team: any) => team.id === teamId);
+	return teams.find((team) => team.id === teamId);
 };

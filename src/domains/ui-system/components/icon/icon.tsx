@@ -1,6 +1,6 @@
+import { Box } from "@mui/material";
 import type { IconProps } from "@tabler/icons-react";
 import { forwardRef } from "react";
-import { Box } from "@mui/material";
 import { ICONS } from "./mapper";
 
 type sizes = "tiny" | "extra-small" | "small" | "medium" | "large";
@@ -34,7 +34,7 @@ const AppIcon = forwardRef<SVGSVGElement, Props>((props, ref) => {
 				display: "contents",
 				color: color,
 				fill: fill,
-				stroke: stroke as any,
+				stroke: stroke,
 			}}
 		>
 			<IconComponent ref={ref} width={measures} height={measures} {...rest} />

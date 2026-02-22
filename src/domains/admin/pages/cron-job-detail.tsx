@@ -10,13 +10,14 @@ import {
 	TableRow,
 } from "@mui/material";
 import { useNavigate } from "@tanstack/react-router";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import {
 	CronJobFormModal,
 	type ICronJobFormValues,
 } from "@/domains/admin/components/cron/cron-job-form-modal";
 import {
 	type CronRunStatus,
+	type IAdminCronJob,
 	type ICreateCronJobVersionInput,
 	useAdminCreateCronJobVersion,
 	useAdminCronJob,
@@ -89,6 +90,122 @@ const toDateTimeLocalValue = (value: string) => {
 	return `${year}-${month}-${day}T${hour}:${minutes}`;
 };
 
+type ShowNotification = ReturnType<typeof useNotification>["showNotification"];
+
+const getToggleLabel = (status: IAdminCronJob["status"]) => {
+	if (status === "retired") return "Retired";
+	if (status === "active") return "Pause";
+	return "Resume";
+};
+
+const buildNewVersionPayload = (values: ICronJobFormValues): ICreateCronJobVersionInput => {
+	const payloadJson = JSON.parse(values.payloadJson) as Record<string, unknown>;
+	return {
+		target: values.target.trim(),
+		payload: payloadJson,
+		scheduleType: values.scheduleType,
+		cronExpression: values.scheduleType === "recurring" ? values.cronExpression.trim() || null : null,
+		runAt:
+			values.scheduleType === "one_time" && values.runAt
+				? new Date(values.runAt).toISOString()
+				: null,
+		timezone: values.timezone.trim() || "UTC",
+	};
+};
+
+const runJobNow = async ({
+	jobId,
+	jobKey,
+	runNow,
+	showNotification,
+}: {
+	jobId: string;
+	jobKey: string;
+	runNow: (jobId: string) => Promise<unknown>;
+	showNotification: ShowNotification;
+}) => {
+	try {
+		await runNow(jobId);
+		showNotification(`Job triggered: ${jobKey}`, "success");
+	} catch (mutationError) {
+		showNotification(
+			`Failed to trigger ${jobKey}: ${getErrorMessage(mutationError, "Unknown error")}`,
+			"error"
+		);
+	}
+};
+
+const toggleJobStatus = async ({
+	jobId,
+	jobKey,
+	status,
+	toggleStatus,
+	showNotification,
+}: {
+	jobId: string;
+	jobKey: string;
+	status: IAdminCronJob["status"];
+	toggleStatus: (params: {
+		jobId: string;
+		currentStatus: IAdminCronJob["status"];
+	}) => Promise<unknown>;
+	showNotification: ShowNotification;
+}) => {
+	if (status === "retired") {
+		showNotification("Retired jobs cannot be resumed or paused", "warning");
+		return;
+	}
+
+	try {
+		await toggleStatus({ jobId, currentStatus: status });
+		const actionLabel = status === "active" ? "paused" : "resumed";
+		showNotification(`Job ${actionLabel}: ${jobKey}`, "success");
+	} catch (mutationError) {
+		showNotification(
+			`Failed to update ${jobKey}: ${getErrorMessage(mutationError, "Unknown error")}`,
+			"error"
+		);
+	}
+};
+
+const saveNewVersion = async ({
+	jobId,
+	jobKey,
+	values,
+	createVersion,
+	showNotification,
+	onSuccess,
+}: {
+	jobId: string;
+	jobKey: string;
+	values: ICronJobFormValues;
+	createVersion: (params: { jobId: string; data: ICreateCronJobVersionInput }) => Promise<unknown>;
+	showNotification: ShowNotification;
+	onSuccess: () => void;
+}) => {
+	try {
+		const newVersionPayload = buildNewVersionPayload(values);
+		await createVersion({
+			jobId,
+			data: newVersionPayload,
+		});
+		showNotification(`New version created for ${jobKey}`, "success");
+		onSuccess();
+	} catch (saveError) {
+		showNotification(getErrorMessage(saveError, "Failed to save new version"), "error");
+	}
+};
+
+const getVersionFormInitialValues = (job: IAdminCronJob): ICronJobFormValues => ({
+	jobKey: job.jobKey,
+	scheduleType: job.schedule,
+	cronExpression: job.schedule === "recurring" ? job.raw.cronExpression || "" : "",
+	runAt: job.schedule === "one_time" ? toDateTimeLocalValue(job.raw.runAt || "") : "",
+	timezone: job.raw.timezone || "UTC",
+	target: job.target,
+	payloadJson: JSON.stringify(job.raw.payload || { mode: "full" }),
+});
+
 const CronJobDetailPage = ({ jobId, onBackToList }: CronJobDetailPageProps) => {
 	const navigate = useNavigate();
 	const { data: job, isLoading, error } = useAdminCronJob(jobId);
@@ -104,84 +221,6 @@ const CronJobDetailPage = ({ jobId, onBackToList }: CronJobDetailPageProps) => {
 	const [isVersionFormOpen, setIsVersionFormOpen] = useState(false);
 	const [isSavingVersionForm, setIsSavingVersionForm] = useState(false);
 
-	const payload = useMemo(() => {
-		if (!job) return null;
-
-		return job.raw.payload;
-	}, [job]);
-
-	const handleRunNow = async () => {
-		if (!job) return;
-
-		try {
-			await runCronJob.mutateAsync(job.id);
-			showNotification(`Job triggered: ${job.jobKey}`, "success");
-		} catch (mutationError) {
-			showNotification(
-				`Failed to trigger ${job.jobKey}: ${getErrorMessage(mutationError, "Unknown error")}`,
-				"error"
-			);
-		}
-	};
-
-	const handleToggleStatus = async () => {
-		if (!job) return;
-		if (job.status === "retired") {
-			showNotification("Retired jobs cannot be resumed or paused", "warning");
-			return;
-		}
-
-		try {
-			await toggleCronJobStatus.mutateAsync({ jobId: job.id, currentStatus: job.status });
-			const actionLabel = job.status === "active" ? "paused" : "resumed";
-			showNotification(`Job ${actionLabel}: ${job.jobKey}`, "success");
-		} catch (mutationError) {
-			showNotification(
-				`Failed to update ${job.jobKey}: ${getErrorMessage(mutationError, "Unknown error")}`,
-				"error"
-			);
-		}
-	};
-
-	const handleCreateNewVersion = () => {
-		setIsVersionFormOpen(true);
-	};
-
-	const handleSaveNewVersion = async (values: ICronJobFormValues) => {
-		setIsSavingVersionForm(true);
-
-		try {
-			if (!job) {
-				throw new Error("Cron job not found");
-			}
-
-			const payloadJson = JSON.parse(values.payloadJson) as Record<string, unknown>;
-			const newVersionPayload: ICreateCronJobVersionInput = {
-				target: values.target.trim(),
-				payload: payloadJson,
-				scheduleType: values.scheduleType,
-				cronExpression:
-					values.scheduleType === "recurring" ? values.cronExpression.trim() || null : null,
-				runAt:
-					values.scheduleType === "one_time" && values.runAt
-						? new Date(values.runAt).toISOString()
-						: null,
-				timezone: values.timezone.trim() || "UTC",
-			};
-
-			await createCronJobVersion.mutateAsync({
-				jobId: job.id,
-				data: newVersionPayload,
-			});
-			showNotification(`New version created for ${values.jobKey}`, "success");
-			setIsVersionFormOpen(false);
-		} catch (saveError) {
-			showNotification(getErrorMessage(saveError, "Failed to save new version"), "error");
-		} finally {
-			setIsSavingVersionForm(false);
-		}
-	};
-
 	if (isLoading) {
 		return <ScreenHeadingSkeleton />;
 	}
@@ -193,6 +232,38 @@ const CronJobDetailPage = ({ jobId, onBackToList }: CronJobDetailPageProps) => {
 	if (!job) {
 		return <AppError error={new Error("Cron job not found")} />;
 	}
+
+	const payload = job.raw.payload;
+
+	const handleRunNow = () =>
+		void runJobNow({
+			jobId: job.id,
+			jobKey: job.jobKey,
+			runNow: runCronJob.mutateAsync,
+			showNotification,
+		});
+
+	const handleToggleStatus = () =>
+		void toggleJobStatus({
+			jobId: job.id,
+			jobKey: job.jobKey,
+			status: job.status,
+			toggleStatus: toggleCronJobStatus.mutateAsync,
+			showNotification,
+		});
+
+	const handleSaveNewVersion = async (values: ICronJobFormValues) => {
+		setIsSavingVersionForm(true);
+		await saveNewVersion({
+			jobId: job.id,
+			jobKey: values.jobKey,
+			values,
+			createVersion: createCronJobVersion.mutateAsync,
+			showNotification,
+			onSuccess: () => setIsVersionFormOpen(false),
+		});
+		setIsSavingVersionForm(false);
+	};
 
 	return (
 		<AuthenticatedScreenLayout data-ui="admin-cron-job-detail-page" overflow="hidden">

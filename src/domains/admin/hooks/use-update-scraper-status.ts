@@ -7,13 +7,12 @@ export const useUpdateScraperStatus = () => {
 	return useMutation({
 		mutationFn: updateScraperStatus,
 		onSuccess: () => {
-			// Invalidate and refetch scraper jobs and statistics
 			queryClient.invalidateQueries({ queryKey: ["admin", "scrapers"] });
 			queryClient.invalidateQueries({ queryKey: ["admin", "scrapers", "statistics"] });
+			queryClient.invalidateQueries({ queryKey: ["admin", "cron", "jobs"] });
 		},
 		onError: (error) => {
 			console.error("Failed to update scraper status:", error);
-			// TODO: Add error notification
 		},
 	});
 };

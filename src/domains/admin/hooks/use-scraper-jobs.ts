@@ -5,7 +5,7 @@ export const useScraperJobs = () => {
 	return useQuery({
 		queryKey: ["admin", "scrapers"],
 		queryFn: fetchScraperJobs,
-		refetchInterval: 60000, // Refetch every minute
-		staleTime: 30000, // Consider data stale after 30 seconds
+		refetchInterval: 60_000,
+		staleTime: 30_000,
 	});
 };

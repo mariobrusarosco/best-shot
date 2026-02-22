@@ -7,13 +7,12 @@ export const useRescheduleScraperJob = () => {
 	return useMutation({
 		mutationFn: rescheduleScraperJob,
 		onSuccess: () => {
-			// Invalidate and refetch scraper jobs and statistics
 			queryClient.invalidateQueries({ queryKey: ["admin", "scrapers"] });
 			queryClient.invalidateQueries({ queryKey: ["admin", "scrapers", "statistics"] });
+			queryClient.invalidateQueries({ queryKey: ["admin", "cron", "jobs"] });
 		},
 		onError: (error) => {
 			console.error("Failed to reschedule scraper job:", error);
-			// TODO: Add error notification
 		},
 	});
 };

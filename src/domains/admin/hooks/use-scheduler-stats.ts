@@ -5,6 +5,5 @@ export const useSchedulerStats = () => {
 	return useQuery({
 		queryKey: ["admin", "scheduler", "stats"],
 		queryFn: fetchSchedulerStats,
-		enabled: true,
 	});
 };

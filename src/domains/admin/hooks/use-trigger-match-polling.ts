@@ -7,7 +7,6 @@ export const useTriggerMatchPolling = () => {
 	return useMutation({
 		mutationFn: triggerMatchPolling,
 		onSuccess: () => {
-			// Invalidate stats to refresh the "matches needing update" count
 			queryClient.invalidateQueries({ queryKey: ["admin", "scheduler", "stats"] });
 		},
 		onError: (error) => {

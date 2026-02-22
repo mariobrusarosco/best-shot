@@ -7,11 +7,9 @@ export const useResetUserActivity = () => {
 	return useMutation({
 		mutationFn: resetUserActivity,
 		onSuccess: () => {
-			// Invalidate queries that might be affected by user activity reset
 			queryClient.invalidateQueries({ queryKey: ["leagues"] });
 			queryClient.invalidateQueries({ queryKey: ["guesses"] });
 			queryClient.invalidateQueries({ queryKey: ["standings"] });
-			// Also invalidate user member data potentially
 			queryClient.invalidateQueries({ queryKey: ["member"] });
 		},
 	});

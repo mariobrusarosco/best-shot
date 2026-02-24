@@ -58,7 +58,6 @@ export const NotificationProvider = ({ children }: { children: ReactNode }) => {
 							<AppIcon name="X" size="extra-small" />
 						</IconButton>
 					}
-					color="success"
 					sx={{
 						width: "100%",
 						borderRadius: 2,

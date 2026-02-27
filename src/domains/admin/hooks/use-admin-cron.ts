@@ -1,4 +1,4 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { keepPreviousData, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { api } from "@/api";
 
 export type CronSchedule = "recurring" | "one_time";
@@ -116,7 +116,7 @@ export interface IAdminCronRunsFilters {
 	triggerType?: CronRunTrigger;
 	target?: string;
 	limit?: number;
-	offset?: number;
+	page?: number;
 }
 
 const baseURL = import.meta.env.VITE_BEST_SHOT_API_V2;
@@ -207,8 +207,18 @@ const fetchCronJob = async (jobId: string): Promise<IAdminCronJob> => {
 	return mapToCronJob(response.data.data);
 };
 
-const fetchCronRuns = async (filters: IAdminCronRunsFilters = {}): Promise<IAdminCronRun[]> => {
-	const { jobDefinitionId, jobKey, status, triggerType, target, limit = 50, offset = 0 } = filters;
+const fetchCronRuns = async (filters: IAdminCronRunsFilters = {}): Promise<{ data: IAdminCronRun[]; total: number }> => {
+	const {
+		jobDefinitionId,
+		jobKey,
+		status,
+		triggerType,
+		target,
+		limit = 10,
+		page = 1,
+	} = filters;
+
+	const offset = (page - 1) * limit;
 
 	const params: Record<string, string | number> = {
 		limit,
@@ -245,7 +255,10 @@ const fetchCronRuns = async (filters: IAdminCronRunsFilters = {}): Promise<IAdmi
 	}
 
 	const runs = Array.isArray(response.data.data) ? response.data.data : [];
-	return runs.map(mapToCronRun);
+	return {
+		data: runs.map(mapToCronRun),
+		total: response.data.total ?? 0,
+	};
 };
 
 const fetchCronRun = async (runId: string): Promise<IAdminCronRun> => {
@@ -355,12 +368,12 @@ export const useAdminCronJob = (jobId: string) => {
 export const useAdminCronJobRuns = (jobId: string, limit = 10) => {
 	return useQuery({
 		queryKey: ["admin", "cron", "job", jobId, "runs", limit],
-		queryFn: () =>
+		queryFn: async () =>
 			fetchCronRuns({
 				jobDefinitionId: jobId,
 				limit,
-				offset: 0,
-			}),
+				page: 1,
+			}).then((res) => res.data),
 		enabled: Boolean(jobId),
 		staleTime: 15_000,
 		refetchInterval: 30_000,
@@ -373,6 +386,7 @@ export const useAdminCronRuns = (filters: IAdminCronRunsFilters = {}) => {
 		queryFn: () => fetchCronRuns(filters),
 		staleTime: 15_000,
 		refetchInterval: 30_000,
+		placeholderData: keepPreviousData,
 	});
 };
 

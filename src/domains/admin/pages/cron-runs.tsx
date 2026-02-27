@@ -16,7 +16,7 @@ import { useMemo, useState } from "react";
 import { type CronRunStatus, useAdminCronRuns } from "@/domains/admin/hooks/use-admin-cron";
 import { AppError } from "@/domains/global/components/error";
 import { ScreenHeading, ScreenHeadingSkeleton } from "@/domains/global/components/screen-heading";
-import { AppTypography } from "@/domains/ui-system/components";
+import { AppIcon, AppTypography } from "@/domains/ui-system/components";
 import { AppButton } from "@/domains/ui-system/components/app-button/app-button";
 import { AuthenticatedScreenLayout } from "@/domains/ui-system/layout/authenticated";
 
@@ -237,11 +237,36 @@ const CronRunsPage = () => {
 					</Table>
 				</TableWrapper>
 
-				{isFetching && (
-					<AppTypography variant="body2" color="neutral.400">
-						Refreshing runs...
+				<PaginationBar>
+					<AppButton
+						variant="outlined"
+						size="small"
+						startIcon={<AppIcon name="ChevronLeft" size="small" />}
+						onClick={() => setPage((current) => Math.max(1, current - 1))}
+						disabled={page <= 1}
+					>
+						Prev
+					</AppButton>
+
+					<AppTypography variant="body2" color="neutral.300">
+						Page {page} of {totalPages}
+						{isFetching ? " • refreshing..." : ""}
 					</AppTypography>
-				)}
+
+					<AppButton
+						variant="outlined"
+						size="small"
+						endIcon={<AppIcon name="ChevronRight" size="small" />}
+						onClick={() => {
+							if (!isPlaceholderData) {
+								setPage((old) => old + 1);
+							}
+						}}
+						disabled={isPlaceholderData || page >= totalPages}
+					>
+						Next
+					</AppButton>
+				</PaginationBar>
 			</Container>
 		</AuthenticatedScreenLayout>
 	);
@@ -323,6 +348,17 @@ const BodyRow = styled(TableRow)(({ theme }) => ({
 const BodyCell = styled(TableCell)(({ theme }) => ({
 	borderBottom: `1px solid ${theme.palette.neutral[800]}`,
 	color: theme.palette.neutral[200],
+}));
+
+const PaginationBar = styled(Box)(({ theme }) => ({
+	backgroundColor: theme.palette.black[800],
+	border: `1px solid ${theme.palette.neutral[700]}`,
+	borderRadius: theme.shape.borderRadius,
+	padding: theme.spacing(1.5, 2),
+	display: "flex",
+	alignItems: "center",
+	justifyContent: "space-between",
+	gap: theme.spacing(1),
 }));
 
 export default CronRunsPage;

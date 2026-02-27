@@ -5,12 +5,14 @@ import {
 	DialogContent,
 	DialogTitle,
 	FormControlLabel,
+	MenuItem,
 	Radio,
 	RadioGroup,
 	styled,
 	TextField,
 } from "@mui/material";
 import { useEffect, useMemo, useState } from "react";
+import { useAdminCronTargets } from "@/domains/admin/hooks/use-admin-cron";
 import { AppTypography } from "@/domains/ui-system/components";
 import { AppButton } from "@/domains/ui-system/components/app-button/app-button";
 
@@ -97,6 +99,7 @@ export const CronJobFormModal = ({
 	onCancel,
 	onSave,
 }: CronJobFormModalProps) => {
+	const { data: targets = [], isLoading: isLoadingTargets } = useAdminCronTargets();
 	const [values, setValues] = useState<ICronJobFormValues>(buildInitialValues(initialValues));
 	const [errors, setErrors] = useState<FormErrors>({});
 
@@ -216,13 +219,26 @@ export const CronJobFormModal = ({
 					<FormRow>
 						<LabelText>target*</LabelText>
 						<FormField
+							select
 							size="small"
 							value={values.target}
 							onChange={(event) => setValue("target", event.target.value)}
-							placeholder="rounds.sync"
 							error={Boolean(errors.target)}
 							helperText={errors.target}
-						/>
+							disabled={isLoadingTargets}
+						>
+							{isLoadingTargets ? (
+								<MenuItem value="">
+									<em>Loading targets...</em>
+								</MenuItem>
+							) : (
+								targets.map((target) => (
+									<MenuItem key={target} value={target}>
+										{target}
+									</MenuItem>
+								))
+							)}
+						</FormField>
 					</FormRow>
 
 					<FormRow alignTop>

@@ -81,11 +81,14 @@ const formatRunId = (runId: string) => {
 	return `${runId.slice(0, 14)}...`;
 };
 
+const PAGE_SIZE = 50;
+
 const CronRunsPage = () => {
 	const navigate = useNavigate();
 	const [statusInput, setStatusInput] = useState<"any" | CronRunStatus>("any");
 	const [jobKeyInput, setJobKeyInput] = useState("");
 	const [targetInput, setTargetInput] = useState("");
+	const [page, setPage] = useState(1);
 	const [filters, setFilters] = useState({
 		status: "any" as "any" | CronRunStatus,
 		jobKey: "",
@@ -97,13 +100,23 @@ const CronRunsPage = () => {
 			status: filters.status === "any" ? undefined : filters.status,
 			jobKey: filters.jobKey || undefined,
 			target: filters.target || undefined,
-			limit: 100,
-			offset: 0,
+			page: page,
+			limit: PAGE_SIZE,
 		}),
-		[filters]
+		[filters, page]
 	);
 
-	const { data: runs = [], isLoading, error, isFetching } = useAdminCronRuns(queryFilters);
+	const {
+		data: result,
+		isLoading,
+		error,
+		isFetching,
+		isPlaceholderData,
+	} = useAdminCronRuns(queryFilters);
+
+	const runs = result?.data ?? [];
+	const totalRuns = result?.total ?? 0;
+	const totalPages = Math.max(1, Math.ceil(totalRuns / PAGE_SIZE));
 
 	const handleSearch = () => {
 		setFilters({
@@ -111,6 +124,7 @@ const CronRunsPage = () => {
 			jobKey: jobKeyInput.trim(),
 			target: targetInput.trim(),
 		});
+		setPage(1);
 	};
 
 	if (isLoading) {

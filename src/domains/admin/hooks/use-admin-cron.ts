@@ -207,16 +207,10 @@ const fetchCronJob = async (jobId: string): Promise<IAdminCronJob> => {
 	return mapToCronJob(response.data.data);
 };
 
-const fetchCronRuns = async (filters: IAdminCronRunsFilters = {}): Promise<{ data: IAdminCronRun[]; total: number }> => {
-	const {
-		jobDefinitionId,
-		jobKey,
-		status,
-		triggerType,
-		target,
-		limit = 10,
-		page = 1,
-	} = filters;
+const fetchCronRuns = async (
+	filters: IAdminCronRunsFilters = {}
+): Promise<{ data: IAdminCronRun[]; total: number }> => {
+	const { jobDefinitionId, jobKey, status, triggerType, target, limit = 10, page = 1 } = filters;
 
 	const offset = (page - 1) * limit;
 
@@ -271,6 +265,18 @@ const fetchCronRun = async (runId: string): Promise<IAdminCronRun> => {
 	}
 
 	return mapToCronRun(response.data.data);
+};
+
+const fetchCronTargets = async (): Promise<string[]> => {
+	const response = await api.get<ICronApiResponse<string[]>>("/admin/cron/targets", {
+		baseURL,
+	});
+
+	if (!response.data.success || !response.data.data) {
+		throw new Error(getErrorMessage(response.data, "Failed to fetch cron targets"));
+	}
+
+	return response.data.data.sort();
 };
 
 const createCronJob = async (input: ICreateCronJobInput): Promise<IAdminCronJob> => {
@@ -397,6 +403,14 @@ export const useAdminCronRun = (runId: string) => {
 		enabled: Boolean(runId),
 		staleTime: 15_000,
 		refetchInterval: 30_000,
+	});
+};
+
+export const useAdminCronTargets = () => {
+	return useQuery({
+		queryKey: ["admin", "cron", "targets"],
+		queryFn: fetchCronTargets,
+		staleTime: Infinity, // Targets are considered static
 	});
 };
 

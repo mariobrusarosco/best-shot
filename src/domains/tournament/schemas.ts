@@ -21,6 +21,7 @@ export const TournamentSchema = z
 		),
 		standingsMode: z.string().min(1),
 		season: z.string().min(4).max(20).optional(),
+		currentRound: z.string().min(1).max(30).nullish(),
 		starterRound: z.string().min(1).max(30).optional(),
 		createdAt: z.string().datetime().optional(),
 		updatedAt: z.string().datetime().optional(),

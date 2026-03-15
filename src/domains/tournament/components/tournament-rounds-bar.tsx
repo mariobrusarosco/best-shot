@@ -9,8 +9,8 @@ import { UIHelper } from "@/domains/ui-system/theme";
 import { OverflowOnHover } from "@/domains/ui-system/utils";
 
 const TournamentRoundsBar = () => {
-	const { activeRound, goToRound } = useTournamentRounds();
 	const { data: tournament } = useTournament();
+	const { activeRound, goToRound } = useTournamentRounds({ tournament });
 
 	useEffect(() => {
 		if (activeRound) {

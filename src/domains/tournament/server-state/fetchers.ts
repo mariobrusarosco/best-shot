@@ -29,7 +29,7 @@ export const getTournaments = async () => {
 };
 
 export const getTournamentMatches = async ({ queryKey }: { queryKey: unknown }) => {
-	const queryKeyArray = queryKey as [string, { tournamentId: string; round: number }];
+	const queryKeyArray = queryKey as [string, { tournamentId: string; round: string }];
 	const [_key, { tournamentId, round }] = queryKeyArray;
 
 	const response = await api.get(`tournaments/${tournamentId}/matches/${round}`);

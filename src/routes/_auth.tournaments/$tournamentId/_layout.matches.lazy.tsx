@@ -14,8 +14,11 @@ import { UIHelper } from "@/domains/ui-system/theme";
 import { OverflowOnHover } from "@/domains/ui-system/utils";
 
 export const TournamentMatchesScreen = () => {
-	const { activeRound } = useTournamentRounds();
 	const tournamentQuery = useTournament();
+	const { activeRound } = useTournamentRounds({
+		tournament: tournamentQuery.data,
+		syncOnMount: true,
+	});
 	const fillWithAI = useFeatureFlag("fill_round_guesses_with_ai");
 
 	if (tournamentQuery.isError) {

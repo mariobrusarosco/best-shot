@@ -34,19 +34,15 @@ const theme = createTheme({
 	},
 
 	// Typography system
-	typography: {
-		...MUI_TYPOGRAPHY_CONFIG,
-	},
-
+	typography: { ...MUI_TYPOGRAPHY_CONFIG },
 	// Spacing system (8px base unit)
 	spacing: MUI_SPACING_CONFIG,
-
 	// Breakpoint system
 	breakpoints: MUI_BREAKPOINTS_CONFIG,
-
 	// Shape system
 	shape: {
 		borderRadius: 8, // Default border radius
+		...DESIGN_SYSTEM_SPACING.borderRadius,
 	},
 
 	// Shadow system

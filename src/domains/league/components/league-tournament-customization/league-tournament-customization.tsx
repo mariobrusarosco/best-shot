@@ -227,65 +227,53 @@ export const TournamentLeagueCard = ({
 	);
 };
 
-const ListGrid = styled(Box)(({ theme }) =>
-	theme.unstable_sx({
-		display: "flex",
-		gap: 1,
-		flexWrap: "wrap",
-	})
-);
+const ListGrid = styled(Box)(({ theme }) => ({
+	display: "flex",
+	gap: theme.spacing(1),
+	flexWrap: "wrap",
+}));
 
-const Card = styled(Surface)(({ theme }) =>
-	theme.unstable_sx({
-		display: "flex",
-		justifyContent: "space-between",
-		alignItems: "center",
-		backgroundColor: "black.800",
-		p: 2,
-		borderRadius: 2,
-		gap: 1,
-	})
-);
+const Card = styled(Surface)(({ theme }) => ({
+	display: "flex",
+	justifyContent: "space-between",
+	alignItems: "center",
+	backgroundColor: theme.palette.black[800],
+	padding: theme.spacing(2),
+	borderRadius: theme.spacing(2),
+	gap: theme.spacing(1),
+}));
 
-const CardHeading = styled(Box)(({ theme }) =>
-	theme.unstable_sx({
-		display: "flex",
-		// flexDirection: "column",
-		alignItems: "center",
-		gap: 1,
-		backgroundColor: "black.800",
-		borderRadius: 3,
-		flex: 1,
-	})
-);
+const CardHeading = styled(Box)(({ theme }) => ({
+	display: "flex",
+	// flexDirection: "column",
+	alignItems: "center",
+	gap: theme.spacing(1),
+	backgroundColor: theme.palette.black[800],
+	borderRadius: theme.spacing(3),
+	flex: 1,
+}));
 
-const LogoBox = styled(Box)(({ theme }) =>
-	theme.unstable_sx({
-		width: 14,
-		height: 14,
-		display: "grid",
-		placeContent: "center",
-	})
-);
+const LogoBox = styled(Box)(() => ({
+	width: 14,
+	height: 14,
+	display: "grid",
+	placeContent: "center",
+}));
 
-const IconBox = styled(Box)(({ theme }) =>
-	theme.unstable_sx({
-		borderRadius: "8px",
-		padding: 0.5,
-		display: "grid",
-		placeContent: "center",
-	})
-);
+const IconBox = styled(Box)(({ theme }) => ({
+	borderRadius: "8px",
+	padding: theme.spacing(0.5),
+	display: "grid",
+	placeContent: "center",
+}));
 
-const SaveButton = styled(AppButton)(({ theme }) =>
-	theme.unstable_sx({
-		backgroundColor: "teal.500",
-		color: "neutral.100",
-		p: 1,
-		borderRadius: 2,
+const SaveButton = styled(AppButton)(({ theme }) => ({
+	backgroundColor: theme.palette.teal[500],
+	color: theme.palette.neutral[100],
+	padding: theme.spacing(1),
+	borderRadius: theme.spacing(2),
 
-		"[aria-disabled='true']&": {
-			opacity: 0.6,
-		},
-	})
-);
+	"[aria-disabled='true']&": {
+		opacity: 0.6,
+	},
+}));

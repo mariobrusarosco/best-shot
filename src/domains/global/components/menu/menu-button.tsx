@@ -12,7 +12,7 @@ export const MenuButton = ({ iconName }: { iconName: keyof typeof ICONS }) => {
 				backgroundColor: theme.palette.teal[500],
 				color: theme.palette.neutral[100],
 				padding: theme.spacing(1),
-				borderRadius: theme.shape.borderRadius,
+				borderRadius: theme.shape.medium,
 				display: "inline-flex",
 				width: 44,
 				height: 44,

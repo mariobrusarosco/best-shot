@@ -5,23 +5,21 @@ import type { ITournament } from "@/domains/tournament/schemas";
 const route = getRouteApi("/_auth/tournaments/$tournamentId");
 
 export const getActiveTournamentRound = (searchRound?: string, tournament?: ITournament) => {
-	return searchRound ??  tournament?.currentRound ?? "1";
+	return searchRound ?? tournament?.currentRound ?? "1";
 };
 
 export const useTournamentRounds = ({
 	tournament,
 	syncOnMount = false,
-}: {
-	tournament?: ITournament;
-	syncOnMount?: boolean;
-} = {}) => {
-	const search = route.useSearch() as { round?: string };
+}: UseTournamentRoundsProps = {}) => {
+	const search = route.useSearch() as TournamentRoundsSearch;
 	const navigate = route.useNavigate();
+	const rounds = tournament?.rounds ?? [];
 	const activeRound = getActiveTournamentRound(search.round, tournament);
+	const isEmpty = !!tournament && rounds.length === 0;
 
 	const goToRound = (round: string) => {
 		navigate({
-			to: "/tournaments/$tournamentId/matches",
 			search: (prev) => ({ ...prev, round }),
 			resetScroll: false,
 			replace: false,
@@ -34,7 +32,6 @@ export const useTournamentRounds = ({
 		}
 
 		navigate({
-			to: "/tournaments/$tournamentId/matches",
 			search: (prev) => ({ ...prev, round: activeRound }),
 			resetScroll: false,
 			replace: true,
@@ -42,7 +39,33 @@ export const useTournamentRounds = ({
 	}, [activeRound, navigate, search.round, syncOnMount]);
 
 	return {
-		activeRound,
-		goToRound,
+		data: {
+			activeRound,
+			rounds,
+		},
+		states: {
+			isEmpty,
+		},
+		handlers: {
+			goToRound,
+		},
 	};
+};
+
+type UseTournamentRoundsProps = {
+	tournament?: TournamentWithRounds;
+	syncOnMount?: boolean;
+};
+
+type TournamentRoundsSearch = {
+	round?: string;
+};
+
+type TournamentWithRounds = ITournament & {
+	rounds?: TournamentRound[];
+};
+
+type TournamentRound = {
+	label: string;
+	slug: string;
 };

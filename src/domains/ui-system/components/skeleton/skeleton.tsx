@@ -44,11 +44,9 @@ export const shimmerEffectNew = css`
 	}
 `;
 
-export const TypographySkeleton = styled(Box)(({ theme }) =>
-	theme.unstable_sx({
-		position: "relative",
-		backgroundColor: "black.800",
-		borderRadius: 2,
-		...shimmerEffect(),
-	})
-);
+export const TypographySkeleton = styled(Box)(({ theme }) => ({
+	position: "relative",
+	backgroundColor: theme.palette.black[800],
+	borderRadius: theme.spacing(2),
+	...shimmerEffect(),
+}));

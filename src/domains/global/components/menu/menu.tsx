@@ -12,7 +12,7 @@ export const Menu = () => {
 	const isAdmin = member?.role === "admin";
 
 	return (
-		<Wrapper as="menu">
+		<Wrapper as="menu" data-ui="app-menu">
 			<MenuLogo to="/">
 				<BestShotIcon fill="currentColor" />
 				<Typography textAlign="center" color="neutral.100" variant="label" data-id="menu-logo">

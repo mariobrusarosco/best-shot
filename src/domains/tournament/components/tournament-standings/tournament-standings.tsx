@@ -171,13 +171,11 @@ const Heading = styled(Box)(() => ({
 	paddingBottom: theme.spacing(3),
 }));
 
-export const TeamLogo = styled("img")(({ theme }) =>
-	theme?.unstable_sx({
-		display: "inline-flex",
-		width: 18,
-		height: 18,
-	})
-);
+export const TeamLogo = styled("img")(() => ({
+	display: "inline-flex",
+	width: 18,
+	height: 18,
+}));
 
 const MultiGroupStandings = ({
 	groups,

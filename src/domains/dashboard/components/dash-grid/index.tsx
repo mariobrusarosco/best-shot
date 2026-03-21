@@ -1,20 +1,16 @@
 import { styled } from "@mui/material";
 import { Box } from "@mui/system";
+import { UIHelper } from "@/domains/ui-system/theme";
 
-export const DashGrid = styled(Box)(({ theme }) =>
-	theme.unstable_sx({
-		borderRadius: 1,
-		display: "grid",
-		gap: {
-			all: 2,
-			tablet: 3,
-		},
-		gridTemplateColumns: {
-			all: "repeat(2, minmax(100px, 1fr))",
-			tablet: "repeat(2, minmax(100px, 320px))",
-		},
-		gridAutoRows: {
-			all: "auto",
-		},
-	})
-);
+export const DashGrid = styled(Box)(({ theme }) => ({
+	borderRadius: theme.spacing(1),
+	display: "grid",
+	gap: theme.spacing(2),
+	gridTemplateColumns: "repeat(2, minmax(100px, 1fr))",
+	gridAutoRows: "auto",
+
+	[UIHelper.startsOn("tablet")]: {
+		gap: theme.spacing(3),
+		gridTemplateColumns: "repeat(2, minmax(100px, 320px))",
+	},
+}));

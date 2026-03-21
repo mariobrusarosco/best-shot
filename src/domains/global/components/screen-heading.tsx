@@ -14,6 +14,7 @@ interface Props extends SurfaceProps {
 
 const { startsOn } = UIHelper;
 
+// Deprecated, do not use it
 export const ScreenHeading = (props: Props & WrapperProps) => {
 	const { children, title, subtitle, backTo, ...wrapperProps } = props;
 	const isDesktopScreen = useMediaQuery(startsOn("desktop"));

@@ -17,7 +17,8 @@ export const LeagueTournaments = ({
 }) => {
 	const [editMode, setEditMode] = useState(false);
 
-	const { data: allAppAvailableTournamens } = useTournaments();
+	const { data } = useTournaments();
+	const allAppAvailableTournaments = data.tournaments;
 	const toggleEditMode = () => {
 		setEditMode((prev) => !prev);
 	};
@@ -54,16 +55,16 @@ export const LeagueTournaments = ({
 				</EmptyState>
 			)}
 
-			{editMode && allAppAvailableTournamens && league.data && (
+			{editMode && league.data && (
 				<LeagueTournamentCustomization
 					currentTournaments={league?.data?.tournaments}
-					allTournaments={allAppAvailableTournamens}
+					allTournaments={allAppAvailableTournaments}
 					league={league.data}
 					onUpdate={toggleEditMode}
 				/>
 			)}
 
-			{!editMode && allAppAvailableTournamens && league.data && (
+			{!editMode && league.data && (
 				<ListGrid data-ui="league-tournament-list">
 					{league?.data?.tournaments.map((tournament) => (
 						<TournamentLeagueCard key={tournament.id} tournament={tournament} />

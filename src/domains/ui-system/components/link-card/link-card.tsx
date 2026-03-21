@@ -21,7 +21,6 @@ export const AppLinkCard = forwardRef<HTMLAnchorElement, Props>(
 							sx={{
 								color: "teal.500",
 								p: 0,
-								borderRadius: "50%",
 								display: "grid",
 								placeItems: "center",
 							}}

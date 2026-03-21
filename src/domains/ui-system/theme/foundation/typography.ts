@@ -2,16 +2,15 @@
  * Design System Foundation: Typography
  *
  * Typography scale and variants following the Best Shot design system.
- * Uses Poppins for headings (clean, modern) and Montserrat for content (readable).
+ * Uses Antonio for headings (clean, modern) and Montserrat for content (readable).
  */
 
 import { MEDIA_QUERIES } from "./breakpoints";
 
 // Font Families
 export const FONT_FAMILIES = {
-	heading: '"Poppins", sans-serif',
+	heading: '"Antonio", sans-serif',
 	body: '"Montserrat", sans-serif',
-	mono: '"JetBrains Mono", "Consolas", monospace',
 } as const;
 
 // Font Weights
@@ -21,7 +20,7 @@ export const FONT_WEIGHTS = {
 	medium: 500,
 	semiBold: 600,
 	bold: 700,
-	extraBold: 800,
+	extraBold: 700,
 } as const;
 
 // Font Sizes (in rem for scalability)
@@ -50,7 +49,7 @@ export const LINE_HEIGHTS = {
 
 // Typography Variants (Enhanced from existing system)
 export const TYPOGRAPHY_VARIANTS = {
-	// Headings (Poppins - clean, modern)
+	// Headings (Antonio - clean, modern)
 	h1: {
 		fontFamily: FONT_FAMILIES.heading,
 		fontSize: "2rem", // Mobile size (32px)
@@ -70,7 +69,7 @@ export const TYPOGRAPHY_VARIANTS = {
 		},
 	},
 	h3: {
-		fontFamily: FONT_FAMILIES.body,
+		fontFamily: FONT_FAMILIES.heading,
 		fontSize: "1.5rem", // Mobile size (24px)
 		fontWeight: FONT_WEIGHTS.semiBold,
 		lineHeight: LINE_HEIGHTS.normal,
@@ -79,7 +78,7 @@ export const TYPOGRAPHY_VARIANTS = {
 		},
 	},
 	h4: {
-		fontFamily: FONT_FAMILIES.body,
+		fontFamily: FONT_FAMILIES.heading,
 		fontSize: "1.25rem", // Mobile size (20px)
 		fontWeight: FONT_WEIGHTS.semiBold,
 		lineHeight: LINE_HEIGHTS.normal,
@@ -88,13 +87,13 @@ export const TYPOGRAPHY_VARIANTS = {
 		},
 	},
 	h5: {
-		fontFamily: FONT_FAMILIES.body,
+		fontFamily: FONT_FAMILIES.heading,
 		fontSize: FONT_SIZES["3xl"], // 30px
 		fontWeight: FONT_WEIGHTS.semiBold,
 		lineHeight: LINE_HEIGHTS.normal,
 	},
 	h6: {
-		fontFamily: FONT_FAMILIES.body,
+		fontFamily: FONT_FAMILIES.heading,
 		fontSize: "1.125rem", // Mobile size (18px)
 		fontWeight: FONT_WEIGHTS.medium,
 		lineHeight: LINE_HEIGHTS.relaxed,
@@ -103,7 +102,6 @@ export const TYPOGRAPHY_VARIANTS = {
 		},
 	},
 
-	// Body Text (Montserrat - readable)
 	body1: {
 		fontFamily: FONT_FAMILIES.body,
 		fontSize: FONT_SIZES.md, // 16px
@@ -128,7 +126,7 @@ export const TYPOGRAPHY_VARIANTS = {
 		},
 	},
 	topic: {
-		fontFamily: FONT_FAMILIES.body,
+		fontFamily: FONT_FAMILIES.heading,
 		fontSize: FONT_SIZES.base, // Mobile size (14px)
 		fontWeight: FONT_WEIGHTS.light,
 		lineHeight: LINE_HEIGHTS.normal,

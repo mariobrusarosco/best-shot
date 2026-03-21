@@ -1,5 +1,6 @@
 import { Box, Stack, styled, Typography } from "@mui/material";
 import { createLazyFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { BestShotIcon } from "@/assets/best-shot-icon";
 import { Authentication } from "@/domains/authentication";
 import { APP_MODE } from "@/domains/global/utils";
 import { AppButton } from "@/domains/ui-system/components/button/button";
@@ -15,9 +16,12 @@ const LoginScreen = () => {
 	return (
 		<PublicLayout>
 			<Login>
-				<Typography variant="h1" color="neutral.100">
-					Best Shot
-				</Typography>
+				<Stack alignItems="center" gap={2}>
+					<BestShotIcon fill={theme.palette.neutral[100]} width={120} height={120} />
+					<Typography variant="h1" color="neutral.100">
+						Best Shot
+					</Typography>
+				</Stack>
 
 				{APP_MODE === "demo" && (
 					<Box

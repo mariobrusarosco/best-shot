@@ -1281,17 +1281,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@fontsource/antonio@npm:^5.2.8":
+  version: 5.2.8
+  resolution: "@fontsource/antonio@npm:5.2.8"
+  checksum: ce3ec918193a2c143c599b0b7db84f2bd2eb071de42bffa985947bf33b6818535f3fd08130c169a519970c01b3c4c31ac5d3c2df16fa58af3b31e474ed82f740
+  languageName: node
+  linkType: hard
+
 "@fontsource/montserrat@npm:^5.1.0":
   version: 5.2.5
   resolution: "@fontsource/montserrat@npm:5.2.5"
   checksum: 5a0b64b6c15f5cb7feb729adfaac9ff4e94ceb207d5e77ebd8f0da0fc3a45972e42f48c6f77104e45257215b6605ef0b7e7b6941adb761f4bdd592000f6f1781
-  languageName: node
-  linkType: hard
-
-"@fontsource/poppins@npm:^5.1.0":
-  version: 5.2.5
-  resolution: "@fontsource/poppins@npm:5.2.5"
-  checksum: 12a0bdf89dfe1a1e10ed3ea72437fcf13d6d4bd7d71964acaccc7a9f3bdea561af4110d1a73146995fcc40dedbe7e791750141804102df4fb28469e9d18144e8
   languageName: node
   linkType: hard
 
@@ -3103,8 +3103,8 @@ __metadata:
     "@biomejs/biome": ^2.1.2
     "@emotion/react": ^11.11.4
     "@emotion/styled": ^11.11.5
+    "@fontsource/antonio": ^5.2.8
     "@fontsource/montserrat": ^5.1.0
-    "@fontsource/poppins": ^5.1.0
     "@hookform/resolvers": ^3.3.4
     "@mui/base": ^5.0.0-beta.70
     "@mui/material": ^7.3.1

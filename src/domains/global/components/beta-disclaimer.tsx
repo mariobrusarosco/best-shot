@@ -1,7 +1,7 @@
 import { Box, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
 
-export const DISCLAIMER_HEIGHT = 40;
+export const DISCLAIMER_HEIGHT = 20;
 
 const DisclaimerContainer = styled(Box)(({ theme }) => ({
 	position: "fixed",
@@ -23,7 +23,7 @@ const DisclaimerContainer = styled(Box)(({ theme }) => ({
 export const BetaDisclaimer = () => {
 	return (
 		<DisclaimerContainer>
-			<Typography variant="label" fontWeight={500}>
+			<Typography variant="caption" fontWeight={500}>
 				This project is in Beta. Designs are not final
 			</Typography>
 		</DisclaimerContainer>

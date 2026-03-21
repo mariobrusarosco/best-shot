@@ -1,29 +1,27 @@
 import { Box, styled } from "@mui/system";
 import { Surface } from "@/domains/ui-system/components/surface/surface";
+import { UIHelper } from "@/domains/ui-system/theme";
 
-const CardHeader = styled(Box)(({ theme }) =>
-	theme.unstable_sx({
-		display: "flex",
-		justifyContent: "space-between",
-	})
-);
+const CardHeader = styled(Box)(() => ({
+	display: "flex",
+	justifyContent: "space-between",
+}));
 
-const CardContainer = styled(Surface)(({ theme }) =>
-	theme.unstable_sx({
-		backgroundColor: "black.800",
-		padding: 2,
-		borderRadius: 2,
-		display: "grid",
-		height: "100%",
-		overflow: "hidden",
-		gridTemplateRows: "40px auto",
-		alignContent: "space-between",
-		gap: {
-			all: 2,
-			tablet: 3,
-		},
-	})
-);
+const CardContainer = styled(Surface)(({ theme }) => ({
+	backgroundColor: theme.palette.black[800],
+	padding: theme.spacing(2),
+	borderRadius: theme.spacing(2),
+	display: "grid",
+	height: "100%",
+	overflow: "hidden",
+	gridTemplateRows: "40px auto",
+	alignContent: "space-between",
+	gap: theme.spacing(2),
+
+	[UIHelper.startsOn("tablet")]: {
+		gap: theme.spacing(3),
+	},
+}));
 
 const Skeleton = () => {
 	return (

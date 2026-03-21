@@ -40,51 +40,47 @@ const Wrapper = styled(Box)(() => ({
 	alignContent: "flex-end",
 }));
 
-const List = styled(Box)(({ theme }) =>
-	theme?.unstable_sx({
-		display: "flex",
-		justifyContent: "space-between",
-		border: `1px solid ${theme.palette.teal[500]}`,
-		borderRadius: 2,
-		padding: 0.5,
-		gap: 0.5,
+const List = styled(Box)(({ theme }) => ({
+	display: "flex",
+	justifyContent: "space-between",
+	border: `1px solid ${theme.palette.teal[500]}`,
+	borderRadius: theme.spacing(2),
+	padding: theme.spacing(0.5),
+	gap: theme.spacing(0.5),
 
-		[UIHelper.startsOn("tablet")]: {
-			maxWidth: "400px",
-			flexDirection: "column",
-			// marginTop: "auto",
-			justifyItems: "flex-start",
-		},
-	})
-);
+	[UIHelper.startsOn("tablet")]: {
+		maxWidth: "400px",
+		flexDirection: "column",
+		// marginTop: "auto",
+		justifyItems: "flex-start",
+	},
+}));
 
-const CustomTab = styled(CustomLink)(({ theme }) =>
-	theme?.unstable_sx({
-		color: "neutral.100",
-		px: 0.5,
-		py: 0.5,
-		borderRadius: 2,
-		flex: 1,
-		textAlign: "center",
+const CustomTab = styled(CustomLink)(({ theme }) => ({
+	color: theme.palette.neutral[100],
+	paddingLeft: theme.spacing(0.5),
+	paddingRight: theme.spacing(0.5),
+	paddingTop: theme.spacing(0.5),
+	paddingBottom: theme.spacing(0.5),
+	borderRadius: theme.spacing(2),
+	flex: 1,
+	textAlign: "center",
 
-		"[aria-selected='true']&": {
-			backgroundColor: "teal.500",
-		},
+	"[aria-selected='true']&": {
+		backgroundColor: theme.palette.teal[500],
+	},
 
-		[UIHelper.startsOn("desktop")]: {
-			minWidth: "200px",
-		},
-	})
-);
+	[UIHelper.startsOn("desktop")]: {
+		minWidth: "200px",
+	},
+}));
 
-export const TabsSkeleton = styled(Wrapper)(({ theme }) =>
-	theme.unstable_sx({
-		position: "relative",
-		height: "41px",
-		border: "none",
-		...shimmerEffect(),
-	})
-);
+export const TabsSkeleton = styled(Wrapper)(() => ({
+	position: "relative",
+	height: "41px",
+	border: "none",
+	...shimmerEffect(),
+}));
 export default {
 	Component: TournamentTabs,
 	Skeleton: TabsSkeleton,

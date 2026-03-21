@@ -2,94 +2,69 @@ import { Stack, Typography } from "@mui/material";
 import { Link } from "@tanstack/react-router";
 import { DashCard } from "@/domains/dashboard/components/dash-card/dash-card";
 import type { IMatchday } from "@/domains/dashboard/typing";
-import { AppButton } from "@/domains/ui-system/components/app-button/app-button";
-import { AppCard } from "@/domains/ui-system/components/app-card/AppCard";
-import { AppIcon } from "@/domains/ui-system/components/icon/icon";
 import { AppPill } from "@/domains/ui-system/components/pill/pill";
-import { MatchdayCard, MatchdayGrid } from "./styles";
+import { MatchdayGrid } from "./styles";
 
-const Matchday = ({ matchday }: { matchday: IMatchday }) => {
+export const Matchday = ({ matchday }: { matchday: IMatchday }) => {
 	const allMatches = matchday.all;
 
-	console.log({ matchday });
-
 	return (
-		<Stack color="neutral.100" gap={3} data-ui="matchday">
+		<Stack color="neutral.100" gap={2} data-ui="matchday">
 			<Stack direction="row" justifyContent="space-between">
-				<AppPill.Component bgcolor="teal.500" color="neutral.100" height={20} width="120px">
-					<Typography textTransform="uppercase" variant="tag">
-						Matchday
-					</Typography>
-				</AppPill.Component>
+				<Typography textTransform="uppercase" variant="h3">
+					Matchday
+				</Typography>
 			</Stack>
 
 			<MatchdayGrid>
-				{allMatches.length === 0 ? (
-					<EmptyState />
-				) : (
-					allMatches.map((match, i) => (
-						<MatchdayCard
-							key={`match-${match.tournamentId}-${match.roundSlug}-${i}`}
+				{allMatches.length === 0 && <EmptyState />}
+				{allMatches.map((match, i) => (
+					<Link
+						key={`match-${match.tournamentId}-${match.roundSlug}-${i}`}
+						to="/tournaments/$tournamentId"
+						params={{ tournamentId: match.tournamentId }}
+						search={{ round: match.roundSlug }}
+						replace={false}
+						resetScroll={false}
+					>
+						<Stack
 							data-ui="matchday-card"
+							sx={{
+								paddingX: 1.5,
+								paddingY: 2,
+								backgroundColor: "#3A3A3A",
+								borderRadius: "8px",
+								gap: 2,
+								width: "220px",
+							}}
 						>
-							<Link
-								to="/tournaments/$tournamentId/matches"
-								params={{ tournamentId: match.tournamentId }}
-								search={{ round: match.roundSlug }}
-								replace={false}
-								resetScroll={false}
+							<Typography
+								fontWeight={500}
+								textTransform="uppercase"
+								variant="h6"
+								maxWidth={"1200px"}
+								textOverflow={"ellipsis"}
+								overflow={"hidden"}
+								whiteSpace={"nowrap"}
 							>
-								<AppCard
-									variant="match"
-									data-ui="card-container"
-									sx={{
-										gridTemplateRows: "10px auto",
-										display: "flex",
-										flexDirection: "column",
-										gap: 2,
-										p: 2,
-									}}
-								>
-									<Stack
-										direction="row"
-										alignItems="flex-start"
-										justifyContent="space-between"
-										gap={2}
-										data-ui="card-header"
-									>
-										<Stack>
-											<Typography
-												fontWeight={500}
-												textTransform="uppercase"
-												variant="tag"
-												maxWidth={"1200px"}
-												textOverflow={"ellipsis"}
-												overflow={"hidden"}
-												whiteSpace={"nowrap"}
-											>
-												{match.tournamentLabel}
-											</Typography>
-										</Stack>
-										<AppButton
-											sx={{
-												color: "teal.500",
-												p: 0,
-												borderRadius: "50%",
-												display: "grid",
-												placeItems: "center",
-											}}
-										>
-											<AppIcon name="ChevronRight" size="extra-small" />
-										</AppButton>
-									</Stack>
-									<Typography variant="tag" color="primary.main" fontWeight={400}>
-										round {match.roundSlug}
-									</Typography>
-								</AppCard>
-							</Link>
-						</MatchdayCard>
-					))
-				)}
+								{match.tournamentLabel}
+							</Typography>
+							<Stack
+								sx={{
+									width: "fit-content",
+									px: 1.5,
+									py: 1,
+									backgroundColor: "#5B98A5",
+									borderRadius: "4px",
+								}}
+							>
+								<Typography variant="topic" color="neutral.100" fontWeight={400}>
+									{match.roundSlug}
+								</Typography>
+							</Stack>
+						</Stack>
+					</Link>
+				))}
 			</MatchdayGrid>
 		</Stack>
 	);
@@ -101,7 +76,7 @@ const EmptyState = () => (
 	</Typography>
 );
 
-const MatchdaySkeleton = () => {
+export const MatchdaySkeleton = () => {
 	// Generate stable keys for skeleton items
 	const skeletonKeys = Array.from({ length: 8 }, (_, i) => `skeleton-item-${i}`);
 
@@ -113,16 +88,13 @@ const MatchdaySkeleton = () => {
 
 			<MatchdayGrid>
 				{skeletonKeys.map((key) => (
-					<MatchdayCard key={key} data-ui="matchday-card-skeleton">
-						<DashCard.Skeleton sx={{ width: "100px", height: "71px" }} />
-					</MatchdayCard>
+					<DashCard.Skeleton
+						key={key}
+						data-ui="matchday-card-skeleton"
+						sx={{ width: "100px", height: "71px" }}
+					/>
 				))}
 			</MatchdayGrid>
 		</Stack>
 	);
-};
-
-export default {
-	Component: Matchday,
-	Skeleton: MatchdaySkeleton,
 };

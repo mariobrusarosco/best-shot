@@ -101,6 +101,17 @@ declare module "@mui/material/styles" {
 		topic?: React.CSSProperties;
 	}
 
+	// Extend Shape
+	interface Shape {
+		tiny: string;
+		small: string;
+		medium: string;
+		large: string;
+		xlarge: string;
+		full: string;
+		rounded: string;
+	}
+
 	// Extend palette
 	interface Palette extends CustomPalette {}
 	interface PaletteOptions extends CustomPalette {}
@@ -164,7 +175,7 @@ export type CustomTypographyVariant =
 
 // ===== TABLER ICONS MODULE DECLARATION =====
 declare module "@tabler/icons-react/dist/icons/*.mjs" {
-	import { ForwardRefExoticComponent, SVGProps } from "react";
+	import type { ForwardRefExoticComponent, SVGProps } from "react";
 
 	const IconComponent: ForwardRefExoticComponent<SVGProps<SVGSVGElement>>;
 	export default IconComponent;

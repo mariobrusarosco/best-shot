@@ -1,6 +1,11 @@
+import { z } from "zod";
 import { API, api } from "@/api";
 import type { IMatch } from "@/domains/match/typing";
-import { type ITournamentStandings, TournamentSchema } from "@/domains/tournament/schemas";
+import {
+	type ITournament,
+	type ITournamentStandings,
+	TournamentSchema,
+} from "@/domains/tournament/schemas";
 
 export const getTournament = async ({ queryKey }: { queryKey: unknown }) => {
 	const queryKeyArray = queryKey as [string, { id: string; round?: number }];
@@ -20,12 +25,14 @@ export const getTournament = async ({ queryKey }: { queryKey: unknown }) => {
 	};
 };
 
-export const getTournaments = async () => {
-	const response = await api.get("tournaments", {
+export const getTournaments = async (): Promise<ITournament[]> => {
+	const response = await API.get<ITournament[]>("tournaments", z.array(TournamentSchema) as any, {
 		baseURL: import.meta.env.VITE_BEST_SHOT_API_V2,
 	});
 
-	return response.data;
+	console.log({ response });
+
+	return response;
 };
 
 export const getTournamentMatches = async ({ queryKey }: { queryKey: unknown }) => {

@@ -10,10 +10,10 @@ import { OverflowOnHover } from "@/domains/ui-system/utils";
 
 const TournamentRoundsBar = () => {
 	const { data: tournament } = useTournament();
-	const { activeRound, goToRound } = useTournamentRounds({ tournament });
+	const { data, handlers } = useTournamentRounds({ tournament });
 
 	useEffect(() => {
-		if (activeRound) {
+		if (data.activeRound) {
 			const el = document.querySelector("[data-active='true']");
 
 			el?.scrollIntoView({
@@ -21,7 +21,7 @@ const TournamentRoundsBar = () => {
 				block: "center",
 			});
 		}
-	}, [activeRound]);
+	}, [data.activeRound]);
 
 	return (
 		<Wrapper data-ui="tournament-rounds-bar">
@@ -34,11 +34,11 @@ const TournamentRoundsBar = () => {
 			</BarHeading>
 
 			<Bar data-ui="bar">
-				{tournament?.rounds?.map(({ label, slug }) => (
+				{data.rounds.map(({ label, slug }) => (
 					<RoundButton
 						key={label}
-						onClick={() => goToRound(slug)}
-						data-active={activeRound === slug}
+						onClick={() => handlers.goToRound(slug)}
+						data-active={data.activeRound === slug}
 					>
 						<Typography component="p" variant="label" color="currentcolor">
 							{label}
@@ -50,40 +50,36 @@ const TournamentRoundsBar = () => {
 	);
 };
 
-const Wrapper = styled(Box)(({ theme }) =>
-	theme?.unstable_sx({
-		display: "flex",
-		flexDirection: "column",
+const Wrapper = styled(Box)(({ theme }) => ({
+	display: "flex",
+	flexDirection: "column",
 
-		[UIHelper.whileIs("mobile")]: {
-			alignItems: "flex-start",
-			overflow: "hidden",
-			position: "fixed",
-			bottom: "80px",
-			left: 0,
-			pt: 2,
-			pb: 4,
-			gap: 2,
-			width: "100vw",
-			backdropFilter: "blur(10px)",
-		},
+	[UIHelper.whileIs("mobile")]: {
+		alignItems: "flex-start",
+		overflow: "hidden",
+		position: "fixed",
+		bottom: "80px",
+		left: 0,
+		paddingTop: theme.spacing(2),
+		paddingBottom: theme.spacing(4),
+		gap: theme.spacing(2),
+		width: "100vw",
+		backdropFilter: "blur(10px)",
+	},
 
-		[UIHelper.startsOn("tablet")]: {
-			gap: theme.spacing(3),
-		},
-	})
-);
+	[UIHelper.startsOn("tablet")]: {
+		gap: theme.spacing(3),
+	},
+}));
 
-const PillAndStandingLink = styled(Box)(({ theme }) =>
-	theme?.unstable_sx({
-		display: "flex",
-		flex: 1,
-		justifyContent: "space-between",
-		alignItems: "center",
-		gap: 2,
-		pb: 2,
-	})
-);
+const PillAndStandingLink = styled(Box)(({ theme }) => ({
+	display: "flex",
+	flex: 1,
+	justifyContent: "space-between",
+	alignItems: "center",
+	gap: theme.spacing(2),
+	paddingBottom: theme.spacing(2),
+}));
 
 const BarHeading = styled(Box)(() => ({
 	display: "flex",

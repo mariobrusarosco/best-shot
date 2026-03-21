@@ -33,32 +33,30 @@ const LeaguesList = ({ leagues }: { leagues: ILeague[] }) => {
 	);
 };
 
-const GridOfCards = styled("ul")(({ theme }) =>
-	theme.unstable_sx({
-		borderRadius: theme.spacing(1),
-		display: "grid",
-		margin: 0,
-		padding: 0,
-		listStyle: "none",
-		...OverflowAuto(),
+const GridOfCards = styled("ul")(({ theme }) => ({
+	borderRadius: theme.spacing(1),
+	display: "grid",
+	margin: 0,
+	padding: 0,
+	listStyle: "none",
+	...OverflowAuto(),
 
-		[UIHelper.whileIs("mobile")]: {
-			maxHeight: "260px",
-			gap: theme.spacing(2),
-			overflow: "auto",
-			paddingBottom: theme.spacing(2),
-			gridAutoColumns: "47%",
-			gridAutoRows: "110px",
-			gridAutoFlow: "column",
-		},
+	[UIHelper.whileIs("mobile")]: {
+		maxHeight: "260px",
+		gap: theme.spacing(2),
+		overflow: "auto",
+		paddingBottom: theme.spacing(2),
+		gridAutoColumns: "47%",
+		gridAutoRows: "110px",
+		gridAutoFlow: "column",
+	},
 
-		[UIHelper.startsOn("tablet")]: {
-			gap: theme.spacing(3),
-			gridTemplateColumns: "repeat(auto-fill, minmax(150px, 160px))",
-			gridTemplateRows: "repeat(auto-fit, 130px)",
-		},
-	})
-);
+	[UIHelper.startsOn("tablet")]: {
+		gap: theme.spacing(3),
+		gridTemplateColumns: "repeat(auto-fill, minmax(150px, 160px))",
+		gridTemplateRows: "repeat(auto-fit, 130px)",
+	},
+}));
 
 const LeaguesListSkeleton = () => {
 	// Generate stable keys for skeleton items

@@ -82,24 +82,22 @@ const toSafeNumber = (str: string) => {
 	return Number(str);
 };
 
-export const InputBoxStyled = styled(Box)(({ theme }) =>
-	theme?.unstable_sx({
-		display: "flex",
-		width: "32px",
-		justifyContent: "space-between",
-		alignItems: "stretch",
-		gridArea: "teams",
-		gap: 1,
+export const InputBoxStyled = styled(Box)(({ theme }) => ({
+	display: "flex",
+	width: "32px",
+	justifyContent: "space-between",
+	alignItems: "stretch",
+	gridArea: "teams",
+	gap: theme.spacing(1),
 
-		"& .decrement": { gridArea: "decrement", flex: 1, order: 1 },
-		"& .input": { gridArea: "input", flex: 1, order: 2 },
-		"& .increment": { gridArea: "increment", flex: 1, order: 3 },
+	"& .decrement": { gridArea: "decrement", flex: 1, order: 1 },
+	"& .input": { gridArea: "input", flex: 1, order: 2 },
+	"& .increment": { gridArea: "increment", flex: 1, order: 3 },
 
-		"[data-open='true'] &": {
-			order: 2,
-		},
-	})
-);
+	"[data-open='true'] &": {
+		order: 2,
+	},
+}));
 
 export const InputStyled = styled("input")(({ theme }) => ({
 	...resetInput(),

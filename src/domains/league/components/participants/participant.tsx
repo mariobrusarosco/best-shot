@@ -17,51 +17,47 @@ export const Participant = ({ participant }: { participant: IParticipant }) => {
 	);
 };
 
-const Role = styled(AppPill.Component)(
-	({ theme, memberRole }: { theme?: Theme; memberRole: string }) =>
-		theme?.unstable_sx({
-			display: "flex",
-			border: "1px solid transparent",
-			backgroundColor: RoleColors[memberRole].bgColor,
-			borderColor: RoleColors[memberRole].borderColor,
-			color: RoleColors[memberRole].color,
-		})
-);
-
-const RoleColors: Record<
-	string,
-	{
-		color: string;
-		bgColor: string;
-		borderColor: string;
-	}
-> = {
-	default: {
-		bgColor: "transparent",
-		borderColor: "teal.500",
-		color: "neutral.100",
-	},
-	guest: {
-		bgColor: "transparent",
-		borderColor: "teal.500",
-		color: "teal.500",
-	},
-	admin: {
-		bgColor: "teal.500",
-		color: "neutral.100",
-		borderColor: "transparent",
-	},
+const getRoleColors = (theme: Theme, role: string) => {
+	const colors: Record<string, { color: string; bgColor: string; borderColor: string }> = {
+		default: {
+			bgColor: "transparent",
+			borderColor: theme.palette.teal[500],
+			color: theme.palette.neutral[100],
+		},
+		guest: {
+			bgColor: "transparent",
+			borderColor: theme.palette.teal[500],
+			color: theme.palette.teal[500],
+		},
+		admin: {
+			bgColor: theme.palette.teal[500],
+			color: theme.palette.neutral[100],
+			borderColor: "transparent",
+		},
+	};
+	return colors[role] || colors.default;
 };
 
-// TODO Unify this Card, if possible
-export const Card = styled(Surface)(({ theme }) =>
-	theme.unstable_sx({
-		backgroundColor: "black.800",
-		padding: 2,
-		borderRadius: 2,
-		display: "flex",
-		justifyContent: "space-between",
-		gap: 2,
-		flex: 1,
-	})
+const Role = styled(AppPill.Component)(
+	({ theme, memberRole }: { theme?: Theme; memberRole: string }) => {
+		const roleColor = getRoleColors(theme as Theme, memberRole);
+		return {
+			display: "flex",
+			border: "1px solid transparent",
+			backgroundColor: roleColor.bgColor,
+			borderColor: roleColor.borderColor,
+			color: roleColor.color,
+		};
+	}
 );
+
+// TODO Unify this Card, if possible
+export const Card = styled(Surface)(({ theme }) => ({
+	backgroundColor: theme.palette.black[800],
+	padding: theme.spacing(2),
+	borderRadius: theme.spacing(2),
+	display: "flex",
+	justifyContent: "space-between",
+	gap: theme.spacing(2),
+	flex: 1,
+}));

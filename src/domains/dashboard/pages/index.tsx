@@ -1,6 +1,6 @@
 import { Typography } from "@mui/material";
 import { styled } from "@mui/system";
-import Matchday from "@/domains/dashboard/components/matchday";
+import { Matchday, MatchdaySkeleton } from "@/domains/dashboard/components/matchday";
 import { useDashboard } from "@/domains/dashboard/hooks/use-dashboard";
 import { ScreenHeading, ScreenHeadingSkeleton } from "@/domains/global/components/screen-heading";
 import { useMember } from "@/domains/member/hooks/use-member";
@@ -18,7 +18,7 @@ const DashboardPage = () => {
 				<ScreenHeadingSkeleton />
 
 				<Dashboard data-ui="dashboard-content-skeleton">
-					<Matchday.Skeleton />
+					<MatchdaySkeleton />
 				</Dashboard>
 			</AuthenticatedScreenLayout>
 		);
@@ -43,7 +43,7 @@ const DashboardPage = () => {
 			<ScreenHeading title="Hello," subtitle={member?.data?.nickName} />
 
 			<Dashboard data-ui="dashboard-content">
-				<Matchday.Component matchday={dashboard.data.matchday} />
+				<Matchday matchday={dashboard.data.matchday} />
 			</Dashboard>
 		</AuthenticatedScreenLayout>
 	);

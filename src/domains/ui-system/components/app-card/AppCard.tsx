@@ -65,7 +65,6 @@ const StyledCard = styled(MuiCard)<AppCardProps>(({ theme, variant, interactive,
 	...(variant === "match" && {
 		backgroundColor: theme.palette.black[800],
 		color: theme.palette.neutral[100],
-		padding: theme.spacing(2),
 	}),
 
 	...(variant === "aiInsight" && {

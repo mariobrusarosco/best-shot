@@ -8,17 +8,9 @@ export const TournamentSchema = z
 		id: z.string().uuid(),
 		label: z.string().min(3).max(50),
 		logo: z.string().url(),
-		memberId: z.string().uuid(),
 		mode: z.string().min(3),
 		status: TournamentStatusSchema.default("active"),
-		onboardingCompleted: z.boolean(),
 		provider: z.string().min(3),
-		rounds: z.array(
-			z.object({
-				label: z.string().min(1).max(30),
-				slug: z.string().min(1).max(30),
-			})
-		),
 		standingsMode: z.string().min(1),
 		season: z.string().min(4).max(20).optional(),
 		currentRound: z.string().min(1).max(30).nullish(),

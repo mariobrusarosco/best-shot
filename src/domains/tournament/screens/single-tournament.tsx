@@ -1,7 +1,6 @@
 import { Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { Box } from "@mui/system";
-import { createLazyFileRoute } from "@tanstack/react-router";
 import { useFeatureFlag } from "@/configuration/feature-flag/use-feature-flag";
 import TournamentRoundOfGames from "@/domains/tournament/components/tournament-round-of-games/tournament-round-of-games";
 import TournamentRoundsBar from "@/domains/tournament/components/tournament-rounds-bar";
@@ -13,12 +12,14 @@ import { AppPill } from "@/domains/ui-system/components/pill/pill";
 import { UIHelper } from "@/domains/ui-system/theme";
 import { OverflowOnHover } from "@/domains/ui-system/utils";
 
-export const TournamentMatchesScreen = () => {
+export const SingleTournamentScreen = () => {
 	const tournamentQuery = useTournament();
-	const { activeRound } = useTournamentRounds({
+	const { data } = useTournamentRounds({
 		tournament: tournamentQuery.data,
 		syncOnMount: true,
 	});
+
+	console.log();
 	const fillWithAI = useFeatureFlag("fill_round_guesses_with_ai");
 
 	if (tournamentQuery.isError) {
@@ -53,7 +54,7 @@ export const TournamentMatchesScreen = () => {
 							color="neutral.100"
 							fontWeight={500}
 						>
-							{activeRound}
+							{data.activeRound}
 						</Typography>
 					</AppPill.Component>
 
@@ -133,8 +134,3 @@ const RoundHeading = styled(Box)(({ theme }) => ({
 	alignItems: "center",
 	gap: theme.spacing(1),
 }));
-
-export const Route = createLazyFileRoute("/_auth/tournaments/$tournamentId/_layout/matches")({
-	component: TournamentMatchesScreen,
-	// errorComponent: (error) => <Typography>{error.error.message}</Typography>,
-});

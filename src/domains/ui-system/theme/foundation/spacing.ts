@@ -105,6 +105,7 @@ export const GAP = {
 // Border Radius (enhanced from existing)
 export const BORDER_RADIUS = {
 	none: "0",
+	tiny: "2px",
 	small: "4px",
 	medium: "8px", // existing small
 	large: "12px",

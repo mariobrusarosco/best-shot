@@ -106,7 +106,7 @@ const TypographySection = () => (
 							color: "neutral.100",
 						}}
 					>
-						Poppins - The quick brown fox jumps over the lazy dog
+						Antonio - The quick brown fox jumps over the lazy dog
 					</Typography>
 				</Box>
 				<Box>

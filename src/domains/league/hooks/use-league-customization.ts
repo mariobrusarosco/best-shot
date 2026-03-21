@@ -6,8 +6,8 @@ export const useLeagueTournaments = (currentTournaments: ITournament[]) => {
 	const [customMode, setCustomMode] = useState(false);
 	const { data } = useTournaments();
 
-	const remainingTournaments = data?.filter((tournament) =>
-		currentTournaments.find((t) => t.id !== tournament.id)
+	const remainingTournaments = data.tournaments.filter(
+		(tournament) => !currentTournaments.some((currentTournament) => currentTournament.id === tournament.id)
 	);
 	const toggleCustomMode = () => setCustomMode((prev) => !prev);
 

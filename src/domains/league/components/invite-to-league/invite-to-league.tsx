@@ -61,18 +61,18 @@ const SubmitButton = styled(AppButton)(({ theme }) => ({
 	},
 }));
 
-const Card = styled(Surface)(({ theme }) =>
-	theme.unstable_sx({
-		backgroundColor: "black.800",
-		px: 2,
-		py: 2,
-		borderRadius: 2,
-		display: "flex",
-		flexDirection: "column",
-		justifyContent: "center",
-		gap: 1,
-	})
-);
+const Card = styled(Surface)(({ theme }) => ({
+	backgroundColor: theme.palette.black[800],
+	paddingLeft: theme.spacing(2),
+	paddingRight: theme.spacing(2),
+	paddingTop: theme.spacing(2),
+	paddingBottom: theme.spacing(2),
+	borderRadius: theme.spacing(2),
+	display: "flex",
+	flexDirection: "column",
+	justifyContent: "center",
+	gap: theme.spacing(1),
+}));
 
 interface MyCustomTypographyProps extends TypographyProps {
 	htmlFor?: string;
@@ -80,9 +80,7 @@ interface MyCustomTypographyProps extends TypographyProps {
 
 const Label = styled((props: MyCustomTypographyProps) => (
 	<Typography variant="label" component={props.component || "label"} {...props} />
-))(({ theme }) =>
-	theme.unstable_sx({
-		textTransform: "uppercase",
-		color: "neutral.100",
-	})
-);
+))(({ theme }) => ({
+	textTransform: "uppercase",
+	color: theme.palette.neutral[100],
+}));

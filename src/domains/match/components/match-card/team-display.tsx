@@ -75,13 +75,11 @@ export const TeamLogoBox = styled(Box)(({ theme }) => ({
 	display: "flex",
 }));
 
-export const TeamLogo = styled("img")(({ theme }) =>
-	theme?.unstable_sx({
-		display: "inline-flex",
-		width: 18,
-		height: 18,
-	})
-);
+export const TeamLogo = styled("img")(() => ({
+	display: "inline-flex",
+	width: 18,
+	height: 18,
+}));
 
 export const Position = styled(Box)(({ theme }) => ({
 	display: "flex",

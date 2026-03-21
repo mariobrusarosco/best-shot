@@ -9,21 +9,28 @@ import {
 	TableRow,
 	Typography,
 } from "@mui/material";
+import { useQueryClient } from "@tanstack/react-query";
+import { getRouteApi } from "@tanstack/react-router";
 import type { z } from "zod";
-import { useTournament } from "@/domains/tournament/hooks/use-tournament";
 import { useTournamentStandings } from "@/domains/tournament/hooks/use-tournament-standings";
 import type {
+	ITournament,
 	TournamentStandingGroupSchema,
 	TournamentStandingTeamSchema,
 } from "@/domains/tournament/schemas";
+import { tournamentKey } from "@/domains/tournament/server-state/keys";
 import { AppPill } from "@/domains/ui-system/components/pill/pill";
 import { shimmerEffect } from "@/domains/ui-system/components/skeleton/skeleton";
 import { theme, UIHelper } from "@/domains/ui-system/theme";
 import { OverflowOnHover } from "@/domains/ui-system/utils";
 
+const route = getRouteApi("/_auth/tournaments/$tournamentId");
+
 const TournamentStandings = () => {
+	const tournamentId = route.useParams().tournamentId;
+	const queryClient = useQueryClient();
+	const tournament = queryClient.getQueryData(tournamentKey(tournamentId)) as ITournament;
 	const tournamentStandings = useTournamentStandings();
-	const tournamentQuery = useTournament();
 
 	if (tournamentStandings.isPending) {
 		return (
@@ -45,7 +52,7 @@ const TournamentStandings = () => {
 		);
 	}
 
-	if (tournamentQuery.data?.mode === "knockout-only") {
+	if (tournament?.standingsMode === "knockout-only") {
 		return (
 			<Wrapper data-testid="standings-wrapper">
 				<Heading>

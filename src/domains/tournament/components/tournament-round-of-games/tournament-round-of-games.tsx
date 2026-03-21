@@ -5,7 +5,7 @@ import { useReconciledGuesses } from "@/domains/guess/hooks/use-reconciled-guess
 import MatchCard from "@/domains/match/components/match-card/match-card";
 import { useTournamentMatches } from "@/domains/tournament/hooks/use-tournament-matches";
 
-const TournamentRoundOfGames = () => {
+export const TournamentRoundOfGames = () => {
 	const matchesQuery = useTournamentMatches();
 	const guessesQuery = useReconciledGuesses(matchesQuery.data || []);
 	const guessMutation = useGuessMutation();
@@ -21,6 +21,8 @@ const TournamentRoundOfGames = () => {
 			</Games>
 		);
 	}
+
+	console.log({ matches: matchesQuery });
 
 	return (
 		<Games className="round-games">
@@ -42,7 +44,7 @@ const TournamentRoundOfGames = () => {
 	);
 };
 
-const TournamentRoundOfGamesSkeleton = () => {
+export const TournamentRoundOfGamesSkeleton = () => {
 	// Generate stable keys for skeleton items
 	const skeletonKeys = Array.from({ length: 10 }, (_, i) => `skeleton-item-${i}`);
 
@@ -62,8 +64,3 @@ const TournamentRoundOfGamesSkeleton = () => {
 const Games = styled(Stack)(({ theme }) => ({
 	gap: theme.spacing(2),
 }));
-
-export default {
-	Component: TournamentRoundOfGames,
-	Skeleton: TournamentRoundOfGamesSkeleton,
-};

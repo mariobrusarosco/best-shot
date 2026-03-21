@@ -6,10 +6,6 @@ import type { TournamentRoundsSearch } from "@/domains/tournament/types";
 
 const route = getRouteApi("/_auth/tournaments/$tournamentId");
 
-// export const getActiveTournamentRound = (searchRound?: string, tournament?: ITournament) => {
-// 	return searchRound ?? tournament?.currentRound ?? "1";
-// };
-
 export const useTournamentRounds = () => {
 	const search = route.useSearch() as TournamentRoundsSearch;
 	const queryClient = useQueryClient();
@@ -22,8 +18,6 @@ export const useTournamentRounds = () => {
 	const roundSelectedOnUrl = search.round;
 	const activeRound = roundSelectedOnUrl ?? tournamentCurrentRound;
 
-	console.log({ activeRound });
-
 	const goToRound = (round: string) => {
 		navigate({
 			search: (prev) => ({ ...prev, round }),
@@ -32,25 +26,12 @@ export const useTournamentRounds = () => {
 		});
 	};
 
-	// useEffect(() => {
-	// 	if (!syncOnMount || search.round || !activeRound) {
-	// 		return;
-	// 	}
-
-	// 	navigate({
-	// 		search: (prev) => ({ ...prev, round: activeRound }),
-	// 		resetScroll: false,
-	// 		replace: true,
-	// 	});
-	// }, [activeRound, navigate]);
-
 	return {
 		data: {
 			activeRound,
+			rounds: tournament.rounds,
 		},
-		states: {
-			// isEmpty,
-		},
+		states: {},
 		handlers: {
 			goToRound,
 		},

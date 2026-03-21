@@ -63,7 +63,6 @@ export const SingleTournamentLayout = () => {
 								textTransform="lowercase"
 								sx={{
 									fontFamily: FONT_FAMILIES.heading,
-									// fontWeight: "bold",
 								}}
 							>
 								current round

@@ -1,16 +1,13 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { getRouteApi } from "@tanstack/react-router";
 import { createGuess } from "@/domains/guess/server-side/mutations";
-import { useTournament } from "@/domains/tournament/hooks/use-tournament";
 import { useTournamentRounds } from "@/domains/tournament/hooks/use-tournament-rounds";
 
 const route = getRouteApi("/_auth/tournaments/$tournamentId");
 
 export const useGuessMutation = () => {
 	const queryClient = useQueryClient();
-	const _search = route.useSearch() as { round?: string };
 	const tournamentId = route.useParams().tournamentId;
-	const _tournamentQuery = useTournament();
 	const {
 		data: { activeRound },
 	} = useTournamentRounds();

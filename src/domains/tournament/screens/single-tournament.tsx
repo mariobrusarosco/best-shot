@@ -1,88 +1,16 @@
-import { Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { Box } from "@mui/system";
-import { useFeatureFlag } from "@/configuration/feature-flag/use-feature-flag";
 import TournamentRoundOfGames from "@/domains/tournament/components/tournament-round-of-games/tournament-round-of-games";
-import TournamentRoundsBar from "@/domains/tournament/components/tournament-rounds-bar";
+import { TournamentRoundsBar } from "@/domains/tournament/components/tournament-rounds-bar";
 import TournamentStandings from "@/domains/tournament/components/tournament-standings/tournament-standings";
-import { useTournament } from "@/domains/tournament/hooks/use-tournament";
-import { useTournamentRounds } from "@/domains/tournament/hooks/use-tournament-rounds";
-import { AppButton } from "@/domains/ui-system/components/button/button";
-import { AppPill } from "@/domains/ui-system/components/pill/pill";
 import { UIHelper } from "@/domains/ui-system/theme";
 import { OverflowOnHover } from "@/domains/ui-system/utils";
 
 export const SingleTournamentScreen = () => {
-	const tournamentQuery = useTournament();
-	const { data } = useTournamentRounds({
-		tournament: tournamentQuery.data,
-		syncOnMount: true,
-	});
-
-	console.log();
-	const fillWithAI = useFeatureFlag("fill_round_guesses_with_ai");
-
-	if (tournamentQuery.isError) {
-		return (
-			<Matches>
-				<Typography variant="h3" color="red.100">
-					lorem
-				</Typography>
-			</Matches>
-		);
-	}
-
 	return (
 		<Matches data-ui="matches">
-			<Rounds data-ui="rounds">
-				<RoundHeading>
-					<AppPill.Component border="1px solid" borderColor="teal.500" width={80} height={25}>
-						<Typography
-							variant="tag"
-							textTransform="uppercase"
-							color="neutral.100"
-							fontWeight={500}
-						>
-							round
-						</Typography>
-					</AppPill.Component>
-
-					<AppPill.Component bgcolor="black.500" height={25} width="auto" padding={2}>
-						<Typography
-							variant="tag"
-							textTransform="uppercase"
-							color="neutral.100"
-							fontWeight={500}
-						>
-							{data.activeRound}
-						</Typography>
-					</AppPill.Component>
-
-					{fillWithAI && (
-						<AppButton
-							onClick={() => {
-								console.log("fill with AI");
-							}}
-							variant="outlined"
-							bgcolor="teal.500"
-						>
-							<Typography
-								variant="tag"
-								textTransform="uppercase"
-								color="neutral.100"
-								fontWeight={500}
-							>
-								Fill with AI
-							</Typography>
-						</AppButton>
-					)}
-				</RoundHeading>
-
-				<TournamentRoundOfGames.Component />
-			</Rounds>
-
-			<TournamentRoundsBar.Component />
-
+			<TournamentRoundsBar />
+			<TournamentRoundOfGames.Component />
 			<TournamentStandings.Component />
 		</Matches>
 	);
@@ -106,7 +34,7 @@ const Matches = styled(Box)(({ theme }) => ({
 	},
 }));
 
-const Rounds = styled(Box)(({ theme }) => ({
+const _Rounds = styled(Box)(({ theme }) => ({
 	flex: 1,
 
 	[UIHelper.whileIs("mobile")]: {
@@ -125,12 +53,4 @@ const Rounds = styled(Box)(({ theme }) => ({
 	},
 
 	...OverflowOnHover(),
-}));
-
-const RoundHeading = styled(Box)(({ theme }) => ({
-	backgroundColor: theme.palette.black[700],
-	paddingBottom: theme.spacing(2),
-	display: "flex",
-	alignItems: "center",
-	gap: theme.spacing(1),
 }));

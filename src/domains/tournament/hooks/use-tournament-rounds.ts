@@ -1,22 +1,28 @@
+import { useQueryClient } from "@tanstack/react-query";
 import { getRouteApi } from "@tanstack/react-router";
-import { useEffect } from "react";
 import type { ITournament } from "@/domains/tournament/schemas";
+import { tournamentKey } from "@/domains/tournament/server-state/keys";
+import type { TournamentRoundsSearch } from "@/domains/tournament/types";
 
 const route = getRouteApi("/_auth/tournaments/$tournamentId");
 
-export const getActiveTournamentRound = (searchRound?: string, tournament?: ITournament) => {
-	return searchRound ?? tournament?.currentRound ?? "1";
-};
+// export const getActiveTournamentRound = (searchRound?: string, tournament?: ITournament) => {
+// 	return searchRound ?? tournament?.currentRound ?? "1";
+// };
 
-export const useTournamentRounds = ({
-	tournament,
-	syncOnMount = false,
-}: UseTournamentRoundsProps = {}) => {
+export const useTournamentRounds = () => {
 	const search = route.useSearch() as TournamentRoundsSearch;
+	const queryClient = useQueryClient();
+	const tournamentId = route.useParams().tournamentId;
 	const navigate = route.useNavigate();
-	const rounds = tournament?.rounds ?? [];
-	const activeRound = getActiveTournamentRound(search.round, tournament);
-	const isEmpty = !!tournament && rounds.length === 0;
+
+	// Derivate States
+	const tournament = queryClient.getQueryData(tournamentKey(tournamentId)) as ITournament;
+	const tournamentCurrentRound = tournament.currentRound;
+	const roundSelectedOnUrl = search.round;
+	const activeRound = roundSelectedOnUrl ?? tournamentCurrentRound;
+
+	console.log({ activeRound });
 
 	const goToRound = (round: string) => {
 		navigate({
@@ -26,46 +32,27 @@ export const useTournamentRounds = ({
 		});
 	};
 
-	useEffect(() => {
-		if (!syncOnMount || search.round || !activeRound) {
-			return;
-		}
+	// useEffect(() => {
+	// 	if (!syncOnMount || search.round || !activeRound) {
+	// 		return;
+	// 	}
 
-		navigate({
-			search: (prev) => ({ ...prev, round: activeRound }),
-			resetScroll: false,
-			replace: true,
-		});
-	}, [activeRound, navigate, search.round, syncOnMount]);
+	// 	navigate({
+	// 		search: (prev) => ({ ...prev, round: activeRound }),
+	// 		resetScroll: false,
+	// 		replace: true,
+	// 	});
+	// }, [activeRound, navigate]);
 
 	return {
 		data: {
 			activeRound,
-			rounds,
 		},
 		states: {
-			isEmpty,
+			// isEmpty,
 		},
 		handlers: {
 			goToRound,
 		},
 	};
-};
-
-type UseTournamentRoundsProps = {
-	tournament?: TournamentWithRounds;
-	syncOnMount?: boolean;
-};
-
-type TournamentRoundsSearch = {
-	round?: string;
-};
-
-type TournamentWithRounds = ITournament & {
-	rounds?: TournamentRound[];
-};
-
-type TournamentRound = {
-	label: string;
-	slug: string;
 };

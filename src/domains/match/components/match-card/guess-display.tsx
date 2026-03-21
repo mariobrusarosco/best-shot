@@ -10,7 +10,6 @@ interface Props {
 }
 
 export const GuessDisplay = ({ data, cardExpanded }: Props) => {
-	console.log("data", data);
 	if (cardExpanded || data.status === "expired") return null;
 
 	const value = data.value;

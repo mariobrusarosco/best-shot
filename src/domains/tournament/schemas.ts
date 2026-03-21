@@ -15,6 +15,7 @@ export const TournamentSchema = z
 		season: z.string().min(4).max(20).optional(),
 		currentRound: z.string().min(1).max(30).nullish(),
 		starterRound: z.string().min(1).max(30).optional(),
+		rounds: z.array(z.object({ label: z.string(), slug: z.string() })).optional(),
 		createdAt: z.string().datetime().optional(),
 		updatedAt: z.string().datetime().optional(),
 	})

@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { getRouteApi } from "@tanstack/react-router";
 import type { ITournament } from "@/domains/tournament/schemas";
 import { getTournament } from "@/domains/tournament/server-state/fetchers";
+import { tournamentKey } from "@/domains/tournament/server-state/keys";
 
 const route = getRouteApi("/_auth/tournaments/$tournamentId");
 
@@ -10,12 +11,20 @@ export const useTournament = ({ fetchOnMount = false }: { fetchOnMount?: boolean
 	const id = params.tournamentId;
 
 	const query = useQuery<ITournament>({
-		queryKey: ["tournament", { id: id }],
+		queryKey: tournamentKey(id),
 		queryFn: getTournament,
 		enabled: fetchOnMount,
 	});
 
-	return query;
+	return {
+		data: {
+			tournament: query.data,
+		},
+		states: {
+			isLoading: query.isLoading,
+			isError: query.isError,
+			isEmpty: !query.isLoading && !query.isError && !query.data,
+		},
+		handlers: {},
+	};
 };
-
-export const tournamentKey = (id: string) => ["tournament", { id }];

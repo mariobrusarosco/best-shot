@@ -1,27 +1,24 @@
 import { styled } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/system/Box";
-import { useEffect } from "react";
-import { useTournament } from "@/domains/tournament/hooks/use-tournament";
 import { useTournamentRounds } from "@/domains/tournament/hooks/use-tournament-rounds";
 import { AppPill } from "@/domains/ui-system/components/pill/pill";
 import { UIHelper } from "@/domains/ui-system/theme";
 import { OverflowOnHover } from "@/domains/ui-system/utils";
 
-const TournamentRoundsBar = () => {
-	const { data: tournament } = useTournament();
-	const { data, handlers } = useTournamentRounds({ tournament });
+export const TournamentRoundsBar = () => {
+	const { data } = useTournamentRounds();
 
-	useEffect(() => {
-		if (data.activeRound) {
-			const el = document.querySelector("[data-active='true']");
+	// useEffect(() => {
+	// 	if (data.activeRound) {
+	// 		const el = document.querySelector("[data-active='true']");
 
-			el?.scrollIntoView({
-				inline: "center",
-				block: "center",
-			});
-		}
-	}, [data.activeRound]);
+	// 		el?.scrollIntoView({
+	// 			inline: "center",
+	// 			block: "center",
+	// 		});
+	// 	}
+	// }, [data.activeRound]);
 
 	return (
 		<Wrapper data-ui="tournament-rounds-bar">
@@ -34,7 +31,7 @@ const TournamentRoundsBar = () => {
 			</BarHeading>
 
 			<Bar data-ui="bar">
-				{data.rounds.map(({ label, slug }) => (
+				{/* {data.rounds.map(({ label, slug }) => (
 					<RoundButton
 						key={label}
 						onClick={() => handlers.goToRound(slug)}
@@ -44,7 +41,7 @@ const TournamentRoundsBar = () => {
 							{label}
 						</Typography>
 					</RoundButton>
-				))}
+				))} */}
 			</Bar>
 		</Wrapper>
 	);
@@ -105,7 +102,7 @@ const Bar = styled(Box)(({ theme }) => ({
 	...OverflowOnHover(),
 }));
 
-const RoundButton = styled(Box)(({ theme }) => ({
+const _RoundButton = styled(Box)(({ theme }) => ({
 	color: theme.palette.neutral[100],
 	display: "flex",
 	alignItems: "center",
@@ -153,6 +150,5 @@ const Skeleton = () => {
 };
 
 export default {
-	Component: TournamentRoundsBar,
 	Skeleton,
 };

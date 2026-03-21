@@ -32,7 +32,7 @@ const AppError = ({ error }: AppErrorProps) => {
 
 	return (
 		<Wrapper data-iu="general-error-page">
-			<BestShotIcon fill={theme.palette.neutral[100]} />
+			<BestShotIcon fill={theme.palette.neutral[100]} width={350} height={350} />
 
 			<Stack textAlign="center" gap={2}>
 				<Typography variant="h1" color={theme.palette.neutral[100]}>
@@ -51,10 +51,11 @@ const Wrapper = styled(Stack)(({ theme }) => ({
 	width: "100%",
 	backgroundColor: theme.palette.black[800],
 	display: "grid",
+	placeItems: "center",
 	placeContent: "center",
 	borderTopLeftRadius: theme.spacing(4),
 	borderTopRightRadius: theme.spacing(4),
-	gap: theme.spacing(3),
+	gap: theme.spacing(),
 	padding: theme.spacing(0, 2),
 
 	[UIHelper.whileIs("mobile")]: {

@@ -3,14 +3,11 @@ import { getTournaments } from "@/domains/tournament/server-state/fetchers";
 
 export const useTournaments = () => {
 	const query = useQuery({
-		queryKey: ["tournaments"],
+		queryKey: tournamentsKey(),
 		queryFn: getTournaments,
 	});
 
 	const tournaments = query.data ?? [];
-
-	console.log({ query });
-
 	return {
 		data: {
 			tournaments,
@@ -23,3 +20,5 @@ export const useTournaments = () => {
 		handlers: {},
 	};
 };
+
+export const tournamentsKey = () => ["tournaments"];

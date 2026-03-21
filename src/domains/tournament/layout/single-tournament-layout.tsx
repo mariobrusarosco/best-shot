@@ -8,9 +8,22 @@ import { ScreenMainContent } from "@/domains/ui-system/layout/screen-main-conten
 import { FONT_FAMILIES } from "@/domains/ui-system/theme/foundation/typography";
 
 export const SingleTournamentLayout = () => {
-	const tournament = useTournament({ fetchOnMount: true });
+	const {
+		data: { tournament },
+		states,
+	} = useTournament({ fetchOnMount: true });
 
-	if (tournament.isRefetching || tournament.isPending) {
+	if (states.isError) {
+		<AuthenticatedScreenLayout>
+			<ScreenHeadingSkeleton />
+
+			<ScreenMainContent>
+				<Typography>Error</Typography>
+			</ScreenMainContent>
+		</AuthenticatedScreenLayout>;
+	}
+
+	if (states.isLoading) {
 		return (
 			<AuthenticatedScreenLayout>
 				<ScreenHeadingSkeleton />
@@ -22,8 +35,16 @@ export const SingleTournamentLayout = () => {
 		);
 	}
 
-	if (tournament.isError) {
-		throw "Error";
+	if (states.isEmpty) {
+		return (
+			<AuthenticatedScreenLayout>
+				<ScreenHeadingSkeleton />
+
+				<ScreenMainContent>
+					<TournamentHeading.Skeleton />
+				</ScreenMainContent>
+			</AuthenticatedScreenLayout>
+		);
 	}
 
 	return (
@@ -32,7 +53,7 @@ export const SingleTournamentLayout = () => {
 				<TournamentDisplay>
 					<NameAndCurrentRound>
 						<Typography data-ui="title" variant="h2" textTransform="uppercase" color="black.400">
-							{tournament.data.label}
+							{tournament?.label}
 						</Typography>
 
 						<CurrentRoundContainer>
@@ -58,14 +79,14 @@ export const SingleTournamentLayout = () => {
 										fontWeight: "bold",
 									}}
 								>
-									{tournament.data.currentRound}
+									{tournament?.currentRound}
 								</Typography>
 							</CurrentRound>
 						</CurrentRoundContainer>
 					</NameAndCurrentRound>
 
 					<LogoContainer>
-						<Logo src={tournament.data?.logo} />
+						<Logo src={tournament?.logo} />
 					</LogoContainer>
 				</TournamentDisplay>
 

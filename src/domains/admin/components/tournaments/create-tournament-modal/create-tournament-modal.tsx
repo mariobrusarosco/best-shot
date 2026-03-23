@@ -187,6 +187,7 @@ export const CreateTournamentModal = ({ onClose }: CreateTournamentModalProps) =
 		defaultValues: {
 			tournamentPublicId: "",
 			seasonId: "",
+			publicUrl: "",
 			label: "",
 			slug: "",
 			provider: "sofa",
@@ -322,6 +323,15 @@ export const CreateTournamentModal = ({ onClose }: CreateTournamentModalProps) =
 								label="Season ID"
 								placeholder="e.g., 52376"
 								helperText="The unique identifier for the season from the data provider"
+								required
+							/>
+
+							<AppFormInput
+								name="publicUrl"
+								control={control}
+								label="Public URL"
+								placeholder="https://www.sofascore.com/tournament/football/..."
+								helperText="The public-facing URL for this tournament"
 								required
 							/>
 						</SectionContainer>

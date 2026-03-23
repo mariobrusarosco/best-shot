@@ -27,6 +27,10 @@ export const TournamentMetadataSchema = z.object({
 export const CreateTournamentSchema = z.object({
 	tournamentPublicId: z.string().min(1, "Tournament public ID is required"),
 	seasonId: z.string().min(1, "Season ID is required"),
+	publicUrl: z
+		.string()
+		.min(1, "Public URL is required")
+		.url("Public URL must be a valid URL"),
 	label: z
 		.string()
 		.min(3, "Tournament name must be at least 3 characters")

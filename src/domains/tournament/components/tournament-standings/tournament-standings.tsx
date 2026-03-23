@@ -278,20 +278,20 @@ const StandingsList = ({ teams }: { teams: z.infer<typeof TournamentStandingTeam
 					return (
 						<Row key={row.order} sx={{ color: "neutral.100" }}>
 							<Cell sx={{ color: "neutral.100" }}>
-								<Stack direction="row" alignItems="center" gap={1}>
+								<Stack direction="row" alignItems="center" gap={2}>
 									<Typography
-										variant="label"
+										variant="topic"
 										textTransform="uppercase"
 										fontWeight={300}
-										color="teal.500"
+										color="neutral.100"
 									>
 										{row.order}
 									</Typography>
 
-									<Stack flexDirection="row" alignItems="center" gap={0.5}>
+									<Stack flexDirection="row" alignItems="center" gap={1}>
 										<TeamLogo src={row.teamBadge} />
 										<Typography
-											variant="label"
+											variant="topic"
 											textTransform="uppercase"
 											fontWeight={300}
 											color="neutral.100"
@@ -311,7 +311,7 @@ const StandingsList = ({ teams }: { teams: z.infer<typeof TournamentStandingTeam
 
 									{/* Fallback for mobile */}
 									<Typography
-										variant="label"
+										variant="topic"
 										textTransform="uppercase"
 										fontWeight={300}
 										color="neutral.100"
@@ -331,7 +331,7 @@ const StandingsList = ({ teams }: { teams: z.infer<typeof TournamentStandingTeam
 							</Cell>
 							<Cell sx={{ color: "neutral.100" }}>
 								<Typography
-									variant="label"
+									variant="topic"
 									textTransform="uppercase"
 									fontWeight={300}
 									color="neutral.100"
@@ -341,7 +341,7 @@ const StandingsList = ({ teams }: { teams: z.infer<typeof TournamentStandingTeam
 							</Cell>
 							<Cell sx={{ color: "neutral.100" }} align="right">
 								<Typography
-									variant="label"
+									variant="topic"
 									textTransform="uppercase"
 									fontWeight={300}
 									color="neutral.100"
@@ -351,7 +351,7 @@ const StandingsList = ({ teams }: { teams: z.infer<typeof TournamentStandingTeam
 							</Cell>
 							<Cell sx={{ color: "neutral.100" }} align="right">
 								<Typography
-									variant="label"
+									variant="topic"
 									textTransform="uppercase"
 									fontWeight={300}
 									color="neutral.100"
@@ -361,7 +361,7 @@ const StandingsList = ({ teams }: { teams: z.infer<typeof TournamentStandingTeam
 							</Cell>
 							<Cell sx={{ color: "neutral.100" }} align="right">
 								<Typography
-									variant="label"
+									variant="topic"
 									textTransform="uppercase"
 									fontWeight={300}
 									color="neutral.100"
@@ -371,7 +371,7 @@ const StandingsList = ({ teams }: { teams: z.infer<typeof TournamentStandingTeam
 							</Cell>
 							<Cell sx={{ color: "neutral.100" }} align="right">
 								<Typography
-									variant="label"
+									variant="topic"
 									textTransform="uppercase"
 									fontWeight={300}
 									color="neutral.100"
@@ -381,7 +381,7 @@ const StandingsList = ({ teams }: { teams: z.infer<typeof TournamentStandingTeam
 							</Cell>
 							<Cell sx={{ color: "neutral.100" }} align="right">
 								<Typography
-									variant="label"
+									variant="topic"
 									textTransform="uppercase"
 									fontWeight={300}
 									color="neutral.100"
@@ -391,7 +391,7 @@ const StandingsList = ({ teams }: { teams: z.infer<typeof TournamentStandingTeam
 							</Cell>
 							<Cell sx={{ color: "neutral.100" }} align="right">
 								<Typography
-									variant="label"
+									variant="topic"
 									textTransform="uppercase"
 									fontWeight={300}
 									color="neutral.100"
@@ -401,7 +401,7 @@ const StandingsList = ({ teams }: { teams: z.infer<typeof TournamentStandingTeam
 							</Cell>
 							<Cell sx={{ color: "neutral.100" }} align="right">
 								<Typography
-									variant="label"
+									variant="topic"
 									textTransform="uppercase"
 									fontWeight={300}
 									color="neutral.100"

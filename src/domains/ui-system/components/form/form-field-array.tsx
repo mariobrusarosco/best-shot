@@ -1,5 +1,4 @@
 import { Box, IconButton, Typography } from "@mui/material";
-import { IconPlus, IconTrash } from "@tabler/icons-react";
 import {
 	type ArrayPath,
 	type Control,
@@ -8,6 +7,7 @@ import {
 	useFieldArray,
 } from "react-hook-form";
 import { AppButton } from "@/domains/ui-system/components/button/button";
+import { AppIcon } from "@/domains/ui-system/components/icon/icon";
 
 interface AppFormFieldArrayProps<T extends FieldValues> {
 	name: ArrayPath<T>;
@@ -82,7 +82,7 @@ export const AppFormFieldArray = <T extends FieldValues>({
 						{canAdd && (
 							<AppButton
 								variant="outlined"
-								startIcon={<IconPlus size={16} />}
+								startIcon={<AppIcon name="Plus" size="extra-small" />}
 								onClick={() => append(defaultItem)}
 								size="small"
 							>
@@ -122,7 +122,7 @@ export const AppFormFieldArray = <T extends FieldValues>({
 										}}
 										size="small"
 									>
-										<IconTrash size={14} />
+										<AppIcon name="Trash" size="extra-small" width={14} height={14} />
 									</IconButton>
 								)}
 
@@ -136,7 +136,7 @@ export const AppFormFieldArray = <T extends FieldValues>({
 			{fields.length > 0 && canAdd && (
 				<AppButton
 					variant="outlined"
-					startIcon={<IconPlus size={16} />}
+					startIcon={<AppIcon name="Plus" size="extra-small" />}
 					onClick={() => append(defaultItem)}
 					size="small"
 					sx={{ mb: 1 }}

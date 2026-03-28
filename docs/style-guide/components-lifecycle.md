@@ -65,26 +65,65 @@ export const UpcomingMatches = () => {
 
 Prefer composing the data in a UI-oriented hook and keeping the component focused on rendering:
 
+  data: {
+    <resourceName>: {
+      data: query.data,
+      states: {
+        isLoading<ResourceName>: query.isLoading,
+        isError<ResourceName>: query.isError,
+      },
+      handlers: {
+        refetch<ResourceName>: query.refetch,
+      },
+    },
+    <resourceName>: {
+      ...
+    }
+  },
+
+Example
+
 ```ts
-export const useUpcomingMatches = () => {
-  const matchesQuery = useMatches({ status: "upcoming" });
+export const useLeagues = () => {
+	const queryClient = useQueryClient();
 
-  const matches = matchesQuery.data?.data ?? [];
-  const upcomingMatches = [...matches]
-    .sort((a, b) => new Date(a.match_date).getTime() - new Date(b.match_date).getTime())
-    .slice(0, 5);
+	const query = useQuery({
+		queryKey: leaguesQueryKey(),
+		queryFn: getLeagues,
+	});
 
-  return {
-    data: {
-      matches: upcomingMatches,
-    },
-    states: {
-      isLoading: matchesQuery.isLoading,
-      isError: matchesQuery.isError,
-      isEmpty: !matchesQuery.isLoading && !matchesQuery.isError && upcomingMatches.length === 0,
-    },
-    handlers: {},
-  };
+	const createLeagueMutation = useMutation({
+		mutationFn: createLeague,
+		onSuccess: () => {
+			alert("League created successfully");
+			queryClient.invalidateQueries({ queryKey: ["leagues"] });
+		},
+		onError: () => {
+			alert("Failed to create league");
+		},
+	});
+
+	return {
+		leagues: {
+			data: query.data,
+			states: {
+				isLoading: query.isLoading,
+				isError: query.isError,
+			},
+			handlers: {
+				refetch: query.refetch,
+			},
+		},
+		league: {
+			states: {
+				isCreatingLeague: createLeagueMutation.isPending,
+				errorWhenCretingLeague: createLeagueMutation.isError,
+			},
+			handlers: {
+				createLeague: createLeagueMutation.mutate,
+			},
+		},
+	};
 };
 ```
 

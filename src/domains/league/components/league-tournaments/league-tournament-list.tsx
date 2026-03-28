@@ -13,18 +13,20 @@ import { AppPill } from "@/domains/ui-system/components/pill/pill";
 export const LeagueTournaments = ({
 	league,
 }: {
-	league: ReturnType<typeof useLeague>["league"];
+	league: ReturnType<typeof useLeague>["league"]["data"];
 }) => {
 	const [editMode, setEditMode] = useState(false);
 
-	const { data } = useTournaments();
-	const allAppAvailableTournaments = data.tournaments;
+	const { tournaments } = useTournaments();
 	const toggleEditMode = () => {
 		setEditMode((prev) => !prev);
 	};
 
-	const isEmptyState = league?.isSuccess && league.data?.tournaments.length === 0;
-	const hasPermissionToEdit = league?.data?.permissions.edit;
+	const isEmptyState = league?.tournaments.length === 0;
+	const hasPermissionToEdit = league?.permissions.edit;
+
+	console.log("league", league);
+	const trackedTournaments = league?.tournaments.filter((t) => t.status === "tracked");
 
 	return (
 		<Box>
@@ -47,6 +49,14 @@ export const LeagueTournaments = ({
 				) : null}
 			</Box>
 
+			{!editMode && trackedTournaments && (
+				<ListGrid data-ui="league-tournament-list">
+					{trackedTournaments?.map((tournament) => (
+						<TournamentLeagueCard key={tournament.id} tournament={tournament} />
+					))}
+				</ListGrid>
+			)}
+
 			{isEmptyState && !editMode && (
 				<EmptyState>
 					<Typography variant="caption">
@@ -55,21 +65,12 @@ export const LeagueTournaments = ({
 				</EmptyState>
 			)}
 
-			{editMode && league.data && (
+			{editMode && league && (
 				<LeagueTournamentCustomization
-					currentTournaments={league?.data?.tournaments}
-					allTournaments={allAppAvailableTournaments}
-					league={league.data}
+					allTournaments={tournaments.data}
+					league={league}
 					onUpdate={toggleEditMode}
 				/>
-			)}
-
-			{!editMode && league.data && (
-				<ListGrid data-ui="league-tournament-list">
-					{league?.data?.tournaments.map((tournament) => (
-						<TournamentLeagueCard key={tournament.id} tournament={tournament} />
-					))}
-				</ListGrid>
 			)}
 		</Box>
 	);

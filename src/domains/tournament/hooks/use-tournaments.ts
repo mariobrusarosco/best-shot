@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { getTournaments } from "@/domains/tournament/server-state/fetchers";
+import { tournamentsKey } from "@/domains/tournament/server-state/keys";
 
 export const useTournaments = () => {
 	const query = useQuery({
@@ -7,18 +8,15 @@ export const useTournaments = () => {
 		queryFn: getTournaments,
 	});
 
-	const tournaments = query.data ?? [];
 	return {
-		data: {
-			tournaments,
+		tournaments: {
+			data: query.data ?? [],
+			states: {
+				isLoading: query.isLoading,
+				isError: query.isError,
+				isEmpty: !query.isLoading && !query.isError && query.data?.length === 0,
+			},
+			handlers: {},
 		},
-		states: {
-			isLoading: query.isLoading,
-			isError: query.isError,
-			isEmpty: !query.isLoading && !query.isError && tournaments.length === 0,
-		},
-		handlers: {},
 	};
 };
-
-export const tournamentsKey = () => ["tournaments"];

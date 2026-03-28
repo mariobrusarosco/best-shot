@@ -10,17 +10,19 @@ interface InviteToLeagueDialogProps {
 }
 
 export const InviteToLeagueDialog = ({ open, onClose }: InviteToLeagueDialogProps) => {
-	const { inputs } = useLeague();
+	const { league } = useLeague();
 
 	const handleInvite = () => {
-		inputs.handleLeagueInvite();
+		league.handlers.handleLeagueInvite();
 		// Close dialog after successful invite
 		onClose();
 	};
 
 	const handleClose = () => {
 		// Reset input when closing
-		inputs.handleGuestIdInput({ target: { value: "" } } as React.ChangeEvent<HTMLInputElement>);
+		league.handlers.handleGuestIdInput({
+			target: { value: "" },
+		} as React.ChangeEvent<HTMLInputElement>);
 		onClose();
 	};
 
@@ -33,7 +35,7 @@ export const InviteToLeagueDialog = ({ open, onClose }: InviteToLeagueDialogProp
 			actions={
 				<DialogActions>
 					<CancelButton onClick={handleClose}>Cancel</CancelButton>
-					<SubmitButton onClick={handleInvite} disabled={!inputs.guestIdInput}>
+					<SubmitButton onClick={handleInvite} disabled={!league.states.guestIdInput}>
 						Send Invite
 					</SubmitButton>
 				</DialogActions>
@@ -47,8 +49,8 @@ export const InviteToLeagueDialog = ({ open, onClose }: InviteToLeagueDialogProp
 						id="guest-id"
 						name="guest-id"
 						placeholder="Enter guest ID..."
-						value={inputs.guestIdInput}
-						onChange={inputs.handleGuestIdInput}
+						value={league.states.guestIdInput}
+						onChange={league.handlers.handleGuestIdInput}
 					/>
 				</Box>
 			</Form>

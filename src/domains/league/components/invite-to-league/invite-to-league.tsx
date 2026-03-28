@@ -6,7 +6,7 @@ import { AppPill } from "@/domains/ui-system/components/pill/pill";
 import { Surface } from "@/domains/ui-system/components/surface/surface";
 
 export const InviteToLeague = () => {
-	const { inputs } = useLeague();
+	const { league } = useLeague();
 
 	return (
 		<Box>
@@ -37,10 +37,10 @@ export const InviteToLeague = () => {
 						type="text"
 						id="guest-id"
 						name="guest-id"
-						value={inputs.guestIdInput}
-						onChange={inputs.handleGuestIdInput}
+						value={league.states.guestIdInput}
+						onChange={league.handlers.handleGuestIdInput}
 					/>
-					<SubmitButton onClick={inputs.handleLeagueInvite}>Invite</SubmitButton>
+					<SubmitButton onClick={league.handlers.handleLeagueInvite}>Invite</SubmitButton>
 				</Box>
 			</Card>
 		</Box>

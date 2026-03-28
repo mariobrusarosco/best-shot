@@ -2,6 +2,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { getRouteApi } from "@tanstack/react-router";
 import { useState } from "react";
 import { getLeague } from "@/domains/league/server-side/fetchers";
+import { leagueQueryKey } from "@/domains/league/server-side/keys";
 import { inviteToLeague } from "@/domains/league/server-side/mutations";
 
 const route = getRouteApi("/_auth/leagues/$leagueId/");
@@ -12,8 +13,8 @@ export const useLeague = () => {
 	const [editMode, setEditMode] = useState(false);
 	const [guestIdInput, setGuestIdInput] = useState("");
 
-	const league = useQuery({
-		queryKey: ["leagues", { leagueId }],
+	const query = useQuery({
+		queryKey: leagueQueryKey(leagueId),
 		queryFn: getLeague,
 		enabled: !!leagueId,
 	});
@@ -32,7 +33,7 @@ export const useLeague = () => {
 
 	const handleLeagueInvite = () => {
 		const inviteInput = {
-			leagueId: league?.data?.id || "",
+			leagueId: query.data?.id || "",
 			guestId: guestIdInput,
 		};
 
@@ -49,14 +50,21 @@ export const useLeague = () => {
 		});
 	};
 
+	console.log("------------query.data", query.data);
 	return {
-		league,
-		setEditMode,
-		editMode,
-		inputs: {
-			guestIdInput,
-			handleGuestIdInput,
-			handleLeagueInvite,
+		league: {
+			data: query.data,
+			states: {
+				editMode,
+				guestIdInput,
+				isPending: query.isPending,
+				isError: query.isError,
+			},
+			handlers: {
+				setEditMode,
+				handleGuestIdInput,
+				handleLeagueInvite,
+			},
 		},
 	};
 };

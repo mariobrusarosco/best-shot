@@ -9,7 +9,7 @@ export const getLeagues = async () => {
 
 export const getLeagueScore = async ({ queryKey }: { queryKey: unknown }) => {
 	const queryKeyArray = queryKey as [string, { leagueId: string }];
-	const [_, { leagueId }] = queryKeyArray;
+	const [, { leagueId }] = queryKeyArray;
 
 	const response = await api.get(`leagues/${leagueId}/leaderboard`);
 
@@ -17,10 +17,10 @@ export const getLeagueScore = async ({ queryKey }: { queryKey: unknown }) => {
 };
 
 export const getLeague = async ({ queryKey }: { queryKey: unknown }) => {
-	const queryKeyArray = queryKey as [string, { leagueId: string }];
-	const [_, { leagueId }] = queryKeyArray;
+	const queryKeyArray = queryKey as [string, { id: string }];
+	const [, { id }] = queryKeyArray;
 
-	const response = await api.get(`leagues/${leagueId}`, {
+	const response = await api.get(`leagues/${id}`, {
 		baseURL: import.meta.env.VITE_BEST_SHOT_API_V2,
 	});
 

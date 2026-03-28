@@ -11,11 +11,9 @@ import { ScreenMainContent } from "@/domains/ui-system/layout/screen-main-conten
 import { UIHelper } from "@/domains/ui-system/theme";
 
 export const AllTournamentsScreen = () => {
-	const { data, states } = useTournaments();
+	const { tournaments } = useTournaments();
 
-	console.log({ data, states });
-
-	if (states.isLoading) {
+	if (tournaments.states.isLoading) {
 		return (
 			<AuthenticatedScreenLayout>
 				<ScreenHeadingSkeleton />
@@ -28,7 +26,7 @@ export const AllTournamentsScreen = () => {
 		);
 	}
 
-	if (states.isError) {
+	if (tournaments.states.isError) {
 		return (
 			<AuthenticatedScreenLayout>
 				<ScreenMainContent>
@@ -40,7 +38,7 @@ export const AllTournamentsScreen = () => {
 		);
 	}
 
-	if (states.isEmpty) {
+	if (tournaments.states.isEmpty) {
 		return (
 			<AuthenticatedScreenLayout>
 				<ScreenHeadingSkeleton />
@@ -59,7 +57,7 @@ export const AllTournamentsScreen = () => {
 			<ScreenHeading title="tournaments" subtitle="2025/2026 season" backTo="/dashboard" />
 
 			<ScreenContainer data-ui="tournaments-main-content">
-				<TournamentsList tournaments={data.tournaments} />
+				<TournamentsList tournaments={tournaments.data} />
 			</ScreenContainer>
 		</AuthenticatedScreenLayout>
 	);

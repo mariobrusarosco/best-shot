@@ -9,7 +9,7 @@ import {
 import { useLeagues } from "@/domains/league/hooks/use-leagues";
 import { type CreateLeagueFormData, createLeagueSchema } from "@/domains/league/schemas";
 import { AppDialog } from "@/domains/ui-system/components/dialog";
-import { AppFormInput } from "@/domains/ui-system/components/form";
+import { AppFormInput } from "@/domains/ui-system/components/form/form-input";
 
 interface CreateLeagueDialogProps {
 	open: boolean;
@@ -17,7 +17,7 @@ interface CreateLeagueDialogProps {
 }
 
 export const CreateLeagueDialog = ({ open, onClose }: CreateLeagueDialogProps) => {
-	const { createLeagueMutation } = useLeagues();
+	const { league } = useLeagues();
 
 	const { control, handleSubmit, reset, formState } = useForm<CreateLeagueFormData>({
 		resolver: zodResolver(createLeagueSchema),
@@ -28,7 +28,7 @@ export const CreateLeagueDialog = ({ open, onClose }: CreateLeagueDialogProps) =
 	});
 
 	const onSubmit = (data: CreateLeagueFormData) => {
-		createLeagueMutation.mutate(data, {
+		league.handlers.createLeague(data, {
 			onSuccess: () => {
 				reset();
 				onClose();
@@ -37,7 +37,7 @@ export const CreateLeagueDialog = ({ open, onClose }: CreateLeagueDialogProps) =
 	};
 
 	const handleClose = () => {
-		if (!createLeagueMutation.isPending) {
+		if (!league.states.isCreatingLeague) {
 			reset();
 			onClose();
 		}
@@ -53,17 +53,17 @@ export const CreateLeagueDialog = ({ open, onClose }: CreateLeagueDialogProps) =
 				<DialogActions>
 					<CancelButton
 						onClick={handleClose}
-						disabled={createLeagueMutation.isPending}
+						disabled={league.states.isCreatingLeague}
 						data-testid="cancel-league-btn"
 					>
 						Cancel
 					</CancelButton>
 					<SubmitButton
 						onClick={handleSubmit(onSubmit)}
-						disabled={createLeagueMutation.isPending || !formState.isValid}
+						disabled={league.states.isCreatingLeague || !formState.isValid}
 						data-testid="submit-league-btn"
 					>
-						{createLeagueMutation.isPending ? "Creating..." : "Create League"}
+						{league.states.isCreatingLeague ? "Creating..." : "Create League"}
 					</SubmitButton>
 				</DialogActions>
 			}

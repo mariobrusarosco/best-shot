@@ -1,6 +1,8 @@
 import { Box, Divider, Stack, styled, Tooltip, Typography } from "@mui/material";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { find } from "lodash";
 import { useState } from "react";
+import { leagueQueryKey } from "@/domains/league/server-side/keys";
 import { updateLeagueTournaments } from "@/domains/league/server-side/mutations";
 import type { ILeague } from "@/domains/league/typing";
 import type { ITournament } from "@/domains/tournament/schemas";
@@ -9,25 +11,26 @@ import { AppIcon } from "@/domains/ui-system/components/icon/icon";
 import { Surface } from "@/domains/ui-system/components/surface/surface";
 
 export const LeagueTournamentCustomization = ({
-	currentTournaments,
 	allTournaments,
 	league,
 	onUpdate,
 }: {
-	currentTournaments: ITournament[];
 	allTournaments: ITournament[];
 	league: ILeague;
 	onUpdate?: () => void;
 }) => {
-	const [tracked, setTracked] = useState(currentTournaments);
+	const [tracked, setTracked] = useState([
+		...allTournaments.filter((t) => !find(league.tournaments, { id: t.id })),
+		...league.tournaments.filter((t) => t.status === "tracked"),
+	]);
 	const [untracked, setUntracked] = useState(
-		allTournaments.filter((t) => !tracked.find((ct) => ct.id === t.id))
+		league.tournaments.filter((t) => !tracked.find((ct) => ct.id === t.id))
 	);
 	const queryClient = useQueryClient();
 
 	const mutation = useMutation({
-		mutationFn: () =>
-			updateLeagueTournaments(league.id, [
+		mutationFn: () => {
+			return updateLeagueTournaments(league.id, [
 				...untracked.map((tournament) => ({
 					tournamentId: tournament.id,
 					leagueId: league.id,
@@ -38,17 +41,18 @@ export const LeagueTournamentCustomization = ({
 					leagueId: league.id,
 					status: "tracked",
 				})),
-			]),
+			]);
+		},
 		onSuccess: () => {
 			queryClient.invalidateQueries({
-				queryKey: ["leagues", { leagueId: league.id }],
+				queryKey: leagueQueryKey(league.id),
 			});
 			onUpdate?.();
 		},
 	});
 
 	// TODO Consider using a Set/Map + using tournament's ID and Logo only
-	const addTournament = (tournament: ITournament) => {
+	const addTournament = (tournament: ILeague["tournaments"][0]) => {
 		setTracked((prev) => {
 			if (prev.find((t) => t.id === tournament.id)) return prev;
 			return [...prev, tournament];
@@ -56,7 +60,7 @@ export const LeagueTournamentCustomization = ({
 		setUntracked((prev) => prev?.filter((t) => t.id !== tournament.id));
 	};
 	// TODO Consider using a Set/Map + using tournament's ID and Logo only
-	const removeTournament = (tournament: ITournament) => {
+	const removeTournament = (tournament: ILeague["tournaments"][0]) => {
 		setUntracked((prev) => {
 			if (prev.find((t) => t.id === tournament.id)) return prev;
 			return [...prev, tournament];
@@ -195,7 +199,7 @@ export const TournamentLeagueCard = ({
 	onRemove,
 	status = "read-only",
 }: {
-	tournament: ITournament;
+	tournament: ILeague["tournaments"][0];
 	onAdd?: () => void;
 	onRemove?: () => void;
 	status?: "tracked" | "untracked" | "read-only";

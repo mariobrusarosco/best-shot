@@ -1,10 +1,13 @@
-import type { ITournament } from "@/domains/tournament/schemas";
-
 export type ILeague = {
 	id: string;
 	label: string;
 	description?: string;
-	tournaments: ITournament[];
+	tournaments: {
+		id: string;
+		logo: string;
+		label: string;
+		status: string;
+	}[];
 	permissions: {
 		edit: boolean;
 		invite: boolean;

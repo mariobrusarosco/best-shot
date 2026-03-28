@@ -26,8 +26,6 @@ interface AppErrorProps {
 }
 
 const AppError = ({ error }: AppErrorProps) => {
-	const errorMessage = error instanceof Error ? error.message : DEFAULT_ERROR_MESSAGE;
-
 	console.error("[BEST SHOT] - App General Error", error);
 
 	return (
@@ -39,7 +37,7 @@ const AppError = ({ error }: AppErrorProps) => {
 					Ops!
 				</Typography>
 				<Typography variant="paragraph" color={theme.palette.teal[500]}>
-					{errorMessage || DEFAULT_ERROR_MESSAGE}
+					{DEFAULT_ERROR_MESSAGE}
 				</Typography>
 			</Stack>
 		</Wrapper>

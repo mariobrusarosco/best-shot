@@ -1,6 +1,6 @@
 import { createLazyFileRoute } from "@tanstack/react-router";
-import { LeagueScreen } from "@/domains/league/screens/league";
+import { SingleLeagueScreen } from "@/domains/league/screens/single-league";
 
 export const Route = createLazyFileRoute("/_auth/leagues/$leagueId/")({
-	component: LeagueScreen,
+	component: SingleLeagueScreen,
 });

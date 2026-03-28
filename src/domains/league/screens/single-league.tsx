@@ -11,9 +11,9 @@ import { AuthenticatedScreenLayout } from "@/domains/ui-system/layout/authentica
 import { ScreenMainContent } from "@/domains/ui-system/layout/screen-main-content";
 import { UIHelper } from "@/domains/ui-system/theme";
 
-export const LeagueScreen = () => {
+export const SingleLeagueScreen = () => {
 	const { league } = useLeague();
-	const hasInvitePermission = league?.data?.permissions.invite;
+	const hasInvitePermission = league.data?.permissions.invite;
 	const [isInviteDialogOpen, setIsInviteDialogOpen] = useState(false);
 
 	const handleOpenInviteDialog = useCallback(() => setIsInviteDialogOpen(true), []);
@@ -35,7 +35,7 @@ export const LeagueScreen = () => {
 		[hasInvitePermission, handleOpenInviteDialog]
 	);
 
-	if (league.isPending) {
+	if (league.states.isPending) {
 		return (
 			<AuthenticatedScreenLayout data-ui="leagues-screen-loading">
 				<ScreenHeading title="league" />
@@ -48,7 +48,7 @@ export const LeagueScreen = () => {
 		);
 	}
 
-	if (league.isError) {
+	if (league.states.isError) {
 		return (
 			<AuthenticatedScreenLayout data-ui="leagues-screen-error">
 				<ScreenHeading title="league" />
@@ -57,6 +57,8 @@ export const LeagueScreen = () => {
 		);
 	}
 
+	console.log("league.data", league.data);
+
 	return (
 		<AuthenticatedScreenLayout data-ui="leagues-screen screen">
 			<ScreenHeading backTo="/leagues" title="league" subtitle={league.data?.label} />
@@ -64,8 +66,8 @@ export const LeagueScreen = () => {
 			<ScreenMainContent>
 				<League data-ui="league">
 					<Stack spacing={2} direction="column" flex={1}>
-						<LeagueTournaments league={league} />
-						<ParticipantsList.Component participants={league.data.participants} />
+						<LeagueTournaments league={league.data} />
+						{/* <ParticipantsList.Component participants={data.league.participants} /> */}
 					</Stack>
 				</League>
 

@@ -1288,10 +1288,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fontsource/montserrat@npm:^5.1.0":
-  version: 5.2.5
-  resolution: "@fontsource/montserrat@npm:5.2.5"
-  checksum: 5a0b64b6c15f5cb7feb729adfaac9ff4e94ceb207d5e77ebd8f0da0fc3a45972e42f48c6f77104e45257215b6605ef0b7e7b6941adb761f4bdd592000f6f1781
+"@fontsource/ibm-plex-mono@npm:^5.2.7":
+  version: 5.2.7
+  resolution: "@fontsource/ibm-plex-mono@npm:5.2.7"
+  checksum: e9f3c3825cebc5f4829cc4f48c7fba9f8c18fb837338ec9b81bab778bd3e69a4e632580df5647831ca3fd782ff7baecd0e2d38585d9a3a6c6db1eb45102afe19
   languageName: node
   linkType: hard
 
@@ -3104,7 +3104,7 @@ __metadata:
     "@emotion/react": ^11.11.4
     "@emotion/styled": ^11.11.5
     "@fontsource/bebas-neue": ^5.2.7
-    "@fontsource/montserrat": ^5.1.0
+    "@fontsource/ibm-plex-mono": ^5.2.7
     "@hookform/resolvers": ^3.3.4
     "@mui/base": ^5.0.0-beta.70
     "@mui/material": ^7.3.1

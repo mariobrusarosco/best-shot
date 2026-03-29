@@ -101,7 +101,7 @@ const PrimaryFont = styled("div")(({ theme }) => ({
 
 const SecondaryFont = styled("div")(({ theme }) => ({
 	...theme.typography,
-	fontFamily: "Montserrat Variable",
+	fontFamily: '"IBM Plex Mono", monospace',
 	backgroundColor: theme.palette.background.paper,
 	padding: theme.spacing(1),
 }));

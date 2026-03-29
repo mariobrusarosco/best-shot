@@ -2,7 +2,7 @@
  * Design System Foundation: Typography
  *
  * Typography scale and variants following the Best Shot design system.
- * Uses Bebas Neue for headings (display, condensed) and Montserrat for content (readable).
+ * Uses Bebas Neue for headings (display, condensed) and IBM Plex Mono for content.
  */
 
 import { MEDIA_QUERIES } from "./breakpoints";
@@ -10,7 +10,7 @@ import { MEDIA_QUERIES } from "./breakpoints";
 // Font Families
 export const FONT_FAMILIES = {
 	heading: '"Bebas Neue", sans-serif',
-	body: '"Montserrat", sans-serif',
+	body: '"IBM Plex Mono", monospace',
 } as const;
 
 // Font Weights
@@ -53,7 +53,7 @@ export const TYPOGRAPHY_VARIANTS = {
 	h1: {
 		fontFamily: FONT_FAMILIES.heading,
 		fontSize: "2rem", // Mobile size (32px)
-		fontWeight: FONT_WEIGHTS.medium,
+		fontWeight: FONT_WEIGHTS.regular,
 		lineHeight: LINE_HEIGHTS.tight,
 		[MEDIA_QUERIES.up.tablet]: {
 			fontSize: FONT_SIZES["7xl"], // Desktop size (60px)
@@ -62,7 +62,7 @@ export const TYPOGRAPHY_VARIANTS = {
 	h2: {
 		fontFamily: FONT_FAMILIES.heading,
 		fontSize: "1.75rem", // Mobile size (28px)
-		fontWeight: FONT_WEIGHTS.medium,
+		fontWeight: FONT_WEIGHTS.regular,
 		lineHeight: LINE_HEIGHTS.tight,
 		[MEDIA_QUERIES.up.tablet]: {
 			fontSize: FONT_SIZES["6xl"], // Desktop size (48px)
@@ -71,7 +71,7 @@ export const TYPOGRAPHY_VARIANTS = {
 	h3: {
 		fontFamily: FONT_FAMILIES.heading,
 		fontSize: "1.5rem", // Mobile size (24px)
-		fontWeight: FONT_WEIGHTS.semiBold,
+		fontWeight: FONT_WEIGHTS.regular,
 		lineHeight: LINE_HEIGHTS.normal,
 		[MEDIA_QUERIES.up.tablet]: {
 			fontSize: FONT_SIZES["5xl"], // Desktop size (42px)
@@ -80,7 +80,7 @@ export const TYPOGRAPHY_VARIANTS = {
 	h4: {
 		fontFamily: FONT_FAMILIES.heading,
 		fontSize: "1.25rem", // Mobile size (20px)
-		fontWeight: FONT_WEIGHTS.semiBold,
+		fontWeight: FONT_WEIGHTS.regular,
 		lineHeight: LINE_HEIGHTS.normal,
 		[MEDIA_QUERIES.up.tablet]: {
 			fontSize: FONT_SIZES["4xl"], // Desktop size (36px)
@@ -89,13 +89,13 @@ export const TYPOGRAPHY_VARIANTS = {
 	h5: {
 		fontFamily: FONT_FAMILIES.heading,
 		fontSize: FONT_SIZES["3xl"], // 30px
-		fontWeight: FONT_WEIGHTS.semiBold,
+		fontWeight: FONT_WEIGHTS.regular,
 		lineHeight: LINE_HEIGHTS.normal,
 	},
 	h6: {
 		fontFamily: FONT_FAMILIES.heading,
 		fontSize: "1.125rem", // Mobile size (18px)
-		fontWeight: FONT_WEIGHTS.medium,
+		fontWeight: FONT_WEIGHTS.regular,
 		lineHeight: LINE_HEIGHTS.relaxed,
 		[MEDIA_QUERIES.up.tablet]: {
 			fontSize: FONT_SIZES["2xl"], // Desktop size (24px)
@@ -128,7 +128,7 @@ export const TYPOGRAPHY_VARIANTS = {
 	topic: {
 		fontFamily: FONT_FAMILIES.heading,
 		fontSize: FONT_SIZES.base, // Mobile size (14px)
-		fontWeight: FONT_WEIGHTS.light,
+		fontWeight: FONT_WEIGHTS.regular,
 		lineHeight: LINE_HEIGHTS.normal,
 		[MEDIA_QUERIES.up.tablet]: {
 			fontSize: FONT_SIZES.md, // Desktop size (16px)
@@ -137,7 +137,7 @@ export const TYPOGRAPHY_VARIANTS = {
 	label: {
 		fontFamily: FONT_FAMILIES.heading,
 		fontSize: FONT_SIZES.sm, // 12px (existing)
-		fontWeight: FONT_WEIGHTS.medium,
+		fontWeight: FONT_WEIGHTS.regular,
 		lineHeight: LINE_HEIGHTS.normal,
 	},
 	tag: {
@@ -157,7 +157,7 @@ export const TYPOGRAPHY_VARIANTS = {
 	overline: {
 		fontFamily: FONT_FAMILIES.heading,
 		fontSize: FONT_SIZES.xs, // 10px
-		fontWeight: FONT_WEIGHTS.semiBold,
+		fontWeight: FONT_WEIGHTS.regular,
 		textTransform: "uppercase" as const,
 		letterSpacing: "0.1em",
 		lineHeight: LINE_HEIGHTS.normal,

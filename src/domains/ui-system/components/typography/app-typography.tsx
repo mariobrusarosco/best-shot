@@ -1,5 +1,6 @@
 import { Typography, type TypographyProps } from "@mui/material";
 import { forwardRef } from "react";
+import { FONT_FAMILIES } from "@/domains/ui-system/theme/foundation/typography";
 
 // Define our custom typography variants
 type AppTypographyVariant =
@@ -49,25 +50,25 @@ const customStyles: Record<AppTypographyVariant, React.CSSProperties> = {
 	body1: {
 		fontSize: "1rem", // 16px
 		fontWeight: 400,
-		fontFamily: "Montserrat",
+		fontFamily: FONT_FAMILIES.body,
 		lineHeight: 1.5,
 	},
 	body2: {
 		fontSize: "0.875rem", // 14px
 		fontWeight: 400,
-		fontFamily: "Montserrat",
+		fontFamily: FONT_FAMILIES.body,
 		lineHeight: 1.4,
 	},
 	subtitle1: {
 		fontSize: "1rem", // 16px
 		fontWeight: 500,
-		fontFamily: "Montserrat",
+		fontFamily: FONT_FAMILIES.body,
 		lineHeight: 1.4,
 	},
 	subtitle2: {
 		fontSize: "0.875rem", // 14px
 		fontWeight: 500,
-		fontFamily: "Montserrat",
+		fontFamily: FONT_FAMILIES.body,
 		lineHeight: 1.4,
 	},
 	h1: {},
@@ -79,37 +80,37 @@ const customStyles: Record<AppTypographyVariant, React.CSSProperties> = {
 	paragraph: {
 		fontSize: "1.125rem", // 18px
 		fontWeight: 400,
-		fontFamily: "Montserrat",
+		fontFamily: FONT_FAMILIES.body,
 		lineHeight: 1.5,
 	},
 	topic: {
 		fontSize: "1rem", // 16px
-		fontWeight: 300,
-		fontFamily: "Montserrat",
+		fontWeight: 400,
+		fontFamily: FONT_FAMILIES.heading,
 		lineHeight: 1.4,
 	},
 	label: {
 		fontSize: "0.75rem", // 12px
-		fontWeight: 500,
-		fontFamily: '"Bebas Neue", sans-serif',
+		fontWeight: 400,
+		fontFamily: FONT_FAMILIES.heading,
 		lineHeight: 1.4,
 	},
 	tag: {
 		fontSize: "0.625rem", // 10px
 		fontWeight: 400,
-		fontFamily: "Montserrat",
+		fontFamily: FONT_FAMILIES.body,
 		lineHeight: 1.4,
 	},
 	caption: {
 		fontSize: "0.75rem", // 12px
 		fontWeight: 400,
-		fontFamily: "Montserrat",
+		fontFamily: FONT_FAMILIES.body,
 		lineHeight: 1.4,
 	},
 	overline: {
 		fontSize: "0.625rem", // 10px
-		fontWeight: 600,
-		fontFamily: '"Bebas Neue", sans-serif',
+		fontWeight: 400,
+		fontFamily: FONT_FAMILIES.heading,
 		textTransform: "uppercase",
 		letterSpacing: "0.1em",
 		lineHeight: 1.4,

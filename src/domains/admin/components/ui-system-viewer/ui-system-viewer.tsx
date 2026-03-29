@@ -119,7 +119,7 @@ const TypographySection = () => (
 							color: "neutral.100",
 						}}
 					>
-						Montserrat - The quick brown fox jumps over the lazy dog
+						IBM Plex Mono - The quick brown fox jumps over the lazy dog
 					</Typography>
 				</Box>
 			</Stack>

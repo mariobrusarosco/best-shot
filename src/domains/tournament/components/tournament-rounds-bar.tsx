@@ -7,7 +7,7 @@ import { UIHelper } from "@/domains/ui-system/theme";
 import { OverflowOnHover } from "@/domains/ui-system/utils";
 
 export const TournamentRoundsBar = () => {
-	const { data, handlers } = useTournamentRounds();
+	const { rounds, activeRound } = useTournamentRounds();
 
 	// useEffect(() => {
 	// 	if (data.activeRound) {
@@ -31,11 +31,11 @@ export const TournamentRoundsBar = () => {
 			</BarHeading>
 
 			<Bar data-ui="bar">
-				{data?.rounds?.map(({ label, slug }) => (
+				{rounds?.data?.map(({ label, slug }) => (
 					<RoundButton
 						key={label}
-						onClick={() => handlers.goToRound(slug)}
-						data-active={data.activeRound === slug}
+						onClick={() => rounds.handlers.goToRound(slug)}
+						data-active={activeRound.data === slug}
 					>
 						<Typography component="p" variant="label" color="currentcolor">
 							{label}

@@ -8,9 +8,7 @@ const route = getRouteApi("/_auth/tournaments/$tournamentId");
 export const useGuessMutation = () => {
 	const queryClient = useQueryClient();
 	const tournamentId = route.useParams().tournamentId;
-	const {
-		data: { activeRound },
-	} = useTournamentRounds();
+	const { activeRound } = useTournamentRounds();
 
 	const mutation = useMutation({
 		mutationKey: ["createdGuess"],
@@ -20,7 +18,7 @@ export const useGuessMutation = () => {
 
 			// Invalidate and refetch - let reconciliation handle the merge
 			queryClient.invalidateQueries({
-				queryKey: ["guess", { tournamentId, activeRound }],
+				queryKey: ["guess", { tournamentId, activeRound: activeRound.data }],
 			});
 		},
 	});

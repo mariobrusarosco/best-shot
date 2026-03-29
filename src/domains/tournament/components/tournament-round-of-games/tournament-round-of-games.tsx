@@ -6,15 +6,15 @@ import MatchCard from "@/domains/match/components/match-card/match-card";
 import { useTournamentMatches } from "@/domains/tournament/hooks/use-tournament-matches";
 
 export const TournamentRoundOfGames = () => {
-	const matchesQuery = useTournamentMatches();
-	const guessesQuery = useReconciledGuesses(matchesQuery.data || []);
+	const { tournamentMatches } = useTournamentMatches();
+	const guessesQuery = useReconciledGuesses(tournamentMatches.data || []);
 	const guessMutation = useGuessMutation();
 
-	if (guessesQuery.isError || matchesQuery.isError) {
+	if (guessesQuery.isError || tournamentMatches.states.isError) {
 		throw new Error("Ops! We could not find games for this round!");
 	}
 
-	if (guessesQuery.isPending || matchesQuery.isPending) {
+	if (guessesQuery.isPending || tournamentMatches.states.isLoading) {
 		return (
 			<Games>
 				<TournamentRoundOfGamesSkeleton />
@@ -22,11 +22,10 @@ export const TournamentRoundOfGames = () => {
 		);
 	}
 
-	console.log({ matches: matchesQuery });
-
+	console.log({ tournamentMatches });
 	return (
 		<Games className="round-games">
-			{matchesQuery.data?.map((match, index) => {
+			{tournamentMatches.data?.map((match, index) => {
 				const guess = guessesQuery.data[index];
 
 				return (

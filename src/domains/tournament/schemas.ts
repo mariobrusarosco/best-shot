@@ -56,3 +56,9 @@ const TournamentStandingsSchema = z.object({
 });
 
 export type ITournamentStandings = z.infer<typeof TournamentStandingsSchema>;
+
+export const TournamentScoreSchema = z.object({
+	points: z.number(),
+	underCalculation: z.boolean(),
+});
+export type ITournamentScore = z.infer<typeof TournamentScoreSchema>;

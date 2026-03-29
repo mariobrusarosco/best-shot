@@ -1,8 +1,9 @@
-import { Box, styled, Typography } from "@mui/material";
+import { Box, Stack, styled, Typography } from "@mui/material";
 import { Outlet } from "@tanstack/react-router";
 import { ScreenHeadingSkeleton } from "@/domains/global/components/screen-heading";
 import TournamentHeading from "@/domains/tournament/components/tournament-heading";
 import { useTournament } from "@/domains/tournament/hooks/use-tournament";
+import { useTournamentScore } from "@/domains/tournament/hooks/use-tournament-score";
 import { AuthenticatedScreenLayout } from "@/domains/ui-system/layout/authenticated";
 import { ScreenMainContent } from "@/domains/ui-system/layout/screen-main-content";
 import { FONT_FAMILIES } from "@/domains/ui-system/theme/foundation/typography";
@@ -12,6 +13,7 @@ export const SingleTournamentLayout = () => {
 		data: { tournament },
 		states,
 	} = useTournament({ fetchOnMount: true });
+	const { score } = useTournamentScore();
 
 	if (states.isError) {
 		<AuthenticatedScreenLayout>
@@ -50,44 +52,88 @@ export const SingleTournamentLayout = () => {
 	return (
 		<AuthenticatedScreenLayout data-ui="single-tournament-layout" overflow="hidden">
 			<TournamentConteainer>
-				<TournamentDisplay>
-					<NameAndCurrentRound>
-						<Typography data-ui="title" variant="h2" textTransform="uppercase" color="black.400">
-							{tournament?.label}
-						</Typography>
-
-						<CurrentRoundContainer>
-							<Typography
-								variant="body1"
-								color="black.400"
-								textTransform="lowercase"
-								sx={{
-									fontFamily: FONT_FAMILIES.heading,
-								}}
-							>
-								current round
+				<Stack flexDirection="row" justifyContent="space-between">
+					<TournamentDisplay>
+						<NameAndCurrentRound>
+							<Typography data-ui="title" variant="h2" textTransform="uppercase" color="black.400">
+								{tournament?.label}
 							</Typography>
-							{/* TODO This Styled Component will be a Pill component once the new Pill is ready */}
-							<CurrentRound>
+
+							<CurrentRoundContainer>
 								<Typography
-									variant="body2"
-									color="neutral.0"
+									variant="body1"
+									color="black.400"
+									textTransform="lowercase"
+									sx={{
+										fontFamily: FONT_FAMILIES.heading,
+									}}
+								>
+									current round
+								</Typography>
+								{/* TODO This Styled Component will be a Pill component once the new Pill is ready */}
+								<CurrentRound>
+									<Typography
+										variant="body2"
+										color="neutral.0"
+										textTransform="uppercase"
+										sx={{
+											fontFamily: FONT_FAMILIES.heading,
+											fontWeight: "bold",
+										}}
+									>
+										{tournament?.currentRound}
+									</Typography>
+								</CurrentRound>
+							</CurrentRoundContainer>
+						</NameAndCurrentRound>
+
+						<LogoContainer>
+							<Logo src={tournament?.logo} />
+						</LogoContainer>
+					</TournamentDisplay>
+
+					<TournamentScoreDisplay data-ui="tournament-score-display">
+						{score.data?.underCalculation ? (
+							<UnderCalculationDisplay>
+								<Typography
+									variant="caption"
 									textTransform="uppercase"
 									sx={{
 										fontFamily: FONT_FAMILIES.heading,
-										fontWeight: "bold",
+										letterSpacing: "0.2px",
+										fontWeight: "700",
 									}}
 								>
-									{tournament?.currentRound}
+									under calculation
 								</Typography>
-							</CurrentRound>
-						</CurrentRoundContainer>
-					</NameAndCurrentRound>
+							</UnderCalculationDisplay>
+						) : null}
 
-					<LogoContainer>
-						<Logo src={tournament?.logo} />
-					</LogoContainer>
-				</TournamentDisplay>
+						<Typography
+							variant="h6"
+							color="black.400"
+							textTransform="uppercase"
+							sx={{
+								fontFamily: FONT_FAMILIES.heading,
+							}}
+						>
+							you have
+						</Typography>
+						<Score>
+							<Typography
+								variant="body2"
+								color="neutral.0"
+								textTransform="uppercase"
+								sx={{
+									fontFamily: FONT_FAMILIES.heading,
+									fontWeight: "bold",
+								}}
+							>
+								{score.data?.points} points
+							</Typography>
+						</Score>
+					</TournamentScoreDisplay>
+				</Stack>
 
 				<Outlet />
 			</TournamentConteainer>
@@ -130,7 +176,6 @@ const NameAndCurrentRound = styled(Box)(({ theme }) => ({
 }));
 
 const LogoContainer = styled(Box)(({ theme }) => ({
-	// backgroundColor: theme.palette.teal[500],
 	padding: theme.spacing(0.5),
 	borderRadius: theme.shape.medium,
 	opacity: 0.7,
@@ -140,4 +185,30 @@ const LogoContainer = styled(Box)(({ theme }) => ({
 const Logo = styled("img")(() => ({
 	height: "auto",
 	maxWidth: "100%",
+}));
+
+const TournamentScoreDisplay = styled(Box)(({ theme }) => ({
+	display: "flex",
+	flexDirection: "column",
+	height: "fit-content",
+	width: "fit-content",
+	gap: theme.spacing(0.5),
+	padding: theme.spacing(2),
+	backgroundColor: theme.palette.neutral[0],
+	borderRadius: theme.shape.medium,
+	alignItems: "center",
+	flexWrap: "wrap",
+}));
+
+const Score = styled(Box)(({ theme }) => ({
+	backgroundColor: theme.palette.teal[500],
+	padding: theme.spacing(1, 1.5),
+	borderRadius: theme.shape.medium,
+}));
+
+const UnderCalculationDisplay = styled(Box)(({ theme }) => ({
+	backgroundColor: theme.palette.pink["700"],
+	padding: theme.spacing(0.5, 1),
+	borderRadius: theme.shape.medium,
+	color: theme.palette.neutral[0],
 }));

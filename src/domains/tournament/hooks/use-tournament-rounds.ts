@@ -27,13 +27,12 @@ export const useTournamentRounds = () => {
 	};
 
 	return {
-		data: {
-			activeRound,
-			rounds: tournament.rounds,
+		rounds: {
+			data: tournament.rounds,
+			handlers: { goToRound },
 		},
-		states: {},
-		handlers: {
-			goToRound,
+		activeRound: {
+			data: activeRound,
 		},
 	};
 };

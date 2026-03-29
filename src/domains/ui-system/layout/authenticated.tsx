@@ -20,7 +20,9 @@ export const AuthenticatedLayout = styled(Box)(({ theme }) => ({
 	},
 }));
 
-export const AuthenticatedScreenLayout = styled(Box)(() => ({
+export const AuthenticatedScreenLayout = styled(Box)(({ theme }) => ({
+	padding: theme.spacing(4, 0),
+
 	[UIHelper.startsOn("tablet")]: {
 		flex: 1,
 	},

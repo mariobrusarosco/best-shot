@@ -32,24 +32,3 @@ const Matches = styled(Box)(({ theme }) => ({
 		columnGap: theme.spacing(4),
 	},
 }));
-
-// const _Rounds = styled(Box)(({ theme }) => ({
-// 	flex: 1,
-
-// 	[UIHelper.whileIs("mobile")]: {
-// 		paddingBottom: theme.spacing(16),
-// 	},
-
-// 	[UIHelper.startsOn("tablet")]: {
-// 		// paddingRight: theme.spacing(2),
-// 		minWidth: "380px",
-// 		// maxWidth: "450px",
-// 	},
-
-// 	[UIHelper.startsOn("desktop")]: {
-// 		paddingRight: theme.spacing(2),
-// 		minWidth: "600px",
-// 	},
-
-// 	...OverflowOnHover(),
-// }));

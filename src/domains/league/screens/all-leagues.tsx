@@ -1,4 +1,4 @@
-import { Box, styled } from "@mui/material";
+import { Box, styled, Typography } from "@mui/material";
 import { useCallback, useMemo, useState } from "react";
 import { ScreenHeading, ScreenHeadingSkeleton } from "@/domains/global/components/screen-heading";
 import { CreateLeagueDialog } from "@/domains/league/components/create-league-dialog";
@@ -26,13 +26,6 @@ export const AllLeaguesScreens = () => {
 				icon: <AppIcon name="Plus" size="medium" />,
 				onClick: handleOpenDialog,
 			},
-			// Future actions can be added here:
-			// {
-			//   id: "create-tournament",
-			//   label: "Create Tournament",
-			//   icon: <AppIcon name="Trophy" size="small" />,
-			//   onClick: handleOpenTournamentDialog,
-			// },
 		],
 		[handleOpenDialog]
 	);
@@ -61,7 +54,11 @@ export const AllLeaguesScreens = () => {
 
 	return (
 		<AuthenticatedScreenLayout data-ui="leagues-screen screen">
-			<ScreenHeading title="leagues" backTo="/dashboard" />
+			<AllLeaguesDisplay>
+				<Typography data-ui="title" variant="h2" textTransform="uppercase" color="black.400">
+					Your Leagues
+				</Typography>
+			</AllLeaguesDisplay>
 
 			<ScreenMainContent data-ui="leagues-content">
 				<Leagues data-ui="leagues">
@@ -95,4 +92,17 @@ const Leagues = styled(Box)(({ theme }) => ({
 	[UIHelper.startsOn("tablet")]: {
 		gap: theme.spacing(3),
 	},
+}));
+
+// TODO: Consider in tbe future to abstract this component to the ui-system
+// given lots of screens might have this component
+
+const AllLeaguesDisplay = styled(Box)(({ theme }) => ({
+	display: "flex",
+	flexDirection: "column",
+	width: "fit-content",
+	gap: theme.spacing(2),
+	padding: theme.spacing(3.5),
+	backgroundColor: theme.palette.neutral[0],
+	borderRadius: theme.shape.medium,
 }));

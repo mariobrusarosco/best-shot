@@ -1,7 +1,6 @@
-import { Box, Typography } from "@mui/material";
+import { Box, styled, Typography } from "@mui/material";
 import { useNavigate } from "@tanstack/react-router";
 import { Authentication } from "@/domains/authentication";
-import { ScreenHeading } from "@/domains/global/components/screen-heading";
 import { useMember } from "@/domains/member/hooks/use-member";
 import { LogoutButton, MyAccount } from "@/domains/member/screens/my-accounts.styles";
 import { AuthenticatedScreenLayout } from "@/domains/ui-system/layout/authenticated";
@@ -42,7 +41,11 @@ export default function MyAccountScreen() {
 
 	return (
 		<AuthenticatedScreenLayout>
-			<ScreenHeading title="my account" />
+			<MyAccountDisplay>
+				<Typography data-ui="title" variant="h2" textTransform="uppercase" color="black.400">
+					My Account
+				</Typography>
+			</MyAccountDisplay>
 
 			<MyAccount>
 				<Box>
@@ -89,3 +92,14 @@ export default function MyAccountScreen() {
 		</AuthenticatedScreenLayout>
 	);
 }
+
+const MyAccountDisplay = styled(Box)(({ theme }) => ({
+	display: "flex",
+	flexDirection: "column",
+	width: "fit-content",
+	gap: theme.spacing(2),
+	padding: theme.spacing(3.5),
+	backgroundColor: theme.palette.neutral[0],
+	borderRadius: theme.shape.medium,
+	minWidth: "300px",
+}));

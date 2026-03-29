@@ -1,4 +1,4 @@
-import { Box, Stack, styled } from "@mui/material";
+import { Box, Stack, styled, Typography } from "@mui/material";
 import { useCallback, useMemo, useState } from "react";
 import { ScreenHeading } from "@/domains/global/components/screen-heading";
 import { InviteToLeagueDialog } from "@/domains/league/components/invite-to-league-dialog";
@@ -10,6 +10,7 @@ import { AppIcon } from "@/domains/ui-system/components/icon/icon";
 import { AuthenticatedScreenLayout } from "@/domains/ui-system/layout/authenticated";
 import { ScreenMainContent } from "@/domains/ui-system/layout/screen-main-content";
 import { UIHelper } from "@/domains/ui-system/theme";
+import { FONT_FAMILIES } from "@/domains/ui-system/theme/foundation/typography";
 
 export const SingleLeagueScreen = () => {
 	const { league } = useLeague();
@@ -57,11 +58,26 @@ export const SingleLeagueScreen = () => {
 		);
 	}
 
-	console.log("league.data", league.data);
-
 	return (
 		<AuthenticatedScreenLayout data-ui="leagues-screen screen">
-			<ScreenHeading backTo="/leagues" title="league" subtitle={league.data?.label} />
+			<LeagueDisplay>
+				<Typography data-ui="title" variant="h2" textTransform="uppercase" color="black.400">
+					League
+				</Typography>
+
+				<LeagueName>
+					<Typography
+						variant="body1"
+						color="neutral.0"
+						textTransform="lowercase"
+						sx={{
+							fontFamily: FONT_FAMILIES.heading,
+						}}
+					>
+						{league.data?.label}
+					</Typography>
+				</LeagueName>
+			</LeagueDisplay>
 
 			<ScreenMainContent>
 				<League data-ui="league">
@@ -102,4 +118,22 @@ const League = styled(Box)(({ theme }) => ({
 	[UIHelper.startsOn("tablet")]: {
 		gap: theme.spacing(5),
 	},
+}));
+
+const LeagueDisplay = styled(Box)(({ theme }) => ({
+	display: "flex",
+	flexDirection: "column",
+	width: "fit-content",
+	gap: theme.spacing(2),
+	padding: theme.spacing(3.5),
+	backgroundColor: theme.palette.neutral[0],
+	borderRadius: theme.shape.medium,
+	minWidth: "300px",
+}));
+
+const LeagueName = styled(Box)(({ theme }) => ({
+	backgroundColor: theme.palette.teal[500],
+	padding: theme.spacing(1, 1.5),
+	borderRadius: theme.shape.medium,
+	width: "fit-content",
 }));

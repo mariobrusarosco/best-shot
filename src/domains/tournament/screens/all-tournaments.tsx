@@ -1,5 +1,5 @@
-import { styled, Typography } from "@mui/material";
-import { ScreenHeading, ScreenHeadingSkeleton } from "@/domains/global/components/screen-heading";
+import { Box, styled, Typography } from "@mui/material";
+import { ScreenHeadingSkeleton } from "@/domains/global/components/screen-heading";
 import TournamentHeading from "@/domains/tournament/components/tournament-heading";
 import {
 	TournamentsList,
@@ -9,6 +9,7 @@ import { useTournaments } from "@/domains/tournament/hooks/use-tournaments";
 import { AuthenticatedScreenLayout } from "@/domains/ui-system/layout/authenticated";
 import { ScreenMainContent } from "@/domains/ui-system/layout/screen-main-content";
 import { UIHelper } from "@/domains/ui-system/theme";
+import { FONT_FAMILIES } from "@/domains/ui-system/theme/foundation/typography";
 
 export const AllTournamentsScreen = () => {
 	const { tournaments } = useTournaments();
@@ -54,7 +55,38 @@ export const AllTournamentsScreen = () => {
 
 	return (
 		<AuthenticatedScreenLayout data-ui="tournaments-screen">
-			<ScreenHeading title="tournaments" subtitle="2025/2026 season" backTo="/dashboard" />
+			<AllTournamentsDisplay>
+				<Typography data-ui="title" variant="h2" textTransform="uppercase" color="black.400">
+					All Tournaments
+				</Typography>
+
+				<CurrentSeasonContainer>
+					<Typography
+						variant="body1"
+						color="black.400"
+						textTransform="lowercase"
+						sx={{
+							fontFamily: FONT_FAMILIES.heading,
+						}}
+					>
+						current round
+					</Typography>
+					{/* TODO This Styled Component will be a Pill component once the new Pill is ready */}
+					<CurrentSeason>
+						<Typography
+							variant="body2"
+							color="neutral.0"
+							textTransform="uppercase"
+							sx={{
+								fontFamily: FONT_FAMILIES.heading,
+								fontWeight: "bold",
+							}}
+						>
+							2025/2026
+						</Typography>
+					</CurrentSeason>
+				</CurrentSeasonContainer>
+			</AllTournamentsDisplay>
 
 			<ScreenContainer data-ui="tournaments-main-content">
 				<TournamentsList tournaments={tournaments.data} />
@@ -68,4 +100,29 @@ export const ScreenContainer = styled(ScreenMainContent)(({ theme }) => ({
 		paddingLeft: theme.spacing(0),
 		paddingRight: theme.spacing(2),
 	},
+}));
+
+// TODO: Consider in tbe future to abstract this component to the ui-system
+// given lots of screens might have this component
+
+const AllTournamentsDisplay = styled(Box)(({ theme }) => ({
+	display: "flex",
+	flexDirection: "column",
+	width: "fit-content",
+	gap: theme.spacing(2),
+	padding: theme.spacing(3.5),
+	backgroundColor: theme.palette.neutral[0],
+	borderRadius: theme.shape.medium,
+}));
+
+const CurrentSeasonContainer = styled(Box)(({ theme }) => ({
+	display: "flex",
+	gap: theme.spacing(1.5),
+	alignItems: "center",
+}));
+
+const CurrentSeason = styled(Box)(({ theme }) => ({
+	backgroundColor: theme.palette.teal[500],
+	padding: theme.spacing(1, 1.5),
+	borderRadius: theme.shape.medium,
 }));

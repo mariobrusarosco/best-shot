@@ -51,7 +51,7 @@ export const SingleTournamentLayout = () => {
 
 	return (
 		<AuthenticatedScreenLayout data-ui="single-tournament-layout" overflow="hidden">
-			<TournamentConteainer>
+			<TournamentContainer>
 				<Stack flexDirection="row" justifyContent="space-between">
 					<TournamentDisplay>
 						<NameAndCurrentRound>
@@ -136,15 +136,14 @@ export const SingleTournamentLayout = () => {
 				</Stack>
 
 				<Outlet />
-			</TournamentConteainer>
+			</TournamentContainer>
 		</AuthenticatedScreenLayout>
 	);
 };
 
-const TournamentConteainer = styled(Box)(({ theme }) => ({
+const TournamentContainer = styled(Box)(({ theme }) => ({
 	display: "flex",
 	flexDirection: "column",
-	padding: theme.spacing(4, 2),
 	gap: theme.spacing(4),
 }));
 

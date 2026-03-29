@@ -19,10 +19,14 @@ export const LeagueTournamentCustomization = ({
 	league: ILeague;
 	onUpdate?: () => void;
 }) => {
-	const [tracked, setTracked] = useState([
-		...allTournaments.filter((t) => !find(league.tournaments, { id: t.id })),
-		...league.tournaments.filter((t) => t.status === "tracked"),
-	]);
+	const [tracked, setTracked] = useState(() => {
+		const tournamentsNeitherTrackedOrUntracked = allTournaments.filter(
+			(t) => !find(league.tournaments, { id: t.id })
+		);
+		const trackedTournaments = league.tournaments.filter((t) => t.status === "tracked");
+
+		return [...tournamentsNeitherTrackedOrUntracked, ...trackedTournaments];
+	});
 	const [untracked, setUntracked] = useState(
 		league.tournaments.filter((t) => !tracked.find((ct) => ct.id === t.id))
 	);

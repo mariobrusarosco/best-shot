@@ -91,7 +91,7 @@ const customStyles: Record<AppTypographyVariant, React.CSSProperties> = {
 	label: {
 		fontSize: "0.75rem", // 12px
 		fontWeight: 500,
-		fontFamily: "Antonio",
+		fontFamily: '"Bebas Neue", sans-serif',
 		lineHeight: 1.4,
 	},
 	tag: {
@@ -109,7 +109,7 @@ const customStyles: Record<AppTypographyVariant, React.CSSProperties> = {
 	overline: {
 		fontSize: "0.625rem", // 10px
 		fontWeight: 600,
-		fontFamily: "Antonio",
+		fontFamily: '"Bebas Neue", sans-serif',
 		textTransform: "uppercase",
 		letterSpacing: "0.1em",
 		lineHeight: 1.4,

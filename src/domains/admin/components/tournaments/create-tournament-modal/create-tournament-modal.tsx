@@ -16,11 +16,7 @@ interface CreateTournamentModalProps {
 
 type CreateTournamentInput = z.infer<typeof CreateTournamentSchema>;
 
-const providerOptions = [
-	{ value: "sofa", label: "SofaScore" },
-	{ value: "espn", label: "ESPN" },
-	{ value: "api-football", label: "API-Football" },
-];
+const providerOptions = [{ value: "sofascore", label: "SofaScore" }];
 
 const modeOptions = [
 	{ value: "regular-season-and-knockout", label: "Regular Season + Knockout" },

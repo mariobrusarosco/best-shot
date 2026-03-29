@@ -2,9 +2,8 @@ import { Box, Divider, Stack, styled, Typography } from "@mui/material";
 import { useState } from "react";
 import { AppButton } from "@/domains/ui-system/components/button/button";
 import { Surface } from "@/domains/ui-system/components/surface/surface";
-import { theme } from "@/domains/ui-system/theme";
 import { COLORS } from "@/domains/ui-system/theme/foundation/colors";
-import { TYPOGRAPHY } from "@/domains/ui-system/theme/foundation/typography";
+import { FONT_FAMILIES, TYPOGRAPHY } from "@/domains/ui-system/theme/foundation/typography";
 
 type TabId = "colors" | "typography" | "breakpoints" | "spacing" | "components";
 
@@ -101,12 +100,12 @@ const TypographySection = () => (
 					</Typography>
 					<Typography
 						sx={{
-							fontFamily: theme.typography.fontFamily?.split(",")[0],
+							fontFamily: FONT_FAMILIES.heading,
 							fontSize: 24,
 							color: "neutral.100",
 						}}
 					>
-						Antonio - The quick brown fox jumps over the lazy dog
+						Bebas Neue - The quick brown fox jumps over the lazy dog
 					</Typography>
 				</Box>
 				<Box>
@@ -115,7 +114,7 @@ const TypographySection = () => (
 					</Typography>
 					<Typography
 						sx={{
-							fontFamily: theme.typography.fontFamily?.split(",")[1],
+							fontFamily: FONT_FAMILIES.body,
 							fontSize: 24,
 							color: "neutral.100",
 						}}

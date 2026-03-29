@@ -2,14 +2,14 @@
  * Design System Foundation: Typography
  *
  * Typography scale and variants following the Best Shot design system.
- * Uses Antonio for headings (clean, modern) and Montserrat for content (readable).
+ * Uses Bebas Neue for headings (display, condensed) and Montserrat for content (readable).
  */
 
 import { MEDIA_QUERIES } from "./breakpoints";
 
 // Font Families
 export const FONT_FAMILIES = {
-	heading: '"Antonio", sans-serif',
+	heading: '"Bebas Neue", sans-serif',
 	body: '"Montserrat", sans-serif',
 } as const;
 
@@ -49,7 +49,7 @@ export const LINE_HEIGHTS = {
 
 // Typography Variants (Enhanced from existing system)
 export const TYPOGRAPHY_VARIANTS = {
-	// Headings (Antonio - clean, modern)
+	// Headings (Bebas Neue - display, condensed)
 	h1: {
 		fontFamily: FONT_FAMILIES.heading,
 		fontSize: "2rem", // Mobile size (32px)

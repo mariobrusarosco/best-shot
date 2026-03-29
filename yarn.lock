@@ -1281,10 +1281,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fontsource/antonio@npm:^5.2.8":
-  version: 5.2.8
-  resolution: "@fontsource/antonio@npm:5.2.8"
-  checksum: ce3ec918193a2c143c599b0b7db84f2bd2eb071de42bffa985947bf33b6818535f3fd08130c169a519970c01b3c4c31ac5d3c2df16fa58af3b31e474ed82f740
+"@fontsource/bebas-neue@npm:^5.2.7":
+  version: 5.2.7
+  resolution: "@fontsource/bebas-neue@npm:5.2.7"
+  checksum: a5a55525aadddb0d8172e16ec510ea85bf63213e36f8ed08fe4533d363702f352f8c584a38c4114f09d7e5184fcfab27d1083b5e4c419c2c7677f1b3f28b8462
   languageName: node
   linkType: hard
 
@@ -3103,7 +3103,7 @@ __metadata:
     "@biomejs/biome": ^2.1.2
     "@emotion/react": ^11.11.4
     "@emotion/styled": ^11.11.5
-    "@fontsource/antonio": ^5.2.8
+    "@fontsource/bebas-neue": ^5.2.7
     "@fontsource/montserrat": ^5.1.0
     "@hookform/resolvers": ^3.3.4
     "@mui/base": ^5.0.0-beta.70

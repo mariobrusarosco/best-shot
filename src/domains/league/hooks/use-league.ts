@@ -50,7 +50,6 @@ export const useLeague = () => {
 		});
 	};
 
-	console.log("------------query.data", query.data);
 	return {
 		league: {
 			data: query.data,

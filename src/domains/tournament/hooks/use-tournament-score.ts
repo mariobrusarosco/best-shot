@@ -12,8 +12,6 @@ export const useTournamentScore = () => {
 		queryFn: getTournamentScore,
 	});
 
-	console.log(query.data);
-
 	return {
 		score: {
 			data: query.data,

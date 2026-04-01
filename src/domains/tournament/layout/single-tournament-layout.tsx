@@ -186,6 +186,7 @@ const Logo = styled("img")(() => ({
 	maxWidth: "100%",
 }));
 
+// TODO: [SCORE DISPLAY] Consider Abstraction
 const TournamentScoreDisplay = styled(Box)(({ theme }) => ({
 	display: "flex",
 	flexDirection: "column",

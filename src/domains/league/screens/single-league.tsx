@@ -5,6 +5,7 @@ import { InviteToLeagueDialog } from "@/domains/league/components/invite-to-leag
 import { LeagueTournaments } from "@/domains/league/components/league-tournaments/league-tournament-list";
 import ParticipantsList from "@/domains/league/components/participants/participants";
 import { useLeague } from "@/domains/league/hooks/use-league";
+import { useLeagueScore } from "@/domains/league/hooks/use-league-score";
 import { type FABAction, FABMenu } from "@/domains/ui-system/components/fab-menu";
 import { AppIcon } from "@/domains/ui-system/components/icon/icon";
 import { AuthenticatedScreenLayout } from "@/domains/ui-system/layout/authenticated";
@@ -14,6 +15,7 @@ import { FONT_FAMILIES } from "@/domains/ui-system/theme/foundation/typography";
 
 export const SingleLeagueScreen = () => {
 	const { league } = useLeague();
+	const { score } = useLeagueScore();
 	const hasInvitePermission = league.data?.permissions.invite;
 	const [isInviteDialogOpen, setIsInviteDialogOpen] = useState(false);
 
@@ -58,26 +60,71 @@ export const SingleLeagueScreen = () => {
 		);
 	}
 
+	console.log("------------score", score);
 	return (
 		<AuthenticatedScreenLayout data-ui="leagues-screen screen">
-			<LeagueDisplay>
-				<Typography data-ui="title" variant="h2" textTransform="uppercase" color="black.400">
-					League
-				</Typography>
+			<Stack flexDirection="row" justifyContent="space-between">
+				<LeagueDisplay>
+					<Typography data-ui="title" variant="h2" textTransform="uppercase" color="black.400">
+						League
+					</Typography>
 
-				<LeagueName>
+					<LeagueName>
+						<Typography
+							variant="body1"
+							color="neutral.0"
+							textTransform="lowercase"
+							sx={{
+								fontFamily: FONT_FAMILIES.heading,
+							}}
+						>
+							{league.data?.label}
+						</Typography>
+					</LeagueName>
+				</LeagueDisplay>
+
+				<LeagueScoreDisplay data-ui="league-score-display">
+					{score.data?.underCalculation ? (
+						<UnderCalculationDisplay>
+							<Typography
+								variant="caption"
+								textTransform="uppercase"
+								sx={{
+									fontFamily: FONT_FAMILIES.heading,
+									letterSpacing: "0.2px",
+									fontWeight: "700",
+								}}
+							>
+								under calculation
+							</Typography>
+						</UnderCalculationDisplay>
+					) : null}
+
 					<Typography
-						variant="body1"
-						color="neutral.0"
-						textTransform="lowercase"
+						variant="h6"
+						color="black.400"
+						textTransform="uppercase"
 						sx={{
 							fontFamily: FONT_FAMILIES.heading,
 						}}
 					>
-						{league.data?.label}
+						you have
 					</Typography>
-				</LeagueName>
-			</LeagueDisplay>
+					<Score>
+						<Typography
+							variant="body2"
+							color="neutral.0"
+							textTransform="uppercase"
+							sx={{
+								fontFamily: FONT_FAMILIES.heading,
+								fontWeight: "bold",
+							}}
+						>
+							{score.data?.points} points
+						</Typography>
+					</Score>
+				</LeagueScoreDisplay>
+			</Stack>
 
 			<ScreenMainContent>
 				<League data-ui="league">
@@ -136,4 +183,31 @@ const LeagueName = styled(Box)(({ theme }) => ({
 	padding: theme.spacing(1, 1.5),
 	borderRadius: theme.shape.medium,
 	width: "fit-content",
+}));
+
+// TODO: [SCORE DISPLAY] Consider Abstraction
+const LeagueScoreDisplay = styled(Box)(({ theme }) => ({
+	display: "flex",
+	flexDirection: "column",
+	height: "fit-content",
+	width: "fit-content",
+	gap: theme.spacing(0.5),
+	padding: theme.spacing(2),
+	backgroundColor: theme.palette.neutral[0],
+	borderRadius: theme.shape.medium,
+	alignItems: "center",
+	flexWrap: "wrap",
+}));
+
+const Score = styled(Box)(({ theme }) => ({
+	backgroundColor: theme.palette.teal[500],
+	padding: theme.spacing(1, 1.5),
+	borderRadius: theme.shape.medium,
+}));
+
+const UnderCalculationDisplay = styled(Box)(({ theme }) => ({
+	backgroundColor: theme.palette.pink["700"],
+	padding: theme.spacing(0.5, 1),
+	borderRadius: theme.shape.medium,
+	color: theme.palette.neutral[0],
 }));

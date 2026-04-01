@@ -1,4 +1,5 @@
 import { api } from "@/api";
+import type { leagueScoreKey } from "@/domains/league/server-side/keys";
 import type { ILeague } from "@/domains/league/typing";
 
 export const getLeagues = async () => {
@@ -8,10 +9,10 @@ export const getLeagues = async () => {
 };
 
 export const getLeagueScore = async ({ queryKey }: { queryKey: unknown }) => {
-	const queryKeyArray = queryKey as [string, { leagueId: string }];
-	const [, { leagueId }] = queryKeyArray;
+	const keys = queryKey as ReturnType<typeof leagueScoreKey>;
+	const [_, id] = keys;
 
-	const response = await api.get(`leagues/${leagueId}/leaderboard`);
+	const response = await api.get(`leagues/${id}/score`);
 
 	return response.data;
 };

@@ -1,10 +1,37 @@
-import { Auth0Provider, useAuth0 as useAuthBase } from "@auth0/auth0-react";
-import { api } from "@/api";
+import { Auth0Provider, useAuth0 } from "@auth0/auth0-react";
+import { createContext, useContext } from "react";
 import type { IAuthHook } from "@/domains/authentication/adapters/typing";
-import { useDatabaseAuth } from "@/domains/authentication/hooks/use-database-auth";
+import { useProjectAuth } from "@/domains/authentication/hooks/use-project-auth";
 import { useMember } from "@/domains/member/hooks/use-member";
 
-const Provider = ({ children }: { children: React.ReactNode }) => {
+
+const AuthContext = createContext<any>(null);
+
+
+const AuthProvider = ({ children }: { children: React.ReactNode }) => {
+	// Auth0 Data Authentication and Methods
+	const auth0 = useAuth0();
+	// Best Shot Data Authentication and Methods
+	const projectAuth = useProjectAuth({ auth0 });
+	// Best Shot Member
+	const member = useMember({ fetchOnMount: auth0.isAuthenticated });
+
+	const contextValue = {
+		isAuthenticated: auth0.isAuthenticated,
+		isLoadingAuth: auth0.isLoading,
+		authId: auth0.user?.sub,
+		signup: projectAuth.handleSignup,
+		login: projectAuth.handleLogin,
+		logout: projectAuth.handleLogout,
+		member
+	} satisfies IAuthHook;
+
+	return (
+		<AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>
+	);
+};
+
+const ProviderWithAuth0 = ({ children }: { children: React.ReactNode }) => {
 	return (
 		<Auth0Provider
 			domain={import.meta.env.VITE_AUTH_DOMAIN}
@@ -15,75 +42,19 @@ const Provider = ({ children }: { children: React.ReactNode }) => {
 			useRefreshTokens={true}
 			cacheLocation="localstorage"
 		>
-			{children}
+			<AuthProvider>{children}</AuthProvider>
 		</Auth0Provider>
 	);
 };
 
-const hook = () => {
-	const { isAuthenticated, isLoading, user, loginWithPopup, logout, getIdTokenClaims } =
-		useAuthBase();
-	const databaseAuth = useDatabaseAuth();
-	const member = useMember({ fetchOnMount: isAuthenticated });
+const useAuthenticatedUser = () => {
+	console.log("STARTING.... adpater auth hook...");
+	const context = useContext(AuthContext);
 
-	const appLogin = async () => {
-		try {
-			await loginWithPopup({
-				authorizationParams: {
-					screen_hint: "login",
-				},
-			});
-			const user = await getIdTokenClaims();
-			if (!user) throw new Error("User not found");
-
-			return await databaseAuth.login.mutateAsync(user.sub);
-		} catch (error) {
-			alert(error);
-
-			return Promise.reject(error);
-		}
-	};
-
-	const appSignup = async () => {
-		try {
-			await loginWithPopup({
-				authorizationParams: { screen_hint: "signup" },
-			});
-			const user = await getIdTokenClaims();
-			console.log("User from token", user);
-
-			// Await the mutation to handle success/error properly
-			const result = await databaseAuth.sign.mutateAsync(user);
-
-			// Show success message
-			alert("Account created successfully!");
-
-			return result;
-		} catch (error) {
-			alert(error instanceof Error ? error.message : String(error));
-			return Promise.reject(error);
-		}
-	};
-
-	const appLogout = async () => {
-		try {
-			await logout({ logoutParams: { returnTo: window.location.origin } });
-			await api.delete("auth");
-		} catch (error) {
-			alert(error);
-
-			return Promise.reject(error);
-		}
-	};
-
-	return {
-		isAuthenticated: isAuthenticated && member.isSuccess,
-		isLoadingAuth: isLoading || member.isLoading,
-		authId: user?.sub,
-		signup: appSignup,
-		login: appLogin,
-		logout: appLogout,
-	} satisfies IAuthHook;
+	if (context === undefined) {
+		throw new Error('useCount must be used within a CountProvider')
+	}
+	return context
 };
 
-export default { hook, Provider };
+export default { useAuthenticatedUser, AuthProvider: ProviderWithAuth0 };

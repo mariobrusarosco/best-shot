@@ -3,17 +3,21 @@ import Auth0 from "./adapters/auth-0";
 import Bypass from "./adapters/bypass";
 import type { IAuthAdapter } from "./adapters/typing";
 
-const AuthenticationAdapter: IAuthAdapter = {
+export const Authentication: IAuthAdapter = {
 	"local-dev": {
-		AuthProvider: Auth0.Provider,
-		useAppAuth: Auth0.hook,
+		Provider: Auth0.AuthProvider,
+		useAuthenticatedUser: Auth0.useAuthenticatedUser,
 	},
 	demo: {
-		AuthProvider: Bypass.Provider,
-		useAppAuth: Bypass.hook,
+		Provider: Bypass.Provider,
+		useAuthenticatedUser: Bypass.useAuthenticatedUser,
 	},
-	staging: { AuthProvider: Auth0.Provider, useAppAuth: Auth0.hook },
-	production: { AuthProvider: Auth0.Provider, useAppAuth: Auth0.hook },
-};
-
-export const Authentication = AuthenticationAdapter[APP_MODE];
+	staging: {
+		Provider: Auth0.AuthProvider,
+		useAuthenticatedUser: Auth0.useAuthenticatedUser,
+	},
+	production: {
+		Provider: Auth0.AuthProvider,
+		useAuthenticatedUser: Auth0.useAuthenticatedUser,
+	},
+}[APP_MODE];

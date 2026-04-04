@@ -52,18 +52,5 @@ League:
   "tournaments": [],
   "underCalculation": true
 }
-Verification:
-
-yarn eslint src/domains/tournament/api/index.ts src/domains/league/api/index.ts
-yarn compile
-One explicit assumption I made:
-
-memberId here means the internal member UUID, not publicId
-If you want, next I can give you a tiny frontend-facing note with the exact endpoints and query param contract in one copy-paste block.
-
-
-
-
-
 
 

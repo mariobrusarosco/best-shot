@@ -6,11 +6,13 @@ import { Menu } from "@/domains/global/components/menu/menu";
 import { AppNotFound } from "@/domains/global/components/not-found";
 import { AuthenticatedLayout } from "@/domains/ui-system/layout/authenticated";
 
-const useAppAuth = Authentication.useAppAuth;
+const useAppAuth = Authentication.useAuthenticatedUser;
 
 const AuthLayout = () => {
 	const auth = useAppAuth();
 	const location = useLocation();
+
+	console.log("AUTH LAYOUT", { auth });
 
 	if (auth.isLoadingAuth) {
 		return <AppLoader />;

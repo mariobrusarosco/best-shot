@@ -92,7 +92,7 @@ export const authenticatedLocalMember = async (publicId: unknown) => {
 	return response.data;
 };
 
-export const hook = () => {
+export const useAuthenticatedUser = () => {
 	const context = useContext(ByPassAuthContext);
 
 	if (context === undefined)
@@ -101,4 +101,4 @@ export const hook = () => {
 	return context;
 };
 
-export default { hook, Provider };
+export default { useAuthenticatedUser, Provider };

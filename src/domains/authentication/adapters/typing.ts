@@ -1,4 +1,5 @@
-import type { APP_MODES } from "@/domains/global/typing";
+import type { I_Member } from "@/domains/member/typing/types-and-interfaces";
+import type { UseQueryResult } from "@tanstack/react-query";
 
 export type IAuthProvider = ({ children }: { children: React.ReactNode }) => JSX.Element;
 
@@ -9,12 +10,10 @@ export type IAuthHook = {
 	login: () => Promise<unknown>;
 	logout: () => Promise<unknown>;
 	signup: () => Promise<unknown>;
+	member: UseQueryResult<I_Member, Error>;
 };
 
-export type IAuthAdapter = Record<
-	APP_MODES,
-	{
-		AuthProvider: IAuthProvider;
-		useAppAuth: () => IAuthHook;
-	}
->;
+export type IAuthAdapter = {
+	Provider: IAuthProvider;
+	useAuthenticatedUser: () => IAuthHook;
+};

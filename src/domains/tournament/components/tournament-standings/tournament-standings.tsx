@@ -35,9 +35,12 @@ const TournamentStandings = () => {
 	if (tournamentStandings.isPending) {
 		return (
 			<Wrapper data-testid="standings-loading">
-				<Typography variant="h6" color={theme.palette.neutral[100]}>
-					Loading
-				</Typography>
+				<Heading>
+					<Typography variant="topic" color={theme.palette.neutral[100]}>
+						Loading Standings
+					</Typography>
+				</Heading>
+				<StandingsListSkeleton teams={20} />
 			</Wrapper>
 		);
 	}
@@ -220,6 +223,206 @@ const UniqueGroupStandings = ({
 	return <StandingsList teams={teams} />;
 };
 
+const StandingsListSkeleton = ({ teams }: { teams: number }) => {
+	return (
+		<StandingsTable
+			size="small"
+			aria-label="standings-table"
+			data-testid="skeleton-standings-table"
+		>
+			<TableHead>
+				<Row>
+					<Cell sx={{ pt: 0, pb: 0, textAlign: "left" }}>
+						<Typography variant="label" fontWeight={300} textTransform="uppercase" color="teal.500">
+							team
+						</Typography>
+					</Cell>
+					<Cell sx={{ pt: 0, pb: 0 }}>
+						<Typography variant="label" textTransform="uppercase" color="teal.500" fontWeight={300}>
+							pts
+						</Typography>
+					</Cell>
+					<Cell sx={{ pt: 0, pb: 0 }}>
+						<Typography variant="label" textTransform="uppercase" color="teal.500" fontWeight={300}>
+							g
+						</Typography>
+					</Cell>
+					<Cell sx={{ pt: 0, pb: 0 }}>
+						<Typography variant="label" textTransform="uppercase" color="teal.500" fontWeight={300}>
+							w
+						</Typography>
+					</Cell>
+					<Cell sx={{ pt: 0, pb: 0 }}>
+						<Typography variant="label" textTransform="uppercase" color="teal.500" fontWeight={300}>
+							d
+						</Typography>
+					</Cell>
+					<Cell sx={{ pt: 0, pb: 0 }}>
+						<Typography variant="label" textTransform="uppercase" color="teal.500" fontWeight={300}>
+							l
+						</Typography>
+					</Cell>
+					<Cell sx={{ pt: 0, pb: 0 }}>
+						<Typography variant="label" textTransform="uppercase" color="teal.500" fontWeight={300}>
+							gf
+						</Typography>
+					</Cell>
+					<Cell sx={{ pt: 0, pb: 0 }}>
+						<Typography variant="label" textTransform="uppercase" color="teal.500" fontWeight={300}>
+							ga
+						</Typography>
+					</Cell>
+					<Cell sx={{ pt: 0, pb: 0 }}>
+						<Typography variant="label" textTransform="uppercase" color="teal.500" fontWeight={300}>
+							gd
+						</Typography>
+					</Cell>
+				</Row>
+			</TableHead>
+
+			<TableBody>
+				{Array.from({ length: teams }, (_, i) => i).map((row) => {
+					return (
+						<Row key={row} sx={{ color: "neutral.100" }}>
+							<Cell sx={{ color: "neutral.100" }}>
+								<Stack direction="row" alignItems="center" gap={2} minWidth="130px">
+									<Typography
+										variant="topic"
+										textTransform="uppercase"
+										fontWeight={300}
+										color="neutral.100"
+									>
+										-
+									</Typography>
+
+									<Stack flexDirection="row" alignItems="center" gap={1}>
+										{/* <TeamLogo src={row.teamBadge} /> */}
+										<Typography
+											variant="topic"
+											textTransform="uppercase"
+											fontWeight={300}
+											color="neutral.100"
+											sx={{
+												display: {
+													all: "none",
+													tablet: "inline-block",
+												},
+											}}
+											overflow="hidden"
+											textOverflow="ellipsis"
+											textAlign="left"
+										>
+											-
+										</Typography>
+									</Stack>
+
+									{/* Fallback for mobile */}
+									<Typography
+										variant="topic"
+										textTransform="uppercase"
+										fontWeight={300}
+										color="neutral.100"
+										sx={{
+											display: {
+												all: "inline-block",
+												tablet: "none",
+											},
+										}}
+										overflow="hidden"
+										textOverflow="ellipsis"
+										textAlign="left"
+									>
+										-
+									</Typography>
+								</Stack>
+							</Cell>
+							<Cell sx={{ color: "neutral.100" }}>
+								<Typography
+									variant="topic"
+									textTransform="uppercase"
+									fontWeight={300}
+									color="neutral.100"
+								>
+									-
+								</Typography>
+							</Cell>
+							<Cell sx={{ color: "neutral.100" }} align="right">
+								<Typography
+									variant="topic"
+									textTransform="uppercase"
+									fontWeight={300}
+									color="neutral.100"
+								>
+									-
+								</Typography>
+							</Cell>
+							<Cell sx={{ color: "neutral.100" }} align="right">
+								<Typography
+									variant="topic"
+									textTransform="uppercase"
+									fontWeight={300}
+									color="neutral.100"
+								>
+									-
+								</Typography>
+							</Cell>
+							<Cell sx={{ color: "neutral.100" }} align="right">
+								<Typography
+									variant="topic"
+									textTransform="uppercase"
+									fontWeight={300}
+									color="neutral.100"
+								>
+									-
+								</Typography>
+							</Cell>
+							<Cell sx={{ color: "neutral.100" }} align="right">
+								<Typography
+									variant="topic"
+									textTransform="uppercase"
+									fontWeight={300}
+									color="neutral.100"
+								>
+									-
+								</Typography>
+							</Cell>
+							<Cell sx={{ color: "neutral.100" }} align="right">
+								<Typography
+									variant="topic"
+									textTransform="uppercase"
+									fontWeight={300}
+									color="neutral.100"
+								>
+									-
+								</Typography>
+							</Cell>
+							<Cell sx={{ color: "neutral.100" }} align="right">
+								<Typography
+									variant="topic"
+									textTransform="uppercase"
+									fontWeight={300}
+									color="neutral.100"
+								>
+									-
+								</Typography>
+							</Cell>
+							<Cell sx={{ color: "neutral.100" }} align="right">
+								<Typography
+									variant="topic"
+									textTransform="uppercase"
+									fontWeight={300}
+									color="neutral.100"
+								>
+									-
+								</Typography>
+							</Cell>
+						</Row>
+					);
+				})}
+			</TableBody>
+		</StandingsTable>
+	);
+};
 const StandingsList = ({ teams }: { teams: z.infer<typeof TournamentStandingTeamSchema>[] }) => {
 	return (
 		<StandingsTable size="small" aria-label="standings-table" data-testid="standings-table">

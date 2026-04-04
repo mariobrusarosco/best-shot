@@ -7,10 +7,8 @@ import { AppButton } from "@/domains/ui-system/components/button/button";
 import { PublicLayout } from "@/domains/ui-system/layout/public";
 import { theme } from "@/domains/ui-system/theme";
 
-const useAppAuth = Authentication.useAppAuth;
-
 const LoginScreen = () => {
-	const auth = useAppAuth();
+	const auth = Authentication.useAuthenticatedUser();
 	const navigate = useNavigate();
 
 	return (

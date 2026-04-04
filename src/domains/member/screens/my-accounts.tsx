@@ -1,21 +1,17 @@
 import { Box, styled, Typography } from "@mui/material";
 import { useNavigate } from "@tanstack/react-router";
 import { Authentication } from "@/domains/authentication";
-import { useMember } from "@/domains/member/hooks/use-member";
 import { LogoutButton, MyAccount } from "@/domains/member/screens/my-accounts.styles";
 import { AuthenticatedScreenLayout } from "@/domains/ui-system/layout/authenticated";
 import { ScreenMainContent } from "@/domains/ui-system/layout/screen-main-content";
 
-const { useAppAuth } = Authentication;
-
 export default function MyAccountScreen() {
-	const auth = useAppAuth();
-	const member = useMember();
+	const auth = Authentication.useAuthenticatedUser();
 	const navigate = useNavigate();
 
-	const fullName = `${member.data?.firstName} ${member.data?.lastName}`;
+	const fullName = `${auth.member.data?.firstName} ${auth.member.data?.lastName}`;
 
-	if (member.isLoading) {
+	if (auth.member.isLoading) {
 		return (
 			<AuthenticatedScreenLayout>
 				<ScreenMainContent>
@@ -27,7 +23,7 @@ export default function MyAccountScreen() {
 		);
 	}
 
-	if (member.isError) {
+	if (auth.member.isError) {
 		return (
 			<AuthenticatedScreenLayout>
 				<ScreenMainContent>
@@ -53,7 +49,7 @@ export default function MyAccountScreen() {
 						User
 					</Typography>
 					<Typography variant="caption" color="neutral.100" component="p">
-						{member.data?.nickName}
+						{auth.member.data?.nickName}
 					</Typography>
 				</Box>
 
@@ -71,7 +67,7 @@ export default function MyAccountScreen() {
 						Email
 					</Typography>
 					<Typography variant="caption" color="neutral.100" component="p">
-						{member.data?.email}
+						{auth.member.data?.email}
 					</Typography>
 				</Box>
 

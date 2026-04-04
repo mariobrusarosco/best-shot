@@ -6,8 +6,6 @@ import type { RouterContext } from "@/routes/__root";
 import { routeTree } from "@/routeTree.gen";
 import { Authentication } from "./domains/authentication";
 
-const { useAppAuth } = Authentication;
-
 // Type-safety registration
 declare module "@tanstack/react-router" {
 	interface Register {
@@ -26,14 +24,11 @@ const router = createRouter({
 });
 
 const Router = () => {
-	const auth = useAppAuth();
-
 	return (
 		<RouterProvider
 			router={router}
 			context={{
 				queryClient,
-				auth,
 			}}
 		/>
 	);

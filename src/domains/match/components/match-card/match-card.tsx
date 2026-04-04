@@ -12,7 +12,6 @@ import type { IMatch } from "@/domains/match/typing";
 import { defineMatchTimebox } from "@/domains/match/utils";
 import { AppButton } from "@/domains/ui-system/components/app-button/app-button";
 import { AppIcon } from "@/domains/ui-system/components/icon/icon";
-import { shimmerEffect } from "@/domains/ui-system/components/skeleton/skeleton";
 import { Surface } from "@/domains/ui-system/components/surface/surface";
 import { theme, UIHelper } from "@/domains/ui-system/theme";
 import { CardAnimation } from "./animations";
@@ -253,13 +252,11 @@ const Button = styled(AppButton)(({ theme }) => ({
 }));
 
 // Loading skeleton
-const Skeleton = styled(Card)(() => ({
-	minHeight: "140px",
+export const MatchCardSkeleton = styled(Card)(() => ({
+	minHeight: "185px",
 	position: "relative",
-	...shimmerEffect(),
 }));
 
 export default {
 	Component: MatchCard,
-	Skeleton,
 };

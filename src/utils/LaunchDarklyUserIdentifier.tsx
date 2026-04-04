@@ -3,8 +3,6 @@ import { useIdentifyUser } from "@/configuration/feature-flag/featureFlags";
 import { Authentication } from "@/domains/authentication";
 import { APP_MODE } from "@/domains/global/utils";
 
-const { useAppAuth } = Authentication;
-
 /**
  * LaunchDarklyUserIdentifier
  *
@@ -15,7 +13,7 @@ const { useAppAuth } = Authentication;
  * the authentication provider.
  */
 export const LaunchDarklyUserIdentifier = () => {
-	const auth = useAppAuth();
+	const auth = Authentication.useAuthenticatedUser();
 	const { isAuthenticated, isLoadingAuth, authId } = auth;
 	const identifyUser = useIdentifyUser();
 

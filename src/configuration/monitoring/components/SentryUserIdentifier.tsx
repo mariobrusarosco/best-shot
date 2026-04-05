@@ -3,8 +3,6 @@ import { Monitoring } from "@/configuration/monitoring";
 import { Authentication } from "@/domains/authentication";
 import { useMember } from "@/domains/member/hooks/use-member";
 
-const { useAppAuth } = Authentication;
-
 /**
  * SentryUserIdentifier Component
  *
@@ -18,7 +16,7 @@ const { useAppAuth } = Authentication;
  * - Track user-specific error patterns
  */
 export function SentryUserIdentifier() {
-	const { isAuthenticated } = useAppAuth();
+	const { isAuthenticated } = Authentication.useAuthenticatedUser();
 	const member = useMember({ fetchOnMount: isAuthenticated });
 
 	useEffect(() => {

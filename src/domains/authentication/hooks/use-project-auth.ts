@@ -46,9 +46,12 @@ export const useProjectAuth = ({ auth0 }: { auth0: ReturnType<typeof useAuth0> }
 		mutationFn: async (token: unknown) => {
 			const response = await api.post(
 				"auth",
-				{ token },
 				{
 					baseURL: import.meta.env.VITE_BEST_SHOT_API_V2,
+					headers: {
+						Authorization: `Bearer ${token}`,
+					},
+					withCredentials: true,
 				}
 			);
 
@@ -87,13 +90,17 @@ export const useProjectAuth = ({ auth0 }: { auth0: ReturnType<typeof useAuth0> }
 					screen_hint: "login",
 				},
 			});
-			const token = await auth0.getAccessTokenSilently();
+			const token = await auth0.getAccessTokenSilently({
+				authorizationParams: {
+					audience: import.meta.env.VITE_AUTH0_AUDIENCE,
+				}
+			});
 			if (!token) throw new Error("User not found");
 			debugger
 
 			return await loginMutation.mutateAsync(token);
 		} catch (error) {
-			alert(error);
+			alert("LOGIN ERROR"  + error);
 
 			return Promise.reject(error);
 		}

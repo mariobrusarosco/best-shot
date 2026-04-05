@@ -7,10 +7,10 @@ import { theme } from "@/domains/ui-system/theme";
 import "@/domains/ui-system/theme/fonts";
 import { GlobalCSS } from "@/domains/ui-system/theme/global-styles";
 import { AppRouter } from "./app-router";
-// import LaunchDarklyUserIdentifier from "@/utils/LaunchDarklyUserIden
 import { AppConfiguration } from "./configuration";
 import { Authentication } from "./domains/authentication";
 import { APP_MODE } from "./domains/global/utils";
+import { SentryUserIdentifier } from "./configuration/monitoring/components/SentryUserIdentifier";
 
 AppConfiguration.init();
 
@@ -26,7 +26,7 @@ function App() {
 						<GlobalCSS />
 						<AppRouter />
 						{/* <LaunchDarklyUserIdentifier /> */}
-						{/* <SentryUserIdentifier /> */}
+						<SentryUserIdentifier />
 					</ThemeProvider>
 				</Authentication.Provider>
 			</AppQueryProvider>

@@ -44,11 +44,14 @@ export const Provider = ({ children }: { children: React.ReactNode }) => {
 	};
 	const [state, setState] = useState<IAuthHook>({
 		isAuthenticated,
-		authId: undefined,
+		authId: memberid as string,
 		isLoadingAuth: true,
 		logout: appLogout,
 		login: appLogin,
 		signup: appSignup,
+		member: {
+			
+		},
 	});
 	// Update state when functions change (though they are stable here)
 	// We need to keep state in sync with isAuthenticated

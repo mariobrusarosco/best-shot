@@ -38,9 +38,11 @@ const ProviderWithAuth0 = ({ children }: { children: React.ReactNode }) => {
 			clientId={import.meta.env.VITE_AUTH_CLIENT_ID}
 			authorizationParams={{
 				redirect_uri: window.location.origin,
+				audience: import.meta.env.VITE_AUTH0_AUDIENCE,
 			}}
 			useRefreshTokens={true}
 			cacheLocation="localstorage"
+			
 		>
 			<AuthProvider>{children}</AuthProvider>
 		</Auth0Provider>
@@ -49,6 +51,7 @@ const ProviderWithAuth0 = ({ children }: { children: React.ReactNode }) => {
 
 const useAuthenticatedUser = () => {
 	console.log("STARTING.... adpater auth hook...");
+
 	const context = useContext(AuthContext);
 
 	if (context === undefined) {

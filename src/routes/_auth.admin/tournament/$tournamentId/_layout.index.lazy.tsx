@@ -1,6 +1,7 @@
 import { Box, CircularProgress, IconButton, styled, Tooltip, Typography } from "@mui/material";
 import { createLazyFileRoute } from "@tanstack/react-router";
 import { useCallback, useState } from "react";
+import { DeleteTournamentButton } from "@/domains/admin/components/tournaments/delete-tournament-button/delete-tournament-button";
 import {
 	useAdminCreateMatches,
 	useAdminCreateRounds,
@@ -148,54 +149,69 @@ function TournamentDetailPage() {
 				}}
 			>
 				{tournamentData && (
-					<Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
-						<Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-							<AppTypography variant="body2" color="neutral.300">
-								Provider
-							</AppTypography>
-							<AppPill.Component bgcolor={"teal.500"}>
-								<Typography
-									variant="tag"
-									textTransform="uppercase"
-									color="neutral.100"
-									fontWeight={500}
-								>
-									{tournamentData.provider}
-								</Typography>
-							</AppPill.Component>
+					<Box
+						sx={{
+							display: "flex",
+							alignItems: "center",
+							justifyContent: "space-between",
+							flexWrap: "wrap",
+							gap: 2,
+						}}
+					>
+						<Box sx={{ display: "flex", alignItems: "center", flexWrap: "wrap", gap: 2 }}>
+							<Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+								<AppTypography variant="body2" color="neutral.300">
+									Provider
+								</AppTypography>
+								<AppPill.Component bgcolor={"teal.500"}>
+									<Typography
+										variant="tag"
+										textTransform="uppercase"
+										color="neutral.100"
+										fontWeight={500}
+									>
+										{tournamentData.provider}
+									</Typography>
+								</AppPill.Component>
+							</Box>
+
+							<Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+								<AppTypography variant="body2" color="neutral.300">
+									Mode
+								</AppTypography>
+								<AppPill.Component bgcolor={"teal.500"}>
+									<Typography
+										variant="tag"
+										textTransform="uppercase"
+										color="neutral.100"
+										fontWeight={500}
+									>
+										{tournamentData.mode}
+									</Typography>
+								</AppPill.Component>
+							</Box>
+
+							<Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+								<AppTypography variant="body2" color="neutral.300">
+									Standings
+								</AppTypography>
+								<AppPill.Component bgcolor={"teal.500"}>
+									<Typography
+										variant="tag"
+										textTransform="uppercase"
+										color="neutral.100"
+										fontWeight={500}
+									>
+										{tournamentData.standingsMode}
+									</Typography>
+								</AppPill.Component>
+							</Box>
 						</Box>
 
-						<Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-							<AppTypography variant="body2" color="neutral.300">
-								Mode
-							</AppTypography>
-							<AppPill.Component bgcolor={"teal.500"}>
-								<Typography
-									variant="tag"
-									textTransform="uppercase"
-									color="neutral.100"
-									fontWeight={500}
-								>
-									{tournamentData.mode}
-								</Typography>
-							</AppPill.Component>
-						</Box>
-
-						<Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-							<AppTypography variant="body2" color="neutral.300">
-								Standings
-							</AppTypography>
-							<AppPill.Component bgcolor={"teal.500"}>
-								<Typography
-									variant="tag"
-									textTransform="uppercase"
-									color="neutral.100"
-									fontWeight={500}
-								>
-									{tournamentData.standingsMode}
-								</Typography>
-							</AppPill.Component>
-						</Box>
+						<DeleteTournamentButton
+							tournamentId={tournamentId}
+							tournamentLabel={tournamentData.label}
+						/>
 					</Box>
 				)}
 			</Box>

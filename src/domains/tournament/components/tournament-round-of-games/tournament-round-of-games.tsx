@@ -1,5 +1,5 @@
 import { styled } from "@mui/material";
-import { Stack } from "@mui/system";
+import { Box, Stack } from "@mui/system";
 import { useGuessMutation } from "@/domains/guess/hooks/use-guess-mutation";
 import { useReconciledGuesses } from "@/domains/guess/hooks/use-reconciled-guesses";
 import MatchCard from "@/domains/match/components/match-card/match-card";
@@ -22,9 +22,8 @@ export const TournamentRoundOfGames = () => {
 		);
 	}
 
-	console.log({ tournamentMatches });
 	return (
-		<Games className="round-games">
+		<Games data-ui="round-games" className="round-games">
 			{tournamentMatches.data?.map((match, index) => {
 				const guess = guessesQuery.data[index];
 
@@ -60,6 +59,10 @@ export const TournamentRoundOfGamesSkeleton = () => {
 	);
 };
 
-const Games = styled(Stack)(({ theme }) => ({
+const Games = styled(Box)(({ theme }) => ({
+	display: "grid",
+	gridTemplateColumns: "repeat(2, 1fr)",
+	maxWidth: "640px",
 	gap: theme.spacing(2),
+	placeContent: "start",
 }));

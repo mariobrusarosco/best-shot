@@ -56,7 +56,6 @@ export const getTournaments = async (): Promise<ITournament[]> => {
 
 export const getTournamentMatches = async ({ queryKey }: { queryKey: unknown }) => {
 	const queryKeyArray = queryKey as ReturnType<typeof tournamentMatchesKey>;
-	console.log({ queryKeyArray });
 	const [_, tournamentId, __, activeRound] = queryKeyArray;
 
 	const response = await api.get(`tournaments/${tournamentId}/matches/${activeRound}`);

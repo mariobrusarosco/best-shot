@@ -167,9 +167,9 @@ const Wrapper = styled(Box)(() => ({
 		display: "none",
 	},
 
-	[UIHelper.startsOn("tablet")]: {
-		flex: 1,
-	},
+	// [UIHelper.startsOn("tablet")]: {
+	// 	flex: 1,
+	// },
 	...OverflowOnHover(),
 }));
 
@@ -255,7 +255,7 @@ const StandingsList = ({ teams }: { teams: z.infer<typeof TournamentStandingTeam
 							l
 						</Typography>
 					</Cell>
-					<Cell sx={{ pt: 0, pb: 0 }}>
+					{/* <Cell sx={{ pt: 0, pb: 0 }}>
 						<Typography variant="label" textTransform="uppercase" color="teal.500" fontWeight={300}>
 							gf
 						</Typography>
@@ -269,7 +269,7 @@ const StandingsList = ({ teams }: { teams: z.infer<typeof TournamentStandingTeam
 						<Typography variant="label" textTransform="uppercase" color="teal.500" fontWeight={300}>
 							gd
 						</Typography>
-					</Cell>
+					</Cell> */}
 				</Row>
 			</TableHead>
 
@@ -379,7 +379,7 @@ const StandingsList = ({ teams }: { teams: z.infer<typeof TournamentStandingTeam
 									{row.losses}
 								</Typography>
 							</Cell>
-							<Cell sx={{ color: "neutral.100" }} align="right">
+							{/* <Cell sx={{ color: "neutral.100" }} align="right">
 								<Typography
 									variant="topic"
 									textTransform="uppercase"
@@ -408,7 +408,7 @@ const StandingsList = ({ teams }: { teams: z.infer<typeof TournamentStandingTeam
 								>
 									{row.gd}
 								</Typography>
-							</Cell>
+							</Cell> */}
 						</Row>
 					);
 				})}

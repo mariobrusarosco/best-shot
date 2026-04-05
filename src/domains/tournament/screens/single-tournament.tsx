@@ -25,7 +25,7 @@ const Matches = styled(Box)(({ theme }) => ({
 	},
 	[UIHelper.startsOn("tablet")]: {
 		height: "100%",
-		columnGap: theme.spacing(1),
+		columnGap: theme.spacing(2),
 	},
 	[UIHelper.startsOn("desktop")]: {
 		height: "100%",

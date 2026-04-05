@@ -8,7 +8,7 @@ import type { TournamentRoundsSearch } from "@/domains/tournament/types";
 
 const route = getRouteApi("/_auth/tournaments/$tournamentId");
 
-export const useGuess = () => {
+export const useGuess = ({ enabled = true }: { enabled?: boolean } = {}) => {
 	const search = route.useSearch() as TournamentRoundsSearch;
 	const queryClient = useQueryClient();
 	const tournamentId = route.useParams().tournamentId;
@@ -22,7 +22,7 @@ export const useGuess = () => {
 	const guesses = useQuery({
 		queryKey: guessKey(tournamentId, activeRound),
 		queryFn: getMemberGuesses,
-		enabled: !!tournamentId && (!!search.round || !!tournament),
+		enabled: enabled && !!tournamentId && (!!search.round || !!tournament),
 	});
 
 	return guesses;

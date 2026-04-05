@@ -6,10 +6,10 @@ import { useState } from "react";
 
 import { BestShotIcon } from "@/assets/best-shot-icon";
 import { useGuessInputs } from "@/domains/guess/hooks/use-guess-inputs";
-import type { useGuessMutation } from "@/domains/guess/hooks/use-guess-mutation";
 import { type GUESS_STATUS, GUESS_STATUSES, type IGuess } from "@/domains/guess/typing";
 import type { IMatch } from "@/domains/match/typing";
 import { defineMatchTimebox } from "@/domains/match/utils";
+import type { MatchSaveAdapter } from "@/domains/tournament/hooks/use-tournament-simulation";
 import { AppButton } from "@/domains/ui-system/components/app-button/app-button";
 import { AppIcon } from "@/domains/ui-system/components/icon/icon";
 import { shimmerEffect } from "@/domains/ui-system/components/skeleton/skeleton";
@@ -39,12 +39,13 @@ const SHOW_CTA_BUTTON_WHEN_GUESS_STATUS = new Set<GUESS_STATUS>([
 interface Props {
 	match: IMatch;
 	guess: IGuess;
-	guessMutation: ReturnType<typeof useGuessMutation>;
+	saveAdapter: MatchSaveAdapter;
+	entryLabel?: string;
 }
 
-const MatchCard = ({ guess, match, guessMutation }: Props) => {
+const MatchCard = ({ guess, match, saveAdapter, entryLabel = "you" }: Props) => {
 	const [isOpen, setIsOpen] = useState(false);
-	const guessInputs = useGuessInputs(guess, match, guessMutation);
+	const guessInputs = useGuessInputs(guess, match, saveAdapter);
 
 	// Match
 	const timebox = defineMatchTimebox(match.date);
@@ -62,7 +63,7 @@ const MatchCard = ({ guess, match, guessMutation }: Props) => {
 			data-guess-status={guess.status}
 			data-id={guess.id}
 		>
-			<CardAnimation lastSavedGuess={guessMutation.data?.matchId === guess.matchId} />
+			<CardAnimation lastSavedGuess={saveAdapter.lastSavedMatchId === guess.matchId} />
 			<Header data-ui="match-card-header">
 				<Stack gap={1} display="flex" flexDirection="row" alignItems="center" width="100%">
 					<Stack direction="row" gap={1} alignItems="center">
@@ -136,7 +137,7 @@ const MatchCard = ({ guess, match, guessMutation }: Props) => {
 					<Box display="flex" gap={1} flexDirection="column" width="80px">
 						<ScoreDisplay matchVenueData={match.home} />
 
-						<GuessDisplay cardExpanded={isOpen} data={guess.home} />
+						<GuessDisplay cardExpanded={isOpen} data={guess.home} label={entryLabel} />
 					</Box>
 					<ScoreInput
 						guessStatus={guess.status}
@@ -151,7 +152,7 @@ const MatchCard = ({ guess, match, guessMutation }: Props) => {
 					<Divider sx={{ borderColor: "black.300" }} />
 					<Box display="flex" gap={1} flexDirection="column" width="80px">
 						<ScoreDisplay matchVenueData={match.away} />
-						<GuessDisplay cardExpanded={isOpen} data={guess.away} />
+						<GuessDisplay cardExpanded={isOpen} data={guess.away} label={entryLabel} />
 					</Box>
 					<ScoreInput
 						guessStatus={guess.status}

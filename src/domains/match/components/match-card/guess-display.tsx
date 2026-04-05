@@ -7,9 +7,10 @@ import { theme } from "@/domains/ui-system/theme";
 interface Props {
 	data: IGuess["away"] | IGuess["away"];
 	cardExpanded: boolean;
+	label?: string;
 }
 
-export const GuessDisplay = ({ data, cardExpanded }: Props) => {
+export const GuessDisplay = ({ data, cardExpanded, label = "you" }: Props) => {
 	if (cardExpanded || data.status === "expired") return null;
 
 	const value = data.value;
@@ -18,7 +19,7 @@ export const GuessDisplay = ({ data, cardExpanded }: Props) => {
 	return (
 		<Wrapper data-ui="guess-display">
 			<Typography textTransform="uppercase" variant="tag" fontWeight={500}>
-				you
+				{label}
 			</Typography>
 			<AppPill.Component minWidth={30} height={20} padding={0} color={color} bgcolor={bgColor}>
 				<Typography variant="tag">{value ?? "-"}</Typography>

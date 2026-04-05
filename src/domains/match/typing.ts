@@ -1,6 +1,6 @@
 export type IMatchResponse = {
 	id: string;
-	date: string;
+	date: string | null;
 	round: string;
 	tournamentId: string;
 	home: {

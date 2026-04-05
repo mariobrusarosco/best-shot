@@ -1,15 +1,16 @@
 import { getRouteApi } from "@tanstack/react-router";
 import { useState } from "react";
 import type { IGuess } from "@/domains/guess/typing";
+import type { CreateGuessInput } from "@/domains/league/typing";
 import type { IMatch } from "@/domains/match/typing";
-import type { useGuessMutation } from "./use-guess-mutation";
+import type { MatchSaveAdapter } from "@/domains/tournament/hooks/use-tournament-simulation";
 
 const route = getRouteApi("/_auth/tournaments/$tournamentId");
 
 export const useGuessInputs = (
 	guess: IGuess,
 	match: IMatch,
-	guessMutation: ReturnType<typeof useGuessMutation>
+	saveAdapter: MatchSaveAdapter
 ) => {
 	const tournamentId = route.useParams().tournamentId;
 
@@ -28,12 +29,14 @@ export const useGuessInputs = (
 			throw new Error("Invalid guess");
 		}
 
-		return guessMutation.mutateAsync({
+		const input: CreateGuessInput = {
 			matchId: match.id,
 			tournamentId,
 			home: { score: homeGuess },
 			away: { score: awayGuess },
-		});
+		};
+
+		return saveAdapter.saveMatch(match, input);
 	};
 
 	const hasEmptyInput = homeGuess === null || awayGuess === null;
@@ -44,7 +47,7 @@ export const useGuessInputs = (
 		handleSave,
 		homeGuess,
 		awayGuess,
-		allowNewGuess: !guessMutation.isPending && !hasEmptyInput,
-		isPending: guessMutation.isPending,
+		allowNewGuess: !saveAdapter.isPending && !hasEmptyInput,
+		isPending: saveAdapter.isPending,
 	};
 };

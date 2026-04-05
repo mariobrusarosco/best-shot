@@ -7,8 +7,12 @@ import { GUESS_STATUSES } from "./typing";
  * @param matchDate ISO datetime string (e.g., "2025-01-15T14:00:00Z")
  * @returns true if match has already started
  */
-export const hasLostTimewindow = (matchDate: string): boolean => {
+export const hasLostTimewindow = (matchDate: string | null): boolean => {
 	try {
+		if (!matchDate) {
+			return false;
+		}
+
 		const matchTime = new Date(matchDate).getTime();
 		const now = Date.now();
 		return now >= matchTime;

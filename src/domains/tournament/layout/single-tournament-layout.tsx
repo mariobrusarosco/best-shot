@@ -4,6 +4,9 @@ import { ScreenHeadingSkeleton } from "@/domains/global/components/screen-headin
 import TournamentHeading from "@/domains/tournament/components/tournament-heading";
 import { useTournament } from "@/domains/tournament/hooks/use-tournament";
 import { useTournamentScore } from "@/domains/tournament/hooks/use-tournament-score";
+import { useTournamentSimulation } from "@/domains/tournament/hooks/use-tournament-simulation";
+import { AppButton } from "@/domains/ui-system/components/app-button/app-button";
+import { AppPill } from "@/domains/ui-system/components/pill/pill";
 import { AuthenticatedScreenLayout } from "@/domains/ui-system/layout/authenticated";
 import { ScreenMainContent } from "@/domains/ui-system/layout/screen-main-content";
 import { FONT_FAMILIES } from "@/domains/ui-system/theme/foundation/typography";
@@ -14,6 +17,7 @@ export const SingleTournamentLayout = () => {
 		states,
 	} = useTournament({ fetchOnMount: true });
 	const { score } = useTournamentScore();
+	const simulation = useTournamentSimulation();
 
 	if (states.isError) {
 		<AuthenticatedScreenLayout>
@@ -135,6 +139,25 @@ export const SingleTournamentLayout = () => {
 					</TournamentScoreDisplay>
 				</Stack>
 
+				{simulation.isEnabled ? (
+					<SimulationControls>
+						<AppPill.Component bgcolor="teal.500" px={2} py={0.75}>
+							<Typography
+								variant="tag"
+								color="neutral.0"
+								textTransform="uppercase"
+								fontWeight={600}
+							>
+								simulation
+							</Typography>
+						</AppPill.Component>
+
+						<AppButton variant="outlined" color="inherit" onClick={simulation.actions.reset}>
+							Reset simulation
+						</AppButton>
+					</SimulationControls>
+				) : null}
+
 				<Outlet />
 			</TournamentContainer>
 		</AuthenticatedScreenLayout>
@@ -145,6 +168,13 @@ const TournamentContainer = styled(Box)(({ theme }) => ({
 	display: "flex",
 	flexDirection: "column",
 	gap: theme.spacing(4),
+}));
+
+const SimulationControls = styled(Box)(({ theme }) => ({
+	display: "flex",
+	alignItems: "center",
+	gap: theme.spacing(2),
+	flexWrap: "wrap",
 }));
 
 const CurrentRoundContainer = styled(Box)(({ theme }) => ({

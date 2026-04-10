@@ -88,6 +88,13 @@ const theme = createTheme({
 
 	// === COMPONENT OVERRIDES ===
 	components: {
+		MuiCssBaseline: {
+			styleOverrides: {
+				body: {
+					backgroundColor: "#2C2C2C",
+				},
+			},
+		},
 		// MUI component overrides
 		MuiButton: buttonOverrides,
 		MuiCard: cardOverrides,

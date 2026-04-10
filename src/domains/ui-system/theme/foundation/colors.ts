@@ -37,9 +37,10 @@ export const SEMANTIC_COLORS = {
 // Neutral/Grayscale Palette
 export const NEUTRAL_COLORS = {
 	black: {
-		300: "#939393", // Light gray (existing)
-		400: "#4D4D4D", // Medium gray (existing)
-		500: "#373737", // Dark gray (existing)
+		100: "#939393", // Light gray (existing)
+		200: "#2C2C2C", // Medium gray (existing)
+		300: "#4D4D4D", // Medium gray (existing)
+		400: "#373737", // Dark gray (existing)
 		700: "#131514", // Almost black (existing)
 		800: "#232424", // Card backgrounds (existing)
 	},

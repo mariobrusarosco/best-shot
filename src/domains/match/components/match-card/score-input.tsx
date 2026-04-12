@@ -2,7 +2,8 @@ import {
 	Unstable_NumberInput as BaseNumberInput,
 	type NumberInputProps,
 } from "@mui/base/Unstable_NumberInput";
-import { Box, styled } from "@mui/system";
+import { Box } from "@mui/material";
+import { styled } from "@mui/material/styles";
 import { forwardRef, useRef } from "react";
 import type { GUESS_STATUS } from "@/domains/guess/typing";
 import { AppButton } from "@/domains/ui-system/components/button/button";

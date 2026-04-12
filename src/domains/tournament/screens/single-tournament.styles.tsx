@@ -15,7 +15,7 @@ export const CurrentRoundContainer = styled(Box)(({ theme }) => ({
 export const CurrentRound = styled(Box)(({ theme }) => ({
 	backgroundColor: theme.palette.teal[500],
 	padding: theme.spacing(1, 1.5),
-	borderRadius: theme.shape.medium,
+	borderRadius: theme.borderRadius.medium,
 }));
 
 export const TournamentDisplay = styled(Box)(({ theme }) => ({
@@ -24,7 +24,7 @@ export const TournamentDisplay = styled(Box)(({ theme }) => ({
 	gap: theme.spacing(2),
 	padding: theme.spacing(3.5),
 	backgroundColor: theme.palette.neutral[0],
-	borderRadius: theme.shape.medium,
+	borderRadius: theme.borderRadius.medium,
 }));
 
 export const NameAndCurrentRound = styled(Box)(({ theme }) => ({
@@ -35,7 +35,7 @@ export const NameAndCurrentRound = styled(Box)(({ theme }) => ({
 
 export const LogoContainer = styled(Box)(({ theme }) => ({
 	padding: theme.spacing(0.5),
-	borderRadius: theme.shape.medium,
+	borderRadius: theme.borderRadius.medium,
 	opacity: 0.7,
 	width: "86px",
 }));
@@ -54,7 +54,7 @@ export const TournamentScoreDisplay = styled(Box)(({ theme }) => ({
 	gap: theme.spacing(0.5),
 	padding: theme.spacing(2),
 	backgroundColor: theme.palette.neutral[0],
-	borderRadius: theme.shape.medium,
+	borderRadius: theme.borderRadius.medium,
 	alignItems: "center",
 	flexWrap: "wrap",
 }));
@@ -62,12 +62,12 @@ export const TournamentScoreDisplay = styled(Box)(({ theme }) => ({
 export const Score = styled(Box)(({ theme }) => ({
 	backgroundColor: theme.palette.teal[500],
 	padding: theme.spacing(1, 1.5),
-	borderRadius: theme.shape.medium,
+	borderRadius: theme.borderRadius.medium,
 }));
 
 export const UnderCalculationDisplay = styled(Box)(({ theme }) => ({
 	backgroundColor: theme.palette.pink["700"],
 	padding: theme.spacing(0.5, 1),
-	borderRadius: theme.shape.medium,
+	borderRadius: theme.borderRadius.medium,
 	color: theme.palette.neutral[0],
 }));

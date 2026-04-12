@@ -7,7 +7,6 @@
 
 import { Card as MuiCard, type CardProps as MuiCardProps } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import "../../types/mui-overrides";
 import { forwardRef } from "react";
 
 // Extended card props for our design system

@@ -495,7 +495,7 @@ const Container = styled(Box)(({ theme }) => ({
 const FiltersContainer = styled(Box)(({ theme }) => ({
 	backgroundColor: theme.palette.black[800],
 	border: `1px solid ${theme.palette.neutral[700]}`,
-	borderRadius: theme.shape.borderRadius,
+	borderRadius: "4px",
 	padding: theme.spacing(2),
 	display: "grid",
 	gap: theme.spacing(1.5),
@@ -544,7 +544,7 @@ const SearchButtonContainer = styled(Box)(({ theme }) => ({
 const TableWrapper = styled(TableContainer)(({ theme }) => ({
 	backgroundColor: theme.palette.black[800],
 	border: `1px solid ${theme.palette.neutral[700]}`,
-	borderRadius: theme.shape.borderRadius,
+	borderRadius: "4px",
 }));
 
 const HeadCell = styled(TableCell)(({ theme }) => ({
@@ -583,7 +583,7 @@ const EmptyState = styled(Box)(({ theme }) => ({
 const PaginationBar = styled(Box)(({ theme }) => ({
 	backgroundColor: theme.palette.black[800],
 	border: `1px solid ${theme.palette.neutral[700]}`,
-	borderRadius: theme.shape.borderRadius,
+	borderRadius: "4px",
 	padding: theme.spacing(1.5, 2),
 	display: "flex",
 	alignItems: "center",

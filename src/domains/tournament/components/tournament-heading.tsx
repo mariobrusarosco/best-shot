@@ -1,20 +1,28 @@
-import { Box, styled } from "@mui/system";
-import { useGuess } from "@/domains/guess/hooks/use-guess";
+import { Box, Typography } from "@mui/material";
+import { styled } from "@mui/material/styles";
 import { UIHelper } from "@/domains/ui-system/theme";
 
-export const TournamentHeading = () => {
-	const guesses = useGuess();
+interface Props {
+	isLoading: boolean;
+}
 
-	if (guesses.isSuccess && guesses.data?.length === 0) {
-		return null;
-	}
+export const TournamentHeading = ({ isLoading }: Props) => {
+	if (isLoading) return <Skeleton />;
 
-	return <Wrapper data-ui="tournament-heading">{/* <TournamentRoundsBar.Component /> */}</Wrapper>;
+	return (
+		<Container data-ui="tournament-heading">
+			<Typography variant="h4">PREMIER LEAGUE 26</Typography>
+		</Container>
+	);
 };
 
-const Wrapper = styled(Box)(({ theme }) => ({
+const Container = styled(Box)(({ theme }) => ({
+	backgroundColor: theme.palette.neutral[200],
+	padding: theme.spacing(2.5, 2),
+	borderRadius: theme.borderRadius.medium,
+
 	[UIHelper.whileIs("mobile")]: {
-		paddingBottom: theme.spacing(4),
+		// TODO
 	},
 	[UIHelper.startsOn("tablet")]: {
 		display: "flex",
@@ -26,14 +34,5 @@ const Wrapper = styled(Box)(({ theme }) => ({
 export const TournamentLogo = styled("img")(() => ({}));
 
 export const Skeleton = () => {
-	return (
-		<Wrapper data-ui="tournament-heading-skeleton">
-			{/* <TournamentRoundsBar.Skeleton /> */}
-		</Wrapper>
-	);
-};
-
-export default {
-	Component: TournamentHeading,
-	Skeleton,
+	return <Container data-ui="tournament-heading-skeleton"></Container>;
 };

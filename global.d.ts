@@ -10,5 +10,5 @@ declare global {
 	}
 }
 
-// All MUI type augmentations have been moved to src/types/mui-overrides.d.ts
+// All MUI type augmentations have been moved to src/domains/ui-system/mui-overrides.d.ts
 // This prevents conflicts and provides a single source of truth for all MUI extensions

@@ -1,5 +1,5 @@
-import { styled, Typography } from "@mui/material";
-import { Stack } from "@mui/system";
+import { Stack, Typography } from "@mui/material";
+import { styled } from "@mui/material/styles";
 import { BestShotIcon } from "@/assets/best-shot-icon";
 import { theme, UIHelper } from "@/domains/ui-system/theme";
 

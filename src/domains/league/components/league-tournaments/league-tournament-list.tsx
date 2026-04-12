@@ -80,7 +80,7 @@ const EmptyState = styled(Box)(({ theme }) => ({
 	display: "flex",
 	flexDirection: "column",
 	backgroundColor: theme.palette.black[800],
-	borderRadius: theme.shape.borderRadius,
+	borderRadius: "4px",
 	gap: theme.spacing(4),
 	paddingLeft: theme.spacing(2),
 	paddingRight: theme.spacing(2),
@@ -94,7 +94,7 @@ const EmptyStartButton = styled(AppButton)(({ theme }) => ({
 	backgroundColor: theme.palette.teal[500],
 	color: theme.palette.neutral[100],
 	padding: theme.spacing(1),
-	borderRadius: theme.shape.borderRadius,
+	borderRadius: "4px",
 	maxWidth: "180px",
 }));
 

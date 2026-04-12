@@ -1,5 +1,5 @@
-import { styled } from "@mui/material";
-import { Box, Stack } from "@mui/system";
+import { Box, Stack } from "@mui/material";
+import { styled } from "@mui/material/styles";
 import { useGuessMutation } from "@/domains/guess/hooks/use-guess-mutation";
 import { useReconciledGuesses } from "@/domains/guess/hooks/use-reconciled-guesses";
 import MatchCard from "@/domains/match/components/match-card/match-card";

@@ -150,7 +150,7 @@ const Container = styled(Box)(({ theme }) => ({
 const DetailCard = styled(Box)(({ theme }) => ({
 	backgroundColor: theme.palette.black[800],
 	border: `1px solid ${theme.palette.neutral[700]}`,
-	borderRadius: theme.shape.borderRadius,
+	borderRadius: "4px",
 	padding: theme.spacing(2),
 	display: "grid",
 	gap: theme.spacing(2),
@@ -173,7 +173,7 @@ const DetailItem = styled(Box)(({ theme }) => ({
 const FailureCard = styled(Box)(({ theme }) => ({
 	backgroundColor: theme.palette.black[800],
 	border: `1px solid ${theme.palette.neutral[700]}`,
-	borderRadius: theme.shape.borderRadius,
+	borderRadius: "4px",
 	padding: theme.spacing(2),
 	display: "grid",
 	gap: theme.spacing(1.5),
@@ -201,7 +201,7 @@ const JsonValueText = styled(AppTypography)(({ theme }) => ({
 	fontFamily: "monospace",
 	backgroundColor: theme.palette.black[700],
 	border: `1px solid ${theme.palette.neutral[700]}`,
-	borderRadius: theme.shape.borderRadius,
+	borderRadius: "4px",
 	padding: theme.spacing(1.25),
 	wordBreak: "break-all",
 }));

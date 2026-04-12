@@ -66,15 +66,14 @@ export const ACCENT_COLORS = {
 } as const;
 
 // Combined Design System Colors
-export const DESIGN_SYSTEM_COLORS = {
-	primary: PRIMARY_COLORS.teal,
+const DESIGN_SYSTEM_COLORS = {
 	...SEMANTIC_COLORS,
 	...NEUTRAL_COLORS,
 	...ACCENT_COLORS,
 } as const;
 
 // Export for MUI theme integration
-export const MUI_PALETTE_COLORS = {
+const _MUI_PALETTE_COLORS = {
 	primary: {
 		main: PRIMARY_COLORS.teal[500],
 		light: PRIMARY_COLORS.teal[400],
@@ -105,7 +104,7 @@ export const MUI_PALETTE_COLORS = {
 	},
 	text: {
 		primary: NEUTRAL_COLORS.black[800],
-		secondary: NEUTRAL_COLORS.black[500],
+		secondary: NEUTRAL_COLORS.black[100],
 	},
 	// Custom color extensions
 	black: NEUTRAL_COLORS.black,

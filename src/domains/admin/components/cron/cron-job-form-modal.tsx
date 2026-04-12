@@ -273,7 +273,7 @@ const StyledDialog = styled(Dialog)(({ theme }) => ({
 	"& .MuiDialog-paper": {
 		backgroundColor: theme.palette.black[800],
 		border: `1px solid ${theme.palette.neutral[700]}`,
-		borderRadius: theme.shape.borderRadius,
+		borderRadius: "4px",
 	},
 }));
 

@@ -174,14 +174,14 @@ const LeagueDisplay = styled(Box)(({ theme }) => ({
 	gap: theme.spacing(2),
 	padding: theme.spacing(3.5),
 	backgroundColor: theme.palette.neutral[0],
-	borderRadius: theme.shape.medium,
+	borderRadius: theme.borderRadius.medium,
 	minWidth: "300px",
 }));
 
 const LeagueName = styled(Box)(({ theme }) => ({
 	backgroundColor: theme.palette.teal[500],
 	padding: theme.spacing(1, 1.5),
-	borderRadius: theme.shape.medium,
+	borderRadius: theme.borderRadius.medium,
 	width: "fit-content",
 }));
 
@@ -194,7 +194,7 @@ const LeagueScoreDisplay = styled(Box)(({ theme }) => ({
 	gap: theme.spacing(0.5),
 	padding: theme.spacing(2),
 	backgroundColor: theme.palette.neutral[0],
-	borderRadius: theme.shape.medium,
+	borderRadius: theme.borderRadius.medium,
 	alignItems: "center",
 	flexWrap: "wrap",
 }));
@@ -202,12 +202,12 @@ const LeagueScoreDisplay = styled(Box)(({ theme }) => ({
 const Score = styled(Box)(({ theme }) => ({
 	backgroundColor: theme.palette.teal[500],
 	padding: theme.spacing(1, 1.5),
-	borderRadius: theme.shape.medium,
+	borderRadius: theme.borderRadius.medium,
 }));
 
 const UnderCalculationDisplay = styled(Box)(({ theme }) => ({
 	backgroundColor: theme.palette.pink["700"],
 	padding: theme.spacing(0.5, 1),
-	borderRadius: theme.shape.medium,
+	borderRadius: theme.borderRadius.medium,
 	color: theme.palette.neutral[0],
 }));

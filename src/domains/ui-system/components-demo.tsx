@@ -1,6 +1,5 @@
-import { Box, Container, Paper, Typography } from "@mui/material";
-import { styled } from "@mui/material/styles";
-import { useMediaQuery, useTheme } from "@mui/system";
+import { Box, Container, Paper, Typography, useMediaQuery } from "@mui/material";
+import { styled, useTheme } from "@mui/material/styles";
 
 const Item = styled(Paper)(({ theme }) => ({
 	color: theme.palette.mode === "dark" ? "#1A2027" : "#fff",

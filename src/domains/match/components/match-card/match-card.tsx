@@ -1,5 +1,5 @@
-import { Divider, Stack, styled, Typography } from "@mui/material";
-import { Box } from "@mui/system";
+import { Box, Divider, Stack, Typography } from "@mui/material";
+import { styled } from "@mui/material/styles";
 import dayjs from "dayjs";
 import { motion } from "motion/react";
 import { useState } from "react";

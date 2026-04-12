@@ -9,7 +9,6 @@ import { Button as MuiButton } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { forwardRef } from "react";
 import type { AppButtonProps } from "@/types/ui-system";
-import "@/types/mui-overrides.d";
 
 // Enhanced styled button with design system improvements
 const StyledButton = styled(MuiButton)<AppButtonProps>(({ theme, loading }) => ({

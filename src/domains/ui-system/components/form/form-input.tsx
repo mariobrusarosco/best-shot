@@ -8,7 +8,6 @@ import {
 } from "react-hook-form";
 import { AppInput } from "@/domains/ui-system/components/input/input";
 import type { AppFormInputProps } from "@/types/ui-system";
-import "@/types/mui-overrides.d";
 
 // Helper components to reduce complexity
 const FormLabel = ({

@@ -1,5 +1,5 @@
 import { TextField } from "@mui/material";
-import { styled } from "@mui/system";
+import { styled } from "@mui/material/styles";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
@@ -25,7 +25,7 @@ interface AppDatePickerProps {
 
 const StyledDatePicker = styled(DatePicker)(({ theme }) => ({
 	"& .MuiInputBase-root": {
-		borderRadius: theme.shape.borderRadius,
+		borderRadius: "4px",
 	},
 	"& .MuiOutlinedInput-root": {
 		"&:hover .MuiOutlinedInput-notchedOutline": {

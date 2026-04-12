@@ -24,6 +24,7 @@ const AuthLayout = () => {
 		<AuthenticatedLayout data-ui="authenticated-layout">
 			<AppHeader />
 			<Menu />
+
 			<Outlet />
 		</AuthenticatedLayout>
 	);

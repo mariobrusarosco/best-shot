@@ -82,7 +82,7 @@ const DashboardDisplay = styled(Box)(({ theme }) => ({
 	gap: theme.spacing(0.5),
 	padding: theme.spacing(2),
 	backgroundColor: theme.palette.neutral[0],
-	borderRadius: theme.shape.medium,
+	borderRadius: theme.borderRadius.medium,
 	alignItems: "center",
 	flexWrap: "wrap",
 }));

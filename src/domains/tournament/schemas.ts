@@ -40,6 +40,7 @@ export const TournamentStandingTeamSchema = z.object({
 	gf: z.string(),
 	ga: z.string(),
 	gd: z.string(),
+	form: z.array(z.enum(["w", "d", "l"])),
 	provider: z.string(),
 	updatedAt: z.string().optional(),
 });
@@ -49,12 +50,27 @@ export const TournamentStandingGroupSchema = z.object({
 	teams: z.array(TournamentStandingTeamSchema),
 });
 
-const TournamentStandingsSchema = z.object({
+const TournamentStandingsBaseSchema = z.object({
 	lastUpdated: z.string(),
 	format: z.string(),
-	teams: z.union([z.array(TournamentStandingTeamSchema), z.array(TournamentStandingGroupSchema)]),
 });
 
+export const TournamentStandingsMultiGroupSchema = TournamentStandingsBaseSchema.extend({
+	format: z.literal("multi-group"),
+	teams: z.array(TournamentStandingGroupSchema),
+});
+
+export const TournamentStandingsSingleGroupSchema = TournamentStandingsBaseSchema.extend({
+	teams: z.array(TournamentStandingTeamSchema),
+});
+
+export const TournamentStandingsSchema = z.union([
+	TournamentStandingsMultiGroupSchema,
+	TournamentStandingsSingleGroupSchema,
+]);
+
+export type ITournamentStandingTeam = z.infer<typeof TournamentStandingTeamSchema>;
+export type ITournamentStandingGroup = z.infer<typeof TournamentStandingGroupSchema>;
 export type ITournamentStandings = z.infer<typeof TournamentStandingsSchema>;
 
 export const TournamentScoreSchema = z.object({

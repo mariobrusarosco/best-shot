@@ -11,8 +11,8 @@
 
 type BorderRadiusTokens =
 	typeof import("@/domains/ui-system/theme/foundation/spacing").BORDER_RADIUS;
-type DesignSystemColors =
-	typeof import("@/domains/ui-system/theme/foundation/colors").DESIGN_SYSTEM_COLORS;
+type AppPalette = typeof import("@/domains/ui-system/theme/foundation/colors").PALETTE;
+type CustomPalette = Pick<AppPalette, "black" | "neutral" | "teal" | "green" | "red" | "pink">;
 
 // ===== INPUT SLOT PROPS AUGMENTATION =====
 declare module "@mui/base/Input" {
@@ -79,16 +79,6 @@ declare module "@mui/material/Typography" {
 		label_1: true;
 		label_2: true;
 	}
-}
-
-// ===== CUSTOM PALETTE INTERFACE =====
-interface CustomPalette {
-	black: DesignSystemColors["black"];
-	neutral: DesignSystemColors["neutral"];
-	teal: DesignSystemColors["primary"];
-	green: DesignSystemColors["success"];
-	red: DesignSystemColors["error"];
-	pink: DesignSystemColors["pink"];
 }
 
 // ===== CUSTOM TYPOGRAPHY VARIANTS =====

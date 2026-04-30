@@ -17,7 +17,7 @@ import { createTheme } from "@mui/material/styles";
 // Component overrides
 import { createUIHelper, MUI_BREAKPOINTS_CONFIG } from "./foundation/breakpoints";
 // Foundation imports
-import { COLORS } from "./foundation/colors";
+import { PALETTE } from "./foundation/colors";
 import { BORDER_RADIUS, MUI_SPACING_CONFIG } from "./foundation/spacing";
 import { MUI_TYPOGRAPHY_CONFIG } from "./foundation/typography";
 
@@ -25,10 +25,7 @@ import { MUI_TYPOGRAPHY_CONFIG } from "./foundation/typography";
 const theme = createTheme({
 	// === FOUNDATION ===
 	// Color system
-	palette: {
-		mode: "light",
-		...COLORS,
-	},
+	palette: PALETTE,
 
 	// Typography system
 	typography: { ...MUI_TYPOGRAPHY_CONFIG },

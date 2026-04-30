@@ -1281,10 +1281,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fontsource/bebas-neue@npm:^5.2.7":
-  version: 5.2.7
-  resolution: "@fontsource/bebas-neue@npm:5.2.7"
-  checksum: a5a55525aadddb0d8172e16ec510ea85bf63213e36f8ed08fe4533d363702f352f8c584a38c4114f09d7e5184fcfab27d1083b5e4c419c2c7677f1b3f28b8462
+"@fontsource/antonio@npm:^5.2.8":
+  version: 5.2.8
+  resolution: "@fontsource/antonio@npm:5.2.8"
+  checksum: ce3ec918193a2c143c599b0b7db84f2bd2eb071de42bffa985947bf33b6818535f3fd08130c169a519970c01b3c4c31ac5d3c2df16fa58af3b31e474ed82f740
   languageName: node
   linkType: hard
 
@@ -2232,21 +2232,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tabler/icons-react@npm:^3.22.0":
-  version: 3.31.0
-  resolution: "@tabler/icons-react@npm:3.31.0"
+"@tabler/icons-react@npm:3.38.0":
+  version: 3.38.0
+  resolution: "@tabler/icons-react@npm:3.38.0"
   dependencies:
-    "@tabler/icons": "npm:3.31.0"
+    "@tabler/icons": 3.38.0
   peerDependencies:
     react: ">= 16"
-  checksum: 712e62b2ef35461c75216c58fd70e9480adbc149415710154d6dc60d81ca16323d3b7f2f0eb8f2f101b4431dd1c15a72b9722ba3cedfcb82d54401ff1aeffc7e
+  checksum: e7f25747c3739e4f9f0329a821a1ee36deb566b59f9963f4a6ae6781798ff429b7456e505604a2cfc4d4e9503989a12b4ad477bd479c21caddf4c72186abb01b
   languageName: node
   linkType: hard
 
-"@tabler/icons@npm:3.31.0":
-  version: 3.31.0
-  resolution: "@tabler/icons@npm:3.31.0"
-  checksum: 73d31d3737d9d684acd4a524796d42e6d82d312699851c1f0f5f09d948f5d3864391e6a5537fa677703976f830a7289bf10ec181d60a8c31ad202acb66d9220f
+"@tabler/icons@npm:3.38.0":
+  version: 3.38.0
+  resolution: "@tabler/icons@npm:3.38.0"
+  checksum: d5799a07ace5754774844e4902d20384c3e3b6896e268863a9baa5e3c2e474d891bb04930710506bc7909fdf6873d167e82e5727a67df37828bfdda82dffa126
   languageName: node
   linkType: hard
 
@@ -3103,7 +3103,7 @@ __metadata:
     "@biomejs/biome": ^2.1.2
     "@emotion/react": ^11.11.4
     "@emotion/styled": ^11.11.5
-    "@fontsource/bebas-neue": ^5.2.7
+    "@fontsource/antonio": ^5.2.8
     "@fontsource/ibm-plex-mono": ^5.2.7
     "@hookform/resolvers": ^3.3.4
     "@mui/base": ^5.0.0-beta.70
@@ -3114,7 +3114,7 @@ __metadata:
     "@playwright/test": ^1.51.1
     "@sentry/react": ^10.22.0
     "@sentry/vite-plugin": ^2.22.7
-    "@tabler/icons-react": ^3.22.0
+    "@tabler/icons-react": 3.38.0
     "@tanstack/react-query": ^5.51.9
     "@tanstack/react-query-devtools": ^5.51.9
     "@tanstack/react-router": ^1.47.1

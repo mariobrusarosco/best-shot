@@ -11,14 +11,7 @@ export const useTournament = ({ id }: { id: string }) => {
 	});
 
 	return {
-		tournament: {
-			data: query.data,
-			states: {
-				isLoading: query.isLoading,
-				isError: query.isError,
-				isEmpty: !query.isLoading && !query.isError && !query.data,
-			},
-			handlers: {},
-		},
+		query,
+		handlers: {},
 	};
 };

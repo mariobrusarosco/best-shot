@@ -2,7 +2,7 @@ import { Box, Divider, Stack, styled, Typography } from "@mui/material";
 import { useState } from "react";
 import { AppButton } from "@/domains/ui-system/components/button/button";
 import { Surface } from "@/domains/ui-system/components/surface/surface";
-import { COLORS } from "@/domains/ui-system/theme/foundation/colors";
+import { PALETTE } from "@/domains/ui-system/theme/foundation/colors";
 import { FONT_FAMILIES, TYPOGRAPHY } from "@/domains/ui-system/theme/foundation/typography";
 
 type TabId = "colors" | "typography" | "breakpoints" | "spacing" | "components";
@@ -56,34 +56,36 @@ export const UISystemViewer = () => {
 
 const ColorsSection = () => (
 	<Stack spacing={4}>
-		{Object.entries(COLORS).map(([colorName, variants]) => (
-			<Box key={colorName}>
-				<Typography variant="h5" color="neutral.100" sx={{ mb: 2, textTransform: "capitalize" }}>
-					{colorName}
-				</Typography>
-				<Box
-					sx={{
-						display: "grid",
-						gridTemplateColumns: "repeat(auto-fill, minmax(150px, 1fr))",
-						gap: 2,
-					}}
-				>
-					{Object.entries(variants).map(([shade, value]) => (
-						<ColorCard key={shade}>
-							<Box sx={{ height: 100, bgcolor: value, borderRadius: 1 }} />
-							<Box sx={{ mt: 1 }}>
-								<Typography variant="subtitle2" color="neutral.100">
-									{shade}
-								</Typography>
-								<Typography variant="caption" color="neutral.500">
-									{value}
-								</Typography>
-							</Box>
-						</ColorCard>
-					))}
+		{Object.entries(PALETTE)
+			.filter(([, variants]) => typeof variants === "object" && variants !== null)
+			.map(([colorName, variants]) => (
+				<Box key={colorName}>
+					<Typography variant="h5" color="neutral.100" sx={{ mb: 2, textTransform: "capitalize" }}>
+						{colorName}
+					</Typography>
+					<Box
+						sx={{
+							display: "grid",
+							gridTemplateColumns: "repeat(auto-fill, minmax(150px, 1fr))",
+							gap: 2,
+						}}
+					>
+						{Object.entries(variants as Record<string, string>).map(([shade, value]) => (
+							<ColorCard key={shade}>
+								<Box sx={{ height: 100, bgcolor: value, borderRadius: 1 }} />
+								<Box sx={{ mt: 1 }}>
+									<Typography variant="subtitle2" color="neutral.100">
+										{shade}
+									</Typography>
+									<Typography variant="caption" color="neutral.500">
+										{value}
+									</Typography>
+								</Box>
+							</ColorCard>
+						))}
+					</Box>
 				</Box>
-			</Box>
-		))}
+			))}
 	</Stack>
 );
 
@@ -105,7 +107,7 @@ const TypographySection = () => (
 							color: "neutral.100",
 						}}
 					>
-						Bebas Neue - The quick brown fox jumps over the lazy dog
+						Antonio - The quick brown fox jumps over the lazy dog
 					</Typography>
 				</Box>
 				<Box>

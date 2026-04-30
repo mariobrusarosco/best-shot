@@ -113,13 +113,9 @@ const TournamentStandings = () => {
 			</Heading>
 
 			{standings.format === "multi-group" ? (
-				<MultiGroupStandings
-					groups={standings.teams as z.infer<typeof TournamentStandingGroupSchema>[]}
-				/>
+				<MultiGroupStandings groups={standings.teams} />
 			) : (
-				<UniqueGroupStandings
-					teams={standings.teams as z.infer<typeof TournamentStandingTeamSchema>[]}
-				/>
+				<UniqueGroupStandings teams={standings.teams} />
 			)}
 		</Wrapper>
 	);

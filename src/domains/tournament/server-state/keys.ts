@@ -7,4 +7,4 @@ export const tournamentMatchesKey = (tournamentId?: string, round?: string | nul
 	round,
 ];
 export const tournamentScoreKey = (id?: string) => ["tournament", id, "score"];
-export const tournamentStandingsKey = (id: string) => ["tournament", id, "standings"];
+export const tournamentStandingsKey = (id?: string) => ["tournament", id, "standings"];

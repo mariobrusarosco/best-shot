@@ -1,6 +1,5 @@
 import { Box, styled, Typography } from "@mui/material";
 import { ScreenHeadingSkeleton } from "@/domains/global/components/screen-heading";
-import TournamentHeading from "@/domains/tournament/components/tournament-heading";
 import {
 	TournamentsList,
 	TournamentsListLoading,
@@ -20,7 +19,6 @@ export const AllTournamentsScreen = () => {
 				<ScreenHeadingSkeleton />
 
 				<ScreenMainContent>
-					<TournamentHeading.Skeleton />
 					<TournamentsListLoading />
 				</ScreenMainContent>
 			</AuthenticatedScreenLayout>
@@ -112,7 +110,7 @@ const AllTournamentsDisplay = styled(Box)(({ theme }) => ({
 	gap: theme.spacing(2),
 	padding: theme.spacing(3.5),
 	backgroundColor: theme.palette.neutral[0],
-	borderRadius: theme.shape.medium,
+	borderRadius: theme.borderRadius.medium,
 }));
 
 const CurrentSeasonContainer = styled(Box)(({ theme }) => ({
@@ -124,5 +122,5 @@ const CurrentSeasonContainer = styled(Box)(({ theme }) => ({
 const CurrentSeason = styled(Box)(({ theme }) => ({
 	backgroundColor: theme.palette.teal[500],
 	padding: theme.spacing(1, 1.5),
-	borderRadius: theme.shape.medium,
+	borderRadius: theme.borderRadius.medium,
 }));

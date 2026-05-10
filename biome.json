@@ -49,6 +49,14 @@
 			},
 			"style": {
 				"useConst": "error",
+				"noRestrictedImports": {
+					"level": "error",
+					"options": {
+						"paths": {
+							"@mui/system": "Use @mui/material for components and @mui/material/styles for styling utilities."
+						}
+					}
+				},
 				"useTemplate": "warn",
 				"noNegationElse": "warn",
 				"useCollapsedElseIf": "warn"

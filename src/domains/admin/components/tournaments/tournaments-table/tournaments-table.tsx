@@ -21,7 +21,7 @@ const StyledTableContainer = styled(TableContainer)(({ theme }) => ({
 	marginTop: theme.spacing(3),
 	backgroundColor: theme.palette.black[800],
 	border: `1px solid ${theme.palette.neutral[700]}`,
-	borderRadius: theme.shape.borderRadius,
+	borderRadius: "4px",
 	"& .MuiTable-root": {
 		minWidth: 800,
 	},

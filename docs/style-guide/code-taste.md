@@ -45,11 +45,18 @@ const getUpcomingMatches = (leagues: I_League[]) => {
 
 - Place local `type` and `interface` declarations at the bottom of the file unless there is a strong reason to keep them near usage.
 
+## Styling
+
+- Refer to [styling.md](./styling.md) for detailed information.
+
+## URL Query Parameters
+
+- Refer to [query-param-handling-and-validation.md](./query-param-handling-and-validation.md) for detailed information.
+
 ## Custom Hooks & Data Orchestration
 
-- The rule *"Do not create new hooks, utilities, wrappers... unless strictly required"* does **not** forbid UI-oriented hooks. 
 - Creating custom domain hooks (e.g., the `useUpcomingMatches` example in the lifecycle guide) to orchestrate raw server-state queries into derived UI state is **strictly required**.
-- These composition hooks exist to enforce the strict `{ data, states, handlers }` contract defined in [components-lifecycle.md](./components-lifecycle.md) and keep complex orchestration out of `.tsx` components.
+- These composition hooks exist to enforce the strict `{ query, actions }` contract defined in [components-lifecycle.md](./components-lifecycle.md) and keep complex orchestration out of `.tsx` components.
 
 ## Scope
 

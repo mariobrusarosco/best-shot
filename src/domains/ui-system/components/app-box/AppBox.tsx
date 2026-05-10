@@ -13,7 +13,7 @@
  * This component exemplifies our Dynamic sx Prop pattern for layout and one-off styling.
  */
 
-import { Box as MuiBox, type BoxProps as MuiBoxProps } from "@mui/system";
+import { Box as MuiBox, type BoxProps as MuiBoxProps } from "@mui/material";
 import { forwardRef } from "react";
 
 // Extended box props for our design system

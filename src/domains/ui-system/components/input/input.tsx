@@ -1,5 +1,6 @@
+import { css } from "@emotion/react";
 import { Input as BaseInput, type InputProps } from "@mui/base/Input";
-import { css, styled } from "@mui/system";
+import { styled } from "@mui/material/styles";
 import * as React from "react";
 
 export const AppInput = React.forwardRef(function CustomInput(
@@ -21,7 +22,7 @@ const StyledInput = styled("input")(
     width: 100%;
     padding: ${theme.spacing(1)};
     border: 1px solid ${theme.palette.black[400]};
-    border-radius: ${theme.shape.borderRadius};
+    border-radius: ${"4px"};
     background-color: ${theme.palette.black[800]};
     color: ${theme.palette.neutral[100]};
 

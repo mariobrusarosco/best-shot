@@ -64,7 +64,7 @@ const IconContainer = styled(Box)(({ theme }) => ({
 	justifyContent: "center",
 	width: 32,
 	height: 32,
-	borderRadius: theme.shape.borderRadius,
+	borderRadius: "4px",
 	backgroundColor: theme.palette.teal[500],
 	color: theme.palette.neutral[100],
 }));
@@ -72,7 +72,7 @@ const IconContainer = styled(Box)(({ theme }) => ({
 const SectionContainer = styled(Box)(({ theme }) => ({
 	marginBottom: theme.spacing(3),
 	padding: theme.spacing(2.5),
-	borderRadius: theme.shape.borderRadius,
+	borderRadius: "4px",
 	backgroundColor: theme.palette.black[800],
 	border: `1px solid ${theme.palette.neutral[700]}`,
 }));
@@ -118,7 +118,7 @@ const FormContainer = styled(Box)(({ theme }) => ({
 		backgroundColor: "#0a0a0a",
 		color: theme.palette.neutral[100],
 		border: `1px solid ${theme.palette.neutral[600]}`,
-		borderRadius: theme.shape.borderRadius,
+		borderRadius: "4px",
 		padding: theme.spacing(1.5),
 		"&:hover": {
 			borderColor: theme.palette.neutral[500],

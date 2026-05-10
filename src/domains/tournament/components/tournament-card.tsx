@@ -56,8 +56,8 @@ export const Card = styled(Box)(({ theme }) => ({
 	display: "flex",
 	justifyContent: "space-between",
 	gap: theme.spacing(4),
-	backgroundColor: theme.palette.black[500],
-	borderRadius: theme.shape.medium,
+	backgroundColor: theme.palette.black[200],
+	borderRadius: theme.borderRadius.medium,
 	padding: theme.spacing(2),
 }));
 

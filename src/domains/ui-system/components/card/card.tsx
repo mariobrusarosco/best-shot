@@ -1,4 +1,5 @@
-import { Box, styled } from "@mui/system";
+import { Box } from "@mui/material";
+import { styled } from "@mui/material/styles";
 import { Surface } from "@/domains/ui-system/components/surface/surface";
 import { UIHelper } from "@/domains/ui-system/theme";
 

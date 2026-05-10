@@ -5,7 +5,8 @@
  * Replaces unstable_sx usage with stable styled component pattern.
  */
 
-import { Box, styled } from "@mui/system";
+import { Box } from "@mui/material";
+import { styled } from "@mui/material/styles";
 
 // ===== STYLED COMPONENTS (Following Static Styled Components Pattern) =====
 

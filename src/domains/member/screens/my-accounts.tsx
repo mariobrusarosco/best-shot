@@ -100,6 +100,6 @@ const MyAccountDisplay = styled(Box)(({ theme }) => ({
 	gap: theme.spacing(2),
 	padding: theme.spacing(3.5),
 	backgroundColor: theme.palette.neutral[0],
-	borderRadius: theme.shape.medium,
+	borderRadius: theme.borderRadius.medium,
 	minWidth: "300px",
 }));

@@ -4,7 +4,7 @@ import type { ITournament } from "@/domains/tournament/schemas";
 import { tournamentKey } from "@/domains/tournament/server-state/keys";
 import type { TournamentRoundsSearch } from "@/domains/tournament/types";
 
-const route = getRouteApi("/_auth/tournaments/$tournamentId");
+const route = getRouteApi("/_auth/tournaments/$tournamentId/");
 
 export const useTournamentRounds = () => {
 	const search = route.useSearch() as TournamentRoundsSearch;
@@ -15,12 +15,12 @@ export const useTournamentRounds = () => {
 	// Derivate States
 	const tournament = queryClient.getQueryData(tournamentKey(tournamentId)) as ITournament;
 	const tournamentCurrentRound = tournament.currentRound;
-	const roundSelectedOnUrl = search.round;
+	const roundSelectedOnUrl = search.selectedRound;
 	const activeRound = roundSelectedOnUrl ?? tournamentCurrentRound;
 
 	const goToRound = (round: string) => {
 		navigate({
-			search: (prev) => ({ ...prev, round }),
+			search: (prev) => ({ ...prev, selectedRound: round }),
 			resetScroll: false,
 			replace: false,
 		});

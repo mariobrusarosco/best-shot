@@ -9,7 +9,7 @@ import { MEDIA_QUERIES } from "./breakpoints";
 
 // Font Families
 export const FONT_FAMILIES = {
-	heading: '"Bebas Neue", sans-serif',
+	heading: '"Antonio", sans-serif',
 	body: '"IBM Plex Mono", monospace',
 } as const;
 
@@ -41,15 +41,14 @@ export const FONT_SIZES = {
 
 // Line Heights
 export const LINE_HEIGHTS = {
+	normal: 1,
 	tight: 1.25,
-	normal: 1.4,
 	relaxed: 1.5,
 	loose: 1.75,
 } as const;
 
 // Typography Variants (Enhanced from existing system)
 export const TYPOGRAPHY_VARIANTS = {
-	// Headings (Bebas Neue - display, condensed)
 	h1: {
 		fontFamily: FONT_FAMILIES.heading,
 		fontSize: "2rem", // Mobile size (32px)
@@ -103,8 +102,8 @@ export const TYPOGRAPHY_VARIANTS = {
 	},
 
 	body1: {
-		fontFamily: FONT_FAMILIES.body,
-		fontSize: FONT_SIZES.md, // 16px
+		fontFamily: FONT_FAMILIES.heading,
+		fontSize: FONT_SIZES.base, // 14px
 		fontWeight: FONT_WEIGHTS.regular,
 		lineHeight: LINE_HEIGHTS.relaxed,
 	},
@@ -117,12 +116,12 @@ export const TYPOGRAPHY_VARIANTS = {
 
 	// Custom Variants (from existing system)
 	paragraph: {
-		fontFamily: FONT_FAMILIES.body,
-		fontSize: FONT_SIZES.md, // Mobile size (16px)
+		fontFamily: FONT_FAMILIES.heading,
+		fontSize: FONT_SIZES.base, // Mobile size (12px)
 		fontWeight: FONT_WEIGHTS.regular,
-		lineHeight: LINE_HEIGHTS.relaxed,
+		lineHeight: LINE_HEIGHTS.normal,
 		[MEDIA_QUERIES.up.tablet]: {
-			fontSize: FONT_SIZES.lg, // Desktop size (18px)
+			fontSize: FONT_SIZES.base, // Desktop size (16px)
 		},
 	},
 	topic: {
@@ -131,10 +130,10 @@ export const TYPOGRAPHY_VARIANTS = {
 		fontWeight: FONT_WEIGHTS.regular,
 		lineHeight: LINE_HEIGHTS.normal,
 		[MEDIA_QUERIES.up.tablet]: {
-			fontSize: FONT_SIZES.md, // Desktop size (16px)
+			fontSize: FONT_SIZES.base, // Desktop size (16px)
 		},
 	},
-	label: {
+	label_1: {
 		fontFamily: FONT_FAMILIES.heading,
 		fontSize: FONT_SIZES.sm, // 12px (existing)
 		fontWeight: FONT_WEIGHTS.regular,
@@ -165,7 +164,7 @@ export const TYPOGRAPHY_VARIANTS = {
 
 	// Subtitles
 	subtitle1: {
-		fontFamily: FONT_FAMILIES.body,
+		fontFamily: FONT_FAMILIES.heading,
 		fontSize: FONT_SIZES.md, // 16px
 		fontWeight: FONT_WEIGHTS.medium,
 		lineHeight: LINE_HEIGHTS.normal,

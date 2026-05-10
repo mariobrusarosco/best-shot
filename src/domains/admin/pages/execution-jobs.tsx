@@ -67,7 +67,7 @@ const Header = styled(Box)(({ theme }) => ({
 	marginBottom: theme.spacing(3),
 	padding: theme.spacing(2),
 	backgroundColor: theme.palette.black[800],
-	borderRadius: theme.shape.borderRadius,
+	borderRadius: "4px",
 	border: `1px solid ${theme.palette.neutral[700]}`,
 }));
 

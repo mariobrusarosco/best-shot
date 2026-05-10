@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { API, api } from "@/api";
+import { MatchResponseSchema } from "@/domains/match/schemas";
 import type { IMatch } from "@/domains/match/typing";
 import {
 	type ITournament,
@@ -37,11 +38,7 @@ export const getTournament = async ({ queryKey }: { queryKey: unknown }) => {
 		baseURL: import.meta.env.VITE_BEST_SHOT_API_V2,
 	});
 
-	// Ensure status has a default value if undefined
-	return {
-		...response,
-		status: response.status || "active",
-	};
+	return response;
 };
 
 export const getTournaments = async (): Promise<ITournament[]> => {
@@ -58,9 +55,15 @@ export const getTournamentMatches = async ({ queryKey }: { queryKey: unknown }) 
 	const queryKeyArray = queryKey as ReturnType<typeof tournamentMatchesKey>;
 	const [_, tournamentId, __, activeRound] = queryKeyArray;
 
-	const response = await api.get(`tournaments/${tournamentId}/matches/${activeRound}`);
+	const response = await API.get(
+		`tournaments/${tournamentId}/matches/${activeRound}`,
+		z.array(MatchResponseSchema),
+		{
+			baseURL: import.meta.env.VITE_BEST_SHOT_API_V2,
+		}
+	);
 
-	return response.data as IMatch[];
+	return response as IMatch[];
 };
 
 export const getTournamentStandings = async ({ queryKey }: { queryKey: unknown }) => {

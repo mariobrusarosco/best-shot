@@ -19,7 +19,6 @@ import { styled } from "@mui/material/styles";
 import { motion } from "motion/react";
 import { forwardRef } from "react";
 import type { AppCardProps } from "@/types/ui-system";
-import "@/types/mui-overrides.d";
 
 // ===== STYLED COMPONENTS (Following Static Styled Components Pattern) =====
 

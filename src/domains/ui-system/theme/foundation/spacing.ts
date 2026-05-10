@@ -149,7 +149,4 @@ export const DESIGN_SYSTEM_SPACING = {
 	padding: PADDING,
 	margin: MARGIN,
 	gap: GAP,
-	borderRadius: BORDER_RADIUS,
-	shadows: SHADOWS,
-	zIndex: Z_INDEX,
 } as const;

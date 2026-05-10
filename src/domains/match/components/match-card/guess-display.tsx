@@ -1,5 +1,5 @@
 import { Box, Typography } from "@mui/material";
-import { styled } from "@mui/system";
+import { styled } from "@mui/material/styles";
 import type { GUESS_STATUS, IGuess } from "@/domains/guess/typing";
 import { AppPill } from "@/domains/ui-system/components/pill/pill";
 import { theme } from "@/domains/ui-system/theme";

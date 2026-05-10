@@ -14,7 +14,7 @@ import { AuthenticatedScreenLayout } from "@/domains/ui-system/layout/authentica
 const StyledContainer = styled(Box)(({ theme }) => ({
 	padding: theme.spacing(2),
 	backgroundColor: theme.palette.black[800],
-	borderRadius: theme.shape.borderRadius,
+	borderRadius: "4px",
 	border: `1px solid ${theme.palette.neutral[700]}`,
 }));
 

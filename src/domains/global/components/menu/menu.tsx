@@ -1,5 +1,5 @@
-import { styled, Typography } from "@mui/material";
-import { Box } from "@mui/system";
+import { Box, Typography } from "@mui/material";
+import { styled } from "@mui/material/styles";
 import { Link } from "@tanstack/react-router";
 import { BestShotIcon } from "@/assets/best-shot-icon";
 import { useMember } from "@/domains/member/hooks/use-member";

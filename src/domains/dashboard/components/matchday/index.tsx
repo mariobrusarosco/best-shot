@@ -23,7 +23,7 @@ export const Matchday = ({ matchday }: { matchday: IMatchday }) => {
 						key={`match-${match.tournamentId}-${match.roundSlug}-${i}`}
 						to="/tournaments/$tournamentId"
 						params={{ tournamentId: match.tournamentId }}
-						search={{ round: match.roundSlug }}
+						search={{ selectedRound: match.roundSlug }}
 						replace={false}
 						resetScroll={false}
 					>

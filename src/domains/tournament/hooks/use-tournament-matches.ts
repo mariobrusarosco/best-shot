@@ -1,39 +1,27 @@
-import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { getRouteApi } from "@tanstack/react-router";
-import type { ITournament } from "@/domains/tournament/schemas";
+import { useQuery } from "@tanstack/react-query";
 import { getTournamentMatches } from "@/domains/tournament/server-state/fetchers";
-import { tournamentKey, tournamentMatchesKey } from "@/domains/tournament/server-state/keys";
-import type { TournamentRoundsSearch } from "@/domains/tournament/types";
+import { tournamentMatchesKey } from "@/domains/tournament/server-state/keys";
+import type { TournamentView } from "@/stores/user-preferences-store";
 
-const route = getRouteApi("/_auth/tournaments/$tournamentId");
-
-export const useTournamentMatches = () => {
-	const search = route.useSearch() as TournamentRoundsSearch;
-	const queryClient = useQueryClient();
-	const tournamentId = route.useParams().tournamentId;
-
-	// Derivate States
-	const tournament = queryClient.getQueryData(tournamentKey(tournamentId)) as ITournament;
-	const tournamentCurrentRound = tournament.currentRound;
-	const roundSelectedOnUrl = search.round;
-	const activeRound = roundSelectedOnUrl ?? tournamentCurrentRound;
-
+export const useTournamentMatches = ({
+	id,
+	selectedRound,
+	view,
+}: {
+	id: string;
+	selectedRound: string | undefined;
+	view: TournamentView;
+}) => {
 	const query = useQuery({
-		queryKey: tournamentMatchesKey(tournamentId, activeRound),
+		queryKey: tournamentMatchesKey(id, selectedRound),
 		queryFn: getTournamentMatches,
-		enabled: !!tournamentId && (!!search.round || !!tournament),
+		enabled: !!id && !!selectedRound,
 	});
 
+	console.log(`Providing matches given view: ${view}`);
+
 	return {
-		tournamentMatches: {
-			data: query.data,
-			states: {
-				isLoading: query.isLoading,
-				isError: query.isError,
-			},
-			handlers: {
-				refetch: query.refetch,
-			},
-		},
+		query,
+		actions: {},
 	};
 };

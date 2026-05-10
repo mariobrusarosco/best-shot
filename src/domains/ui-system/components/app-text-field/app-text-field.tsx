@@ -10,7 +10,6 @@ import type { Theme } from "@mui/material/styles";
 import { styled } from "@mui/material/styles";
 import { forwardRef } from "react";
 import type { AppTextFieldProps } from "@/types/ui-system";
-import "@/types/mui-overrides.d";
 
 // Helper functions to reduce complexity
 const getBorderColor = (theme: Theme, hasError: boolean, hasSuccess: boolean) => {

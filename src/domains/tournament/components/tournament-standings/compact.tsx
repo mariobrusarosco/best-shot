@@ -59,7 +59,7 @@ export const CompactStandings = ({ teams }: Props) => {
 
 			<tbody>
 				{teams?.map((team) => (
-					<tr key={team.id}>
+					<tr key={team.order}>
 						<td>
 							<PositionCell>
 								<Typography
@@ -163,6 +163,6 @@ const LastFiveOutcomes = ({ form }: { form: string[] }) => {
 };
 
 const TeamLogo = styled("img")(() => ({
-	width: "32px",
+	width: "28px",
 	objectFit: "cover",
 }));

@@ -92,16 +92,14 @@ const StyledFormControl = styled(FormControl)<{ error?: boolean; success?: boole
 );
 
 // Enhanced select with design system integration
-const StyledSelect = styled(MuiSelect, {
-	shouldForwardProp: (prop) => !["variant", "loading"].includes(prop as string),
-})<AppSelectProps>(({ theme, variant, loading }) => ({
+const StyledSelect = styled(MuiSelect)(({ theme }) => ({
 	borderRadius: theme.spacing(1),
 
 	// Loading state
-	...(loading && {
+	'&[data-loading="true"]': {
 		opacity: 0.7,
 		pointerEvents: "none",
-	}),
+	},
 
 	// Base styling
 	"& .MuiOutlinedInput-notchedOutline": {
@@ -119,7 +117,7 @@ const StyledSelect = styled(MuiSelect, {
 	},
 
 	// Variant-specific styles
-	...(variant === "tournament" && {
+	'&[data-select-variant="tournament"]': {
 		backgroundColor: theme.palette.black[800],
 		color: theme.palette.neutral[100],
 		"& .MuiOutlinedInput-notchedOutline": {
@@ -128,22 +126,22 @@ const StyledSelect = styled(MuiSelect, {
 		"& .MuiSvgIcon-root": {
 			color: theme.palette.neutral[100],
 		},
-	}),
+	},
 
-	...(variant === "league" && {
+	'&[data-select-variant="league"]': {
 		backgroundColor: theme.palette.background.paper,
 		"& .MuiOutlinedInput-notchedOutline": {
 			borderColor: theme.palette.primary.main,
 		},
-	}),
+	},
 
-	...(variant === "compact" && {
+	'&[data-select-variant="compact"]': {
 		minHeight: "36px",
 		"& .MuiSelect-select": {
 			paddingTop: theme.spacing(1),
 			paddingBottom: theme.spacing(1),
 		},
-	}),
+	},
 
 	// Responsive behavior
 	[theme.breakpoints.down("tablet")]: {
@@ -238,9 +236,9 @@ export const AppSelect = forwardRef<HTMLDivElement, AppSelectProps>(
 				<StyledSelect
 					labelId={`${props.id || "select"}-label`}
 					label={label}
-					// @ts-expect-error - Custom variant handled by styled component
-					variant={variant}
-					loading={loading}
+					variant="outlined"
+					data-select-variant={variant}
+					data-loading={loading ? "true" : "false"}
 					disabled={loading || props.disabled}
 					{...props}
 				>

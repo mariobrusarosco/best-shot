@@ -42,6 +42,7 @@ interface Props {
 	guessMutation: ReturnType<typeof useGuessMutation>;
 }
 
+// Deprecated
 const MatchCard = ({ guess, match, guessMutation }: Props) => {
 	const [isOpen, setIsOpen] = useState(false);
 	const guessInputs = useGuessInputs(guess, match, guessMutation);
@@ -51,7 +52,6 @@ const MatchCard = ({ guess, match, guessMutation }: Props) => {
 
 	const showTimeBox =
 		SHOW_TIMEBOX_WHEN_GUESS_STATUS.has(guess.status) && guess.hasLostTimewindowToGuess;
-	console.log({ guess });
 	const showCTAButton =
 		SHOW_CTA_BUTTON_WHEN_GUESS_STATUS.has(guess.status) && !guess.hasLostTimewindowToGuess;
 	const showSaveButton = SHOW_SAVE_BUTTON_WHEN_GUESS_STATUS.has(guess.status) && isOpen;

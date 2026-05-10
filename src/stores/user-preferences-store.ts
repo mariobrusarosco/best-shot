@@ -1,15 +1,15 @@
 import { Store } from "@tanstack/store";
 
-export type TournamentViewMode = "timeline" | "rounds" | "calendar";
+export type TournamentView = "timeline" | "rounds" | "calendar";
 
 export interface UserPreferences {
-	tournamentViewMode: TournamentViewMode;
+	tournamentView: TournamentView;
 }
 
 const STORAGE_KEY = "best-shot-user-preferences";
 
 const defaultState: UserPreferences = {
-	tournamentViewMode: "timeline",
+	tournamentView: "timeline",
 };
 
 const loadPersistedState = (): UserPreferences => {
@@ -27,10 +27,10 @@ const persistState = () => {
 	localStorage.setItem(STORAGE_KEY, JSON.stringify(userPreferencesStore.state));
 };
 
-export const setTournamentViewMode = (mode: TournamentViewMode) => {
+export const setTournamentView = (view: TournamentView) => {
 	userPreferencesStore.setState((state) => ({
 		...state,
-		tournamentViewMode: mode,
+		tournamentView: view,
 	}));
 
 	persistState();

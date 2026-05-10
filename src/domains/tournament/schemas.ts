@@ -1,27 +1,23 @@
 import { z } from "zod";
 
-export const TournamentStatusSchema = z.enum(["active", "archived", "draft"]);
-export type ITournamentStatus = z.infer<typeof TournamentStatusSchema>;
+// export const TournamentStatusSchema = z.enum(["active", "archived", "draft"]);
+// export type ITournamentStatus = z.infer<typeof TournamentStatusSchema>;
 
-export const TournamentSchema = z
-	.object({
-		id: z.string().uuid(),
-		label: z.string().min(3).max(50),
-		logo: z.string().url(),
-		mode: z.string().min(3),
-		status: TournamentStatusSchema.default("active"),
-		provider: z.string().min(3),
-		standingsMode: z.string().min(1),
-		season: z.string().min(4).max(20).optional(),
-		currentRound: z.string().min(1).max(30).nullish(),
-		starterRound: z.string().min(1).max(30).optional(),
-		rounds: z.array(z.object({ label: z.string(), slug: z.string() })).optional(),
-		createdAt: z.string().datetime().optional(),
-		updatedAt: z.string().datetime().optional(),
-	})
-	.describe("A tournament competition where users make predictions");
-
-export type ITournament = z.infer<typeof TournamentSchema>;
+export const TournamentSchema = z.object({
+	id: z.string().uuid(),
+	label: z.string().min(3).max(50),
+	logo: z.string().url(),
+	mode: z.string().min(3),
+	// status: TournamentStatusSchema.default("active"),
+	provider: z.string().min(3),
+	standingsMode: z.string().min(1),
+	season: z.string().min(4).max(20),
+	currentRound: z.string().min(1).max(30).nullish(),
+	starterRound: z.string().min(1).max(30).optional(),
+	rounds: z.array(z.object({ label: z.string(), slug: z.string() })).optional(),
+	createdAt: z.string().datetime().optional(),
+	updatedAt: z.string().datetime().optional(),
+});
 
 export const TournamentStandingTeamSchema = z.object({
 	id: z.string(),
@@ -69,12 +65,7 @@ export const TournamentStandingsSchema = z.union([
 	TournamentStandingsSingleGroupSchema,
 ]);
 
-export type ITournamentStandingTeam = z.infer<typeof TournamentStandingTeamSchema>;
-export type ITournamentStandingGroup = z.infer<typeof TournamentStandingGroupSchema>;
-export type ITournamentStandings = z.infer<typeof TournamentStandingsSchema>;
-
 export const TournamentScoreSchema = z.object({
 	points: z.number(),
 	underCalculation: z.boolean(),
 });
-export type ITournamentScore = z.infer<typeof TournamentScoreSchema>;

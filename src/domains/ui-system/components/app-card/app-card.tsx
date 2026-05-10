@@ -26,48 +26,46 @@ export interface AppCardProps extends Omit<MuiCardProps, "variant"> {
 }
 
 // Enhanced styled card with design system improvements
-const StyledCard = styled(MuiCard, {
-	shouldForwardProp: (prop) => !["variant", "interactive", "loading"].includes(prop as string),
-})<AppCardProps>(({ theme, interactive, loading, variant }) => ({
+const StyledCard = styled(MuiCard)(({ theme }) => ({
 	// Design system base styles (handled by theme overrides)
 	// Additional component-specific styles
 
 	// Variant-specific styles
-	...(variant === "tournament" && {
+	'&[data-card-variant="tournament"]': {
 		backgroundColor: theme.palette.black?.[800] || "#232424",
 		color: theme.palette.common.white,
 		border: "none",
-	}),
+	},
 
-	...(variant === "match" && {
+	'&[data-card-variant="match"]': {
 		minHeight: "200px",
 		padding: theme.spacing(3),
 		display: "flex",
 		flexDirection: "column",
 		justifyContent: "space-between",
-	}),
+	},
 
-	...(variant === "league" && {
+	'&[data-card-variant="league"]': {
 		padding: theme.spacing(2.5),
 		borderRadius: theme.spacing(2),
-	}),
+	},
 
-	...(variant === "aiInsight" && {
+	'&[data-card-variant="aiInsight"]': {
 		background: `linear-gradient(135deg, ${theme.palette.primary.main}10, ${theme.palette.primary.main}05)`,
 		borderColor: theme.palette.primary.main,
-	}),
+	},
 
-	...(variant === "elevated" && {
+	'&[data-card-variant="elevated"]': {
 		boxShadow: theme.shadows[8],
 		border: "none",
-	}),
+	},
 
-	...(variant === "flat" && {
+	'&[data-card-variant="flat"]': {
 		boxShadow: "none",
 		backgroundColor: theme.palette.background.default,
-	}),
+	},
 
-	...(interactive && {
+	'&[data-interactive="true"]': {
 		cursor: "pointer",
 		transition: theme.transitions.create(["transform", "box-shadow", "border-color"], {
 			duration: theme.transitions.duration.short,
@@ -82,9 +80,9 @@ const StyledCard = styled(MuiCard, {
 			transform: "translateY(0)",
 			boxShadow: theme.shadows[2],
 		},
-	}),
+	},
 
-	...(loading && {
+	'&[data-loading="true"]': {
 		opacity: 0.7,
 		pointerEvents: "none",
 
@@ -98,15 +96,13 @@ const StyledCard = styled(MuiCard, {
 			background: `linear-gradient(90deg, transparent, ${theme.palette.action.hover}, transparent)`,
 			animation: "shimmer 2s infinite",
 		},
-	}),
+	},
 
 	// Focus styles for accessibility when interactive
-	...(interactive && {
-		"&:focus-visible": {
-			outline: `2px solid ${theme.palette.primary.main}`,
-			outlineOffset: "2px",
-		},
-	}),
+	'&[data-interactive="true"]:focus-visible': {
+		outline: `2px solid ${theme.palette.primary.main}`,
+		outlineOffset: "2px",
+	},
 }));
 
 /**
@@ -138,10 +134,9 @@ export const AppCard = forwardRef<HTMLDivElement, AppCardProps>(
 		return (
 			<StyledCard
 				ref={ref}
-				// @ts-expect-error - Custom variant handled by styled component
-				variant={variant}
-				interactive={interactive}
-				loading={loading}
+				data-card-variant={variant}
+				data-interactive={interactive ? "true" : "false"}
+				data-loading={loading ? "true" : "false"}
 				tabIndex={interactive ? tabIndex || 0 : tabIndex}
 				role={interactive ? "button" : undefined}
 				{...props}

@@ -1,14 +1,11 @@
 import { useStore } from "@tanstack/react-store";
-import {
-	setTournamentViewMode,
-	userPreferencesStore,
-} from "@/stores/user-preferences-store";
+import { setTournamentView, userPreferencesStore } from "@/stores/user-preferences-store";
 
-export const useTournamentViewMode = () => {
-	const tournamentViewMode = useStore(userPreferencesStore, (state) => state.tournamentViewMode);
+export const useTournamentView = () => {
+	const view = useStore(userPreferencesStore, (state) => state.tournamentView);
 
 	return {
-		tournamentViewMode,
-		setTournamentViewMode,
+		view,
+		setTournamentView,
 	};
 };

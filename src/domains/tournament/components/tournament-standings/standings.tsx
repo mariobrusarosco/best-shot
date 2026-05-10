@@ -13,8 +13,12 @@ interface Props {
 export const Standings = ({ tournamentId }: Props) => {
 	const theme = useTheme();
 	const [mode, setMode] = useState<"compact" | "full">("compact");
-	const [isOpen, setIsOpen] = useState(true);
+	const [isOpen, setIsOpen] = useState(false);
 	const { query } = useTournamentStandings({ tournamentId });
+
+	if (!query.data || query.isLoading) {
+		return <StandingsSkeleton />;
+	}
 
 	return (
 		<Container data-ui="standings" isOpen$={isOpen}>
@@ -66,7 +70,7 @@ export const StandingsSkeleton = () => {
 		<Container
 			data-ui="standings-skeleton"
 			isOpen$={true}
-			sx={{ backgroundColor: "black.100" }}
+			sx={{ backgroundColor: "neutral.300" }}
 		></Container>
 	);
 };
@@ -77,7 +81,8 @@ const Container = styled(Stack)<{
 	position: "absolute",
 	right: 0,
 	top: 0,
-
+	maxHeight: "100vh",
+	overflowY: "auto",
 	backgroundColor: theme.palette.neutral[200],
 	padding: theme.spacing(3),
 	borderRadius: theme.borderRadius.medium,

@@ -45,41 +45,18 @@ const getUpcomingMatches = (leagues: I_League[]) => {
 
 - Place local `type` and `interface` declarations at the bottom of the file unless there is a strong reason to keep them near usage.
 
-## Styled Components
+## Styling
 
-- Treat styled components as part of the component API, not just a CSS container.
-- When a styled component needs custom styling props, type them explicitly.
-- Suffix style-only props with `$` so their purpose is obvious at the usage site and they do not leak to the DOM.
-- Prefer putting durable layout and responsive behavior in the styled component itself. Use `sx` for small local exceptions, not as the main styling strategy.
-- When responsiveness is part of the component behavior, express it inside the styled component with `UIHelper.whileIs(...)` and `UIHelper.startsOn(...)` blocks.
+- Refer to [styling.md](./styling.md) for detailed information.
 
-Preferred pattern:
+## URL Query Parameters
 
-```tsx
-const Container = styled(Stack)<{
-	isOpen$: boolean;
-}>(({ theme, isOpen$ }) => ({
-	width: isOpen$ ? 350 : 230,
-	padding: theme.spacing(3),
-
-	[UIHelper.whileIs("mobile")]: {
-		// TODO
-	},
-	[UIHelper.startsOn("tablet")]: {
-		// TODO
-	},
-}));
-```
-
-- Type custom styling props explicitly.
-- Read custom styling props only inside the styled callback.
-- If the prop is styling-only, suffix it with `$`.
+- Refer to [query-param-handling-and-validation.md](./query-param-handling-and-validation.md) for detailed information.
 
 ## Custom Hooks & Data Orchestration
 
-- The rule *"Do not create new hooks, utilities, wrappers... unless strictly required"* does **not** forbid UI-oriented hooks. 
 - Creating custom domain hooks (e.g., the `useUpcomingMatches` example in the lifecycle guide) to orchestrate raw server-state queries into derived UI state is **strictly required**.
-- These composition hooks exist to enforce the strict `{ data, states, handlers }` contract defined in [components-lifecycle.md](./components-lifecycle.md) and keep complex orchestration out of `.tsx` components.
+- These composition hooks exist to enforce the strict `{ query, actions }` contract defined in [components-lifecycle.md](./components-lifecycle.md) and keep complex orchestration out of `.tsx` components.
 
 ## Scope
 

@@ -24,11 +24,10 @@ This hook should be the composition layer between domain hooks and the component
 - deriving view-specific state
 - exposing a stable UI contract
 
-The preferred contract is:
+The mandatory contract is:
 
-- `data`
-- `states`
-- `handlers`
+- `query`
+- `actions`
 
 This means the component should not be responsible for:
 
@@ -37,57 +36,28 @@ This means the component should not be responsible for:
 - naming UI booleans from raw query output
 - composing handlers from multiple hooks
 
-Instead, the hook should adapt the data into something the component can render directly.
+* Avoid pushing data orchestration into the component
+* Prefer composing the data in a UI-oriented hook and keeping the component focused on rendering:
 
-## Example
-
-Avoid pushing data orchestration into the component:
+## Creating a UI-oriented hook
 
 ```tsx
-export const UpcomingMatches = () => {
-  const { data, isLoading, isError } = useMatches({ status: "upcoming" });
-
-  if (isLoading) return <UpcomingMatchesSkeleton />;
-  if (isError) return <UpcomingMatchesError />;
-
-  const matches = data?.data ?? [];
-  const upcomingMatches = [...matches]
-    .sort((a, b) => new Date(a.match_date).getTime() - new Date(b.match_date).getTime())
-    .slice(0, 5);
-
-  if (upcomingMatches.length === 0) {
-    return <UpcomingMatchesEmpty />;
-  }
-
-  return <UpcomingMatchesContent matches={upcomingMatches} />;
-};
+<resourceName>: {
+	query,
+	actions: {
+		refetch<ResourceName>: query.refetch,
+	},
+},
+<resourceName>: {
+	...
+}
 ```
 
-Prefer composing the data in a UI-oriented hook and keeping the component focused on rendering:
-
-  data: {
-    <resourceName>: {
-      data: query.data,
-      states: {
-        isLoading<ResourceName>: query.isLoading,
-        isError<ResourceName>: query.isError,
-      },
-      handlers: {
-        refetch<ResourceName>: query.refetch,
-      },
-    },
-    <resourceName>: {
-      ...
-    }
-  },
-
-Example
-
-```ts
+```tsx
 export const useLeagues = () => {
 	const queryClient = useQueryClient();
 
-	const query = useQuery({
+	const leaguesQuery = useQuery({
 		queryKey: leaguesQueryKey(),
 		queryFn: getLeagues,
 	});
@@ -105,39 +75,42 @@ export const useLeagues = () => {
 
 	return {
 		leagues: {
-			data: query.data,
-			states: {
-				isLoading: query.isLoading,
-				isError: query.isError,
-			},
-			handlers: {
-				refetch: query.refetch,
+			query: leaguesQuery,
+			actions: {
+				refetch: leaguesQuery.refetch,
 			},
 		},
 		league: {
-			states: {
-				isCreatingLeague: createLeagueMutation.isPending,
-				errorWhenCretingLeague: createLeagueMutation.isError,
-			},
-			handlers: {
-				createLeague: createLeagueMutation.mutate,
-			},
+			mutation: createLeagueMutation,
 		},
 	};
 };
 ```
 
+## Using a Hook with the UI-friendly contract
+
 ```tsx
-export const UpcomingMatches = () => {
-  const { data, states } = useUpcomingMatches();
+export const Leagues = () => {
+  const { query, actions } = useLeagues();
 
-  if (states.isLoading) return <UpcomingMatchesSkeleton />;
-  if (states.isError) return <UpcomingMatchesError />;
-  if (states.isEmpty) return <UpcomingMatchesEmpty />;
+  if (query.isLoading) return <LeaguesSkeleton />;
+  if (query.isError) return <LeaguesError />;
+  if (nationalLeagues.length === 0 && internationalLeagues.length === 0) {
+    return <LeaguesEmpty />;
+  }
 
-  return <UpcomingMatchesContent matches={data.matches} />;
+// Content Ready
+  const nationalLeagues = [...query.data ?? []]
+    .filter((l) => l.type === "national");
+
+  const internationalLeagues = [...query.data ?? []]
+    .filter((l) => l.type === "international");
+
+  return <LeaguesContent nationalLeagues={nationalLeagues} internationalLeagues={internationalLeagues} />;
 };
 ```
+
+## Lifecycle States
 
 1. _Loading_:
    A Skeleton is used while the data of the component is not loaded yet.
